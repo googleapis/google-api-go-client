@@ -478,6 +478,116 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BitbucketCloudConfig: Configuration for connections to Bitbucket
+// Cloud.
+type BitbucketCloudConfig struct {
+	// AuthorizerCredential: Required. An access token with the `webhook`,
+	// `repository`, `repository:admin` and `pullrequest` scope access. It
+	// can be either a workspace, project or repository access token. It's
+	// recommended to use a system account to generate these credentials.
+	AuthorizerCredential *UserCredential `json:"authorizerCredential,omitempty"`
+
+	// ReadAuthorizerCredential: Required. An access token with the
+	// `repository` access. It can be either a workspace, project or
+	// repository access token. It's recommended to use a system account to
+	// generate the credentials.
+	ReadAuthorizerCredential *UserCredential `json:"readAuthorizerCredential,omitempty"`
+
+	// WebhookSecretSecretVersion: Required. SecretManager resource
+	// containing the webhook secret used to verify webhook events,
+	// formatted as `projects/*/secrets/*/versions/*`.
+	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
+
+	// Workspace: Required. The Bitbucket Cloud Workspace ID to be connected
+	// to Google Cloud Platform.
+	Workspace string `json:"workspace,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthorizerCredential") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthorizerCredential") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BitbucketCloudConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BitbucketCloudConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BitbucketDataCenterConfig: Configuration for connections to Bitbucket
+// Data Center.
+type BitbucketDataCenterConfig struct {
+	// AuthorizerCredential: Required. A http access token with the
+	// `REPO_ADMIN` scope access.
+	AuthorizerCredential *UserCredential `json:"authorizerCredential,omitempty"`
+
+	// HostUri: Required. The URI of the Bitbucket Data Center instance or
+	// cluster this connection is for.
+	HostUri string `json:"hostUri,omitempty"`
+
+	// ReadAuthorizerCredential: Required. A http access token with the
+	// `REPO_READ` access.
+	ReadAuthorizerCredential *UserCredential `json:"readAuthorizerCredential,omitempty"`
+
+	// ServerVersion: Output only. Version of the Bitbucket Data Center
+	// running on the `host_uri`.
+	ServerVersion string `json:"serverVersion,omitempty"`
+
+	// ServiceDirectoryConfig: Optional. Configuration for using Service
+	// Directory to privately connect to a Bitbucket Data Center. This
+	// should only be set if the Bitbucket Data Center is hosted on-premises
+	// and not reachable by public internet. If this field is left empty,
+	// calls to the Bitbucket Data Center will be made over the public
+	// internet.
+	ServiceDirectoryConfig *GoogleDevtoolsCloudbuildV2ServiceDirectoryConfig `json:"serviceDirectoryConfig,omitempty"`
+
+	// SslCa: Optional. SSL certificate to use for requests to the Bitbucket
+	// Data Center.
+	SslCa string `json:"sslCa,omitempty"`
+
+	// WebhookSecretSecretVersion: Required. Immutable. SecretManager
+	// resource containing the webhook secret used to verify webhook events,
+	// formatted as `projects/*/secrets/*/versions/*`.
+	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthorizerCredential") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthorizerCredential") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BitbucketDataCenterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BitbucketDataCenterConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
@@ -560,10 +670,18 @@ func (s *ChildStatusReference) MarshalJSON() ([]byte, error) {
 }
 
 // Connection: A connection to a SCM like GitHub, GitHub Enterprise,
-// Bitbucket Data Center or GitLab.
+// Bitbucket Data Center, Bitbucket Cloud or GitLab.
 type Connection struct {
 	// Annotations: Allows clients to store small amounts of arbitrary data.
 	Annotations map[string]string `json:"annotations,omitempty"`
+
+	// BitbucketCloudConfig: Configuration for connections to Bitbucket
+	// Cloud.
+	BitbucketCloudConfig *BitbucketCloudConfig `json:"bitbucketCloudConfig,omitempty"`
+
+	// BitbucketDataCenterConfig: Configuration for connections to Bitbucket
+	// Data Center.
+	BitbucketDataCenterConfig *BitbucketDataCenterConfig `json:"bitbucketDataCenterConfig,omitempty"`
 
 	// CreateTime: Output only. Server assigned timestamp for when the
 	// connection was created.
@@ -1938,6 +2056,11 @@ type PipelineRun struct {
 	// Provenance: Optional. Provenance configuration.
 	Provenance *Provenance `json:"provenance,omitempty"`
 
+	// Record: Output only. The `Record` of this `PipelineRun`. Format:
+	// `projects/{project}/locations/{location}/results/{result_id}/records/{
+	// record_id}`
+	Record string `json:"record,omitempty"`
+
 	// ResolvedPipelineSpec: Output only. The exact PipelineSpec used to
 	// instantiate the run.
 	ResolvedPipelineSpec *PipelineSpec `json:"resolvedPipelineSpec,omitempty"`
@@ -3192,34 +3315,6 @@ func (s *UserCredential) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// VolumeClaim: VolumeClaim is a user's request for a volume.
-type VolumeClaim struct {
-	// Storage: Volume size, e.g. 1gb.
-	Storage string `json:"storage,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Storage") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Storage") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *VolumeClaim) MarshalJSON() ([]byte, error) {
-	type NoMethod VolumeClaim
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // VolumeMount: Pod volumes to mount into the container's filesystem.
 type VolumeMount struct {
 	// MountPath: Path within the container at which the volume should be
@@ -3386,9 +3481,6 @@ type WorkspaceBinding struct {
 	// which should be used for this binding (i.e. the volume will be
 	// mounted at this sub directory). +optional
 	SubPath string `json:"subPath,omitempty"`
-
-	// VolumeClaim: Volume claim that will be created in the same namespace.
-	VolumeClaim *VolumeClaim `json:"volumeClaim,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with

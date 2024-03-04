@@ -1184,7 +1184,8 @@ type CopyLogEntriesMetadata struct {
 	// Progress: Estimated progress of the operation (0 - 100%).
 	Progress int64 `json:"progress,omitempty"`
 
-	// Request: CopyLogEntries RPC request.
+	// Request: CopyLogEntries RPC request. This field is deprecated and not
+	// used.
 	Request *CopyLogEntriesRequest `json:"request,omitempty"`
 
 	// Source: Source from which to copy log entries.For example, a log
@@ -4387,6 +4388,18 @@ type SavedQuery struct {
 	// UpdateTime: Output only. The timestamp when the saved query was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Visibility: Required. The visibility status of this query, which
+	// determines its ownership.
+	//
+	// Possible values:
+	//   "VISIBILITY_UNSPECIFIED" - The saved query visibility is
+	// unspecified. A CreateSavedQuery request with an unspecified
+	// visibility will be rejected.
+	//   "PRIVATE" - The saved query is only visible to the user that
+	// created it.
+	//   "SHARED" - The saved query is visible to anyone in the project.
+	Visibility string `json:"visibility,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

@@ -607,6 +607,46 @@ func (s *DataProvider) MarshalJSON() ([]byte, error) {
 // DcrExchangeConfig: Data Clean Room (DCR), used for privacy-safe and
 // secured data sharing.
 type DcrExchangeConfig struct {
+	// SingleLinkedDatasetPerCleanroom: Output only. If True, when
+	// subscribing to this DCR, it will create only one linked dataset
+	// containing all resources shared within the cleanroom. If False, when
+	// subscribing to this DCR, it will create 1 linked dataset per listing.
+	// This is not configurable, and by default, all new DCRs will have the
+	// restriction set to True.
+	SingleLinkedDatasetPerCleanroom bool `json:"singleLinkedDatasetPerCleanroom,omitempty"`
+
+	// SingleSelectedResourceSharingRestriction: Output only. If True, this
+	// DCR restricts the contributors to sharing only a single resource in a
+	// Listing. And no two resources should have the same IDs. So if a
+	// contributor adds a view with a conflicting name, the CreateListing
+	// API will reject the request. if False, the data contributor can
+	// publish an entire dataset (as before). This is not configurable, and
+	// by default, all new DCRs will have the restriction set to True.
+	SingleSelectedResourceSharingRestriction bool `json:"singleSelectedResourceSharingRestriction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SingleLinkedDatasetPerCleanroom") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "SingleLinkedDatasetPerCleanroom") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DcrExchangeConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DcrExchangeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // DefaultExchangeConfig: Default Analytics Hub data exchange, used for

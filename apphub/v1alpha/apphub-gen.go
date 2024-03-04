@@ -272,9 +272,11 @@ type Application struct {
 	CreateTime string `json:"createTime,omitempty"`
 
 	// Description: Optional. User-defined description of an Application.
+	// Can have a maximum length of 2048 characters.
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: Optional. User-defined name for the Application.
+	// DisplayName: Optional. User-defined name for the Application. Can
+	// have a maximum length of 63 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Identifier. The resource name of an Application. Format:
@@ -621,7 +623,8 @@ type ContactInfo struct {
 	// Channel: Optional. Communication channel of the contacts.
 	Channel *Channel `json:"channel,omitempty"`
 
-	// DisplayName: Optional. Contact's name.
+	// DisplayName: Optional. Contact's name. Can have a maximum length of
+	// 63 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Email: Required. Email address of the contacts.
@@ -652,12 +655,25 @@ func (s *ContactInfo) MarshalJSON() ([]byte, error) {
 
 // Criticality: Criticality of the Application, Service, or Workload
 type Criticality struct {
-	// Level: Required. Criticality level.
+	// Level: Optional. Criticality level. Can contain only lowercase
+	// letters, numeric characters, underscores, and dashes. Can have a
+	// maximum length of 63 characters.
 	Level string `json:"level,omitempty"`
 
-	// MissionCritical: Required. Indicates mission-critical Application,
+	// MissionCritical: Optional. Indicates mission-critical Application,
 	// Service, or Workload.
 	MissionCritical bool `json:"missionCritical,omitempty"`
+
+	// Type: Required. Criticality Type.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified type.
+	//   "MISSION_CRITICAL" - Mission critical service, application or
+	// workload.
+	//   "HIGH" - High impact.
+	//   "MEDIUM" - Medium impact.
+	//   "LOW" - Low impact.
+	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Level") to
 	// unconditionally include in API requests. By default, fields with
@@ -799,8 +815,20 @@ type Empty struct {
 
 // Environment: Environment of the Application, Service, or Workload
 type Environment struct {
-	// Environment: Required. Environment name.
+	// Environment: Optional. Environment name. Can contain only lowercase
+	// letters, numeric characters, underscores, and dashes. Can have a
+	// maximum length of 63 characters.
 	Environment string `json:"environment,omitempty"`
+
+	// Type: Required. Environment Type.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Unspecified type.
+	//   "PRODUCTION" - Production environment.
+	//   "STAGING" - Staging environment.
+	//   "TEST" - Test environment.
+	//   "DEVELOPMENT" - Development environment.
+	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Environment") to
 	// unconditionally include in API requests. By default, fields with
@@ -881,87 +909,6 @@ type Expr struct {
 
 func (s *Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// FindDiscoveredServicesResponse: Response for FindDiscoveredServices.
-type FindDiscoveredServicesResponse struct {
-	// DiscoveredServices: List of discovered services.
-	DiscoveredServices []*DiscoveredService `json:"discoveredServices,omitempty"`
-
-	// NextPageToken: A token identifying a page of results the server
-	// should return.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Unreachable: Locations that could not be reached.
-	Unreachable []string `json:"unreachable,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "DiscoveredServices")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DiscoveredServices") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *FindDiscoveredServicesResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod FindDiscoveredServicesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// FindDiscoveredWorkloadsResponse: Response for
-// FindDiscoveredWorkloads.
-type FindDiscoveredWorkloadsResponse struct {
-	// DiscoveredWorkloads: List of discovered workloads.
-	DiscoveredWorkloads []*DiscoveredWorkload `json:"discoveredWorkloads,omitempty"`
-
-	// NextPageToken: A token identifying a page of results the server
-	// should return.
-	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Unreachable: Locations that could not be reached.
-	Unreachable []string `json:"unreachable,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "DiscoveredWorkloads")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DiscoveredWorkloads") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *FindDiscoveredWorkloadsResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod FindDiscoveredWorkloadsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1712,14 +1659,16 @@ type Service struct {
 	// CreateTime: Output only. Create time.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: Optional. User-defined description of a Service.
+	// Description: Optional. User-defined description of a Service. Can
+	// have a maximum length of 2048 characters.
 	Description string `json:"description,omitempty"`
 
 	// DiscoveredService: Required. Immutable. The resource name of the
 	// original discovered service.
 	DiscoveredService string `json:"discoveredService,omitempty"`
 
-	// DisplayName: Optional. User-defined name for the Service.
+	// DisplayName: Optional. User-defined name for the Service. Can have a
+	// maximum length of 63 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Identifier. The resource name of a Service. Format:
@@ -2074,14 +2023,16 @@ type Workload struct {
 	// CreateTime: Output only. Create time.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: Optional. User-defined description of a Workload.
+	// Description: Optional. User-defined description of a Workload. Can
+	// have a maximum length of 2048 characters.
 	Description string `json:"description,omitempty"`
 
 	// DiscoveredWorkload: Required. Immutable. The resource name of the
 	// original discovered workload.
 	DiscoveredWorkload string `json:"discoveredWorkload,omitempty"`
 
-	// DisplayName: Optional. User-defined name for the Workload.
+	// DisplayName: Optional. User-defined name for the Workload. Can have a
+	// maximum length of 63 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Name: Identifier. The resource name of the Workload. Format:
@@ -2879,7 +2830,9 @@ func (r *ProjectsLocationsApplicationsService) Create(parent string, application
 }
 
 // ApplicationId sets the optional parameter "applicationId": Required.
-// The Application identifier.
+// The Application identifier. Must contain only lowercase letters,
+// numbers or hyphens, with the first character a letter, the last a
+// letter or a number, and a 63 character maximum.
 func (c *ProjectsLocationsApplicationsCreateCall) ApplicationId(applicationId string) *ProjectsLocationsApplicationsCreateCall {
 	c.urlParams_.Set("applicationId", applicationId)
 	return c
@@ -3003,7 +2956,7 @@ func (c *ProjectsLocationsApplicationsCreateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "applicationId": {
-	//       "description": "Required. The Application identifier.",
+	//       "description": "Required. The Application identifier. Must contain only lowercase letters, numbers or hyphens, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4250,7 +4203,9 @@ func (c *ProjectsLocationsApplicationsServicesCreateCall) RequestId(requestId st
 }
 
 // ServiceId sets the optional parameter "serviceId": Required. The
-// Service identifier.
+// Service identifier. Must contain only lowercase letters, numbers or
+// hyphens, with the first character a letter, the last a letter or a
+// number, and a 63 character maximum.
 func (c *ProjectsLocationsApplicationsServicesCreateCall) ServiceId(serviceId string) *ProjectsLocationsApplicationsServicesCreateCall {
 	c.urlParams_.Set("serviceId", serviceId)
 	return c
@@ -4368,7 +4323,7 @@ func (c *ProjectsLocationsApplicationsServicesCreateCall) Do(opts ...googleapi.C
 	//       "type": "string"
 	//     },
 	//     "serviceId": {
-	//       "description": "Required. The Service identifier.",
+	//       "description": "Required. The Service identifier. Must contain only lowercase letters, numbers or hyphens, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5131,7 +5086,9 @@ func (c *ProjectsLocationsApplicationsWorkloadsCreateCall) RequestId(requestId s
 }
 
 // WorkloadId sets the optional parameter "workloadId": Required. The
-// Workload identifier.
+// Workload identifier. Must contain only lowercase letters, numbers or
+// hyphens, with the first character a letter, the last a letter or a
+// number, and a 63 character maximum.
 func (c *ProjectsLocationsApplicationsWorkloadsCreateCall) WorkloadId(workloadId string) *ProjectsLocationsApplicationsWorkloadsCreateCall {
 	c.urlParams_.Set("workloadId", workloadId)
 	return c
@@ -5249,7 +5206,7 @@ func (c *ProjectsLocationsApplicationsWorkloadsCreateCall) Do(opts ...googleapi.
 	//       "type": "string"
 	//     },
 	//     "workloadId": {
-	//       "description": "Required. The Workload identifier.",
+	//       "description": "Required. The Workload identifier. Must contain only lowercase letters, numbers or hyphens, with the first character a letter, the last a letter or a number, and a 63 character maximum.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -5972,223 +5929,6 @@ func (c *ProjectsLocationsApplicationsWorkloadsPatchCall) Do(opts ...googleapi.C
 
 }
 
-// method id "apphub.projects.locations.discoveredServices.find":
-
-type ProjectsLocationsDiscoveredServicesFindCall struct {
-	s            *APIService
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Find: Finds discovered services that could be added to an application
-// in a host project and location.
-//
-// - parent: Value for parent.
-func (r *ProjectsLocationsDiscoveredServicesService) Find(parent string) *ProjectsLocationsDiscoveredServicesFindCall {
-	c := &ProjectsLocationsDiscoveredServicesFindCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Filter sets the optional parameter "filter": Filtering results
-func (c *ProjectsLocationsDiscoveredServicesFindCall) Filter(filter string) *ProjectsLocationsDiscoveredServicesFindCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Hint for how to order
-// the results
-func (c *ProjectsLocationsDiscoveredServicesFindCall) OrderBy(orderBy string) *ProjectsLocationsDiscoveredServicesFindCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer items than requested. If unspecified, server
-// will pick an appropriate default.
-func (c *ProjectsLocationsDiscoveredServicesFindCall) PageSize(pageSize int64) *ProjectsLocationsDiscoveredServicesFindCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-func (c *ProjectsLocationsDiscoveredServicesFindCall) PageToken(pageToken string) *ProjectsLocationsDiscoveredServicesFindCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsDiscoveredServicesFindCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveredServicesFindCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsDiscoveredServicesFindCall) IfNoneMatch(entityTag string) *ProjectsLocationsDiscoveredServicesFindCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsDiscoveredServicesFindCall) Context(ctx context.Context) *ProjectsLocationsDiscoveredServicesFindCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsDiscoveredServicesFindCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsDiscoveredServicesFindCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/discoveredServices:find")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apphub.projects.locations.discoveredServices.find" call.
-// Exactly one of *FindDiscoveredServicesResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *FindDiscoveredServicesResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsDiscoveredServicesFindCall) Do(opts ...googleapi.CallOption) (*FindDiscoveredServicesResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &FindDiscoveredServicesResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Finds discovered services that could be added to an application in a host project and location.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/discoveredServices:find",
-	//   "httpMethod": "GET",
-	//   "id": "apphub.projects.locations.discoveredServices.find",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filtering results",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Optional. Hint for how to order the results",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results the server should return.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Value for parent.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/discoveredServices:find",
-	//   "response": {
-	//     "$ref": "FindDiscoveredServicesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsDiscoveredServicesFindCall) Pages(ctx context.Context, f func(*FindDiscoveredServicesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
 // method id "apphub.projects.locations.discoveredServices.findUnregistered":
 
 type ProjectsLocationsDiscoveredServicesFindUnregisteredCall struct {
@@ -6563,7 +6303,8 @@ type ProjectsLocationsDiscoveredServicesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists discovered services in a host project and location.
+// List: Lists discovered services that can be added to an application
+// in a host project and location.
 //
 // - parent: Value for parent.
 func (r *ProjectsLocationsDiscoveredServicesService) List(parent string) *ProjectsLocationsDiscoveredServicesListCall {
@@ -6699,7 +6440,7 @@ func (c *ProjectsLocationsDiscoveredServicesListCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists discovered services in a host project and location.",
+	//   "description": "Lists discovered services that can be added to an application in a host project and location.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/discoveredServices",
 	//   "httpMethod": "GET",
 	//   "id": "apphub.projects.locations.discoveredServices.list",
@@ -6751,223 +6492,6 @@ func (c *ProjectsLocationsDiscoveredServicesListCall) Do(opts ...googleapi.CallO
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsDiscoveredServicesListCall) Pages(ctx context.Context, f func(*ListDiscoveredServicesResponse) error) error {
-	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
-	for {
-		x, err := c.Do()
-		if err != nil {
-			return err
-		}
-		if err := f(x); err != nil {
-			return err
-		}
-		if x.NextPageToken == "" {
-			return nil
-		}
-		c.PageToken(x.NextPageToken)
-	}
-}
-
-// method id "apphub.projects.locations.discoveredWorkloads.find":
-
-type ProjectsLocationsDiscoveredWorkloadsFindCall struct {
-	s            *APIService
-	parent       string
-	urlParams_   gensupport.URLParams
-	ifNoneMatch_ string
-	ctx_         context.Context
-	header_      http.Header
-}
-
-// Find: Finds discovered workloads that could be added to an
-// application in a host project and location.
-//
-// - parent: Value for parent.
-func (r *ProjectsLocationsDiscoveredWorkloadsService) Find(parent string) *ProjectsLocationsDiscoveredWorkloadsFindCall {
-	c := &ProjectsLocationsDiscoveredWorkloadsFindCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	return c
-}
-
-// Filter sets the optional parameter "filter": Filtering results
-func (c *ProjectsLocationsDiscoveredWorkloadsFindCall) Filter(filter string) *ProjectsLocationsDiscoveredWorkloadsFindCall {
-	c.urlParams_.Set("filter", filter)
-	return c
-}
-
-// OrderBy sets the optional parameter "orderBy": Hint for how to order
-// the results
-func (c *ProjectsLocationsDiscoveredWorkloadsFindCall) OrderBy(orderBy string) *ProjectsLocationsDiscoveredWorkloadsFindCall {
-	c.urlParams_.Set("orderBy", orderBy)
-	return c
-}
-
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer items than requested. If unspecified, server
-// will pick an appropriate default.
-func (c *ProjectsLocationsDiscoveredWorkloadsFindCall) PageSize(pageSize int64) *ProjectsLocationsDiscoveredWorkloadsFindCall {
-	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
-	return c
-}
-
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results the server should return.
-func (c *ProjectsLocationsDiscoveredWorkloadsFindCall) PageToken(pageToken string) *ProjectsLocationsDiscoveredWorkloadsFindCall {
-	c.urlParams_.Set("pageToken", pageToken)
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsDiscoveredWorkloadsFindCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveredWorkloadsFindCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
-func (c *ProjectsLocationsDiscoveredWorkloadsFindCall) IfNoneMatch(entityTag string) *ProjectsLocationsDiscoveredWorkloadsFindCall {
-	c.ifNoneMatch_ = entityTag
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsDiscoveredWorkloadsFindCall) Context(ctx context.Context) *ProjectsLocationsDiscoveredWorkloadsFindCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsDiscoveredWorkloadsFindCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsDiscoveredWorkloadsFindCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	if c.ifNoneMatch_ != "" {
-		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
-	}
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/discoveredWorkloads:find")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("GET", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "apphub.projects.locations.discoveredWorkloads.find" call.
-// Exactly one of *FindDiscoveredWorkloadsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *FindDiscoveredWorkloadsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *ProjectsLocationsDiscoveredWorkloadsFindCall) Do(opts ...googleapi.CallOption) (*FindDiscoveredWorkloadsResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &FindDiscoveredWorkloadsResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Finds discovered workloads that could be added to an application in a host project and location.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/discoveredWorkloads:find",
-	//   "httpMethod": "GET",
-	//   "id": "apphub.projects.locations.discoveredWorkloads.find",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filtering results",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Optional. Hint for how to order the results",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A token identifying a page of results the server should return.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Value for parent.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/discoveredWorkloads:find",
-	//   "response": {
-	//     "$ref": "FindDiscoveredWorkloadsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// Pages invokes f for each page of results.
-// A non-nil error returned from f will halt the iteration.
-// The provided context supersedes any context provided to the Context method.
-func (c *ProjectsLocationsDiscoveredWorkloadsFindCall) Pages(ctx context.Context, f func(*FindDiscoveredWorkloadsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -7360,7 +6884,8 @@ type ProjectsLocationsDiscoveredWorkloadsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists discovered workloads in a host project and location.
+// List: Lists discovered workloads that can be added to an application
+// in a host project and location.
 //
 // - parent: Value for parent.
 func (r *ProjectsLocationsDiscoveredWorkloadsService) List(parent string) *ProjectsLocationsDiscoveredWorkloadsListCall {
@@ -7496,7 +7021,7 @@ func (c *ProjectsLocationsDiscoveredWorkloadsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists discovered workloads in a host project and location.",
+	//   "description": "Lists discovered workloads that can be added to an application in a host project and location.",
 	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/discoveredWorkloads",
 	//   "httpMethod": "GET",
 	//   "id": "apphub.projects.locations.discoveredWorkloads.list",

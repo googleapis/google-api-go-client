@@ -102,7 +102,7 @@ const defaultUniverseDomain = "googleapis.com"
 // OAuth2 scopes used by this API.
 const (
 	// Move a copy of messages between you and the businesses you have
-	// conversations with.
+	// conversations with across Google services.
 	DataportabilityBusinessmessagingConversationsScope = "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations"
 
 	// Move a copy of your pinned trips on Maps.
@@ -129,7 +129,7 @@ const (
 	// Move a copy of your Maps activity.
 	DataportabilityMyactivityMapsScope = "https://www.googleapis.com/auth/dataportability.myactivity.maps"
 
-	// Move a copy of your search activity.
+	// Move a copy of your Google Search activity.
 	DataportabilityMyactivitySearchScope = "https://www.googleapis.com/auth/dataportability.myactivity.search"
 
 	// Move a copy of your Shopping activity.
@@ -138,10 +138,11 @@ const (
 	// Move a copy of your YouTube activity.
 	DataportabilityMyactivityYoutubeScope = "https://www.googleapis.com/auth/dataportability.myactivity.youtube"
 
-	// Move a copy of your shipping information.
+	// Move a copy of your shipping information on Shopping.
 	DataportabilityShoppingAddressesScope = "https://www.googleapis.com/auth/dataportability.shopping.addresses"
 
-	// Move a copy of reviews you wrote about products or online stores.
+	// Move a copy of reviews you wrote about products or online stores on
+	// Google Search.
 	DataportabilityShoppingReviewsScope = "https://www.googleapis.com/auth/dataportability.shopping.reviews"
 
 	// Move a copy of information about your YouTube channel.
@@ -308,8 +309,8 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
-// InitiatePortabilityArchiveRequest: Request to kick off a Takeout
-// Archive job.
+// InitiatePortabilityArchiveRequest: Request to kick off an Archive
+// job.
 type InitiatePortabilityArchiveRequest struct {
 	// Resources: The resources from which you're exporting data. These
 	// values have a 1:1 correspondence with the OAuth scopes.
@@ -338,11 +339,11 @@ func (s *InitiatePortabilityArchiveRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InitiatePortabilityArchiveResponse: Response from initiating a Take
+// InitiatePortabilityArchiveResponse: Response from initiating an
 // Archive job.
 type InitiatePortabilityArchiveResponse struct {
-	// ArchiveJobId: The archive job ID that is initiated in the Takeout
-	// API. This can be used to get the state of the job.
+	// ArchiveJobId: The archive job ID that is initiated in the API. This
+	// can be used to get the state of the job.
 	ArchiveJobId string `json:"archiveJobId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -372,8 +373,8 @@ func (s *InitiatePortabilityArchiveResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PortabilityArchiveState: Resource that contains the state of a
-// Takeout Archive job.
+// PortabilityArchiveState: Resource that contains the state of an
+// Archive job.
 type PortabilityArchiveState struct {
 	// Name: The resource name of ArchiveJob's PortabilityArchiveState
 	// singleton. The format is:
@@ -381,14 +382,14 @@ type PortabilityArchiveState struct {
 	// job ID provided in the request.
 	Name string `json:"name,omitempty"`
 
-	// State: Resource that represents the state of the Takeout Archive job.
+	// State: Resource that represents the state of the Archive job.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
-	//   "IN_PROGRESS" - The Takeout job is in progress.
-	//   "COMPLETE" - The Takeout job is complete.
-	//   "FAILED" - The Takeout job failed.
-	//   "CANCELLED" - The Takeout job is cancelled.
+	//   "IN_PROGRESS" - The job is in progress.
+	//   "COMPLETE" - The job is complete.
+	//   "FAILED" - The job failed.
+	//   "CANCELLED" - The job is cancelled.
 	State string `json:"state,omitempty"`
 
 	// Urls: If the state is complete, this method returns the signed URLs
@@ -435,7 +436,7 @@ type RetryPortabilityArchiveRequest struct {
 // Archive.
 type RetryPortabilityArchiveResponse struct {
 	// ArchiveJobId: The archive job ID that is initiated by the retry
-	// endpoint. This can be used to get the state of the new job
+	// endpoint. This can be used to get the state of the new job.
 	ArchiveJobId string `json:"archiveJobId,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -476,11 +477,11 @@ type ArchiveJobsGetPortabilityArchiveStateCall struct {
 	header_      http.Header
 }
 
-// GetPortabilityArchiveState: Retrieves the state of a Takeout Archive
-// job for the Portability API.
+// GetPortabilityArchiveState: Retrieves the state of an Archive job for
+// the Portability API.
 //
 //   - name: The archive job ID that is returned when you request the
-//     state of the job from Takeout. The format is:
+//     state of the job. The format is:
 //     archiveJobs/{archive_job}/portabilityArchiveState. archive_job is
 //     the job ID returned by the InitiatePortabilityArchiveResponse.
 func (r *ArchiveJobsService) GetPortabilityArchiveState(name string) *ArchiveJobsGetPortabilityArchiveStateCall {
@@ -588,7 +589,7 @@ func (c *ArchiveJobsGetPortabilityArchiveStateCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the state of a Takeout Archive job for the Portability API.",
+	//   "description": "Retrieves the state of an Archive job for the Portability API.",
 	//   "flatPath": "v1beta/archiveJobs/{archiveJobsId}/portabilityArchiveState",
 	//   "httpMethod": "GET",
 	//   "id": "dataportability.archiveJobs.getPortabilityArchiveState",
@@ -597,7 +598,7 @@ func (c *ArchiveJobsGetPortabilityArchiveStateCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The archive job ID that is returned when you request the state of the job from Takeout. The format is: archiveJobs/{archive_job}/portabilityArchiveState. archive_job is the job ID returned by the InitiatePortabilityArchiveResponse.",
+	//       "description": "Required. The archive job ID that is returned when you request the state of the job. The format is: archiveJobs/{archive_job}/portabilityArchiveState. archive_job is the job ID returned by the InitiatePortabilityArchiveResponse.",
 	//       "location": "path",
 	//       "pattern": "^archiveJobs/[^/]+/portabilityArchiveState$",
 	//       "required": true,
@@ -653,9 +654,9 @@ type ArchiveJobsRetryCall struct {
 
 // Retry: Retries a failed Portability Archive job.
 //
-//   - name: The archive job ID returned by the
-//     InitiatePortabilityArchiveResponse to be retried. Retrying is only
-//     executed if the initial job failed.
+//   - name: The Archive job ID you're retrying. This is returned by the
+//     InitiatePortabilityArchiveResponse. Retrying is only executed if
+//     the initial job failed.
 func (r *ArchiveJobsService) Retry(name string, retryportabilityarchiverequest *RetryPortabilityArchiveRequest) *ArchiveJobsRetryCall {
 	c := &ArchiveJobsRetryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -763,7 +764,7 @@ func (c *ArchiveJobsRetryCall) Do(opts ...googleapi.CallOption) (*RetryPortabili
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The archive job ID returned by the InitiatePortabilityArchiveResponse to be retried. Retrying is only executed if the initial job failed.",
+	//       "description": "Required. The Archive job ID you're retrying. This is returned by the InitiatePortabilityArchiveResponse. Retrying is only executed if the initial job failed.",
 	//       "location": "path",
 	//       "pattern": "^archiveJobs/[^/]+$",
 	//       "required": true,
@@ -820,11 +821,11 @@ type AuthorizationResetCall struct {
 }
 
 // Reset: Revokes OAuth tokens and resets exhausted scopes for a
-// user/project pair. This method allows you to initiate a Takeout
-// request after a new consent is granted. This method also indicates
-// that previous archives can be garbage collected. You should call this
-// method when all jobs are complete and all archives are downloaded. Do
-// not call it only when you start a new job.
+// user/project pair. This method allows you to initiate a request after
+// a new consent is granted. This method also indicates that previous
+// archives can be garbage collected. You should call this method when
+// all jobs are complete and all archives are downloaded. Do not call it
+// only when you start a new job.
 func (r *AuthorizationService) Reset(resetauthorizationrequest *ResetAuthorizationRequest) *AuthorizationResetCall {
 	c := &AuthorizationResetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resetauthorizationrequest = resetauthorizationrequest
@@ -919,7 +920,7 @@ func (c *AuthorizationResetCall) Do(opts ...googleapi.CallOption) (*Empty, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Revokes OAuth tokens and resets exhausted scopes for a user/project pair. This method allows you to initiate a Takeout request after a new consent is granted. This method also indicates that previous archives can be garbage collected. You should call this method when all jobs are complete and all archives are downloaded. Do not call it only when you start a new job.",
+	//   "description": "Revokes OAuth tokens and resets exhausted scopes for a user/project pair. This method allows you to initiate a request after a new consent is granted. This method also indicates that previous archives can be garbage collected. You should call this method when all jobs are complete and all archives are downloaded. Do not call it only when you start a new job.",
 	//   "flatPath": "v1beta/authorization:reset",
 	//   "httpMethod": "POST",
 	//   "id": "dataportability.authorization.reset",
@@ -974,8 +975,7 @@ type PortabilityArchiveInitiateCall struct {
 	header_                           http.Header
 }
 
-// Initiate: Initiates a new Takeout Archive job for the Portability
-// API.
+// Initiate: Initiates a new Archive job for the Portability API.
 func (r *PortabilityArchiveService) Initiate(initiateportabilityarchiverequest *InitiatePortabilityArchiveRequest) *PortabilityArchiveInitiateCall {
 	c := &PortabilityArchiveInitiateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.initiateportabilityarchiverequest = initiateportabilityarchiverequest
@@ -1071,7 +1071,7 @@ func (c *PortabilityArchiveInitiateCall) Do(opts ...googleapi.CallOption) (*Init
 	}
 	return ret, nil
 	// {
-	//   "description": "Initiates a new Takeout Archive job for the Portability API.",
+	//   "description": "Initiates a new Archive job for the Portability API.",
 	//   "flatPath": "v1beta/portabilityArchive:initiate",
 	//   "httpMethod": "POST",
 	//   "id": "dataportability.portabilityArchive.initiate",

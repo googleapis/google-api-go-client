@@ -2418,9 +2418,9 @@ type Dataset struct {
 	// Etag: Output only. A hash of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// ExternalDatasetReference: Optional. Information about the external
-	// metadata storage where the dataset is defined. Filled out when the
-	// dataset type is EXTERNAL.
+	// ExternalDatasetReference: Optional. Reference to a read-only external
+	// dataset defined in data catalogs outside of BigQuery. Filled out when
+	// the dataset type is EXTERNAL.
 	ExternalDatasetReference *ExternalDatasetReference `json:"externalDatasetReference,omitempty"`
 
 	// FriendlyName: Optional. A descriptive name for the dataset.
@@ -2466,6 +2466,9 @@ type Dataset struct {
 	// hours. The value can be from 48 to 168 hours (2 to 7 days). The
 	// default value is 168 hours if this is not set.
 	MaxTimeTravelHours int64 `json:"maxTimeTravelHours,omitempty,string"`
+
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
@@ -4525,7 +4528,7 @@ type IndexUnusedReason struct {
 	// base tables in your organization exceeds your region's limit and the
 	// index is not used in the query. To index larger base tables, you can
 	// use your own reservation for index-management jobs.
-	//   "ESTIMATED_PERFORMANCE_GAIN_TOO_LOW" - Indicates that the esitmated
+	//   "ESTIMATED_PERFORMANCE_GAIN_TOO_LOW" - Indicates that the estimated
 	// performance gain from using the search index is too low for the given
 	// search query.
 	//   "NOT_SUPPORTED_IN_STANDARD_EDITION" - Indicates that search indexes
@@ -4533,10 +4536,10 @@ type IndexUnusedReason struct {
 	//   "INDEX_SUPPRESSED_BY_FUNCTION_OPTION" - Indicates that an option in
 	// the search function that cannot make use of the index has been
 	// selected.
-	//   "INTERNAL_ERROR" - Indicates an internal error that causes the
-	// search index to be unused.
 	//   "QUERY_CACHE_HIT" - Indicates that the query was cached, and thus
 	// the search index was not used.
+	//   "INTERNAL_ERROR" - Indicates an internal error that causes the
+	// search index to be unused.
 	//   "OTHER_REASON" - Indicates that the reason search indexes cannot be
 	// used in the query is not covered by any of the other
 	// IndexUnusedReason options.
@@ -5100,6 +5103,19 @@ type JobConfigurationLoad struct {
 	// connection property is supported, and is used to resolve _SESSION
 	// appearing as the dataset id.
 	ConnectionProperties []*ConnectionProperty `json:"connectionProperties,omitempty"`
+
+	// CopyFilesOnly: Optional. [Experimental] Configures the load job to
+	// only copy files to the destination BigLake managed table with an
+	// external storage_uri, without reading file content and writing them
+	// to new files. Copying files only is supported when: * source_uris are
+	// in the same external storage system as the destination table but they
+	// do not overlap with storage_uri of the destination table. *
+	// source_format is the same file format as the destination table. *
+	// destination_table is an existing BigLake managed table. Its schema
+	// does not have default value expression. It schema does not have type
+	// parameters other than precision and scale. * No options other than
+	// the above are specified.
+	CopyFilesOnly bool `json:"copyFilesOnly,omitempty"`
 
 	// CreateDisposition: Optional. Specifies whether the job is allowed to
 	// create new tables. The following values are supported: *
@@ -6315,7 +6331,7 @@ type JobStatistics2 struct {
 	// undeclared query parameters detected during a dry run validation.
 	UndeclaredQueryParameters []*QueryParameter `json:"undeclaredQueryParameters,omitempty"`
 
-	// VectorSearchStatistics: Output only. Search query specific
+	// VectorSearchStatistics: Output only. Vector Search query specific
 	// statistics.
 	VectorSearchStatistics *VectorSearchStatistics `json:"vectorSearchStatistics,omitempty"`
 

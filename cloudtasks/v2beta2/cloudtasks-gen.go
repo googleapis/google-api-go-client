@@ -677,7 +677,7 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BufferTaskRequest: LINT.IfChange Request message for BufferTask.
+// BufferTaskRequest: Request message for BufferTask.
 type BufferTaskRequest struct {
 	// Body: Optional. Body of the HTTP request. The body can take any
 	// generic value. The value is written to the HttpRequest of the [Task].
@@ -1079,7 +1079,11 @@ func (s *Header) MarshalJSON() ([]byte, error) {
 
 // HeaderOverride: Wraps the Header object.
 type HeaderOverride struct {
-	// Header: header embodying a key and a value.
+	// Header: Header embodying a key and a value. Do not put business
+	// sensitive or personally identifying data in the HTTP Header Override
+	// Configuration or other similar fields in accordance with Section 12
+	// (Resource Fields) of the Service Specific Terms
+	// (https://cloud.google.com/terms/service-terms).
 	Header *Header `json:"header,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Header") to
@@ -1269,7 +1273,11 @@ type HttpTarget struct {
 	// "application/json". Headers which can have multiple values
 	// (according to RFC2616) can be specified using comma-separated values.
 	// The size of the headers must be less than 80KB. Queue-level headers
-	// to override headers of all the tasks in the queue.
+	// to override headers of all the tasks in the queue. Do not put
+	// business sensitive or personally identifying data in the HTTP Header
+	// Override Configuration or other similar fields in accordance with
+	// Section 12 (Resource Fields) of the Service Specific Terms
+	// (https://cloud.google.com/terms/service-terms).
 	HeaderOverrides []*HeaderOverride `json:"headerOverrides,omitempty"`
 
 	// HttpMethod: The HTTP method to use for the request. When specified,

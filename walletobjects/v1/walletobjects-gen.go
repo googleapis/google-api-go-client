@@ -154,7 +154,6 @@ func New(client *http.Client) (*Service, error) {
 	s.Smarttap = NewSmarttapService(s)
 	s.Transitclass = NewTransitclassService(s)
 	s.Transitobject = NewTransitobjectService(s)
-	s.Walletobjects = NewWalletobjectsService(s)
 	return s, nil
 }
 
@@ -200,8 +199,6 @@ type Service struct {
 	Transitclass *TransitclassService
 
 	Transitobject *TransitobjectService
-
-	Walletobjects *WalletobjectsService
 }
 
 func (s *Service) userAgent() string {
@@ -379,39 +376,6 @@ func NewTransitobjectService(s *Service) *TransitobjectService {
 }
 
 type TransitobjectService struct {
-	s *Service
-}
-
-func NewWalletobjectsService(s *Service) *WalletobjectsService {
-	rs := &WalletobjectsService{s: s}
-	rs.V1 = NewWalletobjectsV1Service(s)
-	return rs
-}
-
-type WalletobjectsService struct {
-	s *Service
-
-	V1 *WalletobjectsV1Service
-}
-
-func NewWalletobjectsV1Service(s *Service) *WalletobjectsV1Service {
-	rs := &WalletobjectsV1Service{s: s}
-	rs.PrivateContent = NewWalletobjectsV1PrivateContentService(s)
-	return rs
-}
-
-type WalletobjectsV1Service struct {
-	s *Service
-
-	PrivateContent *WalletobjectsV1PrivateContentService
-}
-
-func NewWalletobjectsV1PrivateContentService(s *Service) *WalletobjectsV1PrivateContentService {
-	rs := &WalletobjectsV1PrivateContentService{s: s}
-	return rs
-}
-
-type WalletobjectsV1PrivateContentService struct {
 	s *Service
 }
 
@@ -644,10 +608,16 @@ func (s *AppLinkDataAppLinkInfo) MarshalJSON() ([]byte, error) {
 }
 
 type AppLinkDataAppLinkInfoAppTarget struct {
+	// PackageName: Package name for AppTarget. For example:
+	// com.google.android.gm
+	PackageName string `json:"packageName,omitempty"`
+
 	// TargetUri: URI for AppTarget. The description on the URI must be set.
+	// Prefer setting package field instead, if this target is defined for
+	// your application.
 	TargetUri *Uri `json:"targetUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "TargetUri") to
+	// ForceSendFields is a list of field names (e.g. "PackageName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -655,10 +625,10 @@ type AppLinkDataAppLinkInfoAppTarget struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "TargetUri") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "PackageName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2342,10 +2312,10 @@ type EventTicketClass struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified preference.
-	//   "MULTIPLE_HOLDERS" - The same object can be saved by any number of
-	// different users, and on any number of devices. Partners typically use
-	// this setup for passes that do not need to be restricted to a single
-	// user or pinned to a single device.
+	//   "MULTIPLE_HOLDERS" - The Pass object is shareable by a user and can
+	// be saved by any number of different users, and on any number of
+	// devices. Partners typically use this setup for passes that do not
+	// need to be restricted to a single user or pinned to a single device.
 	//   "ONE_USER_ALL_DEVICES" - An object can only be saved by one user,
 	// but this user can view and use it on multiple of their devices. Once
 	// the first user saves the object, no other user will be allowed to
@@ -3282,10 +3252,10 @@ type FlightClass struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified preference.
-	//   "MULTIPLE_HOLDERS" - The same object can be saved by any number of
-	// different users, and on any number of devices. Partners typically use
-	// this setup for passes that do not need to be restricted to a single
-	// user or pinned to a single device.
+	//   "MULTIPLE_HOLDERS" - The Pass object is shareable by a user and can
+	// be saved by any number of different users, and on any number of
+	// devices. Partners typically use this setup for passes that do not
+	// need to be restricted to a single user or pinned to a single device.
 	//   "ONE_USER_ALL_DEVICES" - An object can only be saved by one user,
 	// but this user can view and use it on multiple of their devices. Once
 	// the first user saves the object, no other user will be allowed to
@@ -3820,15 +3790,20 @@ type GenericClass struct {
 	// these fields displayed is 10 from class and 10 from object.
 	LinksModuleData *LinksModuleData `json:"linksModuleData,omitempty"`
 
+	// Messages: An array of messages displayed in the app. All users of
+	// this object will receive its associated messages. The maximum number
+	// of these fields is 10.
+	Messages []*Message `json:"messages,omitempty"`
+
 	// MultipleDevicesAndHoldersAllowedStatus: Identifies whether multiple
 	// users and devices will save the same object referencing this class.
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified preference.
-	//   "MULTIPLE_HOLDERS" - The same object can be saved by any number of
-	// different users, and on any number of devices. Partners typically use
-	// this setup for passes that do not need to be restricted to a single
-	// user or pinned to a single device.
+	//   "MULTIPLE_HOLDERS" - The Pass object is shareable by a user and can
+	// be saved by any number of different users, and on any number of
+	// devices. Partners typically use this setup for passes that do not
+	// need to be restricted to a single user or pinned to a single device.
 	//   "ONE_USER_ALL_DEVICES" - An object can only be saved by one user,
 	// but this user can view and use it on multiple of their devices. Once
 	// the first user saves the object, no other user will be allowed to
@@ -3902,6 +3877,39 @@ type GenericClass struct {
 
 func (s *GenericClass) MarshalJSON() ([]byte, error) {
 	type NoMethod GenericClass
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GenericClassAddMessageResponse: Response to adding a new issuer
+// message to the class. This contains the entire updated GenericClass.
+type GenericClassAddMessageResponse struct {
+	// Resource: The updated EventTicketClass resource.
+	Resource *GenericClass `json:"resource,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Resource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Resource") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenericClassAddMessageResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenericClassAddMessageResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4111,6 +4119,40 @@ func (s *GenericObject) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GenericObjectAddMessageResponse: Response to adding a new issuer
+// message to the object. This contains the entire updated
+// GenericObject.
+type GenericObjectAddMessageResponse struct {
+	// Resource: The updated GenericObject resource.
+	Resource *GenericObject `json:"resource,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Resource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Resource") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GenericObjectAddMessageResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GenericObjectAddMessageResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GenericObjectListResponse: List response which contains the list of
 // all generic objects for a given issuer ID.
 type GenericObjectListResponse struct {
@@ -4273,10 +4315,10 @@ type GiftCardClass struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified preference.
-	//   "MULTIPLE_HOLDERS" - The same object can be saved by any number of
-	// different users, and on any number of devices. Partners typically use
-	// this setup for passes that do not need to be restricted to a single
-	// user or pinned to a single device.
+	//   "MULTIPLE_HOLDERS" - The Pass object is shareable by a user and can
+	// be saved by any number of different users, and on any number of
+	// devices. Partners typically use this setup for passes that do not
+	// need to be restricted to a single user or pinned to a single device.
 	//   "ONE_USER_ALL_DEVICES" - An object can only be saved by one user,
 	// but this user can view and use it on multiple of their devices. Once
 	// the first user saves the object, no other user will be allowed to
@@ -5457,10 +5499,10 @@ type LoyaltyClass struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified preference.
-	//   "MULTIPLE_HOLDERS" - The same object can be saved by any number of
-	// different users, and on any number of devices. Partners typically use
-	// this setup for passes that do not need to be restricted to a single
-	// user or pinned to a single device.
+	//   "MULTIPLE_HOLDERS" - The Pass object is shareable by a user and can
+	// be saved by any number of different users, and on any number of
+	// devices. Partners typically use this setup for passes that do not
+	// need to be restricted to a single user or pinned to a single device.
 	//   "ONE_USER_ALL_DEVICES" - An object can only be saved by one user,
 	// but this user can view and use it on multiple of their devices. Once
 	// the first user saves the object, no other user will be allowed to
@@ -6313,8 +6355,7 @@ type Message struct {
 	// LocalizedHeader: Translated strings for the message header.
 	LocalizedHeader *LocalizedString `json:"localizedHeader,omitempty"`
 
-	// MessageType: The type of the message. Currently, this can only be set
-	// for offers.
+	// MessageType: The message type.
 	//
 	// Possible values:
 	//   "MESSAGE_TYPE_UNSPECIFIED"
@@ -6650,10 +6691,10 @@ type OfferClass struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified preference.
-	//   "MULTIPLE_HOLDERS" - The same object can be saved by any number of
-	// different users, and on any number of devices. Partners typically use
-	// this setup for passes that do not need to be restricted to a single
-	// user or pinned to a single device.
+	//   "MULTIPLE_HOLDERS" - The Pass object is shareable by a user and can
+	// be saved by any number of different users, and on any number of
+	// devices. Partners typically use this setup for passes that do not
+	// need to be restricted to a single user or pinned to a single device.
 	//   "ONE_USER_ALL_DEVICES" - An object can only be saved by one user,
 	// but this user can view and use it on multiple of their devices. Once
 	// the first user saves the object, no other user will be allowed to
@@ -7235,75 +7276,6 @@ type Permissions struct {
 
 func (s *Permissions) MarshalJSON() ([]byte, error) {
 	type NoMethod Permissions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PrivateText: Private data for TextModule. This data will be rendered
-// as a TextModule for a pass.
-type PrivateText struct {
-	// Body: Translated strings for the body.
-	Body *LocalizedString `json:"body,omitempty"`
-
-	// Header: Translated strings for the header.
-	Header *LocalizedString `json:"header,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Body") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Body") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PrivateText) MarshalJSON() ([]byte, error) {
-	type NoMethod PrivateText
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PrivateUri: Private data for LinkModule. This data will be rendered
-// as the LinkModule for a pass.
-type PrivateUri struct {
-	// Description: The URI's title appearing in the app as text and its
-	// translated strings. Recommended maximum is 20 characters to ensure
-	// the full string is displayed on smaller screens.
-	Description *LocalizedString `json:"description,omitempty"`
-
-	// Uri: The location of a web page, image, or other resource. URIs in
-	// the `LinksModuleData` can have different prefixes indicating the type
-	// of URI (a link to a web page, a link to a map, a telephone number, or
-	// an email address).
-	Uri string `json:"uri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PrivateUri) MarshalJSON() ([]byte, error) {
-	type NoMethod PrivateUri
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8429,10 +8401,10 @@ type TransitClass struct {
 	//
 	// Possible values:
 	//   "STATUS_UNSPECIFIED" - Unspecified preference.
-	//   "MULTIPLE_HOLDERS" - The same object can be saved by any number of
-	// different users, and on any number of devices. Partners typically use
-	// this setup for passes that do not need to be restricted to a single
-	// user or pinned to a single device.
+	//   "MULTIPLE_HOLDERS" - The Pass object is shareable by a user and can
+	// be saved by any number of different users, and on any number of
+	// devices. Partners typically use this setup for passes that do not
+	// need to be restricted to a single user or pinned to a single device.
 	//   "ONE_USER_ALL_DEVICES" - An object can only be saved by one user,
 	// but this user can view and use it on multiple of their devices. Once
 	// the first user saves the object, no other user will be allowed to
@@ -9055,138 +9027,6 @@ type UpcomingNotification struct {
 
 func (s *UpcomingNotification) MarshalJSON() ([]byte, error) {
 	type NoMethod UpcomingNotification
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadPrivateDataRequest: Request for sending user private Text or
-// URI by the Issuer.
-type UploadPrivateDataRequest struct {
-	// IssuerId: The ID of the issuer sending the data.
-	IssuerId int64 `json:"issuerId,omitempty,string"`
-
-	// Text: Private text data of the user.
-	Text *PrivateText `json:"text,omitempty"`
-
-	// Uri: Private URIs of the user.
-	Uri *PrivateUri `json:"uri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IssuerId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IssuerId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadPrivateDataRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadPrivateDataRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadPrivateDataResponse: Response for uploading user private data
-// (text or URIs)
-type UploadPrivateDataResponse struct {
-	// PrivateContentId: A 64-bit content id for the private data that was
-	// uploaded by the Issuer.
-	PrivateContentId int64 `json:"privateContentId,omitempty,string"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "PrivateContentId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PrivateContentId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadPrivateDataResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadPrivateDataResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadPrivateImageRequest: Request to upload user's private images by
-// Issuers to be used in passes.
-type UploadPrivateImageRequest struct {
-	// Blob: A reference to the image payload that was uploaded by Scotty.
-	Blob *Media `json:"blob,omitempty"`
-
-	// MediaRequestInfo: Extra information about the uploaded media.
-	MediaRequestInfo *MediaRequestInfo `json:"mediaRequestInfo,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Blob") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Blob") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadPrivateImageRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadPrivateImageRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// UploadPrivateImageResponse: Response for uploading the private image
-type UploadPrivateImageResponse struct {
-	// PrivateContentId: A 64-bit content id for the image that was uploaded
-	// by the Issuer.
-	PrivateContentId int64 `json:"privateContentId,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "PrivateContentId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PrivateContentId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *UploadPrivateImageResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod UploadPrivateImageResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12928,6 +12768,152 @@ func (c *FlightobjectUpdateCall) Do(opts ...googleapi.CallOption) (*FlightObject
 
 }
 
+// method id "walletobjects.genericclass.addmessage":
+
+type GenericclassAddmessageCall struct {
+	s                 *Service
+	resourceId        string
+	addmessagerequest *AddMessageRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Addmessage: Adds a message to the generic class referenced by the
+// given class ID.
+//
+//   - resourceId: The unique identifier for a class. This ID must be
+//     unique across all classes from an issuer. This value should follow
+//     the format issuer ID. identifier where the former is issued by
+//     Google and latter is chosen by you. Your unique identifier should
+//     only include alphanumeric characters, '.', '_', or '-'.
+func (r *GenericclassService) Addmessage(resourceId string, addmessagerequest *AddMessageRequest) *GenericclassAddmessageCall {
+	c := &GenericclassAddmessageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resourceId = resourceId
+	c.addmessagerequest = addmessagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GenericclassAddmessageCall) Fields(s ...googleapi.Field) *GenericclassAddmessageCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *GenericclassAddmessageCall) Context(ctx context.Context) *GenericclassAddmessageCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GenericclassAddmessageCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *GenericclassAddmessageCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/genericClass/{resourceId}/addMessage")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resourceId": c.resourceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "walletobjects.genericclass.addmessage" call.
+// Exactly one of *GenericClassAddMessageResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GenericClassAddMessageResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *GenericclassAddmessageCall) Do(opts ...googleapi.CallOption) (*GenericClassAddMessageResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenericClassAddMessageResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds a message to the generic class referenced by the given class ID.",
+	//   "flatPath": "walletobjects/v1/genericClass/{resourceId}/addMessage",
+	//   "httpMethod": "POST",
+	//   "id": "walletobjects.genericclass.addmessage",
+	//   "parameterOrder": [
+	//     "resourceId"
+	//   ],
+	//   "parameters": {
+	//     "resourceId": {
+	//       "description": "The unique identifier for a class. This ID must be unique across all classes from an issuer. This value should follow the format issuer ID. identifier where the former is issued by Google and latter is chosen by you. Your unique identifier should only include alphanumeric characters, '.', '_', or '-'.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "walletobjects/v1/genericClass/{resourceId}/addMessage",
+	//   "request": {
+	//     "$ref": "AddMessageRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GenericClassAddMessageResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/wallet_object.issuer"
+	//   ]
+	// }
+
+}
+
 // method id "walletobjects.genericclass.get":
 
 type GenericclassGetCall struct {
@@ -13658,6 +13644,152 @@ func (c *GenericclassUpdateCall) Do(opts ...googleapi.CallOption) (*GenericClass
 	//   },
 	//   "response": {
 	//     "$ref": "GenericClass"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/wallet_object.issuer"
+	//   ]
+	// }
+
+}
+
+// method id "walletobjects.genericobject.addmessage":
+
+type GenericobjectAddmessageCall struct {
+	s                 *Service
+	resourceId        string
+	addmessagerequest *AddMessageRequest
+	urlParams_        gensupport.URLParams
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// Addmessage: Adds a message to the generic object referenced by the
+// given object ID.
+//
+//   - resourceId: The unique identifier for an object. This ID must be
+//     unique across all classes from an issuer. This value should follow
+//     the format issuer ID. identifier where the former is issued by
+//     Google and latter is chosen by you. Your unique identifier should
+//     only include alphanumeric characters, '.', '_', or '-'.
+func (r *GenericobjectService) Addmessage(resourceId string, addmessagerequest *AddMessageRequest) *GenericobjectAddmessageCall {
+	c := &GenericobjectAddmessageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resourceId = resourceId
+	c.addmessagerequest = addmessagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *GenericobjectAddmessageCall) Fields(s ...googleapi.Field) *GenericobjectAddmessageCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *GenericobjectAddmessageCall) Context(ctx context.Context) *GenericobjectAddmessageCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *GenericobjectAddmessageCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *GenericobjectAddmessageCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addmessagerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/genericObject/{resourceId}/addMessage")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resourceId": c.resourceId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "walletobjects.genericobject.addmessage" call.
+// Exactly one of *GenericObjectAddMessageResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GenericObjectAddMessageResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *GenericobjectAddmessageCall) Do(opts ...googleapi.CallOption) (*GenericObjectAddMessageResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GenericObjectAddMessageResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Adds a message to the generic object referenced by the given object ID.",
+	//   "flatPath": "walletobjects/v1/genericObject/{resourceId}/addMessage",
+	//   "httpMethod": "POST",
+	//   "id": "walletobjects.genericobject.addmessage",
+	//   "parameterOrder": [
+	//     "resourceId"
+	//   ],
+	//   "parameters": {
+	//     "resourceId": {
+	//       "description": "The unique identifier for an object. This ID must be unique across all classes from an issuer. This value should follow the format issuer ID. identifier where the former is issued by Google and latter is chosen by you. Your unique identifier should only include alphanumeric characters, '.', '_', or '-'.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "walletobjects/v1/genericObject/{resourceId}/addMessage",
+	//   "request": {
+	//     "$ref": "AddMessageRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GenericObjectAddMessageResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/wallet_object.issuer"
@@ -23234,132 +23366,6 @@ func (c *TransitobjectUpdateCall) Do(opts ...googleapi.CallOption) (*TransitObje
 	//   },
 	//   "response": {
 	//     "$ref": "TransitObject"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/wallet_object.issuer"
-	//   ]
-	// }
-
-}
-
-// method id "walletobjects.walletobjects.v1.privateContent.uploadPrivateData":
-
-type WalletobjectsV1PrivateContentUploadPrivateDataCall struct {
-	s                        *Service
-	uploadprivatedatarequest *UploadPrivateDataRequest
-	urlParams_               gensupport.URLParams
-	ctx_                     context.Context
-	header_                  http.Header
-}
-
-// UploadPrivateData: Upload private data (text or URI) and returns an
-// Id to be used in its place.
-func (r *WalletobjectsV1PrivateContentService) UploadPrivateData(uploadprivatedatarequest *UploadPrivateDataRequest) *WalletobjectsV1PrivateContentUploadPrivateDataCall {
-	c := &WalletobjectsV1PrivateContentUploadPrivateDataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.uploadprivatedatarequest = uploadprivatedatarequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *WalletobjectsV1PrivateContentUploadPrivateDataCall) Fields(s ...googleapi.Field) *WalletobjectsV1PrivateContentUploadPrivateDataCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *WalletobjectsV1PrivateContentUploadPrivateDataCall) Context(ctx context.Context) *WalletobjectsV1PrivateContentUploadPrivateDataCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *WalletobjectsV1PrivateContentUploadPrivateDataCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *WalletobjectsV1PrivateContentUploadPrivateDataCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.uploadprivatedatarequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "walletobjects/v1/privateContent/uploadPrivateData")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "walletobjects.walletobjects.v1.privateContent.uploadPrivateData" call.
-// Exactly one of *UploadPrivateDataResponse or error will be non-nil.
-// Any non-2xx status code is an error. Response headers are in either
-// *UploadPrivateDataResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
-func (c *WalletobjectsV1PrivateContentUploadPrivateDataCall) Do(opts ...googleapi.CallOption) (*UploadPrivateDataResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &UploadPrivateDataResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Upload private data (text or URI) and returns an Id to be used in its place.",
-	//   "flatPath": "walletobjects/v1/privateContent/uploadPrivateData",
-	//   "httpMethod": "POST",
-	//   "id": "walletobjects.walletobjects.v1.privateContent.uploadPrivateData",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "walletobjects/v1/privateContent/uploadPrivateData",
-	//   "request": {
-	//     "$ref": "UploadPrivateDataRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "UploadPrivateDataResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/wallet_object.issuer"

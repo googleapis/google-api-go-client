@@ -1476,6 +1476,18 @@ type ConfigManagementConfigSyncState struct {
 	//   "INSTALLING" - CRD is installing
 	RootsyncCrd string `json:"rootsyncCrd,omitempty"`
 
+	// State: The state of CS This field summarizes the other fields in this
+	// message.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - CS's state cannot be determined.
+	//   "CONFIG_SYNC_NOT_INSTALLED" - CS is not installed.
+	//   "CONFIG_SYNC_INSTALLED" - The expected CS version is installed
+	// successfully.
+	//   "CONFIG_SYNC_ERROR" - CS encounters errors.
+	//   "CONFIG_SYNC_PENDING" - CS is installing or terminating.
+	State string `json:"state,omitempty"`
+
 	// SyncState: The state of ConfigSync's process to sync configs to a
 	// cluster
 	SyncState *ConfigManagementSyncState `json:"syncState,omitempty"`
@@ -1951,6 +1963,16 @@ type ConfigManagementMembershipSpec struct {
 	// HierarchyController: Hierarchy Controller configuration for the
 	// cluster.
 	HierarchyController *ConfigManagementHierarchyControllerConfig `json:"hierarchyController,omitempty"`
+
+	// Management: Enables automatic Feature management.
+	//
+	// Possible values:
+	//   "MANAGEMENT_UNSPECIFIED" - Unspecified
+	//   "MANAGEMENT_AUTOMATIC" - Google will manage the Feature for the
+	// cluster.
+	//   "MANAGEMENT_MANUAL" - User will manually manage the Feature for the
+	// cluster.
+	Management string `json:"management,omitempty"`
 
 	// PolicyController: Policy Controller configuration for the cluster.
 	PolicyController *ConfigManagementPolicyController `json:"policyController,omitempty"`

@@ -1176,7 +1176,7 @@ func (s *ConditionContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConditionEvaluation: The Condition evaluation.
+// ConditionEvaluation: The condition evaluation.
 type ConditionEvaluation struct {
 	// EvaluationValue: The evaluation result.
 	//
@@ -1186,7 +1186,7 @@ type ConditionEvaluation struct {
 	//   "FALSE" - The evaluation result is `false`.
 	//   "CONDITIONAL" - The evaluation result is `conditional` when the
 	// condition expression contains variables that are either missing input
-	// values or have not been supported by Analyzer yet.
+	// values or have not been supported by Policy Analyzer yet.
 	EvaluationValue string `json:"evaluationValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EvaluationValue") to
@@ -2572,11 +2572,14 @@ type GoogleCloudAssetV1Rule struct {
 	Condition *Expr `json:"condition,omitempty"`
 
 	// ConditionEvaluation: The condition evaluation result for this rule.
-	// Only populated if it meets all the following criteria: * there is a
-	// condition defined for this rule * this rule is within a
-	// consolidated_policy * the consolidated_policy is within
-	// AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer or
-	// AnalyzeOrgPolicyGovernedAssetsResponse.GovernedResource
+	// Only populated if it meets all the following criteria: * There is a
+	// condition defined for this rule. * This rule is within
+	// AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer.consolida
+	// ted_policy, or
+	// AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset.consolidated_poli
+	// cy when the AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset has
+	// AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset.governed_resource
+	// .
 	ConditionEvaluation *ConditionEvaluation `json:"conditionEvaluation,omitempty"`
 
 	// DenyAll: Setting this to true means that all values are denied. This
@@ -2588,8 +2591,8 @@ type GoogleCloudAssetV1Rule struct {
 	// Policies for boolean constraints.
 	Enforce bool `json:"enforce,omitempty"`
 
-	// Values: List of values to be used for this PolicyRule. This field can
-	// be set only in Policies for list constraints.
+	// Values: List of values to be used for this policy rule. This field
+	// can be set only in policies for list constraints.
 	Values *GoogleCloudAssetV1StringValues `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowAll") to
@@ -4435,9 +4438,9 @@ type IamPolicyAnalysisQuery struct {
 	// an organization number (such as "organizations/123"), a folder number
 	// (such as "folders/123"), a project ID (such as
 	// "projects/my-project-id"), or a project number (such as
-	// "projects/12345"). To know how to get organization id, visit here
+	// "projects/12345"). To know how to get organization ID, visit here
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
-	// To know how to get folder or project id, visit here
+	// To know how to get folder or project ID, visit here
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 	Scope string `json:"scope,omitempty"`
 
@@ -6756,7 +6759,7 @@ func (s *TableSchema) MarshalJSON() ([]byte, error) {
 }
 
 // Tag: The key and value for a tag
-// (https://cloud.google.com/resource-manager/docs/tags/tags-overview),
+// (https://cloud.google.com/resource-manager/docs/tags/tags-overview).
 type Tag struct {
 	// TagKey: TagKey namespaced name, in the format of
 	// {ORG_ID}/{TAG_KEY_SHORT_NAME}.
@@ -7543,10 +7546,10 @@ type EffectiveIamPoliciesBatchGetCall struct {
 //     This can only be an organization number (such as
 //     "organizations/123"), a folder number (such as "folders/123"), a
 //     project ID (such as "projects/my-project-id"), or a project number
-//     (such as "projects/12345"). To know how to get organization id,
+//     (such as "projects/12345"). To know how to get organization ID,
 //     visit here
 //     (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
-//     To know how to get folder or project id, visit here
+//     To know how to get folder or project ID, visit here
 //     (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 func (r *EffectiveIamPoliciesService) BatchGet(scope string) *EffectiveIamPoliciesBatchGetCall {
 	c := &EffectiveIamPoliciesBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7681,7 +7684,7 @@ func (c *EffectiveIamPoliciesBatchGetCall) Do(opts ...googleapi.CallOption) (*Ba
 	//       "type": "string"
 	//     },
 	//     "scope": {
-	//       "description": "Required. Only IAM policies on or below the scope will be returned. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
+	//       "description": "Required. Only IAM policies on or below the scope will be returned. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization ID, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project ID, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -9418,9 +9421,9 @@ type V1AnalyzeIamPolicyCall struct {
 //     organization number (such as "organizations/123"), a folder number
 //     (such as "folders/123"), a project ID (such as
 //     "projects/my-project-id"), or a project number (such as
-//     "projects/12345"). To know how to get organization id, visit here
+//     "projects/12345"). To know how to get organization ID, visit here
 //     (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
-//     To know how to get folder or project id, visit here
+//     To know how to get folder or project ID, visit here
 //     (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 func (r *V1Service) AnalyzeIamPolicy(scope string) *V1AnalyzeIamPolicyCall {
 	c := &V1AnalyzeIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9788,7 +9791,7 @@ func (c *V1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*AnalyzeIamPo
 	//       "type": "string"
 	//     },
 	//     "scope": {
-	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the scope will be analyzed. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
+	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the scope will be analyzed. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization ID, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project ID, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -9832,9 +9835,9 @@ type V1AnalyzeIamPolicyLongrunningCall struct {
 //     organization number (such as "organizations/123"), a folder number
 //     (such as "folders/123"), a project ID (such as
 //     "projects/my-project-id"), or a project number (such as
-//     "projects/12345"). To know how to get organization id, visit here
+//     "projects/12345"). To know how to get organization ID, visit here
 //     (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
-//     To know how to get folder or project id, visit here
+//     To know how to get folder or project ID, visit here
 //     (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 func (r *V1Service) AnalyzeIamPolicyLongrunning(scope string, analyzeiampolicylongrunningrequest *AnalyzeIamPolicyLongrunningRequest) *V1AnalyzeIamPolicyLongrunningCall {
 	c := &V1AnalyzeIamPolicyLongrunningCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9943,7 +9946,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Do(opts ...googleapi.CallOption) (*O
 	//   ],
 	//   "parameters": {
 	//     "scope": {
-	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the scope will be analyzed. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
+	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the scope will be analyzed. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization ID, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project ID, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,

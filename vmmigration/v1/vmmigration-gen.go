@@ -170,6 +170,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Groups = NewProjectsLocationsGroupsService(s)
+	rs.ImageImports = NewProjectsLocationsImageImportsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Sources = NewProjectsLocationsSourcesService(s)
 	rs.TargetProjects = NewProjectsLocationsTargetProjectsService(s)
@@ -180,6 +181,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Groups *ProjectsLocationsGroupsService
+
+	ImageImports *ProjectsLocationsImageImportsService
 
 	Operations *ProjectsLocationsOperationsService
 
@@ -194,6 +197,27 @@ func NewProjectsLocationsGroupsService(s *Service) *ProjectsLocationsGroupsServi
 }
 
 type ProjectsLocationsGroupsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsImageImportsService(s *Service) *ProjectsLocationsImageImportsService {
+	rs := &ProjectsLocationsImageImportsService{s: s}
+	rs.ImageImportJobs = NewProjectsLocationsImageImportsImageImportJobsService(s)
+	return rs
+}
+
+type ProjectsLocationsImageImportsService struct {
+	s *Service
+
+	ImageImportJobs *ProjectsLocationsImageImportsImageImportJobsService
+}
+
+func NewProjectsLocationsImageImportsImageImportJobsService(s *Service) *ProjectsLocationsImageImportsImageImportJobsService {
+	rs := &ProjectsLocationsImageImportsImageImportJobsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsImageImportsImageImportJobsService struct {
 	s *Service
 }
 
@@ -1114,6 +1138,11 @@ type CancelCloneJobRequest struct {
 type CancelCutoverJobRequest struct {
 }
 
+// CancelImageImportJobRequest: Request message for
+// 'CancelImageImportJob' request.
+type CancelImageImportJobRequest struct {
+}
+
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
@@ -1645,6 +1674,10 @@ func (s *ComputeScheduling) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CreatingImageStep: CreatingImageStep contains specific step details.
+type CreatingImageStep struct {
+}
+
 // CutoverForecast: CutoverForecast holds information about future
 // CutoverJobs of a MigratingVm.
 type CutoverForecast struct {
@@ -1848,6 +1881,11 @@ func (s *CycleStep) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DataDiskImageImport: Mentions that the image import is not using OS
+// adaptation process.
+type DataDiskImageImport struct {
+}
+
 // DatacenterConnector: DatacenterConnector message describes a
 // connector between the Source and Google Cloud, which is installed on
 // a vmware datacenter (an OVA vm installed by the user) to connect the
@@ -2013,6 +2051,71 @@ type DiskImageDefaults struct {
 
 func (s *DiskImageDefaults) MarshalJSON() ([]byte, error) {
 	type NoMethod DiskImageDefaults
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DiskImageTargetDetails: The target details of the image resource that
+// will be created by the import job.
+type DiskImageTargetDetails struct {
+	// AdditionalLicenses: Optional. Additional licenses to assign to the
+	// image.
+	AdditionalLicenses []string `json:"additionalLicenses,omitempty"`
+
+	// DataDiskImageImport: Optional. Use to skip OS adaptation process.
+	DataDiskImageImport *DataDiskImageImport `json:"dataDiskImageImport,omitempty"`
+
+	// Description: Optional. An optional description of the image.
+	Description string `json:"description,omitempty"`
+
+	// Encryption: Optional. Immutable. The encryption to apply to the
+	// image.
+	Encryption *Encryption `json:"encryption,omitempty"`
+
+	// FamilyName: Optional. The name of the image family to which the new
+	// image belongs.
+	FamilyName string `json:"familyName,omitempty"`
+
+	// ImageName: Required. The name of the image to be created.
+	ImageName string `json:"imageName,omitempty"`
+
+	// Labels: Optional. A map of labels to associate with the image.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// OsAdaptationParameters: Optional. Use to set the parameters relevant
+	// for the OS adaptation process.
+	OsAdaptationParameters *ImageImportOsAdaptationParameters `json:"osAdaptationParameters,omitempty"`
+
+	// SingleRegionStorage: Optional. Set to true to set the image
+	// storageLocations to the single region of the import job. When false,
+	// the closest multi-region is selected.
+	SingleRegionStorage bool `json:"singleRegionStorage,omitempty"`
+
+	// TargetProject: Required. Reference to the TargetProject resource that
+	// represents the target project in which the imported image will be
+	// created.
+	TargetProject string `json:"targetProject,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalLicenses")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalLicenses") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DiskImageTargetDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DiskImageTargetDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2279,6 +2382,231 @@ func (s *Group) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImageImport: ImageImport describes the configuration of the image
+// import to run.
+type ImageImport struct {
+	// CloudStorageUri: Immutable. The path to the Cloud Storage file from
+	// which the image should be imported.
+	CloudStorageUri string `json:"cloudStorageUri,omitempty"`
+
+	// CreateTime: Output only. The time the image import was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DiskImageTargetDefaults: Immutable. Target details for importing a
+	// disk image, will be used by ImageImportJob.
+	DiskImageTargetDefaults *DiskImageTargetDetails `json:"diskImageTargetDefaults,omitempty"`
+
+	// Encryption: Immutable. The encryption details used by the image
+	// import process during the image adaptation for Compute Engine.
+	Encryption *Encryption `json:"encryption,omitempty"`
+
+	// Name: Output only. The resource path of the ImageImport.
+	Name string `json:"name,omitempty"`
+
+	// RecentImageImportJobs: Output only. The result of the most recent
+	// runs for this ImageImport. All jobs for this ImageImport can be
+	// listed via ListImageImportJobs.
+	RecentImageImportJobs []*ImageImportJob `json:"recentImageImportJobs,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CloudStorageUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudStorageUri") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImageImport) MarshalJSON() ([]byte, error) {
+	type NoMethod ImageImport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImageImportJob: ImageImportJob describes the progress and result of
+// an image import.
+type ImageImportJob struct {
+	// CloudStorageUri: Output only. The path to the Cloud Storage file from
+	// which the image should be imported.
+	CloudStorageUri string `json:"cloudStorageUri,omitempty"`
+
+	// CreateTime: Output only. The time the image import was created (as an
+	// API call, not when it was actually created in the target).
+	CreateTime string `json:"createTime,omitempty"`
+
+	// CreatedResources: Output only. The resource paths of the resources
+	// created by the image import job.
+	CreatedResources []string `json:"createdResources,omitempty"`
+
+	// DiskImageTargetDetails: Output only. Target details used to import a
+	// disk image.
+	DiskImageTargetDetails *DiskImageTargetDetails `json:"diskImageTargetDetails,omitempty"`
+
+	// EndTime: Output only. The time the image import was ended.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Errors: Output only. Provides details on the error that led to the
+	// image import state in case of an error.
+	Errors []*Status `json:"errors,omitempty"`
+
+	// Name: Output only. The resource path of the ImageImportJob.
+	Name string `json:"name,omitempty"`
+
+	// State: Output only. The state of the image import.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state is unknown.
+	//   "PENDING" - The image import has not yet started.
+	//   "RUNNING" - The image import is active and running.
+	//   "SUCCEEDED" - The image import has finished successfully.
+	//   "FAILED" - The image import has finished with errors.
+	//   "CANCELLING" - The image import is being cancelled.
+	//   "CANCELLED" - The image import was cancelled.
+	State string `json:"state,omitempty"`
+
+	// Steps: Output only. The image import steps list representing its
+	// progress.
+	Steps []*ImageImportStep `json:"steps,omitempty"`
+
+	// Warnings: Output only. Warnings that occurred during the image
+	// import.
+	Warnings []*MigrationWarning `json:"warnings,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CloudStorageUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudStorageUri") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImageImportJob) MarshalJSON() ([]byte, error) {
+	type NoMethod ImageImportJob
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImageImportOsAdaptationParameters: Parameters affecting the OS
+// adaptation process.
+type ImageImportOsAdaptationParameters struct {
+	// Generalize: Optional. Set to true in order to generalize the imported
+	// image. The generalization process enables co-existence of multiple
+	// VMs created from the same image. For Windows, generalizing the image
+	// removes computer-specific information such as installed drivers and
+	// the computer security identifier (SID).
+	Generalize bool `json:"generalize,omitempty"`
+
+	// LicenseType: Optional. Choose which type of license to apply to the
+	// imported image.
+	//
+	// Possible values:
+	//   "COMPUTE_ENGINE_LICENSE_TYPE_DEFAULT" - The license type is the
+	// default for the OS.
+	//   "COMPUTE_ENGINE_LICENSE_TYPE_PAYG" - The license type is Pay As You
+	// Go license type.
+	//   "COMPUTE_ENGINE_LICENSE_TYPE_BYOL" - The license type is Bring Your
+	// Own License type.
+	LicenseType string `json:"licenseType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Generalize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Generalize") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImageImportOsAdaptationParameters) MarshalJSON() ([]byte, error) {
+	type NoMethod ImageImportOsAdaptationParameters
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImageImportStep: ImageImportStep holds information about the image
+// import step progress.
+type ImageImportStep struct {
+	// AdaptingOs: Adapting OS step.
+	AdaptingOs *AdaptingOSStep `json:"adaptingOs,omitempty"`
+
+	// CreatingImage: Creating image step.
+	CreatingImage *CreatingImageStep `json:"creatingImage,omitempty"`
+
+	// EndTime: Output only. The time the step has ended.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Initializing: Initializing step.
+	Initializing *InitializingImageImportStep `json:"initializing,omitempty"`
+
+	// LoadingSourceFiles: Loading source files step.
+	LoadingSourceFiles *LoadingImageSourceFilesStep `json:"loadingSourceFiles,omitempty"`
+
+	// StartTime: Output only. The time the step has started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdaptingOs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdaptingOs") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImageImportStep) MarshalJSON() ([]byte, error) {
+	type NoMethod ImageImportStep
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InitializingImageImportStep: InitializingImageImportStep contains
+// specific step details.
+type InitializingImageImportStep struct {
+}
+
 // InitializingReplicationStep: InitializingReplicationStep contains
 // specific step details.
 type InitializingReplicationStep struct {
@@ -2480,6 +2808,89 @@ type ListGroupsResponse struct {
 
 func (s *ListGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListGroupsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListImageImportJobsResponse: Response message for
+// 'ListImageImportJobs' call.
+type ListImageImportJobsResponse struct {
+	// ImageImportJobs: Output only. The list of target response.
+	ImageImportJobs []*ImageImportJob `json:"imageImportJobs,omitempty"`
+
+	// NextPageToken: Output only. A token, which can be sent as
+	// `page_token` to retrieve the next page. If this field is omitted,
+	// there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Output only. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ImageImportJobs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImageImportJobs") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListImageImportJobsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListImageImportJobsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListImageImportsResponse: Response message for 'ListImageImports'
+// call.
+type ListImageImportsResponse struct {
+	// ImageImports: Output only. The list of target response.
+	ImageImports []*ImageImport `json:"imageImports,omitempty"`
+
+	// NextPageToken: Output only. A token, which can be sent as
+	// `page_token` to retrieve the next page. If this field is omitted,
+	// there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Output only. Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ImageImports") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImageImports") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListImageImportsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListImageImportsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2763,6 +3174,11 @@ func (s *ListUtilizationReportsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LoadingImageSourceFilesStep: LoadingImageSourceFilesStep contains
+// specific step details.
+type LoadingImageSourceFilesStep struct {
+}
+
 // LocalizedMessage: Provides a localized error message that is safe to
 // return to the user which can be attached to an RPC error.
 type LocalizedMessage struct {
@@ -3030,6 +3446,8 @@ type MigrationError struct {
 	// encountered an error during utilization report creation.
 	//   "APPLIANCE_UPGRADE_ERROR" - Migrate to Virtual Machines encountered
 	// an error during appliance upgrade.
+	//   "IMAGE_IMPORT_ERROR" - Migrate to Virtual Machines encountered an
+	// error in image import operation.
 	Code string `json:"code,omitempty"`
 
 	// ErrorMessage: Output only. The localized error message.
@@ -5964,6 +6382,1216 @@ func (c *ProjectsLocationsGroupsRemoveGroupMigrationCall) Do(opts ...googleapi.C
 	//   ]
 	// }
 
+}
+
+// method id "vmmigration.projects.locations.imageImports.create":
+
+type ProjectsLocationsImageImportsCreateCall struct {
+	s           *Service
+	parent      string
+	imageimport *ImageImport
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// Create: Creates a new ImageImport in a given project.
+//
+// - parent: The ImageImport's parent.
+func (r *ProjectsLocationsImageImportsService) Create(parent string, imageimport *ImageImport) *ProjectsLocationsImageImportsCreateCall {
+	c := &ProjectsLocationsImageImportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.imageimport = imageimport
+	return c
+}
+
+// ImageImportId sets the optional parameter "imageImportId": Required.
+// The image import identifier. This value maximum length is 63
+// characters, and valid characters are /a-z-/. It must start with an
+// english letter and must not end with a hyphen.
+func (c *ProjectsLocationsImageImportsCreateCall) ImageImportId(imageImportId string) *ProjectsLocationsImageImportsCreateCall {
+	c.urlParams_.Set("imageImportId", imageImportId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes since the first request. For example, consider a
+// situation where you make an initial request and the request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsImageImportsCreateCall) RequestId(requestId string) *ProjectsLocationsImageImportsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsImageImportsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsImageImportsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsImageImportsCreateCall) Context(ctx context.Context) *ProjectsLocationsImageImportsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsImageImportsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsImageImportsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.imageimport)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/imageImports")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.imageImports.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsImageImportsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new ImageImport in a given project.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/imageImports",
+	//   "httpMethod": "POST",
+	//   "id": "vmmigration.projects.locations.imageImports.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "imageImportId": {
+	//       "description": "Required. The image import identifier. This value maximum length is 63 characters, and valid characters are /a-z-/. It must start with an english letter and must not end with a hyphen.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The ImageImport's parent.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/imageImports",
+	//   "request": {
+	//     "$ref": "ImageImport"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmmigration.projects.locations.imageImports.delete":
+
+type ProjectsLocationsImageImportsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single ImageImport.
+//
+// - name: The ImageImport name.
+func (r *ProjectsLocationsImageImportsService) Delete(name string) *ProjectsLocationsImageImportsDeleteCall {
+	c := &ProjectsLocationsImageImportsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server will know to ignore the request if it
+// has already been completed. The server will guarantee that for at
+// least 60 minutes after the first request. For example, consider a
+// situation where you make an initial request and t he request times
+// out. If you make the request again with the same request ID, the
+// server can check if original operation with the same request ID was
+// received, and if so, will ignore the second request. This prevents
+// clients from accidentally creating duplicate commitments. The request
+// ID must be a valid UUID with the exception that zero UUID is not
+// supported (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsImageImportsDeleteCall) RequestId(requestId string) *ProjectsLocationsImageImportsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsImageImportsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsImageImportsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsImageImportsDeleteCall) Context(ctx context.Context) *ProjectsLocationsImageImportsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsImageImportsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsImageImportsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.imageImports.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsImageImportsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single ImageImport.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/imageImports/{imageImportsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "vmmigration.projects.locations.imageImports.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The ImageImport name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/imageImports/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and t he request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmmigration.projects.locations.imageImports.get":
+
+type ProjectsLocationsImageImportsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single ImageImport.
+//
+// - name: The ImageImport name.
+func (r *ProjectsLocationsImageImportsService) Get(name string) *ProjectsLocationsImageImportsGetCall {
+	c := &ProjectsLocationsImageImportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsImageImportsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsImageImportsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsImageImportsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsImageImportsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsImageImportsGetCall) Context(ctx context.Context) *ProjectsLocationsImageImportsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsImageImportsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsImageImportsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.imageImports.get" call.
+// Exactly one of *ImageImport or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ImageImport.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsImageImportsGetCall) Do(opts ...googleapi.CallOption) (*ImageImport, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ImageImport{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single ImageImport.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/imageImports/{imageImportsId}",
+	//   "httpMethod": "GET",
+	//   "id": "vmmigration.projects.locations.imageImports.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The ImageImport name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/imageImports/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ImageImport"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmmigration.projects.locations.imageImports.list":
+
+type ProjectsLocationsImageImportsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists ImageImports in a given project.
+//
+// - parent: The parent, which owns this collection of targets.
+func (r *ProjectsLocationsImageImportsService) List(parent string) *ProjectsLocationsImageImportsListCall {
+	c := &ProjectsLocationsImageImportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter request
+// (according to https://google.aip.dev/160).
+func (c *ProjectsLocationsImageImportsListCall) Filter(filter string) *ProjectsLocationsImageImportsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The order by fields
+// for the result (according to https://google.aip.dev/132#ordering).
+// Currently ordering is only possible by "name" field.
+func (c *ProjectsLocationsImageImportsListCall) OrderBy(orderBy string) *ProjectsLocationsImageImportsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of targets to return. The service may return fewer than this value.
+// If unspecified, at most 500 targets will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsImageImportsListCall) PageSize(pageSize int64) *ProjectsLocationsImageImportsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListImageImports` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListImageImports` must match the call that provided the
+// page token.
+func (c *ProjectsLocationsImageImportsListCall) PageToken(pageToken string) *ProjectsLocationsImageImportsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsImageImportsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsImageImportsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsImageImportsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsImageImportsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsImageImportsListCall) Context(ctx context.Context) *ProjectsLocationsImageImportsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsImageImportsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsImageImportsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/imageImports")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.imageImports.list" call.
+// Exactly one of *ListImageImportsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListImageImportsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsImageImportsListCall) Do(opts ...googleapi.CallOption) (*ListImageImportsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListImageImportsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists ImageImports in a given project.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/imageImports",
+	//   "httpMethod": "GET",
+	//   "id": "vmmigration.projects.locations.imageImports.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. The filter request (according to https://google.aip.dev/160).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. The order by fields for the result (according to https://google.aip.dev/132#ordering). Currently ordering is only possible by \"name\" field.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of targets to return. The service may return fewer than this value. If unspecified, at most 500 targets will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListImageImports` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListImageImports` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent, which owns this collection of targets.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/imageImports",
+	//   "response": {
+	//     "$ref": "ListImageImportsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsImageImportsListCall) Pages(ctx context.Context, f func(*ListImageImportsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "vmmigration.projects.locations.imageImports.imageImportJobs.cancel":
+
+type ProjectsLocationsImageImportsImageImportJobsCancelCall struct {
+	s                           *Service
+	name                        string
+	cancelimageimportjobrequest *CancelImageImportJobRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// Cancel: Initiates the cancellation of a running clone job.
+//
+// - name: The image import job id.
+func (r *ProjectsLocationsImageImportsImageImportJobsService) Cancel(name string, cancelimageimportjobrequest *CancelImageImportJobRequest) *ProjectsLocationsImageImportsImageImportJobsCancelCall {
+	c := &ProjectsLocationsImageImportsImageImportJobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.cancelimageimportjobrequest = cancelimageimportjobrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsImageImportsImageImportJobsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsImageImportsImageImportJobsCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsImageImportsImageImportJobsCancelCall) Context(ctx context.Context) *ProjectsLocationsImageImportsImageImportJobsCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsImageImportsImageImportJobsCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsImageImportsImageImportJobsCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cancelimageimportjobrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.imageImports.imageImportJobs.cancel" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsImageImportsImageImportJobsCancelCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Initiates the cancellation of a running clone job.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/imageImports/{imageImportsId}/imageImportJobs/{imageImportJobsId}:cancel",
+	//   "httpMethod": "POST",
+	//   "id": "vmmigration.projects.locations.imageImports.imageImportJobs.cancel",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The image import job id.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/imageImports/[^/]+/imageImportJobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:cancel",
+	//   "request": {
+	//     "$ref": "CancelImageImportJobRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmmigration.projects.locations.imageImports.imageImportJobs.get":
+
+type ProjectsLocationsImageImportsImageImportJobsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single ImageImportJob.
+//
+// - name: The ImageImportJob name.
+func (r *ProjectsLocationsImageImportsImageImportJobsService) Get(name string) *ProjectsLocationsImageImportsImageImportJobsGetCall {
+	c := &ProjectsLocationsImageImportsImageImportJobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsImageImportsImageImportJobsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsImageImportsImageImportJobsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsImageImportsImageImportJobsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsImageImportsImageImportJobsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsImageImportsImageImportJobsGetCall) Context(ctx context.Context) *ProjectsLocationsImageImportsImageImportJobsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsImageImportsImageImportJobsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsImageImportsImageImportJobsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.imageImports.imageImportJobs.get" call.
+// Exactly one of *ImageImportJob or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *ImageImportJob.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsImageImportsImageImportJobsGetCall) Do(opts ...googleapi.CallOption) (*ImageImportJob, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ImageImportJob{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single ImageImportJob.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/imageImports/{imageImportsId}/imageImportJobs/{imageImportJobsId}",
+	//   "httpMethod": "GET",
+	//   "id": "vmmigration.projects.locations.imageImports.imageImportJobs.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The ImageImportJob name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/imageImports/[^/]+/imageImportJobs/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ImageImportJob"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "vmmigration.projects.locations.imageImports.imageImportJobs.list":
+
+type ProjectsLocationsImageImportsImageImportJobsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists ImageImportJobs in a given project.
+//
+// - parent: The parent, which owns this collection of targets.
+func (r *ProjectsLocationsImageImportsImageImportJobsService) List(parent string) *ProjectsLocationsImageImportsImageImportJobsListCall {
+	c := &ProjectsLocationsImageImportsImageImportJobsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter request
+// (according to https://google.aip.dev/160).
+func (c *ProjectsLocationsImageImportsImageImportJobsListCall) Filter(filter string) *ProjectsLocationsImageImportsImageImportJobsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": The order by fields
+// for the result (according to https://google.aip.dev/132#ordering).
+// Currently ordering is only possible by "name" field.
+func (c *ProjectsLocationsImageImportsImageImportJobsListCall) OrderBy(orderBy string) *ProjectsLocationsImageImportsImageImportJobsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of targets to return. The service may return fewer than this value.
+// If unspecified, at most 500 targets will be returned. The maximum
+// value is 1000; values above 1000 will be coerced to 1000.
+func (c *ProjectsLocationsImageImportsImageImportJobsListCall) PageSize(pageSize int64) *ProjectsLocationsImageImportsImageImportJobsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListImageImportJobs` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListImageImportJobs` must match the call that provided
+// the page token.
+func (c *ProjectsLocationsImageImportsImageImportJobsListCall) PageToken(pageToken string) *ProjectsLocationsImageImportsImageImportJobsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsImageImportsImageImportJobsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsImageImportsImageImportJobsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsImageImportsImageImportJobsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsImageImportsImageImportJobsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsImageImportsImageImportJobsListCall) Context(ctx context.Context) *ProjectsLocationsImageImportsImageImportJobsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsImageImportsImageImportJobsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsImageImportsImageImportJobsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/imageImportJobs")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "vmmigration.projects.locations.imageImports.imageImportJobs.list" call.
+// Exactly one of *ListImageImportJobsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListImageImportJobsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsImageImportsImageImportJobsListCall) Do(opts ...googleapi.CallOption) (*ListImageImportJobsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListImageImportJobsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists ImageImportJobs in a given project.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/imageImports/{imageImportsId}/imageImportJobs",
+	//   "httpMethod": "GET",
+	//   "id": "vmmigration.projects.locations.imageImports.imageImportJobs.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. The filter request (according to https://google.aip.dev/160).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. The order by fields for the result (according to https://google.aip.dev/132#ordering). Currently ordering is only possible by \"name\" field.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of targets to return. The service may return fewer than this value. If unspecified, at most 500 targets will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListImageImportJobs` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListImageImportJobs` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent, which owns this collection of targets.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/imageImports/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/imageImportJobs",
+	//   "response": {
+	//     "$ref": "ListImageImportJobsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsImageImportsImageImportJobsListCall) Pages(ctx context.Context, f func(*ListImageImportJobsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "vmmigration.projects.locations.operations.cancel":

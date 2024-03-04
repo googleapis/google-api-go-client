@@ -690,7 +690,7 @@ type ManagementServer struct {
 	// interface and APIs.
 	ManagementUri *ManagementURI `json:"managementUri,omitempty"`
 
-	// Name: Output only. The resource name.
+	// Name: Output only. Identifier. The resource name.
 	Name string `json:"name,omitempty"`
 
 	// Networks: Required. VPC networks to which the ManagementServer

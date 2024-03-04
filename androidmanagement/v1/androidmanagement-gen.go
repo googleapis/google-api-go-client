@@ -366,6 +366,33 @@ type AdvancedSecurityOverrides struct {
 	// enable app verification.
 	GooglePlayProtectVerifyApps string `json:"googlePlayProtectVerifyApps,omitempty"`
 
+	// MtePolicy: Optional. Controls Memory Tagging Extension (MTE)
+	// (https://source.android.com/docs/security/test/memory-safety/arm-mte)
+	// on the device. The device needs to be rebooted to apply changes to
+	// the MTE policy.
+	//
+	// Possible values:
+	//   "MTE_POLICY_UNSPECIFIED" - Unspecified. Defaults to
+	// MTE_USER_CHOICE.
+	//   "MTE_USER_CHOICE" - The user can choose to enable or disable MTE on
+	// the device if the device supports this.
+	//   "MTE_ENFORCED" - MTE is enabled on the device and the user is not
+	// allowed to change this setting. This can be set on fully managed
+	// devices and work profiles on company-owned devices. A
+	// nonComplianceDetail with MANAGEMENT_MODE is reported for other
+	// management modes. A nonComplianceDetail with DEVICE_INCOMPATIBLE is
+	// reported if the device does not support MTE.Supported on Android 14
+	// and above. A nonComplianceDetail with API_LEVEL is reported if the
+	// Android version is less than 14.
+	//   "MTE_DISABLED" - MTE is disabled on the device and the user is not
+	// allowed to change this setting. This applies only on fully managed
+	// devices. In other cases, a nonComplianceDetail with MANAGEMENT_MODE
+	// is reported. A nonComplianceDetail with DEVICE_INCOMPATIBLE is
+	// reported if the device does not support MTE.Supported on Android 14
+	// and above. A nonComplianceDetail with API_LEVEL is reported if the
+	// Android version is less than 14.
+	MtePolicy string `json:"mtePolicy,omitempty"`
+
 	// PersonalAppsThatCanReadWorkNotifications: Personal apps that can read
 	// work profile notifications using a NotificationListenerService
 	// (https://developer.android.com/reference/android/service/notification/NotificationListenerService).
@@ -926,6 +953,16 @@ type ApplicationPolicy struct {
 	// communicate across profiles after receiving user consent.
 	ConnectedWorkAndPersonalApp string `json:"connectedWorkAndPersonalApp,omitempty"`
 
+	// CredentialProviderPolicy: Optional. Whether the app is allowed to act
+	// as a credential provider on Android 14 and above.
+	//
+	// Possible values:
+	//   "CREDENTIAL_PROVIDER_POLICY_UNSPECIFIED" - Unspecified. The
+	// behaviour is governed by credentialProviderPolicyDefault.
+	//   "CREDENTIAL_PROVIDER_ALLOWED" - App is allowed to act as a
+	// credential provider.
+	CredentialProviderPolicy string `json:"credentialProviderPolicy,omitempty"`
+
 	// DefaultPermissionPolicy: The default policy for all permissions
 	// requested by the app. If specified, this overrides the policy-level
 	// default_permission_policy which applies to all apps. It does not
@@ -1025,8 +1062,8 @@ type ApplicationPolicy struct {
 	// constraints are rejected.
 	InstallConstraint []*InstallConstraint `json:"installConstraint,omitempty"`
 
-	// InstallPriority: Optional. Amongst apps with installTypeset
-	// to:FORCE_INSTALLEDPREINSTALLED this controls the relative priority of
+	// InstallPriority: Optional. Amongst apps with installType set to:
+	// FORCE_INSTALLED PREINSTALLEDthis controls the relative priority of
 	// installation. A value of 0 (default) means this app has no priority
 	// over other apps. For values between 1 and 10,000, a lower value means
 	// a higher priority. Values outside of the range 0 to 10,000 inclusive
@@ -3437,8 +3474,8 @@ func (s *HardwareStatus) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// InstallConstraint: Amongst apps with InstallTypeset
-// to:FORCE_INSTALLEDPREINSTALLED this defines a set of restrictions for
+// InstallConstraint: Amongst apps with InstallType set to:
+// FORCE_INSTALLED PREINSTALLEDthis defines a set of restrictions for
 // the app installation. At least one of the fields must be set. When
 // multiple fields are set, then all the constraints need to be
 // satisfied for the app to be installed.
@@ -4798,6 +4835,12 @@ type NonComplianceDetail struct {
 	// configured Wi-Fi network manually. This is applicable only on work
 	// profiles on personally-owned devices. nonComplianceReason is set to
 	// USER_ACTION.
+	//   "ONC_WIFI_KEY_PAIR_ALIAS_NOT_CORRESPONDING_TO_EXISTING_KEY" - Key
+	// pair alias specified via ClientCertKeyPairAlias
+	// (https://chromium.googlesource.com/chromium/src/+/main/components/onc/docs/onc_spec.md#eap-type)
+	// field in openNetworkConfiguration does not correspond to an existing
+	// key installed on the device. nonComplianceReason is set to
+	// INVALID_VALUE.
 	SpecificNonComplianceReason string `json:"specificNonComplianceReason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentValue") to
@@ -5722,6 +5765,26 @@ type Policy struct {
 	// is disabled.
 	CreateWindowsDisabled bool `json:"createWindowsDisabled,omitempty"`
 
+	// CredentialProviderPolicyDefault: Controls which apps are allowed to
+	// act as credential providers on Android 14 and above. These apps store
+	// credentials, see this
+	// (https://developer.android.com/training/sign-in/passkeys) and this
+	// (https://developer.android.com/reference/androidx/credentials/CredentialManager)
+	// for details. See also credentialProviderPolicy.
+	//
+	// Possible values:
+	//   "CREDENTIAL_PROVIDER_POLICY_DEFAULT_UNSPECIFIED" - Unspecified.
+	// Defaults to CREDENTIAL_PROVIDER_DEFAULT_DISALLOWED.
+	//   "CREDENTIAL_PROVIDER_DEFAULT_DISALLOWED" - Apps with
+	// credentialProviderPolicy unspecified are not allowed to act as a
+	// credential provider.
+	//   "CREDENTIAL_PROVIDER_DEFAULT_DISALLOWED_EXCEPT_SYSTEM" - Apps with
+	// credentialProviderPolicy unspecified are not allowed to act as a
+	// credential provider except for the OEM default credential providers.
+	// OEM default credential providers are always allowed to act as
+	// credential providers.
+	CredentialProviderPolicyDefault string `json:"credentialProviderPolicyDefault,omitempty"`
+
 	// CredentialsConfigDisabled: Whether configuring user credentials is
 	// disabled.
 	CredentialsConfigDisabled bool `json:"credentialsConfigDisabled,omitempty"`
@@ -6035,6 +6098,18 @@ type Policy struct {
 	//   "PREFERENTIAL_NETWORK_SERVICE_ENABLED" - Preferential network
 	// service is enabled on the work profile.
 	PreferentialNetworkService string `json:"preferentialNetworkService,omitempty"`
+
+	// PrintingPolicy: Optional. Controls whether printing is allowed. This
+	// is supported on devices running Android 9 and above. .
+	//
+	// Possible values:
+	//   "PRINTING_POLICY_UNSPECIFIED" - Unspecified. Defaults to
+	// PRINTING_ALLOWED.
+	//   "PRINTING_DISALLOWED" - Printing is disallowed. A
+	// nonComplianceDetail with API_LEVEL is reported if the Android version
+	// is less than 9.
+	//   "PRINTING_ALLOWED" - Printing is allowed.
+	PrintingPolicy string `json:"printingPolicy,omitempty"`
 
 	// PrivateKeySelectionEnabled: Allows showing UI on a device for a user
 	// to choose a private key alias if there are no matching rules in
@@ -8046,8 +8121,10 @@ type EnterprisesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an enterprise. Only available for EMM-managed
-// enterprises.
+// Delete: Permanently deletes an enterprise and all accounts and data
+// associated with it. Warning: this will result in a cascaded deletion
+// of all AM API devices associated with the deleted enterprise. Only
+// available for EMM-managed enterprises.
 //
 //   - name: The name of the enterprise in the form
 //     enterprises/{enterpriseId}.
@@ -8143,7 +8220,7 @@ func (c *EnterprisesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an enterprise. Only available for EMM-managed enterprises.",
+	//   "description": "Permanently deletes an enterprise and all accounts and data associated with it. Warning: this will result in a cascaded deletion of all AM API devices associated with the deleted enterprise. Only available for EMM-managed enterprises.",
 	//   "flatPath": "v1/enterprises/{enterprisesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidmanagement.enterprises.delete",

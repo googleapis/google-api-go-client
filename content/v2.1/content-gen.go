@@ -3195,8 +3195,7 @@ func (s *Amount) MarshalJSON() ([]byte, error) {
 // sources receiving pre-attribution data.
 type AttributionSettings struct {
 	// AttributionLookbackWindowInDays: Required. Lookback windows (in days)
-	// used for attribution in this source. Supported values are 7, 30, 60,
-	// 90.
+	// used for attribution in this source. Supported values are 7, 30, 40.
 	AttributionLookbackWindowInDays int64 `json:"attributionLookbackWindowInDays,omitempty"`
 
 	// AttributionModel: Required. Attribution model.
@@ -18523,7 +18522,7 @@ func (s *Row) MarshalJSON() ([]byte, error) {
 // SearchRequest: Request message for the ReportService.Search method.
 type SearchRequest struct {
 	// PageSize: Number of ReportRows to retrieve in a single page. Defaults
-	// to the maximum of 1000. Values above 1000 are coerced to 1000.
+	// to 1000. Values above 5000 are coerced to 5000.
 	PageSize int64 `json:"pageSize,omitempty"`
 
 	// PageToken: Token of the page to retrieve. If not specified, the first

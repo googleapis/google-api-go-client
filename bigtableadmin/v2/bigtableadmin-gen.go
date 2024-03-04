@@ -845,11 +845,6 @@ type CheckConsistencyRequest struct {
 	// GenerateConsistencyToken for the Table.
 	ConsistencyToken string `json:"consistencyToken,omitempty"`
 
-	// StandardReadRemoteWrites: Checks that reads using an app profile with
-	// `StandardIsolation` can see all writes committed before the token was
-	// created, even if the read and write target different clusters.
-	StandardReadRemoteWrites *StandardReadRemoteWrites `json:"standardReadRemoteWrites,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ConsistencyToken") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3191,12 +3186,6 @@ func (s *StandardIsolation) MarshalJSON() ([]byte, error) {
 	type NoMethod StandardIsolation
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// StandardReadRemoteWrites: Checks that all writes before the
-// consistency token was generated is replicated in every cluster and
-// readable.
-type StandardReadRemoteWrites struct {
 }
 
 // Status: The `Status` type defines a logical error model that is

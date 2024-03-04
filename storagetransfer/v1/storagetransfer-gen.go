@@ -893,6 +893,37 @@ func (s *GoogleServiceAccount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// HdfsData: An HdfsData resource specifies a path within an HDFS entity
+// (e.g. a cluster). All cluster-specific settings, such as namenodes
+// and ports, are configured on the transfer agents servicing requests,
+// so HdfsData only contains the root path to the data in our transfer.
+type HdfsData struct {
+	// Path: Root path to transfer files.
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HdfsData) MarshalJSON() ([]byte, error) {
+	type NoMethod HdfsData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // HttpData: An HttpData resource specifies a list of objects on the web
 // to be transferred over HTTP. The information of the objects to be
 // transferred is contained in a file referenced by a URL. The first
@@ -1220,17 +1251,18 @@ type MetadataOptions struct {
 	TemporaryHold string `json:"temporaryHold,omitempty"`
 
 	// TimeCreated: Specifies how each object's `timeCreated` metadata is
-	// preserved for transfers between Google Cloud Storage buckets. If
-	// unspecified, the default behavior is the same as TIME_CREATED_SKIP.
+	// preserved for transfers. If unspecified, the default behavior is the
+	// same as TIME_CREATED_SKIP.
 	//
 	// Possible values:
 	//   "TIME_CREATED_UNSPECIFIED" - TimeCreated behavior is unspecified.
 	//   "TIME_CREATED_SKIP" - Do not preserve the `timeCreated` metadata
 	// from the source object.
 	//   "TIME_CREATED_PRESERVE_AS_CUSTOM_TIME" - Preserves the source
-	// object's `timeCreated` metadata in the `customTime` field in the
-	// destination object. Note that any value stored in the source object's
-	// `customTime` field will not be propagated to the destination object.
+	// object's `timeCreated` or `lastModified` metadata in the `customTime`
+	// field in the destination object. Note that any value stored in the
+	// source object's `customTime` field will not be propagated to the
+	// destination object.
 	TimeCreated string `json:"timeCreated,omitempty"`
 
 	// Uid: Specifies how each file's POSIX user ID (UID) attribute should
@@ -2221,6 +2253,9 @@ type TransferSpec struct {
 	// (https://cloud.google.com/storage-transfer/docs/file-to-file) for
 	// more information.
 	GcsIntermediateDataLocation *GcsData `json:"gcsIntermediateDataLocation,omitempty"`
+
+	// HdfsDataSource: An HDFS cluster data source.
+	HdfsDataSource *HdfsData `json:"hdfsDataSource,omitempty"`
 
 	// HttpDataSource: An HTTP URL data source.
 	HttpDataSource *HttpData `json:"httpDataSource,omitempty"`
@@ -4517,15 +4552,21 @@ type TransferOperationsListCall struct {
 //
 //   - filter: A list of query parameters specified as JSON text in the
 //     form of: `{"projectId":"my_project_id",
-//     "jobNames":["jobid1","jobid2",...],
-//     "operationNames":["opid1","opid2",...],
-//     "transferStatuses":["status1","status2",...]}` Since `jobNames`,
-//     `operationNames`, and `transferStatuses` support multiple values,
-//     they must be specified with array notation. `projectId` is
-//     required. `jobNames`, `operationNames`, and `transferStatuses` are
-//     optional. The valid values for `transferStatuses` are
-//     case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and
-//     ABORTED.
+//     "jobNames":["jobid1","jobid2",...], "jobNamePattern":
+//     "job_name_pattern", "operationNames":["opid1","opid2",...],
+//     "operationNamePattern": "operation_name_pattern",
+//     "minCreationTime": "min_creation_time", "maxCreationTime":
+//     "max_creation_time", "transferStatuses":["status1","status2",...]}`
+//     Since `jobNames`, `operationNames`, and `transferStatuses` support
+//     multiple values, they must be specified with array notation.
+//     `projectId` is the only argument that is required. If specified,
+//     `jobNamePattern` and `operationNamePattern` must match the full job
+//     or operation name respectively. '*' is a wildcard matching 0 or
+//     more characters. `minCreationTime` and `maxCreationTime` should be
+//     timestamps encoded as a string in the RFC 3339
+//     (https://www.ietf.org/rfc/rfc3339.txt) format. The valid values for
+//     `transferStatuses` are case-insensitive: IN_PROGRESS, PAUSED,
+//     SUCCESS, FAILED, and ABORTED.
 //   - name: The name of the type being listed; must be
 //     `transferOperations`.
 func (r *TransferOperationsService) List(name string, filter string) *TransferOperationsListCall {
@@ -4658,7 +4699,7 @@ func (c *TransferOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOper
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Required. A list of query parameters specified as JSON text in the form of: `{\"projectId\":\"my_project_id\", \"jobNames\":[\"jobid1\",\"jobid2\",...], \"operationNames\":[\"opid1\",\"opid2\",...], \"transferStatuses\":[\"status1\",\"status2\",...]}` Since `jobNames`, `operationNames`, and `transferStatuses` support multiple values, they must be specified with array notation. `projectId` is required. `jobNames`, `operationNames`, and `transferStatuses` are optional. The valid values for `transferStatuses` are case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and ABORTED.",
+	//       "description": "Required. A list of query parameters specified as JSON text in the form of: `{\"projectId\":\"my_project_id\", \"jobNames\":[\"jobid1\",\"jobid2\",...], \"jobNamePattern\": \"job_name_pattern\", \"operationNames\":[\"opid1\",\"opid2\",...], \"operationNamePattern\": \"operation_name_pattern\", \"minCreationTime\": \"min_creation_time\", \"maxCreationTime\": \"max_creation_time\", \"transferStatuses\":[\"status1\",\"status2\",...]}` Since `jobNames`, `operationNames`, and `transferStatuses` support multiple values, they must be specified with array notation. `projectId` is the only argument that is required. If specified, `jobNamePattern` and `operationNamePattern` must match the full job or operation name respectively. '*' is a wildcard matching 0 or more characters. `minCreationTime` and `maxCreationTime` should be timestamps encoded as a string in the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. The valid values for `transferStatuses` are case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and ABORTED.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"

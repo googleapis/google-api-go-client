@@ -237,7 +237,7 @@ func (s *AdminUser) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
-// ContactCenter: Message describing ContactCenter object Next ID: 18
+// ContactCenter: Message describing ContactCenter object Next ID: 20
 type ContactCenter struct {
 	// AdminUser: Optional. Info about the first admin user, such as given
 	// name and family name.

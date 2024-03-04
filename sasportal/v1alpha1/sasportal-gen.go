@@ -646,7 +646,8 @@ type SasPortalDevice struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// FccId: The FCC identifier of the device. Refer to
-	// https://www.fcc.gov/oet/ea/fccid for FccID format.
+	// https://www.fcc.gov/oet/ea/fccid for FccID format. Accept underscores
+	// and periods because some test-SAS customers use them.
 	FccId string `json:"fccId,omitempty"`
 
 	// GrantRangeAllowlists: Only ranges that are within the allowlists are

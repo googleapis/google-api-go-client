@@ -783,6 +783,11 @@ func (s *CheckError) MarshalJSON() ([]byte, error) {
 
 // CheckInfo: Contains additional information about the check operation.
 type CheckInfo struct {
+	// ApiKeyUid: The unique id of the api key in the format of "apikey:".
+	// This field will be populated when the consumer passed to Chemist is
+	// an API key and all the API key related validations are successful.
+	ApiKeyUid string `json:"apiKeyUid,omitempty"`
+
 	// ConsumerInfo: Consumer info of this check.
 	ConsumerInfo *ConsumerInfo `json:"consumerInfo,omitempty"`
 
@@ -791,7 +796,7 @@ type CheckInfo struct {
 	// requests to improve performance and allow better aggregation.
 	UnusedArguments []string `json:"unusedArguments,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ConsumerInfo") to
+	// ForceSendFields is a list of field names (e.g. "ApiKeyUid") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -799,10 +804,10 @@ type CheckInfo struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ConsumerInfo") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "ApiKeyUid") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

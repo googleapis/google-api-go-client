@@ -1267,6 +1267,10 @@ type AppRecoveryAction struct {
 	// The action cannot be resumed.
 	//   "RECOVERY_STATUS_DRAFT" - The recovery action is in the draft state
 	// and has not yet been deployed to users.
+	//   "RECOVERY_STATUS_GENERATION_IN_PROGRESS" - The recovery action is
+	// generating recovery apks.
+	//   "RECOVERY_STATUS_GENERATION_FAILED" - The app recovery action
+	// generation has failed.
 	Status string `json:"status,omitempty"`
 
 	// Targeting: Specifies targeting criteria for the recovery action such
@@ -1300,8 +1304,7 @@ func (s *AppRecoveryAction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// AppVersionList: Data format for a list of app versions. Only one app
-// version is supported for now.
+// AppVersionList: Data format for a list of app versions.
 type AppVersionList struct {
 	// VersionCodes: List of app version codes.
 	VersionCodes googleapi.Int64s `json:"versionCodes,omitempty"`
@@ -1361,7 +1364,8 @@ func (s *AppVersionRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ArchiveSubscriptionRequest: Request message for ArchiveSubscription.
+// ArchiveSubscriptionRequest: Deprecated: subscription archiving is not
+// supported.
 type ArchiveSubscriptionRequest struct {
 }
 
@@ -3677,6 +3681,10 @@ type GeneratedRecoveryApk struct {
 	// The action cannot be resumed.
 	//   "RECOVERY_STATUS_DRAFT" - The recovery action is in the draft state
 	// and has not yet been deployed to users.
+	//   "RECOVERY_STATUS_GENERATION_IN_PROGRESS" - The recovery action is
+	// generating recovery apks.
+	//   "RECOVERY_STATUS_GENERATION_FAILED" - The app recovery action
+	// generation has failed.
 	RecoveryStatus string `json:"recoveryStatus,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DownloadId") to
@@ -6110,7 +6118,7 @@ func (s *RegionalSubscriptionOfferPhaseConfig) UnmarshalJSON(data []byte) error 
 type RegionalTaxRateInfo struct {
 	// EligibleForStreamingServiceTaxRate: You must tell us if your app
 	// contains streaming products to correctly charge US state and local
-	// sales tax. Field only supported in United States.
+	// sales tax. Field only supported in the United States.
 	EligibleForStreamingServiceTaxRate bool `json:"eligibleForStreamingServiceTaxRate,omitempty"`
 
 	// StreamingTaxType: To collect communications or amusement taxes in the
@@ -6609,9 +6617,9 @@ type SafetyLabelsUpdateRequest struct {
 	// SafetyLabels: Required. Contents of the CSV file containing Data
 	// Safety responses. For the format of this file, see the Help Center
 	// documentation at
-	// https://support.google.com/googleplay/android-developer/answer/10787469?hl=en#zippy=%2Cunderstand-the-csv-format
+	// https://support.google.com/googleplay/android-developer/answer/10787469?#zippy=%2Cunderstand-the-csv-format
 	// To download an up to date template, follow the steps at
-	// https://support.google.com/googleplay/android-developer/answer/10787469?hl=en#zippy=%2Cexport-to-a-csv-file
+	// https://support.google.com/googleplay/android-developer/answer/10787469?#zippy=%2Cexport-to-a-csv-file
 	SafetyLabels string `json:"safetyLabels,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SafetyLabels") to
@@ -6926,10 +6934,8 @@ func (s *SubscribeWithGoogleInfo) MarshalJSON() ([]byte, error) {
 
 // Subscription: A single subscription for an app.
 type Subscription struct {
-	// Archived: Output only. Whether this subscription is archived.
-	// Archived subscriptions are not available to any subscriber any
-	// longer, cannot be updated, and are not returned in list requests
-	// unless the show archived flag is passed in.
+	// Archived: Output only. Deprecated: subscription archiving is not
+	// supported.
 	Archived bool `json:"archived,omitempty"`
 
 	// BasePlans: The set of base plans for this subscription. Represents
@@ -20456,10 +20462,7 @@ type MonetizationSubscriptionsArchiveCall struct {
 	header_                    http.Header
 }
 
-// Archive: Archives a subscription. Can only be done if at least one
-// base plan was active in the past, and no base plan is available for
-// new or existing subscribers currently. This action is irreversible,
-// and the subscription ID will remain reserved.
+// Archive: Deprecated: subscription archiving is not supported.
 //
 //   - packageName: The parent app (package name) of the app of the
 //     subscription to delete.
@@ -20564,7 +20567,8 @@ func (c *MonetizationSubscriptionsArchiveCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Archives a subscription. Can only be done if at least one base plan was active in the past, and no base plan is available for new or existing subscribers currently. This action is irreversible, and the subscription ID will remain reserved.",
+	//   "deprecated": true,
+	//   "description": "Deprecated: subscription archiving is not supported.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}:archive",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.monetization.subscriptions.archive",
@@ -21399,9 +21403,8 @@ func (c *MonetizationSubscriptionsListCall) PageToken(pageToken string) *Monetiz
 	return c
 }
 
-// ShowArchived sets the optional parameter "showArchived": Whether
-// archived subscriptions should be included in the response. Defaults
-// to false.
+// ShowArchived sets the optional parameter "showArchived": Deprecated:
+// subscription archiving is not supported.
 func (c *MonetizationSubscriptionsListCall) ShowArchived(showArchived bool) *MonetizationSubscriptionsListCall {
 	c.urlParams_.Set("showArchived", fmt.Sprint(showArchived))
 	return c
@@ -21532,7 +21535,8 @@ func (c *MonetizationSubscriptionsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "showArchived": {
-	//       "description": "Whether archived subscriptions should be included in the response. Defaults to false.",
+	//       "deprecated": true,
+	//       "description": "Deprecated: subscription archiving is not supported.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }

@@ -2867,6 +2867,8 @@ type Volume struct {
 	// aggregates.
 	//   "VOLUME_PERFORMANCE_TIER_ASSIGNED" - Assigned aggregates.
 	//   "VOLUME_PERFORMANCE_TIER_HT" - High throughput aggregates.
+	//   "VOLUME_PERFORMANCE_TIER_QOS2_PERFORMANCE" - QoS 2.0 high
+	// performance storage.
 	PerformanceTier string `json:"performanceTier,omitempty"`
 
 	// Pod: Immutable. Pod name. Pod is an independent part of
@@ -2999,6 +3001,8 @@ type VolumeConfig struct {
 	// aggregates.
 	//   "VOLUME_PERFORMANCE_TIER_ASSIGNED" - Assigned aggregates.
 	//   "VOLUME_PERFORMANCE_TIER_HT" - High throughput aggregates.
+	//   "VOLUME_PERFORMANCE_TIER_QOS2_PERFORMANCE" - QoS 2.0 high
+	// performance storage.
 	PerformanceTier string `json:"performanceTier,omitempty"`
 
 	// Protocol: Volume protocol.

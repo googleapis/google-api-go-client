@@ -1135,15 +1135,25 @@ type AdvertiserCreativeConfig struct {
 	// "Campaign Monitor" tag containing this ID to the creative tag.
 	IasClientId int64 `json:"iasClientId,omitempty,string"`
 
-	// ObaComplianceDisabled: Whether or not to use DV360's Online
-	// Behavioral Advertising (OBA) compliance. Starting on February 9,
-	// 2024, this field will be affected by an update to the Display & Video
-	// 360 API Terms of Service. See our announcement
-	// (//ads-developers.googleblog.com/2024/01/update-to-display-video-360-a
-	// pi-terms.html) for more detail. Warning: Changing OBA settings may
-	// cause the audit status of your creatives to be reset by some ad
-	// exchanges, making them ineligible to serve until they are
-	// re-approved.
+	// ObaComplianceDisabled: Whether or not to disable Google's About this
+	// Ad feature that adds badging (to identify the content as an ad) and
+	// transparency information (on interaction with About this Ad) to your
+	// ads for Online Behavioral Advertising (OBA) and regulatory
+	// requirements. About this Ad gives users greater control over the ads
+	// they see and helps you explain why they're seeing your ad. Learn more
+	// (//support.google.com/displayvideo/answer/14315795). If you choose to
+	// set this field to `true`, note that ads served through Display &
+	// Video 360 must comply to the following: * Be Online Behavioral
+	// Advertising (OBA) compliant, as per your contract with Google
+	// Marketing Platform. * In the European Economic Area (EEA), include
+	// transparency information and a mechanism for users to report illegal
+	// content in ads. If using an alternative ad badging, transparency, and
+	// reporting solution, you must ensure it includes the required
+	// transparency information and illegal content flagging mechanism and
+	// that you notify Google of any illegal content reports using the
+	// appropriate form
+	// (//support.google.com/legal/troubleshooter/1114905?sjid=67874840305572
+	// 61960-EU#ts=2981967%2C2982031%2C12980091).
 	ObaComplianceDisabled bool `json:"obaComplianceDisabled,omitempty"`
 
 	// VideoCreativeDataSharingAuthorized: By setting this field to `true`,
@@ -7875,6 +7885,14 @@ type EditCustomerMatchMembersRequest struct {
 	// Customer Match FirstAndThirdPartyAudience.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
+	// RemovedContactInfoList: Input only. A list of contact information to
+	// define the members to be removed.
+	RemovedContactInfoList *ContactInfoList `json:"removedContactInfoList,omitempty"`
+
+	// RemovedMobileDeviceIdList: Input only. A list of mobile device IDs to
+	// define the members to be removed.
+	RemovedMobileDeviceIdList *MobileDeviceIdList `json:"removedMobileDeviceIdList,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AddedContactInfoList") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -8282,6 +8300,12 @@ type ExchangeAssignedTargetingOptionDetails struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -8420,6 +8444,12 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager.
@@ -8540,6 +8570,12 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// Status: Status of the exchange review.
@@ -8659,6 +8695,12 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -9898,6 +9940,12 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GuaranteedOrderId: Output only. The unique identifier of the
@@ -10843,6 +10891,12 @@ type InventorySource struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that
@@ -18881,8 +18935,10 @@ type AdvertisersCreateCall struct {
 }
 
 // Create: Creates a new advertiser. Returns the newly created
-// advertiser if successful. This method can take up to 180 seconds to
-// complete.
+// advertiser if successful. **This method regularly experiences high
+// latency.** We recommend increasing your default timeout
+// (/display-video/api/guides/best-practices/timeouts#client_library_time
+// out) to avoid errors.
 func (r *AdvertisersService) Create(advertiser *Advertiser) *AdvertisersCreateCall {
 	c := &AdvertisersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiser = advertiser
@@ -18977,7 +19033,7 @@ func (c *AdvertisersCreateCall) Do(opts ...googleapi.CallOption) (*Advertiser, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new advertiser. Returns the newly created advertiser if successful. This method can take up to 180 seconds to complete.",
+	//   "description": "Creates a new advertiser. Returns the newly created advertiser if successful. **This method regularly experiences high latency.** We recommend [increasing your default timeout](/display-video/api/guides/best-practices/timeouts#client_library_timeout) to avoid errors.",
 	//   "flatPath": "v2/advertisers",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.create",
@@ -20453,6 +20509,10 @@ type AdvertisersCampaignsDeleteCall struct {
 // Delete: Permanently deletes a campaign. A deleted campaign cannot be
 // recovered. The campaign should be archived first, i.e. set
 // entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it.
+// **This method regularly experiences high latency.** We recommend
+// increasing your default timeout
+// (/display-video/api/guides/best-practices/timeouts#client_library_time
+// out) to avoid errors.
 //
 // - advertiserId: The ID of the advertiser this campaign belongs to.
 // - campaignId: The ID of the campaign we need to delete.
@@ -20550,7 +20610,7 @@ func (c *AdvertisersCampaignsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 	}
 	return ret, nil
 	// {
-	//   "description": "Permanently deletes a campaign. A deleted campaign cannot be recovered. The campaign should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it.",
+	//   "description": "Permanently deletes a campaign. A deleted campaign cannot be recovered. The campaign should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it. **This method regularly experiences high latency.** We recommend [increasing your default timeout](/display-video/api/guides/best-practices/timeouts#client_library_timeout) to avoid errors.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/campaigns/{campaignsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.campaigns.delete",
@@ -23649,7 +23709,11 @@ type AdvertisersChannelsSitesReplaceCall struct {
 
 // Replace: Replaces all of the sites under a single channel. The
 // operation will replace the sites under a channel with the sites
-// provided in ReplaceSitesRequest.new_sites.
+// provided in ReplaceSitesRequest.new_sites. **This method regularly
+// experiences high latency.** We recommend increasing your default
+// timeout
+// (/display-video/api/guides/best-practices/timeouts#client_library_time
+// out) to avoid errors.
 //
 //   - advertiserId: The ID of the advertiser that owns the parent
 //     channel.
@@ -23755,7 +23819,7 @@ func (c *AdvertisersChannelsSitesReplaceCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Replaces all of the sites under a single channel. The operation will replace the sites under a channel with the sites provided in ReplaceSitesRequest.new_sites.",
+	//   "description": "Replaces all of the sites under a single channel. The operation will replace the sites under a channel with the sites provided in ReplaceSitesRequest.new_sites. **This method regularly experiences high latency.** We recommend [increasing your default timeout](/display-video/api/guides/best-practices/timeouts#client_library_timeout) to avoid errors.",
 	//   "flatPath": "v2/advertisers/{advertiserId}/channels/{channelsId}/sites:replace",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.channels.sites.replace",
@@ -28427,7 +28491,10 @@ type AdvertisersLineItemsDuplicateCall struct {
 
 // Duplicate: Duplicates a line item. Returns the ID of the created line
 // item if successful. YouTube & Partners line items cannot be created
-// or updated using the API.
+// or updated using the API. **This method regularly experiences high
+// latency.** We recommend increasing your default timeout
+// (/display-video/api/guides/best-practices/timeouts#client_library_time
+// out) to avoid errors.
 //
 // - advertiserId: The ID of the advertiser this line item belongs to.
 // - lineItemId: The ID of the line item to duplicate.
@@ -28531,7 +28598,7 @@ func (c *AdvertisersLineItemsDuplicateCall) Do(opts ...googleapi.CallOption) (*D
 	}
 	return ret, nil
 	// {
-	//   "description": "Duplicates a line item. Returns the ID of the created line item if successful. YouTube \u0026 Partners line items cannot be created or updated using the API.",
+	//   "description": "Duplicates a line item. Returns the ID of the created line item if successful. YouTube \u0026 Partners line items cannot be created or updated using the API. **This method regularly experiences high latency.** We recommend [increasing your default timeout](/display-video/api/guides/best-practices/timeouts#client_library_timeout) to avoid errors.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}:duplicate",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.duplicate",
@@ -29147,7 +29214,10 @@ type AdvertisersLineItemsPatchCall struct {
 // BulkEditAssignedTargetingOptions * BulkUpdateLineItems *
 // assignedTargetingOptions.create * assignedTargetingOptions.delete
 // YouTube & Partners line items cannot be created or updated using the
-// API.
+// API. **This method regularly experiences high latency.** We recommend
+// increasing your default timeout
+// (/display-video/api/guides/best-practices/timeouts#client_library_time
+// out) to avoid errors.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the line
 //     item belongs to.
@@ -29260,7 +29330,7 @@ func (c *AdvertisersLineItemsPatchCall) Do(opts ...googleapi.CallOption) (*LineI
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing line item. Returns the updated line item if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * BulkUpdateLineItems * assignedTargetingOptions.create * assignedTargetingOptions.delete YouTube \u0026 Partners line items cannot be created or updated using the API.",
+	//   "description": "Updates an existing line item. Returns the updated line item if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * BulkUpdateLineItems * assignedTargetingOptions.create * assignedTargetingOptions.delete YouTube \u0026 Partners line items cannot be created or updated using the API. **This method regularly experiences high latency.** We recommend [increasing your default timeout](/display-video/api/guides/best-practices/timeouts#client_library_timeout) to avoid errors.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.lineItems.patch",
@@ -48015,7 +48085,11 @@ type PartnersChannelsSitesReplaceCall struct {
 
 // Replace: Replaces all of the sites under a single channel. The
 // operation will replace the sites under a channel with the sites
-// provided in ReplaceSitesRequest.new_sites.
+// provided in ReplaceSitesRequest.new_sites. **This method regularly
+// experiences high latency.** We recommend increasing your default
+// timeout
+// (/display-video/api/guides/best-practices/timeouts#client_library_time
+// out) to avoid errors.
 //
 //   - channelId: The ID of the parent channel whose sites will be
 //     replaced.
@@ -48120,7 +48194,7 @@ func (c *PartnersChannelsSitesReplaceCall) Do(opts ...googleapi.CallOption) (*Re
 	}
 	return ret, nil
 	// {
-	//   "description": "Replaces all of the sites under a single channel. The operation will replace the sites under a channel with the sites provided in ReplaceSitesRequest.new_sites.",
+	//   "description": "Replaces all of the sites under a single channel. The operation will replace the sites under a channel with the sites provided in ReplaceSitesRequest.new_sites. **This method regularly experiences high latency.** We recommend [increasing your default timeout](/display-video/api/guides/best-practices/timeouts#client_library_timeout) to avoid errors.",
 	//   "flatPath": "v2/partners/{partnerId}/channels/{channelsId}/sites:replace",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.partners.channels.sites.replace",

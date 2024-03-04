@@ -1548,8 +1548,7 @@ type Job struct {
 	// supported now.
 	TaskGroups []*TaskGroup `json:"taskGroups,omitempty"`
 
-	// Uid: Output only. A system generated unique ID (in UUID4 format) for
-	// the Job.
+	// Uid: Output only. A system generated unique ID for the Job.
 	Uid string `json:"uid,omitempty"`
 
 	// UpdateTime: Output only. The last time the Job was updated.

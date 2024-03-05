@@ -785,6 +785,14 @@ type ConfigVariableTemplate struct {
 	// EnumOptions: Enum options. To be populated if `ValueType` is `ENUM`
 	EnumOptions []*EnumOption `json:"enumOptions,omitempty"`
 
+	// EnumSource: Optional. enum source denotes the source of api to fill
+	// the enum options
+	//
+	// Possible values:
+	//   "ENUM_SOURCE_UNSPECIFIED" - Api type unspecified.
+	//   "EVENT_TYPES_API" - list event types.
+	EnumSource string `json:"enumSource,omitempty"`
+
 	// IsAdvanced: Indicates if current template is part of advanced
 	// settings
 	IsAdvanced bool `json:"isAdvanced,omitempty"`
@@ -2194,6 +2202,10 @@ type EventSubscription struct {
 	// EventSubscription.
 	SubscriberLink string `json:"subscriberLink,omitempty"`
 
+	// TriggerConfigVariables: Optional. Configuration for configuring the
+	// trigger
+	TriggerConfigVariables []*ConfigVariable `json:"triggerConfigVariables,omitempty"`
+
 	// UpdateTime: Output only. Updated time.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -2398,10 +2410,6 @@ type EventingConfig struct {
 	// RegistrationDestinationConfig: Registration endpoint for auto
 	// registration.
 	RegistrationDestinationConfig *DestinationConfig `json:"registrationDestinationConfig,omitempty"`
-
-	// TriggerConfigVariables: Optional. Additional eventing related field
-	// values
-	TriggerConfigVariables []*ConfigVariable `json:"triggerConfigVariables,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdditionalVariables")
 	// to unconditionally include in API requests. By default, fields with

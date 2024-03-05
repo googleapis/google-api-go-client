@@ -105,6 +105,28 @@ const (
 	// conversations with across Google services.
 	DataportabilityBusinessmessagingConversationsScope = "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations"
 
+	// Move a copy of the information you entered into online forms in
+	// Chrome.
+	DataportabilityChromeAutofillScope = "https://www.googleapis.com/auth/dataportability.chrome.autofill"
+
+	// Move a copy of pages you bookmarked in Chrome.
+	DataportabilityChromeBookmarksScope = "https://www.googleapis.com/auth/dataportability.chrome.bookmarks"
+
+	// Move a copy of words you added to Chrome's dictionary.
+	DataportabilityChromeDictionaryScope = "https://www.googleapis.com/auth/dataportability.chrome.dictionary"
+
+	// Move a copy of extensions you installed from the Chrome Web Store.
+	DataportabilityChromeExtensionsScope = "https://www.googleapis.com/auth/dataportability.chrome.extensions"
+
+	// Move a copy of sites you visited in Chrome.
+	DataportabilityChromeHistoryScope = "https://www.googleapis.com/auth/dataportability.chrome.history"
+
+	// Move a copy of pages you added to your reading list in Chrome.
+	DataportabilityChromeReadingListScope = "https://www.googleapis.com/auth/dataportability.chrome.reading_list"
+
+	// Move a copy of your settings in Chrome.
+	DataportabilityChromeSettingsScope = "https://www.googleapis.com/auth/dataportability.chrome.settings"
+
 	// Move a copy of your pinned trips on Maps.
 	DataportabilityMapsCommuteRoutesScope = "https://www.googleapis.com/auth/dataportability.maps.commute_routes"
 
@@ -138,6 +160,10 @@ const (
 	// Move a copy of your YouTube activity.
 	DataportabilityMyactivityYoutubeScope = "https://www.googleapis.com/auth/dataportability.myactivity.youtube"
 
+	// Move a copy of your saved links, images, places, and collections from
+	// your use of Google services.
+	DataportabilitySavedCollectionsScope = "https://www.googleapis.com/auth/dataportability.saved.collections"
+
 	// Move a copy of your shipping information on Shopping.
 	DataportabilityShoppingAddressesScope = "https://www.googleapis.com/auth/dataportability.shopping.addresses"
 
@@ -157,6 +183,12 @@ const (
 	// Move a copy of your uploaded YouTube music tracks and your YouTube
 	// music library.
 	DataportabilityYoutubeMusicScope = "https://www.googleapis.com/auth/dataportability.youtube.music"
+
+	// Move a copy of your YouTube playables saved game progress files.
+	DataportabilityYoutubePlayableScope = "https://www.googleapis.com/auth/dataportability.youtube.playable"
+
+	// Move a copy of your YouTube posts.
+	DataportabilityYoutubePostsScope = "https://www.googleapis.com/auth/dataportability.youtube.posts"
 
 	// Move a copy of your YouTube private playlists.
 	DataportabilityYoutubePrivatePlaylistsScope = "https://www.googleapis.com/auth/dataportability.youtube.private_playlists"
@@ -190,6 +222,13 @@ const (
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
+		"https://www.googleapis.com/auth/dataportability.chrome.autofill",
+		"https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
+		"https://www.googleapis.com/auth/dataportability.chrome.dictionary",
+		"https://www.googleapis.com/auth/dataportability.chrome.extensions",
+		"https://www.googleapis.com/auth/dataportability.chrome.history",
+		"https://www.googleapis.com/auth/dataportability.chrome.reading_list",
+		"https://www.googleapis.com/auth/dataportability.chrome.settings",
 		"https://www.googleapis.com/auth/dataportability.maps.commute_routes",
 		"https://www.googleapis.com/auth/dataportability.maps.commute_settings",
 		"https://www.googleapis.com/auth/dataportability.maps.ev_profile",
@@ -201,12 +240,15 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/dataportability.myactivity.search",
 		"https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 		"https://www.googleapis.com/auth/dataportability.myactivity.youtube",
+		"https://www.googleapis.com/auth/dataportability.saved.collections",
 		"https://www.googleapis.com/auth/dataportability.shopping.addresses",
 		"https://www.googleapis.com/auth/dataportability.shopping.reviews",
 		"https://www.googleapis.com/auth/dataportability.youtube.channel",
 		"https://www.googleapis.com/auth/dataportability.youtube.comments",
 		"https://www.googleapis.com/auth/dataportability.youtube.live_chat",
 		"https://www.googleapis.com/auth/dataportability.youtube.music",
+		"https://www.googleapis.com/auth/dataportability.youtube.playable",
+		"https://www.googleapis.com/auth/dataportability.youtube.posts",
 		"https://www.googleapis.com/auth/dataportability.youtube.private_playlists",
 		"https://www.googleapis.com/auth/dataportability.youtube.private_videos",
 		"https://www.googleapis.com/auth/dataportability.youtube.public_playlists",
@@ -611,6 +653,13 @@ func (c *ArchiveJobsGetPortabilityArchiveStateCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.dictionary",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.extensions",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.history",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.reading_list",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.settings",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
 	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
@@ -622,12 +671,15 @@ func (c *ArchiveJobsGetPortabilityArchiveStateCall) Do(opts ...googleapi.CallOpt
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",
+	//     "https://www.googleapis.com/auth/dataportability.saved.collections",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.addresses",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.channel",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.comments",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.live_chat",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.music",
+	//     "https://www.googleapis.com/auth/dataportability.youtube.playable",
+	//     "https://www.googleapis.com/auth/dataportability.youtube.posts",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.private_playlists",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.private_videos",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.public_playlists",
@@ -780,6 +832,13 @@ func (c *ArchiveJobsRetryCall) Do(opts ...googleapi.CallOption) (*RetryPortabili
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.dictionary",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.extensions",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.history",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.reading_list",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.settings",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
 	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
@@ -791,12 +850,15 @@ func (c *ArchiveJobsRetryCall) Do(opts ...googleapi.CallOption) (*RetryPortabili
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",
+	//     "https://www.googleapis.com/auth/dataportability.saved.collections",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.addresses",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.channel",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.comments",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.live_chat",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.music",
+	//     "https://www.googleapis.com/auth/dataportability.youtube.playable",
+	//     "https://www.googleapis.com/auth/dataportability.youtube.posts",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.private_playlists",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.private_videos",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.public_playlists",
@@ -935,6 +997,13 @@ func (c *AuthorizationResetCall) Do(opts ...googleapi.CallOption) (*Empty, error
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.dictionary",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.extensions",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.history",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.reading_list",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.settings",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
 	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
@@ -946,12 +1015,15 @@ func (c *AuthorizationResetCall) Do(opts ...googleapi.CallOption) (*Empty, error
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",
+	//     "https://www.googleapis.com/auth/dataportability.saved.collections",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.addresses",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.channel",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.comments",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.live_chat",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.music",
+	//     "https://www.googleapis.com/auth/dataportability.youtube.playable",
+	//     "https://www.googleapis.com/auth/dataportability.youtube.posts",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.private_playlists",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.private_videos",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.public_playlists",
@@ -1086,6 +1158,13 @@ func (c *PortabilityArchiveInitiateCall) Do(opts ...googleapi.CallOption) (*Init
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.dictionary",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.extensions",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.history",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.reading_list",
+	//     "https://www.googleapis.com/auth/dataportability.chrome.settings",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
 	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
@@ -1097,12 +1176,15 @@ func (c *PortabilityArchiveInitiateCall) Do(opts ...googleapi.CallOption) (*Init
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",
+	//     "https://www.googleapis.com/auth/dataportability.saved.collections",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.addresses",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.channel",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.comments",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.live_chat",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.music",
+	//     "https://www.googleapis.com/auth/dataportability.youtube.playable",
+	//     "https://www.googleapis.com/auth/dataportability.youtube.posts",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.private_playlists",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.private_videos",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.public_playlists",

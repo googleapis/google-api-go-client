@@ -1236,6 +1236,50 @@ func (s *KerberosConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LatestBackup: The details of the latest scheduled backup.
+type LatestBackup struct {
+	// BackupId: Output only. The ID of an in-progress scheduled backup.
+	// Empty if no backup is in progress.
+	BackupId string `json:"backupId,omitempty"`
+
+	// Duration: Output only. The duration of the backup completion.
+	Duration string `json:"duration,omitempty"`
+
+	// StartTime: Output only. The time when the backup was started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// State: Output only. The current state of the backup.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state of the backup is unknown.
+	//   "IN_PROGRESS" - The backup is in progress.
+	//   "SUCCEEDED" - The backup completed.
+	//   "FAILED" - The backup failed.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LatestBackup) MarshalJSON() ([]byte, error) {
+	type NoMethod LatestBackup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListBackupsResponse: Response message for
 // DataprocMetastore.ListBackups.
 type ListBackupsResponse struct {
@@ -2177,6 +2221,10 @@ type Restore struct {
 	// d}/backups/{backup_id}.
 	Backup string `json:"backup,omitempty"`
 
+	// BackupLocation: Optional. A Cloud Storage URI specifying where the
+	// backup artifacts are stored, in the format gs:///.
+	BackupLocation string `json:"backupLocation,omitempty"`
+
 	// Details: Output only. The restore details containing the revision of
 	// the service to be restored to, in format of JSON.
 	Details string `json:"details,omitempty"`
@@ -2236,6 +2284,13 @@ type RestoreServiceRequest struct {
 	// d}/backups/{backup_id}. Mutually exclusive with backup_location, and
 	// exactly one of the two must be set.
 	Backup string `json:"backup,omitempty"`
+
+	// BackupLocation: Optional. A Cloud Storage URI specifying the location
+	// of the backup artifacts, namely - backup avro files under "avro/",
+	// backup_metastore.json and service.json, in the following form:gs://.
+	// Mutually exclusive with backup, and exactly one of the two must be
+	// set.
+	BackupLocation string `json:"backupLocation,omitempty"`
 
 	// RequestId: Optional. A request ID. Specify a unique request ID to
 	// allow the server to ignore the request if it has completed. The
@@ -2338,6 +2393,63 @@ func (s *ScalingConfig) UnmarshalJSON(data []byte) error {
 	}
 	s.ScalingFactor = float64(s1.ScalingFactor)
 	return nil
+}
+
+// ScheduledBackup: This specifies the configuration of scheduled
+// backup.
+type ScheduledBackup struct {
+	// BackupLocation: Optional. A Cloud Storage URI of a folder, in the
+	// format gs:///. A sub-folder containing backup files will be stored
+	// below it.
+	BackupLocation string `json:"backupLocation,omitempty"`
+
+	// CronSchedule: Optional. The scheduled interval in Cron format, see
+	// https://en.wikipedia.org/wiki/Cron The default is empty: scheduled
+	// backup is not enabled. Must be specified to enable scheduled backups.
+	CronSchedule string `json:"cronSchedule,omitempty"`
+
+	// Enabled: Optional. Defines whether the scheduled backup is enabled.
+	// The default value is false.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// LatestBackup: Output only. The details of the latest scheduled
+	// backup.
+	LatestBackup *LatestBackup `json:"latestBackup,omitempty"`
+
+	// NextScheduledTime: Output only. The time when the next backups
+	// execution is scheduled to start.
+	NextScheduledTime string `json:"nextScheduledTime,omitempty"`
+
+	// TimeZone: Optional. Specifies the time zone to be used when
+	// interpreting cron_schedule. Must be a time zone name from the time
+	// zone database
+	// (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones), e.g.
+	// America/Los_Angeles or Africa/Abidjan. If left unspecified, the
+	// default is UTC.
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupLocation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScheduledBackup) MarshalJSON() ([]byte, error) {
+	type NoMethod ScheduledBackup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Secret: A securely stored value.
@@ -2455,6 +2567,10 @@ type Service struct {
 
 	// ScalingConfig: Scaling configuration of the metastore service.
 	ScalingConfig *ScalingConfig `json:"scalingConfig,omitempty"`
+
+	// ScheduledBackup: Optional. The configuration of scheduled backup for
+	// the metastore service.
+	ScheduledBackup *ScheduledBackup `json:"scheduledBackup,omitempty"`
 
 	// State: Output only. The current state of the metastore service.
 	//

@@ -1357,6 +1357,74 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LookupDiscoveredServiceResponse: Response for
+// LookupDiscoveredService.
+type LookupDiscoveredServiceResponse struct {
+	// DiscoveredService: Discovered service if exists, empty otherwise.
+	DiscoveredService *DiscoveredService `json:"discoveredService,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DiscoveredService")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiscoveredService") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LookupDiscoveredServiceResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod LookupDiscoveredServiceResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LookupDiscoveredWorkloadResponse: Response for
+// LookupDiscoveredWorkload.
+type LookupDiscoveredWorkloadResponse struct {
+	// DiscoveredWorkload: Discovered workload if exists, empty otherwise.
+	DiscoveredWorkload *DiscoveredWorkload `json:"discoveredWorkload,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DiscoveredWorkload")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiscoveredWorkload") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LookupDiscoveredWorkloadResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod LookupDiscoveredWorkloadResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LookupServiceProjectAttachmentResponse: Response for
 // LookupServiceProjectAttachment.
 type LookupServiceProjectAttachmentResponse struct {
@@ -6509,6 +6577,166 @@ func (c *ProjectsLocationsDiscoveredServicesListCall) Pages(ctx context.Context,
 	}
 }
 
+// method id "apphub.projects.locations.discoveredServices.lookup":
+
+type ProjectsLocationsDiscoveredServicesLookupCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Lookup: Looks up a discovered service in a host project and location
+// and with a given resource URI.
+//
+// - parent: Value for parent.
+func (r *ProjectsLocationsDiscoveredServicesService) Lookup(parent string) *ProjectsLocationsDiscoveredServicesLookupCall {
+	c := &ProjectsLocationsDiscoveredServicesLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Uri sets the optional parameter "uri": Required. Resource URI to find
+// service for. Accepts both project number and project id and does
+// translation when needed.
+func (c *ProjectsLocationsDiscoveredServicesLookupCall) Uri(uri string) *ProjectsLocationsDiscoveredServicesLookupCall {
+	c.urlParams_.Set("uri", uri)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDiscoveredServicesLookupCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveredServicesLookupCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDiscoveredServicesLookupCall) IfNoneMatch(entityTag string) *ProjectsLocationsDiscoveredServicesLookupCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDiscoveredServicesLookupCall) Context(ctx context.Context) *ProjectsLocationsDiscoveredServicesLookupCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDiscoveredServicesLookupCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDiscoveredServicesLookupCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/discoveredServices:lookup")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apphub.projects.locations.discoveredServices.lookup" call.
+// Exactly one of *LookupDiscoveredServiceResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *LookupDiscoveredServiceResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDiscoveredServicesLookupCall) Do(opts ...googleapi.CallOption) (*LookupDiscoveredServiceResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LookupDiscoveredServiceResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Looks up a discovered service in a host project and location and with a given resource URI.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/discoveredServices:lookup",
+	//   "httpMethod": "GET",
+	//   "id": "apphub.projects.locations.discoveredServices.lookup",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Value for parent.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "uri": {
+	//       "description": "Required. Resource URI to find service for. Accepts both project number and project id and does translation when needed.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/discoveredServices:lookup",
+	//   "response": {
+	//     "$ref": "LookupDiscoveredServiceResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "apphub.projects.locations.discoveredWorkloads.findUnregistered":
 
 type ProjectsLocationsDiscoveredWorkloadsFindUnregisteredCall struct {
@@ -7088,6 +7316,166 @@ func (c *ProjectsLocationsDiscoveredWorkloadsListCall) Pages(ctx context.Context
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "apphub.projects.locations.discoveredWorkloads.lookup":
+
+type ProjectsLocationsDiscoveredWorkloadsLookupCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Lookup: Looks up a discovered Workload in a host project and location
+// and with a given resource URI.
+//
+// - parent: Value for parent.
+func (r *ProjectsLocationsDiscoveredWorkloadsService) Lookup(parent string) *ProjectsLocationsDiscoveredWorkloadsLookupCall {
+	c := &ProjectsLocationsDiscoveredWorkloadsLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Uri sets the optional parameter "uri": Required. Resource URI to find
+// workload for. Accepts both project number and project id and does
+// translation when needed.
+func (c *ProjectsLocationsDiscoveredWorkloadsLookupCall) Uri(uri string) *ProjectsLocationsDiscoveredWorkloadsLookupCall {
+	c.urlParams_.Set("uri", uri)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDiscoveredWorkloadsLookupCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveredWorkloadsLookupCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDiscoveredWorkloadsLookupCall) IfNoneMatch(entityTag string) *ProjectsLocationsDiscoveredWorkloadsLookupCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDiscoveredWorkloadsLookupCall) Context(ctx context.Context) *ProjectsLocationsDiscoveredWorkloadsLookupCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDiscoveredWorkloadsLookupCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDiscoveredWorkloadsLookupCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/discoveredWorkloads:lookup")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apphub.projects.locations.discoveredWorkloads.lookup" call.
+// Exactly one of *LookupDiscoveredWorkloadResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *LookupDiscoveredWorkloadResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDiscoveredWorkloadsLookupCall) Do(opts ...googleapi.CallOption) (*LookupDiscoveredWorkloadResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &LookupDiscoveredWorkloadResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Looks up a discovered Workload in a host project and location and with a given resource URI.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/discoveredWorkloads:lookup",
+	//   "httpMethod": "GET",
+	//   "id": "apphub.projects.locations.discoveredWorkloads.lookup",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Value for parent.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "uri": {
+	//       "description": "Required. Resource URI to find workload for. Accepts both project number and project id and does translation when needed.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/discoveredWorkloads:lookup",
+	//   "response": {
+	//     "$ref": "LookupDiscoveredWorkloadResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "apphub.projects.locations.operations.cancel":

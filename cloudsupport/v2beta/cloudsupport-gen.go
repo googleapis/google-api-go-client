@@ -375,8 +375,7 @@ func (s *Blobstore2Info) MarshalJSON() ([]byte, error) {
 // unique identifiers, an ID and a number, and they look like this: ```
 // projects/abc/cases/456 ``` ``` projects/123/cases/456 ``` You can use
 // either of them when calling the API. To learn more about project
-// identifiers, see AIP-2510 (https://google.aip.dev/cloud/2510). Next
-// ID: 38
+// identifiers, see AIP-2510 (https://google.aip.dev/cloud/2510).
 type Case struct {
 	// Classification: The issue classification applicable to this case.
 	Classification *CaseClassification `json:"classification,omitempty"`
@@ -2459,7 +2458,8 @@ func (c *CasesListCall) PageToken(pageToken string) *CasesListCall {
 }
 
 // ProductLine sets the optional parameter "productLine": The product
-// line to request cases for.
+// line for which to request cases for. If unspecified, only Google
+// Cloud cases will be returned.
 //
 // Possible values:
 //
@@ -2602,7 +2602,7 @@ func (c *CasesListCall) Do(opts ...googleapi.CallOption) (*ListCasesResponse, er
 	//       "type": "string"
 	//     },
 	//     "productLine": {
-	//       "description": "The product line to request cases for.",
+	//       "description": "The product line for which to request cases for. If unspecified, only Google Cloud cases will be returned.",
 	//       "enum": [
 	//         "PRODUCT_LINE_UNSPECIFIED",
 	//         "GOOGLE_CLOUD",

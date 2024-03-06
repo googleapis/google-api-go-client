@@ -1095,8 +1095,6 @@ type CommonEventObject struct {
 	//   "SLIDES" - The add-on launches from Google Slides.
 	//   "DRAWINGS" - The add-on launches from Google Drawings.
 	//   "CHAT" - A Google Chat app. Not used for Google Workspace Add-ons.
-	//   "CHAT_IN_GMAIL" - The add-on or appfinder widget launches from
-	// Chat-in-Gmail
 	HostApp string `json:"hostApp,omitempty"`
 
 	// InvokedFunction: Name of the invoked function associated with the
@@ -1942,19 +1940,19 @@ func (s *GoogleAppsCardV1ButtonList) MarshalJSON() ([]byte, error) {
 // "imageUrl":
 // "https://developers.google.com/chat/images/quickstart-app-avatar.png",
 //
-//	"imageType": "CIRCLE", "imageAltText": "Avatar for Sasha", },
+//	"imageType": "CIRCLE", "imageAltText": "Avatar for Sasha" },
 //
 // "sections": [ { "header": "Contact Info", "collapsible": true,
 // "uncollapsibleWidgetsCount": 1, "widgets": [ { "decoratedText": {
-// "startIcon": { "knownIcon": "EMAIL", }, "text": "sasha@example.com",
-// } }, { "decoratedText": { "startIcon": { "knownIcon": "PERSON", },
-// "text": "Online", }, }, { "decoratedText": { "startIcon": {
-// "knownIcon": "PHONE", }, "text": "+1 (555) 555-1234", } }, {
+// "startIcon": { "knownIcon": "EMAIL" }, "text": "sasha@example.com" }
+// }, { "decoratedText": { "startIcon": { "knownIcon": "PERSON" },
+// "text": "Online" } }, { "decoratedText": { "startIcon": {
+// "knownIcon": "PHONE" }, "text": "+1 (555) 555-1234" } }, {
 // "buttonList": { "buttons": [ { "text": "Share", "onClick": {
-// "openLink": { "url": "https://example.com/share", } } }, { "text":
+// "openLink": { "url": "https://example.com/share" } } }, { "text":
 // "Edit", "onClick": { "action": { "function": "goToView",
-// "parameters": [ { "key": "viewType", "value": "EDIT", } ], } } }, ],
-// } }, ], }, ], }, } ], } ```
+// "parameters": [ { "key": "viewType", "value": "EDIT" } ] } } } ] } }
+// ] } ] } } ] } ```
 type GoogleAppsCardV1Card struct {
 	// CardActions: The card's actions. Actions are added to the card's
 	// toolbar menu. Google Workspace Add-ons
@@ -6661,8 +6659,8 @@ func (c *SpacesListCall) Filter(filter string) *SpacesListCall {
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of spaces to return. The service might return fewer than this value.
 // If unspecified, at most 100 spaces are returned. The maximum value is
-// 1,000. If you use a value more than 1,000, it's automatically changed
-// to 1,000. Negative values return an `INVALID_ARGUMENT` error.
+// 1000. If you use a value more than 1000, it's automatically changed
+// to 1000. Negative values return an `INVALID_ARGUMENT` error.
 func (c *SpacesListCall) PageSize(pageSize int64) *SpacesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -6786,7 +6784,7 @@ func (c *SpacesListCall) Do(opts ...googleapi.CallOption) (*ListSpacesResponse, 
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of spaces to return. The service might return fewer than this value. If unspecified, at most 100 spaces are returned. The maximum value is 1,000. If you use a value more than 1,000, it's automatically changed to 1,000. Negative values return an `INVALID_ARGUMENT` error.",
+	//       "description": "Optional. The maximum number of spaces to return. The service might return fewer than this value. If unspecified, at most 100 spaces are returned. The maximum value is 1000. If you use a value more than 1000, it's automatically changed to 1000. Negative values return an `INVALID_ARGUMENT` error.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -7710,8 +7708,8 @@ func (c *SpacesMembersListCall) Filter(filter string) *SpacesMembersListCall {
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of memberships to return. The service might return fewer than this
 // value. If unspecified, at most 100 memberships are returned. The
-// maximum value is 1,000. If you use a value more than 1,000, it's
-// automatically changed to 1,000. Negative values return an
+// maximum value is 1000. If you use a value more than 1000, it's
+// automatically changed to 1000. Negative values return an
 // `INVALID_ARGUMENT` error.
 func (c *SpacesMembersListCall) PageSize(pageSize int64) *SpacesMembersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -7862,7 +7860,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of memberships to return. The service might return fewer than this value. If unspecified, at most 100 memberships are returned. The maximum value is 1,000. If you use a value more than 1,000, it's automatically changed to 1,000. Negative values return an `INVALID_ARGUMENT` error.",
+	//       "description": "Optional. The maximum number of memberships to return. The service might return fewer than this value. If unspecified, at most 100 memberships are returned. The maximum value is 1000. If you use a value more than 1000, it's automatically changed to 1000. Negative values return an `INVALID_ARGUMENT` error.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -8563,9 +8561,8 @@ func (c *SpacesMessagesListCall) OrderBy(orderBy string) *SpacesMessagesListCall
 // PageSize sets the optional parameter "pageSize": The maximum number
 // of messages returned. The service might return fewer messages than
 // this value. If unspecified, at most 25 are returned. The maximum
-// value is 1,000. If you use a value more than 1,000, it's
-// automatically changed to 1,000. Negative values return an
-// `INVALID_ARGUMENT` error.
+// value is 1000. If you use a value more than 1000, it's automatically
+// changed to 1000. Negative values return an `INVALID_ARGUMENT` error.
 func (c *SpacesMessagesListCall) PageSize(pageSize int64) *SpacesMessagesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -8708,7 +8705,7 @@ func (c *SpacesMessagesListCall) Do(opts ...googleapi.CallOption) (*ListMessages
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of messages returned. The service might return fewer messages than this value. If unspecified, at most 25 are returned. The maximum value is 1,000. If you use a value more than 1,000, it's automatically changed to 1,000. Negative values return an `INVALID_ARGUMENT` error.",
+	//       "description": "The maximum number of messages returned. The service might return fewer messages than this value. If unspecified, at most 25 are returned. The maximum value is 1000. If you use a value more than 1000, it's automatically changed to 1000. Negative values return an `INVALID_ARGUMENT` error.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

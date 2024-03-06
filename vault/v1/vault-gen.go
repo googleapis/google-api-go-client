@@ -7480,7 +7480,10 @@ func (c *OperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//   },
 	//   "response": {
 	//     "$ref": "Empty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/ediscovery"
+	//   ]
 	// }
 
 }
@@ -7612,7 +7615,10 @@ func (c *OperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) 
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Empty"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/ediscovery"
+	//   ]
 	// }
 
 }
@@ -7943,7 +7949,11 @@ func (c *OperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsRe
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "ListOperationsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/ediscovery",
+	//     "https://www.googleapis.com/auth/ediscovery.readonly"
+	//   ]
 	// }
 
 }

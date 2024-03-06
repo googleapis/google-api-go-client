@@ -705,7 +705,7 @@ type GoogleFirebaseAppcheckV1betaBatchUpdateResourcePoliciesRequest struct {
 	Requests []*GoogleFirebaseAppcheckV1betaUpdateResourcePolicyRequest `json:"requests,omitempty"`
 
 	// UpdateMask: Optional. A comma-separated list of names of fields in
-	// the ResourceConfigurations to update. Example: `enforcement_mode`. If
+	// the ResourcePolicy objects to update. Example: `enforcement_mode`. If
 	// this field is present, the `update_mask` field in the
 	// UpdateResourcePolicyRequest messages must all match this field, or
 	// the entire batch fails and no updates will be committed.
@@ -1507,8 +1507,8 @@ type GoogleFirebaseAppcheckV1betaListResourcePoliciesResponse struct {
 	// response, then a token is returned. If the string is empty or
 	// omitted, then this response is the last page of results. This token
 	// can be used in a subsequent call to ListResourcePolicies to find the
-	// next group of ResourcePolicys. Page tokens are short-lived and should
-	// not be persisted.
+	// next group of ResourcePolicy objects. Page tokens are short-lived and
+	// should not be persisted.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// ResourcePolicies: The ResourcePolicys retrieved.
@@ -2481,6 +2481,15 @@ type OauthClientsExchangeAppAttestAssertionCall struct {
 //     `project_number` element can be replaced with the project ID of the
 //     Firebase project. Learn more about using project identifiers in
 //     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Alternatively, if this method is being called for an OAuth client
+//     protected by App Check, this field can also be in the format: ```
+//     oauthClients/{oauth_client_id} ``` You can view the OAuth client ID
+//     for your OAuth clients in the Google Cloud console. Note that only
+//     iOS OAuth clients are supported at this time, and they must be
+//     linked to corresponding iOS Firebase apps. Please see the
+//     documentation
+//     (https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup)
+//     for more information.
 func (r *OauthClientsService) ExchangeAppAttestAssertion(appid string, googlefirebaseappcheckv1betaexchangeappattestassertionrequest *GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest) *OauthClientsExchangeAppAttestAssertionCall {
 	c := &OauthClientsExchangeAppAttestAssertionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2590,7 +2599,7 @@ func (c *OauthClientsExchangeAppAttestAssertionCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "app": {
-	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard. Alternatively, if this method is being called for an OAuth client protected by App Check, this field can also be in the format: ``` oauthClients/{oauth_client_id} ``` You can view the OAuth client ID for your OAuth clients in the Google Cloud console. Note that only iOS OAuth clients are supported at this time, and they must be linked to corresponding iOS Firebase apps. Please see [the documentation](https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup) for more information.",
 	//       "location": "path",
 	//       "pattern": "^oauthClients/[^/]+$",
 	//       "required": true,
@@ -2635,6 +2644,15 @@ type OauthClientsExchangeAppAttestAttestationCall struct {
 //     `project_number` element can be replaced with the project ID of the
 //     Firebase project. Learn more about using project identifiers in
 //     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Alternatively, if this method is being called for an OAuth client
+//     protected by App Check, this field can also be in the format: ```
+//     oauthClients/{oauth_client_id} ``` You can view the OAuth client ID
+//     for your OAuth clients in the Google Cloud console. Note that only
+//     iOS OAuth clients are supported at this time, and they must be
+//     linked to corresponding iOS Firebase apps. Please see the
+//     documentation
+//     (https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup)
+//     for more information.
 func (r *OauthClientsService) ExchangeAppAttestAttestation(appid string, googlefirebaseappcheckv1betaexchangeappattestattestationrequest *GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest) *OauthClientsExchangeAppAttestAttestationCall {
 	c := &OauthClientsExchangeAppAttestAttestationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2745,7 +2763,7 @@ func (c *OauthClientsExchangeAppAttestAttestationCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "app": {
-	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard. Alternatively, if this method is being called for an OAuth client protected by App Check, this field can also be in the format: ``` oauthClients/{oauth_client_id} ``` You can view the OAuth client ID for your OAuth clients in the Google Cloud console. Note that only iOS OAuth clients are supported at this time, and they must be linked to corresponding iOS Firebase apps. Please see [the documentation](https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup) for more information.",
 	//       "location": "path",
 	//       "pattern": "^oauthClients/[^/]+$",
 	//       "required": true,
@@ -2788,6 +2806,15 @@ type OauthClientsExchangeDebugTokenCall struct {
 //     `project_number` element can be replaced with the project ID of the
 //     Firebase project. Learn more about using project identifiers in
 //     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Alternatively, if this method is being called for an OAuth client
+//     protected by App Check, this field can also be in the format: ```
+//     oauthClients/{oauth_client_id} ``` You can view the OAuth client ID
+//     for your OAuth clients in the Google Cloud console. Note that only
+//     iOS OAuth clients are supported at this time, and they must be
+//     linked to corresponding iOS Firebase apps. Please see the
+//     documentation
+//     (https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup)
+//     for more information.
 func (r *OauthClientsService) ExchangeDebugToken(appid string, googlefirebaseappcheckv1betaexchangedebugtokenrequest *GoogleFirebaseAppcheckV1betaExchangeDebugTokenRequest) *OauthClientsExchangeDebugTokenCall {
 	c := &OauthClientsExchangeDebugTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -2897,7 +2924,7 @@ func (c *OauthClientsExchangeDebugTokenCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "app": {
-	//       "description": "Required. The relative resource name of the app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+	//       "description": "Required. The relative resource name of the app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard. Alternatively, if this method is being called for an OAuth client protected by App Check, this field can also be in the format: ``` oauthClients/{oauth_client_id} ``` You can view the OAuth client ID for your OAuth clients in the Google Cloud console. Note that only iOS OAuth clients are supported at this time, and they must be linked to corresponding iOS Firebase apps. Please see [the documentation](https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup) for more information.",
 	//       "location": "path",
 	//       "pattern": "^oauthClients/[^/]+$",
 	//       "required": true,
@@ -2940,6 +2967,15 @@ type OauthClientsGenerateAppAttestChallengeCall struct {
 //     `project_number` element can be replaced with the project ID of the
 //     Firebase project. Learn more about using project identifiers in
 //     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Alternatively, if this method is being called for an OAuth client
+//     protected by App Check, this field can also be in the format: ```
+//     oauthClients/{oauth_client_id} ``` You can view the OAuth client ID
+//     for your OAuth clients in the Google Cloud console. Note that only
+//     iOS OAuth clients are supported at this time, and they must be
+//     linked to corresponding iOS Firebase apps. Please see the
+//     documentation
+//     (https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup)
+//     for more information.
 func (r *OauthClientsService) GenerateAppAttestChallenge(appid string, googlefirebaseappcheckv1betagenerateappattestchallengerequest *GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeRequest) *OauthClientsGenerateAppAttestChallengeCall {
 	c := &OauthClientsGenerateAppAttestChallengeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -3050,7 +3086,7 @@ func (c *OauthClientsGenerateAppAttestChallengeCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "app": {
-	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard. Alternatively, if this method is being called for an OAuth client protected by App Check, this field can also be in the format: ``` oauthClients/{oauth_client_id} ``` You can view the OAuth client ID for your OAuth clients in the Google Cloud console. Note that only iOS OAuth clients are supported at this time, and they must be linked to corresponding iOS Firebase apps. Please see [the documentation](https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup) for more information.",
 	//       "location": "path",
 	//       "pattern": "^oauthClients/[^/]+$",
 	//       "required": true,
@@ -3266,6 +3302,15 @@ type ProjectsAppsExchangeAppAttestAssertionCall struct {
 //     `project_number` element can be replaced with the project ID of the
 //     Firebase project. Learn more about using project identifiers in
 //     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Alternatively, if this method is being called for an OAuth client
+//     protected by App Check, this field can also be in the format: ```
+//     oauthClients/{oauth_client_id} ``` You can view the OAuth client ID
+//     for your OAuth clients in the Google Cloud console. Note that only
+//     iOS OAuth clients are supported at this time, and they must be
+//     linked to corresponding iOS Firebase apps. Please see the
+//     documentation
+//     (https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup)
+//     for more information.
 func (r *ProjectsAppsService) ExchangeAppAttestAssertion(appid string, googlefirebaseappcheckv1betaexchangeappattestassertionrequest *GoogleFirebaseAppcheckV1betaExchangeAppAttestAssertionRequest) *ProjectsAppsExchangeAppAttestAssertionCall {
 	c := &ProjectsAppsExchangeAppAttestAssertionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -3375,7 +3420,7 @@ func (c *ProjectsAppsExchangeAppAttestAssertionCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "app": {
-	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard. Alternatively, if this method is being called for an OAuth client protected by App Check, this field can also be in the format: ``` oauthClients/{oauth_client_id} ``` You can view the OAuth client ID for your OAuth clients in the Google Cloud console. Note that only iOS OAuth clients are supported at this time, and they must be linked to corresponding iOS Firebase apps. Please see [the documentation](https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup) for more information.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
 	//       "required": true,
@@ -3420,6 +3465,15 @@ type ProjectsAppsExchangeAppAttestAttestationCall struct {
 //     `project_number` element can be replaced with the project ID of the
 //     Firebase project. Learn more about using project identifiers in
 //     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Alternatively, if this method is being called for an OAuth client
+//     protected by App Check, this field can also be in the format: ```
+//     oauthClients/{oauth_client_id} ``` You can view the OAuth client ID
+//     for your OAuth clients in the Google Cloud console. Note that only
+//     iOS OAuth clients are supported at this time, and they must be
+//     linked to corresponding iOS Firebase apps. Please see the
+//     documentation
+//     (https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup)
+//     for more information.
 func (r *ProjectsAppsService) ExchangeAppAttestAttestation(appid string, googlefirebaseappcheckv1betaexchangeappattestattestationrequest *GoogleFirebaseAppcheckV1betaExchangeAppAttestAttestationRequest) *ProjectsAppsExchangeAppAttestAttestationCall {
 	c := &ProjectsAppsExchangeAppAttestAttestationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -3530,7 +3584,7 @@ func (c *ProjectsAppsExchangeAppAttestAttestationCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "app": {
-	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard. Alternatively, if this method is being called for an OAuth client protected by App Check, this field can also be in the format: ``` oauthClients/{oauth_client_id} ``` You can view the OAuth client ID for your OAuth clients in the Google Cloud console. Note that only iOS OAuth clients are supported at this time, and they must be linked to corresponding iOS Firebase apps. Please see [the documentation](https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup) for more information.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
 	//       "required": true,
@@ -3724,6 +3778,15 @@ type ProjectsAppsExchangeDebugTokenCall struct {
 //     `project_number` element can be replaced with the project ID of the
 //     Firebase project. Learn more about using project identifiers in
 //     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Alternatively, if this method is being called for an OAuth client
+//     protected by App Check, this field can also be in the format: ```
+//     oauthClients/{oauth_client_id} ``` You can view the OAuth client ID
+//     for your OAuth clients in the Google Cloud console. Note that only
+//     iOS OAuth clients are supported at this time, and they must be
+//     linked to corresponding iOS Firebase apps. Please see the
+//     documentation
+//     (https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup)
+//     for more information.
 func (r *ProjectsAppsService) ExchangeDebugToken(appid string, googlefirebaseappcheckv1betaexchangedebugtokenrequest *GoogleFirebaseAppcheckV1betaExchangeDebugTokenRequest) *ProjectsAppsExchangeDebugTokenCall {
 	c := &ProjectsAppsExchangeDebugTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -3833,7 +3896,7 @@ func (c *ProjectsAppsExchangeDebugTokenCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "app": {
-	//       "description": "Required. The relative resource name of the app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+	//       "description": "Required. The relative resource name of the app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard. Alternatively, if this method is being called for an OAuth client protected by App Check, this field can also be in the format: ``` oauthClients/{oauth_client_id} ``` You can view the OAuth client ID for your OAuth clients in the Google Cloud console. Note that only iOS OAuth clients are supported at this time, and they must be linked to corresponding iOS Firebase apps. Please see [the documentation](https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup) for more information.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
 	//       "required": true,
@@ -4787,6 +4850,15 @@ type ProjectsAppsGenerateAppAttestChallengeCall struct {
 //     `project_number` element can be replaced with the project ID of the
 //     Firebase project. Learn more about using project identifiers in
 //     Google's AIP 2510 (https://google.aip.dev/cloud/2510) standard.
+//     Alternatively, if this method is being called for an OAuth client
+//     protected by App Check, this field can also be in the format: ```
+//     oauthClients/{oauth_client_id} ``` You can view the OAuth client ID
+//     for your OAuth clients in the Google Cloud console. Note that only
+//     iOS OAuth clients are supported at this time, and they must be
+//     linked to corresponding iOS Firebase apps. Please see the
+//     documentation
+//     (https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup)
+//     for more information.
 func (r *ProjectsAppsService) GenerateAppAttestChallenge(appid string, googlefirebaseappcheckv1betagenerateappattestchallengerequest *GoogleFirebaseAppcheckV1betaGenerateAppAttestChallengeRequest) *ProjectsAppsGenerateAppAttestChallengeCall {
 	c := &ProjectsAppsGenerateAppAttestChallengeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.appid = appid
@@ -4897,7 +4969,7 @@ func (c *ProjectsAppsGenerateAppAttestChallengeCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "app": {
-	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard.",
+	//       "description": "Required. The relative resource name of the iOS app, in the format: ``` projects/{project_number}/apps/{app_id} ``` If necessary, the `project_number` element can be replaced with the project ID of the Firebase project. Learn more about using project identifiers in Google's [AIP 2510](https://google.aip.dev/cloud/2510) standard. Alternatively, if this method is being called for an OAuth client protected by App Check, this field can also be in the format: ``` oauthClients/{oauth_client_id} ``` You can view the OAuth client ID for your OAuth clients in the Google Cloud console. Note that only iOS OAuth clients are supported at this time, and they must be linked to corresponding iOS Firebase apps. Please see [the documentation](https://developers.google.com/identity/sign-in/ios/appcheck/get-started#project-setup) for more information.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/apps/[^/]+$",
 	//       "required": true,

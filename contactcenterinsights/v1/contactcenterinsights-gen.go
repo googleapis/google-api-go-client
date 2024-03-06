@@ -4065,8 +4065,9 @@ type GoogleCloudContactcenterinsightsV1Settings struct {
 	// of the supported triggers occurs. * "create-analysis": Notify each
 	// time an analysis is created. * "create-conversation": Notify each
 	// time a conversation is created. * "export-insights-data": Notify each
-	// time an export is complete. * "update-conversation": Notify each time
-	// a conversation is updated via UpdateConversation. *
+	// time an export is complete. * "ingest-conversations": Notify each
+	// time an IngestConversations LRO completes. * "update-conversation":
+	// Notify each time a conversation is updated via UpdateConversation. *
 	// "upload-conversation": Notify when an UploadConversation LRO
 	// completes. Values are Pub/Sub topics. The format of each Pub/Sub
 	// topic is: projects/{project}/topics/{topic}

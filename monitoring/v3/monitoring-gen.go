@@ -5521,7 +5521,7 @@ type MService struct {
 	// MeshIstio: Type used for Istio services scoped to an Istio mesh.
 	MeshIstio *MeshIstio `json:"meshIstio,omitempty"`
 
-	// Name: Resource name for this Service. The format is:
+	// Name: Identifier. Resource name for this Service. The format is:
 	// projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]
 	Name string `json:"name,omitempty"`
 
@@ -5647,7 +5647,8 @@ type ServiceLevelObjective struct {
 	// objective to be met. 0 < goal <= 0.999.
 	Goal float64 `json:"goal,omitempty"`
 
-	// Name: Resource name for this ServiceLevelObjective. The format is:
+	// Name: Identifier. Resource name for this ServiceLevelObjective. The
+	// format is:
 	// projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObje
 	// ctives/[SLO_NAME]
 	Name string `json:"name,omitempty"`
@@ -17528,7 +17529,7 @@ type ServicesPatchCall struct {
 
 // Patch: Update this Service.
 //
-//   - name: Resource name for this Service. The format is:
+//   - name: Identifier. Resource name for this Service. The format is:
 //     projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID].
 func (r *ServicesService) Patch(name string, service *MService) *ServicesPatchCall {
 	c := &ServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -17644,7 +17645,7 @@ func (c *ServicesPatchCall) Do(opts ...googleapi.CallOption) (*MService, error) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name for this Service. The format is: projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID] ",
+	//       "description": "Identifier. Resource name for this Service. The format is: projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID] ",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -18423,7 +18424,8 @@ type ServicesServiceLevelObjectivesPatchCall struct {
 
 // Patch: Update the given ServiceLevelObjective.
 //
-//   - name: Resource name for this ServiceLevelObjective. The format is:
+//   - name: Identifier. Resource name for this ServiceLevelObjective. The
+//     format is:
 //     projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelOb
 //     jectives/[SLO_NAME].
 func (r *ServicesServiceLevelObjectivesService) Patch(name string, servicelevelobjective *ServiceLevelObjective) *ServicesServiceLevelObjectivesPatchCall {
@@ -18540,7 +18542,7 @@ func (c *ServicesServiceLevelObjectivesPatchCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Resource name for this ServiceLevelObjective. The format is: projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME] ",
+	//       "description": "Identifier. Resource name for this ServiceLevelObjective. The format is: projects/[PROJECT_ID_OR_NUMBER]/services/[SERVICE_ID]/serviceLevelObjectives/[SLO_NAME] ",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+/services/[^/]+/serviceLevelObjectives/[^/]+$",
 	//       "required": true,

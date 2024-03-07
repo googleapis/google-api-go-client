@@ -871,6 +871,42 @@ func (s *AuxiliaryMessage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BacklightInfo: Information about the device's backlights.
+type BacklightInfo struct {
+	// Brightness: Output only. Current brightness of the backlight, between
+	// 0 and max_brightness.
+	Brightness int64 `json:"brightness,omitempty"`
+
+	// MaxBrightness: Output only. Maximum brightness for the backlight.
+	MaxBrightness int64 `json:"maxBrightness,omitempty"`
+
+	// Path: Output only. Path to this backlight on the system. Useful if
+	// the caller needs to correlate with other information.
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Brightness") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Brightness") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BacklightInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod BacklightInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BatchChangeChromeOsDeviceStatusRequest: A request for changing the
 // status of a batch of ChromeOS devices.
 type BatchChangeChromeOsDeviceStatusRequest struct {
@@ -1736,6 +1772,10 @@ type ChromeOsDevice struct {
 	// AutoUpdateExpiration: (Read-only) The timestamp after which the
 	// device will stop receiving Chrome updates or support
 	AutoUpdateExpiration int64 `json:"autoUpdateExpiration,omitempty,string"`
+
+	// BacklightInfo: Output only. Contains backlight information for the
+	// device.
+	BacklightInfo []*BacklightInfo `json:"backlightInfo,omitempty"`
 
 	// BootMode: The boot mode for the device. The possible values are: *
 	// `Verified`: The device is running a valid version of the Chrome OS. *

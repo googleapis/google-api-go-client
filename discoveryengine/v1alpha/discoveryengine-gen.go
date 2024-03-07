@@ -2871,6 +2871,86 @@ func (s *GoogleCloudDiscoveryengineV1alphaBigQuerySource) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaChunk: Chunk captures all raw
+// metadata information of items to be recommended or searched in the
+// chunk mode.
+type GoogleCloudDiscoveryengineV1alphaChunk struct {
+	// Content: Content is a string from a document (parsed content).
+	Content string `json:"content,omitempty"`
+
+	// DerivedStructData: Output only. This field is OUTPUT_ONLY. It
+	// contains derived data that are not in the original input document.
+	DerivedStructData googleapi.RawMessage `json:"derivedStructData,omitempty"`
+
+	// DocumentMetadata: Metadata of the document from the current chunk.
+	DocumentMetadata *GoogleCloudDiscoveryengineV1alphaChunkDocumentMetadata `json:"documentMetadata,omitempty"`
+
+	// Id: Unique chunk id of the current chunk.
+	Id string `json:"id,omitempty"`
+
+	// Name: The full resource name of the chunk. Format:
+	// `projects/{project}/locations/{location}/collections/{collection}/data
+	// Stores/{data_store}/branches/{branch}/documents/{document_id}/chunks/{
+	// chunk_id}`. This field must be a UTF-8 encoded string with a length
+	// limit of 1024 characters.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaChunk) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaChunk
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaChunkDocumentMetadata: Document
+// metadata contains the information of the document of the current
+// chunk.
+type GoogleCloudDiscoveryengineV1alphaChunkDocumentMetadata struct {
+	// Title: Title of the document.
+	Title string `json:"title,omitempty"`
+
+	// Uri: Uri of the document.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Title") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Title") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaChunkDocumentMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaChunkDocumentMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaCompleteQueryRequest: Request
 // message for CompletionService.CompleteQuery method.
 type GoogleCloudDiscoveryengineV1alphaCompleteQueryRequest struct {
@@ -2901,7 +2981,7 @@ type GoogleCloudDiscoveryengineV1alphaCompleteQueryRequest struct {
 	// suggestions taken directly from user-imported document fields marked
 	// as completable. Default values: * `document` is the default model for
 	// regular dataStores. * `search-history` is the default model for site
-	// search dataStores.
+	// search dataStores. *
 	QueryModel string `json:"queryModel,omitempty"`
 
 	// UserPseudoId: A unique identifier for tracking visitors. For example,
@@ -4131,6 +4211,9 @@ func (s *GoogleCloudDiscoveryengineV1alphaDocumentInfo) MarshalJSON() ([]byte, e
 // DataStoreService.UpdateDocumentProcessingConfig method will
 // initialize the config.
 type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig struct {
+	// ChunkingConfig: Whether chunking mode is enabled.
+	ChunkingConfig *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfig `json:"chunkingConfig,omitempty"`
+
 	// DefaultParsingConfig: Configurations for default Document parser. If
 	// not specified, we will configure it as default DigitalParsingConfig,
 	// and the default parsing config will be applied to all file types for
@@ -4162,16 +4245,15 @@ type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "DefaultParsingConfig") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ChunkingConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DefaultParsingConfig") to
+	// NullFields is a list of field names (e.g. "ChunkingConfig") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -4183,6 +4265,74 @@ type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig struct {
 
 func (s *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfi
+// g: Configuration for chunking config.
+type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfig struct {
+	// LayoutBasedChunkingConfig: Configuration for the layout based
+	// chunking.
+	LayoutBasedChunkingConfig *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig `json:"layoutBasedChunkingConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "LayoutBasedChunkingConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "LayoutBasedChunkingConfig") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfi
+// gLayoutBasedChunkingConfig: Configuration for the layout based
+// chunking.
+type GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig struct {
+	// ChunkSize: The token size limit for each chunk. Supported values:
+	// 100-500 (inclusive). Default value: 500.
+	ChunkSize int64 `json:"chunkSize,omitempty"`
+
+	// IncludeAncestorHeadings: Whether to include appending different
+	// levels of headings to chunks from the middle of the document to
+	// prevent context loss. Default value: False.
+	IncludeAncestorHeadings bool `json:"includeAncestorHeadings,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChunkSize") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChunkSize") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7831,6 +7981,19 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpec struct {
 	// provided, there will be no extractive answer in the search response.
 	ExtractiveContentSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecExtractiveContentSpec `json:"extractiveContentSpec,omitempty"`
 
+	// SearchResultMode: Specifies the search result mode. If unspecified,
+	// the search result mode is based on
+	// DataStore.DocumentProcessingConfig.chunking_config: * If
+	// DataStore.DocumentProcessingConfig.chunking_config is specified, it
+	// defaults to `CHUNKS`. * Otherwise, it defaults to `DOCUMENTS`.
+	//
+	// Possible values:
+	//   "SEARCH_RESULT_MODE_UNSPECIFIED" - Default value.
+	//   "DOCUMENTS" - Returns documents in the search result.
+	//   "CHUNKS" - Returns chunks in the search result. Only available if
+	// the DataStore.DocumentProcessingConfig.chunking_config is specified.
+	SearchResultMode string `json:"searchResultMode,omitempty"`
+
 	// SnippetSpec: If `snippetSpec` is not specified, snippets are not
 	// included in the search response.
 	SnippetSpec *GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSnippetSpec `json:"snippetSpec,omitempty"`
@@ -8752,6 +8915,10 @@ func (s *GoogleCloudDiscoveryengineV1alphaSearchResponseQueryExpansionInfo) Mars
 // GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResult:
 // Represents the search results.
 type GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResult struct {
+	// Chunk: The chunk data in the search response if the
+	// SearchRequest.ContentSearchSpec.search_result_mode is set to CHUNKS.
+	Chunk *GoogleCloudDiscoveryengineV1alphaChunk `json:"chunk,omitempty"`
+
 	// Document: The document data snippet in the search response. Only
 	// fields that are marked as retrievable are populated.
 	Document *GoogleCloudDiscoveryengineV1alphaDocument `json:"document,omitempty"`
@@ -8762,7 +8929,7 @@ type GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResult struct {
 	// ModelScores: Google provided available scores.
 	ModelScores map[string]GoogleCloudDiscoveryengineV1alphaDoubleList `json:"modelScores,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Document") to
+	// ForceSendFields is a list of field names (e.g. "Chunk") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -8770,8 +8937,8 @@ type GoogleCloudDiscoveryengineV1alphaSearchResponseSearchResult struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Document") to include in
-	// API requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Chunk") to include in API
+	// requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -14033,7 +14200,7 @@ func (c *ProjectsLocationsCollectionsDataStoresCompleteQueryCall) Query(query st
 // `document-completable` - Using suggestions taken directly from
 // user-imported document fields marked as completable. Default values:
 // * `document` is the default model for regular dataStores. *
-// `search-history` is the default model for site search dataStores.
+// `search-history` is the default model for site search dataStores. *
 func (c *ProjectsLocationsCollectionsDataStoresCompleteQueryCall) QueryModel(queryModel string) *ProjectsLocationsCollectionsDataStoresCompleteQueryCall {
 	c.urlParams_.Set("queryModel", queryModel)
 	return c
@@ -14182,7 +14349,7 @@ func (c *ProjectsLocationsCollectionsDataStoresCompleteQueryCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "queryModel": {
-	//       "description": "Specifies the autocomplete data model. This overrides any model specified in the Configuration \u003e Autocomplete section of the Cloud console. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for site search dataStores.",
+	//       "description": "Specifies the autocomplete data model. This overrides any model specified in the Configuration \u003e Autocomplete section of the Cloud console. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for site search dataStores. *",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -28026,7 +28193,7 @@ func (c *ProjectsLocationsDataStoresCompleteQueryCall) Query(query string) *Proj
 // `document-completable` - Using suggestions taken directly from
 // user-imported document fields marked as completable. Default values:
 // * `document` is the default model for regular dataStores. *
-// `search-history` is the default model for site search dataStores.
+// `search-history` is the default model for site search dataStores. *
 func (c *ProjectsLocationsDataStoresCompleteQueryCall) QueryModel(queryModel string) *ProjectsLocationsDataStoresCompleteQueryCall {
 	c.urlParams_.Set("queryModel", queryModel)
 	return c
@@ -28175,7 +28342,7 @@ func (c *ProjectsLocationsDataStoresCompleteQueryCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "queryModel": {
-	//       "description": "Specifies the autocomplete data model. This overrides any model specified in the Configuration \u003e Autocomplete section of the Cloud console. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for site search dataStores.",
+	//       "description": "Specifies the autocomplete data model. This overrides any model specified in the Configuration \u003e Autocomplete section of the Cloud console. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for site search dataStores. *",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

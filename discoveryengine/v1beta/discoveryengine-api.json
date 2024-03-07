@@ -214,7 +214,7 @@
                           "type": "string"
                         },
                         "queryModel": {
-                          "description": "Specifies the autocomplete data model. This overrides any model specified in the Configuration \u003e Autocomplete section of the Cloud console. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for site search dataStores.",
+                          "description": "Specifies the autocomplete data model. This overrides any model specified in the Configuration \u003e Autocomplete section of the Cloud console. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for site search dataStores. *",
                           "location": "query",
                           "type": "string"
                         },
@@ -2738,7 +2738,7 @@
                       "type": "string"
                     },
                     "queryModel": {
-                      "description": "Specifies the autocomplete data model. This overrides any model specified in the Configuration \u003e Autocomplete section of the Cloud console. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for site search dataStores.",
+                      "description": "Specifies the autocomplete data model. This overrides any model specified in the Configuration \u003e Autocomplete section of the Cloud console. Currently supported values: * `document` - Using suggestions generated from user-imported documents. * `search-history` - Using suggestions generated from the past history of SearchService.Search API calls. Do not use it when there is no traffic for Search API. * `user-event` - Using suggestions generated from user-imported search events. * `document-completable` - Using suggestions taken directly from user-imported document fields marked as completable. Default values: * `document` is the default model for regular dataStores. * `search-history` is the default model for site search dataStores. *",
                       "location": "query",
                       "type": "string"
                     },
@@ -4449,7 +4449,7 @@
       }
     }
   },
-  "revision": "20240227",
+  "revision": "20240305",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -5860,6 +5860,10 @@
       "description": "A singleton resource of DataStore. It's empty when DataStore is created, which defaults to digital parser. The first call to DataStoreService.UpdateDocumentProcessingConfig method will initialize the config.",
       "id": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfig",
       "properties": {
+        "chunkingConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfig",
+          "description": "Whether chunking mode is enabled."
+        },
         "defaultParsingConfig": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigParsingConfig",
           "description": "Configurations for default Document parser. If not specified, we will configure it as default DigitalParsingConfig, and the default parsing config will be applied to all file types for Document parsing."
@@ -5879,6 +5883,33 @@
           },
           "description": "Map from file type to override the default parsing configuration based on the file type. Supported keys: * `pdf`: Override parsing config for PDF files, either digital parsing, ocr parsing or layout parsing is supported. * `html`: Override parsing config for HTML files, only digital parsing and or layout parsing are supported. * `docx`: Override parsing config for DOCX files, only digital parsing and or layout parsing are supported.",
           "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfig": {
+      "description": "Configuration for chunking config.",
+      "id": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfig",
+      "properties": {
+        "layoutBasedChunkingConfig": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig",
+          "description": "Configuration for the layout based chunking."
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig": {
+      "description": "Configuration for the layout based chunking.",
+      "id": "GoogleCloudDiscoveryengineV1alphaDocumentProcessingConfigChunkingConfigLayoutBasedChunkingConfig",
+      "properties": {
+        "chunkSize": {
+          "description": "The token size limit for each chunk. Supported values: 100-500 (inclusive). Default value: 500.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "includeAncestorHeadings": {
+          "description": "Whether to include appending different levels of headings to chunks from the middle of the document to prevent context loss. Default value: False.",
+          "type": "boolean"
         }
       },
       "type": "object"

@@ -3958,6 +3958,18 @@ func (r *ProjectsLocationsFunctionsService) Get(name string) *ProjectsLocationsF
 	return c
 }
 
+// Revision sets the optional parameter "revision": The optional version
+// of the 1st gen function whose details should be obtained. The version
+// of a 1st gen function is an integer that starts from 1 and gets
+// incremented on redeployments. GCF may keep historical configs for old
+// versions of 1st gen function. This field can be specified to fetch
+// the historical configs. This field is valid only for GCF 1st gen
+// function.
+func (c *ProjectsLocationsFunctionsGetCall) Revision(revision string) *ProjectsLocationsFunctionsGetCall {
+	c.urlParams_.Set("revision", revision)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4070,6 +4082,11 @@ func (c *ProjectsLocationsFunctionsGetCall) Do(opts ...googleapi.CallOption) (*F
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "revision": {
+	//       "description": "Optional. The optional version of the 1st gen function whose details should be obtained. The version of a 1st gen function is an integer that starts from 1 and gets incremented on redeployments. GCF may keep historical configs for old versions of 1st gen function. This field can be specified to fetch the historical configs. This field is valid only for GCF 1st gen function.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

@@ -362,10 +362,12 @@ type AwsS3Data struct {
 	// (https://docs.aws.amazon.com/AmazonS3/latest/dev/create-bucket-get-location-example.html)).
 	BucketName string `json:"bucketName,omitempty"`
 
-	// CloudfrontDomain: Optional. Cloudfront domain name pointing to this
-	// bucket (as origin), to use when fetching. Format:
-	// `https://{id}.cloudfront.net` or any valid custom domain
-	// `https://...`
+	// CloudfrontDomain: Optional. The CloudFront distribution domain name
+	// pointing to this bucket, to use when fetching. See Transfer from S3
+	// via CloudFront
+	// (https://cloud.google.com/storage-transfer/docs/s3-cloudfront) for
+	// more information. Format: `https://{id}.cloudfront.net` or any valid
+	// custom domain. Must begin with `https://`.
 	CloudfrontDomain string `json:"cloudfrontDomain,omitempty"`
 
 	// CredentialsSecret: Optional. The Resource name of a secret in Secret
@@ -376,8 +378,7 @@ type AwsS3Data struct {
 	// access to a source: Amazon S3]
 	// (https://cloud.google.com/storage-transfer/docs/source-amazon-s3#secret_manager)
 	// for more information. If `credentials_secret` is specified, do not
-	// specify role_arn or aws_access_key. This feature is in preview
-	// (https://cloud.google.com/terms/service-terms#1). Format:
+	// specify role_arn or aws_access_key. Format:
 	// `projects/{project_number}/secrets/{secret_name}`
 	CredentialsSecret string `json:"credentialsSecret,omitempty"`
 
@@ -445,8 +446,7 @@ type AzureBlobStorageData struct {
 	// [Configure access to a source: Microsoft Azure Blob Storage]
 	// (https://cloud.google.com/storage-transfer/docs/source-microsoft-azure#secret_manager)
 	// for more information. If `credentials_secret` is specified, do not
-	// specify azure_credentials. This feature is in preview
-	// (https://cloud.google.com/terms/service-terms#1). Format:
+	// specify azure_credentials. Format:
 	// `projects/{project_number}/secrets/{secret_name}`
 	CredentialsSecret string `json:"credentialsSecret,omitempty"`
 
@@ -820,12 +820,13 @@ type GcsData struct {
 	// Name Requirements (/storage/docs/naming#requirements).
 	BucketName string `json:"bucketName,omitempty"`
 
-	// ManagedFolderTransferEnabled: Transfer managed folders is in public
-	// preview. This option is only applicable to the Cloud Storage source
-	// bucket. If set to true: - The source managed folder will be
-	// transferred to the destination bucket - The destination managed
-	// folder will always be overwritten, other OVERWRITE options will not
-	// be supported
+	// ManagedFolderTransferEnabled: Preview. Enables the transfer of
+	// managed folders between Cloud Storage buckets. Set this option on the
+	// gcs_data_source. If set to true: - Managed folders in the source
+	// bucket are transferred to the destination bucket. - Managed folders
+	// in the destination bucket are overwritten. Other OVERWRITE options
+	// are not supported. See Transfer Cloud Storage managed folders
+	// (/storage-transfer/docs/managed-folders).
 	ManagedFolderTransferEnabled bool `json:"managedFolderTransferEnabled,omitempty"`
 
 	// Path: Root path to transfer objects. Must be an empty string or full

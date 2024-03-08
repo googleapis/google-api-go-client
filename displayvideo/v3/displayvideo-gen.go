@@ -6562,8 +6562,7 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_6" - SDF version 6
 	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide)
-	// before migrating to this version. Currently in beta. Only available
-	// for use by a subset of users.
+	// before migrating to this version.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
@@ -17123,8 +17122,7 @@ type SdfConfig struct {
 	//   "SDF_VERSION_6" - SDF version 6
 	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide)
-	// before migrating to this version. Currently in beta. Only available
-	// for use by a subset of users.
+	// before migrating to this version.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
@@ -17210,8 +17208,7 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_6" - SDF version 6
 	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide)
-	// before migrating to this version. Currently in beta. Only available
-	// for use by a subset of users.
+	// before migrating to this version.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -19170,6 +19167,7 @@ type YoutubeAndPartnersBiddingStrategy struct {
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_MANUAL_CPV` *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_CPA` *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_CPM` *
+	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_RESERVE_CPM` *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_ROAS` If not using
 	// an applicable strategy, the value of this field will be 0.
 	Value int64 `json:"value,omitempty,string"`

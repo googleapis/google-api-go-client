@@ -37,7 +37,7 @@
 // By default, all available scopes (see "Constants") are used to authenticate.
 // To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
-//	workspaceeventsService, err := workspaceevents.NewService(ctx, option.WithScopes(workspaceevents.ChatSpacesReadonlyScope))
+//	workspaceeventsService, err := workspaceevents.NewService(ctx, option.WithScopes(workspaceevents.MeetingsSpaceReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
@@ -129,6 +129,13 @@ const (
 
 	// View chat and spaces in Google Chat
 	ChatSpacesReadonlyScope = "https://www.googleapis.com/auth/chat.spaces.readonly"
+
+	// Create, edit, and see information about your Google Meet conferences
+	// created by the app.
+	MeetingsSpaceCreatedScope = "https://www.googleapis.com/auth/meetings.space.created"
+
+	// Read information about any of your Google Meet conferences
+	MeetingsSpaceReadonlyScope = "https://www.googleapis.com/auth/meetings.space.readonly"
 )
 
 // NewService creates a new Service.
@@ -143,6 +150,8 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/chat.messages.readonly",
 		"https://www.googleapis.com/auth/chat.spaces",
 		"https://www.googleapis.com/auth/chat.spaces.readonly",
+		"https://www.googleapis.com/auth/meetings.space.created",
+		"https://www.googleapis.com/auth/meetings.space.readonly",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
@@ -742,7 +751,9 @@ func (c *OperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error)
 	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
 	//     "https://www.googleapis.com/auth/chat.messages.readonly",
 	//     "https://www.googleapis.com/auth/chat.spaces",
-	//     "https://www.googleapis.com/auth/chat.spaces.readonly"
+	//     "https://www.googleapis.com/auth/chat.spaces.readonly",
+	//     "https://www.googleapis.com/auth/meetings.space.created",
+	//     "https://www.googleapis.com/auth/meetings.space.readonly"
 	//   ]
 	// }
 
@@ -892,7 +903,9 @@ func (c *SubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
 	//     "https://www.googleapis.com/auth/chat.messages.readonly",
 	//     "https://www.googleapis.com/auth/chat.spaces",
-	//     "https://www.googleapis.com/auth/chat.spaces.readonly"
+	//     "https://www.googleapis.com/auth/chat.spaces.readonly",
+	//     "https://www.googleapis.com/auth/meetings.space.created",
+	//     "https://www.googleapis.com/auth/meetings.space.readonly"
 	//   ]
 	// }
 
@@ -1076,7 +1089,9 @@ func (c *SubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, 
 	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
 	//     "https://www.googleapis.com/auth/chat.messages.readonly",
 	//     "https://www.googleapis.com/auth/chat.spaces",
-	//     "https://www.googleapis.com/auth/chat.spaces.readonly"
+	//     "https://www.googleapis.com/auth/chat.spaces.readonly",
+	//     "https://www.googleapis.com/auth/meetings.space.created",
+	//     "https://www.googleapis.com/auth/meetings.space.readonly"
 	//   ]
 	// }
 
@@ -1235,7 +1250,9 @@ func (c *SubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscription, 
 	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
 	//     "https://www.googleapis.com/auth/chat.messages.readonly",
 	//     "https://www.googleapis.com/auth/chat.spaces",
-	//     "https://www.googleapis.com/auth/chat.spaces.readonly"
+	//     "https://www.googleapis.com/auth/chat.spaces.readonly",
+	//     "https://www.googleapis.com/auth/meetings.space.created",
+	//     "https://www.googleapis.com/auth/meetings.space.readonly"
 	//   ]
 	// }
 
@@ -1434,7 +1451,9 @@ func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*ListSubscript
 	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
 	//     "https://www.googleapis.com/auth/chat.messages.readonly",
 	//     "https://www.googleapis.com/auth/chat.spaces",
-	//     "https://www.googleapis.com/auth/chat.spaces.readonly"
+	//     "https://www.googleapis.com/auth/chat.spaces.readonly",
+	//     "https://www.googleapis.com/auth/meetings.space.created",
+	//     "https://www.googleapis.com/auth/meetings.space.readonly"
 	//   ]
 	// }
 
@@ -1638,7 +1657,9 @@ func (c *SubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
 	//     "https://www.googleapis.com/auth/chat.messages.readonly",
 	//     "https://www.googleapis.com/auth/chat.spaces",
-	//     "https://www.googleapis.com/auth/chat.spaces.readonly"
+	//     "https://www.googleapis.com/auth/chat.spaces.readonly",
+	//     "https://www.googleapis.com/auth/meetings.space.created",
+	//     "https://www.googleapis.com/auth/meetings.space.readonly"
 	//   ]
 	// }
 
@@ -1794,7 +1815,9 @@ func (c *SubscriptionsReactivateCall) Do(opts ...googleapi.CallOption) (*Operati
 	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
 	//     "https://www.googleapis.com/auth/chat.messages.readonly",
 	//     "https://www.googleapis.com/auth/chat.spaces",
-	//     "https://www.googleapis.com/auth/chat.spaces.readonly"
+	//     "https://www.googleapis.com/auth/chat.spaces.readonly",
+	//     "https://www.googleapis.com/auth/meetings.space.created",
+	//     "https://www.googleapis.com/auth/meetings.space.readonly"
 	//   ]
 	// }
 

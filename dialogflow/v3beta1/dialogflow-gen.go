@@ -500,6 +500,11 @@ type GoogleCloudDialogflowCxV3AdvancedSettings struct {
 	// logging. Exposed at the following levels: - Agent level.
 	LoggingSettings *GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings `json:"loggingSettings,omitempty"`
 
+	// SpeechSettings: Settings for speech to text detection. Exposed at the
+	// following levels: - Agent level - Flow level - Page level - Parameter
+	// level
+	SpeechSettings *GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings `json:"speechSettings,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AudioExportGcsDestination") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -597,6 +602,51 @@ type GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings struct {
 
 func (s *GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings: Define
+// behaviors of speech to text detection.
+type GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings struct {
+	// EndpointerSensitivity: Sensitivity of the speech model that detects
+	// the end of speech. Scale from 0 to 100.
+	EndpointerSensitivity int64 `json:"endpointerSensitivity,omitempty"`
+
+	// Models: Mapping from language to Speech-to-Text model. The mapped
+	// Speech-to-Text model will be selected for requests from its
+	// corresponding language. For more information, see Speech models
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).
+	Models map[string]string `json:"models,omitempty"`
+
+	// NoSpeechTimeout: Timeout before detecting no speech.
+	NoSpeechTimeout string `json:"noSpeechTimeout,omitempty"`
+
+	// UseTimeoutBasedEndpointing: Use timeout based endpointing,
+	// interpreting endpointer sensitivy as seconds of timeout value.
+	UseTimeoutBasedEndpointing bool `json:"useTimeoutBasedEndpointing,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EndpointerSensitivity") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndpointerSensitivity") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4707,6 +4757,11 @@ type GoogleCloudDialogflowCxV3beta1AdvancedSettings struct {
 	// logging. Exposed at the following levels: - Agent level.
 	LoggingSettings *GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings `json:"loggingSettings,omitempty"`
 
+	// SpeechSettings: Settings for speech to text detection. Exposed at the
+	// following levels: - Agent level - Flow level - Page level - Parameter
+	// level
+	SpeechSettings *GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings `json:"speechSettings,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AudioExportGcsDestination") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -4808,6 +4863,51 @@ func (s *GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings) MarshalJ
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings: Define
+// behaviors of speech to text detection.
+type GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings struct {
+	// EndpointerSensitivity: Sensitivity of the speech model that detects
+	// the end of speech. Scale from 0 to 100.
+	EndpointerSensitivity int64 `json:"endpointerSensitivity,omitempty"`
+
+	// Models: Mapping from language to Speech-to-Text model. The mapped
+	// Speech-to-Text model will be selected for requests from its
+	// corresponding language. For more information, see Speech models
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).
+	Models map[string]string `json:"models,omitempty"`
+
+	// NoSpeechTimeout: Timeout before detecting no speech.
+	NoSpeechTimeout string `json:"noSpeechTimeout,omitempty"`
+
+	// UseTimeoutBasedEndpointing: Use timeout based endpointing,
+	// interpreting endpointer sensitivy as seconds of timeout value.
+	UseTimeoutBasedEndpointing bool `json:"useTimeoutBasedEndpointing,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EndpointerSensitivity") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndpointerSensitivity") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1Agent: Agents are best described as
 // Natural Language Understanding (NLU) modules that transform user
 // requests into actionable data. You can include agents in your app,
@@ -4869,6 +4969,10 @@ type GoogleCloudDialogflowCxV3beta1Agent struct {
 	// Agents.UpdateAgent method. Agents.CreateAgent populates the name
 	// automatically. Format: `projects//locations//agents/`.
 	Name string `json:"name,omitempty"`
+
+	// PersonalizationSettings: Optional. Settings for end user
+	// personalization.
+	PersonalizationSettings *GoogleCloudDialogflowCxV3beta1AgentPersonalizationSettings `json:"personalizationSettings,omitempty"`
 
 	// SecuritySettings: Name of the SecuritySettings reference for the
 	// agent. Format: `projects//locations//securitySettings/`.
@@ -5059,6 +5163,42 @@ type GoogleCloudDialogflowCxV3beta1AgentGitIntegrationSettingsGithubSettings str
 
 func (s *GoogleCloudDialogflowCxV3beta1AgentGitIntegrationSettingsGithubSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1AgentGitIntegrationSettingsGithubSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1AgentPersonalizationSettings: Settings
+// for end user personalization.
+type GoogleCloudDialogflowCxV3beta1AgentPersonalizationSettings struct {
+	// DefaultEndUserMetadata: Optional. Default end user metadata, used
+	// when processing DetectIntent requests. Recommended to be filled as a
+	// template instead of hard-coded value, for example { "age":
+	// "$session.params.age" }. The data will be merged with the
+	// QueryParameters.end_user_metadata in DetectIntentRequest.query_params
+	// during query processing.
+	DefaultEndUserMetadata googleapi.RawMessage `json:"defaultEndUserMetadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultEndUserMetadata") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DefaultEndUserMetadata")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1AgentPersonalizationSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1AgentPersonalizationSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -12429,7 +12569,9 @@ type GoogleCloudDialogflowCxV3beta1SecuritySettings struct {
 	// than Dialogflow's default 365d TTL (30 days for Agent Assist
 	// traffic), higher value will be ignored and use default. Setting a
 	// value higher than that has no effect. A missing value or setting to 0
-	// also means we use default TTL.
+	// also means we use default TTL. When data retention configuration is
+	// changed, it only applies to the data created after the change; the
+	// TTL of existing data created before the change stays intact.
 	RetentionWindowDays int64 `json:"retentionWindowDays,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -12476,7 +12618,9 @@ type GoogleCloudDialogflowCxV3beta1SecuritySettingsAudioExportSettings struct {
 	//   "OGG" - OGG Vorbis.
 	AudioFormat string `json:"audioFormat,omitempty"`
 
-	// EnableAudioRedaction: Enable audio redaction if it is true.
+	// EnableAudioRedaction: Enable audio redaction if it is true. Note that
+	// this only redacts end-user audio data; Synthesised audio from the
+	// virtual agent is not redacted.
 	EnableAudioRedaction bool `json:"enableAudioRedaction,omitempty"`
 
 	// GcsBucket: Cloud Storage bucket to export audio record to. Setting

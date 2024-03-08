@@ -942,6 +942,11 @@ type GooglePlayDeveloperReportingV1alpha1ErrorIssue struct {
 	// apps/{app}/{issue}
 	Name string `json:"name,omitempty"`
 
+	// SampleErrorReports: Output only. Sample error reports which belong to
+	// this ErrorIssue. *Note:* currently a maximum of 1 per ErrorIssue is
+	// supported. Format: "apps/{app}/{report}"
+	SampleErrorReports []string `json:"sampleErrorReports,omitempty"`
+
 	// Type: Type of the errors grouped in this issue.
 	//
 	// Possible values:
@@ -5001,6 +5006,15 @@ func (c *VitalsErrorsIssuesSearchCall) PageToken(pageToken string) *VitalsErrors
 	return c
 }
 
+// SampleErrorReportLimit sets the optional parameter
+// "sampleErrorReportLimit": Number of sample error reports to return
+// per ErrorIssue. If unspecified, 0 will be used. *Note:* currently
+// only 0 and 1 are supported.
+func (c *VitalsErrorsIssuesSearchCall) SampleErrorReportLimit(sampleErrorReportLimit int64) *VitalsErrorsIssuesSearchCall {
+	c.urlParams_.Set("sampleErrorReportLimit", fmt.Sprint(sampleErrorReportLimit))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5254,6 +5268,12 @@ func (c *VitalsErrorsIssuesSearchCall) Do(opts ...googleapi.CallOption) (*Google
 	//       "pattern": "^apps/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "sampleErrorReportLimit": {
+	//       "description": "Optional. Number of sample error reports to return per ErrorIssue. If unspecified, 0 will be used. *Note:* currently only 0 and 1 are supported.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
 	//     }
 	//   },
 	//   "path": "v1alpha1/{+parent}/errorIssues:search",
@@ -5327,7 +5347,9 @@ func (r *VitalsErrorsReportsService) Search(parent string) *VitalsErrorsReportsS
 // `NATIVE_CRASH`, `ANR`. Example: `errorIssueType = JAVA_CRASH OR
 // errorIssueType = NATIVE_CRASH`. * `errorIssueId`: Matches error
 // reports belonging to the requested error issue ids only. Example:
-// `errorIssueId = 1234 OR errorIssueId = 4567`. * `appProcessState`:
+// `errorIssueId = 1234 OR errorIssueId = 4567`. * `errorReportId`:
+// Matches error reports with the requested error report id. Example:
+// `errorReportId = 1234 OR errorReportId = 4567`. * `appProcessState`:
 // Matches error reports on the process state of an app, indicating
 // whether an app runs in the foreground (user-visible) or background.
 // Valid candidates: `FOREGROUND`, `BACKGROUND`. Example:
@@ -5650,7 +5672,7 @@ func (c *VitalsErrorsReportsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A selection predicate to retrieve only a subset of the reports. For filtering basics, please check [AIP-160](https://google.aip.dev/160). ** Supported field names:** * `apiLevel`: Matches error reports that occurred in the requested Android versions (specified as the numeric API level) only. Example: `apiLevel = 28 OR apiLevel = 29`. * `versionCode`: Matches error reports that occurred in the requested app version codes only. Example: `versionCode = 123 OR versionCode = 456`. * `deviceModel`: Matches error issues that occurred in the requested devices. Example: `deviceModel = \"google/walleye\" OR deviceModel = \"google/marlin\"`. * `deviceBrand`: Matches error issues that occurred in the requested device brands. Example: `deviceBrand = \"Google\". * `deviceType`: Matches error reports that occurred in the requested device types. Example: `deviceType = \"PHONE\"`. * `errorIssueType`: Matches error reports of the requested types only. Valid candidates: `JAVA_CRASH`, `NATIVE_CRASH`, `ANR`. Example: `errorIssueType = JAVA_CRASH OR errorIssueType = NATIVE_CRASH`. * `errorIssueId`: Matches error reports belonging to the requested error issue ids only. Example: `errorIssueId = 1234 OR errorIssueId = 4567`. * `appProcessState`: Matches error reports on the process state of an app, indicating whether an app runs in the foreground (user-visible) or background. Valid candidates: `FOREGROUND`, `BACKGROUND`. Example: `appProcessState = FOREGROUND`. * `isUserPerceived`: Matches error reports that are user-perceived. It is not accompanied by any operators. Example: `isUserPerceived`. ** Supported operators:** * Comparison operators: The only supported comparison operator is equality. The filtered field must appear on the left hand side of the comparison. * Logical Operators: Logical operators `AND` and `OR` can be used to build complex filters following a conjunctive normal form (CNF), i.e., conjunctions of disjunctions. The `OR` operator takes precedence over `AND` so the use of parenthesis is not necessary when building CNF. The `OR` operator is only supported to build disjunctions that apply to the same field, e.g., `versionCode = 123 OR versionCode = ANR`. The filter expression `versionCode = 123 OR errorIssueType = ANR` is not valid. ** Examples ** Some valid filtering expressions: * `versionCode = 123 AND errorIssueType = ANR` * `versionCode = 123 AND errorIssueType = OR errorIssueType = CRASH` * `versionCode = 123 AND (errorIssueType = OR errorIssueType = CRASH)`",
+	//       "description": "A selection predicate to retrieve only a subset of the reports. For filtering basics, please check [AIP-160](https://google.aip.dev/160). ** Supported field names:** * `apiLevel`: Matches error reports that occurred in the requested Android versions (specified as the numeric API level) only. Example: `apiLevel = 28 OR apiLevel = 29`. * `versionCode`: Matches error reports that occurred in the requested app version codes only. Example: `versionCode = 123 OR versionCode = 456`. * `deviceModel`: Matches error issues that occurred in the requested devices. Example: `deviceModel = \"google/walleye\" OR deviceModel = \"google/marlin\"`. * `deviceBrand`: Matches error issues that occurred in the requested device brands. Example: `deviceBrand = \"Google\". * `deviceType`: Matches error reports that occurred in the requested device types. Example: `deviceType = \"PHONE\"`. * `errorIssueType`: Matches error reports of the requested types only. Valid candidates: `JAVA_CRASH`, `NATIVE_CRASH`, `ANR`. Example: `errorIssueType = JAVA_CRASH OR errorIssueType = NATIVE_CRASH`. * `errorIssueId`: Matches error reports belonging to the requested error issue ids only. Example: `errorIssueId = 1234 OR errorIssueId = 4567`. * `errorReportId`: Matches error reports with the requested error report id. Example: `errorReportId = 1234 OR errorReportId = 4567`. * `appProcessState`: Matches error reports on the process state of an app, indicating whether an app runs in the foreground (user-visible) or background. Valid candidates: `FOREGROUND`, `BACKGROUND`. Example: `appProcessState = FOREGROUND`. * `isUserPerceived`: Matches error reports that are user-perceived. It is not accompanied by any operators. Example: `isUserPerceived`. ** Supported operators:** * Comparison operators: The only supported comparison operator is equality. The filtered field must appear on the left hand side of the comparison. * Logical Operators: Logical operators `AND` and `OR` can be used to build complex filters following a conjunctive normal form (CNF), i.e., conjunctions of disjunctions. The `OR` operator takes precedence over `AND` so the use of parenthesis is not necessary when building CNF. The `OR` operator is only supported to build disjunctions that apply to the same field, e.g., `versionCode = 123 OR versionCode = ANR`. The filter expression `versionCode = 123 OR errorIssueType = ANR` is not valid. ** Examples ** Some valid filtering expressions: * `versionCode = 123 AND errorIssueType = ANR` * `versionCode = 123 AND errorIssueType = OR errorIssueType = CRASH` * `versionCode = 123 AND (errorIssueType = OR errorIssueType = CRASH)`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

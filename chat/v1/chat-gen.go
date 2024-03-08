@@ -4296,8 +4296,8 @@ type Message struct {
 	// added to communicate formatting. This field might not capture all
 	// formatting visible in the UI, but includes the following: * Markup
 	// syntax (https://developers.google.com/chat/format-messages) for bold,
-	// italic, strikethrough, monospace, and monospace block. * User
-	// mentions
+	// italic, strikethrough, monospace, monospace block, and bulleted list.
+	// * User mentions
 	// (https://developers.google.com/chat/format-messages#messages-@mention)
 	// using the format ``. * Custom hyperlinks using the format
 	// `<{url}|{rendered_text}>` where the first string is the URL and the

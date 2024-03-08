@@ -1405,6 +1405,9 @@ type ComplianceNote struct {
 	// Description: A description about this compliance check.
 	Description string `json:"description,omitempty"`
 
+	// Impact: Potential impact of the suggested remediation
+	Impact string `json:"impact,omitempty"`
+
 	// Rationale: A rationale for the existence of this compliance check.
 	Rationale string `json:"rationale,omitempty"`
 

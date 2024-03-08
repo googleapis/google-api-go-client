@@ -1999,6 +1999,49 @@ func (s *PipelineRef) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PipelineResult: A value produced by a Pipeline.
+type PipelineResult struct {
+	// Description: Output only. Description of the result.
+	Description string `json:"description,omitempty"`
+
+	// Name: Output only. Name of the result.
+	Name string `json:"name,omitempty"`
+
+	// Type: Output only. The type of data that the result holds.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default enum type; should not be used.
+	//   "STRING" - Default
+	//   "ARRAY" - Array type
+	//   "OBJECT" - Object type
+	Type string `json:"type,omitempty"`
+
+	// Value: Output only. Value of the result.
+	Value *ResultValue `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PipelineResult) MarshalJSON() ([]byte, error) {
+	type NoMethod PipelineResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PipelineRun: Message describing PipelineRun object
 type PipelineRun struct {
 	// Annotations: User annotations. See
@@ -2065,6 +2108,10 @@ type PipelineRun struct {
 	// instantiate the run.
 	ResolvedPipelineSpec *PipelineSpec `json:"resolvedPipelineSpec,omitempty"`
 
+	// Results: Optional. Output only. List of results written out by the
+	// pipeline's containers
+	Results []*PipelineRunResult `json:"results,omitempty"`
+
 	// Security: Optional. Security configuration.
 	Security *Security `json:"security,omitempty"`
 
@@ -2126,6 +2173,38 @@ func (s *PipelineRun) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PipelineRunResult: PipelineRunResult used to describe the results of
+// a pipeline
+type PipelineRunResult struct {
+	// Name: Output only. Name of the TaskRun
+	Name string `json:"name,omitempty"`
+
+	// Value: Output only. Value of the result.
+	Value *ResultValue `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PipelineRunResult) MarshalJSON() ([]byte, error) {
+	type NoMethod PipelineRunResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PipelineSpec: PipelineSpec defines the desired state of Pipeline.
 type PipelineSpec struct {
 	// FinallyTasks: List of Tasks that execute just before leaving the
@@ -2141,6 +2220,10 @@ type PipelineSpec struct {
 
 	// Params: List of parameters.
 	Params []*ParamSpec `json:"params,omitempty"`
+
+	// Results: Optional. Output only. List of results written out by the
+	// pipeline's containers
+	Results []*PipelineResult `json:"results,omitempty"`
 
 	// Tasks: List of Tasks that execute when this Pipeline is run.
 	Tasks []*PipelineTask `json:"tasks,omitempty"`
@@ -2553,6 +2636,50 @@ type Repository struct {
 
 func (s *Repository) MarshalJSON() ([]byte, error) {
 	type NoMethod Repository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResultValue: ResultValue holds different types of data for a single
+// result.
+type ResultValue struct {
+	// ArrayVal: Value of the result if type is array.
+	ArrayVal []string `json:"arrayVal,omitempty"`
+
+	// ObjectVal: Value of the result if type is object.
+	ObjectVal map[string]string `json:"objectVal,omitempty"`
+
+	// StringVal: Value of the result if type is string.
+	StringVal string `json:"stringVal,omitempty"`
+
+	// Type: Output only. The type of data that the result holds.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default enum type; should not be used.
+	//   "STRING" - Default
+	//   "ARRAY" - Array type
+	//   "OBJECT" - Object type
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArrayVal") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArrayVal") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultValue) MarshalJSON() ([]byte, error) {
+	type NoMethod ResultValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -3889,10 +3889,6 @@ type PrivatePoolV1Config struct {
 	// NetworkConfig: Network configuration for the pool.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
 
-	// PrivateServiceConnect: Immutable. Private Service Connect(PSC)
-	// Network configuration for the pool.
-	PrivateServiceConnect *PrivateServiceConnect `json:"privateServiceConnect,omitempty"`
-
 	// WorkerConfig: Machine configuration for the workers in the pool.
 	WorkerConfig *WorkerConfig `json:"workerConfig,omitempty"`
 
@@ -3915,59 +3911,6 @@ type PrivatePoolV1Config struct {
 
 func (s *PrivatePoolV1Config) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivatePoolV1Config
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PrivateServiceConnect: Defines the Private Service Connect network
-// configuration for the pool.
-type PrivateServiceConnect struct {
-	// NetworkAttachment: Required. Immutable. The network attachment that
-	// the worker network interface is peered to. Must be in the format
-	// `projects/{project}/regions/{region}/networkAttachments/{networkAttach
-	// ment}`. The region of network attachment must be the same as the
-	// worker pool. See Network Attachments
-	// (https://cloud.google.com/vpc/docs/about-network-attachments)
-	NetworkAttachment string `json:"networkAttachment,omitempty"`
-
-	// PublicIpAddressDisabled: Required. Immutable. Disable public IP on
-	// the primary network interface. If true, workers are created without
-	// any public address, which prevents network egress to public IPs
-	// unless a network proxy is configured. If false, workers are created
-	// with a public address which allows for public internet egress. The
-	// public address only applies to traffic through the primary network
-	// interface. If `route_all_traffic` is set to true, all traffic will go
-	// through the non-primary network interface, this boolean has no
-	// effect.
-	PublicIpAddressDisabled bool `json:"publicIpAddressDisabled,omitempty"`
-
-	// RouteAllTraffic: Immutable. Route all traffic through PSC interface.
-	// Enable this if you want full control of traffic in the private pool.
-	// Configure Cloud NAT for the subnet of network attachment if you need
-	// to access public Internet. If false, Only route private IPs, e.g.
-	// 10.0.0.0/8, 172.16.0.0/12, and 192.168.0.0/16 through PSC interface.
-	RouteAllTraffic bool `json:"routeAllTraffic,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "NetworkAttachment")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NetworkAttachment") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PrivateServiceConnect) MarshalJSON() ([]byte, error) {
-	type NoMethod PrivateServiceConnect
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

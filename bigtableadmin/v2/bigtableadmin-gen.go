@@ -489,6 +489,39 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AutomatedBackupPolicy: Defines an automated backup policy for a table
+type AutomatedBackupPolicy struct {
+	// Frequency: Required. How frequently automated backups should occur.
+	// The only supported value at this time is 24 hours.
+	Frequency string `json:"frequency,omitempty"`
+
+	// RetentionPeriod: Required. How long the automated backups should be
+	// retained. The only supported value at this time is 3 days.
+	RetentionPeriod string `json:"retentionPeriod,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Frequency") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Frequency") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutomatedBackupPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod AutomatedBackupPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AutoscalingLimits: Limits for the number of nodes a Cluster can
 // autoscale up/down to.
 type AutoscalingLimits struct {
@@ -2485,6 +2518,12 @@ type Modification struct {
 	// fail if no column family exists with the given ID.
 	Update *ColumnFamily `json:"update,omitempty"`
 
+	// UpdateMask: Optional. A mask specifying which fields (e.g. `gc_rule`)
+	// in the `update` mod should be updated, ignored for other modification
+	// types. If unset or empty, we treat it as updating `gc_rule` to be
+	// backward compatible.
+	UpdateMask string `json:"updateMask,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Create") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3236,6 +3275,10 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 // timestamp. Each table is served using the resources of its parent
 // cluster.
 type Table struct {
+	// AutomatedBackupPolicy: If specified, automated backups are enabled
+	// for this table. Otherwise, automated backups are disabled.
+	AutomatedBackupPolicy *AutomatedBackupPolicy `json:"automatedBackupPolicy,omitempty"`
+
 	// ChangeStreamConfig: If specified, enable the change stream on this
 	// table. Otherwise, the change stream is disabled and the change stream
 	// is not retained.
@@ -3292,15 +3335,16 @@ type Table struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "ChangeStreamConfig")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AutomatedBackupPolicy") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ChangeStreamConfig") to
+	// NullFields is a list of field names (e.g. "AutomatedBackupPolicy") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

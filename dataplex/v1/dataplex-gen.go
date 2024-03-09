@@ -3175,6 +3175,10 @@ type GoogleCloudDataplexV1DataQualitySpecPostScanActions struct {
 	// provided BigQuery table.
 	BigqueryExport *GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport `json:"bigqueryExport,omitempty"`
 
+	// NotificationReport: Optional. If set, results will be sent to the
+	// provided notification receipts upon triggers.
+	NotificationReport *GoogleCloudDataplexV1DataQualitySpecPostScanActionsNotificationReport `json:"notificationReport,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "BigqueryExport") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3229,6 +3233,137 @@ func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport) Mars
 	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualitySpecPostScanActionsJobEndTrigger:
+// This trigger is triggered whenever a scan job run ends, regardless of
+// the result.
+type GoogleCloudDataplexV1DataQualitySpecPostScanActionsJobEndTrigger struct {
+}
+
+// GoogleCloudDataplexV1DataQualitySpecPostScanActionsJobFailureTrigger:
+// This trigger is triggered when the scan job itself fails, regardless
+// of the result.
+type GoogleCloudDataplexV1DataQualitySpecPostScanActionsJobFailureTrigger struct {
+}
+
+// GoogleCloudDataplexV1DataQualitySpecPostScanActionsNotificationReport:
+//
+//	The configuration of notification report post scan action.
+type GoogleCloudDataplexV1DataQualitySpecPostScanActionsNotificationReport struct {
+	// JobEndTrigger: Optional. If set, report will be sent when a scan job
+	// ends.
+	JobEndTrigger *GoogleCloudDataplexV1DataQualitySpecPostScanActionsJobEndTrigger `json:"jobEndTrigger,omitempty"`
+
+	// JobFailureTrigger: Optional. If set, report will be sent when a scan
+	// job fails.
+	JobFailureTrigger *GoogleCloudDataplexV1DataQualitySpecPostScanActionsJobFailureTrigger `json:"jobFailureTrigger,omitempty"`
+
+	// Recipients: Required. The recipients who will receive the
+	// notification report.
+	Recipients *GoogleCloudDataplexV1DataQualitySpecPostScanActionsRecipients `json:"recipients,omitempty"`
+
+	// ScoreThresholdTrigger: Optional. If set, report will be sent when
+	// score threshold is met.
+	ScoreThresholdTrigger *GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger `json:"scoreThresholdTrigger,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JobEndTrigger") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JobEndTrigger") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsNotificationReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActionsNotificationReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualitySpecPostScanActionsRecipients: The
+// individuals or groups who are designated to receive notifications
+// upon triggers.
+type GoogleCloudDataplexV1DataQualitySpecPostScanActionsRecipients struct {
+	// Emails: Optional. The email recipients who will receive the
+	// DataQualityScan results report.
+	Emails []string `json:"emails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Emails") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Emails") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsRecipients) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActionsRecipients
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigg
+// er: This trigger is triggered when the DQ score in the job result is
+// less than a specified input score.
+type GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger struct {
+	// ScoreThreshold: Optional. The score range is in 0,100.
+	ScoreThreshold float64 `json:"scoreThreshold,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ScoreThreshold") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ScoreThreshold") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger
+	var s1 struct {
+		ScoreThreshold gensupport.JSONFloat64 `json:"scoreThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ScoreThreshold = float64(s1.ScoreThreshold)
+	return nil
 }
 
 // GoogleCloudDataplexV1DataScan: Represents a user-visible job which

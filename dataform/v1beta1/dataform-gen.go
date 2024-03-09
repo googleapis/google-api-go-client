@@ -2617,7 +2617,7 @@ type ReleaseConfig struct {
 	// `branch1`
 	GitCommitish string `json:"gitCommitish,omitempty"`
 
-	// Name: Output only. The release config's name.
+	// Name: Identifier. The release config's name.
 	Name string `json:"name,omitempty"`
 
 	// RecentScheduledReleaseRecords: Output only. Records of the 10 most
@@ -8084,7 +8084,7 @@ type ProjectsLocationsRepositoriesReleaseConfigsPatchCall struct {
 
 // Patch: Updates a single ReleaseConfig.
 //
-// - name: Output only. The release config's name.
+// - name: Identifier. The release config's name.
 func (r *ProjectsLocationsRepositoriesReleaseConfigsService) Patch(name string, releaseconfig *ReleaseConfig) *ProjectsLocationsRepositoriesReleaseConfigsPatchCall {
 	c := &ProjectsLocationsRepositoriesReleaseConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8200,7 +8200,7 @@ func (c *ProjectsLocationsRepositoriesReleaseConfigsPatchCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The release config's name.",
+	//       "description": "Identifier. The release config's name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/releaseConfigs/[^/]+$",
 	//       "required": true,

@@ -3211,7 +3211,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// parent/primary resource if the current resource is a replica or
 	// derived form of another Database resource. Else it would be NULL.
 	// REQUIRED if the immediate parent exists when first time resource is
-	// getting ingested
+	// getting ingested, otherwise optional.
 	PrimaryResourceId *StorageDatabasecenterPartnerapiV1mainDatabaseResourceId `json:"primaryResourceId,omitempty"`
 
 	// Product: The product this resource represents.

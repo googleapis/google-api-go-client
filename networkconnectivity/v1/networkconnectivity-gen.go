@@ -2724,8 +2724,8 @@ type Route struct {
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Location: Output only. The location of the route. Uses the following
-	// form: "projects/{project}/locations/{location}" Example:
+	// Location: Output only. The origin location of the route. Uses the
+	// following form: "projects/{project}/locations/{location}" Example:
 	// projects/1234/locations/us-central1
 	Location string `json:"location,omitempty"`
 

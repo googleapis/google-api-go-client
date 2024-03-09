@@ -912,6 +912,10 @@ type Instance struct {
 	// denial period for this instance.
 	LastDenyMaintenancePeriod *DenyMaintenancePeriod `json:"lastDenyMaintenancePeriod,omitempty"`
 
+	// LinkedLspProjectNumber: Optional. Linked Google Cloud Project Number
+	// for Looker Studio Pro.
+	LinkedLspProjectNumber int64 `json:"linkedLspProjectNumber,omitempty,string"`
+
 	// LookerUri: Output only. Looker instance URI which can be used to
 	// access the Looker Instance UI.
 	LookerUri string `json:"lookerUri,omitempty"`
@@ -947,15 +951,6 @@ type Instance struct {
 	// PrivateIpEnabled: Whether private IP is enabled on the Looker
 	// instance.
 	PrivateIpEnabled bool `json:"privateIpEnabled,omitempty"`
-
-	// PscConfig: Optional. PSC configuration. Used when `enable_private_ip`
-	// and `psc_enabled` are both true.
-	PscConfig *PscConfig `json:"pscConfig,omitempty"`
-
-	// PscEnabled: Optional. Whether to use Private Service Connect (PSC)
-	// for private IP connectivity. If true, VPC peering (PSA) will not be
-	// used.
-	PscEnabled bool `json:"pscEnabled,omitempty"`
 
 	// PublicIpEnabled: Whether public IP is enabled on the Looker instance.
 	PublicIpEnabled bool `json:"publicIpEnabled,omitempty"`
@@ -1509,97 +1504,8 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PscConfig: Information for Private Service Connect (PSC) setup for a
-// Looker instance.
-type PscConfig struct {
-	// AllowedVpcs: Optional. List of VPCs that are allowed ingress into
-	// looker. Format: projects/{project}/global/networks/{network}
-	AllowedVpcs []string `json:"allowedVpcs,omitempty"`
-
-	// LookerServiceAttachmentUri: Output only. URI of the Looker service
-	// attachment.
-	LookerServiceAttachmentUri string `json:"lookerServiceAttachmentUri,omitempty"`
-
-	// ServiceAttachments: Optional. List of egress service attachment
-	// configurations.
-	ServiceAttachments []*ServiceAttachment `json:"serviceAttachments,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AllowedVpcs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowedVpcs") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PscConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod PscConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // RestartInstanceRequest: Request options for restarting an instance.
 type RestartInstanceRequest struct {
-}
-
-// ServiceAttachment: Service attachment configuration.
-type ServiceAttachment struct {
-	// ConnectionStatus: Output only. Connection status.
-	//
-	// Possible values:
-	//   "UNKNOWN" - Connection status is unspecified.
-	//   "ACCEPTED" - Connection is established and functioning normally.
-	//   "PENDING" - Connection is not established (Looker tenant project
-	// hasn't been allowlisted).
-	//   "REJECTED" - Connection is not established (Looker tenant project
-	// is explicitly in reject list).
-	//   "NEEDS_ATTENTION" - Issue with target service attachment, e.g. NAT
-	// subnet is exhausted.
-	//   "CLOSED" - Target service attachment does not exist. This status is
-	// a terminal state.
-	ConnectionStatus string `json:"connectionStatus,omitempty"`
-
-	// LocalFqdn: Required. Fully qualified domain name that will be used in
-	// the private DNS record created for the service attachment.
-	LocalFqdn string `json:"localFqdn,omitempty"`
-
-	// TargetServiceAttachmentUri: Required. URI of the service attachment
-	// to connect to. Format:
-	// projects/{project}/regions/{region}/serviceAttachments/{service_attach
-	// ment}
-	TargetServiceAttachmentUri string `json:"targetServiceAttachmentUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConnectionStatus") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConnectionStatus") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *ServiceAttachment) MarshalJSON() ([]byte, error) {
-	type NoMethod ServiceAttachment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.

@@ -1077,7 +1077,7 @@ type DatabaseResourceMetadata struct {
 	// parent/primary resource if the current resource is a replica or
 	// derived form of another Database resource. Else it would be NULL.
 	// REQUIRED if the immediate parent exists when first time resource is
-	// getting ingested
+	// getting ingested, otherwise optional.
 	PrimaryResourceId *DatabaseResourceId `json:"primaryResourceId,omitempty"`
 
 	// Product: The product this resource represents.
@@ -1435,6 +1435,8 @@ type Entitlement struct {
 	// Possible values:
 	//   "ENTITLEMENT_TYPE_UNSPECIFIED"
 	//   "DUET_AI" - The root entitlement representing Duet AI package
+	// ownership.
+	//   "GEMINI" - The root entitlement representing Gemini package
 	// ownership.
 	Type string `json:"type,omitempty"`
 

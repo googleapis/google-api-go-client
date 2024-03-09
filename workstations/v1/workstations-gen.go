@@ -224,6 +224,38 @@ type ProjectsLocationsWorkstationClustersWorkstationConfigsWorkstationsService s
 	s *Service
 }
 
+// Accelerator: An accelerator card attached to the instance.
+type Accelerator struct {
+	// Count: Optional. Number of accelerator cards exposed to the instance.
+	Count int64 `json:"count,omitempty"`
+
+	// Type: Optional. Type of accelerator resource to attach to the
+	// instance, for example, "nvidia-tesla-p100".
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Count") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Count") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Accelerator) MarshalJSON() ([]byte, error) {
+	type NoMethod Accelerator
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -569,6 +601,41 @@ func (s *DomainConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// EphemeralDirectory: An ephemeral directory which won't persist across
+// workstation sessions. It is freshly created on every workstation
+// start operation.
+type EphemeralDirectory struct {
+	// GcePd: An EphemeralDirectory backed by a Compute Engine persistent
+	// disk.
+	GcePd *GcePersistentDisk `json:"gcePd,omitempty"`
+
+	// MountPath: Required. Location of this directory in the running
+	// workstation.
+	MountPath string `json:"mountPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcePd") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcePd") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EphemeralDirectory) MarshalJSON() ([]byte, error) {
+	type NoMethod EphemeralDirectory
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Expr: Represents a textual expression in the Common Expression
 // Language (CEL) syntax. CEL is a C-like expression language. The
 // syntax and semantics of CEL are documented at
@@ -663,6 +730,10 @@ func (s *GceConfidentialInstanceConfig) MarshalJSON() ([]byte, error) {
 
 // GceInstance: A runtime using a Compute Engine instance.
 type GceInstance struct {
+	// Accelerators: Optional. A list of the type and count of accelerator
+	// cards attached to the instance.
+	Accelerators []*Accelerator `json:"accelerators,omitempty"`
+
 	// BootDiskSizeGb: Optional. The size of the boot disk for the VM in
 	// gigabytes (GB). The minimum boot disk size is `30` GB. Defaults to
 	// `50` GB.
@@ -682,8 +753,11 @@ type GceInstance struct {
 	// addresses).
 	DisablePublicIpAddresses bool `json:"disablePublicIpAddresses,omitempty"`
 
+	// DisableSsh: Optional. Whether to disable SSH access to the VM.
+	DisableSsh bool `json:"disableSsh,omitempty"`
+
 	// EnableNestedVirtualization: Optional. Whether to enable nested
-	// virtualization on Cloud Workstations VMs created under this
+	// virtualization on Cloud Workstations VMs created using this
 	// workstation configuration. Nested virtualization lets you run virtual
 	// machine (VM) instances inside your workstation. Before enabling
 	// nested virtualization, consider the following important
@@ -764,7 +838,7 @@ type GceInstance struct {
 	// (https://cloud.google.com/workstations/docs/configure-firewall-rules).
 	Tags []string `json:"tags,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "BootDiskSizeGb") to
+	// ForceSendFields is a list of field names (e.g. "Accelerators") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -772,13 +846,12 @@ type GceInstance struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BootDiskSizeGb") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Accelerators") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -788,7 +861,54 @@ func (s *GceInstance) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GceRegionalPersistentDisk: A PersistentDirectory backed by a Compute
+// GcePersistentDisk: An EphemeralDirectory is backed by a Compute
+// Engine persistent disk.
+type GcePersistentDisk struct {
+	// DiskType: Optional. Type of the disk to use. Defaults to
+	// "pd-standard".
+	DiskType string `json:"diskType,omitempty"`
+
+	// ReadOnly: Optional. Whether the disk is read only. If true, the disk
+	// may be shared by multiple VMs and source_snapshot must be set.
+	ReadOnly bool `json:"readOnly,omitempty"`
+
+	// SourceImage: Optional. Name of the disk image to use as the source
+	// for the disk. Must be empty if source_snapshot is set. Updating
+	// source_image will update content in the ephemeral directory after the
+	// workstation is restarted. This field is mutable.
+	SourceImage string `json:"sourceImage,omitempty"`
+
+	// SourceSnapshot: Optional. Name of the snapshot to use as the source
+	// for the disk. Must be empty if source_image is set. Must be empty if
+	// read_only is false. Updating source_snapshot will update content in
+	// the ephemeral directory after the workstation is restarted. This
+	// field is mutable.
+	SourceSnapshot string `json:"sourceSnapshot,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DiskType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiskType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GcePersistentDisk) MarshalJSON() ([]byte, error) {
+	type NoMethod GcePersistentDisk
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GceRegionalPersistentDisk: A Persistent Directory backed by a Compute
 // Engine regional persistent disk. The persistent_directories field is
 // repeated, but it may contain only one entry. It creates a persistent
 // disk (https://cloud.google.com/compute/docs/disks/persistent-disks)
@@ -2122,10 +2242,10 @@ type WorkstationConfig struct {
 
 	// DisableTcpConnections: Optional. Disables support for plain TCP
 	// connections in the workstation. By default the service supports TCP
-	// connections via a websocket relay. Setting this option to true
+	// connections through a websocket relay. Setting this option to true
 	// disables that relay, which prevents the usage of services that
-	// require plain tcp connections, such as ssh. When enabled, all
-	// communication must occur over https or wss.
+	// require plain TCP connections, such as SSH. When enabled, all
+	// communication must occur over HTTPS or WSS.
 	DisableTcpConnections bool `json:"disableTcpConnections,omitempty"`
 
 	// DisplayName: Optional. Human-readable name for this workstation
@@ -2153,6 +2273,10 @@ type WorkstationConfig struct {
 	// the workstation session automatically stops within 7 hours. Immutable
 	// after the workstation configuration is created.
 	EncryptionKey *CustomerEncryptionKey `json:"encryptionKey,omitempty"`
+
+	// EphemeralDirectories: Optional. Ephemeral directories which won't
+	// persist across workstation sessions.
+	EphemeralDirectories []*EphemeralDirectory `json:"ephemeralDirectories,omitempty"`
 
 	// Etag: Optional. Checksum computed by the server. May be sent on
 	// update and delete requests to make sure that the client has an

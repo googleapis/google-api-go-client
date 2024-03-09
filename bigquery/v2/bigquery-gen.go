@@ -2451,6 +2451,10 @@ type Dataset struct {
 	// modified, in milliseconds since the epoch.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
 
+	// LinkedDatasetMetadata: Output only. Metadata about the LinkedDataset.
+	// Filled out when the dataset type is LINKED.
+	LinkedDatasetMetadata *LinkedDatasetMetadata `json:"linkedDatasetMetadata,omitempty"`
+
 	// LinkedDatasetSource: Optional. The source dataset reference when the
 	// dataset is of type LINKED. For all other dataset types it is not set.
 	// This field cannot be updated once it is set. Any attempt to update
@@ -6589,6 +6593,44 @@ func (s *JsonOptions) MarshalJSON() ([]byte, error) {
 
 type JsonValue interface{}
 
+// LinkedDatasetMetadata: Metadata about the Linked Dataset.
+type LinkedDatasetMetadata struct {
+	// LinkState: Output only. Specifies whether Linked Dataset is currently
+	// in a linked state or not.
+	//
+	// Possible values:
+	//   "LINK_STATE_UNSPECIFIED" - The default value. Default to the LINKED
+	// state.
+	//   "LINKED" - Normal Linked Dataset state. Data is queryable via the
+	// Linked Dataset.
+	//   "UNLINKED" - Data publisher or owner has unlinked this Linked
+	// Dataset. It means you can no longer query or see the data in the
+	// Linked Dataset.
+	LinkState string `json:"linkState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LinkState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LinkState") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LinkedDatasetMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod LinkedDatasetMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LinkedDatasetSource: A dataset source type which refers to another
 // BigQuery dataset.
 type LinkedDatasetSource struct {
@@ -7487,6 +7529,66 @@ type ParquetOptions struct {
 
 func (s *ParquetOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ParquetOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartitionedColumn: The partitioning column information.
+type PartitionedColumn struct {
+	// Field: Output only. The name of the partition column.
+	Field string `json:"field,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartitionedColumn) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitionedColumn
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartitioningDefinition: The partitioning information, which includes
+// managed table and external table partition information.
+type PartitioningDefinition struct {
+	// PartitionedColumn: Output only. Details about each partitioning
+	// column. BigQuery native tables only support 1 partitioning column.
+	// Other table types may support 0, 1 or more partitioning columns.
+	PartitionedColumn []*PartitionedColumn `json:"partitionedColumn,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PartitionedColumn")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PartitionedColumn") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartitioningDefinition) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitioningDefinition
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9486,25 +9588,25 @@ type SparkStatistics struct {
 	Endpoints map[string]string `json:"endpoints,omitempty"`
 
 	// GcsStagingBucket: Output only. The Google Cloud Storage bucket that
-	// is used as the default filesystem by the Spark application. This
-	// fields is only filled when the Spark procedure uses the INVOKER
-	// security mode. It is inferred from the system variable
-	// @@spark_proc_properties.staging_bucket if it is provided. Otherwise,
-	// BigQuery creates a default staging bucket for the job and returns the
-	// bucket name in this field. Example: * `gs://[bucket_name]`
+	// is used as the default file system by the Spark application. This
+	// field is only filled when the Spark procedure uses the invoker
+	// security mode. The `gcsStagingBucket` bucket is inferred from the
+	// `@@spark_proc_properties.staging_bucket` system variable (if it is
+	// provided). Otherwise, BigQuery creates a default staging bucket for
+	// the job and returns the bucket name in this field. Example: *
+	// `gs://[bucket_name]`
 	GcsStagingBucket string `json:"gcsStagingBucket,omitempty"`
 
 	// KmsKeyName: Output only. The Cloud KMS encryption key that is used to
 	// protect the resources created by the Spark job. If the Spark
-	// procedure uses DEFINER security mode, the Cloud KMS key is inferred
-	// from the Spark connection associated with the procedure if it is
-	// provided. Otherwise the key is inferred from the default key of the
-	// Spark connection's project if the CMEK organization policy is
-	// enforced. If the Spark procedure uses INVOKER security mode, the
-	// Cloud KMS encryption key is inferred from the system variable
-	// @@spark_proc_properties.kms_key_name if it is provided. Otherwise,
-	// the key is inferred fromt he default key of the BigQuery job's
-	// project if the CMEK organization policy is enforced. Example: *
+	// procedure uses the invoker security mode, the Cloud KMS encryption
+	// key is either inferred from the provided system variable,
+	// `@@spark_proc_properties.kms_key_name`, or the default key of the
+	// BigQuery job's project (if the CMEK organization policy is enforced).
+	// Otherwise, the Cloud KMS key is either inferred from the Spark
+	// connection associated with the procedure (if it is provided), or from
+	// the default key of the Spark connection's project if the CMEK
+	// organization policy is enforced. Example: *
 	// `projects/[kms_project_id]/locations/[region]/keyRings/[key_region]/cr
 	// yptoKeys/[key]`
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
@@ -10053,6 +10155,11 @@ type Table struct {
 	// is not kept in real time, and might be delayed by a few seconds to a
 	// few minutes.
 	NumTotalPhysicalBytes int64 `json:"numTotalPhysicalBytes,omitempty,string"`
+
+	// PartitionDefinition: Output only. The partition information for all
+	// table formats, including managed partitioned tables, hive partitioned
+	// tables, and iceberg partitioned tables.
+	PartitionDefinition *PartitioningDefinition `json:"partitionDefinition,omitempty"`
 
 	// RangePartitioning: If specified, configures range partitioning for
 	// this table.
@@ -10643,8 +10750,9 @@ type TableFieldSchema struct {
 	// Type: Required. The field data type. Possible values include: *
 	// STRING * BYTES * INTEGER (or INT64) * FLOAT (or FLOAT64) * BOOLEAN
 	// (or BOOL) * TIMESTAMP * DATE * TIME * DATETIME * GEOGRAPHY * NUMERIC
-	// * BIGNUMERIC * JSON * RECORD (or STRUCT) Use of RECORD/STRUCT
-	// indicates that the field contains a nested schema.
+	// * BIGNUMERIC * JSON * RECORD (or STRUCT) * RANGE (Preview
+	// (/products/#product-launch-stages)) Use of RECORD/STRUCT indicates
+	// that the field contains a nested schema.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Categories") to
@@ -10733,8 +10841,8 @@ func (s *TableFieldSchemaPolicyTags) MarshalJSON() ([]byte, error) {
 // TableFieldSchemaRangeElementType: Represents the type of a field
 // element.
 type TableFieldSchemaRangeElementType struct {
-	// Type: Required. The type of a field element. See
-	// TableFieldSchema.type.
+	// Type: Required. The type of a field element. For more information,
+	// see TableFieldSchema.type.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to

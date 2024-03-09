@@ -2207,6 +2207,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/data-portability",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "dataportability:v1",
+      "name": "dataportability",
+      "version": "v1",
+      "title": "Data Portability API",
+      "description": "The Data Portability API lets you build applications that request authorization from a user to move a copy of data from Google services into your application. This enables data portability and facilitates switching services.",
+      "discoveryRestUrl": "https://dataportability.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/data-portability",
       "preferred": true
     },
     {

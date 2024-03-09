@@ -3365,6 +3365,9 @@ type IdentityServiceAuthMethod struct {
 	// Proxy: Proxy server address to use for auth method.
 	Proxy string `json:"proxy,omitempty"`
 
+	// SamlConfig: SAML specific configuration.
+	SamlConfig *IdentityServiceSamlConfig `json:"samlConfig,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AzureadConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3402,6 +3405,10 @@ type IdentityServiceAzureADConfig struct {
 	// EncryptedClientSecret: Output only. Encrypted AzureAD client secret.
 	EncryptedClientSecret string `json:"encryptedClientSecret,omitempty"`
 
+	// GroupFormat: Optional. Format of the AzureAD groups that the client
+	// wants for auth.
+	GroupFormat string `json:"groupFormat,omitempty"`
+
 	// KubectlRedirectUri: The redirect URL that kubectl uses for
 	// authorization.
 	KubectlRedirectUri string `json:"kubectlRedirectUri,omitempty"`
@@ -3409,6 +3416,10 @@ type IdentityServiceAzureADConfig struct {
 	// Tenant: Kind of Azure AD account to be authenticated. Supported
 	// values are or for accounts belonging to a specific tenant.
 	Tenant string `json:"tenant,omitempty"`
+
+	// UserClaim: Optional. Claim in the AzureAD ID Token that holds the
+	// user details.
+	UserClaim string `json:"userClaim,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ClientId") to
 	// unconditionally include in API requests. By default, fields with
@@ -3606,6 +3617,69 @@ type IdentityServiceOidcConfig struct {
 
 func (s *IdentityServiceOidcConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentityServiceOidcConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceSamlConfig: Configuration for the SAML Auth flow.
+type IdentityServiceSamlConfig struct {
+	// AttributeMapping: Optional. The mapping of additional user attributes
+	// like nickname, birthday and address etc.. `key` is the name of this
+	// additional attribute. `value` is a string presenting as CEL(common
+	// expression language, go/cel) used for getting the value from the
+	// resources. Take nickname as an example, in this case, `key` is
+	// "attribute.nickname" and `value` is "assertion.nickname".
+	AttributeMapping map[string]string `json:"attributeMapping,omitempty"`
+
+	// GroupPrefix: Optional. Prefix to prepend to group name.
+	GroupPrefix string `json:"groupPrefix,omitempty"`
+
+	// GroupsAttribute: Optional. The SAML attribute to read groups from.
+	// This value is expected to be a string and will be passed along as-is
+	// (with the option of being prefixed by the `group_prefix`).
+	GroupsAttribute string `json:"groupsAttribute,omitempty"`
+
+	// IdentityProviderCertificates: Required. The list of IdP certificates
+	// to validate the SAML response against.
+	IdentityProviderCertificates []string `json:"identityProviderCertificates,omitempty"`
+
+	// IdentityProviderId: Required. The entity ID of the SAML IdP.
+	IdentityProviderId string `json:"identityProviderId,omitempty"`
+
+	// IdentityProviderSsoUri: Required. The URI where the SAML IdP exposes
+	// the SSO service.
+	IdentityProviderSsoUri string `json:"identityProviderSsoUri,omitempty"`
+
+	// UserAttribute: Optional. The SAML attribute to read username from. If
+	// unspecified, the username will be read from the NameID element of the
+	// assertion in SAML response. This value is expected to be a string and
+	// will be passed along as-is (with the option of being prefixed by the
+	// `user_prefix`).
+	UserAttribute string `json:"userAttribute,omitempty"`
+
+	// UserPrefix: Optional. Prefix to prepend to user name.
+	UserPrefix string `json:"userPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AttributeMapping") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AttributeMapping") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceSamlConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceSamlConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

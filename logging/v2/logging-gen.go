@@ -1323,7 +1323,8 @@ type CreateBucketRequest struct {
 
 	// BucketId: Required. A client-assigned identifier such as "my-bucket".
 	// Identifiers are limited to 100 characters and can include only
-	// letters, digits, underscores, hyphens, and periods.
+	// letters, digits, underscores, hyphens, and periods. Bucket
+	// identifiers must start with an alphanumeric character.
 	BucketId string `json:"bucketId,omitempty"`
 
 	// Parent: Required. The resource in which to create the log bucket:
@@ -2656,7 +2657,7 @@ func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
 
 // LogBucket: Describes a repository in which log entries are stored.
 type LogBucket struct {
-	// AnalyticsEnabled: Optional. Whether log analytics is enabled for this
+	// AnalyticsEnabled: Whether log analytics is enabled for this
 	// bucket.Once enabled, log analytics features cannot be disabled.
 	AnalyticsEnabled bool `json:"analyticsEnabled,omitempty"`
 
@@ -4365,7 +4366,7 @@ type SavedQuery struct {
 	// query.
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: Optional. The user specified title for the SavedQuery.
+	// DisplayName: Required. The user specified title for the SavedQuery.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// LoggingQuery: Logging query that can be executed in Logs Explorer or
@@ -6471,7 +6472,8 @@ func (r *BillingAccountsLocationsBucketsService) Create(parent string, logbucket
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *BillingAccountsLocationsBucketsCreateCall) BucketId(bucketId string) *BillingAccountsLocationsBucketsCreateCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -6577,7 +6579,7 @@ func (c *BillingAccountsLocationsBucketsCreateCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6632,7 +6634,8 @@ func (r *BillingAccountsLocationsBucketsService) CreateAsync(parent string, logb
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *BillingAccountsLocationsBucketsCreateAsyncCall) BucketId(bucketId string) *BillingAccountsLocationsBucketsCreateAsyncCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -6738,7 +6741,7 @@ func (c *BillingAccountsLocationsBucketsCreateAsyncCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15243,7 +15246,8 @@ func (r *FoldersLocationsBucketsService) Create(parent string, logbucket *LogBuc
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *FoldersLocationsBucketsCreateCall) BucketId(bucketId string) *FoldersLocationsBucketsCreateCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -15349,7 +15353,7 @@ func (c *FoldersLocationsBucketsCreateCall) Do(opts ...googleapi.CallOption) (*L
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -15404,7 +15408,8 @@ func (r *FoldersLocationsBucketsService) CreateAsync(parent string, logbucket *L
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *FoldersLocationsBucketsCreateAsyncCall) BucketId(bucketId string) *FoldersLocationsBucketsCreateAsyncCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -15510,7 +15515,7 @@ func (c *FoldersLocationsBucketsCreateAsyncCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -21357,7 +21362,8 @@ func (r *LocationsBucketsService) Create(parent string, logbucket *LogBucket) *L
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *LocationsBucketsCreateCall) BucketId(bucketId string) *LocationsBucketsCreateCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -21463,7 +21469,7 @@ func (c *LocationsBucketsCreateCall) Do(opts ...googleapi.CallOption) (*LogBucke
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -21518,7 +21524,8 @@ func (r *LocationsBucketsService) CreateAsync(parent string, logbucket *LogBucke
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *LocationsBucketsCreateAsyncCall) BucketId(bucketId string) *LocationsBucketsCreateAsyncCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -21624,7 +21631,7 @@ func (c *LocationsBucketsCreateAsyncCall) Do(opts ...googleapi.CallOption) (*Ope
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -27085,7 +27092,8 @@ func (r *OrganizationsLocationsBucketsService) Create(parent string, logbucket *
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *OrganizationsLocationsBucketsCreateCall) BucketId(bucketId string) *OrganizationsLocationsBucketsCreateCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -27191,7 +27199,7 @@ func (c *OrganizationsLocationsBucketsCreateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -27246,7 +27254,8 @@ func (r *OrganizationsLocationsBucketsService) CreateAsync(parent string, logbuc
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *OrganizationsLocationsBucketsCreateAsyncCall) BucketId(bucketId string) *OrganizationsLocationsBucketsCreateAsyncCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -27352,7 +27361,7 @@ func (c *OrganizationsLocationsBucketsCreateAsyncCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -34334,7 +34343,8 @@ func (r *ProjectsLocationsBucketsService) Create(parent string, logbucket *LogBu
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *ProjectsLocationsBucketsCreateCall) BucketId(bucketId string) *ProjectsLocationsBucketsCreateCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -34440,7 +34450,7 @@ func (c *ProjectsLocationsBucketsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -34495,7 +34505,8 @@ func (r *ProjectsLocationsBucketsService) CreateAsync(parent string, logbucket *
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *ProjectsLocationsBucketsCreateAsyncCall) BucketId(bucketId string) *ProjectsLocationsBucketsCreateAsyncCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -34601,7 +34612,7 @@ func (c *ProjectsLocationsBucketsCreateAsyncCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

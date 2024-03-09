@@ -333,6 +333,45 @@ func (s *AclEntry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AcquireSsrsLeaseContext: Acquire SSRS lease context.
+type AcquireSsrsLeaseContext struct {
+	// Duration: Lease duration needed for SSRS setup.
+	Duration string `json:"duration,omitempty"`
+
+	// ReportDatabase: The report database to be used for SSRS setup.
+	ReportDatabase string `json:"reportDatabase,omitempty"`
+
+	// ServiceLogin: The username to be used as the service login to connect
+	// to the report database for SSRS setup.
+	ServiceLogin string `json:"serviceLogin,omitempty"`
+
+	// SetupLogin: The username to be used as the setup login to connect to
+	// the database server for SSRS setup.
+	SetupLogin string `json:"setupLogin,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Duration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Duration") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AcquireSsrsLeaseContext) MarshalJSON() ([]byte, error) {
+	type NoMethod AcquireSsrsLeaseContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AdvancedMachineFeatures: Specifies options for controlling advanced
 // machine features.
 type AdvancedMachineFeatures struct {
@@ -914,6 +953,14 @@ type ConnectSettings struct {
 	// minor version is 35.
 	//   "MYSQL_8_0_36" - The database major version is MySQL 8.0 and the
 	// minor version is 36.
+	//   "MYSQL_8_0_37" - The database major version is MySQL 8.0 and the
+	// minor version is 37.
+	//   "MYSQL_8_0_38" - The database major version is MySQL 8.0 and the
+	// minor version is 38.
+	//   "MYSQL_8_0_39" - The database major version is MySQL 8.0 and the
+	// minor version is 39.
+	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the
+	// minor version is 40.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server
@@ -1193,6 +1240,14 @@ type DatabaseInstance struct {
 	// minor version is 35.
 	//   "MYSQL_8_0_36" - The database major version is MySQL 8.0 and the
 	// minor version is 36.
+	//   "MYSQL_8_0_37" - The database major version is MySQL 8.0 and the
+	// minor version is 37.
+	//   "MYSQL_8_0_38" - The database major version is MySQL 8.0 and the
+	// minor version is 38.
+	//   "MYSQL_8_0_39" - The database major version is MySQL 8.0 and the
+	// minor version is 39.
+	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the
+	// minor version is 40.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server
@@ -2121,6 +2176,14 @@ type Flag struct {
 	// minor version is 35.
 	//   "MYSQL_8_0_36" - The database major version is MySQL 8.0 and the
 	// minor version is 36.
+	//   "MYSQL_8_0_37" - The database major version is MySQL 8.0 and the
+	// minor version is 37.
+	//   "MYSQL_8_0_38" - The database major version is MySQL 8.0 and the
+	// minor version is 38.
+	//   "MYSQL_8_0_39" - The database major version is MySQL 8.0 and the
+	// minor version is 39.
+	//   "MYSQL_8_0_40" - The database major version is MySQL 8.0 and the
+	// minor version is 40.
 	//   "SQLSERVER_2019_STANDARD" - The database version is SQL Server 2019
 	// Standard.
 	//   "SQLSERVER_2019_ENTERPRISE" - The database version is SQL Server
@@ -2600,6 +2663,38 @@ type InstanceReference struct {
 
 func (s *InstanceReference) MarshalJSON() ([]byte, error) {
 	type NoMethod InstanceReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InstancesAcquireSsrsLeaseRequest: Request to acquire a lease for
+// SSRS.
+type InstancesAcquireSsrsLeaseRequest struct {
+	// AcquireSsrsLeaseContext: Contains details about the acquire SSRS
+	// lease operation.
+	AcquireSsrsLeaseContext *AcquireSsrsLeaseContext `json:"acquireSsrsLeaseContext,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AcquireSsrsLeaseContext") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AcquireSsrsLeaseContext")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstancesAcquireSsrsLeaseRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InstancesAcquireSsrsLeaseRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3407,6 +3502,10 @@ func (s *OnPremisesConfiguration) MarshalJSON() ([]byte, error) {
 // return an Operation resource, only the fields relevant to the
 // operation are populated in the resource.
 type Operation struct {
+	// AcquireSsrsLeaseContext: The context for acquire SSRS lease
+	// operation, if applicable.
+	AcquireSsrsLeaseContext *AcquireSsrsLeaseContext `json:"acquireSsrsLeaseContext,omitempty"`
+
 	// ApiWarning: An Admin API warning message.
 	ApiWarning *ApiWarning `json:"apiWarning,omitempty"`
 
@@ -3497,6 +3596,10 @@ type Operation struct {
 	// database for auto recovery.
 	//   "REENCRYPT" - Re-encrypts CMEK instances with latest key version.
 	//   "SWITCHOVER" - Switches over to replica instance from primary.
+	//   "ACQUIRE_SSRS_LEASE" - Acquire a lease for the setup of SQL Server
+	// Reporting Services (SSRS).
+	//   "RELEASE_SSRS_LEASE" - Release a lease for the setup of SQL Server
+	// Reporting Services (SSRS).
 	OperationType string `json:"operationType,omitempty"`
 
 	// SelfLink: The URI of this resource.
@@ -3533,20 +3636,22 @@ type Operation struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "ApiWarning") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AcquireSsrsLeaseContext") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ApiWarning") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AcquireSsrsLeaseContext")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4147,6 +4252,10 @@ type Settings struct {
 	//   "ENTERPRISE_PLUS" - The instance is an Enterprise Plus edition.
 	Edition string `json:"edition,omitempty"`
 
+	// EnableGoogleMlIntegration: Optional. Configuration to enable Cloud
+	// SQL Vertex AI Integration
+	EnableGoogleMlIntegration bool `json:"enableGoogleMlIntegration,omitempty"`
+
 	// InsightsConfig: Insights configuration, for now relevant only for
 	// Postgres.
 	InsightsConfig *InsightsConfig `json:"insightsConfig,omitempty"`
@@ -4415,6 +4524,39 @@ func (s *SqlExternalSyncSettingError) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SqlInstancesAcquireSsrsLeaseResponse: Response for the acquire SSRS
+// lease request.
+type SqlInstancesAcquireSsrsLeaseResponse struct {
+	// OperationId: The unique identifier for this operation.
+	OperationId string `json:"operationId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "OperationId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OperationId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlInstancesAcquireSsrsLeaseResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlInstancesAcquireSsrsLeaseResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SqlInstancesGetDiskShrinkConfigResponse: Instance get disk shrink
 // config response.
 type SqlInstancesGetDiskShrinkConfigResponse struct {
@@ -4488,6 +4630,39 @@ type SqlInstancesGetLatestRecoveryTimeResponse struct {
 
 func (s *SqlInstancesGetLatestRecoveryTimeResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlInstancesGetLatestRecoveryTimeResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlInstancesReleaseSsrsLeaseResponse: Response for the release SSRS
+// lease request.
+type SqlInstancesReleaseSsrsLeaseResponse struct {
+	// OperationId: The unique identifier for this operation.
+	OperationId string `json:"operationId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "OperationId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OperationId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlInstancesReleaseSsrsLeaseResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlInstancesReleaseSsrsLeaseResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4598,6 +4773,17 @@ type SqlInstancesVerifyExternalSyncSettingsRequest struct {
 	//   "OFFLINE" - Offline external sync only dumps and loads a one-time
 	// snapshot of the primary instance's data
 	SyncMode string `json:"syncMode,omitempty"`
+
+	// SyncParallelLevel: Optional. Parallel level for initial data sync.
+	// Currently only applicable for PostgreSQL.
+	//
+	// Possible values:
+	//   "EXTERNAL_SYNC_PARALLEL_LEVEL_UNSPECIFIED" - Unknown sync parallel
+	// level. Will be defaulted to OPTIMAL.
+	//   "MIN" - Minimal parallel level.
+	//   "OPTIMAL" - Optimal parallel level.
+	//   "MAX" - Maximum parallel level.
+	SyncParallelLevel string `json:"syncParallelLevel,omitempty"`
 
 	// VerifyConnectionOnly: Flag to enable verifying connection only
 	VerifyConnectionOnly bool `json:"verifyConnectionOnly,omitempty"`
@@ -7539,6 +7725,165 @@ func (c *FlagsListCall) Do(opts ...googleapi.CallOption) (*FlagsListResponse, er
 
 }
 
+// method id "sql.instances.acquireSsrsLease":
+
+type InstancesAcquireSsrsLeaseCall struct {
+	s                                *Service
+	project                          string
+	instance                         string
+	instancesacquiressrsleaserequest *InstancesAcquireSsrsLeaseRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// AcquireSsrsLease: Acquire a lease for the setup of SQL Server
+// Reporting Services (SSRS).
+//
+//   - instance: Cloud SQL instance ID. This doesn't include the project
+//     ID. It's composed of lowercase letters, numbers, and hyphens, and
+//     it must start with a letter. The total length must be 98 characters
+//     or less (Example: instance-id).
+//   - project: Project ID of the project that contains the instance
+//     (Example: project-id).
+func (r *InstancesService) AcquireSsrsLease(project string, instance string, instancesacquiressrsleaserequest *InstancesAcquireSsrsLeaseRequest) *InstancesAcquireSsrsLeaseCall {
+	c := &InstancesAcquireSsrsLeaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.instance = instance
+	c.instancesacquiressrsleaserequest = instancesacquiressrsleaserequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesAcquireSsrsLeaseCall) Fields(s ...googleapi.Field) *InstancesAcquireSsrsLeaseCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InstancesAcquireSsrsLeaseCall) Context(ctx context.Context) *InstancesAcquireSsrsLeaseCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesAcquireSsrsLeaseCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstancesAcquireSsrsLeaseCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.instancesacquiressrsleaserequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{project}/instances/{instance}/acquireSsrsLease")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"instance": c.instance,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sql.instances.acquireSsrsLease" call.
+// Exactly one of *SqlInstancesAcquireSsrsLeaseResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *SqlInstancesAcquireSsrsLeaseResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *InstancesAcquireSsrsLeaseCall) Do(opts ...googleapi.CallOption) (*SqlInstancesAcquireSsrsLeaseResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SqlInstancesAcquireSsrsLeaseResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Acquire a lease for the setup of SQL Server Reporting Services (SSRS).",
+	//   "flatPath": "v1/projects/{project}/instances/{instance}/acquireSsrsLease",
+	//   "httpMethod": "POST",
+	//   "id": "sql.instances.acquireSsrsLease",
+	//   "parameterOrder": [
+	//     "project",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Required. Cloud SQL instance ID. This doesn't include the project ID. It's composed of lowercase letters, numbers, and hyphens, and it must start with a letter. The total length must be 98 characters or less (Example: instance-id).",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Required. Project ID of the project that contains the instance (Example: project-id).",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/projects/{project}/instances/{instance}/acquireSsrsLease",
+	//   "request": {
+	//     "$ref": "InstancesAcquireSsrsLeaseRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SqlInstancesAcquireSsrsLeaseResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sqlservice.admin"
+	//   ]
+	// }
+
+}
+
 // method id "sql.instances.addServerCa":
 
 type InstancesAddServerCaCall struct {
@@ -9904,6 +10249,154 @@ func (c *InstancesReencryptCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/sqlservice.admin"
+	//   ]
+	// }
+
+}
+
+// method id "sql.instances.releaseSsrsLease":
+
+type InstancesReleaseSsrsLeaseCall struct {
+	s          *Service
+	project    string
+	instance   string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// ReleaseSsrsLease: Release a lease for the setup of SQL Server
+// Reporting Services (SSRS).
+//
+//   - instance: The Cloud SQL instance ID. This doesn't include the
+//     project ID. The instance ID contains lowercase letters, numbers,
+//     and hyphens, and it must start with a letter. This ID can have a
+//     maximum length of 98 characters.
+//   - project: The project ID that contains the instance.
+func (r *InstancesService) ReleaseSsrsLease(project string, instance string) *InstancesReleaseSsrsLeaseCall {
+	c := &InstancesReleaseSsrsLeaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.project = project
+	c.instance = instance
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InstancesReleaseSsrsLeaseCall) Fields(s ...googleapi.Field) *InstancesReleaseSsrsLeaseCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InstancesReleaseSsrsLeaseCall) Context(ctx context.Context) *InstancesReleaseSsrsLeaseCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InstancesReleaseSsrsLeaseCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InstancesReleaseSsrsLeaseCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/projects/{project}/instances/{instance}/releaseSsrsLease")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"project":  c.project,
+		"instance": c.instance,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "sql.instances.releaseSsrsLease" call.
+// Exactly one of *SqlInstancesReleaseSsrsLeaseResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *SqlInstancesReleaseSsrsLeaseResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *InstancesReleaseSsrsLeaseCall) Do(opts ...googleapi.CallOption) (*SqlInstancesReleaseSsrsLeaseResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SqlInstancesReleaseSsrsLeaseResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Release a lease for the setup of SQL Server Reporting Services (SSRS).",
+	//   "flatPath": "v1/projects/{project}/instances/{instance}/releaseSsrsLease",
+	//   "httpMethod": "POST",
+	//   "id": "sql.instances.releaseSsrsLease",
+	//   "parameterOrder": [
+	//     "project",
+	//     "instance"
+	//   ],
+	//   "parameters": {
+	//     "instance": {
+	//       "description": "Required. The Cloud SQL instance ID. This doesn't include the project ID. The instance ID contains lowercase letters, numbers, and hyphens, and it must start with a letter. This ID can have a maximum length of 98 characters.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "project": {
+	//       "description": "Required. The project ID that contains the instance.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/projects/{project}/instances/{instance}/releaseSsrsLease",
+	//   "response": {
+	//     "$ref": "SqlInstancesReleaseSsrsLeaseResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",

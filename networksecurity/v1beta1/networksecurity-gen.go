@@ -905,6 +905,10 @@ type FirewallEndpointAssociation struct {
 	// CreateTime: Output only. Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
 
+	// Disabled: Optional. Whether the association is disabled. True
+	// indicates that traffic won't be intercepted
+	Disabled bool `json:"disabled,omitempty"`
+
 	// FirewallEndpoint: Required. The URL of the FirewallEndpoint that is
 	// being associated.
 	FirewallEndpoint string `json:"firewallEndpoint,omitempty"`

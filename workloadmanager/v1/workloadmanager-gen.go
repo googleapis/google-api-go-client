@@ -1650,13 +1650,26 @@ func (s *RunEvaluationRequest) MarshalJSON() ([]byte, error) {
 
 // SapComponent: The component of sap workload
 type SapComponent struct {
+	// HaHosts: A list of host URIs that are part of the HA configuration if
+	// present. An empty list indicates the component is not configured for
+	// HA.
+	HaHosts []string `json:"haHosts,omitempty"`
+
 	// Resources: Output only. resources in the component
 	Resources []*CloudResource `json:"resources,omitempty"`
 
 	// Sid: Output only. sid is the sap component identificator
 	Sid string `json:"sid,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Resources") to
+	// TopologyType: The detected topology of the component.
+	//
+	// Possible values:
+	//   "TOPOLOGY_TYPE_UNSPECIFIED" - Unspecified topology.
+	//   "TOPOLOGY_SCALE_UP" - A scale-up single node system.
+	//   "TOPOLOGY_SCALE_OUT" - A scale-out multi-node system.
+	TopologyType string `json:"topologyType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HaHosts") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1664,7 +1677,7 @@ type SapComponent struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Resources") to include in
+	// NullFields is a list of field names (e.g. "HaHosts") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as

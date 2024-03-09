@@ -463,6 +463,51 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BoostConfig: A configuration that workstations can boost to.
+type BoostConfig struct {
+	// Accelerators: Optional. A list of the type and count of accelerator
+	// cards attached to the boost instance. Defaults to `none`.
+	Accelerators []*Accelerator `json:"accelerators,omitempty"`
+
+	// Id: Optional. Required. The id to be used for the boost config.
+	Id string `json:"id,omitempty"`
+
+	// MachineType: Optional. The type of machine that boosted VM instances
+	// will use—for example, `e2-standard-4`. For more information about
+	// machine types that Cloud Workstations supports, see the list of
+	// available machine types
+	// (https://cloud.google.com/workstations/docs/available-machine-types).
+	// Defaults to `e2-standard-4`.
+	MachineType string `json:"machineType,omitempty"`
+
+	// PoolSize: Optional. The number of boost VMs that the system should
+	// keep idle so that workstations can be boosted quickly. Defaults to
+	// `0`.
+	PoolSize int64 `json:"poolSize,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Accelerators") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Accelerators") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BoostConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BoostConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
@@ -734,6 +779,11 @@ type GceInstance struct {
 	// cards attached to the instance.
 	Accelerators []*Accelerator `json:"accelerators,omitempty"`
 
+	// BoostConfigs: Optional. A list of the boost configurations that
+	// workstations created using this workstation configuration are allowed
+	// to use.
+	BoostConfigs []*BoostConfig `json:"boostConfigs,omitempty"`
+
 	// BootDiskSizeGb: Optional. The size of the boot disk for the VM in
 	// gigabytes (GB). The minimum boot disk size is `30` GB. Defaults to
 	// `50` GB.
@@ -757,7 +807,7 @@ type GceInstance struct {
 	DisableSsh bool `json:"disableSsh,omitempty"`
 
 	// EnableNestedVirtualization: Optional. Whether to enable nested
-	// virtualization on Cloud Workstations VMs created under this
+	// virtualization on Cloud Workstations VMs created using this
 	// workstation configuration. Nested virtualization lets you run virtual
 	// machine (VM) instances inside your workstation. Before enabling
 	// nested virtualization, consider the following important
@@ -908,7 +958,7 @@ func (s *GcePersistentDisk) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GceRegionalPersistentDisk: A PersistentDirectory backed by a Compute
+// GceRegionalPersistentDisk: A Persistent Directory backed by a Compute
 // Engine regional persistent disk. The persistent_directories field is
 // repeated, but it may contain only one entry. It creates a persistent
 // disk (https://cloud.google.com/compute/docs/disks/persistent-disks)
@@ -1739,6 +1789,10 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // StartWorkstationRequest: Request message for StartWorkstation.
 type StartWorkstationRequest struct {
+	// BoostConfig: Optional. If set, the workstation starts using the boost
+	// configuration with the specified ID.
+	BoostConfig string `json:"boostConfig,omitempty"`
+
 	// Etag: Optional. If set, the request will be rejected if the latest
 	// version of the workstation on the server does not have this ETag.
 	Etag string `json:"etag,omitempty"`
@@ -1747,7 +1801,7 @@ type StartWorkstationRequest struct {
 	// review, but do not actually apply it.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// ForceSendFields is a list of field names (e.g. "BoostConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1755,10 +1809,10 @@ type StartWorkstationRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "BoostConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2155,10 +2209,10 @@ type WorkstationConfig struct {
 
 	// DisableTcpConnections: Optional. Disables support for plain TCP
 	// connections in the workstation. By default the service supports TCP
-	// connections via a websocket relay. Setting this option to true
+	// connections through a websocket relay. Setting this option to true
 	// disables that relay, which prevents the usage of services that
-	// require plain tcp connections, such as ssh. When enabled, all
-	// communication must occur over https or wss.
+	// require plain TCP connections, such as SSH. When enabled, all
+	// communication must occur over HTTPS or WSS.
 	DisableTcpConnections bool `json:"disableTcpConnections,omitempty"`
 
 	// DisplayName: Optional. Human-readable name for this workstation

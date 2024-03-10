@@ -242,6 +242,9 @@ type Assignment struct {
 	// from other reservations.
 	//   "BACKGROUND" - Background jobs that BigQuery runs for the customers
 	// in the background.
+	//   "CONTINUOUS" - Continuous SQL jobs will use this reservation.
+	// Reservations with continuous assignments cannot be mixed with
+	// non-continuous assignments.
 	JobType string `json:"jobType,omitempty"`
 
 	// Name: Output only. Name of the resource. E.g.:
@@ -745,8 +748,8 @@ type Reservation struct {
 	// This is a soft target due to asynchronous nature of the system and
 	// various optimizations for small queries. Default value is 0 which
 	// means that concurrency target will be automatically computed by the
-	// system. NOTE: this field is exposed as `target_job_concurrency` in
-	// the Information Schema, DDL and BQ CLI.
+	// system. NOTE: this field is exposed as target job concurrency in the
+	// Information Schema, DDL and BQ CLI.
 	Concurrency int64 `json:"concurrency,omitempty,string"`
 
 	// CreationTime: Output only. Creation time of the reservation.

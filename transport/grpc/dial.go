@@ -179,7 +179,7 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 		ts = ds.InternalCredentials.TokenSource
 	} else if ds.Credentials != nil {
 		ts = ds.Credentials.TokenSource
-	} else if ds.TokenProvider != nil {
+	} else if ds.TokenSource != nil {
 		ts = ds.TokenSource
 	}
 	var tp auth.TokenProvider

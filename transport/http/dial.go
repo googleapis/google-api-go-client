@@ -69,7 +69,7 @@ func newClientNewAuth(ctx context.Context, settings *internal.DialSettings) (*ht
 		ts = settings.InternalCredentials.TokenSource
 	} else if settings.Credentials != nil {
 		ts = settings.Credentials.TokenSource
-	} else if settings.TokenProvider != nil {
+	} else if settings.TokenSource != nil {
 		ts = settings.TokenSource
 	}
 	var tp auth.TokenProvider

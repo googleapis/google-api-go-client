@@ -48,8 +48,12 @@ func credsNewAuth(ctx context.Context, settings *DialSettings) (*google.Credenti
 		return settings.InternalCredentials, nil
 	} else if settings.Credentials != nil {
 		return settings.Credentials, nil
-	} else if settings.TokenProvider != nil {
+	} else if settings.TokenSource != nil {
 		return &google.Credentials{TokenSource: settings.TokenSource}, nil
+	}
+
+	if settings.TokenProvider != nil {
+		return &google.Credentials{TokenSource: oauth2adapt.TokenSourceFromTokenProvider(settings.TokenProvider)}, nil
 	}
 
 	var useSelfSignedJWT bool

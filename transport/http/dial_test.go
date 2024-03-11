@@ -10,7 +10,6 @@ import (
 	"strings"
 	"testing"
 
-	"go.opencensus.io/plugin/ochttp"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/option"
@@ -28,21 +27,13 @@ func TestNewClient(t *testing.T) {
 	if endpoint != "" {
 		t.Errorf("got: %s, want: ''", endpoint)
 	}
-	if got, want := fmt.Sprintf("%T", client.Transport), "*oauth2.Transport"; got != want {
-		t.Fatalf("got %s, want: %s", got, want)
-	}
-	t1 := client.Transport.(*oauth2.Transport)
-	if got, want := fmt.Sprintf("%T", t1.Base), "*ochttp.Transport"; got != want {
-		t.Fatalf("got %s, want: %s", got, want)
-	}
-	t2 := t1.Base.(*ochttp.Transport)
-	if got, want := fmt.Sprintf("%T", t2.Base), "*otelhttp.Transport"; got != want {
+	if got, want := fmt.Sprintf("%T", client.Transport), "*httptransport.authTransport"; got != want {
 		t.Fatalf("got %s, want: %s", got, want)
 	}
 }
 
 func TestNewClient_MismatchedUniverseChecks(t *testing.T) {
-
+	t.Setenv("GOOGLE_API_GO_EXPERIMENTAL_DISABLE_NEW_AUTH_LIB", "true")
 	rootTokenScope := "https://www.googleapis.com/auth/cloud-platform"
 	otherUniverse := "example.com"
 	defaultUniverse := "googleapis.com"

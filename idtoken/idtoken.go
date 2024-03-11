@@ -104,7 +104,7 @@ func NewTokenSource(ctx context.Context, audience string, opts ...ClientOption) 
 }
 
 func newTokenSourceNewAuth(ctx context.Context, audience string, ds *internal.DialSettings) (oauth2.TokenSource, error) {
-	if ds.TokenSource != nil {
+	if ds.TokenProvider != nil {
 		return nil, fmt.Errorf("idtoken: option.WithTokenProvider not supported")
 	}
 	tp, err := newidtoken.NewTokenProvider(&newidtoken.Options{

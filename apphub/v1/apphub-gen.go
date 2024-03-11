@@ -908,7 +908,7 @@ func (s *ListApplicationsResponse) MarshalJSON() ([]byte, error) {
 
 // ListDiscoveredServicesResponse: Response for ListDiscoveredServices.
 type ListDiscoveredServicesResponse struct {
-	// DiscoveredServices: List of discovered services.
+	// DiscoveredServices: List of Discovered Services.
 	DiscoveredServices []*DiscoveredService `json:"discoveredServices,omitempty"`
 
 	// NextPageToken: A token identifying a page of results the server
@@ -949,7 +949,7 @@ func (s *ListDiscoveredServicesResponse) MarshalJSON() ([]byte, error) {
 // ListDiscoveredWorkloadsResponse: Response for
 // ListDiscoveredWorkloads.
 type ListDiscoveredWorkloadsResponse struct {
-	// DiscoveredWorkloads: List of discovered workloads.
+	// DiscoveredWorkloads: List of Discovered Workloads.
 	DiscoveredWorkloads []*DiscoveredWorkload `json:"discoveredWorkloads,omitempty"`
 
 	// NextPageToken: A token identifying a page of results the server
@@ -1232,7 +1232,7 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 // LookupDiscoveredServiceResponse: Response for
 // LookupDiscoveredService.
 type LookupDiscoveredServiceResponse struct {
-	// DiscoveredService: Discovered service if exists, empty otherwise.
+	// DiscoveredService: Discovered Service if exists, empty otherwise.
 	DiscoveredService *DiscoveredService `json:"discoveredService,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1266,7 +1266,7 @@ func (s *LookupDiscoveredServiceResponse) MarshalJSON() ([]byte, error) {
 // LookupDiscoveredWorkloadResponse: Response for
 // LookupDiscoveredWorkload.
 type LookupDiscoveredWorkloadResponse struct {
-	// DiscoveredWorkload: Discovered workload if exists, empty otherwise.
+	// DiscoveredWorkload: Discovered Workload if exists, empty otherwise.
 	DiscoveredWorkload *DiscoveredWorkload `json:"discoveredWorkload,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2149,10 +2149,12 @@ type ProjectsLocationsDetachServiceProjectAttachmentCall struct {
 }
 
 // DetachServiceProjectAttachment: Detaches a service project from a
-// host project. You can call this API from either a host or service
-// project.
+// host project. You can call this API from any service project without
+// needing access to the host project that it is attached to.
 //
-// - name: Value for name.
+//   - name: Service project id and location to detach from a host
+//     project. Only global location is supported. Expected format:
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsService) DetachServiceProjectAttachment(name string, detachserviceprojectattachmentrequest *DetachServiceProjectAttachmentRequest) *ProjectsLocationsDetachServiceProjectAttachmentCall {
 	c := &ProjectsLocationsDetachServiceProjectAttachmentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2252,7 +2254,7 @@ func (c *ProjectsLocationsDetachServiceProjectAttachmentCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Detaches a service project from a host project. You can call this API from either a host or service project.",
+	//   "description": "Detaches a service project from a host project. You can call this API from any service project without needing access to the host project that it is attached to.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:detachServiceProjectAttachment",
 	//   "httpMethod": "POST",
 	//   "id": "apphub.projects.locations.detachServiceProjectAttachment",
@@ -2261,7 +2263,7 @@ func (c *ProjectsLocationsDetachServiceProjectAttachmentCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Value for name.",
+	//       "description": "Required. Service project id and location to detach from a host project. Only global location is supported. Expected format: `projects/{project}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2648,11 +2650,13 @@ type ProjectsLocationsLookupServiceProjectAttachmentCall struct {
 	header_      http.Header
 }
 
-// LookupServiceProjectAttachment: Looks up a service project
-// attachment. You can call this API from either a host or service
-// project.
+// LookupServiceProjectAttachment: Lists a service project attachment
+// for a given service project. You can call this API from any project
+// to find if it is attached to a host project.
 //
-// - name: Value for name.
+//   - name: Service project ID and location to lookup service project
+//     attachment for. Only global location is supported. Expected format:
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsService) LookupServiceProjectAttachment(name string) *ProjectsLocationsLookupServiceProjectAttachmentCall {
 	c := &ProjectsLocationsLookupServiceProjectAttachmentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2759,7 +2763,7 @@ func (c *ProjectsLocationsLookupServiceProjectAttachmentCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up a service project attachment. You can call this API from either a host or service project.",
+	//   "description": "Lists a service project attachment for a given service project. You can call this API from any project to find if it is attached to a host project.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:lookupServiceProjectAttachment",
 	//   "httpMethod": "GET",
 	//   "id": "apphub.projects.locations.lookupServiceProjectAttachment",
@@ -2768,7 +2772,7 @@ func (c *ProjectsLocationsLookupServiceProjectAttachmentCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Value for name.",
+	//       "description": "Required. Service project ID and location to lookup service project attachment for. Only global location is supported. Expected format: `projects/{project}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2799,7 +2803,8 @@ type ProjectsLocationsApplicationsCreateCall struct {
 
 // Create: Creates an Application in a host project and location.
 //
-// - parent: Value for parent.
+//   - parent: Project and location to create Application in. Expected
+//     format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsApplicationsService) Create(parent string, application *Application) *ProjectsLocationsApplicationsCreateCall {
 	c := &ProjectsLocationsApplicationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2939,7 +2944,7 @@ func (c *ProjectsLocationsApplicationsCreateCall) Do(opts ...googleapi.CallOptio
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Value for parent.",
+	//       "description": "Required. Project and location to create Application in. Expected format: `projects/{project}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2977,7 +2982,10 @@ type ProjectsLocationsApplicationsDeleteCall struct {
 
 // Delete: Deletes an Application in a host project and location.
 //
-// - name: Value for name.
+//   - name: Fully qualified name of the Application to delete. Expected
+//     format:
+//     `projects/{project}/locations/{location}/applications/{application}`
+//     .
 func (r *ProjectsLocationsApplicationsService) Delete(name string) *ProjectsLocationsApplicationsDeleteCall {
 	c := &ProjectsLocationsApplicationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3097,7 +3105,7 @@ func (c *ProjectsLocationsApplicationsDeleteCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Value for name.",
+	//       "description": "Required. Fully qualified name of the Application to delete. Expected format: `projects/{project}/locations/{location}/applications/{application}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/applications/[^/]+$",
 	//       "required": true,
@@ -3133,7 +3141,10 @@ type ProjectsLocationsApplicationsGetCall struct {
 
 // Get: Gets an Application in a host project and location.
 //
-// - name: Value for name.
+//   - name: Fully qualified name of the Application to fetch. Expected
+//     format:
+//     `projects/{project}/locations/{location}/applications/{application}`
+//     .
 func (r *ProjectsLocationsApplicationsService) Get(name string) *ProjectsLocationsApplicationsGetCall {
 	c := &ProjectsLocationsApplicationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3248,7 +3259,7 @@ func (c *ProjectsLocationsApplicationsGetCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Value for name.",
+	//       "description": "Required. Fully qualified name of the Application to fetch. Expected format: `projects/{project}/locations/{location}/applications/{application}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/applications/[^/]+$",
 	//       "required": true,
@@ -3454,21 +3465,22 @@ type ProjectsLocationsApplicationsListCall struct {
 
 // List: Lists Applications in a host project and location.
 //
-// - parent: Value for parent.
+//   - parent: Project and location to list Applications on. Expected
+//     format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsApplicationsService) List(parent string) *ProjectsLocationsApplicationsListCall {
 	c := &ProjectsLocationsApplicationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsApplicationsListCall) Filter(filter string) *ProjectsLocationsApplicationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order
-// the results
+// the results.
 func (c *ProjectsLocationsApplicationsListCall) OrderBy(orderBy string) *ProjectsLocationsApplicationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -3597,12 +3609,12 @@ func (c *ProjectsLocationsApplicationsListCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filtering results",
+	//       "description": "Optional. Filtering results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Hint for how to order the results",
+	//       "description": "Optional. Hint for how to order the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3618,7 +3630,7 @@ func (c *ProjectsLocationsApplicationsListCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Value for parent.",
+	//       "description": "Required. Project and location to list Applications on. Expected format: `projects/{project}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -4154,7 +4166,10 @@ type ProjectsLocationsApplicationsServicesCreateCall struct {
 
 // Create: Creates a Service in an Application.
 //
-// - parent: Value for parent.
+//   - parent: Fully qualified name of the parent Application to create
+//     the Service in. Expected format:
+//     `projects/{project}/locations/{location}/applications/{application}`
+//     .
 func (r *ProjectsLocationsApplicationsServicesService) Create(parent string, service *Service) *ProjectsLocationsApplicationsServicesCreateCall {
 	c := &ProjectsLocationsApplicationsServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4289,7 +4304,7 @@ func (c *ProjectsLocationsApplicationsServicesCreateCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Value for parent.",
+	//       "description": "Required. Fully qualified name of the parent Application to create the Service in. Expected format: `projects/{project}/locations/{location}/applications/{application}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/applications/[^/]+$",
 	//       "required": true,
@@ -4330,9 +4345,12 @@ type ProjectsLocationsApplicationsServicesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a Service in an Application.
+// Delete: Deletes a Service from an Application.
 //
-// - name: Value for name.
+//   - name: Fully qualified name of the Service to delete from an
+//     Application. Expected format:
+//     `projects/{project}/locations/{location}/applications/{application}/
+//     services/{service}`.
 func (r *ProjectsLocationsApplicationsServicesService) Delete(name string) *ProjectsLocationsApplicationsServicesDeleteCall {
 	c := &ProjectsLocationsApplicationsServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4443,7 +4461,7 @@ func (c *ProjectsLocationsApplicationsServicesDeleteCall) Do(opts ...googleapi.C
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a Service in an Application.",
+	//   "description": "Deletes a Service from an Application.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/services/{servicesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apphub.projects.locations.applications.services.delete",
@@ -4452,7 +4470,7 @@ func (c *ProjectsLocationsApplicationsServicesDeleteCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Value for name.",
+	//       "description": "Required. Fully qualified name of the Service to delete from an Application. Expected format: `projects/{project}/locations/{location}/applications/{application}/services/{service}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/applications/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -4488,7 +4506,10 @@ type ProjectsLocationsApplicationsServicesGetCall struct {
 
 // Get: Gets a Service in an Application.
 //
-// - name: Value for name.
+//   - name: Fully qualified name of the Service to fetch. Expected
+//     format:
+//     `projects/{project}/locations/{location}/applications/{application}/
+//     services/{service}`.
 func (r *ProjectsLocationsApplicationsServicesService) Get(name string) *ProjectsLocationsApplicationsServicesGetCall {
 	c := &ProjectsLocationsApplicationsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4603,7 +4624,7 @@ func (c *ProjectsLocationsApplicationsServicesGetCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Value for name.",
+	//       "description": "Required. Fully qualified name of the Service to fetch. Expected format: `projects/{project}/locations/{location}/applications/{application}/services/{service}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/applications/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -4632,9 +4653,12 @@ type ProjectsLocationsApplicationsServicesListCall struct {
 	header_      http.Header
 }
 
-// List: List Services in an Application.
+// List: Lists Services in an Application.
 //
-// - parent: Value for parent.
+//   - parent: Fully qualified name of the parent Application to list
+//     Services for. Expected format:
+//     `projects/{project}/locations/{location}/applications/{application}`
+//     .
 func (r *ProjectsLocationsApplicationsServicesService) List(parent string) *ProjectsLocationsApplicationsServicesListCall {
 	c := &ProjectsLocationsApplicationsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4768,7 +4792,7 @@ func (c *ProjectsLocationsApplicationsServicesListCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "List Services in an Application.",
+	//   "description": "Lists Services in an Application.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/services",
 	//   "httpMethod": "GET",
 	//   "id": "apphub.projects.locations.applications.services.list",
@@ -4798,7 +4822,7 @@ func (c *ProjectsLocationsApplicationsServicesListCall) Do(opts ...googleapi.Cal
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Value for parent.",
+	//       "description": "Required. Fully qualified name of the parent Application to list Services for. Expected format: `projects/{project}/locations/{location}/applications/{application}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/applications/[^/]+$",
 	//       "required": true,
@@ -5037,7 +5061,10 @@ type ProjectsLocationsApplicationsWorkloadsCreateCall struct {
 
 // Create: Creates a Workload in an Application.
 //
-// - parent: Value for parent.
+//   - parent: Fully qualified name of the Application to create Workload
+//     in. Expected format:
+//     `projects/{project}/locations/{location}/applications/{application}`
+//     .
 func (r *ProjectsLocationsApplicationsWorkloadsService) Create(parent string, workload *Workload) *ProjectsLocationsApplicationsWorkloadsCreateCall {
 	c := &ProjectsLocationsApplicationsWorkloadsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5172,7 +5199,7 @@ func (c *ProjectsLocationsApplicationsWorkloadsCreateCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Value for parent.",
+	//       "description": "Required. Fully qualified name of the Application to create Workload in. Expected format: `projects/{project}/locations/{location}/applications/{application}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/applications/[^/]+$",
 	//       "required": true,
@@ -5213,9 +5240,12 @@ type ProjectsLocationsApplicationsWorkloadsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a Workload in an Application.
+// Delete: Deletes a Workload from an Application.
 //
-// - name: Value for name.
+//   - name: Fully qualified name of the Workload to delete from an
+//     Application. Expected format:
+//     `projects/{project}/locations/{location}/applications/{application}/
+//     workloads/{workload}`.
 func (r *ProjectsLocationsApplicationsWorkloadsService) Delete(name string) *ProjectsLocationsApplicationsWorkloadsDeleteCall {
 	c := &ProjectsLocationsApplicationsWorkloadsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5326,7 +5356,7 @@ func (c *ProjectsLocationsApplicationsWorkloadsDeleteCall) Do(opts ...googleapi.
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a Workload in an Application.",
+	//   "description": "Deletes a Workload from an Application.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/applications/{applicationsId}/workloads/{workloadsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apphub.projects.locations.applications.workloads.delete",
@@ -5335,7 +5365,7 @@ func (c *ProjectsLocationsApplicationsWorkloadsDeleteCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Value for name.",
+	//       "description": "Required. Fully qualified name of the Workload to delete from an Application. Expected format: `projects/{project}/locations/{location}/applications/{application}/workloads/{workload}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/applications/[^/]+/workloads/[^/]+$",
 	//       "required": true,
@@ -5371,7 +5401,10 @@ type ProjectsLocationsApplicationsWorkloadsGetCall struct {
 
 // Get: Gets a Workload in an Application.
 //
-// - name: Value for name.
+//   - name: Fully qualified name of the Workload to fetch. Expected
+//     format:
+//     `projects/{project}/locations/{location}/applications/{application}/
+//     workloads/{workload}`.
 func (r *ProjectsLocationsApplicationsWorkloadsService) Get(name string) *ProjectsLocationsApplicationsWorkloadsGetCall {
 	c := &ProjectsLocationsApplicationsWorkloadsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5486,7 +5519,7 @@ func (c *ProjectsLocationsApplicationsWorkloadsGetCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Value for name.",
+	//       "description": "Required. Fully qualified name of the Workload to fetch. Expected format: `projects/{project}/locations/{location}/applications/{application}/workloads/{workload}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/applications/[^/]+/workloads/[^/]+$",
 	//       "required": true,
@@ -5517,21 +5550,24 @@ type ProjectsLocationsApplicationsWorkloadsListCall struct {
 
 // List: Lists Workloads in an Application.
 //
-// - parent: Value for parent.
+//   - parent: Fully qualified name of the parent Application to list
+//     Workloads for. Expected format:
+//     `projects/{project}/locations/{location}/applications/{application}`
+//     .
 func (r *ProjectsLocationsApplicationsWorkloadsService) List(parent string) *ProjectsLocationsApplicationsWorkloadsListCall {
 	c := &ProjectsLocationsApplicationsWorkloadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsApplicationsWorkloadsListCall) Filter(filter string) *ProjectsLocationsApplicationsWorkloadsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order
-// the results
+// the results.
 func (c *ProjectsLocationsApplicationsWorkloadsListCall) OrderBy(orderBy string) *ProjectsLocationsApplicationsWorkloadsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -5660,12 +5696,12 @@ func (c *ProjectsLocationsApplicationsWorkloadsListCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filtering results",
+	//       "description": "Optional. Filtering results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Hint for how to order the results",
+	//       "description": "Optional. Hint for how to order the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5681,7 +5717,7 @@ func (c *ProjectsLocationsApplicationsWorkloadsListCall) Do(opts ...googleapi.Ca
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Value for parent.",
+	//       "description": "Required. Fully qualified name of the parent Application to list Workloads for. Expected format: `projects/{project}/locations/{location}/applications/{application}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/applications/[^/]+$",
 	//       "required": true,
@@ -5918,9 +5954,12 @@ type ProjectsLocationsDiscoveredServicesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a discovered service in a host project and location.
+// Get: Gets a Discovered Service in a host project and location.
 //
-// - name: Value for name.
+//   - name: Fully qualified name of the Discovered Service to fetch.
+//     Expected format:
+//     `projects/{project}/locations/{location}/discoveredServices/{discove
+//     redService}`.
 func (r *ProjectsLocationsDiscoveredServicesService) Get(name string) *ProjectsLocationsDiscoveredServicesGetCall {
 	c := &ProjectsLocationsDiscoveredServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6026,7 +6065,7 @@ func (c *ProjectsLocationsDiscoveredServicesGetCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a discovered service in a host project and location.",
+	//   "description": "Gets a Discovered Service in a host project and location.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/discoveredServices/{discoveredServicesId}",
 	//   "httpMethod": "GET",
 	//   "id": "apphub.projects.locations.discoveredServices.get",
@@ -6035,7 +6074,7 @@ func (c *ProjectsLocationsDiscoveredServicesGetCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Value for name.",
+	//       "description": "Required. Fully qualified name of the Discovered Service to fetch. Expected format: `projects/{project}/locations/{location}/discoveredServices/{discoveredService}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/discoveredServices/[^/]+$",
 	//       "required": true,
@@ -6064,24 +6103,25 @@ type ProjectsLocationsDiscoveredServicesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists discovered services that can be added to an application
+// List: Lists Discovered Services that can be added to an Application
 // in a host project and location.
 //
-// - parent: Value for parent.
+//   - parent: Project and location to list Discovered Services on.
+//     Expected format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsDiscoveredServicesService) List(parent string) *ProjectsLocationsDiscoveredServicesListCall {
 	c := &ProjectsLocationsDiscoveredServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsDiscoveredServicesListCall) Filter(filter string) *ProjectsLocationsDiscoveredServicesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order
-// the results
+// the results.
 func (c *ProjectsLocationsDiscoveredServicesListCall) OrderBy(orderBy string) *ProjectsLocationsDiscoveredServicesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -6201,7 +6241,7 @@ func (c *ProjectsLocationsDiscoveredServicesListCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists discovered services that can be added to an application in a host project and location.",
+	//   "description": "Lists Discovered Services that can be added to an Application in a host project and location.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/discoveredServices",
 	//   "httpMethod": "GET",
 	//   "id": "apphub.projects.locations.discoveredServices.list",
@@ -6210,12 +6250,12 @@ func (c *ProjectsLocationsDiscoveredServicesListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filtering results",
+	//       "description": "Optional. Filtering results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Hint for how to order the results",
+	//       "description": "Optional. Hint for how to order the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6231,7 +6271,7 @@ func (c *ProjectsLocationsDiscoveredServicesListCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Value for parent.",
+	//       "description": "Required. Project and location to list Discovered Services on. Expected format: `projects/{project}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -6281,10 +6321,11 @@ type ProjectsLocationsDiscoveredServicesLookupCall struct {
 	header_      http.Header
 }
 
-// Lookup: Looks up a discovered service in a host project and location
-// and with a given resource URI.
+// Lookup: Lists a Discovered Service in a host project and location,
+// with a given resource URI.
 //
-// - parent: Value for parent.
+//   - parent: Host project ID and location to lookup Discovered Service
+//     in. Expected format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsDiscoveredServicesService) Lookup(parent string) *ProjectsLocationsDiscoveredServicesLookupCall {
 	c := &ProjectsLocationsDiscoveredServicesLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6292,8 +6333,8 @@ func (r *ProjectsLocationsDiscoveredServicesService) Lookup(parent string) *Proj
 }
 
 // Uri sets the optional parameter "uri": Required. Resource URI to find
-// service for. Accepts both project number and project id and does
-// translation when needed.
+// DiscoveredService for. Accepts both project number and project ID and
+// does translation when needed.
 func (c *ProjectsLocationsDiscoveredServicesLookupCall) Uri(uri string) *ProjectsLocationsDiscoveredServicesLookupCall {
 	c.urlParams_.Set("uri", uri)
 	return c
@@ -6398,7 +6439,7 @@ func (c *ProjectsLocationsDiscoveredServicesLookupCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up a discovered service in a host project and location and with a given resource URI.",
+	//   "description": "Lists a Discovered Service in a host project and location, with a given resource URI.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/discoveredServices:lookup",
 	//   "httpMethod": "GET",
 	//   "id": "apphub.projects.locations.discoveredServices.lookup",
@@ -6407,14 +6448,14 @@ func (c *ProjectsLocationsDiscoveredServicesLookupCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Value for parent.",
+	//       "description": "Required. Host project ID and location to lookup Discovered Service in. Expected format: `projects/{project}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "uri": {
-	//       "description": "Required. Resource URI to find service for. Accepts both project number and project id and does translation when needed.",
+	//       "description": "Required. Resource URI to find DiscoveredService for. Accepts both project number and project ID and does translation when needed.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -6441,9 +6482,12 @@ type ProjectsLocationsDiscoveredWorkloadsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a discovered workload in a host project and location.
+// Get: Gets a Discovered Workload in a host project and location.
 //
-// - name: Value for name.
+//   - name: Fully qualified name of the Discovered Workload to fetch.
+//     Expected format:
+//     `projects/{project}/locations/{location}/discoveredWorkloads/{discov
+//     eredWorkload}`.
 func (r *ProjectsLocationsDiscoveredWorkloadsService) Get(name string) *ProjectsLocationsDiscoveredWorkloadsGetCall {
 	c := &ProjectsLocationsDiscoveredWorkloadsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6549,7 +6593,7 @@ func (c *ProjectsLocationsDiscoveredWorkloadsGetCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a discovered workload in a host project and location.",
+	//   "description": "Gets a Discovered Workload in a host project and location.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/discoveredWorkloads/{discoveredWorkloadsId}",
 	//   "httpMethod": "GET",
 	//   "id": "apphub.projects.locations.discoveredWorkloads.get",
@@ -6558,7 +6602,7 @@ func (c *ProjectsLocationsDiscoveredWorkloadsGetCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Value for name.",
+	//       "description": "Required. Fully qualified name of the Discovered Workload to fetch. Expected format: `projects/{project}/locations/{location}/discoveredWorkloads/{discoveredWorkload}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/discoveredWorkloads/[^/]+$",
 	//       "required": true,
@@ -6587,24 +6631,25 @@ type ProjectsLocationsDiscoveredWorkloadsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists discovered workloads that can be added to an application
+// List: Lists Discovered Workloads that can be added to an Application
 // in a host project and location.
 //
-// - parent: Value for parent.
+//   - parent: Project and location to list Discovered Workloads on.
+//     Expected format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsDiscoveredWorkloadsService) List(parent string) *ProjectsLocationsDiscoveredWorkloadsListCall {
 	c := &ProjectsLocationsDiscoveredWorkloadsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsDiscoveredWorkloadsListCall) Filter(filter string) *ProjectsLocationsDiscoveredWorkloadsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order
-// the results
+// the results.
 func (c *ProjectsLocationsDiscoveredWorkloadsListCall) OrderBy(orderBy string) *ProjectsLocationsDiscoveredWorkloadsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -6724,7 +6769,7 @@ func (c *ProjectsLocationsDiscoveredWorkloadsListCall) Do(opts ...googleapi.Call
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists discovered workloads that can be added to an application in a host project and location.",
+	//   "description": "Lists Discovered Workloads that can be added to an Application in a host project and location.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/discoveredWorkloads",
 	//   "httpMethod": "GET",
 	//   "id": "apphub.projects.locations.discoveredWorkloads.list",
@@ -6733,12 +6778,12 @@ func (c *ProjectsLocationsDiscoveredWorkloadsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filtering results",
+	//       "description": "Optional. Filtering results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Hint for how to order the results",
+	//       "description": "Optional. Hint for how to order the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6754,7 +6799,7 @@ func (c *ProjectsLocationsDiscoveredWorkloadsListCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Value for parent.",
+	//       "description": "Required. Project and location to list Discovered Workloads on. Expected format: `projects/{project}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -6804,10 +6849,11 @@ type ProjectsLocationsDiscoveredWorkloadsLookupCall struct {
 	header_      http.Header
 }
 
-// Lookup: Looks up a discovered Workload in a host project and location
-// and with a given resource URI.
+// Lookup: Lists a Discovered Workload in a host project and location,
+// with a given resource URI.
 //
-// - parent: Value for parent.
+//   - parent: Host project ID and location to lookup Discovered Workload
+//     in. Expected format: `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsDiscoveredWorkloadsService) Lookup(parent string) *ProjectsLocationsDiscoveredWorkloadsLookupCall {
 	c := &ProjectsLocationsDiscoveredWorkloadsLookupCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6815,8 +6861,8 @@ func (r *ProjectsLocationsDiscoveredWorkloadsService) Lookup(parent string) *Pro
 }
 
 // Uri sets the optional parameter "uri": Required. Resource URI to find
-// workload for. Accepts both project number and project id and does
-// translation when needed.
+// Discovered Workload for. Accepts both project number and project ID
+// and does translation when needed.
 func (c *ProjectsLocationsDiscoveredWorkloadsLookupCall) Uri(uri string) *ProjectsLocationsDiscoveredWorkloadsLookupCall {
 	c.urlParams_.Set("uri", uri)
 	return c
@@ -6921,7 +6967,7 @@ func (c *ProjectsLocationsDiscoveredWorkloadsLookupCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Looks up a discovered Workload in a host project and location and with a given resource URI.",
+	//   "description": "Lists a Discovered Workload in a host project and location, with a given resource URI.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/discoveredWorkloads:lookup",
 	//   "httpMethod": "GET",
 	//   "id": "apphub.projects.locations.discoveredWorkloads.lookup",
@@ -6930,14 +6976,14 @@ func (c *ProjectsLocationsDiscoveredWorkloadsLookupCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Value for parent.",
+	//       "description": "Required. Host project ID and location to lookup Discovered Workload in. Expected format: `projects/{project}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "uri": {
-	//       "description": "Required. Resource URI to find workload for. Accepts both project number and project id and does translation when needed.",
+	//       "description": "Required. Resource URI to find Discovered Workload for. Accepts both project number and project ID and does translation when needed.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7606,7 +7652,9 @@ type ProjectsLocationsServiceProjectAttachmentsCreateCall struct {
 
 // Create: Attaches a service project to the host project.
 //
-// - parent: Value for parent.
+//   - parent: Host project ID and location to which service project is
+//     being attached. Only global location is supported. Expected format:
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsServiceProjectAttachmentsService) Create(parent string, serviceprojectattachment *ServiceProjectAttachment) *ProjectsLocationsServiceProjectAttachmentsCreateCall {
 	c := &ProjectsLocationsServiceProjectAttachmentsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7634,9 +7682,9 @@ func (c *ProjectsLocationsServiceProjectAttachmentsCreateCall) RequestId(request
 
 // ServiceProjectAttachmentId sets the optional parameter
 // "serviceProjectAttachmentId": Required. The service project
-// attachment identifier must contain the project_id of the service
+// attachment identifier must contain the project id of the service
 // project specified in the service_project_attachment.service_project
-// field. Hint: "projects/{project_id}"
+// field.
 func (c *ProjectsLocationsServiceProjectAttachmentsCreateCall) ServiceProjectAttachmentId(serviceProjectAttachmentId string) *ProjectsLocationsServiceProjectAttachmentsCreateCall {
 	c.urlParams_.Set("serviceProjectAttachmentId", serviceProjectAttachmentId)
 	return c
@@ -7742,7 +7790,7 @@ func (c *ProjectsLocationsServiceProjectAttachmentsCreateCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. Value for parent.",
+	//       "description": "Required. Host project ID and location to which service project is being attached. Only global location is supported. Expected format: `projects/{project}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -7754,7 +7802,7 @@ func (c *ProjectsLocationsServiceProjectAttachmentsCreateCall) Do(opts ...google
 	//       "type": "string"
 	//     },
 	//     "serviceProjectAttachmentId": {
-	//       "description": "Required. The service project attachment identifier must contain the project_id of the service project specified in the service_project_attachment.service_project field. Hint: \"projects/{project_id}\"",
+	//       "description": "Required. The service project attachment identifier must contain the project id of the service project specified in the service_project_attachment.service_project field.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -7783,9 +7831,12 @@ type ProjectsLocationsServiceProjectAttachmentsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a service project attached to the host project.
+// Delete: Deletes a service project attachment.
 //
-// - name: Value for name.
+//   - name: Fully qualified name of the service project attachment to
+//     delete. Expected format:
+//     `projects/{project}/locations/{location}/serviceProjectAttachments/{
+//     serviceProjectAttachment}`.
 func (r *ProjectsLocationsServiceProjectAttachmentsService) Delete(name string) *ProjectsLocationsServiceProjectAttachmentsDeleteCall {
 	c := &ProjectsLocationsServiceProjectAttachmentsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7896,7 +7947,7 @@ func (c *ProjectsLocationsServiceProjectAttachmentsDeleteCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a service project attached to the host project.",
+	//   "description": "Deletes a service project attachment.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/serviceProjectAttachments/{serviceProjectAttachmentsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "apphub.projects.locations.serviceProjectAttachments.delete",
@@ -7905,7 +7956,7 @@ func (c *ProjectsLocationsServiceProjectAttachmentsDeleteCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Value for name.",
+	//       "description": "Required. Fully qualified name of the service project attachment to delete. Expected format: `projects/{project}/locations/{location}/serviceProjectAttachments/{serviceProjectAttachment}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceProjectAttachments/[^/]+$",
 	//       "required": true,
@@ -7939,9 +7990,12 @@ type ProjectsLocationsServiceProjectAttachmentsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a service project attached to the host project.
+// Get: Gets a service project attachment.
 //
-// - name: Value for name.
+//   - name: Fully qualified name of the service project attachment to
+//     retrieve. Expected format:
+//     `projects/{project}/locations/{location}/serviceProjectAttachments/{
+//     serviceProjectAttachment}`.
 func (r *ProjectsLocationsServiceProjectAttachmentsService) Get(name string) *ProjectsLocationsServiceProjectAttachmentsGetCall {
 	c := &ProjectsLocationsServiceProjectAttachmentsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8047,7 +8101,7 @@ func (c *ProjectsLocationsServiceProjectAttachmentsGetCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets a service project attached to the host project.",
+	//   "description": "Gets a service project attachment.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/serviceProjectAttachments/{serviceProjectAttachmentsId}",
 	//   "httpMethod": "GET",
 	//   "id": "apphub.projects.locations.serviceProjectAttachments.get",
@@ -8056,7 +8110,7 @@ func (c *ProjectsLocationsServiceProjectAttachmentsGetCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Value for name.",
+	//       "description": "Required. Fully qualified name of the service project attachment to retrieve. Expected format: `projects/{project}/locations/{location}/serviceProjectAttachments/{serviceProjectAttachment}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/serviceProjectAttachments/[^/]+$",
 	//       "required": true,
@@ -8085,23 +8139,25 @@ type ProjectsLocationsServiceProjectAttachmentsListCall struct {
 	header_      http.Header
 }
 
-// List: List service projects attached to the host project.
+// List: Lists service projects attached to the host project.
 //
-// - parent: Value for parent.
+//   - parent: Host project ID and location to list service project
+//     attachments. Only global location is supported. Expected format:
+//     `projects/{project}/locations/{location}`.
 func (r *ProjectsLocationsServiceProjectAttachmentsService) List(parent string) *ProjectsLocationsServiceProjectAttachmentsListCall {
 	c := &ProjectsLocationsServiceProjectAttachmentsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filtering results
+// Filter sets the optional parameter "filter": Filtering results.
 func (c *ProjectsLocationsServiceProjectAttachmentsListCall) Filter(filter string) *ProjectsLocationsServiceProjectAttachmentsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // OrderBy sets the optional parameter "orderBy": Hint for how to order
-// the results
+// the results.
 func (c *ProjectsLocationsServiceProjectAttachmentsListCall) OrderBy(orderBy string) *ProjectsLocationsServiceProjectAttachmentsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -8222,7 +8278,7 @@ func (c *ProjectsLocationsServiceProjectAttachmentsListCall) Do(opts ...googleap
 	}
 	return ret, nil
 	// {
-	//   "description": "List service projects attached to the host project.",
+	//   "description": "Lists service projects attached to the host project.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/serviceProjectAttachments",
 	//   "httpMethod": "GET",
 	//   "id": "apphub.projects.locations.serviceProjectAttachments.list",
@@ -8231,12 +8287,12 @@ func (c *ProjectsLocationsServiceProjectAttachmentsListCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filtering results",
+	//       "description": "Optional. Filtering results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Hint for how to order the results",
+	//       "description": "Optional. Hint for how to order the results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8252,7 +8308,7 @@ func (c *ProjectsLocationsServiceProjectAttachmentsListCall) Do(opts ...googleap
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Value for parent.",
+	//       "description": "Required. Host project ID and location to list service project attachments. Only global location is supported. Expected format: `projects/{project}/locations/{location}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

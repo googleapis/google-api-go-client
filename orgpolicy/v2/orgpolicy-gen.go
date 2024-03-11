@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "orgpolicy:v2"
 const apiName = "orgpolicy"
 const apiVersion = "v2"
 const basePath = "https://orgpolicy.googleapis.com/"
+const basePathTemplate = "https://orgpolicy.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://orgpolicy.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -645,6 +649,13 @@ type GoogleCloudOrgpolicyV2Policy struct {
 	// if it's enforced.
 	DryRunSpec *GoogleCloudOrgpolicyV2PolicySpec `json:"dryRunSpec,omitempty"`
 
+	// Etag: Optional. An opaque tag indicating the current state of the
+	// policy, used for concurrency control. This 'etag' is computed by the
+	// server based on the value of other fields, and may be sent on update
+	// and delete requests to ensure the client has an up-to-date value
+	// before proceeding.
+	Etag string `json:"etag,omitempty"`
+
 	// Name: Immutable. The resource name of the policy. Must be one of the
 	// following forms, where `constraint_name` is the name of the
 	// constraint which this policy configures: *
@@ -691,11 +702,11 @@ func (s *GoogleCloudOrgpolicyV2Policy) MarshalJSON() ([]byte, error) {
 // specification which is used to specify constraints for configurations
 // of Google Cloud resources.
 type GoogleCloudOrgpolicyV2PolicySpec struct {
-	// Etag: An opaque tag indicating the current version of the policy,
+	// Etag: An opaque tag indicating the current version of the policySpec,
 	// used for concurrency control. This field is ignored if used in a
-	// `CreatePolicy` request. When the policy` is returned from either a
+	// `CreatePolicy` request. When the policy is returned from either a
 	// `GetPolicy` or a `ListPolicies` request, this `etag` indicates the
-	// version of the current policy to use when executing a
+	// version of the current policySpec to use when executing a
 	// read-modify-write loop. When the policy is returned from a
 	// `GetEffectivePolicy` request, the `etag` will be unset.
 	Etag string `json:"etag,omitempty"`
@@ -1291,6 +1302,15 @@ func (r *FoldersPoliciesService) Delete(name string) *FoldersPoliciesDeleteCall 
 	return c
 }
 
+// Etag sets the optional parameter "etag": The current etag of policy.
+// If an etag is provided and does not match the current etag of the
+// policy, deletion will be blocked and an ABORTED error will be
+// returned.
+func (c *FoldersPoliciesDeleteCall) Etag(etag string) *FoldersPoliciesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -1385,6 +1405,11 @@ func (c *FoldersPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*GooglePro
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "etag": {
+	//       "description": "Optional. The current etag of policy. If an etag is provided and does not match the current etag of the policy, deletion will be blocked and an ABORTED error will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. Name of the policy to delete. See the policy entry for naming rules.",
 	//       "location": "path",
@@ -3230,6 +3255,15 @@ func (r *OrganizationsPoliciesService) Delete(name string) *OrganizationsPolicie
 	return c
 }
 
+// Etag sets the optional parameter "etag": The current etag of policy.
+// If an etag is provided and does not match the current etag of the
+// policy, deletion will be blocked and an ABORTED error will be
+// returned.
+func (c *OrganizationsPoliciesDeleteCall) Etag(etag string) *OrganizationsPoliciesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3324,6 +3358,11 @@ func (c *OrganizationsPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Goo
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "etag": {
+	//       "description": "Optional. The current etag of policy. If an etag is provided and does not match the current etag of the policy, deletion will be blocked and an ABORTED error will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. Name of the policy to delete. See the policy entry for naming rules.",
 	//       "location": "path",
@@ -4386,6 +4425,15 @@ func (r *ProjectsPoliciesService) Delete(name string) *ProjectsPoliciesDeleteCal
 	return c
 }
 
+// Etag sets the optional parameter "etag": The current etag of policy.
+// If an etag is provided and does not match the current etag of the
+// policy, deletion will be blocked and an ABORTED error will be
+// returned.
+func (c *ProjectsPoliciesDeleteCall) Etag(etag string) *ProjectsPoliciesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4480,6 +4528,11 @@ func (c *ProjectsPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*GooglePr
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "etag": {
+	//       "description": "Optional. The current etag of policy. If an etag is provided and does not match the current etag of the policy, deletion will be blocked and an ABORTED error will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "name": {
 	//       "description": "Required. Name of the policy to delete. See the policy entry for naming rules.",
 	//       "location": "path",

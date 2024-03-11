@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "managedidentities:v1alpha1"
 const apiName = "managedidentities"
 const apiVersion = "v1alpha1"
 const basePath = "https://managedidentities.googleapis.com/"
+const basePathTemplate = "https://managedidentities.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://managedidentities.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -375,11 +379,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -391,7 +418,12 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -1187,7 +1219,7 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	// been attached to the instance. The key must be of the type name of
 	// the oneof policy name defined in MaintenancePolicy, and the
 	// referenced policy must define the same policy type. For details,
-	// please refer to go/cloud-saas-mw-ug. Should not be set if
+	// please refer to go/mr-user-guide. Should not be set if
 	// maintenance_settings.maintenance_policies is set.
 	MaintenancePolicyNames map[string]string `json:"maintenancePolicyNames,omitempty"`
 
@@ -1356,7 +1388,7 @@ type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings struct {
 	// attached to the instance. The key must be of the type name of the
 	// oneof policy name defined in MaintenancePolicy, and the embedded
 	// policy must define the same policy type. For details, please refer to
-	// go/cloud-saas-mw-ug. Should not be set if maintenance_policy_names is
+	// go/mr-user-guide. Should not be set if maintenance_policy_names is
 	// set. If only the name is needed, then only populate
 	// MaintenancePolicy.name.
 	MaintenancePolicies map[string]MaintenancePolicy `json:"maintenancePolicies,omitempty"`

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "drive:v2"
 const apiName = "drive"
 const apiVersion = "v2"
 const basePath = "https://www.googleapis.com/drive/v2/"
+const basePathTemplate = "https://www.UNIVERSE_DOMAIN/drive/v2/"
 const mtlsBasePath = "https://www.mtls.googleapis.com/drive/v2/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -145,7 +147,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -1147,7 +1151,8 @@ type Channel struct {
 	// notification delivered over this channel. Optional.
 	Token string `json:"token,omitempty"`
 
-	// Type: The type of delivery mechanism used for this channel.
+	// Type: The type of delivery mechanism used for this channel. Valid
+	// values are "web_hook" or "webhook".
 	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1585,6 +1590,11 @@ type ContentRestriction struct {
 	// RestrictionDate: The time at which the content restriction was set
 	// (formatted RFC 3339 timestamp). Only populated if readOnly is true.
 	RestrictionDate string `json:"restrictionDate,omitempty"`
+
+	// SystemRestricted: Output only. Whether the content restriction was
+	// applied by the system, for example due to an esignature. Users cannot
+	// modify or remove system restricted content restrictions.
+	SystemRestricted bool `json:"systemRestricted,omitempty"`
 
 	// Type: Output only. The type of the content restriction. Currently the
 	// only possible value is `globalContentRestriction`.

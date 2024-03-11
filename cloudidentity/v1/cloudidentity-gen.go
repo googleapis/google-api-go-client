@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "cloudidentity:v1"
 const apiName = "cloudidentity"
 const apiVersion = "v1"
 const basePath = "https://cloudidentity.googleapis.com/"
+const basePathTemplate = "https://cloudidentity.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudidentity.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -136,7 +138,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -448,7 +452,7 @@ func (s *DsaPublicKeyInfo) MarshalJSON() ([]byte, error) {
 type DynamicGroupMetadata struct {
 	// Queries: Memberships will be the union of all queries. Only one entry
 	// with USER resource is currently supported. Customers can create up to
-	// 100 dynamic groups.
+	// 500 dynamic groups.
 	Queries []*DynamicGroupQuery `json:"queries,omitempty"`
 
 	// Status: Output only. Status of the dynamic group.
@@ -571,7 +575,9 @@ func (s *DynamicGroupStatus) MarshalJSON() ([]byte, error) {
 // with different `namespace`s.
 type EntityKey struct {
 	// Id: The ID of the entity. For Google-managed entities, the `id`
-	// should be the email address of an existing group or user. For
+	// should be the email address of an existing group or user. Email
+	// addresses need to adhere to name guidelines for users and groups
+	// (https://support.google.com/a/answer/9193374). For
 	// external-identity-mapped entities, the `id` must be a string
 	// conforming to the Identity Source's requirements. Must be unique
 	// within a `namespace`.
@@ -6469,9 +6475,10 @@ func (c *DevicesDeviceUsersLookupCall) PageToken(pageToken string) *DevicesDevic
 // Resource Id used by Google Endpoint Verification. If the user is
 // enrolled into Google Endpoint Verification, this id will be saved as
 // the 'device_resource_id' field in the following platform dependent
-// files. Mac: ~/.secureConnect/context_aware_config.json Windows:
-// C:\Users\%USERPROFILE%\.secureConnect\context_aware_config.json
-// Linux: ~/.secureConnect/context_aware_config.json
+// files. * macOS: ~/.secureConnect/context_aware_config.json * Windows:
+// %USERPROFILE%\AppData\Local\Google\Endpoint
+// Verification\accounts.json * Linux:
+// ~/.secureConnect/context_aware_config.json
 func (c *DevicesDeviceUsersLookupCall) RawResourceId(rawResourceId string) *DevicesDeviceUsersLookupCall {
 	c.urlParams_.Set("rawResourceId", rawResourceId)
 	return c
@@ -6619,7 +6626,7 @@ func (c *DevicesDeviceUsersLookupCall) Do(opts ...googleapi.CallOption) (*Google
 	//       "type": "string"
 	//     },
 	//     "rawResourceId": {
-	//       "description": "Raw Resource Id used by Google Endpoint Verification. If the user is enrolled into Google Endpoint Verification, this id will be saved as the 'device_resource_id' field in the following platform dependent files. Mac: ~/.secureConnect/context_aware_config.json Windows: C:\\Users\\%USERPROFILE%\\.secureConnect\\context_aware_config.json Linux: ~/.secureConnect/context_aware_config.json",
+	//       "description": "Raw Resource Id used by Google Endpoint Verification. If the user is enrolled into Google Endpoint Verification, this id will be saved as the 'device_resource_id' field in the following platform dependent files. * macOS: ~/.secureConnect/context_aware_config.json * Windows: %USERPROFILE%\\AppData\\Local\\Google\\Endpoint Verification\\accounts.json * Linux: ~/.secureConnect/context_aware_config.json",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8272,9 +8279,12 @@ func (r *GroupsService) Lookup() *GroupsLookupCall {
 
 // GroupKeyId sets the optional parameter "groupKey.id": The ID of the
 // entity. For Google-managed entities, the `id` should be the email
-// address of an existing group or user. For external-identity-mapped
-// entities, the `id` must be a string conforming to the Identity
-// Source's requirements. Must be unique within a `namespace`.
+// address of an existing group or user. Email addresses need to adhere
+// to name guidelines for users and groups
+// (https://support.google.com/a/answer/9193374). For
+// external-identity-mapped entities, the `id` must be a string
+// conforming to the Identity Source's requirements. Must be unique
+// within a `namespace`.
 func (c *GroupsLookupCall) GroupKeyId(groupKeyId string) *GroupsLookupCall {
 	c.urlParams_.Set("groupKey.id", groupKeyId)
 	return c
@@ -8395,7 +8405,7 @@ func (c *GroupsLookupCall) Do(opts ...googleapi.CallOption) (*LookupGroupNameRes
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "groupKey.id": {
-	//       "description": "The ID of the entity. For Google-managed entities, the `id` should be the email address of an existing group or user. For external-identity-mapped entities, the `id` must be a string conforming to the Identity Source's requirements. Must be unique within a `namespace`.",
+	//       "description": "The ID of the entity. For Google-managed entities, the `id` should be the email address of an existing group or user. Email addresses need to adhere to [name guidelines for users and groups](https://support.google.com/a/answer/9193374). For external-identity-mapped entities, the `id` must be a string conforming to the Identity Source's requirements. Must be unique within a `namespace`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8624,10 +8634,10 @@ func (c *GroupsSearchCall) PageToken(pageToken string) *GroupsSearchCall {
 // contain optional inclusion operators on `labels` such as
 // `'cloudidentity.googleapis.com/groups.discussion_forum' in labels`).
 // * Can contain an optional equality operator on `domain_name`. e.g.
-// `domain_name == 'abc.com'` * Can contain optional
+// `domain_name == 'examplepetstore.com'` * Can contain optional
 // `startsWith/contains/equality` operators on `group_key`, e.g.
 // `group_key.startsWith('dev')`, `group_key.contains('dev'), group_key
-// == 'dev@abc.com'` * Can contain optional
+// == 'dev@examplepetstore.com'` * Can contain optional
 // `startsWith/contains/equality` operators on `display_name`, such as
 // `display_name.startsWith('dev')` , `display_name.contains('dev')`,
 // `display_name == 'dev'`
@@ -8763,7 +8773,7 @@ func (c *GroupsSearchCall) Do(opts ...googleapi.CallOption) (*SearchGroupsRespon
 	//       "type": "string"
 	//     },
 	//     "query": {
-	//       "description": "Required. The search query. * Must be specified in [Common Expression Language](https://opensource.google/projects/cel). * Must contain equality operators on the parent, e.g. `parent == 'customers/{customer_id}'`. The `customer_id` must begin with \"C\" (for example, 'C046psxkn'). [Find your customer ID.] (https://support.google.com/cloudidentity/answer/10070793) * Can contain optional inclusion operators on `labels` such as `'cloudidentity.googleapis.com/groups.discussion_forum' in labels`). * Can contain an optional equality operator on `domain_name`. e.g. `domain_name == 'abc.com'` * Can contain optional `startsWith/contains/equality` operators on `group_key`, e.g. `group_key.startsWith('dev')`, `group_key.contains('dev'), group_key == 'dev@abc.com'` * Can contain optional `startsWith/contains/equality` operators on `display_name`, such as `display_name.startsWith('dev')` , `display_name.contains('dev')`, `display_name == 'dev'`",
+	//       "description": "Required. The search query. * Must be specified in [Common Expression Language](https://opensource.google/projects/cel). * Must contain equality operators on the parent, e.g. `parent == 'customers/{customer_id}'`. The `customer_id` must begin with \"C\" (for example, 'C046psxkn'). [Find your customer ID.] (https://support.google.com/cloudidentity/answer/10070793) * Can contain optional inclusion operators on `labels` such as `'cloudidentity.googleapis.com/groups.discussion_forum' in labels`). * Can contain an optional equality operator on `domain_name`. e.g. `domain_name == 'examplepetstore.com'` * Can contain optional `startsWith/contains/equality` operators on `group_key`, e.g. `group_key.startsWith('dev')`, `group_key.contains('dev'), group_key == 'dev@examplepetstore.com'` * Can contain optional `startsWith/contains/equality` operators on `display_name`, such as `display_name.startsWith('dev')` , `display_name.contains('dev')`, `display_name == 'dev'`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10018,9 +10028,12 @@ func (r *GroupsMembershipsService) Lookup(parent string) *GroupsMembershipsLooku
 
 // MemberKeyId sets the optional parameter "memberKey.id": The ID of the
 // entity. For Google-managed entities, the `id` should be the email
-// address of an existing group or user. For external-identity-mapped
-// entities, the `id` must be a string conforming to the Identity
-// Source's requirements. Must be unique within a `namespace`.
+// address of an existing group or user. Email addresses need to adhere
+// to name guidelines for users and groups
+// (https://support.google.com/a/answer/9193374). For
+// external-identity-mapped entities, the `id` must be a string
+// conforming to the Identity Source's requirements. Must be unique
+// within a `namespace`.
 func (c *GroupsMembershipsLookupCall) MemberKeyId(memberKeyId string) *GroupsMembershipsLookupCall {
 	c.urlParams_.Set("memberKey.id", memberKeyId)
 	return c
@@ -10146,7 +10159,7 @@ func (c *GroupsMembershipsLookupCall) Do(opts ...googleapi.CallOption) (*LookupM
 	//   ],
 	//   "parameters": {
 	//     "memberKey.id": {
-	//       "description": "The ID of the entity. For Google-managed entities, the `id` should be the email address of an existing group or user. For external-identity-mapped entities, the `id` must be a string conforming to the Identity Source's requirements. Must be unique within a `namespace`.",
+	//       "description": "The ID of the entity. For Google-managed entities, the `id` should be the email address of an existing group or user. Email addresses need to adhere to [name guidelines for users and groups](https://support.google.com/a/answer/9193374). For external-identity-mapped entities, the `id` must be a string conforming to the Identity Source's requirements. Must be unique within a `namespace`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

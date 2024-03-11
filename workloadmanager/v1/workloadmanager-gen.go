@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "workloadmanager:v1"
 const apiName = "workloadmanager"
 const apiVersion = "v1"
 const basePath = "https://workloadmanager.googleapis.com/"
+const basePathTemplate = "https://workloadmanager.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://workloadmanager.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -169,6 +173,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.Insights = NewProjectsLocationsInsightsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Rules = NewProjectsLocationsRulesService(s)
+	rs.WorkloadProfiles = NewProjectsLocationsWorkloadProfilesService(s)
 	return rs
 }
 
@@ -182,6 +187,8 @@ type ProjectsLocationsService struct {
 	Operations *ProjectsLocationsOperationsService
 
 	Rules *ProjectsLocationsRulesService
+
+	WorkloadProfiles *ProjectsLocationsWorkloadProfilesService
 }
 
 func NewProjectsLocationsEvaluationsService(s *Service) *ProjectsLocationsEvaluationsService {
@@ -256,9 +263,281 @@ type ProjectsLocationsRulesService struct {
 	s *Service
 }
 
+func NewProjectsLocationsWorkloadProfilesService(s *Service) *ProjectsLocationsWorkloadProfilesService {
+	rs := &ProjectsLocationsWorkloadProfilesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsWorkloadProfilesService struct {
+	s *Service
+}
+
+// APILayerServer: The API layer server
+type APILayerServer struct {
+	// Name: Output only. The api layer name
+	Name string `json:"name,omitempty"`
+
+	// OsVersion: Output only. OS information
+	OsVersion string `json:"osVersion,omitempty"`
+
+	// Resources: Output only. resources in the component
+	Resources []*CloudResource `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *APILayerServer) MarshalJSON() ([]byte, error) {
+	type NoMethod APILayerServer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AvailabilityGroup: The availability groups for sqlserver
+type AvailabilityGroup struct {
+	// Databases: Output only. The databases
+	Databases []string `json:"databases,omitempty"`
+
+	// Name: Output only. The availability group name
+	Name string `json:"name,omitempty"`
+
+	// PrimaryServer: Output only. The primary server
+	PrimaryServer string `json:"primaryServer,omitempty"`
+
+	// SecondaryServers: Output only. The secondary servers
+	SecondaryServers []string `json:"secondaryServers,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Databases") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Databases") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AvailabilityGroup) MarshalJSON() ([]byte, error) {
+	type NoMethod AvailabilityGroup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BackendServer: The backend server
+type BackendServer struct {
+	// BackupFile: Output only. The backup file
+	BackupFile string `json:"backupFile,omitempty"`
+
+	// BackupSchedule: Output only. The backup schedule
+	BackupSchedule string `json:"backupSchedule,omitempty"`
+
+	// Name: Output only. The backend name
+	Name string `json:"name,omitempty"`
+
+	// OsVersion: Output only. OS information
+	OsVersion string `json:"osVersion,omitempty"`
+
+	// Resources: Output only. resources in the component
+	Resources []*CloudResource `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupFile") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupFile") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BackendServer) MarshalJSON() ([]byte, error) {
+	type NoMethod BackendServer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BigQueryDestination: Message describing big query destination
+type BigQueryDestination struct {
+	// CreateNewResultsTable: Optional. determine if results will be saved
+	// in a new table
+	CreateNewResultsTable bool `json:"createNewResultsTable,omitempty"`
+
+	// DestinationDataset: Optional. destination dataset to save evaluation
+	// results
+	DestinationDataset string `json:"destinationDataset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CreateNewResultsTable") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateNewResultsTable") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BigQueryDestination) MarshalJSON() ([]byte, error) {
+	type NoMethod BigQueryDestination
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// CloudResource: The resource on GCP
+type CloudResource struct {
+	// Kind: Output only. ComputeInstance, ComputeDisk, VPC, Bare Metal
+	// server, etc.
+	//
+	// Possible values:
+	//   "RESOURCE_KIND_UNSPECIFIED" - Unspecified resource kind.
+	//   "RESOURCE_KIND_INSTANCE" - This is a compute instance.
+	//   "RESOURCE_KIND_DISK" - This is a compute disk.
+	//   "RESOURCE_KIND_ADDRESS" - This is a compute address.
+	//   "RESOURCE_KIND_FILESTORE" - This is a filestore instance.
+	//   "RESOURCE_KIND_HEALTH_CHECK" - This is a compute health check.
+	//   "RESOURCE_KIND_FORWARDING_RULE" - This is a compute forwarding
+	// rule.
+	//   "RESOURCE_KIND_BACKEND_SERVICE" - This is a compute backend
+	// service.
+	//   "RESOURCE_KIND_SUBNETWORK" - This is a compute subnetwork.
+	//   "RESOURCE_KIND_NETWORK" - This is a compute network.
+	//   "RESOURCE_KIND_PUBLIC_ADDRESS" - This is a public accessible IP
+	// Address.
+	//   "RESOURCE_KIND_INSTANCE_GROUP" - This is a compute instance group.
+	Kind string `json:"kind,omitempty"`
+
+	// Name: Output only. resource name
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Kind") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Kind") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudResource) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Cluster: The cluster for sqlserver
+type Cluster struct {
+	// Nodes: Output only. The nodes
+	Nodes []string `json:"nodes,omitempty"`
+
+	// WitnessServer: Output only. The witness server
+	WitnessServer string `json:"witnessServer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Nodes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Nodes") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Cluster) MarshalJSON() ([]byte, error) {
+	type NoMethod Cluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Database: The database for sqlserver
+type Database struct {
+	// BackupFile: Output only. The backup file
+	BackupFile string `json:"backupFile,omitempty"`
+
+	// BackupSchedule: Output only. The backup schedule
+	BackupSchedule string `json:"backupSchedule,omitempty"`
+
+	// HostVm: Output only. The host VM
+	HostVm string `json:"hostVm,omitempty"`
+
+	// Name: Output only. The database name
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupFile") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupFile") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Database) MarshalJSON() ([]byte, error) {
+	type NoMethod Database
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -274,6 +553,9 @@ type Empty struct {
 
 // Evaluation: LINT.IfChange Message describing Evaluation object
 type Evaluation struct {
+	// BigQueryDestination: Optional. BigQuery destination
+	BigQueryDestination *BigQueryDestination `json:"bigQueryDestination,omitempty"`
+
 	// CreateTime: Output only. [Output only] Create time stamp
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -317,20 +599,21 @@ type Evaluation struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "BigQueryDestination")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BigQueryDestination") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -451,6 +734,40 @@ func (s *ExecutionResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FrontEndServer: The front end server
+type FrontEndServer struct {
+	// Name: Output only. The frontend name
+	Name string `json:"name,omitempty"`
+
+	// OsVersion: Output only. OS information
+	OsVersion string `json:"osVersion,omitempty"`
+
+	// Resources: Output only. resources in the component
+	Resources []*CloudResource `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FrontEndServer) MarshalJSON() ([]byte, error) {
+	type NoMethod FrontEndServer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GceInstanceFilter: Message describing compute engine instance filter
 type GceInstanceFilter struct {
 	// ServiceAccounts: Service account of compute engine
@@ -521,6 +838,94 @@ type Insight struct {
 
 func (s *Insight) MarshalJSON() ([]byte, error) {
 	type NoMethod Insight
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Instance: a vm instance
+type Instance struct {
+	// Name: Output only. name of the VM
+	Name string `json:"name,omitempty"`
+
+	// Region: Output only. The location of the VM
+	Region string `json:"region,omitempty"`
+
+	// Status: Output only. The state of the VM
+	//
+	// Possible values:
+	//   "INSTANCESTATE_UNSPECIFIED" - The Status of the VM is unspecified
+	//   "PROVISIONING" - Resources are being allocated for the instance.
+	//   "STAGING" - All required resources have been allocated and the
+	// instance is being started.
+	//   "RUNNING" - The instance is running.
+	//   "STOPPING" - The instance is currently stopping (either being
+	// deleted or killed).
+	//   "STOPPED" - The instance has stopped due to various reasons (user
+	// request, VM preemption, project freezing, etc.).
+	//   "TERMINATED" - The instance has failed in some way.
+	//   "SUSPENDING" - The instance is suspending.
+	//   "SUSPENDED" - The instance is suspended.
+	//   "REPAIRING" - The instance is in repair.
+	//   "DEPROVISIONING" - The instance is in de-provisioning state.
+	Status string `json:"status,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Instance) MarshalJSON() ([]byte, error) {
+	type NoMethod Instance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Layer: The database layer
+type Layer struct {
+	// ApplicationType: the application layer
+	ApplicationType string `json:"applicationType,omitempty"`
+
+	// DatabaseType: Optional. the database layer
+	DatabaseType string `json:"databaseType,omitempty"`
+
+	// Instances: Optional. instances in a layer
+	Instances []*Instance `json:"instances,omitempty"`
+
+	// Sid: Output only. system identification of a layer
+	Sid string `json:"sid,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApplicationType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApplicationType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Layer) MarshalJSON() ([]byte, error) {
+	type NoMethod Layer
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -786,6 +1191,77 @@ type ListScannedResourcesResponse struct {
 
 func (s *ListScannedResourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListScannedResourcesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListWorkloadProfilesResponse: List workloadResponse returns a
+// response with the list of workload overview
+type ListWorkloadProfilesResponse struct {
+	// NextPageToken: Output only. A token identifying a page of results the
+	// server should return
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// WorkloadOverviews: Output only. The list of Workload Overview
+	WorkloadOverviews []*WorkloadProfileOverview `json:"workloadOverviews,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListWorkloadProfilesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListWorkloadProfilesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LoadBalancerServer: The load balancer for sqlserver
+type LoadBalancerServer struct {
+	// Ip: Output only. The IP address
+	Ip string `json:"ip,omitempty"`
+
+	// Vm: Output only. The VM name
+	Vm string `json:"vm,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ip") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Ip") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LoadBalancerServer) MarshalJSON() ([]byte, error) {
+	type NoMethod LoadBalancerServer
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1096,6 +1572,9 @@ type Rule struct {
 	// Severity: the severity of the rule
 	Severity string `json:"severity,omitempty"`
 
+	// Tags: List of user-defined tags
+	Tags []string `json:"tags,omitempty"`
+
 	// Uri: the docuement url for the rule
 	Uri string `json:"uri,omitempty"`
 
@@ -1169,6 +1648,50 @@ func (s *RunEvaluationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SapComponent: The component of sap workload
+type SapComponent struct {
+	// HaHosts: A list of host URIs that are part of the HA configuration if
+	// present. An empty list indicates the component is not configured for
+	// HA.
+	HaHosts []string `json:"haHosts,omitempty"`
+
+	// Resources: Output only. resources in the component
+	Resources []*CloudResource `json:"resources,omitempty"`
+
+	// Sid: Output only. sid is the sap component identificator
+	Sid string `json:"sid,omitempty"`
+
+	// TopologyType: The detected topology of the component.
+	//
+	// Possible values:
+	//   "TOPOLOGY_TYPE_UNSPECIFIED" - Unspecified topology.
+	//   "TOPOLOGY_SCALE_UP" - A scale-up single node system.
+	//   "TOPOLOGY_SCALE_OUT" - A scale-out multi-node system.
+	TopologyType string `json:"topologyType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HaHosts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HaHosts") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapComponent) MarshalJSON() ([]byte, error) {
+	type NoMethod SapComponent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SapDiscovery: The schema of SAP system discovery data.
 type SapDiscovery struct {
 	// ApplicationLayer: Optional. An SAP system may run without an
@@ -1181,6 +1704,10 @@ type SapDiscovery struct {
 	// Metadata: Optional. The metadata for SAP system discovery data.
 	Metadata *SapDiscoveryMetadata `json:"metadata,omitempty"`
 
+	// ProjectNumber: Optional. The GCP project number that this SapSystem
+	// belongs to.
+	ProjectNumber string `json:"projectNumber,omitempty"`
+
 	// SystemId: Output only. A combination of database SID, database
 	// instance URI and tenant DB name to make a unique identifier
 	// per-system.
@@ -1189,6 +1716,9 @@ type SapDiscovery struct {
 	// UpdateTime: Required. Unix timestamp this system has been updated
 	// last.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// WorkloadProperties: Optional. The properties of the workload.
+	WorkloadProperties *SapDiscoveryWorkloadProperties `json:"workloadProperties,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ApplicationLayer") to
 	// unconditionally include in API requests. By default, fields with
@@ -1222,6 +1752,11 @@ type SapDiscoveryComponent struct {
 	// DatabaseProperties: Optional. The component is a SAP database.
 	DatabaseProperties *SapDiscoveryComponentDatabaseProperties `json:"databaseProperties,omitempty"`
 
+	// HaHosts: Optional. A list of host URIs that are part of the HA
+	// configuration if present. An empty list indicates the component is
+	// not configured for HA.
+	HaHosts []string `json:"haHosts,omitempty"`
+
 	// HostProject: Required. Pantheon Project in which the resources
 	// reside.
 	HostProject string `json:"hostProject,omitempty"`
@@ -1232,6 +1767,14 @@ type SapDiscoveryComponent struct {
 	// Sid: Optional. The SAP identifier, used by the SAP software and helps
 	// differentiate systems for customers.
 	Sid string `json:"sid,omitempty"`
+
+	// TopologyType: Optional. The detected topology of the component.
+	//
+	// Possible values:
+	//   "TOPOLOGY_TYPE_UNSPECIFIED" - Unspecified topology.
+	//   "TOPOLOGY_SCALE_UP" - A scale-up single node system.
+	//   "TOPOLOGY_SCALE_OUT" - A scale-out multi-node system.
+	TopologyType string `json:"topologyType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ApplicationProperties") to unconditionally include in API requests.
@@ -1261,6 +1804,10 @@ func (s *SapDiscoveryComponent) MarshalJSON() ([]byte, error) {
 // SapDiscoveryComponentApplicationProperties: A set of properties
 // describing an SAP Application layer.
 type SapDiscoveryComponentApplicationProperties struct {
+	// Abap: Optional. Indicates whether this is a Java or ABAP Netweaver
+	// instance. true means it is ABAP, false means it is Java.
+	Abap bool `json:"abap,omitempty"`
+
 	// ApplicationType: Required. Type of the application. Netweaver, etc.
 	//
 	// Possible values:
@@ -1272,12 +1819,16 @@ type SapDiscoveryComponentApplicationProperties struct {
 	// application.
 	AscsUri string `json:"ascsUri,omitempty"`
 
+	// KernelVersion: Optional. Kernel version for Netweaver running in the
+	// system.
+	KernelVersion string `json:"kernelVersion,omitempty"`
+
 	// NfsUri: Optional. Resource URI of the recognized shared NFS of the
 	// application. May be empty if the application server has only a single
 	// node.
 	NfsUri string `json:"nfsUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ApplicationType") to
+	// ForceSendFields is a list of field names (e.g. "Abap") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1285,13 +1836,12 @@ type SapDiscoveryComponentApplicationProperties struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ApplicationType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Abap") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1312,6 +1862,10 @@ type SapDiscoveryComponentDatabaseProperties struct {
 	//   "MAX_DB" - SAP MAX_DB
 	//   "DB2" - IBM DB2
 	DatabaseType string `json:"databaseType,omitempty"`
+
+	// DatabaseVersion: Optional. The version of the database software
+	// running in the system.
+	DatabaseVersion string `json:"databaseVersion,omitempty"`
 
 	// PrimaryInstanceUri: Required. URI of the recognized primary instance
 	// of the database.
@@ -1388,6 +1942,10 @@ func (s *SapDiscoveryMetadata) MarshalJSON() ([]byte, error) {
 
 // SapDiscoveryResource: Message describing a resource.
 type SapDiscoveryResource struct {
+	// InstanceProperties: Optional. A set of properties only applying to
+	// instance type resources.
+	InstanceProperties *SapDiscoveryResourceInstanceProperties `json:"instanceProperties,omitempty"`
+
 	// RelatedResources: Optional. A list of resource URIs related to this
 	// resource.
 	RelatedResources []string `json:"relatedResources,omitempty"`
@@ -1430,15 +1988,15 @@ type SapDiscoveryResource struct {
 	// its discovery data updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RelatedResources") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "InstanceProperties")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RelatedResources") to
+	// NullFields is a list of field names (e.g. "InstanceProperties") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1454,27 +2012,174 @@ func (s *SapDiscoveryResource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SapValidation: A presentation of SAP workload insight. The schema of
-// SAP workloads validation related data.
-type SapValidation struct {
-	// ValidationDetails: Optional. A list of SAP validation metrics data.
-	ValidationDetails []*SapValidationValidationDetail `json:"validationDetails,omitempty"`
+// SapDiscoveryResourceInstanceProperties: A set of properties only
+// present for an instance type resource
+type SapDiscoveryResourceInstanceProperties struct {
+	// ClusterInstances: Optional. A list of instance URIs that are part of
+	// a cluster with this one.
+	ClusterInstances []string `json:"clusterInstances,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ValidationDetails")
-	// to unconditionally include in API requests. By default, fields with
+	// VirtualHostname: Optional. A virtual hostname of the instance if it
+	// has one.
+	VirtualHostname string `json:"virtualHostname,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClusterInstances") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ValidationDetails") to
+	// NullFields is a list of field names (e.g. "ClusterInstances") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapDiscoveryResourceInstanceProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod SapDiscoveryResourceInstanceProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SapDiscoveryWorkloadProperties: A set of properties describing an SAP
+// workload.
+type SapDiscoveryWorkloadProperties struct {
+	// ProductVersions: Optional. List of SAP Products and their versions
+	// running on the system.
+	ProductVersions []*SapDiscoveryWorkloadPropertiesProductVersion `json:"productVersions,omitempty"`
+
+	// SoftwareComponentVersions: Optional. A list of SAP software
+	// components and their versions running on the system.
+	SoftwareComponentVersions []*SapDiscoveryWorkloadPropertiesSoftwareComponentProperties `json:"softwareComponentVersions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProductVersions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProductVersions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapDiscoveryWorkloadProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod SapDiscoveryWorkloadProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SapDiscoveryWorkloadPropertiesProductVersion: A product name and
+// version.
+type SapDiscoveryWorkloadPropertiesProductVersion struct {
+	// Name: Optional. Name of the product.
+	Name string `json:"name,omitempty"`
+
+	// Version: Optional. Version of the product.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapDiscoveryWorkloadPropertiesProductVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod SapDiscoveryWorkloadPropertiesProductVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SapDiscoveryWorkloadPropertiesSoftwareComponentProperties: A SAP
+// software component name, version, and type.
+type SapDiscoveryWorkloadPropertiesSoftwareComponentProperties struct {
+	// ExtVersion: Optional. The component's minor version.
+	ExtVersion string `json:"extVersion,omitempty"`
+
+	// Name: Optional. Name of the component.
+	Name string `json:"name,omitempty"`
+
+	// Type: Optional. The component's type.
+	Type string `json:"type,omitempty"`
+
+	// Version: Optional. The component's major version.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExtVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExtVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapDiscoveryWorkloadPropertiesSoftwareComponentProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod SapDiscoveryWorkloadPropertiesSoftwareComponentProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SapValidation: A presentation of SAP workload insight. The schema of
+// SAP workloads validation related data.
+type SapValidation struct {
+	// ProjectId: Required. The project_id of the cloud project that the
+	// Insight data comes from.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// ValidationDetails: Optional. A list of SAP validation metrics data.
+	ValidationDetails []*SapValidationValidationDetail `json:"validationDetails,omitempty"`
+
+	// Zone: Optional. The zone of the instance that the Insight data comes
+	// from.
+	Zone string `json:"zone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProjectId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProjectId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1490,6 +2195,10 @@ type SapValidationValidationDetail struct {
 	// Details: Optional. The pairs of metrics data: field name & field
 	// value.
 	Details map[string]string `json:"details,omitempty"`
+
+	// IsPresent: Optional. Was there a SAP system detected for this
+	// validation type.
+	IsPresent bool `json:"isPresent,omitempty"`
 
 	// SapValidationType: Optional. The SAP system that the validation data
 	// is from.
@@ -1540,10 +2249,81 @@ func (s *SapValidationValidationDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SapWorkload: The body of sap workload
+type SapWorkload struct {
+	// Application: Output only. the acsc componment
+	Application *SapComponent `json:"application,omitempty"`
+
+	// Database: Output only. the database componment
+	Database *SapComponent `json:"database,omitempty"`
+
+	// Metadata: Output only. The metadata for SAP workload.
+	Metadata map[string]string `json:"metadata,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Application") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Application") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod SapWorkload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SapWorkloadOverview: The overview of sap workload
+type SapWorkloadOverview struct {
+	// AppSid: Output only. The application SID
+	AppSid string `json:"appSid,omitempty"`
+
+	// DbSid: Output only. The database SID
+	DbSid string `json:"dbSid,omitempty"`
+
+	// SapSystemId: Output only. The UUID for a SAP workload
+	SapSystemId string `json:"sapSystemId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppSid") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppSid") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SapWorkloadOverview) MarshalJSON() ([]byte, error) {
+	type NoMethod SapWorkloadOverview
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ScannedResource: Message of scanned resource
 type ScannedResource struct {
 	// Resource: resource name
 	Resource string `json:"resource,omitempty"`
+
+	// Type: resource type
+	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Resource") to
 	// unconditionally include in API requests. By default, fields with
@@ -1690,6 +2470,75 @@ func (s *SqlserverValidationValidationDetail) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SqlserverWorkload: The body of sqlserver workload
+type SqlserverWorkload struct {
+	// Ags: Output only. The availability groups for sqlserver
+	Ags []*AvailabilityGroup `json:"ags,omitempty"`
+
+	// Cluster: Output only. The cluster for sqlserver
+	Cluster *Cluster `json:"cluster,omitempty"`
+
+	// Databases: Output only. The databases for sqlserver
+	Databases []*Database `json:"databases,omitempty"`
+
+	// LoadBalancerServer: Output only. The load balancer for sqlserver
+	LoadBalancerServer *LoadBalancerServer `json:"loadBalancerServer,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Ags") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Ags") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlserverWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlserverWorkload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlserverWorkloadOverview: The overview of sqlserver workload
+type SqlserverWorkloadOverview struct {
+	// AvailabilityGroup: Output only. The availability groups
+	AvailabilityGroup []string `json:"availabilityGroup,omitempty"`
+
+	// SqlserverSystemId: Output only. The UUID for a Sqlserver workload
+	SqlserverSystemId string `json:"sqlserverSystemId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AvailabilityGroup")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AvailabilityGroup") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlserverWorkloadOverview) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlserverWorkloadOverview
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -1734,6 +2583,72 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ThreeTierWorkload: The body of three tier workload
+type ThreeTierWorkload struct {
+	// ApiLayer: Output only. The API layer for three tier workload
+	ApiLayer *APILayerServer `json:"apiLayer,omitempty"`
+
+	// Backend: Output only. The backend for three tier workload
+	Backend *BackendServer `json:"backend,omitempty"`
+
+	// Endpoint: Output only. the workload endpoint
+	Endpoint string `json:"endpoint,omitempty"`
+
+	// Frontend: Output only. The frontend for three tier workload
+	Frontend *FrontEndServer `json:"frontend,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiLayer") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiLayer") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ThreeTierWorkload) MarshalJSON() ([]byte, error) {
+	type NoMethod ThreeTierWorkload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ThreeTierWorkloadOverview: The overview of three tier workload
+type ThreeTierWorkloadOverview struct {
+	// ThreeTierSystemId: Output only. The UUID for a three tier workload
+	ThreeTierSystemId string `json:"threeTierSystemId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ThreeTierSystemId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ThreeTierSystemId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ThreeTierWorkloadOverview) MarshalJSON() ([]byte, error) {
+	type NoMethod ThreeTierWorkloadOverview
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ViolationDetails: Message describing the violdation in execution
 // result
 type ViolationDetails struct {
@@ -1765,6 +2680,118 @@ type ViolationDetails struct {
 
 func (s *ViolationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ViolationDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadProfile: workload resource
+type WorkloadProfile struct {
+	// Application: Optional. The application layer
+	Application *Layer `json:"application,omitempty"`
+
+	// Ascs: Optional. The ascs layer
+	Ascs *Layer `json:"ascs,omitempty"`
+
+	// Database: Optional. The database layer
+	Database *Layer `json:"database,omitempty"`
+
+	// Labels: Optional. such as name, description, version. More example
+	// can be found in deployment
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Identifier. name of resource names have the form
+	// 'projects/{project_id}/workloads/{workload_id}'
+	Name string `json:"name,omitempty"`
+
+	// RefreshedTime: Required. time when the workload data was refreshed
+	RefreshedTime string `json:"refreshedTime,omitempty"`
+
+	// SapWorkload: The sap workload content
+	SapWorkload *SapWorkload `json:"sapWorkload,omitempty"`
+
+	// SqlserverWorkload: The sqlserver workload content
+	SqlserverWorkload *SqlserverWorkload `json:"sqlserverWorkload,omitempty"`
+
+	// State: Output only. [output only] the current state if a a workload
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - unspecified
+	//   "ACTIVE" - ACTIVE state
+	//   "DEPLOYING" - workload is in Deploying state
+	//   "DESTROYING" - The workload is in Destroying state
+	//   "MAINTENANCE" - The Workload is undermaintance
+	State string `json:"state,omitempty"`
+
+	// ThreeTierWorkload: The 3 tier web app workload content
+	ThreeTierWorkload *ThreeTierWorkload `json:"threeTierWorkload,omitempty"`
+
+	// WorkloadType: Required. The type of the workload
+	//
+	// Possible values:
+	//   "WORKLOAD_TYPE_UNSPECIFIED" - unspecified workload type
+	//   "S4_HANA" - running sap workload s4/hana
+	//   "SQL_SERVER" - running sqlserver workload
+	//   "THREE_TIER_WEB_APP" - running 3 tier web app workload
+	WorkloadType string `json:"workloadType,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Application") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Application") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkloadProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadProfile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WorkloadProfileOverview: a workload profile overview
+type WorkloadProfileOverview struct {
+	// SapWorkloadOverview: The sap workload overview
+	SapWorkloadOverview *SapWorkloadOverview `json:"sapWorkloadOverview,omitempty"`
+
+	// SqlserverWorkloadOverview: The sqlserver workload overview
+	SqlserverWorkloadOverview *SqlserverWorkloadOverview `json:"sqlserverWorkloadOverview,omitempty"`
+
+	// ThreeTierWorkloadOverview: The three tier workload overview
+	ThreeTierWorkloadOverview *ThreeTierWorkloadOverview `json:"threeTierWorkloadOverview,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SapWorkloadOverview")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SapWorkloadOverview") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WorkloadProfileOverview) MarshalJSON() ([]byte, error) {
+	type NoMethod WorkloadProfileOverview
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2351,6 +3378,161 @@ func (c *ProjectsLocationsEvaluationsCreateCall) Do(opts ...googleapi.CallOption
 
 }
 
+// method id "workloadmanager.projects.locations.evaluations.delete":
+
+type ProjectsLocationsEvaluationsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single Evaluation.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsEvaluationsService) Delete(name string) *ProjectsLocationsEvaluationsDeleteCall {
+	c := &ProjectsLocationsEvaluationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed. The server will guarantee
+// that for at least 60 minutes after the first request. For example,
+// consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsEvaluationsDeleteCall) RequestId(requestId string) *ProjectsLocationsEvaluationsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEvaluationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsEvaluationsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEvaluationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsEvaluationsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEvaluationsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEvaluationsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "workloadmanager.projects.locations.evaluations.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEvaluationsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single Evaluation.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/evaluations/{evaluationsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "workloadmanager.projects.locations.evaluations.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the resource",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/evaluations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "workloadmanager.projects.locations.evaluations.get":
 
 type ProjectsLocationsEvaluationsGetCall struct {
@@ -2711,6 +3893,161 @@ func (c *ProjectsLocationsEvaluationsListCall) Pages(ctx context.Context, f func
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "workloadmanager.projects.locations.evaluations.executions.delete":
+
+type ProjectsLocationsEvaluationsExecutionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single Execution.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsEvaluationsExecutionsService) Delete(name string) *ProjectsLocationsEvaluationsExecutionsDeleteCall {
+	c := &ProjectsLocationsEvaluationsExecutionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed. The server will guarantee
+// that for at least 60 minutes after the first request. For example,
+// consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsEvaluationsExecutionsDeleteCall) RequestId(requestId string) *ProjectsLocationsEvaluationsExecutionsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsEvaluationsExecutionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsEvaluationsExecutionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsEvaluationsExecutionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsEvaluationsExecutionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsEvaluationsExecutionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsEvaluationsExecutionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "workloadmanager.projects.locations.evaluations.executions.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsEvaluationsExecutionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single Execution.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/evaluations/{evaluationsId}/executions/{executionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "workloadmanager.projects.locations.evaluations.executions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the resource",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/evaluations/[^/]+/executions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "workloadmanager.projects.locations.evaluations.executions.get":
@@ -4639,6 +5976,357 @@ func (c *ProjectsLocationsRulesListCall) Do(opts ...googleapi.CallOption) (*List
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsRulesListCall) Pages(ctx context.Context, f func(*ListRulesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "workloadmanager.projects.locations.workloadProfiles.get":
+
+type ProjectsLocationsWorkloadProfilesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single workload.
+//
+// - name: Name of the resource.
+func (r *ProjectsLocationsWorkloadProfilesService) Get(name string) *ProjectsLocationsWorkloadProfilesGetCall {
+	c := &ProjectsLocationsWorkloadProfilesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsWorkloadProfilesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsWorkloadProfilesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsWorkloadProfilesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsWorkloadProfilesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsWorkloadProfilesGetCall) Context(ctx context.Context) *ProjectsLocationsWorkloadProfilesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsWorkloadProfilesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWorkloadProfilesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "workloadmanager.projects.locations.workloadProfiles.get" call.
+// Exactly one of *WorkloadProfile or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *WorkloadProfile.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsWorkloadProfilesGetCall) Do(opts ...googleapi.CallOption) (*WorkloadProfile, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &WorkloadProfile{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single workload.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workloadProfiles/{workloadProfilesId}",
+	//   "httpMethod": "GET",
+	//   "id": "workloadmanager.projects.locations.workloadProfiles.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the resource",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/workloadProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "WorkloadProfile"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "workloadmanager.projects.locations.workloadProfiles.list":
+
+type ProjectsLocationsWorkloadProfilesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List workloads
+//
+// - parent: Parent value for ListWorkloadRequest.
+func (r *ProjectsLocationsWorkloadProfilesService) List(parent string) *ProjectsLocationsWorkloadProfilesListCall {
+	c := &ProjectsLocationsWorkloadProfilesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filtering results
+func (c *ProjectsLocationsWorkloadProfilesListCall) Filter(filter string) *ProjectsLocationsWorkloadProfilesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Server may return fewer items than requested. If unspecified, server
+// will pick an appropriate default.
+func (c *ProjectsLocationsWorkloadProfilesListCall) PageSize(pageSize int64) *ProjectsLocationsWorkloadProfilesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return.
+func (c *ProjectsLocationsWorkloadProfilesListCall) PageToken(pageToken string) *ProjectsLocationsWorkloadProfilesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsWorkloadProfilesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsWorkloadProfilesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsWorkloadProfilesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsWorkloadProfilesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsWorkloadProfilesListCall) Context(ctx context.Context) *ProjectsLocationsWorkloadProfilesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsWorkloadProfilesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsWorkloadProfilesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/workloadProfiles")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "workloadmanager.projects.locations.workloadProfiles.list" call.
+// Exactly one of *ListWorkloadProfilesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListWorkloadProfilesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsWorkloadProfilesListCall) Do(opts ...googleapi.CallOption) (*ListWorkloadProfilesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListWorkloadProfilesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "deprecated": true,
+	//   "description": "List workloads",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workloadProfiles",
+	//   "httpMethod": "GET",
+	//   "id": "workloadmanager.projects.locations.workloadProfiles.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filtering results",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Requested page size. Server may return fewer items than requested. If unspecified, server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token identifying a page of results the server should return.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent value for ListWorkloadRequest",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/workloadProfiles",
+	//   "response": {
+	//     "$ref": "ListWorkloadProfilesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsWorkloadProfilesListCall) Pages(ctx context.Context, f func(*ListWorkloadProfilesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

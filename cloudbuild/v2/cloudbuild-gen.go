@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "cloudbuild:v2"
 const apiName = "cloudbuild"
 const apiVersion = "v2"
 const basePath = "https://cloudbuild.googleapis.com/"
+const basePathTemplate = "https://cloudbuild.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudbuild.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -396,11 +400,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -412,11 +439,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -438,6 +474,116 @@ type Binding struct {
 
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BitbucketCloudConfig: Configuration for connections to Bitbucket
+// Cloud.
+type BitbucketCloudConfig struct {
+	// AuthorizerCredential: Required. An access token with the `webhook`,
+	// `repository`, `repository:admin` and `pullrequest` scope access. It
+	// can be either a workspace, project or repository access token. It's
+	// recommended to use a system account to generate these credentials.
+	AuthorizerCredential *UserCredential `json:"authorizerCredential,omitempty"`
+
+	// ReadAuthorizerCredential: Required. An access token with the
+	// `repository` access. It can be either a workspace, project or
+	// repository access token. It's recommended to use a system account to
+	// generate the credentials.
+	ReadAuthorizerCredential *UserCredential `json:"readAuthorizerCredential,omitempty"`
+
+	// WebhookSecretSecretVersion: Required. SecretManager resource
+	// containing the webhook secret used to verify webhook events,
+	// formatted as `projects/*/secrets/*/versions/*`.
+	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
+
+	// Workspace: Required. The Bitbucket Cloud Workspace ID to be connected
+	// to Google Cloud Platform.
+	Workspace string `json:"workspace,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthorizerCredential") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthorizerCredential") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BitbucketCloudConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BitbucketCloudConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BitbucketDataCenterConfig: Configuration for connections to Bitbucket
+// Data Center.
+type BitbucketDataCenterConfig struct {
+	// AuthorizerCredential: Required. A http access token with the
+	// `REPO_ADMIN` scope access.
+	AuthorizerCredential *UserCredential `json:"authorizerCredential,omitempty"`
+
+	// HostUri: Required. The URI of the Bitbucket Data Center instance or
+	// cluster this connection is for.
+	HostUri string `json:"hostUri,omitempty"`
+
+	// ReadAuthorizerCredential: Required. A http access token with the
+	// `REPO_READ` access.
+	ReadAuthorizerCredential *UserCredential `json:"readAuthorizerCredential,omitempty"`
+
+	// ServerVersion: Output only. Version of the Bitbucket Data Center
+	// running on the `host_uri`.
+	ServerVersion string `json:"serverVersion,omitempty"`
+
+	// ServiceDirectoryConfig: Optional. Configuration for using Service
+	// Directory to privately connect to a Bitbucket Data Center. This
+	// should only be set if the Bitbucket Data Center is hosted on-premises
+	// and not reachable by public internet. If this field is left empty,
+	// calls to the Bitbucket Data Center will be made over the public
+	// internet.
+	ServiceDirectoryConfig *GoogleDevtoolsCloudbuildV2ServiceDirectoryConfig `json:"serviceDirectoryConfig,omitempty"`
+
+	// SslCa: Optional. SSL certificate to use for requests to the Bitbucket
+	// Data Center.
+	SslCa string `json:"sslCa,omitempty"`
+
+	// WebhookSecretSecretVersion: Required. Immutable. SecretManager
+	// resource containing the webhook secret used to verify webhook events,
+	// formatted as `projects/*/secrets/*/versions/*`.
+	WebhookSecretSecretVersion string `json:"webhookSecretSecretVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthorizerCredential") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthorizerCredential") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BitbucketDataCenterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BitbucketDataCenterConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -524,10 +670,18 @@ func (s *ChildStatusReference) MarshalJSON() ([]byte, error) {
 }
 
 // Connection: A connection to a SCM like GitHub, GitHub Enterprise,
-// Bitbucket Data Center or GitLab.
+// Bitbucket Data Center, Bitbucket Cloud or GitLab.
 type Connection struct {
 	// Annotations: Allows clients to store small amounts of arbitrary data.
 	Annotations map[string]string `json:"annotations,omitempty"`
+
+	// BitbucketCloudConfig: Configuration for connections to Bitbucket
+	// Cloud.
+	BitbucketCloudConfig *BitbucketCloudConfig `json:"bitbucketCloudConfig,omitempty"`
+
+	// BitbucketDataCenterConfig: Configuration for connections to Bitbucket
+	// Data Center.
+	BitbucketDataCenterConfig *BitbucketDataCenterConfig `json:"bitbucketDataCenterConfig,omitempty"`
 
 	// CreateTime: Output only. Server assigned timestamp for when the
 	// connection was created.
@@ -1845,6 +1999,49 @@ func (s *PipelineRef) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PipelineResult: A value produced by a Pipeline.
+type PipelineResult struct {
+	// Description: Output only. Description of the result.
+	Description string `json:"description,omitempty"`
+
+	// Name: Output only. Name of the result.
+	Name string `json:"name,omitempty"`
+
+	// Type: Output only. The type of data that the result holds.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default enum type; should not be used.
+	//   "STRING" - Default
+	//   "ARRAY" - Array type
+	//   "OBJECT" - Object type
+	Type string `json:"type,omitempty"`
+
+	// Value: Output only. Value of the result.
+	Value *ResultValue `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PipelineResult) MarshalJSON() ([]byte, error) {
+	type NoMethod PipelineResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PipelineRun: Message describing PipelineRun object
 type PipelineRun struct {
 	// Annotations: User annotations. See
@@ -1869,6 +2066,14 @@ type PipelineRun struct {
 	// Etag: Needed for declarative-friendly resources.
 	Etag string `json:"etag,omitempty"`
 
+	// FinallyStartTime: Output only. FinallyStartTime is when all
+	// non-finally tasks have been completed and only finally tasks are
+	// being executed. +optional
+	FinallyStartTime string `json:"finallyStartTime,omitempty"`
+
+	// GcbParams: Output only. GCB default params.
+	GcbParams map[string]string `json:"gcbParams,omitempty"`
+
 	// Name: Output only. The `PipelineRun` name with format
 	// `projects/{project}/locations/{location}/pipelineRuns/{pipeline_run}`
 	Name string `json:"name,omitempty"`
@@ -1891,9 +2096,24 @@ type PipelineRun struct {
 	// PipelineSpec: PipelineSpec defines the desired state of Pipeline.
 	PipelineSpec *PipelineSpec `json:"pipelineSpec,omitempty"`
 
+	// Provenance: Optional. Provenance configuration.
+	Provenance *Provenance `json:"provenance,omitempty"`
+
+	// Record: Output only. The `Record` of this `PipelineRun`. Format:
+	// `projects/{project}/locations/{location}/results/{result_id}/records/{
+	// record_id}`
+	Record string `json:"record,omitempty"`
+
 	// ResolvedPipelineSpec: Output only. The exact PipelineSpec used to
 	// instantiate the run.
 	ResolvedPipelineSpec *PipelineSpec `json:"resolvedPipelineSpec,omitempty"`
+
+	// Results: Optional. Output only. List of results written out by the
+	// pipeline's containers
+	Results []*PipelineRunResult `json:"results,omitempty"`
+
+	// Security: Optional. Security configuration.
+	Security *Security `json:"security,omitempty"`
 
 	// ServiceAccount: Service account used in the Pipeline.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
@@ -1916,6 +2136,9 @@ type PipelineRun struct {
 	// UpdateTime: Output only. Time at which the request to update the
 	// `PipelineRun` was received.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Worker: Optional. Worker configuration.
+	Worker *Worker `json:"worker,omitempty"`
 
 	// WorkerPool: Output only. The WorkerPool used to run this PipelineRun.
 	WorkerPool string `json:"workerPool,omitempty"`
@@ -1950,6 +2173,38 @@ func (s *PipelineRun) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PipelineRunResult: PipelineRunResult used to describe the results of
+// a pipeline
+type PipelineRunResult struct {
+	// Name: Output only. Name of the TaskRun
+	Name string `json:"name,omitempty"`
+
+	// Value: Output only. Value of the result.
+	Value *ResultValue `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PipelineRunResult) MarshalJSON() ([]byte, error) {
+	type NoMethod PipelineRunResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PipelineSpec: PipelineSpec defines the desired state of Pipeline.
 type PipelineSpec struct {
 	// FinallyTasks: List of Tasks that execute just before leaving the
@@ -1965,6 +2220,10 @@ type PipelineSpec struct {
 
 	// Params: List of parameters.
 	Params []*ParamSpec `json:"params,omitempty"`
+
+	// Results: Optional. Output only. List of results written out by the
+	// pipeline's containers
+	Results []*PipelineResult `json:"results,omitempty"`
 
 	// Tasks: List of Tasks that execute when this Pipeline is run.
 	Tasks []*PipelineTask `json:"tasks,omitempty"`
@@ -2269,6 +2528,62 @@ func (s *PropertySpec) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Provenance: Provenance configuration.
+type Provenance struct {
+	// Enabled: Optional. Provenance push mode.
+	//
+	// Possible values:
+	//   "ENABLED_UNSPECIFIED" - Default to disabled (before AA
+	// regionalization), optimistic after
+	//   "REQUIRED" - Provenance failures would fail the run
+	//   "OPTIMISTIC" - GCB will attempt to push to artifact analaysis and
+	// build state would not be impacted by the push failures.
+	//   "DISABLED" - Disable the provenance push entirely.
+	Enabled string `json:"enabled,omitempty"`
+
+	// Region: Optional. Provenance region.
+	//
+	// Possible values:
+	//   "REGION_UNSPECIFIED" - The PipelineRun/TaskRun/Workflow will be
+	// rejected. Update this comment to push to the same region as the run
+	// in Artifact Analysis when it's regionalized.
+	//   "GLOBAL" - Push provenance to Artifact Analysis in global region.
+	Region string `json:"region,omitempty"`
+
+	// Storage: Optional. Where provenance is stored.
+	//
+	// Possible values:
+	//   "STORAGE_UNSPECIFIED" - Default PREFER_ARTIFACT_PROJECT.
+	//   "PREFER_ARTIFACT_PROJECT" - GCB will attempt to push provenance to
+	// the artifact project. If it is not available, fallback to build
+	// project.
+	//   "ARTIFACT_PROJECT_ONLY" - Only push to artifact project.
+	//   "BUILD_PROJECT_ONLY" - Only push to build project.
+	Storage string `json:"storage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Provenance) MarshalJSON() ([]byte, error) {
+	type NoMethod Provenance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Repository: A repository associated to a parent connection.
 type Repository struct {
 	// Annotations: Allows clients to store small amounts of arbitrary data.
@@ -2321,6 +2636,50 @@ type Repository struct {
 
 func (s *Repository) MarshalJSON() ([]byte, error) {
 	type NoMethod Repository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ResultValue: ResultValue holds different types of data for a single
+// result.
+type ResultValue struct {
+	// ArrayVal: Value of the result if type is array.
+	ArrayVal []string `json:"arrayVal,omitempty"`
+
+	// ObjectVal: Value of the result if type is object.
+	ObjectVal map[string]string `json:"objectVal,omitempty"`
+
+	// StringVal: Value of the result if type is string.
+	StringVal string `json:"stringVal,omitempty"`
+
+	// Type: Output only. The type of data that the result holds.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Default enum type; should not be used.
+	//   "STRING" - Default
+	//   "ARRAY" - Array type
+	//   "OBJECT" - Object type
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArrayVal") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ArrayVal") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResultValue) MarshalJSON() ([]byte, error) {
+	type NoMethod ResultValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2405,6 +2764,43 @@ type SecretVolumeSource struct {
 
 func (s *SecretVolumeSource) MarshalJSON() ([]byte, error) {
 	type NoMethod SecretVolumeSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Security: Security configuration.
+type Security struct {
+	// PrivilegeMode: Optional. Privilege mode.
+	//
+	// Possible values:
+	//   "PRIVILEGE_MODE_UNSPECIFIED" - Default to PRIVILEGED.
+	//   "PRIVILEGED" - Privileged mode.
+	//   "UNPRIVILEGED" - Unprivileged mode.
+	PrivilegeMode string `json:"privilegeMode,omitempty"`
+
+	// ServiceAccount: IAM service account whose credentials will be used at
+	// runtime.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PrivilegeMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrivilegeMode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Security) MarshalJSON() ([]byte, error) {
+	type NoMethod Security
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2723,6 +3119,10 @@ type StepTemplate struct {
 	// Cannot be updated.
 	Env []*EnvVar `json:"env,omitempty"`
 
+	// VolumeMounts: Optional. Pod volumes to mount into the container's
+	// filesystem.
+	VolumeMounts []*VolumeMount `json:"volumeMounts,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Env") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2866,7 +3266,7 @@ type TaskSpec struct {
 	// StepTemplate: Optional. StepTemplate can be used as the basis for all
 	// step containers within the Task, so that the steps inherit settings
 	// on the base container.
-	StepTemplate []*StepTemplate `json:"stepTemplate,omitempty"`
+	StepTemplate *StepTemplate `json:"stepTemplate,omitempty"`
 
 	// Steps: Steps of the task.
 	Steps []*Step `json:"steps,omitempty"`
@@ -3042,34 +3442,6 @@ func (s *UserCredential) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// VolumeClaim: VolumeClaim is a user's request for a volume.
-type VolumeClaim struct {
-	// Storage: Volume size, e.g. 1gb.
-	Storage string `json:"storage,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Storage") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Storage") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *VolumeClaim) MarshalJSON() ([]byte, error) {
-	type NoMethod VolumeClaim
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // VolumeMount: Pod volumes to mount into the container's filesystem.
 type VolumeMount struct {
 	// MountPath: Path within the container at which the volume should be
@@ -3193,6 +3565,35 @@ func (s *WhenExpression) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Worker: Configuration for the worker.
+type Worker struct {
+	// MachineType: Optional. Machine type of a worker, default is
+	// "e2-standard-2".
+	MachineType string `json:"machineType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MachineType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MachineType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Worker) MarshalJSON() ([]byte, error) {
+	type NoMethod Worker
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // WorkspaceBinding: WorkspaceBinding maps a workspace to a Volume.
 // PipelineRef can be used to refer to a specific instance of a
 // Pipeline.
@@ -3203,8 +3604,10 @@ type WorkspaceBinding struct {
 	// Secret: Secret Volume Source.
 	Secret *SecretVolumeSource `json:"secret,omitempty"`
 
-	// VolumeClaim: Volume claim that will be created in the same namespace.
-	VolumeClaim *VolumeClaim `json:"volumeClaim,omitempty"`
+	// SubPath: Optional. SubPath is optionally a directory on the volume
+	// which should be used for this binding (i.e. the volume will be
+	// mounted at this sub directory). +optional
+	SubPath string `json:"subPath,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
@@ -3280,6 +3683,11 @@ func (s *WorkspaceDeclaration) MarshalJSON() ([]byte, error) {
 type WorkspacePipelineTaskBinding struct {
 	// Name: Name of the workspace as declared by the task.
 	Name string `json:"name,omitempty"`
+
+	// SubPath: Optional. SubPath is optionally a directory on the volume
+	// which should be used for this binding (i.e. the volume will be
+	// mounted at this sub directory). +optional
+	SubPath string `json:"subPath,omitempty"`
 
 	// Workspace: Name of the workspace declared by the pipeline.
 	Workspace string `json:"workspace,omitempty"`

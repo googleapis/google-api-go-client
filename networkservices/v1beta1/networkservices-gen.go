@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "networkservices:v1beta1"
 const apiName = "networkservices"
 const apiVersion = "v1beta1"
 const basePath = "https://networkservices.googleapis.com/"
+const basePathTemplate = "https://networkservices.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://networkservices.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -445,11 +449,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -461,11 +488,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -743,20 +779,20 @@ func (s *ExtensionChain) MarshalJSON() ([]byte, error) {
 // ExtensionChainExtension: A single extension in the chain to execute
 // for the matching request.
 type ExtensionChainExtension struct {
-	// Authority: Required. The `:authority` header in the gRPC request sent
-	// from Envoy to the extension service.
+	// Authority: Optional. The `:authority` header in the gRPC request sent
+	// from Envoy to the extension service. Required for Callout extensions.
 	Authority string `json:"authority,omitempty"`
 
 	// FailOpen: Optional. Determines how the proxy behaves if the call to
 	// the extension fails or times out. When set to `TRUE`, request or
 	// response processing continues without error. Any subsequent
 	// extensions in the extension chain are also executed. When set to
-	// `FALSE`: * If response headers have not been delivered to the
-	// downstream client, a generic 500 error is returned to the client. The
-	// error response can be tailored by configuring a custom error response
-	// in the load balancer. * If response headers have been delivered, then
-	// the HTTP stream to the downstream client is reset. Default is
-	// `FALSE`.
+	// `FALSE` or the default setting of `FALSE` is used, one of the
+	// following happens: * If response headers have not been delivered to
+	// the downstream client, a generic 500 error is returned to the client.
+	// The error response can be tailored by configuring a custom error
+	// response in the load balancer. * If response headers have been
+	// delivered, then the HTTP stream to the downstream client is reset.
 	FailOpen bool `json:"failOpen,omitempty"`
 
 	// ForwardHeaders: Optional. List of the HTTP headers to forward to the
@@ -772,8 +808,15 @@ type ExtensionChainExtension struct {
 	Name string `json:"name,omitempty"`
 
 	// Service: Required. The reference to the service that runs the
-	// extension. Must be a reference to a backend service
-	// (https://cloud.google.com/compute/docs/reference/rest/v1/backendServices).
+	// extension. Currently only callout extensions are supported here. To
+	// configure a callout extension, `service` must be a fully-qualified
+	// reference to a backend service
+	// (https://cloud.google.com/compute/docs/reference/rest/v1/backendServices)
+	// in the format:
+	// `https://www.googleapis.com/compute/v1/projects/{project}/regions/{reg
+	// ion}/backendServices/{backendService}` or
+	// `https://www.googleapis.com/compute/v1/projects/{project}/global/backe
+	// ndServices/{backendService}`.
 	Service string `json:"service,omitempty"`
 
 	// SupportedEvents: Optional. A set of events during request or response
@@ -791,10 +834,15 @@ type ExtensionChainExtension struct {
 	// extension is called when the HTTP response headers arrive.
 	//   "RESPONSE_BODY" - If included in `supported_events`, the extension
 	// is called when the HTTP response body arrives.
+	//   "REQUEST_TRAILERS" - If included in `supported_events`, the
+	// extension is called when the HTTP request trailers arrives.
+	//   "RESPONSE_TRAILERS" - If included in `supported_events`, the
+	// extension is called when the HTTP response trailers arrives.
 	SupportedEvents []string `json:"supportedEvents,omitempty"`
 
-	// Timeout: Required. Specifies the timeout for each individual message
+	// Timeout: Optional. Specifies the timeout for each individual message
 	// on the stream. The timeout must be between 10-1000 milliseconds.
+	// Required for Callout extensions.
 	Timeout string `json:"timeout,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Authority") to
@@ -825,7 +873,8 @@ func (s *ExtensionChainExtension) MarshalJSON() ([]byte, error) {
 type ExtensionChainMatchCondition struct {
 	// CelExpression: Required. A Common Expression Language (CEL)
 	// expression that is used to match requests for which the extension
-	// chain is executed.
+	// chain is executed. For more information, see CEL matcher language
+	// reference (/service-extensions/docs/cel-matcher-language-reference).
 	CelExpression string `json:"celExpression,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CelExpression") to
@@ -855,7 +904,7 @@ func (s *ExtensionChainMatchCondition) MarshalJSON() ([]byte, error) {
 // a load balancer. It captures the ip:port over which the services are
 // exposed by the proxy, along with any policy configurations. Routes
 // have reference to to Gateways to dictate how requests should be
-// routed by this Gateway.
+// routed by this Gateway. Next id: 32
 type Gateway struct {
 	// Addresses: Optional. Zero or one IPv4 or IPv6 address on which the
 	// Gateway will receive the traffic. When no address is provided, an IP
@@ -877,6 +926,19 @@ type Gateway struct {
 	// length 1024 characters.
 	Description string `json:"description,omitempty"`
 
+	// EnvoyHeaders: Optional. Determines if envoy will insert internal
+	// debug headers into upstream requests. Other Envoy headers may still
+	// be injected. By default, envoy will not insert any debug headers.
+	//
+	// Possible values:
+	//   "ENVOY_HEADERS_UNSPECIFIED" - Defaults to NONE.
+	//   "NONE" - Suppress envoy debug headers.
+	//   "DEBUG_HEADERS" - Envoy will insert default internal debug headers
+	// into upstream requests: x-envoy-attempt-count
+	// x-envoy-is-timeout-retry x-envoy-expected-rq-timeout-ms
+	// x-envoy-original-path x-envoy-upstream-stream-duration-ms
+	EnvoyHeaders string `json:"envoyHeaders,omitempty"`
+
 	// GatewaySecurityPolicy: Optional. A fully-qualified
 	// GatewaySecurityPolicy URL reference. Defines how a server should
 	// apply security policy to inbound (VM to Proxy) initiated connections.
@@ -884,6 +946,16 @@ type Gateway struct {
 	// `projects/*/locations/*/gatewaySecurityPolicies/swg-policy`. This
 	// policy is specific to gateways of type 'SECURE_WEB_GATEWAY'.
 	GatewaySecurityPolicy string `json:"gatewaySecurityPolicy,omitempty"`
+
+	// IpVersion: Optional. The IP Version that will be used by this
+	// gateway. Valid options are IPV4 or IPV6. Default is IPV4.
+	//
+	// Possible values:
+	//   "IP_VERSION_UNSPECIFIED" - The type when IP version is not
+	// specified. Defaults to IPV4.
+	//   "IPV4" - The type for IP version 4.
+	//   "IPV6" - The type for IP version 6.
+	IpVersion string `json:"ipVersion,omitempty"`
 
 	// Labels: Optional. Set of label tags associated with the Gateway
 	// resource.
@@ -1361,6 +1433,13 @@ type GrpcRouteRouteAction struct {
 	// ignored by clients that are configured with a fault_injection_policy
 	FaultInjectionPolicy *GrpcRouteFaultInjectionPolicy `json:"faultInjectionPolicy,omitempty"`
 
+	// IdleTimeout: Optional. Specifies the idle timeout for the selected
+	// route. The idle timeout is defined as the period in which there are
+	// no bytes sent or received on either the upstream or downstream
+	// connection. If not set, the default idle timeout is 1 hour. If set to
+	// 0s, the timeout will be disabled.
+	IdleTimeout string `json:"idleTimeout,omitempty"`
+
 	// RetryPolicy: Optional. Specifies the retry policy associated with
 	// this route.
 	RetryPolicy *GrpcRouteRetryPolicy `json:"retryPolicy,omitempty"`
@@ -1661,6 +1740,20 @@ func (s *HttpRouteCorsPolicy) MarshalJSON() ([]byte, error) {
 // HttpRouteDestination: Specifications of a destination to which the
 // request should be routed to.
 type HttpRouteDestination struct {
+	// RequestHeaderModifier: Optional. The specification for modifying the
+	// headers of a matching request prior to delivery of the request to the
+	// destination. If HeaderModifiers are set on both the Destination and
+	// the RouteAction, they will be merged. Conflicts between the two will
+	// not be resolved on the configuration.
+	RequestHeaderModifier *HttpRouteHeaderModifier `json:"requestHeaderModifier,omitempty"`
+
+	// ResponseHeaderModifier: Optional. The specification for modifying the
+	// headers of a response prior to sending the response back to the
+	// client. If HeaderModifiers are set on both the Destination and the
+	// RouteAction, they will be merged. Conflicts between the two will not
+	// be resolved on the configuration.
+	ResponseHeaderModifier *HttpRouteHeaderModifier `json:"responseHeaderModifier,omitempty"`
+
 	// ServiceName: The URL of a BackendService to route traffic to.
 	ServiceName string `json:"serviceName,omitempty"`
 
@@ -1676,20 +1769,22 @@ type HttpRouteDestination struct {
 	// distributed in equal proportions to all of them.
 	Weight int64 `json:"weight,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ServiceName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "RequestHeaderModifier") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ServiceName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "RequestHeaderModifier") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1932,6 +2027,44 @@ func (s *HttpRouteHeaderModifier) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// HttpRouteHttpDirectResponse: Static HTTP response object to be
+// returned.
+type HttpRouteHttpDirectResponse struct {
+	// BytesBody: Optional. Response body as bytes. Maximum body size is
+	// 4096B.
+	BytesBody string `json:"bytesBody,omitempty"`
+
+	// Status: Required. Status to return as part of HTTP Response. Must be
+	// a positive integer.
+	Status int64 `json:"status,omitempty"`
+
+	// StringBody: Optional. Response body as a string. Maximum body length
+	// is 1024 characters.
+	StringBody string `json:"stringBody,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BytesBody") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BytesBody") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HttpRouteHttpDirectResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod HttpRouteHttpDirectResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // HttpRouteQueryParameterMatch: Specifications to match a query
 // parameter in the request.
 type HttpRouteQueryParameterMatch struct {
@@ -2058,6 +2191,10 @@ type HttpRouteRequestMirrorPolicy struct {
 	// weight of the destination will be ignored.
 	Destination *HttpRouteDestination `json:"destination,omitempty"`
 
+	// MirrorPercent: Optional. The percentage of requests to get mirrored
+	// to the desired destination.
+	MirrorPercent float64 `json:"mirrorPercent,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Destination") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2079,6 +2216,20 @@ func (s *HttpRouteRequestMirrorPolicy) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRouteRequestMirrorPolicy
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *HttpRouteRequestMirrorPolicy) UnmarshalJSON(data []byte) error {
+	type NoMethod HttpRouteRequestMirrorPolicy
+	var s1 struct {
+		MirrorPercent gensupport.JSONFloat64 `json:"mirrorPercent"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MirrorPercent = float64(s1.MirrorPercent)
+	return nil
 }
 
 // HttpRouteRetryPolicy: The specifications for retries.
@@ -2139,6 +2290,10 @@ type HttpRouteRouteAction struct {
 	// Destinations: The destination to which traffic should be forwarded.
 	Destinations []*HttpRouteDestination `json:"destinations,omitempty"`
 
+	// DirectResponse: Optional. Static HTTP Response object to be returned
+	// regardless of the request.
+	DirectResponse *HttpRouteHttpDirectResponse `json:"directResponse,omitempty"`
+
 	// FaultInjectionPolicy: The specification for fault injection
 	// introduced into traffic to test the resiliency of clients to backend
 	// service failure. As part of fault injection, when clients send
@@ -2148,6 +2303,13 @@ type HttpRouteRouteAction struct {
 	// percentage of requests. timeout and retry_policy will be ignored by
 	// clients that are configured with a fault_injection_policy
 	FaultInjectionPolicy *HttpRouteFaultInjectionPolicy `json:"faultInjectionPolicy,omitempty"`
+
+	// IdleTimeout: Optional. Specifies the idle timeout for the selected
+	// route. The idle timeout is defined as the period in which there are
+	// no bytes sent or received on either the upstream or downstream
+	// connection. If not set, the default idle timeout is 1 hour. If set to
+	// 0s, the timeout will be disabled.
+	IdleTimeout string `json:"idleTimeout,omitempty"`
 
 	// Redirect: If set, the request is directed as configured by this
 	// field.
@@ -2406,8 +2568,9 @@ type LbRouteExtension struct {
 
 	// Labels: Optional. Set of labels associated with the
 	// `LbRouteExtension` resource. The format must comply with the
-	// following requirements
-	// (/compute/docs/labeling-resources#requirements).
+	// requirements for labels
+	// (/compute/docs/labeling-resources#requirements) for Google Cloud
+	// resources.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LoadBalancingScheme: Required. All backend services and forwarding
@@ -2424,8 +2587,8 @@ type LbRouteExtension struct {
 	// Managed HTTP(S) Load Balancing.
 	LoadBalancingScheme string `json:"loadBalancingScheme,omitempty"`
 
-	// Name: Required. Name of the `LbRouteExtension` resource in the
-	// following format:
+	// Name: Required. Identifier. Name of the `LbRouteExtension` resource
+	// in the following format:
 	// `projects/{project}/locations/{location}/lbRouteExtensions/{lb_route_e
 	// xtension}`.
 	Name string `json:"name,omitempty"`
@@ -2487,8 +2650,9 @@ type LbTrafficExtension struct {
 
 	// Labels: Optional. Set of labels associated with the
 	// `LbTrafficExtension` resource. The format must comply with the
-	// following requirements
-	// (/compute/docs/labeling-resources#requirements).
+	// requirements for labels
+	// (/compute/docs/labeling-resources#requirements) for Google Cloud
+	// resources.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// LoadBalancingScheme: Required. All backend services and forwarding
@@ -2505,8 +2669,8 @@ type LbTrafficExtension struct {
 	// Managed HTTP(S) Load Balancing.
 	LoadBalancingScheme string `json:"loadBalancingScheme,omitempty"`
 
-	// Name: Required. Name of the `LbTrafficExtension` resource in the
-	// following format:
+	// Name: Required. Identifier. Name of the `LbTrafficExtension` resource
+	// in the following format:
 	// `projects/{project}/locations/{location}/lbTrafficExtensions/{lb_traff
 	// ic_extension}`.
 	Name string `json:"name,omitempty"`
@@ -3110,6 +3274,19 @@ type Mesh struct {
 	// length 1024 characters.
 	Description string `json:"description,omitempty"`
 
+	// EnvoyHeaders: Optional. Determines if envoy will insert internal
+	// debug headers into upstream requests. Other Envoy headers may still
+	// be injected. By default, envoy will not insert any debug headers.
+	//
+	// Possible values:
+	//   "ENVOY_HEADERS_UNSPECIFIED" - Defaults to NONE.
+	//   "NONE" - Suppress envoy debug headers.
+	//   "DEBUG_HEADERS" - Envoy will insert default internal debug headers
+	// into upstream requests: x-envoy-attempt-count
+	// x-envoy-is-timeout-retry x-envoy-expected-rq-timeout-ms
+	// x-envoy-original-path x-envoy-upstream-stream-duration-ms
+	EnvoyHeaders string `json:"envoyHeaders,omitempty"`
+
 	// InterceptionPort: Optional. If set to a valid TCP port (1-65535),
 	// instructs the SIDECAR proxy to listen on the specified port of
 	// localhost (127.0.0.1) address. The SIDECAR proxy will expect all
@@ -3175,7 +3352,8 @@ type MetadataLabelMatcher struct {
 	// with label connects, the config from P2 will be selected. If a client
 	// with label connects, the config from P3 will be selected. If there is
 	// more than one best match, (for example, if a config P4 with selector
-	// exists and if a client with label connects), an error will be thrown.
+	// exists and if a client with label connects), pick up the one with
+	// older creation time.
 	//
 	// Possible values:
 	//   "METADATA_LABEL_MATCH_CRITERIA_UNSPECIFIED" - Default value. Should
@@ -3846,6 +4024,13 @@ type TcpRouteRouteAction struct {
 	// Only one of route destination or original destination can be set.
 	Destinations []*TcpRouteRouteDestination `json:"destinations,omitempty"`
 
+	// IdleTimeout: Optional. Specifies the idle timeout for the selected
+	// route. The idle timeout is defined as the period in which there are
+	// no bytes sent or received on either the upstream or downstream
+	// connection. If not set, the default idle timeout is 30 seconds. If
+	// set to 0s, the timeout will be disabled.
+	IdleTimeout string `json:"idleTimeout,omitempty"`
+
 	// OriginalDestination: Optional. If true, Router will use the
 	// destination IP and port of the original connection as the destination
 	// of the request. Default is false. Only one of route destinations or
@@ -4134,6 +4319,13 @@ type TlsRouteRouteAction struct {
 	// Destinations: Required. The destination services to which traffic
 	// should be forwarded. At least one destination service is required.
 	Destinations []*TlsRouteRouteDestination `json:"destinations,omitempty"`
+
+	// IdleTimeout: Optional. Specifies the idle timeout for the selected
+	// route. The idle timeout is defined as the period in which there are
+	// no bytes sent or received on either the upstream or downstream
+	// connection. If not set, the default idle timeout is 1 hour. If set to
+	// 0s, the timeout will be disabled.
+	IdleTimeout string `json:"idleTimeout,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Destinations") to
 	// unconditionally include in API requests. By default, fields with
@@ -9482,8 +9674,8 @@ type ProjectsLocationsLbRouteExtensionsPatchCall struct {
 // Patch: Updates the parameters of the specified `LbRouteExtension`
 // resource.
 //
-//   - name: Name of the `LbRouteExtension` resource in the following
-//     format:
+//   - name: Identifier. Name of the `LbRouteExtension` resource in the
+//     following format:
 //     `projects/{project}/locations/{location}/lbRouteExtensions/{lb_route
 //     _extension}`.
 func (r *ProjectsLocationsLbRouteExtensionsService) Patch(name string, lbrouteextension *LbRouteExtension) *ProjectsLocationsLbRouteExtensionsPatchCall {
@@ -9621,7 +9813,7 @@ func (c *ProjectsLocationsLbRouteExtensionsPatchCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `LbRouteExtension` resource in the following format: `projects/{project}/locations/{location}/lbRouteExtensions/{lb_route_extension}`.",
+	//       "description": "Required. Identifier. Name of the `LbRouteExtension` resource in the following format: `projects/{project}/locations/{location}/lbRouteExtensions/{lb_route_extension}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lbRouteExtensions/[^/]+$",
 	//       "required": true,
@@ -10371,8 +10563,8 @@ type ProjectsLocationsLbTrafficExtensionsPatchCall struct {
 // Patch: Updates the parameters of the specified `LbTrafficExtension`
 // resource.
 //
-//   - name: Name of the `LbTrafficExtension` resource in the following
-//     format:
+//   - name: Identifier. Name of the `LbTrafficExtension` resource in the
+//     following format:
 //     `projects/{project}/locations/{location}/lbTrafficExtensions/{lb_tra
 //     ffic_extension}`.
 func (r *ProjectsLocationsLbTrafficExtensionsService) Patch(name string, lbtrafficextension *LbTrafficExtension) *ProjectsLocationsLbTrafficExtensionsPatchCall {
@@ -10510,7 +10702,7 @@ func (c *ProjectsLocationsLbTrafficExtensionsPatchCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `LbTrafficExtension` resource in the following format: `projects/{project}/locations/{location}/lbTrafficExtensions/{lb_traffic_extension}`.",
+	//       "description": "Required. Identifier. Name of the `LbTrafficExtension` resource in the following format: `projects/{project}/locations/{location}/lbTrafficExtensions/{lb_traffic_extension}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/lbTrafficExtensions/[^/]+$",
 	//       "required": true,

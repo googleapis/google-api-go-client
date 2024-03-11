@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,12 +90,16 @@ const apiId = "safebrowsing:v5"
 const apiName = "safebrowsing"
 const apiVersion = "v5"
 const basePath = "https://safebrowsing.googleapis.com/"
+const basePathTemplate = "https://safebrowsing.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://safebrowsing.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -187,19 +191,22 @@ func (s *GoogleSecuritySafebrowsingV5FullHash) MarshalJSON() ([]byte, error) {
 // new threat types and threat attributes may be added by the server at
 // any time; those additions are considered minor version changes. It is
 // Google's policy not to expose minor version numbers in APIs (see
-// https://cloud.google.com/apis/design/versioning), so clients MUST be
-// prepared to receive FullHashDetail messages containing ThreatType
-// enum values or ThreatAttribute enum values that are considered
-// invalid by the client. Therefore, it is the client's responsibility
-// to check for the validity of all ThreatType and ThreatAttribute enum
-// values; if any value is considered invalid, the client MUST disregard
-// the entire FullHashDetail message.
+// https://cloud.google.com/apis/design/versioning for the versioning
+// policy), so clients MUST be prepared to receive `FullHashDetail`
+// messages containing `ThreatType` enum values or `ThreatAttribute`
+// enum values that are considered invalid by the client. Therefore, it
+// is the client's responsibility to check for the validity of all
+// `ThreatType` and `ThreatAttribute` enum values; if any value is
+// considered invalid, the client MUST disregard the entire
+// `FullHashDetail` message.
 type GoogleSecuritySafebrowsingV5FullHashFullHashDetail struct {
 	// Attributes: Unordered list. Additional attributes about those full
 	// hashes. This may be empty.
 	//
 	// Possible values:
-	//   "THREAT_ATTRIBUTE_UNSPECIFIED" - Unknown.
+	//   "THREAT_ATTRIBUTE_UNSPECIFIED" - Unknown attribute. If this is
+	// returned by the server, the client shall disregard the enclosing
+	// `FullHashDetail` altogether.
 	//   "CANARY" - Indicates that the threat_type should not be used for
 	// enforcement.
 	//   "FRAME_ONLY" - Indicates that the threat_type should only be used
@@ -209,7 +216,9 @@ type GoogleSecuritySafebrowsingV5FullHashFullHashDetail struct {
 	// ThreatType: The type of threat. This field will never be empty.
 	//
 	// Possible values:
-	//   "THREAT_TYPE_UNSPECIFIED" - Unknown.
+	//   "THREAT_TYPE_UNSPECIFIED" - Unknown threat type. If this is
+	// returned by the server, the client shall disregard the enclosing
+	// `FullHashDetail` altogether.
 	//   "MALWARE" - Malware threat type.
 	//   "SOCIAL_ENGINEERING" - Social engineering threat type.
 	//   "UNWANTED_SOFTWARE" - Unwanted software threat type.
@@ -241,19 +250,24 @@ func (s *GoogleSecuritySafebrowsingV5FullHashFullHashDetail) MarshalJSON() ([]by
 }
 
 // GoogleSecuritySafebrowsingV5SearchHashesResponse: The response
-// returned after searching threat hashes. Note that if nothing is
-// found, the server will return an OK status (HTTP status code 200)
-// with the `full_hashes` field empty, rather than returning a NOT_FOUND
-// status (HTTP status code 404).
+// returned after searching threat hashes. If nothing is found, the
+// server will return an OK status (HTTP status code 200) with the
+// `full_hashes` field empty, rather than returning a NOT_FOUND status
+// (HTTP status code 404). **What's new in V5**: There is a separation
+// between FullHash and FullHashDetail. In the case when a hash
+// represents a site having multiple threats (e.g. both MALWARE and
+// SOCIAL_ENGINEERING), the full hash does not need to be sent twice as
+// in V4. Furthermore, the cache duration has been simplified into a
+// single `cache_duration` field.
 type GoogleSecuritySafebrowsingV5SearchHashesResponse struct {
-	// CacheDuration: The client-side cache duration. The client shall add
+	// CacheDuration: The client-side cache duration. The client MUST add
 	// this duration to the current time to determine the expiration time.
 	// The expiration time then applies to every hash prefix queried by the
 	// client in the request, regardless of how many full hashes are
 	// returned in the response. Even if the server returns no full hashes
-	// for a particular hash prefix, this fact should also be cached by the
-	// client. Important: the client must not assume that the server will
-	// return the same cache duration for all responses. The server may
+	// for a particular hash prefix, this fact MUST also be cached by the
+	// client. Important: the client MUST NOT assume that the server will
+	// return the same cache duration for all responses. The server MAY
 	// choose different cache durations for different responses depending on
 	// the situation.
 	CacheDuration string `json:"cacheDuration,omitempty"`
@@ -299,15 +313,21 @@ type HashesSearchCall struct {
 }
 
 // Search: Search for full hashes matching the specified prefixes. This
-// is a custom method as described by guidance at
-// https://google.aip.dev/136
+// is a custom method as defined by https://google.aip.dev/136 (the
+// custom method refers to this method having a custom name within
+// Google's general API development nomenclature; it does not refer to
+// using a custom HTTP method).
 func (r *HashesService) Search() *HashesSearchCall {
 	c := &HashesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // HashPrefixes sets the optional parameter "hashPrefixes": Required.
-// The hash prefixes to be looked up.
+// The hash prefixes to be looked up. Clients MUST NOT send more than
+// 1000 hash prefixes. However, following the URL processing procedure,
+// clients SHOULD NOT need to send more than 30 hash prefixes. Currently
+// each hash prefix is required to be exactly 4 bytes long. This MAY be
+// relaxed in the future.
 func (c *HashesSearchCall) HashPrefixes(hashPrefixes ...string) *HashesSearchCall {
 	c.urlParams_.SetMulti("hashPrefixes", append([]string{}, hashPrefixes...))
 	return c
@@ -411,14 +431,14 @@ func (c *HashesSearchCall) Do(opts ...googleapi.CallOption) (*GoogleSecuritySafe
 	}
 	return ret, nil
 	// {
-	//   "description": "Search for full hashes matching the specified prefixes. This is a custom method as described by guidance at https://google.aip.dev/136",
+	//   "description": "Search for full hashes matching the specified prefixes. This is a custom method as defined by https://google.aip.dev/136 (the custom method refers to this method having a custom name within Google's general API development nomenclature; it does not refer to using a custom HTTP method).",
 	//   "flatPath": "v5/hashes:search",
 	//   "httpMethod": "GET",
 	//   "id": "safebrowsing.hashes.search",
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "hashPrefixes": {
-	//       "description": "Required. The hash prefixes to be looked up.",
+	//       "description": "Required. The hash prefixes to be looked up. Clients MUST NOT send more than 1000 hash prefixes. However, following the URL processing procedure, clients SHOULD NOT need to send more than 30 hash prefixes. Currently each hash prefix is required to be exactly 4 bytes long. This MAY be relaxed in the future.",
 	//       "format": "byte",
 	//       "location": "query",
 	//       "repeated": true,

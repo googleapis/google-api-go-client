@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "metastore:v1alpha"
 const apiName = "metastore"
 const apiVersion = "v1alpha"
 const basePath = "https://metastore.googleapis.com/"
+const basePathTemplate = "https://metastore.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://metastore.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, 
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -204,6 +208,7 @@ func NewProjectsLocationsServicesService(s *APIService) *ProjectsLocationsServic
 	rs.Backups = NewProjectsLocationsServicesBackupsService(s)
 	rs.Databases = NewProjectsLocationsServicesDatabasesService(s)
 	rs.MetadataImports = NewProjectsLocationsServicesMetadataImportsService(s)
+	rs.MigrationExecutions = NewProjectsLocationsServicesMigrationExecutionsService(s)
 	return rs
 }
 
@@ -215,6 +220,8 @@ type ProjectsLocationsServicesService struct {
 	Databases *ProjectsLocationsServicesDatabasesService
 
 	MetadataImports *ProjectsLocationsServicesMetadataImportsService
+
+	MigrationExecutions *ProjectsLocationsServicesMigrationExecutionsService
 }
 
 func NewProjectsLocationsServicesBackupsService(s *APIService) *ProjectsLocationsServicesBackupsService {
@@ -253,6 +260,15 @@ func NewProjectsLocationsServicesMetadataImportsService(s *APIService) *Projects
 }
 
 type ProjectsLocationsServicesMetadataImportsService struct {
+	s *APIService
+}
+
+func NewProjectsLocationsServicesMigrationExecutionsService(s *APIService) *ProjectsLocationsServicesMigrationExecutionsService {
+	rs := &ProjectsLocationsServicesMigrationExecutionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsServicesMigrationExecutionsService struct {
 	s *APIService
 }
 
@@ -295,6 +311,53 @@ func (s *AlterMetadataResourceLocationRequest) MarshalJSON() ([]byte, error) {
 // AlterMetadataResourceLocationResponse: Response message for
 // DataprocMetastore.AlterMetadataResourceLocation.
 type AlterMetadataResourceLocationResponse struct {
+}
+
+// AlterTablePropertiesRequest: Request message for
+// DataprocMetastore.AlterTableProperties.
+type AlterTablePropertiesRequest struct {
+	// Properties: A map that describes the desired values to mutate. If
+	// update_mask is empty, the properties will not update. Otherwise, the
+	// properties only alters the value whose associated paths exist in the
+	// update mask
+	Properties map[string]string `json:"properties,omitempty"`
+
+	// TableName: Required. The name of the table containing the properties
+	// you're altering in the following
+	// format.databases/{database_id}/tables/{table_id}
+	TableName string `json:"tableName,omitempty"`
+
+	// UpdateMask: A field mask that specifies the metadata table properties
+	// that are overwritten by the update. Fields specified in the
+	// update_mask are relative to the resource (not to the full request). A
+	// field is overwritten if it is in the mask.For example, given the
+	// target properties: properties { a: 1 b: 2 } And an update properties:
+	// properties { a: 2 b: 3 c: 4 } then if the field mask is:paths:
+	// "properties.b", "properties.c"then the result will be: properties {
+	// a: 1 b: 3 c: 4 }
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Properties") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Properties") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AlterTablePropertiesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AlterTablePropertiesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
@@ -571,7 +634,30 @@ type Binding struct {
 	// group:{emailid}: An email address that represents a Google group. For
 	// example, admins@example.com. domain:{domain}: The G Suite domain
 	// (primary) that represents all the users of that domain. For example,
-	// google.com or example.com. deleted:user:{emailid}?uid={uniqueid}: An
+	// google.com or example.com.
+	// principal://iam.googleapis.com/locations/global/workforcePools/{pool_i
+	// d}/subject/{subject_attribute_value}: A single identity in a
+	// workforce identity pool.
+	// principalSet://iam.googleapis.com/locations/global/workforcePools/{poo
+	// l_id}/group/{group_id}: All workforce identities in a group.
+	// principalSet://iam.googleapis.com/locations/global/workforcePools/{poo
+	// l_id}/attribute.{attribute_name}/{attribute_value}: All workforce
+	// identities with a specific attribute value.
+	// principalSet://iam.googleapis.com/locations/global/workforcePools/{poo
+	// l_id}/*: All identities in a workforce identity pool.
+	// principal://iam.googleapis.com/projects/{project_number}/locations/glo
+	// bal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}:
+	//  A single identity in a workload identity pool.
+	// principalSet://iam.googleapis.com/projects/{project_number}/locations/
+	// global/workloadIdentityPools/{pool_id}/group/{group_id}: A workload
+	// identity pool group.
+	// principalSet://iam.googleapis.com/projects/{project_number}/locations/
+	// global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{att
+	// ribute_value}: All identities in a workload identity pool with a
+	// certain attribute.
+	// principalSet://iam.googleapis.com/projects/{project_number}/locations/
+	// global/workloadIdentityPools/{pool_id}/*: All identities in a
+	// workload identity pool. deleted:user:{emailid}?uid={uniqueid}: An
 	// email address (plus unique identifier) representing a user that has
 	// been recently deleted. For example,
 	// alice@example.com?uid=123456789012345678901. If the user is
@@ -589,10 +675,19 @@ type Binding struct {
 	// admins@example.com?uid=123456789012345678901. If the group is
 	// recovered, this value reverts to group:{emailid} and the recovered
 	// group retains the role in the binding.
+	// deleted:principal://iam.googleapis.com/locations/global/workforcePools
+	// /{pool_id}/subject/{subject_attribute_value}: Deleted single identity
+	// in a workforce identity pool. For example,
+	// deleted:principal://iam.googleapis.com/locations/global/workforcePools
+	// /my-pool-id/subject/my-subject-attribute-value.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of members, or principals.
-	// For example, roles/viewer, roles/editor, or roles/owner.
+	// For example, roles/viewer, roles/editor, or roles/owner.For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -1222,6 +1317,50 @@ type Lake struct {
 
 func (s *Lake) MarshalJSON() ([]byte, error) {
 	type NoMethod Lake
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LatestBackup: The details of the latest scheduled backup.
+type LatestBackup struct {
+	// BackupId: Output only. The ID of an in-progress scheduled backup.
+	// Empty if no backup is in progress.
+	BackupId string `json:"backupId,omitempty"`
+
+	// Duration: Output only. The duration of the backup completion.
+	Duration string `json:"duration,omitempty"`
+
+	// StartTime: Output only. The time when the backup was started.
+	StartTime string `json:"startTime,omitempty"`
+
+	// State: Output only. The current state of the backup.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state of the backup is unknown.
+	//   "IN_PROGRESS" - The backup is in progress.
+	//   "SUCCEEDED" - The backup completed.
+	//   "FAILED" - The backup failed.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LatestBackup) MarshalJSON() ([]byte, error) {
+	type NoMethod LatestBackup
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2237,6 +2376,10 @@ type Restore struct {
 	// d}/backups/{backup_id}.
 	Backup string `json:"backup,omitempty"`
 
+	// BackupLocation: Optional. A Cloud Storage URI specifying where the
+	// backup artifacts are stored, in the format gs:///.
+	BackupLocation string `json:"backupLocation,omitempty"`
+
 	// Details: Output only. The restore details containing the revision of
 	// the service to be restored to, in format of JSON.
 	Details string `json:"details,omitempty"`
@@ -2290,11 +2433,19 @@ func (s *Restore) MarshalJSON() ([]byte, error) {
 
 // RestoreServiceRequest: Request message for DataprocMetastore.Restore.
 type RestoreServiceRequest struct {
-	// Backup: Required. The relative resource name of the metastore service
+	// Backup: Optional. The relative resource name of the metastore service
 	// backup to restore from, in the following
 	// form:projects/{project_id}/locations/{location_id}/services/{service_i
-	// d}/backups/{backup_id}.
+	// d}/backups/{backup_id}. Mutually exclusive with backup_location, and
+	// exactly one of the two must be set.
 	Backup string `json:"backup,omitempty"`
+
+	// BackupLocation: Optional. A Cloud Storage URI specifying the location
+	// of the backup artifacts, namely - backup avro files under "avro/",
+	// backup_metastore.json and service.json, in the following form:gs://.
+	// Mutually exclusive with backup, and exactly one of the two must be
+	// set.
+	BackupLocation string `json:"backupLocation,omitempty"`
 
 	// RequestId: Optional. A request ID. Specify a unique request ID to
 	// allow the server to ignore the request if it has completed. The
@@ -2397,6 +2548,63 @@ func (s *ScalingConfig) UnmarshalJSON(data []byte) error {
 	}
 	s.ScalingFactor = float64(s1.ScalingFactor)
 	return nil
+}
+
+// ScheduledBackup: This specifies the configuration of scheduled
+// backup.
+type ScheduledBackup struct {
+	// BackupLocation: Optional. A Cloud Storage URI of a folder, in the
+	// format gs:///. A sub-folder containing backup files will be stored
+	// below it.
+	BackupLocation string `json:"backupLocation,omitempty"`
+
+	// CronSchedule: Optional. The scheduled interval in Cron format, see
+	// https://en.wikipedia.org/wiki/Cron The default is empty: scheduled
+	// backup is not enabled. Must be specified to enable scheduled backups.
+	CronSchedule string `json:"cronSchedule,omitempty"`
+
+	// Enabled: Optional. Defines whether the scheduled backup is enabled.
+	// The default value is false.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// LatestBackup: Output only. The details of the latest scheduled
+	// backup.
+	LatestBackup *LatestBackup `json:"latestBackup,omitempty"`
+
+	// NextScheduledTime: Output only. The time when the next backups
+	// execution is scheduled to start.
+	NextScheduledTime string `json:"nextScheduledTime,omitempty"`
+
+	// TimeZone: Optional. Specifies the time zone to be used when
+	// interpreting cron_schedule. Must be a time zone name from the time
+	// zone database
+	// (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones), e.g.
+	// America/Los_Angeles or Africa/Abidjan. If left unspecified, the
+	// default is UTC.
+	TimeZone string `json:"timeZone,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupLocation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupLocation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScheduledBackup) MarshalJSON() ([]byte, error) {
+	type NoMethod ScheduledBackup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Secret: A securely stored value.
@@ -2514,6 +2722,10 @@ type Service struct {
 
 	// ScalingConfig: Scaling configuration of the metastore service.
 	ScalingConfig *ScalingConfig `json:"scalingConfig,omitempty"`
+
+	// ScheduledBackup: Optional. The configuration of scheduled backup for
+	// the metastore service.
+	ScheduledBackup *ScheduledBackup `json:"scheduledBackup,omitempty"`
 
 	// State: Output only. The current state of the metastore service.
 	//
@@ -5270,6 +5482,152 @@ func (c *ProjectsLocationsServicesAlterLocationCall) Do(opts ...googleapi.CallOp
 	//   "path": "v1alpha/{+service}:alterLocation",
 	//   "request": {
 	//     "$ref": "AlterMetadataResourceLocationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "metastore.projects.locations.services.alterTableProperties":
+
+type ProjectsLocationsServicesAlterTablePropertiesCall struct {
+	s                           *APIService
+	service                     string
+	altertablepropertiesrequest *AlterTablePropertiesRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// AlterTableProperties: Alter metadata table properties.
+//
+//   - service: The relative resource name of the Dataproc Metastore
+//     service that's being used to mutate metadata table properties, in
+//     the following
+//     format:projects/{project_id}/locations/{location_id}/services/{servi
+//     ce_id}.
+func (r *ProjectsLocationsServicesService) AlterTableProperties(service string, altertablepropertiesrequest *AlterTablePropertiesRequest) *ProjectsLocationsServicesAlterTablePropertiesCall {
+	c := &ProjectsLocationsServicesAlterTablePropertiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.service = service
+	c.altertablepropertiesrequest = altertablepropertiesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesAlterTablePropertiesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Context(ctx context.Context) *ProjectsLocationsServicesAlterTablePropertiesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesAlterTablePropertiesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.altertablepropertiesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+service}:alterTableProperties")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"service": c.service,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.services.alterTableProperties" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Alter metadata table properties.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:alterTableProperties",
+	//   "httpMethod": "POST",
+	//   "id": "metastore.projects.locations.services.alterTableProperties",
+	//   "parameterOrder": [
+	//     "service"
+	//   ],
+	//   "parameters": {
+	//     "service": {
+	//       "description": "Required. The relative resource name of the Dataproc Metastore service that's being used to mutate metadata table properties, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+service}:alterTableProperties",
+	//   "request": {
+	//     "$ref": "AlterTablePropertiesRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
@@ -10225,6 +10583,161 @@ func (c *ProjectsLocationsServicesMetadataImportsPatchCall) Do(opts ...googleapi
 	//   "request": {
 	//     "$ref": "MetadataImport"
 	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "metastore.projects.locations.services.migrationExecutions.delete":
+
+type ProjectsLocationsServicesMigrationExecutionsDeleteCall struct {
+	s          *APIService
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single migration execution.
+//
+//   - name: The relative resource name of the migrationExecution to
+//     delete, in the following
+//     form:projects/{project_number}/locations/{location_id}/services/{ser
+//     vice_id}/migrationExecutions/{migration_execution_id}.
+func (r *ProjectsLocationsServicesMigrationExecutionsService) Delete(name string) *ProjectsLocationsServicesMigrationExecutionsDeleteCall {
+	c := &ProjectsLocationsServicesMigrationExecutionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID.
+// Specify a unique request ID to allow the server to ignore the request
+// if it has completed. The server will ignore subsequent requests that
+// provide a duplicate request ID for at least 60 minutes after the
+// first request.For example, if an initial request times out, followed
+// by another request with the same request ID, the server ignores the
+// second request to prevent the creation of duplicate commitments.The
+// request ID must be a valid UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format)
+// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) RequestId(requestId string) *ProjectsLocationsServicesMigrationExecutionsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesMigrationExecutionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsServicesMigrationExecutionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.services.migrationExecutions.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single migration execution.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/migrationExecutions/{migrationExecutionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "metastore.projects.locations.services.migrationExecutions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The relative resource name of the migrationExecution to delete, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/migrationExecutions/{migration_execution_id}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/migrationExecutions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID. Specify a unique request ID to allow the server to ignore the request if it has completed. The server will ignore subsequent requests that provide a duplicate request ID for at least 60 minutes after the first request.For example, if an initial request times out, followed by another request with the same request ID, the server ignores the second request to prevent the creation of duplicate commitments.The request ID must be a valid UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
 	//   "response": {
 	//     "$ref": "Operation"
 	//   },

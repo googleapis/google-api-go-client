@@ -1801,7 +1801,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The resource name for the rbacrolebinding `projects/{project}/locations/{location}/namespaces/{namespace}/rbacrolebindings/{rbacrolebinding}` or `projects/{project}/locations/{location}/memberships/{membership}/rbacrolebindings/{rbacrolebinding}`",
+                          "description": "The resource name for the rbacrolebinding `projects/{project}/locations/{location}/scopes/{scope}/rbacrolebindings/{rbacrolebinding}` or `projects/{project}/locations/{location}/memberships/{membership}/rbacrolebindings/{rbacrolebinding}`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/scopes/[^/]+/rbacrolebindings/[^/]+$",
                           "required": true,
@@ -1834,7 +1834,7 @@
       }
     }
   },
-  "revision": "20231103",
+  "revision": "20240229",
   "rootUrl": "https://gkehub.googleapis.com/",
   "schemas": {
     "AppDevExperienceFeatureSpec": {
@@ -1939,6 +1939,34 @@
       },
       "type": "object"
     },
+    "BinaryAuthorizationConfig": {
+      "description": "BinaryAuthorizationConfig defines the fleet level configuration of binary authorization feature.",
+      "id": "BinaryAuthorizationConfig",
+      "properties": {
+        "evaluationMode": {
+          "description": "Optional. Mode of operation for binauthz policy evaluation.",
+          "enum": [
+            "EVALUATION_MODE_UNSPECIFIED",
+            "DISABLED",
+            "POLICY_BINDINGS"
+          ],
+          "enumDescriptions": [
+            "Default value",
+            "Disable BinaryAuthorization",
+            "Use Binary Authorization with the policies specified in policy_bindings."
+          ],
+          "type": "string"
+        },
+        "policyBindings": {
+          "description": "Optional. Binauthz policies that apply to this cluster.",
+          "items": {
+            "$ref": "PolicyBinding"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "Binding": {
       "description": "Associates `members`, or principals, with a `role`.",
       "id": "Binding",
@@ -1948,14 +1976,14 @@
           "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."
         },
         "members": {
-          "description": "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a Google service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An identifier for a [Kubernetes service account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding.",
+          "description": "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a Google service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An identifier for a [Kubernetes service account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. * `principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`: A single identity in a workforce identity pool. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/group/{group_id}`: All workforce identities in a group. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/attribute.{attribute_name}/{attribute_value}`: All workforce identities with a specific attribute value. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/*`: All identities in a workforce identity pool. * `principal://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}`: A single identity in a workload identity pool. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload identity pool group. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}`: All identities in a workload identity pool with a certain attribute. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/*`: All identities in a workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`: Deleted single identity in a workforce identity pool. For example, `deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-pool-id/subject/my-subject-attribute-value`.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "role": {
-          "description": "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
+          "description": "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview of the IAM roles and permissions, see the [IAM documentation](https://cloud.google.com/iam/docs/roles-overview). For a list of the available pre-defined roles, see [here](https://cloud.google.com/iam/docs/understanding-roles).",
           "type": "string"
         }
       },
@@ -1967,6 +1995,253 @@
       "properties": {},
       "type": "object"
     },
+    "ClusterUpgradeFleetSpec": {
+      "description": "**ClusterUpgrade**: The configuration for the fleet-level ClusterUpgrade feature.",
+      "id": "ClusterUpgradeFleetSpec",
+      "properties": {
+        "gkeUpgradeOverrides": {
+          "description": "Allow users to override some properties of each GKE upgrade.",
+          "items": {
+            "$ref": "ClusterUpgradeGKEUpgradeOverride"
+          },
+          "type": "array"
+        },
+        "postConditions": {
+          "$ref": "ClusterUpgradePostConditions",
+          "description": "Required. Post conditions to evaluate to mark an upgrade COMPLETE. Required."
+        },
+        "upstreamFleets": {
+          "description": "This fleet consumes upgrades that have COMPLETE status code in the upstream fleets. See UpgradeStatus.Code for code definitions. The fleet name should be either fleet project number or id. This is defined as repeated for future proof reasons. Initial implementation will enforce at most one upstream fleet.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ClusterUpgradeFleetState": {
+      "description": "**ClusterUpgrade**: The state for the fleet-level ClusterUpgrade feature.",
+      "id": "ClusterUpgradeFleetState",
+      "properties": {
+        "downstreamFleets": {
+          "description": "This fleets whose upstream_fleets contain the current fleet. The fleet name should be either fleet project number or id.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "gkeState": {
+          "$ref": "ClusterUpgradeGKEUpgradeFeatureState",
+          "description": "Feature state for GKE clusters."
+        },
+        "ignored": {
+          "additionalProperties": {
+            "$ref": "ClusterUpgradeIgnoredMembership"
+          },
+          "description": "A list of memberships ignored by the feature. For example, manually upgraded clusters can be ignored if they are newer than the default versions of its release channel. The membership resource is in the format: `projects/{p}/locations/{l}/membership/{m}`.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "ClusterUpgradeGKEUpgrade": {
+      "description": "GKEUpgrade represents a GKE provided upgrade, e.g., control plane upgrade.",
+      "id": "ClusterUpgradeGKEUpgrade",
+      "properties": {
+        "name": {
+          "description": "Name of the upgrade, e.g., \"k8s_control_plane\". It should be a valid upgrade name. It must not exceet 99 characters.",
+          "type": "string"
+        },
+        "version": {
+          "description": "Version of the upgrade, e.g., \"1.22.1-gke.100\". It should be a valid version. It must not exceet 99 characters.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ClusterUpgradeGKEUpgradeFeatureCondition": {
+      "description": "GKEUpgradeFeatureCondition describes the condition of the feature for GKE clusters at a certain point of time.",
+      "id": "ClusterUpgradeGKEUpgradeFeatureCondition",
+      "properties": {
+        "reason": {
+          "description": "Reason why the feature is in this status.",
+          "type": "string"
+        },
+        "status": {
+          "description": "Status of the condition, one of True, False, Unknown.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Type of the condition, for example, \"ready\".",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Last timestamp the condition was updated.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ClusterUpgradeGKEUpgradeFeatureState": {
+      "description": "GKEUpgradeFeatureState contains feature states for GKE clusters in the scope.",
+      "id": "ClusterUpgradeGKEUpgradeFeatureState",
+      "properties": {
+        "conditions": {
+          "description": "Current conditions of the feature.",
+          "items": {
+            "$ref": "ClusterUpgradeGKEUpgradeFeatureCondition"
+          },
+          "type": "array"
+        },
+        "upgradeState": {
+          "description": "Upgrade state. It will eventually replace `state`.",
+          "items": {
+            "$ref": "ClusterUpgradeGKEUpgradeState"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ClusterUpgradeGKEUpgradeOverride": {
+      "description": "Properties of a GKE upgrade that can be overridden by the user. For example, a user can skip soaking by overriding the soaking to 0.",
+      "id": "ClusterUpgradeGKEUpgradeOverride",
+      "properties": {
+        "postConditions": {
+          "$ref": "ClusterUpgradePostConditions",
+          "description": "Required. Post conditions to override for the specified upgrade (name + version). Required."
+        },
+        "upgrade": {
+          "$ref": "ClusterUpgradeGKEUpgrade",
+          "description": "Required. Which upgrade to override. Required."
+        }
+      },
+      "type": "object"
+    },
+    "ClusterUpgradeGKEUpgradeState": {
+      "description": "GKEUpgradeState is a GKEUpgrade and its state at the scope and fleet level.",
+      "id": "ClusterUpgradeGKEUpgradeState",
+      "properties": {
+        "stats": {
+          "additionalProperties": {
+            "format": "int64",
+            "type": "string"
+          },
+          "description": "Number of GKE clusters in each status code.",
+          "type": "object"
+        },
+        "status": {
+          "$ref": "ClusterUpgradeUpgradeStatus",
+          "description": "Status of the upgrade."
+        },
+        "upgrade": {
+          "$ref": "ClusterUpgradeGKEUpgrade",
+          "description": "Which upgrade to track the state."
+        }
+      },
+      "type": "object"
+    },
+    "ClusterUpgradeIgnoredMembership": {
+      "description": "IgnoredMembership represents a membership ignored by the feature. A membership can be ignored because it was manually upgraded to a newer version than RC default.",
+      "id": "ClusterUpgradeIgnoredMembership",
+      "properties": {
+        "ignoredTime": {
+          "description": "Time when the membership was first set to ignored.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "reason": {
+          "description": "Reason why the membership is ignored.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ClusterUpgradeMembershipGKEUpgradeState": {
+      "description": "ScopeGKEUpgradeState is a GKEUpgrade and its state per-membership.",
+      "id": "ClusterUpgradeMembershipGKEUpgradeState",
+      "properties": {
+        "status": {
+          "$ref": "ClusterUpgradeUpgradeStatus",
+          "description": "Status of the upgrade."
+        },
+        "upgrade": {
+          "$ref": "ClusterUpgradeGKEUpgrade",
+          "description": "Which upgrade to track the state."
+        }
+      },
+      "type": "object"
+    },
+    "ClusterUpgradeMembershipState": {
+      "description": "Per-membership state for this feature.",
+      "id": "ClusterUpgradeMembershipState",
+      "properties": {
+        "ignored": {
+          "$ref": "ClusterUpgradeIgnoredMembership",
+          "description": "Whether this membership is ignored by the feature. For example, manually upgraded clusters can be ignored if they are newer than the default versions of its release channel."
+        },
+        "upgrades": {
+          "description": "Actual upgrade state against desired.",
+          "items": {
+            "$ref": "ClusterUpgradeMembershipGKEUpgradeState"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ClusterUpgradePostConditions": {
+      "description": "Post conditional checks after an upgrade has been applied on all eligible clusters.",
+      "id": "ClusterUpgradePostConditions",
+      "properties": {
+        "soaking": {
+          "description": "Required. Amount of time to \"soak\" after a rollout has been finished before marking it COMPLETE. Cannot exceed 30 days. Required.",
+          "format": "google-duration",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "ClusterUpgradeUpgradeStatus": {
+      "description": "UpgradeStatus provides status information for each upgrade.",
+      "id": "ClusterUpgradeUpgradeStatus",
+      "properties": {
+        "code": {
+          "description": "Status code of the upgrade.",
+          "enum": [
+            "CODE_UNSPECIFIED",
+            "INELIGIBLE",
+            "PENDING",
+            "IN_PROGRESS",
+            "SOAKING",
+            "FORCED_SOAKING",
+            "COMPLETE"
+          ],
+          "enumDescriptions": [
+            "Required by https://linter.aip.dev/126/unspecified.",
+            "The upgrade is ineligible. At the scope level, this means the upgrade is ineligible for all the clusters in the scope.",
+            "The upgrade is pending. At the scope level, this means the upgrade is pending for all the clusters in the scope.",
+            "The upgrade is in progress. At the scope level, this means the upgrade is in progress for at least one cluster in the scope.",
+            "The upgrade has finished and is soaking until the soaking time is up. At the scope level, this means at least one cluster is in soaking while the rest are either soaking or complete.",
+            "A cluster will be forced to enter soaking if an upgrade doesn't finish within a certain limit, despite it's actual status.",
+            "The upgrade has passed all post conditions (soaking). At the scope level, this means all eligible clusters are in COMPLETE status."
+          ],
+          "type": "string"
+        },
+        "reason": {
+          "description": "Reason for this status.",
+          "type": "string"
+        },
+        "updateTime": {
+          "description": "Last timestamp the status was updated.",
+          "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "CommonFeatureSpec": {
       "description": "CommonFeatureSpec contains Hub-wide configuration information",
       "id": "CommonFeatureSpec",
@@ -1974,6 +2249,14 @@
         "appdevexperience": {
           "$ref": "AppDevExperienceFeatureSpec",
           "description": "Appdevexperience specific spec."
+        },
+        "clusterupgrade": {
+          "$ref": "ClusterUpgradeFleetSpec",
+          "description": "ClusterUpgrade (fleet-based) feature spec."
+        },
+        "dataplanev2": {
+          "$ref": "DataplaneV2FeatureSpec",
+          "description": "DataplaneV2 feature spec."
         },
         "fleetobservability": {
           "$ref": "FleetObservabilityFeatureSpec",
@@ -1993,6 +2276,10 @@
         "appdevexperience": {
           "$ref": "AppDevExperienceFeatureState",
           "description": "Appdevexperience specific state."
+        },
+        "clusterupgrade": {
+          "$ref": "ClusterUpgradeFleetState",
+          "description": "ClusterUpgrade fleet-level state."
         },
         "fleetobservability": {
           "$ref": "FleetObservabilityFeatureState",
@@ -2047,7 +2334,7 @@
           "description": "Git repo configuration for the cluster."
         },
         "metricsGcpServiceAccountEmail": {
-          "description": "The Email of the Google Cloud Service Account (GSA) used for exporting Config Sync metrics to Cloud Monitoring and Cloud Monarch when Workload Identity is enabled. The GSA should have the Monitoring Metric Writer (roles/monitoring.metricWriter) IAM role. The Kubernetes ServiceAccount `default` in the namespace `config-management-monitoring` should be bound to the GSA. This field is required when automatic Feature management is enabled.",
+          "description": "The Email of the Google Cloud Service Account (GSA) used for exporting Config Sync metrics to Cloud Monitoring and Cloud Monarch when Workload Identity is enabled. The GSA should have the Monitoring Metric Writer (roles/monitoring.metricWriter) IAM role. The Kubernetes ServiceAccount `default` in the namespace `config-management-monitoring` should be bound to the GSA.",
           "type": "string"
         },
         "oci": {
@@ -2061,10 +2348,6 @@
         "sourceFormat": {
           "description": "Specifies whether the Config Sync Repo is in \"hierarchical\" or \"unstructured\" mode.",
           "type": "string"
-        },
-        "stopSyncing": {
-          "description": "Set to true to stop syncing configs for a single cluster when automatic Feature management is enabled. Default to false. The field will be ignored when automatic Feature management is disabled.",
-          "type": "boolean"
         }
       },
       "type": "object"
@@ -2227,6 +2510,60 @@
             "$ref": "ConfigManagementConfigSyncError"
           },
           "type": "array"
+        },
+        "reposyncCrd": {
+          "description": "The state of the Reposync CRD",
+          "enum": [
+            "CRD_STATE_UNSPECIFIED",
+            "NOT_INSTALLED",
+            "INSTALLED",
+            "TERMINATING",
+            "INSTALLING"
+          ],
+          "enumDescriptions": [
+            "CRD's state cannot be determined",
+            "CRD is not installed",
+            "CRD is installed",
+            "CRD is terminating (i.e., it has been deleted and is cleaning up)",
+            "CRD is installing"
+          ],
+          "type": "string"
+        },
+        "rootsyncCrd": {
+          "description": "The state of the RootSync CRD",
+          "enum": [
+            "CRD_STATE_UNSPECIFIED",
+            "NOT_INSTALLED",
+            "INSTALLED",
+            "TERMINATING",
+            "INSTALLING"
+          ],
+          "enumDescriptions": [
+            "CRD's state cannot be determined",
+            "CRD is not installed",
+            "CRD is installed",
+            "CRD is terminating (i.e., it has been deleted and is cleaning up)",
+            "CRD is installing"
+          ],
+          "type": "string"
+        },
+        "state": {
+          "description": "The state of CS This field summarizes the other fields in this message.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "CONFIG_SYNC_NOT_INSTALLED",
+            "CONFIG_SYNC_INSTALLED",
+            "CONFIG_SYNC_ERROR",
+            "CONFIG_SYNC_PENDING"
+          ],
+          "enumDescriptions": [
+            "CS's state cannot be determined.",
+            "CS is not installed.",
+            "The expected CS version is installed successfully.",
+            "CS encounters errors.",
+            "CS is installing or terminating."
+          ],
+          "type": "string"
         },
         "syncState": {
           "$ref": "ConfigManagementSyncState",
@@ -2882,10 +3219,25 @@
       },
       "type": "object"
     },
+    "DataplaneV2FeatureSpec": {
+      "description": "**Dataplane V2**: Spec",
+      "id": "DataplaneV2FeatureSpec",
+      "properties": {
+        "enableEncryption": {
+          "description": "Enable dataplane-v2 based encryption for multiple clusters.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "DefaultClusterConfig": {
       "description": "DefaultClusterConfig describes the default cluster configurations to be applied to all clusters born-in-fleet.",
       "id": "DefaultClusterConfig",
       "properties": {
+        "binaryAuthorizationConfig": {
+          "$ref": "BinaryAuthorizationConfig",
+          "description": "Optional. Enable/Disable binary authorization features for the cluster."
+        },
         "securityPostureConfig": {
           "$ref": "SecurityPostureConfig",
           "description": "Enable/Disable Security Posture features for the cluster."
@@ -3381,6 +3733,10 @@
         "proxy": {
           "description": "Proxy server address to use for auth method.",
           "type": "string"
+        },
+        "samlConfig": {
+          "$ref": "IdentityServiceSamlConfig",
+          "description": "SAML specific configuration."
         }
       },
       "type": "object"
@@ -3403,12 +3759,20 @@
           "readOnly": true,
           "type": "string"
         },
+        "groupFormat": {
+          "description": "Optional. Format of the AzureAD groups that the client wants for auth.",
+          "type": "string"
+        },
         "kubectlRedirectUri": {
           "description": "The redirect URL that kubectl uses for authorization.",
           "type": "string"
         },
         "tenant": {
           "description": "Kind of Azure AD account to be authenticated. Supported values are or for accounts belonging to a specific tenant.",
+          "type": "string"
+        },
+        "userClaim": {
+          "description": "Optional. Claim in the AzureAD ID Token that holds the user details.",
           "type": "string"
         }
       },
@@ -3532,6 +3896,51 @@
         },
         "userPrefix": {
           "description": "Prefix to prepend to user name.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "IdentityServiceSamlConfig": {
+      "description": "Configuration for the SAML Auth flow.",
+      "id": "IdentityServiceSamlConfig",
+      "properties": {
+        "attributeMapping": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. The mapping of additional user attributes like nickname, birthday and address etc.. `key` is the name of this additional attribute. `value` is a string presenting as CEL(common expression language, go/cel) used for getting the value from the resources. Take nickname as an example, in this case, `key` is \"attribute.nickname\" and `value` is \"assertion.nickname\".",
+          "type": "object"
+        },
+        "groupPrefix": {
+          "description": "Optional. Prefix to prepend to group name.",
+          "type": "string"
+        },
+        "groupsAttribute": {
+          "description": "Optional. The SAML attribute to read groups from. This value is expected to be a string and will be passed along as-is (with the option of being prefixed by the `group_prefix`).",
+          "type": "string"
+        },
+        "identityProviderCertificates": {
+          "description": "Required. The list of IdP certificates to validate the SAML response against.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "identityProviderId": {
+          "description": "Required. The entity ID of the SAML IdP.",
+          "type": "string"
+        },
+        "identityProviderSsoUri": {
+          "description": "Required. The URI where the SAML IdP exposes the SSO service.",
+          "type": "string"
+        },
+        "userAttribute": {
+          "description": "Optional. The SAML attribute to read username from. If unspecified, the username will be read from the NameID element of the assertion in SAML response. This value is expected to be a string and will be passed along as-is (with the option of being prefixed by the `user_prefix`).",
+          "type": "string"
+        },
+        "userPrefix": {
+          "description": "Optional. Prefix to prepend to user name.",
           "type": "string"
         }
       },
@@ -4042,6 +4451,10 @@
           "$ref": "AppDevExperienceFeatureState",
           "description": "Appdevexperience specific state."
         },
+        "clusterupgrade": {
+          "$ref": "ClusterUpgradeMembershipState",
+          "description": "ClusterUpgrade state."
+        },
         "configmanagement": {
           "$ref": "ConfigManagementMembershipState",
           "description": "Config Management-specific state."
@@ -4405,6 +4818,17 @@
       },
       "type": "object"
     },
+    "PolicyBinding": {
+      "description": "Binauthz policy that applies to this cluster.",
+      "id": "PolicyBinding",
+      "properties": {
+        "name": {
+          "description": "The relative resource name of the binauthz platform policy to audit. GKE platform policies have the following format: `projects/{project_number}/platforms/gke/policies/{policy_id}`.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "PolicyControllerBundleInstallSpec": {
       "description": "BundleInstallSpec is the specification configuration for a single managed bundle.",
       "id": "PolicyControllerBundleInstallSpec",
@@ -4675,7 +5099,8 @@
           "type": "string"
         },
         "podAntiAffinity": {
-          "description": "Pod anti-affinity enablement.",
+          "deprecated": true,
+          "description": "Pod anti-affinity enablement. Deprecated: use `pod_affinity` instead.",
           "type": "boolean"
         },
         "podTolerations": {
@@ -4795,7 +5220,7 @@
           "type": "object"
         },
         "name": {
-          "description": "The resource name for the rbacrolebinding `projects/{project}/locations/{location}/namespaces/{namespace}/rbacrolebindings/{rbacrolebinding}` or `projects/{project}/locations/{location}/memberships/{membership}/rbacrolebindings/{rbacrolebinding}`",
+          "description": "The resource name for the rbacrolebinding `projects/{project}/locations/{location}/scopes/{scope}/rbacrolebindings/{rbacrolebinding}` or `projects/{project}/locations/{location}/memberships/{membership}/rbacrolebindings/{rbacrolebinding}`",
           "type": "string"
         },
         "role": {

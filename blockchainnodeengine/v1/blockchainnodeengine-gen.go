@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "blockchainnodeengine:v1"
 const apiName = "blockchainnodeengine"
 const apiVersion = "v1"
 const basePath = "https://blockchainnodeengine.googleapis.com/"
+const basePathTemplate = "https://blockchainnodeengine.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://blockchainnodeengine.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -228,7 +232,11 @@ type BlockchainNode struct {
 	// PrivateServiceConnectEnabled: Optional. When true, the node is only
 	// accessible via Private Service Connect; no public endpoints are
 	// exposed. Otherwise, the node is only accessible via public endpoints.
-	// See https://cloud.google.com/vpc/docs/private-service-connect.
+	// Warning: Private Service Connect enabled nodes may require a manual
+	// migration effort to remain compatible with future versions of the
+	// product. If this feature is enabled, you will be notified of these
+	// changes along with any required action to avoid disruption. See
+	// https://cloud.google.com/vpc/docs/private-service-connect.
 	PrivateServiceConnectEnabled bool `json:"privateServiceConnectEnabled,omitempty"`
 
 	// State: Output only. A status representing the state of the node.
@@ -368,16 +376,6 @@ type EthereumDetails struct {
 	// the `debug` namespace. Defaults to `false`.
 	ApiEnableDebug bool `json:"apiEnableDebug,omitempty"`
 
-	// BeaconFeeRecipient: An Ethereum address which the beacon client will
-	// send fee rewards to if no recipient is configured in the validator
-	// client. See
-	// https://lighthouse-book.sigmaprime.io/suggested-fee-recipient.html or
-	// https://docs.prylabs.network/docs/execution-node/fee-recipient for
-	// examples of how this is used. Note that while this is often described
-	// as "suggested", as we run the execution node we can trust the
-	// execution node, and therefore this is considered enforced.
-	BeaconFeeRecipient string `json:"beaconFeeRecipient,omitempty"`
-
 	// ConsensusClient: Immutable. The consensus client.
 	//
 	// Possible values:
@@ -436,6 +434,10 @@ type EthereumDetails struct {
 	//   "ARCHIVE" - Holds the same data as full node as well as all of the
 	// blockchain's history state data dating back to the Genesis Block.
 	NodeType string `json:"nodeType,omitempty"`
+
+	// ValidatorConfig: Configuration for validator-related parameters on
+	// the beacon client, and for any GCP-managed validator client.
+	ValidatorConfig *ValidatorConfig `json:"validatorConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdditionalEndpoints")
 	// to unconditionally include in API requests. By default, fields with
@@ -879,6 +881,52 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ValidatorConfig: Configuration for validator-related parameters on
+// the beacon client, and for any GCP-managed validator client.
+type ValidatorConfig struct {
+	// BeaconFeeRecipient: An Ethereum address which the beacon client will
+	// send fee rewards to if no recipient is configured in the validator
+	// client. See
+	// https://lighthouse-book.sigmaprime.io/suggested-fee-recipient.html or
+	// https://docs.prylabs.network/docs/execution-node/fee-recipient for
+	// examples of how this is used. Note that while this is often described
+	// as "suggested", as we run the execution node we can trust the
+	// execution node, and therefore this is considered enforced.
+	BeaconFeeRecipient string `json:"beaconFeeRecipient,omitempty"`
+
+	// ManagedValidatorClient: Immutable. When true, deploys a GCP-managed
+	// validator client alongside the beacon client.
+	ManagedValidatorClient bool `json:"managedValidatorClient,omitempty"`
+
+	// MevRelayUrls: URLs for MEV-relay services to use for block building.
+	// When set, a GCP-managed MEV-boost service is configured on the beacon
+	// client.
+	MevRelayUrls []string `json:"mevRelayUrls,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BeaconFeeRecipient")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BeaconFeeRecipient") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ValidatorConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ValidatorConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

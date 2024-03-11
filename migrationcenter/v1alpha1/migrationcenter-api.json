@@ -2107,7 +2107,7 @@
       }
     }
   },
-  "revision": "20231027",
+  "revision": "20240122",
   "rootUrl": "https://migrationcenter.googleapis.com/",
   "schemas": {
     "AddAssetsToGroupRequest": {
@@ -2671,6 +2671,12 @@
           "type": "array"
         }
       },
+      "type": "object"
+    },
+    "ComputeEngineSoleTenantMigrationTarget": {
+      "description": "Compute engine sole tenant migration target.",
+      "id": "ComputeEngineSoleTenantMigrationTarget",
+      "properties": {},
       "type": "object"
     },
     "ComputeStorageDescriptor": {
@@ -3376,6 +3382,13 @@
       "description": "Guest installed application information.",
       "id": "GuestInstalledApplication",
       "properties": {
+        "licenses": {
+          "description": "License strings associated with the installed application.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
         "name": {
           "description": "Installed application name.",
           "type": "string"
@@ -4139,6 +4152,11 @@
       "description": "An insight about potential migrations for an asset.",
       "id": "MigrationInsight",
       "properties": {
+        "computeEngineSoleTenantTarget": {
+          "$ref": "ComputeEngineSoleTenantMigrationTarget",
+          "description": "Output only. A Google Compute Engine Sole Tenant target.",
+          "readOnly": true
+        },
         "computeEngineTarget": {
           "$ref": "ComputeEngineMigrationTarget",
           "description": "Output only. A Google Compute Engine target.",
@@ -4689,8 +4707,8 @@
             "TOTAL_COST_OF_OWNERSHIP"
           ],
           "enumDescriptions": [
-            "Default Report type.",
-            "Total cost of ownership Report type."
+            "Default report type.",
+            "Total cost of ownership report type."
           ],
           "type": "string"
         },
@@ -4769,7 +4787,7 @@
       "properties": {
         "allAssetsStats": {
           "$ref": "ReportSummaryAssetAggregateStats",
-          "description": "Aggregate statistics for all the assets across all the groups."
+          "description": "Aggregate statistics for unique assets across all the groups."
         },
         "groupFindings": {
           "description": "Findings for each Group included in this report.",
@@ -4809,11 +4827,11 @@
         },
         "operatingSystem": {
           "$ref": "ReportSummaryChartData",
-          "description": "Count of assets grouped by Operating System families."
+          "description": "Count of assets grouped by Operating System families. Only present for virtual machines."
         },
         "storageBytesHistogram": {
           "$ref": "ReportSummaryHistogramChartData",
-          "description": "Histogram showing a distribution of memory sizes."
+          "description": "Histogram showing a distribution of storage sizes."
         },
         "storageUtilization": {
           "$ref": "ReportSummaryChartData",
@@ -4886,11 +4904,11 @@
           "description": "Summary statistics for all the assets in this group."
         },
         "description": {
-          "description": "Description for the Group.",
+          "description": "Description for this group finding.",
           "type": "string"
         },
         "displayName": {
-          "description": "Display Name for the Group.",
+          "description": "Display Name for this group finding.",
           "type": "string"
         },
         "overlappingAssetCount": {
@@ -4923,7 +4941,8 @@
         },
         "machineFinding": {
           "$ref": "ReportSummaryMachineFinding",
-          "description": "A set of findings that applies to all machines in the input."
+          "description": "Output only. A set of findings that applies to all virtual machines in the input. Only present for virtual machines.",
+          "readOnly": true
         },
         "machinePreferences": {
           "$ref": "VirtualMachinePreferences",
@@ -4935,11 +4954,11 @@
         },
         "monthlyCostNetworkEgress": {
           "$ref": "Money",
-          "description": "Network Egress monthly cost for this preference set."
+          "description": "Network Egress monthly cost for this preference set. Only present for virtual machines."
         },
         "monthlyCostOsLicense": {
           "$ref": "Money",
-          "description": "Licensing monthly cost for this preference set."
+          "description": "Operating system licensing monthly cost for this preference set. Only present for virtual machines."
         },
         "monthlyCostOther": {
           "$ref": "Money",
@@ -4965,7 +4984,7 @@
         },
         "soleTenantFinding": {
           "$ref": "ReportSummarySoleTenantFinding",
-          "description": "A set of findings that applies to Stole-Tenant machines in the input."
+          "description": "A set of findings that applies to Stole-Tenant machines in the input. Only present for virtual machines."
         },
         "topPriority": {
           "deprecated": true,
@@ -4974,7 +4993,7 @@
         },
         "vmwareEngineFinding": {
           "$ref": "ReportSummaryVMWareEngineFinding",
-          "description": "A set of findings that applies to VMWare machines in the input."
+          "description": "A set of findings that applies to VMWare machines in the input. Only present for virtual machines."
         }
       },
       "type": "object"
@@ -5867,7 +5886,7 @@
         },
         "regionPreferences": {
           "$ref": "RegionPreferences",
-          "description": "Region preferences for assets using this preference set. If you are unsure which value to set, the migration service API region is often a good value to start with."
+          "description": "Region preferences for assets using this preference set. If you are unsure which value to set, the migration service API region is often a good value to start with. If PreferenceSet.RegionPreferences is specified, it overrides this field."
         },
         "sizingOptimizationCustomParameters": {
           "$ref": "VirtualMachinePreferencesSizingOptimizationCustomParameters",

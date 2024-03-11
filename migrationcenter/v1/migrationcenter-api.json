@@ -2099,7 +2099,7 @@
       }
     }
   },
-  "revision": "20231013",
+  "revision": "20240104",
   "rootUrl": "https://migrationcenter.googleapis.com/",
   "schemas": {
     "AddAssetsToGroupRequest": {
@@ -2595,6 +2595,22 @@
         "machinePreferences": {
           "$ref": "MachinePreferences",
           "description": "Preferences concerning the machine types to consider on Compute Engine."
+        },
+        "persistentDiskType": {
+          "description": "Persistent disk type to use. If unspecified (default), all types are considered, based on available usage data.",
+          "enum": [
+            "PERSISTENT_DISK_TYPE_UNSPECIFIED",
+            "PERSISTENT_DISK_TYPE_STANDARD",
+            "PERSISTENT_DISK_TYPE_BALANCED",
+            "PERSISTENT_DISK_TYPE_SSD"
+          ],
+          "enumDescriptions": [
+            "Unspecified (default value). Selecting this value allows the system to use any disk type according to reported usage. This a good value to start with.",
+            "Standard HDD Persistent Disk.",
+            "Balanced Persistent Disk.",
+            "SSD Persistent Disk."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -3252,6 +3268,13 @@
           "description": "The time when the application was installed.",
           "format": "google-datetime",
           "type": "string"
+        },
+        "licenses": {
+          "description": "License strings associated with the installed application.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         },
         "path": {
           "description": "Source path.",
@@ -4794,7 +4817,7 @@
         },
         "storageBytesHistogram": {
           "$ref": "ReportSummaryHistogramChartData",
-          "description": "Histogram showing a distribution of memory sizes."
+          "description": "Histogram showing a distribution of storage sizes."
         },
         "storageUtilizationChart": {
           "$ref": "ReportSummaryUtilizationChartData",

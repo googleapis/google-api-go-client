@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -97,7 +97,9 @@ const apiId = "spanner:v1"
 const apiName = "spanner"
 const apiVersion = "v1"
 const basePath = "https://spanner.googleapis.com/"
+const basePathTemplate = "https://spanner.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://spanner.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -122,7 +124,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -482,7 +486,7 @@ type AutoscalingTargets struct {
 	// StorageUtilizationPercent: Required. The target storage utilization
 	// percentage that the autoscaler should be trying to achieve for the
 	// instance. This number is on a scale from 0 (no utilization) to 100
-	// (full utilization). The valid range is [10, 100] inclusive.
+	// (full utilization). The valid range is [10, 99] inclusive.
 	StorageUtilizationPercent int64 `json:"storageUtilizationPercent,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -873,11 +877,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -889,11 +916,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -965,6 +1001,13 @@ func (s *ChildLink) MarshalJSON() ([]byte, error) {
 
 // CommitRequest: The request for Commit.
 type CommitRequest struct {
+	// MaxCommitDelay: Optional. The amount of latency this request is
+	// willing to incur in order to improve throughput. If this field is not
+	// set, Spanner assumes requests are relatively latency sensitive and
+	// automatically determines an appropriate delay time. You can specify a
+	// batching delay value between 0 and 500 ms.
+	MaxCommitDelay string `json:"maxCommitDelay,omitempty"`
+
 	// Mutations: The mutations to be executed when this transaction
 	// commits. All mutations are applied atomically, in the order they
 	// appear in this list.
@@ -991,7 +1034,7 @@ type CommitRequest struct {
 	// TransactionId: Commit a previously-started transaction.
 	TransactionId string `json:"transactionId,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Mutations") to
+	// ForceSendFields is a list of field names (e.g. "MaxCommitDelay") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -999,12 +1042,13 @@ type CommitRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Mutations") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MaxCommitDelay") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1407,9 +1451,9 @@ type CreateDatabaseRequest struct {
 	// (https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto).
 	// To generate it, install (https://grpc.io/docs/protoc-installation/)
 	// and run `protoc` with --include_imports and --descriptor_set_out. For
-	// example, to generate for moon/shot/app.proto, run """ $protoc
+	// example, to generate for moon/shot/app.proto, run ``` $protoc
 	// --proto_path=/app_path --proto_path=/lib_path \ --include_imports \
-	// --descriptor_set_out=descriptors.data \ moon/shot/app.proto """ For
+	// --descriptor_set_out=descriptors.data \ moon/shot/app.proto ``` For
 	// more details, see protobuffer self description
 	// (https://developers.google.com/protocol-buffers/docs/techniques#self-description).
 	ProtoDescriptors string `json:"protoDescriptors,omitempty"`
@@ -1529,6 +1573,17 @@ type CreateInstanceMetadata struct {
 	// EndTime: The time at which this operation failed or was completed
 	// successfully.
 	EndTime string `json:"endTime,omitempty"`
+
+	// ExpectedFulfillmentPeriod: The expected fulfillment period of this
+	// create operation.
+	//
+	// Possible values:
+	//   "FULFILLMENT_PERIOD_UNSPECIFIED" - Not specified.
+	//   "FULFILLMENT_PERIOD_NORMAL" - Normal fulfillment period. The
+	// operation is expected to complete within minutes.
+	//   "FULFILLMENT_PERIOD_EXTENDED" - Extended fulfillment period. It can
+	// take up to an hour for the operation to complete.
+	ExpectedFulfillmentPeriod string `json:"expectedFulfillmentPeriod,omitempty"`
 
 	// Instance: The instance being created.
 	Instance *Instance `json:"instance,omitempty"`
@@ -1935,9 +1990,9 @@ func (s *DiagnosticMessage) MarshalJSON() ([]byte, error) {
 // transaction, otherwise the API will return an `INVALID_ARGUMENT`
 // error.
 type DirectedReadOptions struct {
-	// ExcludeReplicas: Exclude_replicas indicates that should be excluded
-	// from serving requests. Spanner will not route requests to the
-	// replicas in this list.
+	// ExcludeReplicas: Exclude_replicas indicates that specified replicas
+	// should be excluded from serving requests. Spanner will not route
+	// requests to the replicas in this list.
 	ExcludeReplicas *ExcludeReplicas `json:"excludeReplicas,omitempty"`
 
 	// IncludeReplicas: Include_replicas indicates the order of replicas (as
@@ -2959,6 +3014,10 @@ type InstanceConfig struct {
 	//   "READY" - The instance config is fully created and ready to be used
 	// to create instances.
 	State string `json:"state,omitempty"`
+
+	// StorageLimitPerProcessingUnit: Output only. The storage limit in
+	// bytes per processing unit.
+	StorageLimitPerProcessingUnit int64 `json:"storageLimitPerProcessingUnit,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -4297,9 +4356,9 @@ type PartitionQueryRequest struct {
 	// Sql: Required. The query request to generate partitions for. The
 	// request will fail if the query is not root partitionable. For a query
 	// to be root partitionable, it needs to satisfy a few conditions. For
-	// example, the first operator in the query execution plan must be a
-	// distributed union operator. For more information about other
-	// conditions, see Read data in parallel
+	// example, if the query execution plan contains a distributed union
+	// operator, then it must be the first operator in the plan. For more
+	// information about other conditions, see Read data in parallel
 	// (https://cloud.google.com/spanner/docs/reads#read_data_in_parallel).
 	// The query request must not contain DML commands, such as INSERT,
 	// UPDATE, or DELETE. Use ExecuteStreamingSql with a PartitionedDml
@@ -4984,7 +5043,7 @@ type ReplicaInfo struct {
 	// more details.
 	DefaultLeaderLocation bool `json:"defaultLeaderLocation,omitempty"`
 
-	// Location: The location of the serving resources, e.g. "us-central1".
+	// Location: The location of the serving resources, e.g., "us-central1".
 	Location string `json:"location,omitempty"`
 
 	// Type: The type of replica.
@@ -5038,7 +5097,7 @@ func (s *ReplicaInfo) MarshalJSON() ([]byte, error) {
 // the replica. Some examples of using replica_selectors are: *
 // `location:us-east1` --> The "us-east1" replica(s) of any available
 // type will be used to process the request. * `type:READ_ONLY` --> The
-// "READ_ONLY" type replica(s) in nearest . available location will be
+// "READ_ONLY" type replica(s) in nearest available location will be
 // used to process the request. * `location:us-east1 type:READ_ONLY` -->
 // The "READ_ONLY" type replica(s) in location "us-east1" will be used
 // to process the request.
@@ -6248,6 +6307,8 @@ type Type struct {
 	//   "INT64" - Encoded as `string`, in decimal format.
 	//   "FLOAT64" - Encoded as `number`, or the strings "NaN",
 	// "Infinity", or "-Infinity".
+	//   "FLOAT32" - Encoded as `number`, or the strings "NaN",
+	// "Infinity", or "-Infinity".
 	//   "TIMESTAMP" - Encoded as `string` in RFC 3339 timestamp format. The
 	// time zone must be present, and must be "Z". If the schema has the
 	// column option `allow_commit_timestamp=true`, the placeholder string
@@ -6424,9 +6485,9 @@ type UpdateDatabaseDdlRequest struct {
 	// (https://github.com/protocolbuffers/protobuf/blob/main/src/google/protobuf/descriptor.proto).
 	// To generate it, install (https://grpc.io/docs/protoc-installation/)
 	// and run `protoc` with --include_imports and --descriptor_set_out. For
-	// example, to generate for moon/shot/app.proto, run """ $protoc
+	// example, to generate for moon/shot/app.proto, run ``` $protoc
 	// --proto_path=/app_path --proto_path=/lib_path \ --include_imports \
-	// --descriptor_set_out=descriptors.data \ moon/shot/app.proto """ For
+	// --descriptor_set_out=descriptors.data \ moon/shot/app.proto ``` For
 	// more details, see protobuffer self description
 	// (https://developers.google.com/protocol-buffers/docs/techniques#self-description).
 	ProtoDescriptors string `json:"protoDescriptors,omitempty"`
@@ -6617,6 +6678,17 @@ type UpdateInstanceMetadata struct {
 	// EndTime: The time at which this operation failed or was completed
 	// successfully.
 	EndTime string `json:"endTime,omitempty"`
+
+	// ExpectedFulfillmentPeriod: The expected fulfillment period of this
+	// update operation.
+	//
+	// Possible values:
+	//   "FULFILLMENT_PERIOD_UNSPECIFIED" - Not specified.
+	//   "FULFILLMENT_PERIOD_NORMAL" - Normal fulfillment period. The
+	// operation is expected to complete within minutes.
+	//   "FULFILLMENT_PERIOD_EXTENDED" - Extended fulfillment period. It can
+	// take up to an hour for the operation to complete.
+	ExpectedFulfillmentPeriod string `json:"expectedFulfillmentPeriod,omitempty"`
 
 	// Instance: The desired end state of the update.
 	Instance *Instance `json:"instance,omitempty"`

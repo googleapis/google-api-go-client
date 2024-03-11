@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "searchads360:v0"
 const apiName = "searchads360"
 const apiVersion = "v0"
 const basePath = "https://searchads360.googleapis.com/"
+const basePathTemplate = "https://searchads360.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://searchads360.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -106,7 +108,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -1405,6 +1409,9 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// in the range of 0 to 0.9. Any value above 0.9 is reported as 0.9001.
 	ContentRankLostImpressionShare float64 `json:"contentRankLostImpressionShare,omitempty"`
 
+	// ConversionCustomMetrics: The conversion custom metrics.
+	ConversionCustomMetrics []*GoogleAdsSearchads360V0Common__Value `json:"conversionCustomMetrics,omitempty"`
+
 	// Conversions: The number of conversions. This only includes conversion
 	// actions which include_in_conversions_metric attribute is set to true.
 	// If you use conversion-based bidding, your bid strategies will
@@ -1703,6 +1710,9 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	// MobileFriendlyClicksPercentage: The percentage of mobile clicks that
 	// go to a mobile-friendly page.
 	MobileFriendlyClicksPercentage float64 `json:"mobileFriendlyClicksPercentage,omitempty"`
+
+	// RawEventConversionMetrics: The raw event conversion metrics.
+	RawEventConversionMetrics []*GoogleAdsSearchads360V0Common__Value `json:"rawEventConversionMetrics,omitempty"`
 
 	// SearchAbsoluteTopImpressionShare: The percentage of the customer's
 	// Shopping or Search ad impressions that are shown in the most
@@ -2330,6 +2340,9 @@ type GoogleAdsSearchads360V0Common__Segments struct {
 	// ConversionActionName: Conversion action name.
 	ConversionActionName string `json:"conversionActionName,omitempty"`
 
+	// ConversionCustomDimensions: The conversion custom dimensions.
+	ConversionCustomDimensions []*GoogleAdsSearchads360V0Common__Value `json:"conversionCustomDimensions,omitempty"`
+
 	// Date: Date to which metrics apply. yyyy-MM-dd format, for example,
 	// 2018-04-17.
 	Date string `json:"date,omitempty"`
@@ -2547,6 +2560,9 @@ type GoogleAdsSearchads360V0Common__Segments struct {
 	// quarter. Uses the calendar year for quarters, for example, the second
 	// quarter of 2018 starts on 2018-04-01. Formatted as yyyy-MM-dd.
 	Quarter string `json:"quarter,omitempty"`
+
+	// RawEventConversionDimensions: The raw event conversion dimensions.
+	RawEventConversionDimensions []*GoogleAdsSearchads360V0Common__Value `json:"rawEventConversionDimensions,omitempty"`
 
 	// Week: Week as defined as Monday through Sunday, and represented by
 	// the date of Monday. Formatted as yyyy-MM-dd.
@@ -4634,6 +4650,61 @@ func (s *GoogleAdsSearchads360V0ResourcesConversionActionValueSettings) Unmarsha
 	return nil
 }
 
+// GoogleAdsSearchads360V0ResourcesConversionCustomVariableFloodlightConv
+// ersionCustomVariableInfo: Information for Search Ads 360 Floodlight
+// Conversion Custom Variables.
+type GoogleAdsSearchads360V0ResourcesConversionCustomVariableFloodlightConversionCustomVariableInfo struct {
+	// FloodlightVariableDataType: Output only. Floodlight variable data
+	// type defined in Search Ads 360.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "NUMBER" - Represents a floodlight variable of "Number" type. This
+	// variable may be assigned to floodlight variables of DIMENSION or
+	// METRIC types.
+	//   "STRING" - Represents a floodlight variable of "String" type. This
+	// variable may be assigned to floodlight variables of DIMENSION type.
+	FloodlightVariableDataType string `json:"floodlightVariableDataType,omitempty"`
+
+	// FloodlightVariableType: Output only. Floodlight variable type defined
+	// in Search Ads 360.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "DIMENSION" - Dimension floodlight variable type.
+	//   "METRIC" - Metric floodlight variable type.
+	//   "UNSET" - Floodlight variable type is unset.
+	FloodlightVariableType string `json:"floodlightVariableType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FloodlightVariableDataType") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "FloodlightVariableDataType") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesConversionCustomVariableFloodlightConversionCustomVariableInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0ResourcesConversionCustomVariableFloodlightConversionCustomVariableInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductBidd
 // ingCategory: One element of a bidding category at a certain level.
 // Top-level categories are at level 1, their children at level 2, and
@@ -6260,7 +6331,8 @@ type GoogleAdsSearchads360V0Resources__AssetGroupListingGroupFilter struct {
 	//   "UNSPECIFIED" - Not specified.
 	//   "UNKNOWN" - Used for return value only. Represents value unknown in
 	// this version.
-	//   "SHOPPING" - Represents the shopping vertical.
+	//   "SHOPPING" - Represents the shopping vertical. The vertical is
+	// allowed only in Performance Max for Retail campaigns.
 	Vertical string `json:"vertical,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AssetGroup") to
@@ -8016,6 +8088,118 @@ func (s *GoogleAdsSearchads360V0Resources__ConversionAction) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Resources__ConversionCustomVariable: A
+// conversion custom variable. See "About custom Floodlight metrics and
+// dimensions in the new Search Ads 360" at
+// https://support.google.com/sa360/answer/13567857
+type GoogleAdsSearchads360V0Resources__ConversionCustomVariable struct {
+	// Cardinality: Output only. Cardinality of the conversion custom
+	// variable.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "BELOW_ALL_LIMITS" - The conversion custom variable has cardinality
+	// below all limits. The variable can be used for segmentation, and
+	// stats can accrue for new values if the variable is enabled.
+	//   "EXCEEDS_SEGMENTATION_LIMIT_BUT_NOT_STATS_LIMIT" - The conversion
+	// custom variable has cardinality that exceeds the segmentation limit,
+	// but does not exceed the stats limit. Segmentation will be disabled,
+	// but stats can accrue for new values if the variable is enabled.
+	//   "APPROACHES_STATS_LIMIT" - The conversion custom variable has
+	// exceeded the segmentation limits, and is approaching the stats limits
+	// (> 90%). Segmentation will be disabled, but stats can accrue for new
+	// values if the variable is enabled.
+	//   "EXCEEDS_STATS_LIMIT" - The conversion custom variable has exceeded
+	// both the segmentation limits and stats limits. Segmentation will be
+	// disabled, and stats for enabled variables can accrue only if the
+	// existing values do not increase the cardinality of the variable any
+	// further.
+	Cardinality string `json:"cardinality,omitempty"`
+
+	// CustomColumnIds: Output only. The IDs of custom columns that use this
+	// conversion custom variable.
+	CustomColumnIds googleapi.Int64s `json:"customColumnIds,omitempty"`
+
+	// Family: Output only. Family of the conversion custom variable.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "STANDARD" - The standard conversion custom variable. Customers are
+	// required to activate before use.
+	//   "FLOODLIGHT" - The conversion custom variable imported from a
+	// custom floodlight variable.
+	Family string `json:"family,omitempty"`
+
+	// FloodlightConversionCustomVariableInfo: Output only. Fields for
+	// Search Ads 360 floodlight conversion custom variables.
+	FloodlightConversionCustomVariableInfo *GoogleAdsSearchads360V0ResourcesConversionCustomVariableFloodlightConversionCustomVariableInfo `json:"floodlightConversionCustomVariableInfo,omitempty"`
+
+	// Id: Output only. The ID of the conversion custom variable.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Name: Required. The name of the conversion custom variable. Name
+	// should be unique. The maximum length of name is 100 characters. There
+	// should not be any extra spaces before and after.
+	Name string `json:"name,omitempty"`
+
+	// OwnerCustomer: Output only. The resource name of the customer that
+	// owns the conversion custom variable.
+	OwnerCustomer string `json:"ownerCustomer,omitempty"`
+
+	// ResourceName: Immutable. The resource name of the conversion custom
+	// variable. Conversion custom variable resource names have the form:
+	// `customers/{customer_id}/conversionCustomVariables/{conversion_custom_
+	// variable_id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// Status: The status of the conversion custom variable for conversion
+	// event accrual.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "ACTIVATION_NEEDED" - The conversion custom variable is pending
+	// activation and will not accrue stats until set to ENABLED. This
+	// status can't be used in CREATE and UPDATE requests.
+	//   "ENABLED" - The conversion custom variable is enabled and will
+	// accrue stats.
+	//   "PAUSED" - The conversion custom variable is paused and will not
+	// accrue stats until set to ENABLED again.
+	Status string `json:"status,omitempty"`
+
+	// Tag: Required. Immutable. The tag of the conversion custom variable.
+	// Tag should be unique and consist of a "u" character directly followed
+	// with a number less than ormequal to 100. For example: "u4".
+	Tag string `json:"tag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Cardinality") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Cardinality") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__ConversionCustomVariable) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__ConversionCustomVariable
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Resources__ConversionTrackingSetting: A
 // collection of customer-wide settings related to Search Ads 360
 // Conversion Tracking.
@@ -9458,6 +9642,70 @@ func (s *GoogleAdsSearchads360V0Resources__WebpageView) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Services__ConversionCustomDimensionHeader:
+// Message for conversion custom dimension header.
+type GoogleAdsSearchads360V0Services__ConversionCustomDimensionHeader struct {
+	// Id: The conversion custom dimension ID.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Name: The user defined name of the conversion custom dimension.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Services__ConversionCustomDimensionHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Services__ConversionCustomDimensionHeader
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Services__ConversionCustomMetricHeader:
+// Message for conversion custom metric header.
+type GoogleAdsSearchads360V0Services__ConversionCustomMetricHeader struct {
+	// Id: The conversion custom metric ID.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Name: The user defined name of the conversion custom metric.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Services__ConversionCustomMetricHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Services__ConversionCustomMetricHeader
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Services__CustomColumnHeader: Message for
 // custom column header.
 type GoogleAdsSearchads360V0Services__CustomColumnHeader struct {
@@ -9556,6 +9804,70 @@ type GoogleAdsSearchads360V0Services__ListCustomColumnsResponse struct {
 
 func (s *GoogleAdsSearchads360V0Services__ListCustomColumnsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAdsSearchads360V0Services__ListCustomColumnsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Services__RawEventConversionDimensionHeader:
+// Message for raw event conversion dimension header.
+type GoogleAdsSearchads360V0Services__RawEventConversionDimensionHeader struct {
+	// Id: The conversion custom variable ID.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Name: The user defined name of the raw event dimension.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Services__RawEventConversionDimensionHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Services__RawEventConversionDimensionHeader
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0Services__RawEventConversionMetricHeader:
+// Message for raw event conversion metric header.
+type GoogleAdsSearchads360V0Services__RawEventConversionMetricHeader struct {
+	// Id: The conversion custom variable ID.
+	Id int64 `json:"id,omitempty,string"`
+
+	// Name: The user defined name of the raw event metric.
+	Name string `json:"name,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Services__RawEventConversionMetricHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Services__RawEventConversionMetricHeader
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9660,6 +9972,10 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 
 	// ConversionAction: The conversion action referenced in the query.
 	ConversionAction *GoogleAdsSearchads360V0Resources__ConversionAction `json:"conversionAction,omitempty"`
+
+	// ConversionCustomVariable: The conversion custom variable referenced
+	// in the query.
+	ConversionCustomVariable *GoogleAdsSearchads360V0Resources__ConversionCustomVariable `json:"conversionCustomVariable,omitempty"`
 
 	// CustomColumns: The custom columns.
 	CustomColumns []*GoogleAdsSearchads360V0Common__Value `json:"customColumns,omitempty"`
@@ -9901,6 +10217,14 @@ func (s *GoogleAdsSearchads360V0Services__SearchSearchAds360Request) MarshalJSON
 // GoogleAdsSearchads360V0Services__SearchSearchAds360Response: Response
 // message for SearchAds360Service.Search.
 type GoogleAdsSearchads360V0Services__SearchSearchAds360Response struct {
+	// ConversionCustomDimensionHeaders: The headers of the conversion
+	// custom dimensions in the results.
+	ConversionCustomDimensionHeaders []*GoogleAdsSearchads360V0Services__ConversionCustomDimensionHeader `json:"conversionCustomDimensionHeaders,omitempty"`
+
+	// ConversionCustomMetricHeaders: The headers of the conversion custom
+	// metrics in the results.
+	ConversionCustomMetricHeaders []*GoogleAdsSearchads360V0Services__ConversionCustomMetricHeader `json:"conversionCustomMetricHeaders,omitempty"`
+
 	// CustomColumnHeaders: The headers of the custom columns in the
 	// results.
 	CustomColumnHeaders []*GoogleAdsSearchads360V0Services__CustomColumnHeader `json:"customColumnHeaders,omitempty"`
@@ -9914,6 +10238,14 @@ type GoogleAdsSearchads360V0Services__SearchSearchAds360Response struct {
 	// attribute of the next request. `next_page_token` is not returned for
 	// the last page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// RawEventConversionDimensionHeaders: The headers of the raw event
+	// conversion dimensions in the results.
+	RawEventConversionDimensionHeaders []*GoogleAdsSearchads360V0Services__RawEventConversionDimensionHeader `json:"rawEventConversionDimensionHeaders,omitempty"`
+
+	// RawEventConversionMetricHeaders: The headers of the raw event
+	// conversion metrics in the results.
+	RawEventConversionMetricHeaders []*GoogleAdsSearchads360V0Services__RawEventConversionMetricHeader `json:"rawEventConversionMetricHeaders,omitempty"`
 
 	// Results: The list of rows that matched the query.
 	Results []*GoogleAdsSearchads360V0Services__SearchAds360Row `json:"results,omitempty"`
@@ -9931,21 +10263,22 @@ type GoogleAdsSearchads360V0Services__SearchSearchAds360Response struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CustomColumnHeaders")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ConversionCustomDimensionHeaders") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CustomColumnHeaders") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "ConversionCustomDimensionHeaders") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

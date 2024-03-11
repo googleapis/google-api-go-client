@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "books:v1"
 const apiName = "books"
 const apiVersion = "v1"
 const basePath = "https://books.googleapis.com/"
+const basePathTemplate = "https://books.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://books.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -106,7 +108,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -9409,6 +9413,13 @@ func (r *MylibraryAnnotationsService) Summary(layerIds []string, volumeId string
 	return c
 }
 
+// Source sets the optional parameter "source": String to identify the
+// originator of this request.
+func (c *MylibraryAnnotationsSummaryCall) Source(source string) *MylibraryAnnotationsSummaryCall {
+	c.urlParams_.Set("source", source)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -9506,6 +9517,11 @@ func (c *MylibraryAnnotationsSummaryCall) Do(opts ...googleapi.CallOption) (*Ann
 	//       "location": "query",
 	//       "repeated": true,
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "source": {
+	//       "description": "Optional. String to identify the originator of this request.",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "volumeId": {

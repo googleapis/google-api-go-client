@@ -1284,7 +1284,7 @@
       }
     }
   },
-  "revision": "20231026",
+  "revision": "20240223",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadata": {
@@ -1317,11 +1317,6 @@
         "documentId": {
           "$ref": "GoogleCloudDocumentaiUiv1beta3DocumentId",
           "description": "The document id of the auto-labeled document. This will replace the gcs_uri."
-        },
-        "gcsUri": {
-          "deprecated": true,
-          "description": "The gcs_uri of the auto-labeling document, which uniquely identifies a dataset document.",
-          "type": "string"
         },
         "status": {
           "$ref": "GoogleRpcStatus",
@@ -2948,7 +2943,7 @@
       "properties": {
         "boundingPoly": {
           "$ref": "GoogleCloudDocumentaiV1beta1BoundingPoly",
-          "description": "Optional. Identifies the bounding polygon of a layout element on the page."
+          "description": "Optional. Identifies the bounding polygon of a layout element on the page. If `layout_type` is set, the bounding polygon must be exactly the same to the layout element it's referring to."
         },
         "confidence": {
           "description": "Optional. Confidence of detected page element, if applicable. Range `[0, 1]`.",
@@ -4349,7 +4344,7 @@
       "properties": {
         "boundingPoly": {
           "$ref": "GoogleCloudDocumentaiV1beta2BoundingPoly",
-          "description": "Optional. Identifies the bounding polygon of a layout element on the page."
+          "description": "Optional. Identifies the bounding polygon of a layout element on the page. If `layout_type` is set, the bounding polygon must be exactly the same to the layout element it's referring to."
         },
         "confidence": {
           "description": "Optional. Confidence of detected page element, if applicable. Range `[0, 1]`.",
@@ -5573,6 +5568,13 @@
           "$ref": "GoogleCloudDocumentaiV1beta3BatchDocumentsInputConfig",
           "description": "The input documents for the BatchProcessDocuments method."
         },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. The labels with user-defined metadata for the request. Label keys and values can be no longer than 63 characters (Unicode codepoints) and can only contain lowercase letters, numeric characters, underscores, and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter.",
+          "type": "object"
+        },
         "outputConfig": {
           "$ref": "GoogleCloudDocumentaiV1beta3BatchProcessRequestBatchOutputConfig",
           "deprecated": true,
@@ -5696,7 +5698,7 @@
         "documentWarehouseConfig": {
           "$ref": "GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig",
           "deprecated": true,
-          "description": "Optional. Derepcated. Warehouse-based dataset configuration is not supported today."
+          "description": "Optional. Deprecated. Warehouse-based dataset configuration is not supported."
         },
         "gcsManagedConfig": {
           "$ref": "GoogleCloudDocumentaiV1beta3DatasetGCSManagedConfig",
@@ -6322,7 +6324,7 @@
       "properties": {
         "boundingPoly": {
           "$ref": "GoogleCloudDocumentaiV1beta3BoundingPoly",
-          "description": "Optional. Identifies the bounding polygon of a layout element on the page."
+          "description": "Optional. Identifies the bounding polygon of a layout element on the page. If `layout_type` is set, the bounding polygon must be exactly the same to the layout element it's referring to."
         },
         "confidence": {
           "description": "Optional. Confidence of detected page element, if applicable. Range `[0, 1]`.",
@@ -7125,6 +7127,10 @@
       "description": "Defines properties that can be part of the entity type.",
       "id": "GoogleCloudDocumentaiV1beta3DocumentSchemaEntityTypeProperty",
       "properties": {
+        "displayName": {
+          "description": "User defined name for the property.",
+          "type": "string"
+        },
         "name": {
           "description": "The name of the property. Follows the same guidelines as the EntityType name.",
           "type": "string"
@@ -8123,7 +8129,7 @@
         },
         "ocrConfig": {
           "$ref": "GoogleCloudDocumentaiV1beta3OcrConfig",
-          "description": "Only applicable to `OCR_PROCESSOR`. Returns error if set on other processor types."
+          "description": "Only applicable to `OCR_PROCESSOR` and `FORM_PARSER_PROCESSOR`. Returns error if set on other processor types."
         },
         "schemaOverride": {
           "$ref": "GoogleCloudDocumentaiV1beta3DocumentSchema",
@@ -8168,6 +8174,13 @@
         "inlineDocument": {
           "$ref": "GoogleCloudDocumentaiV1beta3Document",
           "description": "An inline document proto."
+        },
+        "labels": {
+          "additionalProperties": {
+            "type": "string"
+          },
+          "description": "Optional. The labels with user-defined metadata for the request. Label keys and values can be no longer than 63 characters (Unicode codepoints) and can only contain lowercase letters, numeric characters, underscores, and dashes. International characters are allowed. Label values are optional. Label keys must start with a letter.",
+          "type": "object"
         },
         "processOptions": {
           "$ref": "GoogleCloudDocumentaiV1beta3ProcessOptions",
@@ -8384,6 +8397,21 @@
         "latestEvaluation": {
           "$ref": "GoogleCloudDocumentaiV1beta3EvaluationReference",
           "description": "The most recently invoked evaluation for the processor version."
+        },
+        "modelType": {
+          "description": "Output only. The model type of this processor version.",
+          "enum": [
+            "MODEL_TYPE_UNSPECIFIED",
+            "MODEL_TYPE_GENERATIVE",
+            "MODEL_TYPE_CUSTOM"
+          ],
+          "enumDescriptions": [
+            "The processor version has unspecified model type.",
+            "The processor version has generative model type.",
+            "The processor version has custom model type."
+          ],
+          "readOnly": true,
+          "type": "string"
         },
         "name": {
           "description": "The resource name of the processor version. Format: `projects/{project}/locations/{location}/processors/{processor}/processorVersions/{processor_version}`",
@@ -8760,6 +8788,10 @@
           "$ref": "GoogleCloudDocumentaiV1beta3DocumentSchema",
           "description": "Optional. The schema the processor version will be trained with."
         },
+        "foundationModelTuningOptions": {
+          "$ref": "GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestFoundationModelTuningOptions",
+          "description": "Options to control foundation model tuning of a processor."
+        },
         "inputData": {
           "$ref": "GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestInputData",
           "description": "Optional. The input data used to train the ProcessorVersion."
@@ -8788,6 +8820,23 @@
             ""
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestFoundationModelTuningOptions": {
+      "description": "Options to control foundation model tuning of the processor.",
+      "id": "GoogleCloudDocumentaiV1beta3TrainProcessorVersionRequestFoundationModelTuningOptions",
+      "properties": {
+        "learningRateMultiplier": {
+          "description": "Optional. The multiplier to apply to the recommended learning rate. Valid values are between 0.1 and 10. If not provided, recommended learning rate will be used.",
+          "format": "float",
+          "type": "number"
+        },
+        "trainSteps": {
+          "description": "Optional. The number of steps to run for model tuning. Valid values are between 1 and 400. If not provided, recommended steps will be used.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"

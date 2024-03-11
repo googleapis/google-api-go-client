@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "cloudbilling:v1"
 const apiName = "cloudbilling"
 const apiVersion = "v1"
 const basePath = "https://cloudbilling.googleapis.com/"
+const basePathTemplate = "https://cloudbilling.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudbilling.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -120,7 +122,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, 
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -422,8 +426,16 @@ type BillingAccount struct {
 	// Open: Output only. True if the billing account is open, and will
 	// therefore be charged for any usage on associated projects. False if
 	// the billing account is closed, and therefore projects associated with
-	// it will be unable to use paid services.
+	// it are unable to use paid services.
 	Open bool `json:"open,omitempty"`
+
+	// Parent: Output only. The billing account's parent resource
+	// identifier. Use the `MoveBillingAccount` method to update the
+	// account's parent resource if it is a organization. Format: -
+	// `organizations/{organization_id}`, for example,
+	// `organizations/12345678` - `billingAccounts/{billing_account_id}`,
+	// for example, `billingAccounts/012345-567890-ABCDEF`
+	Parent string `json:"parent,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -484,11 +496,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -500,11 +535,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -873,7 +917,7 @@ func (s *Money) MarshalJSON() ([]byte, error) {
 // RPC.
 type MoveBillingAccountRequest struct {
 	// DestinationParent: Required. The resource name of the Organization to
-	// reparent the billing account under. Must be of the form
+	// move the billing account under. Must be of the form
 	// `organizations/{organization_id}`.
 	DestinationParent string `json:"destinationParent,omitempty"`
 
@@ -1499,8 +1543,8 @@ func (r *BillingAccountsService) Create(billingaccount *BillingAccount) *Billing
 }
 
 // Parent sets the optional parameter "parent": The parent to create a
-// billing account from. Format: - organizations/{organization_id} eg
-// organizations/12345678 - billingAccounts/{billing_account_id} eg
+// billing account from. Format: -
+// `billingAccounts/{billing_account_id}`, for example,
 // `billingAccounts/012345-567890-ABCDEF`
 func (c *BillingAccountsCreateCall) Parent(parent string) *BillingAccountsCreateCall {
 	c.urlParams_.Set("parent", parent)
@@ -1602,7 +1646,7 @@ func (c *BillingAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAc
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Optional. The parent to create a billing account from. Format: - organizations/{organization_id} eg organizations/12345678 - billingAccounts/{billing_account_id} eg `billingAccounts/012345-567890-ABCDEF`",
+	//       "description": "Optional. The parent to create a billing account from. Format: - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -1972,8 +2016,8 @@ func (r *BillingAccountsService) List() *BillingAccountsListCall {
 // Filter sets the optional parameter "filter": Options for how to
 // filter the returned billing accounts. This only supports filtering
 // for subaccounts (https://cloud.google.com/billing/docs/concepts)
-// under a single provided parent billing account. (e.g.
-// "master_billing_account=billingAccounts/012345-678901-ABCDEF").
+// under a single provided parent billing account. (for example,
+// `master_billing_account=billingAccounts/012345-678901-ABCDEF`).
 // Boolean algebra and other fields are not currently supported.
 func (c *BillingAccountsListCall) Filter(filter string) *BillingAccountsListCall {
 	c.urlParams_.Set("filter", filter)
@@ -1998,9 +2042,10 @@ func (c *BillingAccountsListCall) PageToken(pageToken string) *BillingAccountsLi
 }
 
 // Parent sets the optional parameter "parent": The parent resource to
-// list billing accounts from. Format: - organizations/{organization_id}
-// eg organizations/12345678 - billingAccounts/{billing_account_id} eg
-// `billingAccounts/012345-567890-ABCDEF`
+// list billing accounts from. Format: -
+// `organizations/{organization_id}`, for example,
+// `organizations/12345678` - `billingAccounts/{billing_account_id}`,
+// for example, `billingAccounts/012345-567890-ABCDEF`
 func (c *BillingAccountsListCall) Parent(parent string) *BillingAccountsListCall {
 	c.urlParams_.Set("parent", parent)
 	return c
@@ -2109,7 +2154,7 @@ func (c *BillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBilling
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Options for how to filter the returned billing accounts. This only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided parent billing account. (e.g. \"master_billing_account=billingAccounts/012345-678901-ABCDEF\"). Boolean algebra and other fields are not currently supported.",
+	//       "description": "Options for how to filter the returned billing accounts. This only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided parent billing account. (for example, `master_billing_account=billingAccounts/012345-678901-ABCDEF`). Boolean algebra and other fields are not currently supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2125,7 +2170,7 @@ func (c *BillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBilling
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Optional. The parent resource to list billing accounts from. Format: - organizations/{organization_id} eg organizations/12345678 - billingAccounts/{billing_account_id} eg `billingAccounts/012345-567890-ABCDEF`",
+	//       "description": "Optional. The parent resource to list billing accounts from. Format: - `organizations/{organization_id}`, for example, `organizations/12345678` - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -3000,8 +3045,7 @@ type BillingAccountsSubAccountsCreateCall struct {
 // provisioned for subaccounts.
 //
 //   - parent: Optional. The parent to create a billing account from.
-//     Format: - organizations/{organization_id} eg organizations/12345678
-//   - billingAccounts/{billing_account_id} eg
+//     Format: - `billingAccounts/{billing_account_id}`, for example,
 //     `billingAccounts/012345-567890-ABCDEF`.
 func (r *BillingAccountsSubAccountsService) Create(parent string, billingaccount *BillingAccount) *BillingAccountsSubAccountsCreateCall {
 	c := &BillingAccountsSubAccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3110,7 +3154,7 @@ func (c *BillingAccountsSubAccountsCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Optional. The parent to create a billing account from. Format: - organizations/{organization_id} eg organizations/12345678 - billingAccounts/{billing_account_id} eg `billingAccounts/012345-567890-ABCDEF`",
+	//       "description": "Optional. The parent to create a billing account from. Format: - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -3148,9 +3192,9 @@ type BillingAccountsSubAccountsListCall struct {
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
 //
 //   - parent: Optional. The parent resource to list billing accounts
-//     from. Format: - organizations/{organization_id} eg
-//     organizations/12345678 - billingAccounts/{billing_account_id} eg
-//     `billingAccounts/012345-567890-ABCDEF`.
+//     from. Format: - `organizations/{organization_id}`, for example,
+//     `organizations/12345678` - `billingAccounts/{billing_account_id}`,
+//     for example, `billingAccounts/012345-567890-ABCDEF`.
 func (r *BillingAccountsSubAccountsService) List(parent string) *BillingAccountsSubAccountsListCall {
 	c := &BillingAccountsSubAccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3160,8 +3204,8 @@ func (r *BillingAccountsSubAccountsService) List(parent string) *BillingAccounts
 // Filter sets the optional parameter "filter": Options for how to
 // filter the returned billing accounts. This only supports filtering
 // for subaccounts (https://cloud.google.com/billing/docs/concepts)
-// under a single provided parent billing account. (e.g.
-// "master_billing_account=billingAccounts/012345-678901-ABCDEF").
+// under a single provided parent billing account. (for example,
+// `master_billing_account=billingAccounts/012345-678901-ABCDEF`).
 // Boolean algebra and other fields are not currently supported.
 func (c *BillingAccountsSubAccountsListCall) Filter(filter string) *BillingAccountsSubAccountsListCall {
 	c.urlParams_.Set("filter", filter)
@@ -3293,7 +3337,7 @@ func (c *BillingAccountsSubAccountsListCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Options for how to filter the returned billing accounts. This only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided parent billing account. (e.g. \"master_billing_account=billingAccounts/012345-678901-ABCDEF\"). Boolean algebra and other fields are not currently supported.",
+	//       "description": "Options for how to filter the returned billing accounts. This only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided parent billing account. (for example, `master_billing_account=billingAccounts/012345-678901-ABCDEF`). Boolean algebra and other fields are not currently supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3309,7 +3353,7 @@ func (c *BillingAccountsSubAccountsListCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Optional. The parent resource to list billing accounts from. Format: - organizations/{organization_id} eg organizations/12345678 - billingAccounts/{billing_account_id} eg `billingAccounts/012345-567890-ABCDEF`",
+	//       "description": "Optional. The parent resource to list billing accounts from. Format: - `organizations/{organization_id}`, for example, `organizations/12345678` - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -3376,8 +3420,7 @@ type OrganizationsBillingAccountsCreateCall struct {
 // provisioned for subaccounts.
 //
 //   - parent: Optional. The parent to create a billing account from.
-//     Format: - organizations/{organization_id} eg organizations/12345678
-//   - billingAccounts/{billing_account_id} eg
+//     Format: - `billingAccounts/{billing_account_id}`, for example,
 //     `billingAccounts/012345-567890-ABCDEF`.
 func (r *OrganizationsBillingAccountsService) Create(parent string, billingaccount *BillingAccount) *OrganizationsBillingAccountsCreateCall {
 	c := &OrganizationsBillingAccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3486,7 +3529,7 @@ func (c *OrganizationsBillingAccountsCreateCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Optional. The parent to create a billing account from. Format: - organizations/{organization_id} eg organizations/12345678 - billingAccounts/{billing_account_id} eg `billingAccounts/012345-567890-ABCDEF`",
+	//       "description": "Optional. The parent to create a billing account from. Format: - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -3524,9 +3567,9 @@ type OrganizationsBillingAccountsListCall struct {
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
 //
 //   - parent: Optional. The parent resource to list billing accounts
-//     from. Format: - organizations/{organization_id} eg
-//     organizations/12345678 - billingAccounts/{billing_account_id} eg
-//     `billingAccounts/012345-567890-ABCDEF`.
+//     from. Format: - `organizations/{organization_id}`, for example,
+//     `organizations/12345678` - `billingAccounts/{billing_account_id}`,
+//     for example, `billingAccounts/012345-567890-ABCDEF`.
 func (r *OrganizationsBillingAccountsService) List(parent string) *OrganizationsBillingAccountsListCall {
 	c := &OrganizationsBillingAccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3536,8 +3579,8 @@ func (r *OrganizationsBillingAccountsService) List(parent string) *Organizations
 // Filter sets the optional parameter "filter": Options for how to
 // filter the returned billing accounts. This only supports filtering
 // for subaccounts (https://cloud.google.com/billing/docs/concepts)
-// under a single provided parent billing account. (e.g.
-// "master_billing_account=billingAccounts/012345-678901-ABCDEF").
+// under a single provided parent billing account. (for example,
+// `master_billing_account=billingAccounts/012345-678901-ABCDEF`).
 // Boolean algebra and other fields are not currently supported.
 func (c *OrganizationsBillingAccountsListCall) Filter(filter string) *OrganizationsBillingAccountsListCall {
 	c.urlParams_.Set("filter", filter)
@@ -3669,7 +3712,7 @@ func (c *OrganizationsBillingAccountsListCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Options for how to filter the returned billing accounts. This only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided parent billing account. (e.g. \"master_billing_account=billingAccounts/012345-678901-ABCDEF\"). Boolean algebra and other fields are not currently supported.",
+	//       "description": "Options for how to filter the returned billing accounts. This only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided parent billing account. (for example, `master_billing_account=billingAccounts/012345-678901-ABCDEF`). Boolean algebra and other fields are not currently supported.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3685,7 +3728,7 @@ func (c *OrganizationsBillingAccountsListCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Optional. The parent resource to list billing accounts from. Format: - organizations/{organization_id} eg organizations/12345678 - billingAccounts/{billing_account_id} eg `billingAccounts/012345-567890-ABCDEF`",
+	//       "description": "Optional. The parent resource to list billing accounts from. Format: - `organizations/{organization_id}`, for example, `organizations/12345678` - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -3740,8 +3783,8 @@ type OrganizationsBillingAccountsMoveCall struct {
 
 // Move: Changes which parent organization a billing account belongs to.
 //
-//   - destinationParent: The resource name of the Organization to
-//     reparent the billing account under. Must be of the form
+//   - destinationParent: The resource name of the Organization to move
+//     the billing account under. Must be of the form
 //     `organizations/{organization_id}`.
 //   - name: The resource name of the billing account to move. Must be of
 //     the form `billingAccounts/{billing_account_id}`. The specified
@@ -3864,7 +3907,7 @@ func (c *OrganizationsBillingAccountsMoveCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "destinationParent": {
-	//       "description": "Required. The resource name of the Organization to reparent the billing account under. Must be of the form `organizations/{organization_id}`.",
+	//       "description": "Required. The resource name of the Organization to move the billing account under. Must be of the form `organizations/{organization_id}`.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,

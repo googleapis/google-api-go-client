@@ -305,7 +305,8 @@
     "chromeosdevices": {
       "methods": {
         "action": {
-          "description": "Takes an action that affects a Chrome OS Device. This includes deprovisioning, disabling, and re-enabling devices. *Warning:* * Deprovisioning a device will stop device policy syncing and remove device-level printers. After a device is deprovisioned, it must be wiped before it can be re-enrolled. * Lost or stolen devices should use the disable action. * Re-enabling a disabled device will consume a device license. If you do not have sufficient licenses available when completing the re-enable action, you will receive an error. For more information about deprovisioning and disabling devices, visit the [help center](https://support.google.com/chrome/a/answer/3523633).",
+          "deprecated": true,
+          "description": "Use [BatchChangeChromeOsDeviceStatus](/admin-sdk/directory/reference/rest/v1/customer.devices.chromeos/batchChangeStatus) instead. Takes an action that affects a Chrome OS Device. This includes deprovisioning, disabling, and re-enabling devices. *Warning:* * Deprovisioning a device will stop device policy syncing and remove device-level printers. After a device is deprovisioned, it must be wiped before it can be re-enrolled. * Lost or stolen devices should use the disable action. * Re-enabling a disabled device will consume a device license. If you do not have sufficient licenses available when completing the re-enable action, you will receive an error. For more information about deprovisioning and disabling devices, visit the [help center](https://support.google.com/chrome/a/answer/3523633).",
           "flatPath": "admin/directory/v1/customer/{customerId}/devices/chromeos/{resourceId}/action",
           "httpMethod": "POST",
           "id": "directory.chromeosdevices.action",
@@ -613,6 +614,33 @@
           "resources": {
             "chromeos": {
               "methods": {
+                "batchChangeStatus": {
+                  "description": "Changes the status of a batch of ChromeOS devices. For more information about changing a ChromeOS device state [Repair, repurpose, or retire ChromeOS devices](https://support.google.com/chrome/a/answer/3523633).",
+                  "flatPath": "admin/directory/v1/customer/{customerId}/devices/chromeos:batchChangeStatus",
+                  "httpMethod": "POST",
+                  "id": "admin.customer.devices.chromeos.batchChangeStatus",
+                  "parameterOrder": [
+                    "customerId"
+                  ],
+                  "parameters": {
+                    "customerId": {
+                      "description": "Required. Immutable ID of the Google Workspace account.",
+                      "location": "path",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "admin/directory/v1/customer/{customerId}/devices/chromeos:batchChangeStatus",
+                  "request": {
+                    "$ref": "BatchChangeChromeOsDeviceStatusRequest"
+                  },
+                  "response": {
+                    "$ref": "BatchChangeChromeOsDeviceStatusResponse"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/admin.directory.device.chromeos"
+                  ]
+                },
                 "issueCommand": {
                   "description": "Issues a command for the device to execute.",
                   "flatPath": "admin/directory/v1/customer/{customerId}/devices/chromeos/{deviceId}:issueCommand",
@@ -4643,7 +4671,7 @@
       }
     }
   },
-  "revision": "20231005",
+  "revision": "20240304",
   "rootUrl": "https://admin.googleapis.com/",
   "schemas": {
     "Alias": {
@@ -4778,6 +4806,117 @@
             "Message of severity: error."
           ],
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BacklightInfo": {
+      "description": "Information about the device's backlights.",
+      "id": "BacklightInfo",
+      "properties": {
+        "brightness": {
+          "description": "Output only. Current brightness of the backlight, between 0 and max_brightness.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "maxBrightness": {
+          "description": "Output only. Maximum brightness for the backlight.",
+          "format": "int32",
+          "readOnly": true,
+          "type": "integer"
+        },
+        "path": {
+          "description": "Output only. Path to this backlight on the system. Useful if the caller needs to correlate with other information.",
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "BatchChangeChromeOsDeviceStatusRequest": {
+      "description": "A request for changing the status of a batch of ChromeOS devices.",
+      "id": "BatchChangeChromeOsDeviceStatusRequest",
+      "properties": {
+        "changeChromeOsDeviceStatusAction": {
+          "description": "Required. The action to take on the ChromeOS device in order to change its status.",
+          "enum": [
+            "CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_UNSPECIFIED",
+            "CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_DEPROVISION",
+            "CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_DISABLE",
+            "CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_REENABLE"
+          ],
+          "enumDescriptions": [
+            "Default value. Value is unused.",
+            "Deprovisions a ChromeOS device. If you have ChromeOS devices that are no longer being used in your organization, you should deprovision them so that you’re no longer managing them. Deprovisioning the device removes all policies that were on the device as well as device-level printers and the ability to use the device as a kiosk. Depending on the upgrade that’s associated with the device this action might release the license back into the license pool; which allows you to use the license on a different device.",
+            "Disables a ChromeOS device. Use this action if a user loses their device or it’s stolen, this makes it such that the device is still managed, so it will still receive policies, but no one can use it. Depending on the upgrade that’s associated with the device this action might release the license back into the license pool; which allows you to use the license on a different device.",
+            "Reenables a ChromeOS device to be used after being disabled. Reenables the device once it's no longer lost or it's been recovered. This allows the device to be used again. Depending on the upgrade associated with the device this might consume one license from the license pool, meaning that if there aren't enough licenses available the operation will fail."
+          ],
+          "type": "string"
+        },
+        "deprovisionReason": {
+          "description": "Optional. The reason behind a device deprovision. Must be provided if 'changeChromeOsDeviceStatusAction' is set to 'CHANGE_CHROME_OS_DEVICE_STATUS_ACTION_DEPROVISION'. Otherwise, omit this field.",
+          "enum": [
+            "DEPROVISION_REASON_UNSPECIFIED",
+            "DEPROVISION_REASON_SAME_MODEL_REPLACEMENT",
+            "DEPROVISION_REASON_UPGRADE",
+            "DEPROVISION_REASON_DOMAIN_MOVE",
+            "DEPROVISION_REASON_SERVICE_EXPIRATION",
+            "DEPROVISION_REASON_OTHER",
+            "DEPROVISION_REASON_DIFFERENT_MODEL_REPLACEMENT",
+            "DEPROVISION_REASON_RETIRING_DEVICE",
+            "DEPROVISION_REASON_UPGRADE_TRANSFER",
+            "DEPROVISION_REASON_NOT_REQUIRED",
+            "DEPROVISION_REASON_REPAIR_CENTER"
+          ],
+          "enumDeprecated": [
+            false,
+            false,
+            true,
+            true,
+            true,
+            true,
+            false,
+            false,
+            false,
+            false,
+            false
+          ],
+          "enumDescriptions": [
+            "The deprovision reason is unknown.",
+            "Same model replacement. You have return materials authorization (RMA) or you are replacing a malfunctioning device under warranty with the same device model.",
+            "The device was upgraded.",
+            "The device's domain was changed.",
+            "Service expired for the device.",
+            "The device was deprovisioned for a legacy reason that is no longer supported.",
+            "Different model replacement. You are replacing this device with an upgraded or newer device model.",
+            "Retiring from fleet. You are donating, discarding, or otherwise removing the device from use.",
+            "ChromeOS Flex upgrade transfer. This is a ChromeOS Flex device that you are replacing with a Chromebook within a year.",
+            "A reason was not required. For example, the licenses were returned to the customer's license pool.",
+            "The device was deprovisioned by the Repair Service Center. Can only be set by Repair Service Center during RMA."
+          ],
+          "type": "string"
+        },
+        "deviceIds": {
+          "description": "Required. List of the IDs of the ChromeOS devices to change. Maximum 50.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "BatchChangeChromeOsDeviceStatusResponse": {
+      "description": "The response of changing the status of a batch of ChromeOS devices.",
+      "id": "BatchChangeChromeOsDeviceStatusResponse",
+      "properties": {
+        "changeChromeOsDeviceStatusResults": {
+          "description": "The results for each of the ChromeOS devices provided in the request.",
+          "items": {
+            "$ref": "ChangeChromeOsDeviceStatusResult"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -5151,6 +5290,31 @@
       },
       "type": "object"
     },
+    "ChangeChromeOsDeviceStatusResult": {
+      "description": "The result of a single ChromeOS device for a Change state operation.",
+      "id": "ChangeChromeOsDeviceStatusResult",
+      "properties": {
+        "deviceId": {
+          "description": "The unique ID of the ChromeOS device.",
+          "type": "string"
+        },
+        "error": {
+          "$ref": "Status",
+          "description": "The error result of the operation in case of failure."
+        },
+        "response": {
+          "$ref": "ChangeChromeOsDeviceStatusSucceeded",
+          "description": "The device could change its status successfully."
+        }
+      },
+      "type": "object"
+    },
+    "ChangeChromeOsDeviceStatusSucceeded": {
+      "description": "Response for a successful ChromeOS device status change.",
+      "id": "ChangeChromeOsDeviceStatusSucceeded",
+      "properties": {},
+      "type": "object"
+    },
     "Channel": {
       "description": "An notification channel used to watch for resource changes.",
       "id": "Channel",
@@ -5242,6 +5406,14 @@
           "description": "(Read-only) The timestamp after which the device will stop receiving Chrome updates or support",
           "format": "int64",
           "type": "string"
+        },
+        "backlightInfo": {
+          "description": "Output only. Contains backlight information for the device.",
+          "items": {
+            "$ref": "BacklightInfo"
+          },
+          "readOnly": true,
+          "type": "array"
         },
         "bootMode": {
           "description": "The boot mode for the device. The possible values are: * `Verified`: The device is running a valid version of the Chrome OS. * `Dev`: The devices's developer hardware switch is enabled. When booted, the device has a command line shell. For an example of a developer switch, see the [Chromebook developer information](https://www.chromium.org/chromium-os/developer-information-for-chrome-os-devices/samsung-series-5-chromebook#TOC-Developer-switch).",
@@ -5943,7 +6115,8 @@
             "WIPE_USERS",
             "REMOTE_POWERWASH",
             "DEVICE_START_CRD_SESSION",
-            "CAPTURE_LOGS"
+            "CAPTURE_LOGS",
+            "FETCH_SUPPORT_PACKET"
           ],
           "enumDescriptions": [
             "The command type was unspecified.",
@@ -5953,7 +6126,8 @@
             "Wipe all the users off of the device. Executing this command in the device will remove all user profile data, but it will keep device policy and enrollment.",
             "Wipes the device by performing a power wash. Executing this command in the device will remove all data including user policies, device policies and enrollment policies. Warning: This will revert the device back to a factory state with no enrollment unless the device is subject to forced or auto enrollment. Use with caution, as this is an irreversible action!",
             "Starts a Chrome Remote Desktop session.",
-            "Capture the system logs of a kiosk device. The logs can be downloaded from the downloadUrl link present in `deviceFiles` field of [chromeosdevices](https://developers.google.com/admin-sdk/directory/reference/rest/v1/chromeosdevices)"
+            "Capture the system logs of a kiosk device. The logs can be downloaded from the downloadUrl link present in `deviceFiles` field of [chromeosdevices](https://developers.google.com/admin-sdk/directory/reference/rest/v1/chromeosdevices)",
+            "Fetch support packet from a device remotely. Support packet is a zip archive that contains various system logs and debug data from a ChromeOS device. The support packet can be downloaded from the downloadURL link present in the `deviceFiles` field of [`chromeosdevices`](https://developers.google.com/admin-sdk/directory/reference/rest/v1/chromeosdevices)"
           ],
           "type": "string"
         }
@@ -6010,7 +6184,8 @@
             "WIPE_USERS",
             "REMOTE_POWERWASH",
             "DEVICE_START_CRD_SESSION",
-            "CAPTURE_LOGS"
+            "CAPTURE_LOGS",
+            "FETCH_SUPPORT_PACKET"
           ],
           "enumDescriptions": [
             "The command type was unspecified.",
@@ -6020,12 +6195,13 @@
             "Wipe all the users off of the device. Executing this command in the device will remove all user profile data, but it will keep device policy and enrollment.",
             "Wipes the device by performing a power wash. Executing this command in the device will remove all data including user policies, device policies and enrollment policies. Warning: This will revert the device back to a factory state with no enrollment unless the device is subject to forced or auto enrollment. Use with caution, as this is an irreversible action!",
             "Starts a Chrome Remote Desktop session.",
-            "Capture the system logs of a kiosk device. The logs can be downloaded from the downloadUrl link present in `deviceFiles` field of [chromeosdevices](https://developers.google.com/admin-sdk/directory/reference/rest/v1/chromeosdevices)"
+            "Capture the system logs of a kiosk device. The logs can be downloaded from the downloadUrl link present in `deviceFiles` field of [chromeosdevices](https://developers.google.com/admin-sdk/directory/reference/rest/v1/chromeosdevices)",
+            "Fetch support packet from a device remotely. Support packet is a zip archive that contains various system logs and debug data from a ChromeOS device. The support packet can be downloaded from the downloadURL link present in the `deviceFiles` field of [`chromeosdevices`](https://developers.google.com/admin-sdk/directory/reference/rest/v1/chromeosdevices)"
           ],
           "type": "string"
         },
         "payload": {
-          "description": "The payload for the command, provide it only if command supports it. The following commands support adding payload: * `SET_VOLUME`: Payload is a stringified JSON object in the form: { \"volume\": 50 }. The volume has to be an integer in the range [0,100]. * `DEVICE_START_CRD_SESSION`: Payload is optionally a stringified JSON object in the form: { \"ackedUserPresence\": true }. `ackedUserPresence` is a boolean. By default, `ackedUserPresence` is set to `false`. To start a Chrome Remote Desktop session for an active device, set `ackedUserPresence` to `true`.",
+          "description": "The payload for the command, provide it only if command supports it. The following commands support adding payload: * `SET_VOLUME`: Payload is a stringified JSON object in the form: { \"volume\": 50 }. The volume has to be an integer in the range [0,100]. * `DEVICE_START_CRD_SESSION`: Payload is optionally a stringified JSON object in the form: { \"ackedUserPresence\": true }. `ackedUserPresence` is a boolean. By default, `ackedUserPresence` is set to `false`. To start a Chrome Remote Desktop session for an active device, set `ackedUserPresence` to `true`. * `REBOOT`: Payload is a stringified JSON object in the form: { \"user_session_delay_seconds\": 300 }. The delay has to be in the range [0, 300]. * `FETCH_SUPPORT_PACKET`: Payload is optionally a stringified JSON object in the form: {\"supportPacketDetails\":{ \"issueCaseId\": optional_support_case_id_string, \"issueDescription\": optional_issue_description_string, \"requestedDataCollectors\": []}} The list of available `data_collector_enums` are as following: Chrome System Information (1), Crash IDs (2), Memory Details (3), UI Hierarchy (4), Additional ChromeOS Platform Logs (5), Device Event (6), Intel WiFi NICs Debug Dump (7), Touch Events (8), Lacros (9), Lacros System Information (10), ChromeOS Flex Logs (11), DBus Details (12), ChromeOS Network Routes (13), ChromeOS Shill (Connection Manager) Logs (14), Policies (15), ChromeOS System State and Logs (16), ChromeOS System Logs (17), ChromeOS Chrome User Logs (18), ChromeOS Bluetooth (19), ChromeOS Connected Input Devices (20), ChromeOS Traffic Counters (21), ChromeOS Virtual Keyboard (22), ChromeOS Network Health (23). See more details in [help article](https://support.google.com/chrome/a?p=remote-log).",
           "type": "string"
         }
       },
@@ -7470,6 +7646,33 @@
       },
       "type": "object"
     },
+    "Status": {
+      "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
+      "id": "Status",
+      "properties": {
+        "code": {
+          "description": "The status code, which should be an enum value of google.rpc.Code.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "details": {
+          "description": "A list of messages that carry the error details. There is a common set of message types for APIs to use.",
+          "items": {
+            "additionalProperties": {
+              "description": "Properties of the object. Contains field @type with type URL.",
+              "type": "any"
+            },
+            "type": "object"
+          },
+          "type": "array"
+        },
+        "message": {
+          "description": "A developer-facing error message, which should be in English. Any user-facing error message should be localized and sent in the google.rpc.Status.details field, or localized by the client.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Token": {
       "description": "JSON template for token resource in Directory API.",
       "id": "Token",
@@ -7589,7 +7792,7 @@
           "type": "string"
         },
         "emails": {
-          "description": "The list of the user's email addresses. The maximum allowed data size for this field is 10KB.",
+          "description": "The list of the user's email addresses. The maximum allowed data size for this field is 10KB. This excludes `publicKeyEncryptionCertificates`.",
           "type": "any"
         },
         "etag": {
@@ -7895,6 +8098,24 @@
         "primary": {
           "description": "If this is user's primary email. Only one entry could be marked as primary.",
           "type": "boolean"
+        },
+        "public_key_encryption_certificates": {
+          "description": "Public Key Encryption Certificates. Current limit: 1 per email address, and 5 per user.",
+          "properties": {
+            "certificate": {
+              "description": "X.509 encryption certificate in `PEM` format. Must only be an end-entity (leaf) certificate.",
+              "type": "string"
+            },
+            "is_default": {
+              "description": "Whether this is the default certificate for the given email address.",
+              "type": "boolean"
+            },
+            "state": {
+              "description": "Denotes the certificate's state in its lifecycle. Possible values are `not_yet_validated`, `valid`, `invalid`, `expired`, and `revoked`.",
+              "type": "string"
+            }
+          },
+          "type": "object"
         },
         "type": {
           "description": "Each entry can have a type which indicates standard types of that entry. For example email could be of home, work etc. In addition to the standard type, an entry can have a custom type and can take any value Such types should have the CUSTOM value as type and also have a customType value.",

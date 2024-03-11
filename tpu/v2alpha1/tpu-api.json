@@ -965,7 +965,7 @@
       }
     }
   },
-  "revision": "20231102",
+  "revision": "20240205",
   "rootUrl": "https://tpu.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -982,13 +982,15 @@
             "TYPE_UNSPECIFIED",
             "V2",
             "V3",
-            "V4"
+            "V4",
+            "V5P"
           ],
           "enumDescriptions": [
             "Unspecified version.",
             "TPU v2.",
             "TPU v3.",
-            "TPU v4."
+            "TPU v4.",
+            "TPU v5."
           ],
           "type": "string"
         }
@@ -1477,6 +1479,11 @@
           "description": "The name of the network for the TPU node. It must be a preexisting Google Compute Engine network. If none is provided, \"default\" will be used.",
           "type": "string"
         },
+        "queueCount": {
+          "description": "Optional. Specifies networking queue count for TPU VM instance's network interface.",
+          "format": "int32",
+          "type": "integer"
+        },
         "subnetwork": {
           "description": "The name of the subnetwork for the TPU node. It must be a preexisting Google Compute Engine subnetwork. If none is provided, \"default\" will be used.",
           "type": "string"
@@ -1910,7 +1917,7 @@
           "type": "string"
         },
         "stateInitiator": {
-          "description": "Output only. The initiator of the QueuedResources's current state.",
+          "description": "Output only. The initiator of the QueuedResources's current state. Used to indicate whether the SUSPENDING/SUSPENDED state was initiated by the user or the service.",
           "enum": [
             "STATE_INITIATOR_UNSPECIFIED",
             "USER",
@@ -2011,6 +2018,10 @@
         },
         "reserved": {
           "description": "Whether the node is created under a reservation.",
+          "type": "boolean"
+        },
+        "spot": {
+          "description": "Optional. Defines whether the node is Spot VM.",
           "type": "boolean"
         }
       },

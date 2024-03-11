@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "dataplex:v1"
 const apiName = "dataplex"
 const apiVersion = "v1"
 const basePath = "https://dataplex.googleapis.com/"
+const basePathTemplate = "https://dataplex.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://dataplex.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -2307,6 +2311,54 @@ func (s *GoogleCloudDataplexV1DataProfileSpecSelectedFields) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDataplexV1DataQualityColumnResult: DataQualityColumnResult
+// provides a more detailed, per-column view of the results.
+type GoogleCloudDataplexV1DataQualityColumnResult struct {
+	// Column: Output only. The column specified in the DataQualityRule.
+	Column string `json:"column,omitempty"`
+
+	// Score: Output only. The column-level data quality score for this data
+	// scan job if and only if the 'column' field is set.The score ranges
+	// between between 0, 100 (up to two decimal points).
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Column") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataQualityColumnResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityColumnResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDataplexV1DataQualityColumnResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDataplexV1DataQualityColumnResult
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
+}
+
 // GoogleCloudDataplexV1DataQualityDimension: A dimension captures data
 // quality intent about a defined subset of the rules specified.
 type GoogleCloudDataplexV1DataQualityDimension struct {
@@ -2349,6 +2401,11 @@ type GoogleCloudDataplexV1DataQualityDimensionResult struct {
 	// Passed: Whether the dimension passed or failed.
 	Passed bool `json:"passed,omitempty"`
 
+	// Score: Output only. The dimension-level data quality score for this
+	// data scan job if and only if the 'dimension' field is set.The score
+	// ranges between 0, 100 (up to two decimal points).
+	Score float64 `json:"score,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2372,9 +2429,28 @@ func (s *GoogleCloudDataplexV1DataQualityDimensionResult) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+func (s *GoogleCloudDataplexV1DataQualityDimensionResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDataplexV1DataQualityDimensionResult
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
+}
+
 // GoogleCloudDataplexV1DataQualityResult: The output of a
 // DataQualityScan.
 type GoogleCloudDataplexV1DataQualityResult struct {
+	// Columns: Output only. A list of results at the column level.A column
+	// will have a corresponding DataQualityColumnResult if and only if
+	// there is at least one rule with the 'column' field set to it.
+	Columns []*GoogleCloudDataplexV1DataQualityColumnResult `json:"columns,omitempty"`
+
 	// Dimensions: A list of results at the dimension level.A dimension will
 	// have a corresponding DataQualityDimensionResult if and only if there
 	// is at least one rule with the 'dimension' field set to it.
@@ -2395,7 +2471,11 @@ type GoogleCloudDataplexV1DataQualityResult struct {
 	// ScannedData: The data scanned for this result.
 	ScannedData *GoogleCloudDataplexV1ScannedData `json:"scannedData,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// Score: Output only. The overall data quality score.The score ranges
+	// between 0, 100 (up to two decimal points).
+	Score float64 `json:"score,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Columns") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2403,7 +2483,7 @@ type GoogleCloudDataplexV1DataQualityResult struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Dimensions") to include in
+	// NullFields is a list of field names (e.g. "Columns") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -2416,6 +2496,20 @@ func (s *GoogleCloudDataplexV1DataQualityResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityResult
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDataplexV1DataQualityResult) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDataplexV1DataQualityResult
+	var s1 struct {
+		Score gensupport.JSONFloat64 `json:"score"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Score = float64(s1.Score)
+	return nil
 }
 
 // GoogleCloudDataplexV1DataQualityResultPostScanActionsResult: The
@@ -2509,8 +2603,9 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 
 	// IgnoreNull: Optional. Rows with null values will automatically fail a
 	// rule, unless ignore_null is true. In that case, such null rows are
-	// trivially considered passing.This field is only valid for row-level
-	// type rules.
+	// trivially considered passing.This field is only valid for the
+	// following type of rules: RangeExpectation RegexExpectation
+	// SetExpectation UniquenessExpectation
 	IgnoreNull bool `json:"ignoreNull,omitempty"`
 
 	// Name: Optional. A mutable name for the rule. The name must contain
@@ -3080,6 +3175,10 @@ type GoogleCloudDataplexV1DataQualitySpecPostScanActions struct {
 	// provided BigQuery table.
 	BigqueryExport *GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport `json:"bigqueryExport,omitempty"`
 
+	// NotificationReport: Optional. If set, results will be sent to the
+	// provided notification receipts upon triggers.
+	NotificationReport *GoogleCloudDataplexV1DataQualitySpecPostScanActionsNotificationReport `json:"notificationReport,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "BigqueryExport") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -3134,6 +3233,137 @@ func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport) Mars
 	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActionsBigQueryExport
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualitySpecPostScanActionsJobEndTrigger:
+// This trigger is triggered whenever a scan job run ends, regardless of
+// the result.
+type GoogleCloudDataplexV1DataQualitySpecPostScanActionsJobEndTrigger struct {
+}
+
+// GoogleCloudDataplexV1DataQualitySpecPostScanActionsJobFailureTrigger:
+// This trigger is triggered when the scan job itself fails, regardless
+// of the result.
+type GoogleCloudDataplexV1DataQualitySpecPostScanActionsJobFailureTrigger struct {
+}
+
+// GoogleCloudDataplexV1DataQualitySpecPostScanActionsNotificationReport:
+//
+//	The configuration of notification report post scan action.
+type GoogleCloudDataplexV1DataQualitySpecPostScanActionsNotificationReport struct {
+	// JobEndTrigger: Optional. If set, report will be sent when a scan job
+	// ends.
+	JobEndTrigger *GoogleCloudDataplexV1DataQualitySpecPostScanActionsJobEndTrigger `json:"jobEndTrigger,omitempty"`
+
+	// JobFailureTrigger: Optional. If set, report will be sent when a scan
+	// job fails.
+	JobFailureTrigger *GoogleCloudDataplexV1DataQualitySpecPostScanActionsJobFailureTrigger `json:"jobFailureTrigger,omitempty"`
+
+	// Recipients: Required. The recipients who will receive the
+	// notification report.
+	Recipients *GoogleCloudDataplexV1DataQualitySpecPostScanActionsRecipients `json:"recipients,omitempty"`
+
+	// ScoreThresholdTrigger: Optional. If set, report will be sent when
+	// score threshold is met.
+	ScoreThresholdTrigger *GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger `json:"scoreThresholdTrigger,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JobEndTrigger") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JobEndTrigger") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsNotificationReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActionsNotificationReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualitySpecPostScanActionsRecipients: The
+// individuals or groups who are designated to receive notifications
+// upon triggers.
+type GoogleCloudDataplexV1DataQualitySpecPostScanActionsRecipients struct {
+	// Emails: Optional. The email recipients who will receive the
+	// DataQualityScan results report.
+	Emails []string `json:"emails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Emails") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Emails") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsRecipients) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActionsRecipients
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigg
+// er: This trigger is triggered when the DQ score in the job result is
+// less than a specified input score.
+type GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger struct {
+	// ScoreThreshold: Optional. The score range is in 0,100.
+	ScoreThreshold float64 `json:"scoreThreshold,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ScoreThreshold") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ScoreThreshold") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDataplexV1DataQualitySpecPostScanActionsScoreThresholdTrigger
+	var s1 struct {
+		ScoreThreshold gensupport.JSONFloat64 `json:"scoreThreshold"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.ScoreThreshold = float64(s1.ScoreThreshold)
+	return nil
 }
 
 // GoogleCloudDataplexV1DataScan: Represents a user-visible job which
@@ -4613,6 +4843,7 @@ type GoogleCloudDataplexV1GovernanceEvent struct {
 	//   "GOVERNANCE_RULE_SEARCH_LIMIT_EXCEEDS" - Rule processing exceeds
 	// the allowed limit.
 	//   "GOVERNANCE_RULE_ERRORS" - Rule processing errors.
+	//   "GOVERNANCE_RULE_PROCESSING" - Governance rule processing Event.
 	EventType string `json:"eventType,omitempty"`
 
 	// Message: The log message.
@@ -7569,7 +7800,30 @@ type GoogleIamV1Binding struct {
 	// group:{emailid}: An email address that represents a Google group. For
 	// example, admins@example.com. domain:{domain}: The G Suite domain
 	// (primary) that represents all the users of that domain. For example,
-	// google.com or example.com. deleted:user:{emailid}?uid={uniqueid}: An
+	// google.com or example.com.
+	// principal://iam.googleapis.com/locations/global/workforcePools/{pool_i
+	// d}/subject/{subject_attribute_value}: A single identity in a
+	// workforce identity pool.
+	// principalSet://iam.googleapis.com/locations/global/workforcePools/{poo
+	// l_id}/group/{group_id}: All workforce identities in a group.
+	// principalSet://iam.googleapis.com/locations/global/workforcePools/{poo
+	// l_id}/attribute.{attribute_name}/{attribute_value}: All workforce
+	// identities with a specific attribute value.
+	// principalSet://iam.googleapis.com/locations/global/workforcePools/{poo
+	// l_id}/*: All identities in a workforce identity pool.
+	// principal://iam.googleapis.com/projects/{project_number}/locations/glo
+	// bal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}:
+	//  A single identity in a workload identity pool.
+	// principalSet://iam.googleapis.com/projects/{project_number}/locations/
+	// global/workloadIdentityPools/{pool_id}/group/{group_id}: A workload
+	// identity pool group.
+	// principalSet://iam.googleapis.com/projects/{project_number}/locations/
+	// global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{att
+	// ribute_value}: All identities in a workload identity pool with a
+	// certain attribute.
+	// principalSet://iam.googleapis.com/projects/{project_number}/locations/
+	// global/workloadIdentityPools/{pool_id}/*: All identities in a
+	// workload identity pool. deleted:user:{emailid}?uid={uniqueid}: An
 	// email address (plus unique identifier) representing a user that has
 	// been recently deleted. For example,
 	// alice@example.com?uid=123456789012345678901. If the user is
@@ -7587,10 +7841,19 @@ type GoogleIamV1Binding struct {
 	// admins@example.com?uid=123456789012345678901. If the group is
 	// recovered, this value reverts to group:{emailid} and the recovered
 	// group retains the role in the binding.
+	// deleted:principal://iam.googleapis.com/locations/global/workforcePools
+	// /{pool_id}/subject/{subject_attribute_value}: Deleted single identity
+	// in a workforce identity pool. For example,
+	// deleted:principal://iam.googleapis.com/locations/global/workforcePools
+	// /my-pool-id/subject/my-subject-attribute-value.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of members, or principals.
-	// For example, roles/viewer, roles/editor, or roles/owner.
+	// For example, roles/viewer, roles/editor, or roles/owner.For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to

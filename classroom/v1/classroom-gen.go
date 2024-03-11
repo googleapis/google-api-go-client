@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "classroom:v1"
 const apiName = "classroom"
 const apiVersion = "v1"
 const basePath = "https://classroom.googleapis.com/"
+const basePathTemplate = "https://classroom.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://classroom.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -202,7 +204,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -2858,8 +2862,8 @@ func (s *Student) MarshalJSON() ([]byte, error) {
 }
 
 // StudentSubmission: Student submission for course work.
-// StudentSubmission items are generated when a CourseWork item is
-// created. StudentSubmissions that have never been accessed (i.e. with
+// `StudentSubmission` items are generated when a `CourseWork` item is
+// created. Student submissions that have never been accessed (i.e. with
 // `state` = NEW) may not have a creation time or update time.
 type StudentSubmission struct {
 	// AlternateLink: Absolute link to the submission in the Classroom web
@@ -6774,13 +6778,13 @@ func (r *CoursesCourseWorkService) Patch(courseId string, id string, coursework 
 // identifies which fields on the course work to update. This field is
 // required to do an update. The update fails if invalid fields are
 // specified. If a field supports empty values, it can be cleared by
-// specifying it in the update mask and not in the CourseWork object. If
-// a field that does not support empty values is included in the update
-// mask and not set in the CourseWork object, an `INVALID_ARGUMENT`
-// error is returned. The following fields may be specified by teachers:
-// * `title` * `description` * `state` * `due_date` * `due_time` *
-// `max_points` * `scheduled_time` * `submission_modification_mode` *
-// `topic_id`
+// specifying it in the update mask and not in the `CourseWork` object.
+// If a field that does not support empty values is included in the
+// update mask and not set in the `CourseWork` object, an
+// `INVALID_ARGUMENT` error is returned. The following fields may be
+// specified by teachers: * `title` * `description` * `state` *
+// `due_date` * `due_time` * `max_points` * `scheduled_time` *
+// `submission_modification_mode` * `topic_id`
 func (c *CoursesCourseWorkPatchCall) UpdateMask(updateMask string) *CoursesCourseWorkPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6900,7 +6904,7 @@ func (c *CoursesCourseWorkPatchCall) Do(opts ...googleapi.CallOption) (*CourseWo
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Mask that identifies which fields on the course work to update. This field is required to do an update. The update fails if invalid fields are specified. If a field supports empty values, it can be cleared by specifying it in the update mask and not in the CourseWork object. If a field that does not support empty values is included in the update mask and not set in the CourseWork object, an `INVALID_ARGUMENT` error is returned. The following fields may be specified by teachers: * `title` * `description` * `state` * `due_date` * `due_time` * `max_points` * `scheduled_time` * `submission_modification_mode` * `topic_id`",
+	//       "description": "Mask that identifies which fields on the course work to update. This field is required to do an update. The update fails if invalid fields are specified. If a field supports empty values, it can be cleared by specifying it in the update mask and not in the `CourseWork` object. If a field that does not support empty values is included in the update mask and not set in the `CourseWork` object, an `INVALID_ARGUMENT` error is returned. The following fields may be specified by teachers: * `title` * `description` * `state` * `due_date` * `due_time` * `max_points` * `scheduled_time` * `submission_modification_mode` * `topic_id`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

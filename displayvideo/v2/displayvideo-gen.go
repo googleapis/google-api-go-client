@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "displayvideo:v2"
 const apiName = "displayvideo"
 const apiVersion = "v2"
 const basePath = "https://displayvideo.googleapis.com/"
+const basePathTemplate = "https://displayvideo.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://displayvideo.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -126,7 +128,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -571,10 +575,22 @@ type FirstAndThirdPartyAudiencesService struct {
 
 func NewFloodlightGroupsService(s *Service) *FloodlightGroupsService {
 	rs := &FloodlightGroupsService{s: s}
+	rs.FloodlightActivities = NewFloodlightGroupsFloodlightActivitiesService(s)
 	return rs
 }
 
 type FloodlightGroupsService struct {
+	s *Service
+
+	FloodlightActivities *FloodlightGroupsFloodlightActivitiesService
+}
+
+func NewFloodlightGroupsFloodlightActivitiesService(s *Service) *FloodlightGroupsFloodlightActivitiesService {
+	rs := &FloodlightGroupsFloodlightActivitiesService{s: s}
+	return rs
+}
+
+type FloodlightGroupsFloodlightActivitiesService struct {
 	s *Service
 }
 
@@ -943,7 +959,8 @@ type Advertiser struct {
 	// by the system.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
-	// BillingConfig: Required. Billing related settings of the advertiser.
+	// BillingConfig: Optional. Required. Billing related settings of the
+	// advertiser.
 	BillingConfig *AdvertiserBillingConfig `json:"billingConfig,omitempty"`
 
 	// CreativeConfig: Required. Creative related settings of the
@@ -1078,8 +1095,8 @@ func (s *AdvertiserAdServerConfig) MarshalJSON() ([]byte, error) {
 
 // AdvertiserBillingConfig: Billing related settings of an advertiser.
 type AdvertiserBillingConfig struct {
-	// BillingProfileId: The ID of a billing profile assigned to the
-	// advertiser.
+	// BillingProfileId: Optional. The ID of a billing profile assigned to
+	// the advertiser.
 	BillingProfileId int64 `json:"billingProfileId,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "BillingProfileId") to
@@ -1118,11 +1135,25 @@ type AdvertiserCreativeConfig struct {
 	// "Campaign Monitor" tag containing this ID to the creative tag.
 	IasClientId int64 `json:"iasClientId,omitempty,string"`
 
-	// ObaComplianceDisabled: Whether or not to use DV360's Online
-	// Behavioral Advertising (OBA) compliance. Warning: Changing OBA
-	// settings may cause the audit status of your creatives to be reset by
-	// some ad exchanges, making them ineligible to serve until they are
-	// re-approved.
+	// ObaComplianceDisabled: Whether or not to disable Google's About this
+	// Ad feature that adds badging (to identify the content as an ad) and
+	// transparency information (on interaction with About this Ad) to your
+	// ads for Online Behavioral Advertising (OBA) and regulatory
+	// requirements. About this Ad gives users greater control over the ads
+	// they see and helps you explain why they're seeing your ad. Learn more
+	// (//support.google.com/displayvideo/answer/14315795). If you choose to
+	// set this field to `true`, note that ads served through Display &
+	// Video 360 must comply to the following: * Be Online Behavioral
+	// Advertising (OBA) compliant, as per your contract with Google
+	// Marketing Platform. * In the European Economic Area (EEA), include
+	// transparency information and a mechanism for users to report illegal
+	// content in ads. If using an alternative ad badging, transparency, and
+	// reporting solution, you must ensure it includes the required
+	// transparency information and illegal content flagging mechanism and
+	// that you notify Google of any illegal content reports using the
+	// appropriate form
+	// (//support.google.com/legal/troubleshooter/1114905?sjid=67874840305572
+	// 61960-EU#ts=2981967%2C2982031%2C12980091).
 	ObaComplianceDisabled bool `json:"obaComplianceDisabled,omitempty"`
 
 	// VideoCreativeDataSharingAuthorized: By setting this field to `true`,
@@ -4605,6 +4636,10 @@ type CmHybridConfig struct {
 	// configuration linked with the DV360 advertiser.
 	CmAccountId int64 `json:"cmAccountId,omitempty,string"`
 
+	// CmAdvertiserIds: Output only. The set of CM360 Advertiser IDs sharing
+	// the CM360 Floodlight configuration.
+	CmAdvertiserIds googleapi.Int64s `json:"cmAdvertiserIds,omitempty"`
+
 	// CmFloodlightConfigId: Required. Immutable. ID of the CM360 Floodlight
 	// configuration linked with the DV360 advertiser.
 	CmFloodlightConfigId int64 `json:"cmFloodlightConfigId,omitempty,string"`
@@ -4849,7 +4884,8 @@ type Consent struct {
 	// AdPersonalization: Represents consent for ad personalization.
 	//
 	// Possible values:
-	//   "CONSENT_STATUS_UNSPECIFIED" - Consent is not specified.
+	//   "CONSENT_STATUS_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
 	//   "CONSENT_STATUS_GRANTED" - Consent is granted.
 	//   "CONSENT_STATUS_DENIED" - Consent is denied.
 	AdPersonalization string `json:"adPersonalization,omitempty"`
@@ -4857,7 +4893,8 @@ type Consent struct {
 	// AdUserData: Represents consent for ad user data.
 	//
 	// Possible values:
-	//   "CONSENT_STATUS_UNSPECIFIED" - Consent is not specified.
+	//   "CONSENT_STATUS_UNSPECIFIED" - Type value is not specified or is
+	// unknown in this version.
 	//   "CONSENT_STATUS_GRANTED" - Consent is granted.
 	//   "CONSENT_STATUS_DENIED" - Consent is denied.
 	AdUserData string `json:"adUserData,omitempty"`
@@ -4947,7 +4984,10 @@ func (s *ContactInfo) MarshalJSON() ([]byte, error) {
 // ContactInfoList: Wrapper message for a list of contact information
 // defining Customer Match audience members.
 type ContactInfoList struct {
-	// Consent: Input only. User consent status.
+	// Consent: Input only. The consent setting for the users in
+	// contact_infos. Leaving this field unset indicates that consent is not
+	// specified. If ad_user_data or ad_personalization fields are set to
+	// `CONSENT_STATUS_DENIED`, the request will return an error.
 	Consent *Consent `json:"consent,omitempty"`
 
 	// ContactInfos: A list of ContactInfo objects defining Customer Match
@@ -5784,8 +5824,7 @@ type CreateSdfDownloadTaskRequest struct {
 	//   "SDF_VERSION_6" - SDF version 6
 	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide)
-	// before migrating to this version. Currently in beta. Only available
-	// for use by a subset of users.
+	// before migrating to this version.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
@@ -7845,6 +7884,14 @@ type EditCustomerMatchMembersRequest struct {
 	// Customer Match FirstAndThirdPartyAudience.
 	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
 
+	// RemovedContactInfoList: Input only. A list of contact information to
+	// define the members to be removed.
+	RemovedContactInfoList *ContactInfoList `json:"removedContactInfoList,omitempty"`
+
+	// RemovedMobileDeviceIdList: Input only. A list of mobile device IDs to
+	// define the members to be removed.
+	RemovedMobileDeviceIdList *MobileDeviceIdList `json:"removedMobileDeviceIdList,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AddedContactInfoList") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -8252,6 +8299,12 @@ type ExchangeAssignedTargetingOptionDetails struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -8390,6 +8443,12 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GoogleAdManagerAgencyId: Output only. Agency ID of Google Ad Manager.
@@ -8510,6 +8569,12 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// Status: Status of the exchange review.
@@ -8629,6 +8694,12 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Exchange") to
@@ -9012,6 +9083,73 @@ func (s *FixedBidStrategy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FloodlightActivity: A single Floodlight activity.
+type FloodlightActivity struct {
+	// AdvertiserIds: Output only. IDs of the advertisers that have access
+	// to the parent Floodlight group. Only advertisers under the provided
+	// partner ID will be listed in this field.
+	AdvertiserIds googleapi.Int64s `json:"advertiserIds,omitempty"`
+
+	// DisplayName: Required. The display name of the Floodlight activity.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// FloodlightActivityId: Output only. The unique ID of the Floodlight
+	// activity. Assigned by the system.
+	FloodlightActivityId int64 `json:"floodlightActivityId,omitempty,string"`
+
+	// FloodlightGroupId: Required. Immutable. The ID of the parent
+	// Floodlight group.
+	FloodlightGroupId int64 `json:"floodlightGroupId,omitempty,string"`
+
+	// Name: Output only. The resource name of the Floodlight activity.
+	Name string `json:"name,omitempty"`
+
+	// RemarketingConfigs: Output only. A list of configuration objects
+	// designating whether remarketing for this Floodlight Activity is
+	// enabled and available for a specifc advertiser. If enabled, this
+	// Floodlight Activity generates a remarketing user list that is able to
+	// be used in targeting under the advertiser.
+	RemarketingConfigs []*RemarketingConfig `json:"remarketingConfigs,omitempty"`
+
+	// ServingStatus: Optional. Whether the Floodlight activity is served.
+	//
+	// Possible values:
+	//   "FLOODLIGHT_ACTIVITY_SERVING_STATUS_UNSPECIFIED" - Type value is
+	// not specified or is unknown in this version.
+	//   "FLOODLIGHT_ACTIVITY_SERVING_STATUS_ENABLED" - Enabled.
+	//   "FLOODLIGHT_ACTIVITY_SERVING_STATUS_DISABLED" - Disabled.
+	ServingStatus string `json:"servingStatus,omitempty"`
+
+	// SslRequired: Output only. Whether tags are required to be compliant.
+	SslRequired bool `json:"sslRequired,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertiserIds") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvertiserIds") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FloodlightActivity) MarshalJSON() ([]byte, error) {
+	type NoMethod FloodlightActivity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // FloodlightGroup: A single Floodlight group.
 type FloodlightGroup struct {
 	// ActiveViewConfig: The Active View video viewability metric
@@ -9097,11 +9235,11 @@ type FrequencyCap struct {
 	// unlimited is `false` and max_views is not set.
 	MaxImpressions int64 `json:"maxImpressions,omitempty"`
 
-	// MaxViews: The maximum number of times a user may click-through or
-	// fully view an ad during this period until it is no longer served to
-	// them. Must be greater than 0. Only applicable to YouTube and Partners
-	// resources. Required when unlimited is `false` and max_impressions is
-	// not set.
+	// MaxViews: Optional. The maximum number of times a user may
+	// click-through or fully view an ad during this period until it is no
+	// longer served to them. Must be greater than 0. Only applicable to
+	// YouTube and Partners resources. Required when unlimited is `false`
+	// and max_impressions is not set.
 	MaxViews int64 `json:"maxViews,omitempty"`
 
 	// TimeUnit: The time unit in which the frequency cap will be applied.
@@ -9801,6 +9939,12 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GuaranteedOrderId: Output only. The unique identifier of the
@@ -10746,6 +10890,12 @@ type InventorySource struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
+	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
+	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
+	//   "EXCHANGE_CHARTBOOST_GBID" - Chartboost Mediation.
+	//   "EXCHANGE_ADMOST_GBID" - AdMost.
+	//   "EXCHANGE_TOPON_GBID" - TopOn.
 	Exchange string `json:"exchange,omitempty"`
 
 	// GuaranteedOrderId: Immutable. The ID of the guaranteed order that
@@ -12419,6 +12569,46 @@ func (s *ListFirstAndThirdPartyAudiencesResponse) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type ListFloodlightActivitiesResponse struct {
+	// FloodlightActivities: The list of Floodlight activities. This list
+	// will be absent if empty.
+	FloodlightActivities []*FloodlightActivity `json:"floodlightActivities,omitempty"`
+
+	// NextPageToken: A token to retrieve the next page of results. Pass
+	// this value in the page_token field in the subsequent call to
+	// `ListFloodlightActivities` method to retrieve the next page of
+	// results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "FloodlightActivities") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FloodlightActivities") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListFloodlightActivitiesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListFloodlightActivitiesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ListGoogleAudiencesResponse struct {
 	// GoogleAudiences: The list of Google audiences. This list will be
 	// absent if empty.
@@ -13647,7 +13837,10 @@ func (s *MobileApp) MarshalJSON() ([]byte, error) {
 // MobileDeviceIdList: Wrapper message for a list of mobile device IDs
 // defining Customer Match audience members.
 type MobileDeviceIdList struct {
-	// Consent: Input only. User consent status.
+	// Consent: Input only. The consent setting for the users in
+	// mobile_device_ids. Leaving this field unset indicates that consent is
+	// not specified. If ad_user_data or ad_personalization fields are set
+	// to `CONSENT_STATUS_DENIED`, the request will return an error.
 	Consent *Consent `json:"consent,omitempty"`
 
 	// MobileDeviceIds: A list of mobile device IDs defining Customer Match
@@ -15170,14 +15363,17 @@ type PoiAssignedTargetingOptionDetails struct {
 
 	// TargetingOptionId: Required. The targeting_option_id of a
 	// TargetingOption of type `TARGETING_TYPE_POI`. Accepted POI targeting
-	// option IDs can be retrieved using SearchTargetingOptions. If
-	// targeting a specific latitude/longitude coordinate removed from an
-	// address or POI name, you can generate the necessary targeting option
-	// ID by rounding the desired coordinate values to the 6th decimal
-	// place, removing the decimals, and concatenating the string values
-	// separated by a semicolon. For example, you can target the
-	// latitude/longitude pair of 40.7414691, -74.003387 using the targeting
-	// option ID "40741469;-74003387".
+	// option IDs can be retrieved using
+	// `targetingTypes.targetingOptions.search`. If targeting a specific
+	// latitude/longitude coordinate removed from an address or POI name,
+	// you can generate the necessary targeting option ID by rounding the
+	// desired coordinate values to the 6th decimal place, removing the
+	// decimals, and concatenating the string values separated by a
+	// semicolon. For example, you can target the latitude/longitude pair of
+	// 40.7414691, -74.003387 using the targeting option ID
+	// "40741469;-74003387". **Upon** **creation, this field value will be
+	// updated to append a semicolon and** **alphanumerical hash value if
+	// only latitude/longitude coordinates are** **provided.**
 	TargetingOptionId string `json:"targetingOptionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
@@ -15660,6 +15856,39 @@ func (s *RegionalLocationListAssignedTargetingOptionDetails) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RemarketingConfig: Settings that control the whether remarketing is
+// enabled for the given identified advertiser.
+type RemarketingConfig struct {
+	// AdvertiserId: Output only. The ID of the advertiser.
+	AdvertiserId int64 `json:"advertiserId,omitempty,string"`
+
+	// RemarketingEnabled: Output only. Whether the Floodlight activity
+	// remarketing user list is available to the identified advertiser.
+	RemarketingEnabled bool `json:"remarketingEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdvertiserId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdvertiserId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemarketingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RemarketingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ReplaceNegativeKeywordsRequest: Request message for
 // NegativeKeywordService.ReplaceNegativeKeywords.
 type ReplaceNegativeKeywordsRequest struct {
@@ -15936,8 +16165,7 @@ type SdfConfig struct {
 	//   "SDF_VERSION_6" - SDF version 6
 	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide)
-	// before migrating to this version. Currently in beta. Only available
-	// for use by a subset of users.
+	// before migrating to this version.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdminEmail") to
@@ -16023,8 +16251,7 @@ type SdfDownloadTaskMetadata struct {
 	//   "SDF_VERSION_6" - SDF version 6
 	//   "SDF_VERSION_7" - SDF version 7. Read the [v7 migration
 	// guide](/display-video/api/structured-data-file/v7-migration-guide)
-	// before migrating to this version. Currently in beta. Only available
-	// for use by a subset of users.
+	// before migrating to this version.
 	Version string `json:"version,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
@@ -17345,6 +17572,10 @@ type User struct {
 	// user.
 	Email string `json:"email,omitempty"`
 
+	// LastLoginTime: Output only. The timestamp when the user last logged
+	// in DV360 UI.
+	LastLoginTime string `json:"lastLoginTime,omitempty"`
+
 	// Name: Output only. The resource name of the user.
 	Name string `json:"name,omitempty"`
 
@@ -18185,6 +18416,7 @@ type YoutubeAndPartnersBiddingStrategy struct {
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_MANUAL_CPV` *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_CPA` *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_CPM` *
+	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_RESERVE_CPM` *
 	// `YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_ROAS` If not using
 	// an applicable strategy, the value of this field will be 0.
 	Value int64 `json:"value,omitempty,string"`
@@ -18218,6 +18450,10 @@ func (s *YoutubeAndPartnersBiddingStrategy) MarshalJSON() ([]byte, error) {
 // YouTube related inventories the YouTube and Partners line item will
 // target.
 type YoutubeAndPartnersInventorySourceConfig struct {
+	// IncludeGoogleTv: Optional. Whether to target inventory in video apps
+	// available with Google TV.
+	IncludeGoogleTv bool `json:"includeGoogleTv,omitempty"`
+
 	// IncludeYoutubeSearch: Whether to target inventory on the YouTube
 	// search results page.
 	IncludeYoutubeSearch bool `json:"includeYoutubeSearch,omitempty"`
@@ -18231,16 +18467,15 @@ type YoutubeAndPartnersInventorySourceConfig struct {
 	// videos on YouTube and YouTube videos embedded on other sites.
 	IncludeYoutubeVideos bool `json:"includeYoutubeVideos,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "IncludeYoutubeSearch") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "IncludeGoogleTv") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IncludeYoutubeSearch") to
+	// NullFields is a list of field names (e.g. "IncludeGoogleTv") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -18307,26 +18542,29 @@ type YoutubeAndPartnersSettings struct {
 	// Partners inventories the line item will target.
 	InventorySourceSettings *YoutubeAndPartnersInventorySourceConfig `json:"inventorySourceSettings,omitempty"`
 
-	// LeadFormId: The ID of the form to generate leads.
+	// LeadFormId: Optional. The ID of the form to generate leads.
 	LeadFormId int64 `json:"leadFormId,omitempty,string"`
 
-	// LinkedMerchantId: The ID of the merchant which is linked to the line
-	// item for product feed.
+	// LinkedMerchantId: Optional. The ID of the merchant which is linked to
+	// the line item for product feed.
 	LinkedMerchantId int64 `json:"linkedMerchantId,omitempty,string"`
 
-	// RelatedVideoIds: The IDs of the videos appear below the primary video
-	// ad when the ad is playing in the YouTube app on mobile devices.
+	// RelatedVideoIds: Optional. The IDs of the videos appear below the
+	// primary video ad when the ad is playing in the YouTube app on mobile
+	// devices.
 	RelatedVideoIds []string `json:"relatedVideoIds,omitempty"`
 
-	// TargetFrequency: The average number of times you want ads from this
-	// line item to show to the same person over a certain period of time.
+	// TargetFrequency: Optional. The average number of times you want ads
+	// from this line item to show to the same person over a certain period
+	// of time.
 	TargetFrequency *TargetFrequency `json:"targetFrequency,omitempty"`
 
 	// ThirdPartyMeasurementSettings: Optional. The third-party measurement
 	// settings of the line item.
 	ThirdPartyMeasurementSettings *YoutubeAndPartnersThirdPartyMeasurementSettings `json:"thirdPartyMeasurementSettings,omitempty"`
 
-	// VideoAdSequenceSettings: The settings related to VideoAdSequence.
+	// VideoAdSequenceSettings: Optional. The settings related to
+	// VideoAdSequence.
 	VideoAdSequenceSettings *VideoAdSequenceSettings `json:"videoAdSequenceSettings,omitempty"`
 
 	// ViewFrequencyCap: The view frequency cap settings of the line item.
@@ -18695,8 +18933,10 @@ type AdvertisersCreateCall struct {
 }
 
 // Create: Creates a new advertiser. Returns the newly created
-// advertiser if successful. This method can take up to 180 seconds to
-// complete.
+// advertiser if successful. **This method regularly experiences high
+// latency.** We recommend increasing your default timeout
+// (/display-video/api/guides/best-practices/timeouts#client_library_time
+// out) to avoid errors.
 func (r *AdvertisersService) Create(advertiser *Advertiser) *AdvertisersCreateCall {
 	c := &AdvertisersCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiser = advertiser
@@ -18791,7 +19031,7 @@ func (c *AdvertisersCreateCall) Do(opts ...googleapi.CallOption) (*Advertiser, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new advertiser. Returns the newly created advertiser if successful. This method can take up to 180 seconds to complete.",
+	//   "description": "Creates a new advertiser. Returns the newly created advertiser if successful. **This method regularly experiences high latency.** We recommend [increasing your default timeout](/display-video/api/guides/best-practices/timeouts#client_library_timeout) to avoid errors.",
 	//   "flatPath": "v2/advertisers",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.create",
@@ -20267,6 +20507,10 @@ type AdvertisersCampaignsDeleteCall struct {
 // Delete: Permanently deletes a campaign. A deleted campaign cannot be
 // recovered. The campaign should be archived first, i.e. set
 // entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it.
+// **This method regularly experiences high latency.** We recommend
+// increasing your default timeout
+// (/display-video/api/guides/best-practices/timeouts#client_library_time
+// out) to avoid errors.
 //
 // - advertiserId: The ID of the advertiser this campaign belongs to.
 // - campaignId: The ID of the campaign we need to delete.
@@ -20364,7 +20608,7 @@ func (c *AdvertisersCampaignsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 	}
 	return ret, nil
 	// {
-	//   "description": "Permanently deletes a campaign. A deleted campaign cannot be recovered. The campaign should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it.",
+	//   "description": "Permanently deletes a campaign. A deleted campaign cannot be recovered. The campaign should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it. **This method regularly experiences high latency.** We recommend [increasing your default timeout](/display-video/api/guides/best-practices/timeouts#client_library_timeout) to avoid errors.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/campaigns/{campaignsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.campaigns.delete",
@@ -23463,7 +23707,11 @@ type AdvertisersChannelsSitesReplaceCall struct {
 
 // Replace: Replaces all of the sites under a single channel. The
 // operation will replace the sites under a channel with the sites
-// provided in ReplaceSitesRequest.new_sites.
+// provided in ReplaceSitesRequest.new_sites. **This method regularly
+// experiences high latency.** We recommend increasing your default
+// timeout
+// (/display-video/api/guides/best-practices/timeouts#client_library_time
+// out) to avoid errors.
 //
 //   - advertiserId: The ID of the advertiser that owns the parent
 //     channel.
@@ -23569,7 +23817,7 @@ func (c *AdvertisersChannelsSitesReplaceCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Replaces all of the sites under a single channel. The operation will replace the sites under a channel with the sites provided in ReplaceSitesRequest.new_sites.",
+	//   "description": "Replaces all of the sites under a single channel. The operation will replace the sites under a channel with the sites provided in ReplaceSitesRequest.new_sites. **This method regularly experiences high latency.** We recommend [increasing your default timeout](/display-video/api/guides/best-practices/timeouts#client_library_timeout) to avoid errors.",
 	//   "flatPath": "v2/advertisers/{advertiserId}/channels/{channelsId}/sites:replace",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.channels.sites.replace",
@@ -23620,7 +23868,9 @@ type AdvertisersCreativesCreateCall struct {
 }
 
 // Create: Creates a new creative. Returns the newly created creative if
-// successful.
+// successful. A "Standard" user role
+// (//support.google.com/displayvideo/answer/2723011) or greater for the
+// parent advertiser or partner is required to make this request.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the
 //     creative belongs to.
@@ -23722,7 +23972,7 @@ func (c *AdvertisersCreativesCreateCall) Do(opts ...googleapi.CallOption) (*Crea
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new creative. Returns the newly created creative if successful.",
+	//   "description": "Creates a new creative. Returns the newly created creative if successful. A [\"Standard\" user role](//support.google.com/displayvideo/answer/2723011) or greater for the parent advertiser or partner is required to make this request.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/creatives",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.creatives.create",
@@ -23767,7 +24017,9 @@ type AdvertisersCreativesDeleteCall struct {
 // Delete: Deletes a creative. Returns error code `NOT_FOUND` if the
 // creative does not exist. The creative should be archived first, i.e.
 // set entity_status to `ENTITY_STATUS_ARCHIVED`, before it can be
-// deleted.
+// deleted. A "Standard" user role
+// (//support.google.com/displayvideo/answer/2723011) or greater for the
+// parent advertiser or partner is required to make this request.
 //
 // - advertiserId: The ID of the advertiser this creative belongs to.
 // - creativeId: The ID of the creative to be deleted.
@@ -23865,7 +24117,7 @@ func (c *AdvertisersCreativesDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a creative. Returns error code `NOT_FOUND` if the creative does not exist. The creative should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, before it can be deleted.",
+	//   "description": "Deletes a creative. Returns error code `NOT_FOUND` if the creative does not exist. The creative should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, before it can be deleted. A [\"Standard\" user role](//support.google.com/displayvideo/answer/2723011) or greater for the parent advertiser or partner is required to make this request.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/creatives/{creativesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.creatives.delete",
@@ -24342,7 +24594,9 @@ type AdvertisersCreativesPatchCall struct {
 }
 
 // Patch: Updates an existing creative. Returns the updated creative if
-// successful.
+// successful. A "Standard" user role
+// (//support.google.com/displayvideo/answer/2723011) or greater for the
+// parent advertiser or partner is required to make this request.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the
 //     creative belongs to.
@@ -24455,7 +24709,7 @@ func (c *AdvertisersCreativesPatchCall) Do(opts ...googleapi.CallOption) (*Creat
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing creative. Returns the updated creative if successful.",
+	//   "description": "Updates an existing creative. Returns the updated creative if successful. A [\"Standard\" user role](//support.google.com/displayvideo/answer/2723011) or greater for the parent advertiser or partner is required to make this request.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/creatives/{creativesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.creatives.patch",
@@ -27381,6 +27635,8 @@ type AdvertisersLineItemsBulkEditAssignedTargetingOptionsCall struct {
 // this endpoint cannot be made concurrently with the following requests
 // updating the same line item: * lineItems.bulkUpdate * lineItems.patch
 // * assignedTargetingOptions.create * assignedTargetingOptions.delete
+// YouTube & Partners line items cannot be created or updated using the
+// API.
 //
 // - advertiserId: The ID of the advertiser the line items belong to.
 func (r *AdvertisersLineItemsService) BulkEditAssignedTargetingOptions(advertiserId int64, bulkeditassignedtargetingoptionsrequest *BulkEditAssignedTargetingOptionsRequest) *AdvertisersLineItemsBulkEditAssignedTargetingOptionsCall {
@@ -27483,7 +27739,7 @@ func (c *AdvertisersLineItemsBulkEditAssignedTargetingOptionsCall) Do(opts ...go
 	}
 	return ret, nil
 	// {
-	//   "description": "Bulk edits targeting options under multiple line items. The operation will delete the assigned targeting options provided in BulkEditAssignedTargetingOptionsRequest.delete_requests and then create the assigned targeting options provided in BulkEditAssignedTargetingOptionsRequest.create_requests. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * lineItems.bulkUpdate * lineItems.patch * assignedTargetingOptions.create * assignedTargetingOptions.delete",
+	//   "description": "Bulk edits targeting options under multiple line items. The operation will delete the assigned targeting options provided in BulkEditAssignedTargetingOptionsRequest.delete_requests and then create the assigned targeting options provided in BulkEditAssignedTargetingOptionsRequest.create_requests. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * lineItems.bulkUpdate * lineItems.patch * assignedTargetingOptions.create * assignedTargetingOptions.delete YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems:bulkEditAssignedTargetingOptions",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.bulkEditAssignedTargetingOptions",
@@ -27790,6 +28046,8 @@ type AdvertisersLineItemsBulkUpdateCall struct {
 // cannot be made concurrently with the following requests updating the
 // same line item: * BulkEditAssignedTargetingOptions * UpdateLineItem *
 // assignedTargetingOptions.create * assignedTargetingOptions.delete
+// YouTube & Partners line items cannot be created or updated using the
+// API.
 //
 // - advertiserId: The ID of the advertiser this line item belongs to.
 func (r *AdvertisersLineItemsService) BulkUpdate(advertiserId int64, bulkupdatelineitemsrequest *BulkUpdateLineItemsRequest) *AdvertisersLineItemsBulkUpdateCall {
@@ -27890,7 +28148,7 @@ func (c *AdvertisersLineItemsBulkUpdateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates multiple line items. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * UpdateLineItem * assignedTargetingOptions.create * assignedTargetingOptions.delete",
+	//   "description": "Updates multiple line items. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * UpdateLineItem * assignedTargetingOptions.create * assignedTargetingOptions.delete YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems:bulkUpdate",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.bulkUpdate",
@@ -27933,7 +28191,8 @@ type AdvertisersLineItemsCreateCall struct {
 }
 
 // Create: Creates a new line item. Returns the newly created line item
-// if successful.
+// if successful. YouTube & Partners line items cannot be created or
+// updated using the API.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the line
 //     item belongs to.
@@ -28035,7 +28294,7 @@ func (c *AdvertisersLineItemsCreateCall) Do(opts ...googleapi.CallOption) (*Line
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new line item. Returns the newly created line item if successful.",
+	//   "description": "Creates a new line item. Returns the newly created line item if successful. YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.create",
@@ -28080,7 +28339,8 @@ type AdvertisersLineItemsDeleteCall struct {
 // Delete: Deletes a line item. Returns error code `NOT_FOUND` if the
 // line item does not exist. The line item should be archived first,
 // i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to
-// delete it.
+// delete it. YouTube & Partners line items cannot be created or updated
+// using the API.
 //
 // - advertiserId: The ID of the advertiser this line item belongs to.
 // - lineItemId: The ID of the line item to delete.
@@ -28178,7 +28438,7 @@ func (c *AdvertisersLineItemsDeleteCall) Do(opts ...googleapi.CallOption) (*Empt
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a line item. Returns error code `NOT_FOUND` if the line item does not exist. The line item should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it.",
+	//   "description": "Deletes a line item. Returns error code `NOT_FOUND` if the line item does not exist. The line item should be archived first, i.e. set entity_status to `ENTITY_STATUS_ARCHIVED`, to be able to delete it. YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.lineItems.delete",
@@ -28228,7 +28488,11 @@ type AdvertisersLineItemsDuplicateCall struct {
 }
 
 // Duplicate: Duplicates a line item. Returns the ID of the created line
-// item if successful.
+// item if successful. YouTube & Partners line items cannot be created
+// or updated using the API. **This method regularly experiences high
+// latency.** We recommend increasing your default timeout
+// (/display-video/api/guides/best-practices/timeouts#client_library_time
+// out) to avoid errors.
 //
 // - advertiserId: The ID of the advertiser this line item belongs to.
 // - lineItemId: The ID of the line item to duplicate.
@@ -28332,7 +28596,7 @@ func (c *AdvertisersLineItemsDuplicateCall) Do(opts ...googleapi.CallOption) (*D
 	}
 	return ret, nil
 	// {
-	//   "description": "Duplicates a line item. Returns the ID of the created line item if successful.",
+	//   "description": "Duplicates a line item. Returns the ID of the created line item if successful. YouTube \u0026 Partners line items cannot be created or updated using the API. **This method regularly experiences high latency.** We recommend [increasing your default timeout](/display-video/api/guides/best-practices/timeouts#client_library_timeout) to avoid errors.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}:duplicate",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.duplicate",
@@ -28388,7 +28652,8 @@ type AdvertisersLineItemsGenerateDefaultCall struct {
 // `ENTITY_STATUS_DRAFT` entity_status. Returns the newly created line
 // item if successful. There are default values based on the three
 // fields: * The insertion order's insertion_order_type * The insertion
-// order's automation_type * The given line_item_type
+// order's automation_type * The given line_item_type YouTube & Partners
+// line items cannot be created or updated using the API.
 //
 // - advertiserId: The ID of the advertiser this line item belongs to.
 func (r *AdvertisersLineItemsService) GenerateDefault(advertiserId int64, generatedefaultlineitemrequest *GenerateDefaultLineItemRequest) *AdvertisersLineItemsGenerateDefaultCall {
@@ -28489,7 +28754,7 @@ func (c *AdvertisersLineItemsGenerateDefaultCall) Do(opts ...googleapi.CallOptio
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new line item with settings (including targeting) inherited from the insertion order and an `ENTITY_STATUS_DRAFT` entity_status. Returns the newly created line item if successful. There are default values based on the three fields: * The insertion order's insertion_order_type * The insertion order's automation_type * The given line_item_type",
+	//   "description": "Creates a new line item with settings (including targeting) inherited from the insertion order and an `ENTITY_STATUS_DRAFT` entity_status. Returns the newly created line item if successful. There are default values based on the three fields: * The insertion order's insertion_order_type * The insertion order's automation_type * The given line_item_type YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems:generateDefault",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.generateDefault",
@@ -28946,6 +29211,11 @@ type AdvertisersLineItemsPatchCall struct {
 // with the following requests updating the same line item: *
 // BulkEditAssignedTargetingOptions * BulkUpdateLineItems *
 // assignedTargetingOptions.create * assignedTargetingOptions.delete
+// YouTube & Partners line items cannot be created or updated using the
+// API. **This method regularly experiences high latency.** We recommend
+// increasing your default timeout
+// (/display-video/api/guides/best-practices/timeouts#client_library_time
+// out) to avoid errors.
 //
 //   - advertiserId: Output only. The unique ID of the advertiser the line
 //     item belongs to.
@@ -29058,7 +29328,7 @@ func (c *AdvertisersLineItemsPatchCall) Do(opts ...googleapi.CallOption) (*LineI
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an existing line item. Returns the updated line item if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * BulkUpdateLineItems * assignedTargetingOptions.create * assignedTargetingOptions.delete",
+	//   "description": "Updates an existing line item. Returns the updated line item if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * BulkEditAssignedTargetingOptions * BulkUpdateLineItems * assignedTargetingOptions.create * assignedTargetingOptions.delete YouTube \u0026 Partners line items cannot be created or updated using the API. **This method regularly experiences high latency.** We recommend [increasing your default timeout](/display-video/api/guides/best-practices/timeouts#client_library_timeout) to avoid errors.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "displayvideo.advertisers.lineItems.patch",
@@ -29122,7 +29392,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall struct
 // cannot be made concurrently with the following requests updating the
 // same line item: * lineItems.bulkEditAssignedTargetingOptions *
 // lineItems.bulkUpdate * lineItems.patch *
-// DeleteLineItemAssignedTargetingOption
+// DeleteLineItemAssignedTargetingOption YouTube & Partners line items
+// cannot be created or updated using the API.
 //
 //   - advertiserId: The ID of the advertiser the line item belongs to.
 //   - lineItemId: The ID of the line item the assigned targeting option
@@ -29263,7 +29534,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsCreateCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Assigns a targeting option to a line item. Returns the assigned targeting option if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * lineItems.bulkEditAssignedTargetingOptions * lineItems.bulkUpdate * lineItems.patch * DeleteLineItemAssignedTargetingOption",
+	//   "description": "Assigns a targeting option to a line item. Returns the assigned targeting option if successful. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * lineItems.bulkEditAssignedTargetingOptions * lineItems.bulkUpdate * lineItems.patch * DeleteLineItemAssignedTargetingOption YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.create",
@@ -29430,7 +29701,8 @@ type AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall struct
 // Requests to this endpoint cannot be made concurrently with the
 // following requests updating the same line item: *
 // lineItems.bulkEditAssignedTargetingOptions * lineItems.bulkUpdate *
-// lineItems.patch * CreateLineItemAssignedTargetingOption
+// lineItems.patch * CreateLineItemAssignedTargetingOption YouTube &
+// Partners line items cannot be created or updated using the API.
 //
 //   - advertiserId: The ID of the advertiser the line item belongs to.
 //   - assignedTargetingOptionId: The ID of the assigned targeting option
@@ -29569,7 +29841,7 @@ func (c *AdvertisersLineItemsTargetingTypesAssignedTargetingOptionsDeleteCall) D
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an assigned targeting option from a line item. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * lineItems.bulkEditAssignedTargetingOptions * lineItems.bulkUpdate * lineItems.patch * CreateLineItemAssignedTargetingOption",
+	//   "description": "Deletes an assigned targeting option from a line item. Requests to this endpoint cannot be made concurrently with the following requests updating the same line item: * lineItems.bulkEditAssignedTargetingOptions * lineItems.bulkUpdate * lineItems.patch * CreateLineItemAssignedTargetingOption YouTube \u0026 Partners line items cannot be created or updated using the API.",
 	//   "flatPath": "v2/advertisers/{advertisersId}/lineItems/{lineItemsId}/targetingTypes/{targetingTypesId}/assignedTargetingOptions/{assignedTargetingOptionsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "displayvideo.advertisers.lineItems.targetingTypes.assignedTargetingOptions.delete",
@@ -41064,6 +41336,409 @@ func (c *FloodlightGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Floodligh
 
 }
 
+// method id "displayvideo.floodlightGroups.floodlightActivities.get":
+
+type FloodlightGroupsFloodlightActivitiesGetCall struct {
+	s                    *Service
+	floodlightGroupId    int64
+	floodlightActivityId int64
+	urlParams_           gensupport.URLParams
+	ifNoneMatch_         string
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Get: Gets a Floodlight activity.
+//
+//   - floodlightActivityId: The ID of the Floodlight activity to fetch.
+//   - floodlightGroupId: The ID of the parent Floodlight group to which
+//     the requested Floodlight activity belongs.
+func (r *FloodlightGroupsFloodlightActivitiesService) Get(floodlightGroupId int64, floodlightActivityId int64) *FloodlightGroupsFloodlightActivitiesGetCall {
+	c := &FloodlightGroupsFloodlightActivitiesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.floodlightGroupId = floodlightGroupId
+	c.floodlightActivityId = floodlightActivityId
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": Required. The ID
+// of the partner through which the Floodlight activity is being
+// accessed.
+func (c *FloodlightGroupsFloodlightActivitiesGetCall) PartnerId(partnerId int64) *FloodlightGroupsFloodlightActivitiesGetCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FloodlightGroupsFloodlightActivitiesGetCall) Fields(s ...googleapi.Field) *FloodlightGroupsFloodlightActivitiesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FloodlightGroupsFloodlightActivitiesGetCall) IfNoneMatch(entityTag string) *FloodlightGroupsFloodlightActivitiesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FloodlightGroupsFloodlightActivitiesGetCall) Context(ctx context.Context) *FloodlightGroupsFloodlightActivitiesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FloodlightGroupsFloodlightActivitiesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FloodlightGroupsFloodlightActivitiesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/floodlightGroups/{+floodlightGroupId}/floodlightActivities/{+floodlightActivityId}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"floodlightGroupId":    strconv.FormatInt(c.floodlightGroupId, 10),
+		"floodlightActivityId": strconv.FormatInt(c.floodlightActivityId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.floodlightGroups.floodlightActivities.get" call.
+// Exactly one of *FloodlightActivity or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *FloodlightActivity.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FloodlightGroupsFloodlightActivitiesGetCall) Do(opts ...googleapi.CallOption) (*FloodlightActivity, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FloodlightActivity{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a Floodlight activity.",
+	//   "flatPath": "v2/floodlightGroups/{floodlightGroupsId}/floodlightActivities/{floodlightActivitiesId}",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.floodlightGroups.floodlightActivities.get",
+	//   "parameterOrder": [
+	//     "floodlightGroupId",
+	//     "floodlightActivityId"
+	//   ],
+	//   "parameters": {
+	//     "floodlightActivityId": {
+	//       "description": "Required. The ID of the Floodlight activity to fetch.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "floodlightGroupId": {
+	//       "description": "Required. The ID of the parent Floodlight group to which the requested Floodlight activity belongs.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner through which the Floodlight activity is being accessed.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/floodlightGroups/{+floodlightGroupId}/floodlightActivities/{+floodlightActivityId}",
+	//   "response": {
+	//     "$ref": "FloodlightActivity"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// method id "displayvideo.floodlightGroups.floodlightActivities.list":
+
+type FloodlightGroupsFloodlightActivitiesListCall struct {
+	s                 *Service
+	floodlightGroupId int64
+	urlParams_        gensupport.URLParams
+	ifNoneMatch_      string
+	ctx_              context.Context
+	header_           http.Header
+}
+
+// List: Lists Floodlight activities in a Floodlight group.
+//
+//   - floodlightGroupId: The ID of the parent Floodlight group to which
+//     the requested Floodlight activities belong.
+func (r *FloodlightGroupsFloodlightActivitiesService) List(floodlightGroupId int64) *FloodlightGroupsFloodlightActivitiesListCall {
+	c := &FloodlightGroupsFloodlightActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.floodlightGroupId = floodlightGroupId
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field by which to sort
+// the list. Acceptable values are: * `displayName` (default) *
+// `floodlightActivityId` The default sorting order is ascending. To
+// specify descending order for a field, a suffix "desc" should be added
+// to the field name. Example: `displayName desc`.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) OrderBy(orderBy string) *FloodlightGroupsFloodlightActivitiesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// Must be between `1` and `100`. If unspecified will default to `100`.
+// Returns error code `INVALID_ARGUMENT` if an invalid value is
+// specified.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) PageSize(pageSize int64) *FloodlightGroupsFloodlightActivitiesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of next_page_token returned from the previous call
+// to `ListFloodlightActivities` method. If not specified, the first
+// page of results will be returned.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) PageToken(pageToken string) *FloodlightGroupsFloodlightActivitiesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// PartnerId sets the optional parameter "partnerId": Required. The ID
+// of the partner through which the Floodlight activities are being
+// accessed.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) PartnerId(partnerId int64) *FloodlightGroupsFloodlightActivitiesListCall {
+	c.urlParams_.Set("partnerId", fmt.Sprint(partnerId))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) Fields(s ...googleapi.Field) *FloodlightGroupsFloodlightActivitiesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) IfNoneMatch(entityTag string) *FloodlightGroupsFloodlightActivitiesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) Context(ctx context.Context) *FloodlightGroupsFloodlightActivitiesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FloodlightGroupsFloodlightActivitiesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/floodlightGroups/{+floodlightGroupId}/floodlightActivities")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"floodlightGroupId": strconv.FormatInt(c.floodlightGroupId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "displayvideo.floodlightGroups.floodlightActivities.list" call.
+// Exactly one of *ListFloodlightActivitiesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListFloodlightActivitiesResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) Do(opts ...googleapi.CallOption) (*ListFloodlightActivitiesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListFloodlightActivitiesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Floodlight activities in a Floodlight group.",
+	//   "flatPath": "v2/floodlightGroups/{floodlightGroupsId}/floodlightActivities",
+	//   "httpMethod": "GET",
+	//   "id": "displayvideo.floodlightGroups.floodlightActivities.list",
+	//   "parameterOrder": [
+	//     "floodlightGroupId"
+	//   ],
+	//   "parameters": {
+	//     "floodlightGroupId": {
+	//       "description": "Required. The ID of the parent Floodlight group to which the requested Floodlight activities belong.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Field by which to sort the list. Acceptable values are: * `displayName` (default) * `floodlightActivityId` The default sorting order is ascending. To specify descending order for a field, a suffix \"desc\" should be added to the field name. Example: `displayName desc`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Requested page size. Must be between `1` and `100`. If unspecified will default to `100`. Returns error code `INVALID_ARGUMENT` if an invalid value is specified.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A token identifying a page of results the server should return. Typically, this is the value of next_page_token returned from the previous call to `ListFloodlightActivities` method. If not specified, the first page of results will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "partnerId": {
+	//       "description": "Required. The ID of the partner through which the Floodlight activities are being accessed.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/floodlightGroups/{+floodlightGroupId}/floodlightActivities",
+	//   "response": {
+	//     "$ref": "ListFloodlightActivitiesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/display-video"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FloodlightGroupsFloodlightActivitiesListCall) Pages(ctx context.Context, f func(*ListFloodlightActivitiesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "displayvideo.googleAudiences.get":
 
 type GoogleAudiencesGetCall struct {
@@ -47408,7 +48083,11 @@ type PartnersChannelsSitesReplaceCall struct {
 
 // Replace: Replaces all of the sites under a single channel. The
 // operation will replace the sites under a channel with the sites
-// provided in ReplaceSitesRequest.new_sites.
+// provided in ReplaceSitesRequest.new_sites. **This method regularly
+// experiences high latency.** We recommend increasing your default
+// timeout
+// (/display-video/api/guides/best-practices/timeouts#client_library_time
+// out) to avoid errors.
 //
 //   - channelId: The ID of the parent channel whose sites will be
 //     replaced.
@@ -47513,7 +48192,7 @@ func (c *PartnersChannelsSitesReplaceCall) Do(opts ...googleapi.CallOption) (*Re
 	}
 	return ret, nil
 	// {
-	//   "description": "Replaces all of the sites under a single channel. The operation will replace the sites under a channel with the sites provided in ReplaceSitesRequest.new_sites.",
+	//   "description": "Replaces all of the sites under a single channel. The operation will replace the sites under a channel with the sites provided in ReplaceSitesRequest.new_sites. **This method regularly experiences high latency.** We recommend [increasing your default timeout](/display-video/api/guides/best-practices/timeouts#client_library_timeout) to avoid errors.",
 	//   "flatPath": "v2/partners/{partnerId}/channels/{channelsId}/sites:replace",
 	//   "httpMethod": "POST",
 	//   "id": "displayvideo.partners.channels.sites.replace",

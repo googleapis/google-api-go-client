@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -97,7 +97,9 @@ const apiId = "bigquery:v2"
 const apiName = "bigquery"
 const apiVersion = "v2"
 const basePath = "https://bigquery.googleapis.com/bigquery/v2/"
+const basePathTemplate = "https://bigquery.UNIVERSE_DOMAIN/bigquery/v2/"
 const mtlsBasePath = "https://bigquery.mtls.googleapis.com/bigquery/v2/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -142,7 +144,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -969,8 +973,9 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AvroOptions: Options for external data sources.
 type AvroOptions struct {
-	// UseAvroLogicalTypes: [Optional] If sourceFormat is set to "AVRO",
+	// UseAvroLogicalTypes: Optional. If sourceFormat is set to "AVRO",
 	// indicates whether to interpret logical types as the corresponding
 	// BigQuery data type (for example, TIMESTAMP), instead of using the raw
 	// type (for example, INTEGER).
@@ -1000,12 +1005,28 @@ func (s *AvroOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BiEngineReason: Reason why BI Engine didn't accelerate the query (or
+// sub-query).
 type BiEngineReason struct {
-	// Code: [Output-only] High-level BI Engine reason for partial or
+	// Code: Output only. High-level BI Engine reason for partial or
+	// disabled acceleration
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - BiEngineReason not specified.
+	//   "NO_RESERVATION" - No reservation available for BI Engine
+	// acceleration.
+	//   "INSUFFICIENT_RESERVATION" - Not enough memory available for BI
+	// Engine acceleration.
+	//   "UNSUPPORTED_SQL_TEXT" - This particular SQL text is not supported
+	// for acceleration by BI Engine.
+	//   "INPUT_TOO_LARGE" - Input too large for acceleration by BI Engine.
+	//   "OTHER_REASON" - Catch-all code for all other cases for partial or
 	// disabled acceleration.
+	//   "TABLE_EXCLUDED" - One or more tables were not eligible for BI
+	// Engine acceleration.
 	Code string `json:"code,omitempty"`
 
-	// Message: [Output-only] Free form human-readable reason for partial or
+	// Message: Output only. Free form human-readable reason for partial or
 	// disabled acceleration.
 	Message string `json:"message,omitempty"`
 
@@ -1032,13 +1053,34 @@ func (s *BiEngineReason) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BiEngineStatistics: Statistics for a BI Engine specific query.
+// Populated as part of JobStatistics2
 type BiEngineStatistics struct {
-	// AccelerationMode: [Output-only] Specifies which mode of BI Engine
+	// AccelerationMode: Output only. Specifies which mode of BI Engine
 	// acceleration was performed (if any).
+	//
+	// Possible values:
+	//   "BI_ENGINE_ACCELERATION_MODE_UNSPECIFIED" - BiEngineMode type not
+	// specified.
+	//   "BI_ENGINE_DISABLED" - BI Engine acceleration was attempted but
+	// disabled. bi_engine_reasons specifies a more detailed reason.
+	//   "PARTIAL_INPUT" - Some inputs were accelerated using BI Engine. See
+	// bi_engine_reasons for why parts of the query were not accelerated.
+	//   "FULL_INPUT" - All of the query inputs were accelerated using BI
+	// Engine.
+	//   "FULL_QUERY" - All of the query was accelerated using BI Engine.
 	AccelerationMode string `json:"accelerationMode,omitempty"`
 
-	// BiEngineMode: [Output-only] Specifies which mode of BI Engine
+	// BiEngineMode: Output only. Specifies which mode of BI Engine
 	// acceleration was performed (if any).
+	//
+	// Possible values:
+	//   "ACCELERATION_MODE_UNSPECIFIED" - BiEngineMode type not specified.
+	//   "DISABLED" - BI Engine disabled the acceleration. bi_engine_reasons
+	// specifies a more detailed reason.
+	//   "PARTIAL" - Part of the query was accelerated using BI Engine. See
+	// bi_engine_reasons for why parts of the query were not accelerated.
+	//   "FULL" - All of the query was accelerated using BI Engine.
 	BiEngineMode string `json:"biEngineMode,omitempty"`
 
 	// BiEngineReasons: In case of DISABLED or PARTIAL bi_engine_mode, these
@@ -1071,27 +1113,35 @@ func (s *BiEngineStatistics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BigLakeConfiguration: Configuration for BigLake managed tables.
 type BigLakeConfiguration struct {
-	// ConnectionId: [Required] Required and immutable. Credential reference
-	// for accessing external storage system. Normalized as
-	// project_id.location_id.connection_id.
+	// ConnectionId: Required. The connection specifying the credentials to
+	// be used to read and write to external storage, such as Cloud Storage.
+	// The connection_id can have the form
+	// "<project\_id>.<location\_id>.<connection\_id>" or
+	// "projects/<project\_id>/locations/<location\_id>/connections/<connecti
+	// on\_id>".
 	ConnectionId string `json:"connectionId,omitempty"`
 
-	// FileFormat: [Required] Required and immutable. Open source file
-	// format that the table data is stored in. Currently only PARQUET is
-	// supported.
+	// FileFormat: Required. The file format the table data is stored in.
+	//
+	// Possible values:
+	//   "FILE_FORMAT_UNSPECIFIED" - Default Value.
+	//   "PARQUET" - Apache Parquet format.
 	FileFormat string `json:"fileFormat,omitempty"`
 
-	// StorageUri: [Required] Required and immutable. Fully qualified
-	// location prefix of the external folder where data is stored.
-	// Normalized to standard format: "gs:////". Starts with "gs://" rather
-	// than "/bigstore/". Ends with "/". Does not contain "*". See also
-	// BigLakeStorageMetadata on how it is used.
+	// StorageUri: Required. The fully qualified location prefix of the
+	// external folder where table data is stored. The '*' wildcard
+	// character is not allowed. The URI should be in the format
+	// "gs://bucket/path_to_table/"
 	StorageUri string `json:"storageUri,omitempty"`
 
-	// TableFormat: [Required] Required and immutable. Open source file
-	// format that the table data is stored in. Currently only PARQUET is
-	// supported.
+	// TableFormat: Required. The table format the metadata only snapshots
+	// are stored in.
+	//
+	// Possible values:
+	//   "TABLE_FORMAT_UNSPECIFIED" - Default Value.
+	//   "ICEBERG" - Apache Iceberg format.
 	TableFormat string `json:"tableFormat,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConnectionId") to
@@ -1118,15 +1168,10 @@ func (s *BigLakeConfiguration) MarshalJSON() ([]byte, error) {
 }
 
 type BigQueryModelTraining struct {
-	// CurrentIteration: [Output-only, Beta] Index of current ML training
-	// iteration. Updated during create model query job to show job
-	// progress.
+	// CurrentIteration: Deprecated.
 	CurrentIteration int64 `json:"currentIteration,omitempty"`
 
-	// ExpectedTotalIterations: [Output-only, Beta] Expected number of
-	// iterations for the create model query job specified as num_iterations
-	// in the input query. The actual total number of iterations may be less
-	// than this number due to early stop.
+	// ExpectedTotalIterations: Deprecated.
 	ExpectedTotalIterations int64 `json:"expectedTotalIterations,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentIteration") to
@@ -1153,8 +1198,9 @@ func (s *BigQueryModelTraining) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BigtableColumn: Information related to a Bigtable column.
 type BigtableColumn struct {
-	// Encoding: [Optional] The encoding of the values when the type is not
+	// Encoding: Optional. The encoding of the values when the type is not
 	// STRING. Acceptable encoding values are: TEXT - indicates values are
 	// alphanumeric text strings. BINARY - indicates values are encoded
 	// using HBase Bytes.toBytes family of functions. 'encoding' can also be
@@ -1162,13 +1208,13 @@ type BigtableColumn struct {
 	// takes precedence if 'encoding' is set at both levels.
 	Encoding string `json:"encoding,omitempty"`
 
-	// FieldName: [Optional] If the qualifier is not a valid BigQuery field
-	// identifier i.e. does not match [a-zA-Z][a-zA-Z0-9_]*, a valid
-	// identifier must be provided as the column field name and is used as
-	// field name in queries.
+	// FieldName: Optional. If the qualifier is not a valid BigQuery field
+	// identifier i.e. does not match a-zA-Z*, a valid identifier must be
+	// provided as the column field name and is used as field name in
+	// queries.
 	FieldName string `json:"fieldName,omitempty"`
 
-	// OnlyReadLatest: [Optional] If this is set, only the latest version of
+	// OnlyReadLatest: Optional. If this is set, only the latest version of
 	// value in this column are exposed. 'onlyReadLatest' can also be set at
 	// the column family level. However, the setting at this level takes
 	// precedence if 'onlyReadLatest' is set at both levels.
@@ -1180,19 +1226,21 @@ type BigtableColumn struct {
 	// the qualifier_string field. Otherwise, a base-64 encoded value must
 	// be set to qualifier_encoded. The column field name is the same as the
 	// column qualifier. However, if the qualifier is not a valid BigQuery
-	// field identifier i.e. does not match [a-zA-Z][a-zA-Z0-9_]*, a valid
-	// identifier must be provided as field_name.
+	// field identifier i.e. does not match a-zA-Z*, a valid identifier must
+	// be provided as field_name.
 	QualifierEncoded string `json:"qualifierEncoded,omitempty"`
 
+	// QualifierString: Qualifier string.
 	QualifierString string `json:"qualifierString,omitempty"`
 
-	// Type: [Optional] The type to convert the value in cells of this
+	// Type: Optional. The type to convert the value in cells of this
 	// column. The values are expected to be encoded using HBase
 	// Bytes.toBytes function when using the BINARY encoding value.
-	// Following BigQuery types are allowed (case-sensitive) - BYTES STRING
-	// INTEGER FLOAT BOOLEAN Default type is BYTES. 'type' can also be set
-	// at the column family level. However, the setting at this level takes
-	// precedence if 'type' is set at both levels.
+	// Following BigQuery types are allowed (case-sensitive): * BYTES *
+	// STRING * INTEGER * FLOAT * BOOLEAN * JSON Default type is BYTES.
+	// 'type' can also be set at the column family level. However, the
+	// setting at this level takes precedence if 'type' is set at both
+	// levels.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Encoding") to
@@ -1218,15 +1266,17 @@ func (s *BigtableColumn) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BigtableColumnFamily: Information related to a Bigtable column
+// family.
 type BigtableColumnFamily struct {
-	// Columns: [Optional] Lists of columns that should be exposed as
+	// Columns: Optional. Lists of columns that should be exposed as
 	// individual fields as opposed to a list of (column name, value) pairs.
 	// All columns whose qualifier matches a qualifier in this list can be
 	// accessed as .. Other columns can be accessed as a list through
 	// .Column field.
 	Columns []*BigtableColumn `json:"columns,omitempty"`
 
-	// Encoding: [Optional] The encoding of the values when the type is not
+	// Encoding: Optional. The encoding of the values when the type is not
 	// STRING. Acceptable encoding values are: TEXT - indicates values are
 	// alphanumeric text strings. BINARY - indicates values are encoded
 	// using HBase Bytes.toBytes family of functions. This can be overridden
@@ -1237,19 +1287,19 @@ type BigtableColumnFamily struct {
 	// FamilyId: Identifier of the column family.
 	FamilyId string `json:"familyId,omitempty"`
 
-	// OnlyReadLatest: [Optional] If this is set only the latest version of
+	// OnlyReadLatest: Optional. If this is set only the latest version of
 	// value are exposed for all columns in this column family. This can be
 	// overridden for a specific column by listing that column in 'columns'
 	// and specifying a different setting for that column.
 	OnlyReadLatest bool `json:"onlyReadLatest,omitempty"`
 
-	// Type: [Optional] The type to convert the value in cells of this
-	// column family. The values are expected to be encoded using HBase
+	// Type: Optional. The type to convert the value in cells of this column
+	// family. The values are expected to be encoded using HBase
 	// Bytes.toBytes function when using the BINARY encoding value.
-	// Following BigQuery types are allowed (case-sensitive) - BYTES STRING
-	// INTEGER FLOAT BOOLEAN Default type is BYTES. This can be overridden
-	// for a specific column by listing that column in 'columns' and
-	// specifying a type for it.
+	// Following BigQuery types are allowed (case-sensitive): * BYTES *
+	// STRING * INTEGER * FLOAT * BOOLEAN * JSON Default type is BYTES. This
+	// can be overridden for a specific column by listing that column in
+	// 'columns' and specifying a type for it.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Columns") to
@@ -1275,8 +1325,10 @@ func (s *BigtableColumnFamily) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BigtableOptions: Options specific to Google Cloud Bigtable data
+// sources.
 type BigtableOptions struct {
-	// ColumnFamilies: [Optional] List of column families to expose in the
+	// ColumnFamilies: Optional. List of column families to expose in the
 	// table schema along with their types. This list restricts the column
 	// families that can be referenced in queries and specifies their value
 	// types. You can use this list to do type conversions - see the 'type'
@@ -1286,13 +1338,19 @@ type BigtableOptions struct {
 	// query are read from Bigtable.
 	ColumnFamilies []*BigtableColumnFamily `json:"columnFamilies,omitempty"`
 
-	// IgnoreUnspecifiedColumnFamilies: [Optional] If field is true, then
-	// the column families that are not specified in columnFamilies list are
-	// not exposed in the table schema. Otherwise, they are read with BYTES
-	// type values. The default value is false.
+	// IgnoreUnspecifiedColumnFamilies: Optional. If field is true, then the
+	// column families that are not specified in columnFamilies list are not
+	// exposed in the table schema. Otherwise, they are read with BYTES type
+	// values. The default value is false.
 	IgnoreUnspecifiedColumnFamilies bool `json:"ignoreUnspecifiedColumnFamilies,omitempty"`
 
-	// ReadRowkeyAsString: [Optional] If field is true, then the rowkey
+	// OutputColumnFamiliesAsJson: Optional. If field is true, then each
+	// column family will be read as a single JSON column. Otherwise they
+	// are read as a repeated cell structure containing timestamp/value
+	// tuples. The default value is false.
+	OutputColumnFamiliesAsJson bool `json:"outputColumnFamiliesAsJson,omitempty"`
+
+	// ReadRowkeyAsString: Optional. If field is true, then the rowkey
 	// column families will be read and converted to string. Otherwise they
 	// are read with BYTES type values and users need to manually cast them
 	// with CAST if necessary. The default value is false.
@@ -1473,11 +1531,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -1489,11 +1570,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -1520,29 +1610,19 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 }
 
 type BqmlIterationResult struct {
-	// DurationMs: [Output-only, Beta] Time taken to run the training
-	// iteration in milliseconds.
+	// DurationMs: Deprecated.
 	DurationMs int64 `json:"durationMs,omitempty,string"`
 
-	// EvalLoss: [Output-only, Beta] Eval loss computed on the eval data at
-	// the end of the iteration. The eval loss is used for early stopping to
-	// avoid overfitting. No eval loss if eval_split_method option is
-	// specified as no_split or auto_split with input data size less than
-	// 500 rows.
+	// EvalLoss: Deprecated.
 	EvalLoss float64 `json:"evalLoss,omitempty"`
 
-	// Index: [Output-only, Beta] Index of the ML training iteration,
-	// starting from zero for each training run.
+	// Index: Deprecated.
 	Index int64 `json:"index,omitempty"`
 
-	// LearnRate: [Output-only, Beta] Learning rate used for this iteration,
-	// it varies for different training iterations if learn_rate_strategy
-	// option is not constant.
+	// LearnRate: Deprecated.
 	LearnRate float64 `json:"learnRate,omitempty"`
 
-	// TrainingLoss: [Output-only, Beta] Training loss computed on the
-	// training data at the end of the iteration. The training loss function
-	// is defined by model type.
+	// TrainingLoss: Deprecated.
 	TrainingLoss float64 `json:"trainingLoss,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DurationMs") to
@@ -1587,26 +1667,16 @@ func (s *BqmlIterationResult) UnmarshalJSON(data []byte) error {
 }
 
 type BqmlTrainingRun struct {
-	// IterationResults: [Output-only, Beta] List of each iteration results.
+	// IterationResults: Deprecated.
 	IterationResults []*BqmlIterationResult `json:"iterationResults,omitempty"`
 
-	// StartTime: [Output-only, Beta] Training run start time in
-	// milliseconds since the epoch.
+	// StartTime: Deprecated.
 	StartTime string `json:"startTime,omitempty"`
 
-	// State: [Output-only, Beta] Different state applicable for a training
-	// run. IN PROGRESS: Training run is in progress. FAILED: Training run
-	// ended due to a non-retryable failure. SUCCEEDED: Training run
-	// successfully completed. CANCELLED: Training run cancelled by the
-	// user.
+	// State: Deprecated.
 	State string `json:"state,omitempty"`
 
-	// TrainingOptions: [Output-only, Beta] Training options used by this
-	// training run. These options are mutable for subsequent training runs.
-	// Default values are explicitly stored for options not specified in the
-	// input query of the first training run. For subsequent training runs,
-	// any option not explicitly specified in the input query will be copied
-	// from the previous training run.
+	// TrainingOptions: Deprecated.
 	TrainingOptions *BqmlTrainingRunTrainingOptions `json:"trainingOptions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IterationResults") to
@@ -1633,12 +1703,7 @@ func (s *BqmlTrainingRun) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// BqmlTrainingRunTrainingOptions: [Output-only, Beta] Training options
-// used by this training run. These options are mutable for subsequent
-// training runs. Default values are explicitly stored for options not
-// specified in the input query of the first training run. For
-// subsequent training runs, any option not explicitly specified in the
-// input query will be copied from the previous training run.
+// BqmlTrainingRunTrainingOptions: Deprecated.
 type BqmlTrainingRunTrainingOptions struct {
 	EarlyStop bool `json:"earlyStop,omitempty"`
 
@@ -1768,12 +1833,14 @@ func (s *CategoryCount) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CloneDefinition: Information about base table and clone time of a
+// table clone.
 type CloneDefinition struct {
-	// BaseTableReference: [Required] Reference describing the ID of the
+	// BaseTableReference: Required. Reference describing the ID of the
 	// table that was cloned.
 	BaseTableReference *TableReference `json:"baseTableReference,omitempty"`
 
-	// CloneTime: [Required] The time at which the base table was cloned.
+	// CloneTime: Required. The time at which the base table was cloned.
 	// This value is reported in the JSON response using RFC3339 format.
 	CloneTime string `json:"cloneTime,omitempty"`
 
@@ -1886,12 +1953,14 @@ func (s *ClusterInfo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// Clustering: Configures table clustering.
 type Clustering struct {
-	// Fields: [Repeated] One or more fields on which data should be
-	// clustered. Only top-level, non-repeated, simple-type fields are
-	// supported. When you cluster a table using multiple columns, the order
-	// of columns you specify is important. The order of the specified
-	// columns determines the sort order of the data.
+	// Fields: One or more fields on which data should be clustered. Only
+	// top-level, non-repeated, simple-type fields are supported. The
+	// ordering of the clustering fields should be prioritized from most to
+	// least important for filtering purposes. Additional information on
+	// limitations can be found here:
+	// https://cloud.google.com/bigquery/docs/creating-clustered-tables#limitations
 	Fields []string `json:"fields,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
@@ -2016,11 +2085,29 @@ func (s *ConfusionMatrix) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ConnectionProperty: A connection-level property to customize query
+// behavior. Under JDBC, these correspond directly to connection
+// properties passed to the DriverManager. Under ODBC, these correspond
+// to properties in the connection string. Currently supported
+// connection properties: * **dataset_project_id**: represents the
+// default project for datasets that are used in the query. Setting the
+// system variable `@@dataset_project_id` achieves the same behavior.
+// For more information about system variables, see:
+// https://cloud.google.com/bigquery/docs/reference/system-variables *
+// **time_zone**: represents the default timezone used to run the query.
+// * **session_id**: associates the query with a given session. *
+// **query_label**: associates the query with a given job label. If set,
+// all subsequent queries in a script or session will have this label.
+// For the format in which a you can specify a query label, see labels
+// in the JobConfiguration resource type:
+// https://cloud.google.com/bigquery/docs/reference/rest/v2/Job#jobconfiguration
+// Additional properties are allowed, but ignored. Specifying multiple
+// connection properties with the same key returns an error.
 type ConnectionProperty struct {
-	// Key: [Required] Name of the connection property to set.
+	// Key: The key of the property to set.
 	Key string `json:"key,omitempty"`
 
-	// Value: [Required] Value of the connection property.
+	// Value: The value of the property to set.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Key") to
@@ -2046,8 +2133,9 @@ func (s *ConnectionProperty) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CsvOptions: Information related to a CSV data source.
 type CsvOptions struct {
-	// AllowJaggedRows: [Optional] Indicates if BigQuery should accept rows
+	// AllowJaggedRows: Optional. Indicates if BigQuery should accept rows
 	// that are missing trailing optional columns. If true, BigQuery treats
 	// missing trailing columns as null values. If false, records with
 	// missing trailing columns are treated as bad records, and if there are
@@ -2055,46 +2143,54 @@ type CsvOptions struct {
 	// The default value is false.
 	AllowJaggedRows bool `json:"allowJaggedRows,omitempty"`
 
-	// AllowQuotedNewlines: [Optional] Indicates if BigQuery should allow
+	// AllowQuotedNewlines: Optional. Indicates if BigQuery should allow
 	// quoted data sections that contain newline characters in a CSV file.
 	// The default value is false.
 	AllowQuotedNewlines bool `json:"allowQuotedNewlines,omitempty"`
 
-	// Encoding: [Optional] The character encoding of the data. The
-	// supported values are UTF-8 or ISO-8859-1. The default value is UTF-8.
-	// BigQuery decodes the data after the raw, binary data has been split
-	// using the values of the quote and fieldDelimiter properties.
+	// Encoding: Optional. The character encoding of the data. The supported
+	// values are UTF-8, ISO-8859-1, UTF-16BE, UTF-16LE, UTF-32BE, and
+	// UTF-32LE. The default value is UTF-8. BigQuery decodes the data after
+	// the raw, binary data has been split using the values of the quote and
+	// fieldDelimiter properties.
 	Encoding string `json:"encoding,omitempty"`
 
-	// FieldDelimiter: [Optional] The separator for fields in a CSV file.
-	// BigQuery converts the string to ISO-8859-1 encoding, and then uses
-	// the first byte of the encoded string to split the data in its raw,
-	// binary state. BigQuery also supports the escape sequence "\t" to
-	// specify a tab separator. The default value is a comma (',').
+	// FieldDelimiter: Optional. The separator character for fields in a CSV
+	// file. The separator is interpreted as a single byte. For files
+	// encoded in ISO-8859-1, any single character can be used as a
+	// separator. For files encoded in UTF-8, characters represented in
+	// decimal range 1-127 (U+0001-U+007F) can be used without any
+	// modification. UTF-8 characters encoded with multiple bytes (i.e.
+	// U+0080 and above) will have only the first byte used for separating
+	// fields. The remaining bytes will be treated as a part of the field.
+	// BigQuery also supports the escape sequence "\t" (U+0009) to specify a
+	// tab separator. The default value is comma (",", U+002C).
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
 
-	// NullMarker: [Optional] An custom string that will represent a NULL
+	// NullMarker: [Optional] A custom string that will represent a NULL
 	// value in CSV import data.
 	NullMarker string `json:"nullMarker,omitempty"`
 
-	// PreserveAsciiControlCharacters: [Optional] Preserves the embedded
+	// PreserveAsciiControlCharacters: Optional. Indicates if the embedded
 	// ASCII control characters (the first 32 characters in the ASCII-table,
-	// from '\x00' to '\x1F') when loading from CSV. Only applicable to CSV,
-	// ignored for other formats.
+	// from '\x00' to '\x1F') are preserved.
 	PreserveAsciiControlCharacters bool `json:"preserveAsciiControlCharacters,omitempty"`
 
-	// Quote: [Optional] The value that is used to quote data sections in a
+	// Quote: Optional. The value that is used to quote data sections in a
 	// CSV file. BigQuery converts the string to ISO-8859-1 encoding, and
 	// then uses the first byte of the encoded string to split the data in
-	// its raw, binary state. The default value is a double-quote ('"'). If
+	// its raw, binary state. The default value is a double-quote ("). If
 	// your data does not contain quoted sections, set the property value to
 	// an empty string. If your data contains quoted newline characters, you
-	// must also set the allowQuotedNewlines property to true.
+	// must also set the allowQuotedNewlines property to true. To include
+	// the specific quote character within a quoted value, precede it with
+	// an additional matching quote character. For example, if you want to
+	// escape the default character ' " ', use ' "" '.
 	//
 	// Default: "
 	Quote *string `json:"quote,omitempty"`
 
-	// SkipLeadingRows: [Optional] The number of rows at the top of a CSV
+	// SkipLeadingRows: Optional. The number of rows at the top of a CSV
 	// file that BigQuery will skip when reading the data. The default value
 	// is 0. This property is useful if you have header rows in the file
 	// that should be skipped. When autodetect is on, the behavior is the
@@ -2133,13 +2229,40 @@ func (s *CsvOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DataFormatOptions: Options for data format adjustments.
+type DataFormatOptions struct {
+	// UseInt64Timestamp: Optional. Output timestamp as usec int64. Default
+	// is false.
+	UseInt64Timestamp bool `json:"useInt64Timestamp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "UseInt64Timestamp")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "UseInt64Timestamp") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataFormatOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod DataFormatOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataMaskingStatistics: Statistics for data-masking.
 type DataMaskingStatistics struct {
-	// DataMaskingApplied: [Output-only] [Preview] Whether any accessed data
-	// was protected by data masking. The actual evaluation is done by
-	// accessStats.masked_field_count > 0. Since this is only used for the
-	// discovery_doc generation purpose, as long as the type (boolean)
-	// matches, client library can leverage this. The actual evaluation of
-	// the variable is done else-where.
+	// DataMaskingApplied: Whether any accessed data was protected by the
+	// data masking.
 	DataMaskingApplied bool `json:"dataMaskingApplied,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DataMaskingApplied")
@@ -2204,7 +2327,7 @@ func (s *DataSplitResult) MarshalJSON() ([]byte, error) {
 }
 
 type Dataset struct {
-	// Access: [Optional] An array of objects that define dataset access for
+	// Access: Optional. An array of objects that define dataset access for
 	// one or more entities. You can set this property when inserting or
 	// updating a dataset in order to control who is allowed to access the
 	// data. If unspecified at dataset creation time, BigQuery adds default
@@ -2215,76 +2338,107 @@ type Dataset struct {
 	// creator email]; access.role: OWNER;
 	Access []*DatasetAccess `json:"access,omitempty"`
 
-	// CreationTime: [Output-only] The time when this dataset was created,
-	// in milliseconds since the epoch.
+	// CreationTime: Output only. The time when this dataset was created, in
+	// milliseconds since the epoch.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
-	// DatasetReference: [Required] A reference that identifies the dataset.
+	// DatasetReference: Required. A reference that identifies the dataset.
 	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
 
-	// DefaultCollation: [Output-only] The default collation of the dataset.
+	// DefaultCollation: Optional. Defines the default collation
+	// specification of future tables created in the dataset. If a table is
+	// created in this dataset without table-level default collation, then
+	// the table inherits the dataset default collation, which is applied to
+	// the string fields that do not have explicit collation specified. A
+	// change to this field affects only tables created afterwards, and does
+	// not alter the existing tables. The following values are supported: *
+	// 'und:ci': undetermined locale, case insensitive. * '': empty string.
+	// Default to case-sensitive behavior.
 	DefaultCollation string `json:"defaultCollation,omitempty"`
 
+	// DefaultEncryptionConfiguration: The default encryption key for all
+	// tables in the dataset. Once this property is set, all newly-created
+	// partitioned tables in the dataset will have encryption key set to
+	// this value, unless table creation request (or query) overrides the
+	// key.
 	DefaultEncryptionConfiguration *EncryptionConfiguration `json:"defaultEncryptionConfiguration,omitempty"`
 
-	// DefaultPartitionExpirationMs: [Optional] The default partition
-	// expiration for all partitioned tables in the dataset, in
-	// milliseconds. Once this property is set, all newly-created
-	// partitioned tables in the dataset will have an expirationMs property
-	// in the timePartitioning settings set to this value, and changing the
-	// value will only affect new tables, not existing ones. The storage in
-	// a partition will have an expiration time of its partition time plus
-	// this value. Setting this property overrides the use of
-	// defaultTableExpirationMs for partitioned tables: only one of
-	// defaultTableExpirationMs and defaultPartitionExpirationMs will be
-	// used for any new partitioned table. If you provide an explicit
-	// timePartitioning.expirationMs when creating or updating a partitioned
-	// table, that value takes precedence over the default partition
-	// expiration time indicated by this property.
+	// DefaultPartitionExpirationMs: This default partition expiration,
+	// expressed in milliseconds. When new time-partitioned tables are
+	// created in a dataset where this property is set, the table will
+	// inherit this value, propagated as the `TimePartitioning.expirationMs`
+	// property on the new table. If you set `TimePartitioning.expirationMs`
+	// explicitly when creating a table, the `defaultPartitionExpirationMs`
+	// of the containing dataset is ignored. When creating a partitioned
+	// table, if `defaultPartitionExpirationMs` is set, the
+	// `defaultTableExpirationMs` value is ignored and the table will not be
+	// inherit a table expiration deadline.
 	DefaultPartitionExpirationMs int64 `json:"defaultPartitionExpirationMs,omitempty,string"`
 
-	// DefaultRoundingMode: [Output-only] The default rounding mode of the
-	// dataset.
+	// DefaultRoundingMode: Optional. Defines the default rounding mode
+	// specification of new tables created within this dataset. During table
+	// creation, if this field is specified, the table within this dataset
+	// will inherit the default rounding mode of the dataset. Setting the
+	// default rounding mode on a table overrides this option. Existing
+	// tables in the dataset are unaffected. If columns are defined during
+	// that table creation, they will immediately inherit the table's
+	// default rounding mode, unless otherwise specified.
+	//
+	// Possible values:
+	//   "ROUNDING_MODE_UNSPECIFIED" - Unspecified will default to using
+	// ROUND_HALF_AWAY_FROM_ZERO.
+	//   "ROUND_HALF_AWAY_FROM_ZERO" - ROUND_HALF_AWAY_FROM_ZERO rounds half
+	// values away from zero when applying precision and scale upon writing
+	// of NUMERIC and BIGNUMERIC values. For Scale: 0 1.1, 1.2, 1.3, 1.4 =>
+	// 1 1.5, 1.6, 1.7, 1.8, 1.9 => 2
+	//   "ROUND_HALF_EVEN" - ROUND_HALF_EVEN rounds half values to the
+	// nearest even value when applying precision and scale upon writing of
+	// NUMERIC and BIGNUMERIC values. For Scale: 0 1.1, 1.2, 1.3, 1.4 => 1
+	// 1.5 => 2 1.6, 1.7, 1.8, 1.9 => 2 2.5 => 2
 	DefaultRoundingMode string `json:"defaultRoundingMode,omitempty"`
 
-	// DefaultTableExpirationMs: [Optional] The default lifetime of all
-	// tables in the dataset, in milliseconds. The minimum value is 3600000
-	// milliseconds (one hour). Once this property is set, all newly-created
-	// tables in the dataset will have an expirationTime property set to the
-	// creation time plus the value in this property, and changing the value
-	// will only affect new tables, not existing ones. When the
-	// expirationTime for a given table is reached, that table will be
-	// deleted automatically. If a table's expirationTime is modified or
-	// removed before the table expires, or if you provide an explicit
-	// expirationTime when creating a table, that value takes precedence
-	// over the default expiration time indicated by this property.
+	// DefaultTableExpirationMs: Optional. The default lifetime of all
+	// tables in the dataset, in milliseconds. The minimum lifetime value is
+	// 3600000 milliseconds (one hour). To clear an existing default
+	// expiration with a PATCH request, set to 0. Once this property is set,
+	// all newly-created tables in the dataset will have an expirationTime
+	// property set to the creation time plus the value in this property,
+	// and changing the value will only affect new tables, not existing
+	// ones. When the expirationTime for a given table is reached, that
+	// table will be deleted automatically. If a table's expirationTime is
+	// modified or removed before the table expires, or if you provide an
+	// explicit expirationTime when creating a table, that value takes
+	// precedence over the default expiration time indicated by this
+	// property.
 	DefaultTableExpirationMs int64 `json:"defaultTableExpirationMs,omitempty,string"`
 
-	// Description: [Optional] A user-friendly description of the dataset.
+	// Description: Optional. A user-friendly description of the dataset.
 	Description string `json:"description,omitempty"`
 
-	// Etag: [Output-only] A hash of the resource.
+	// Etag: Output only. A hash of the resource.
 	Etag string `json:"etag,omitempty"`
 
-	// ExternalDatasetReference: [Optional] Information about the external
-	// metadata storage where the dataset is defined. Filled out when the
-	// dataset type is EXTERNAL.
+	// ExternalDatasetReference: Optional. Reference to a read-only external
+	// dataset defined in data catalogs outside of BigQuery. Filled out when
+	// the dataset type is EXTERNAL.
 	ExternalDatasetReference *ExternalDatasetReference `json:"externalDatasetReference,omitempty"`
 
-	// FriendlyName: [Optional] A descriptive name for the dataset.
+	// FriendlyName: Optional. A descriptive name for the dataset.
 	FriendlyName string `json:"friendlyName,omitempty"`
 
-	// Id: [Output-only] The fully-qualified unique name of the dataset in
+	// Id: Output only. The fully-qualified unique name of the dataset in
 	// the format projectId:datasetId. The dataset name without the project
 	// name is given in the datasetId field. When creating a new dataset,
 	// leave this field blank, and instead specify the datasetId field.
 	Id string `json:"id,omitempty"`
 
-	// IsCaseInsensitive: [Optional] Indicates if table names are case
-	// insensitive in the dataset.
+	// IsCaseInsensitive: Optional. TRUE if the dataset and its table names
+	// are case-insensitive, otherwise FALSE. By default, this is FALSE,
+	// which means the dataset and its table names are case-sensitive. This
+	// field does not affect routine references.
 	IsCaseInsensitive bool `json:"isCaseInsensitive,omitempty"`
 
-	// Kind: [Output-only] The resource type.
+	// Kind: Output only. The resource type.
 	Kind string `json:"kind,omitempty"`
 
 	// Labels: The labels associated with this dataset. You can use these to
@@ -2293,35 +2447,60 @@ type Dataset struct {
 	// Labels for more information.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// LastModifiedTime: [Output-only] The date when this dataset or any of
-	// its tables was last modified, in milliseconds since the epoch.
+	// LastModifiedTime: Output only. The date when this dataset was last
+	// modified, in milliseconds since the epoch.
 	LastModifiedTime int64 `json:"lastModifiedTime,omitempty,string"`
 
+	// LinkedDatasetMetadata: Output only. Metadata about the LinkedDataset.
+	// Filled out when the dataset type is LINKED.
+	LinkedDatasetMetadata *LinkedDatasetMetadata `json:"linkedDatasetMetadata,omitempty"`
+
+	// LinkedDatasetSource: Optional. The source dataset reference when the
+	// dataset is of type LINKED. For all other dataset types it is not set.
+	// This field cannot be updated once it is set. Any attempt to update
+	// this field using Update and Patch API Operations will be ignored.
+	LinkedDatasetSource *LinkedDatasetSource `json:"linkedDatasetSource,omitempty"`
+
 	// Location: The geographic location where the dataset should reside.
-	// The default value is US. See details at
-	// https://cloud.google.com/bigquery/docs/locations.
+	// See https://cloud.google.com/bigquery/docs/locations for supported
+	// locations.
 	Location string `json:"location,omitempty"`
 
-	// MaxTimeTravelHours: [Optional] Number of hours for the max time
-	// travel for all tables in the dataset.
+	// MaxTimeTravelHours: Optional. Defines the time travel window in
+	// hours. The value can be from 48 to 168 hours (2 to 7 days). The
+	// default value is 168 hours if this is not set.
 	MaxTimeTravelHours int64 `json:"maxTimeTravelHours,omitempty,string"`
 
-	// SatisfiesPzs: [Output-only] Reserved for future use.
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
+
+	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
 
-	// SelfLink: [Output-only] A URL that can be used to access the resource
+	// SelfLink: Output only. A URL that can be used to access the resource
 	// again. You can use this URL in Get or Update requests to the
 	// resource.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// StorageBillingModel: [Optional] Storage billing model to be used for
-	// all tables in the dataset. Can be set to PHYSICAL. Default is
-	// LOGICAL.
+	// StorageBillingModel: Optional. Updates storage_billing_model for the
+	// dataset.
+	//
+	// Possible values:
+	//   "STORAGE_BILLING_MODEL_UNSPECIFIED" - Value not set.
+	//   "LOGICAL" - Billing for logical bytes.
+	//   "PHYSICAL" - Billing for physical bytes.
 	StorageBillingModel string `json:"storageBillingModel,omitempty"`
 
-	// Tags: [Optional]The tags associated with this dataset. Tag keys are
-	// globally unique.
+	// Tags: Output only. Tags for the Dataset.
 	Tags []*DatasetTags `json:"tags,omitempty"`
+
+	// Type: Output only. Same as `type` in `ListFormatDataset`. The type of
+	// the dataset, one of: * DEFAULT - only accessible by owner and
+	// authorized accounts, * PUBLIC - accessible by everyone, * LINKED -
+	// linked dataset, * EXTERNAL - dataset with definition in external
+	// metadata catalog. -- *BIGLAKE_METASTORE - dataset that references a
+	// database created in BigLakeMetastore service. --
+	Type string `json:"type,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2350,6 +2529,7 @@ func (s *Dataset) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DatasetAccess: An object that defines dataset access for an entity.
 type DatasetAccess struct {
 	// Dataset: [Pick one] A grant authorizing all resources of a particular
 	// type in a particular dataset access to this dataset. Only views are
@@ -2371,10 +2551,10 @@ type DatasetAccess struct {
 	// IAM Policy but isn't a user, group, domain, or special group.
 	IamMember string `json:"iamMember,omitempty"`
 
-	// Role: [Required] An IAM role ID that should be granted to the user,
-	// group, or domain specified in this access entry. The following legacy
-	// mappings will be applied: OWNER  roles/bigquery.dataOwner WRITER
-	// roles/bigquery.dataEditor READER  roles/bigquery.dataViewer This
+	// Role: An IAM role ID that should be granted to the user, group, or
+	// domain specified in this access entry. The following legacy mappings
+	// will be applied: OWNER <=> roles/bigquery.dataOwner WRITER <=>
+	// roles/bigquery.dataEditor READER <=> roles/bigquery.dataViewer This
 	// field will accept any of the above formats, but will return only the
 	// legacy format. For example, if you set this field to
 	// "roles/bigquery.dataOwner", it will be returned back as "OWNER".
@@ -2401,10 +2581,10 @@ type DatasetAccess struct {
 	UserByEmail string `json:"userByEmail,omitempty"`
 
 	// View: [Pick one] A view from a different dataset to grant access to.
-	// Queries executed against that view will have read access to tables in
-	// this dataset. The role field is not required when this field is set.
-	// If that view is updated by any user, access to the view needs to be
-	// granted again via an update operation.
+	// Queries executed against that view will have read access to
+	// views/tables/routines in this dataset. The role field is not required
+	// when this field is set. If that view is updated by any user, access
+	// to the view needs to be granted again via an update operation.
 	View *TableReference `json:"view,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Dataset") to
@@ -2430,12 +2610,14 @@ func (s *DatasetAccess) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DatasetTags: A global tag managed by Resource Manager.
+// https://cloud.google.com/iam/docs/tags-access-control#definitions
 type DatasetTags struct {
-	// TagKey: [Required] The namespaced friendly name of the tag key, e.g.
+	// TagKey: Required. The namespaced friendly name of the tag key, e.g.
 	// "12345/environment" where 12345 is org id.
 	TagKey string `json:"tagKey,omitempty"`
 
-	// TagValue: [Required] Friendly short name of the tag value, e.g.
+	// TagValue: Required. The friendly short name of the tag value, e.g.
 	// "production".
 	TagValue string `json:"tagValue,omitempty"`
 
@@ -2462,10 +2644,20 @@ func (s *DatasetTags) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DatasetAccessEntry: Grants all resources of particular types in a
+// particular dataset read access to the current dataset. Similar to how
+// individually authorized views work, updates to any resource granted
+// through its dataset (including creation of new resources) requires
+// read permission to referenced resources, plus write permission to the
+// authorizing dataset.
 type DatasetAccessEntry struct {
-	// Dataset: [Required] The dataset this entry applies to.
+	// Dataset: The dataset this entry applies to
 	Dataset *DatasetReference `json:"dataset,omitempty"`
 
+	// TargetTypes: Which resources in the dataset this entry applies to.
+	// Currently, only views are supported, but additional target types may
+	// be added in the future.
+	//
 	// Possible values:
 	//   "TARGET_TYPE_UNSPECIFIED" - Do not use. You must set a target type
 	// explicitly.
@@ -2496,6 +2688,8 @@ func (s *DatasetAccessEntry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DatasetList: Response format for a page of results when listing
+// datasets.
 type DatasetList struct {
 	// Datasets: An array of the dataset resources in the project. Each
 	// resource contains basic information. For full information about a
@@ -2503,17 +2697,23 @@ type DatasetList struct {
 	// property is omitted when there are no datasets in the project.
 	Datasets []*DatasetListDatasets `json:"datasets,omitempty"`
 
-	// Etag: A hash value of the results page. You can use this property to
-	// determine if the page has changed since the last request.
+	// Etag: Output only. A hash value of the results page. You can use this
+	// property to determine if the page has changed since the last request.
 	Etag string `json:"etag,omitempty"`
 
-	// Kind: The list type. This property always returns the value
-	// "bigquery#datasetList".
+	// Kind: Output only. The resource type. This property always returns
+	// the value "bigquery#datasetList"
 	Kind string `json:"kind,omitempty"`
 
 	// NextPageToken: A token that can be used to request the next results
 	// page. This property is omitted on the final results page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: A list of skipped locations that were unreachable. For
+	// more information about BigQuery locations, see:
+	// https://cloud.google.com/bigquery/docs/locations. Example:
+	// "europe-west5"
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -2542,26 +2742,29 @@ func (s *DatasetList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DatasetListDatasets: A dataset resource with only a subset of fields,
+// to be returned in a list of datasets.
 type DatasetListDatasets struct {
 	// DatasetReference: The dataset reference. Use this property to access
 	// specific parts of the dataset's ID, such as project ID or dataset ID.
 	DatasetReference *DatasetReference `json:"datasetReference,omitempty"`
 
-	// FriendlyName: A descriptive name for the dataset, if one exists.
+	// FriendlyName: An alternate name for the dataset. The friendly name is
+	// purely decorative in nature.
 	FriendlyName string `json:"friendlyName,omitempty"`
 
 	// Id: The fully-qualified, unique, opaque ID of the dataset.
 	Id string `json:"id,omitempty"`
 
 	// Kind: The resource type. This property always returns the value
-	// "bigquery#dataset".
+	// "bigquery#dataset"
 	Kind string `json:"kind,omitempty"`
 
 	// Labels: The labels associated with this dataset. You can use these to
 	// organize and group your datasets.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Location: The geographic location where the data resides.
+	// Location: The geographic location where the dataset resides.
 	Location string `json:"location,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DatasetReference") to
@@ -2589,12 +2792,12 @@ func (s *DatasetListDatasets) MarshalJSON() ([]byte, error) {
 }
 
 type DatasetReference struct {
-	// DatasetId: [Required] A unique ID for this dataset, without the
+	// DatasetId: Required. A unique ID for this dataset, without the
 	// project name. The ID must contain only letters (a-z, A-Z), numbers
 	// (0-9), or underscores (_). The maximum length is 1,024 characters.
 	DatasetId string `json:"datasetId,omitempty"`
 
-	// ProjectId: [Optional] The ID of the project containing this dataset.
+	// ProjectId: Optional. The ID of the project containing this dataset.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DatasetId") to
@@ -2620,24 +2823,23 @@ func (s *DatasetReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DestinationTableProperties: Properties for the destination table.
 type DestinationTableProperties struct {
-	// Description: [Optional] The description for the destination table.
+	// Description: Optional. The description for the destination table.
 	// This will only be used if the destination table is newly created. If
 	// the table already exists and a value different than the current
 	// description is provided, the job will fail.
 	Description string `json:"description,omitempty"`
 
-	// ExpirationTime: [Internal] This field is for Google internal use
-	// only.
+	// ExpirationTime: Internal use only.
 	ExpirationTime string `json:"expirationTime,omitempty"`
 
-	// FriendlyName: [Optional] The friendly name for the destination table.
-	// This will only be used if the destination table is newly created. If
-	// the table already exists and a value different than the current
-	// friendly name is provided, the job will fail.
+	// FriendlyName: Optional. Friendly name for the destination table. If
+	// the table already exists, it should be same as the existing friendly
+	// name.
 	FriendlyName string `json:"friendlyName,omitempty"`
 
-	// Labels: [Optional] The labels associated with this table. You can use
+	// Labels: Optional. The labels associated with this table. You can use
 	// these to organize and group your tables. This will only be used if
 	// the destination table is newly created. If the table already exists
 	// and labels are different than the current labels are provided, the
@@ -2713,17 +2915,18 @@ func (s *DimensionalityReductionMetrics) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// DmlStatistics: Detailed statistics for DML statements
 type DmlStatistics struct {
-	// DeletedRowCount: Number of deleted Rows. populated by DML DELETE,
-	// MERGE and TRUNCATE statements.
+	// DeletedRowCount: Output only. Number of deleted Rows. populated by
+	// DML DELETE, MERGE and TRUNCATE statements.
 	DeletedRowCount int64 `json:"deletedRowCount,omitempty,string"`
 
-	// InsertedRowCount: Number of inserted Rows. Populated by DML INSERT
-	// and MERGE statements.
+	// InsertedRowCount: Output only. Number of inserted Rows. Populated by
+	// DML INSERT and MERGE statements
 	InsertedRowCount int64 `json:"insertedRowCount,omitempty,string"`
 
-	// UpdatedRowCount: Number of updated Rows. Populated by DML UPDATE and
-	// MERGE statements.
+	// UpdatedRowCount: Output only. Number of updated Rows. Populated by
+	// DML UPDATE and MERGE statements.
 	UpdatedRowCount int64 `json:"updatedRowCount,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "DeletedRowCount") to
@@ -2936,6 +3139,7 @@ func (s *Entry) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ErrorProto: Error details.
 type ErrorProto struct {
 	// DebugInfo: Debugging information. This property is internal to Google
 	// and should not be used.
@@ -3029,9 +3233,18 @@ func (s *EvaluationMetrics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ExplainQueryStage: A single stage of query execution.
 type ExplainQueryStage struct {
 	// CompletedParallelInputs: Number of parallel input segments completed.
 	CompletedParallelInputs int64 `json:"completedParallelInputs,omitempty,string"`
+
+	// ComputeMode: Output only. Compute mode for this stage.
+	//
+	// Possible values:
+	//   "COMPUTE_MODE_UNSPECIFIED" - ComputeMode type not specified.
+	//   "BIGQUERY" - This stage was processed using BigQuery slots.
+	//   "BI_ENGINE" - This stage was processed using BI Engine compute.
+	ComputeMode string `json:"computeMode,omitempty"`
 
 	// ComputeMsAvg: Milliseconds the average shard spent on CPU-bound
 	// tasks.
@@ -3049,19 +3262,19 @@ type ExplainQueryStage struct {
 	// CPU-bound tasks.
 	ComputeRatioMax float64 `json:"computeRatioMax,omitempty"`
 
-	// EndMs: Stage end time represented as milliseconds since epoch.
+	// EndMs: Stage end time represented as milliseconds since the epoch.
 	EndMs int64 `json:"endMs,omitempty,string"`
 
-	// Id: Unique ID for stage within plan.
+	// Id: Unique ID for the stage within the plan.
 	Id int64 `json:"id,omitempty,string"`
 
 	// InputStages: IDs for stages that are inputs to this stage.
 	InputStages googleapi.Int64s `json:"inputStages,omitempty"`
 
-	// Name: Human-readable name for stage.
+	// Name: Human-readable name for the stage.
 	Name string `json:"name,omitempty"`
 
-	// ParallelInputs: Number of parallel input segments to be processed.
+	// ParallelInputs: Number of parallel input segments to be processed
 	ParallelInputs int64 `json:"parallelInputs,omitempty,string"`
 
 	// ReadMsAvg: Milliseconds the average shard spent reading input.
@@ -3094,10 +3307,11 @@ type ExplainQueryStage struct {
 	// SlotMs: Slot-milliseconds used by the stage.
 	SlotMs int64 `json:"slotMs,omitempty,string"`
 
-	// StartMs: Stage start time represented as milliseconds since epoch.
+	// StartMs: Stage start time represented as milliseconds since the
+	// epoch.
 	StartMs int64 `json:"startMs,omitempty,string"`
 
-	// Status: Current status for the stage.
+	// Status: Current status for this stage.
 	Status string `json:"status,omitempty"`
 
 	// Steps: List of operations within the stage in dependency order
@@ -3187,11 +3401,12 @@ func (s *ExplainQueryStage) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ExplainQueryStep: An operation within a stage.
 type ExplainQueryStep struct {
 	// Kind: Machine-readable operation type.
 	Kind string `json:"kind,omitempty"`
 
-	// Substeps: Human-readable stage descriptions.
+	// Substeps: Human-readable description of the step(s).
 	Substeps []string `json:"substeps,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Kind") to
@@ -3264,6 +3479,41 @@ func (s *Explanation) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ExportDataStatistics: Statistics for the EXPORT DATA statement as
+// part of Query Job. EXTRACT JOB statistics are populated in
+// JobStatistics4.
+type ExportDataStatistics struct {
+	// FileCount: Number of destination files generated in case of EXPORT
+	// DATA statement only.
+	FileCount int64 `json:"fileCount,omitempty,string"`
+
+	// RowCount: [Alpha] Number of destination rows generated in case of
+	// EXPORT DATA statement only.
+	RowCount int64 `json:"rowCount,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "FileCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FileCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExportDataStatistics) MarshalJSON() ([]byte, error) {
+	type NoMethod ExportDataStatistics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Expr: Represents a textual expression in the Common Expression
 // Language (CEL) syntax. CEL is a C-like expression language. The
 // syntax and semantics of CEL are documented at
@@ -3329,65 +3579,87 @@ type ExternalDataConfiguration struct {
 	// Any option specified explicitly will be honored.
 	Autodetect bool `json:"autodetect,omitempty"`
 
-	// AvroOptions: Additional properties to set if sourceFormat is set to
-	// Avro.
+	// AvroOptions: Optional. Additional properties to set if sourceFormat
+	// is set to AVRO.
 	AvroOptions *AvroOptions `json:"avroOptions,omitempty"`
 
-	// BigtableOptions: [Optional] Additional options if sourceFormat is set
+	// BigtableOptions: Optional. Additional options if sourceFormat is set
 	// to BIGTABLE.
 	BigtableOptions *BigtableOptions `json:"bigtableOptions,omitempty"`
 
-	// Compression: [Optional] The compression type of the data source.
+	// Compression: Optional. The compression type of the data source.
 	// Possible values include GZIP and NONE. The default value is NONE.
 	// This setting is ignored for Google Cloud Bigtable, Google Cloud
-	// Datastore backups and Avro formats.
+	// Datastore backups, Avro, ORC and Parquet formats. An empty string is
+	// an invalid value.
 	Compression string `json:"compression,omitempty"`
 
-	// ConnectionId: [Optional, Trusted Tester] Connection for external data
-	// source.
+	// ConnectionId: Optional. The connection specifying the credentials to
+	// be used to read external storage, such as Azure Blob, Cloud Storage,
+	// or S3. The connection_id can have the form
+	// "<project\_id>.<location\_id>.<connection\_id>" or
+	// "projects/<project\_id>/locations/<location\_id>/connections/<connecti
+	// on\_id>".
 	ConnectionId string `json:"connectionId,omitempty"`
 
-	// CsvOptions: Additional properties to set if sourceFormat is set to
-	// CSV.
+	// CsvOptions: Optional. Additional properties to set if sourceFormat is
+	// set to CSV.
 	CsvOptions *CsvOptions `json:"csvOptions,omitempty"`
 
-	// DecimalTargetTypes: [Optional] Defines the list of possible SQL data
-	// types to which the source decimal values are converted. This list and
-	// the precision and the scale parameters of the decimal field determine
-	// the target type. In the order of NUMERIC, BIGNUMERIC, and STRING, a
-	// type is picked if it is in the specified list and if it supports the
+	// DecimalTargetTypes: Defines the list of possible SQL data types to
+	// which the source decimal values are converted. This list and the
+	// precision and the scale parameters of the decimal field determine the
+	// target type. In the order of NUMERIC, BIGNUMERIC, and STRING, a type
+	// is picked if it is in the specified list and if it supports the
 	// precision and the scale. STRING supports all precision and scale
 	// values. If none of the listed types supports the precision and the
 	// scale, the type supporting the widest range in the specified list is
 	// picked, and if a value exceeds the supported range when reading the
 	// data, an error will be thrown. Example: Suppose the value of this
-	// field is ["NUMERIC", "BIGNUMERIC"]. If (precision,scale) is: (38,9)
-	// -> NUMERIC; (39,9) -> BIGNUMERIC (NUMERIC cannot hold 30 integer
-	// digits); (38,10) -> BIGNUMERIC (NUMERIC cannot hold 10 fractional
-	// digits); (76,38) -> BIGNUMERIC; (77,38) -> BIGNUMERIC (error if value
-	// exeeds supported range). This field cannot contain duplicate types.
-	// The order of the types in this field is ignored. For example,
+	// field is ["NUMERIC", "BIGNUMERIC"]. If (precision,scale) is: * (38,9)
+	// -> NUMERIC; * (39,9) -> BIGNUMERIC (NUMERIC cannot hold 30 integer
+	// digits); * (38,10) -> BIGNUMERIC (NUMERIC cannot hold 10 fractional
+	// digits); * (76,38) -> BIGNUMERIC; * (77,38) -> BIGNUMERIC (error if
+	// value exeeds supported range). This field cannot contain duplicate
+	// types. The order of the types in this field is ignored. For example,
 	// ["BIGNUMERIC", "NUMERIC"] is the same as ["NUMERIC", "BIGNUMERIC"]
 	// and NUMERIC always takes precedence over BIGNUMERIC. Defaults to
 	// ["NUMERIC", "STRING"] for ORC and ["NUMERIC"] for the other file
 	// formats.
+	//
+	// Possible values:
+	//   "DECIMAL_TARGET_TYPE_UNSPECIFIED" - Invalid type.
+	//   "NUMERIC" - Decimal values could be converted to NUMERIC type.
+	//   "BIGNUMERIC" - Decimal values could be converted to BIGNUMERIC
+	// type.
+	//   "STRING" - Decimal values could be converted to STRING type.
 	DecimalTargetTypes []string `json:"decimalTargetTypes,omitempty"`
 
-	// FileSetSpecType: [Optional] Specifies how source URIs are interpreted
+	// FileSetSpecType: Optional. Specifies how source URIs are interpreted
 	// for constructing the file set to load. By default source URIs are
 	// expanded against the underlying storage. Other options include
 	// specifying manifest files. Only applicable to object storage systems.
+	//
+	// Possible values:
+	//   "FILE_SET_SPEC_TYPE_FILE_SYSTEM_MATCH" - This option expands source
+	// URIs by listing files from the object store. It is the default
+	// behavior if FileSetSpecType is not set.
+	//   "FILE_SET_SPEC_TYPE_NEW_LINE_DELIMITED_MANIFEST" - This option
+	// indicates that the provided URIs are newline-delimited manifest
+	// files, with one URI per line. Wildcard URIs are not supported.
 	FileSetSpecType string `json:"fileSetSpecType,omitempty"`
 
-	// GoogleSheetsOptions: [Optional] Additional options if sourceFormat is
+	// GoogleSheetsOptions: Optional. Additional options if sourceFormat is
 	// set to GOOGLE_SHEETS.
 	GoogleSheetsOptions *GoogleSheetsOptions `json:"googleSheetsOptions,omitempty"`
 
-	// HivePartitioningOptions: [Optional] Options to configure hive
-	// partitioning support.
+	// HivePartitioningOptions: Optional. When set, configures hive
+	// partitioning support. Not all storage formats support hive
+	// partitioning -- requesting hive partitioning on an unsupported format
+	// will lead to an error, as will providing an invalid specification.
 	HivePartitioningOptions *HivePartitioningOptions `json:"hivePartitioningOptions,omitempty"`
 
-	// IgnoreUnknownValues: [Optional] Indicates if BigQuery should allow
+	// IgnoreUnknownValues: Optional. Indicates if BigQuery should allow
 	// extra values that are not represented in the table schema. If true,
 	// the extra values are ignored. If false, records with extra columns
 	// are treated as bad records, and if there are too many bad records, an
@@ -3396,53 +3668,85 @@ type ExternalDataConfiguration struct {
 	// an extra value: CSV: Trailing columns JSON: Named values that don't
 	// match any column names Google Cloud Bigtable: This setting is
 	// ignored. Google Cloud Datastore backups: This setting is ignored.
-	// Avro: This setting is ignored.
+	// Avro: This setting is ignored. ORC: This setting is ignored. Parquet:
+	// This setting is ignored.
 	IgnoreUnknownValues bool `json:"ignoreUnknownValues,omitempty"`
 
-	// JsonOptions: Additional properties to set if `sourceFormat` is set to
-	// `NEWLINE_DELIMITED_JSON`.
+	// JsonExtension: Optional. Load option to be used together with
+	// source_format newline-delimited JSON to indicate that a variant of
+	// JSON is being loaded. To load newline-delimited GeoJSON, specify
+	// GEOJSON (and source_format must be set to NEWLINE_DELIMITED_JSON).
+	//
+	// Possible values:
+	//   "JSON_EXTENSION_UNSPECIFIED" - The default if provided value is not
+	// one included in the enum, or the value is not specified. The source
+	// formate is parsed without any modification.
+	//   "GEOJSON" - Use GeoJSON variant of JSON. See
+	// https://tools.ietf.org/html/rfc7946.
+	JsonExtension string `json:"jsonExtension,omitempty"`
+
+	// JsonOptions: Optional. Additional properties to set if sourceFormat
+	// is set to JSON.
 	JsonOptions *JsonOptions `json:"jsonOptions,omitempty"`
 
-	// MaxBadRecords: [Optional] The maximum number of bad records that
+	// MaxBadRecords: Optional. The maximum number of bad records that
 	// BigQuery can ignore when reading data. If the number of bad records
 	// exceeds this value, an invalid error is returned in the job result.
-	// This is only valid for CSV, JSON, and Google Sheets. The default
-	// value is 0, which requires that all records are valid. This setting
-	// is ignored for Google Cloud Bigtable, Google Cloud Datastore backups
-	// and Avro formats.
+	// The default value is 0, which requires that all records are valid.
+	// This setting is ignored for Google Cloud Bigtable, Google Cloud
+	// Datastore backups, Avro, ORC and Parquet formats.
 	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
 
-	// MetadataCacheMode: [Optional] Metadata Cache Mode for the table. Set
+	// MetadataCacheMode: Optional. Metadata Cache Mode for the table. Set
 	// this to enable caching of metadata from external data source.
+	//
+	// Possible values:
+	//   "METADATA_CACHE_MODE_UNSPECIFIED" - Unspecified metadata cache
+	// mode.
+	//   "AUTOMATIC" - Set this mode to trigger automatic background refresh
+	// of metadata cache from the external source. Queries will use the
+	// latest available cache version within the table's maxStaleness
+	// interval.
+	//   "MANUAL" - Set this mode to enable triggering manual refresh of the
+	// metadata cache from external source. Queries will use the latest
+	// manually triggered cache version within the table's maxStaleness
+	// interval.
 	MetadataCacheMode string `json:"metadataCacheMode,omitempty"`
 
-	// ObjectMetadata: ObjectMetadata is used to create Object Tables.
-	// Object Tables contain a listing of objects (with their metadata)
-	// found at the source_uris. If ObjectMetadata is set, source_format
-	// should be omitted. Currently SIMPLE is the only supported Object
-	// Metadata type.
+	// ObjectMetadata: Optional. ObjectMetadata is used to create Object
+	// Tables. Object Tables contain a listing of objects (with their
+	// metadata) found at the source_uris. If ObjectMetadata is set,
+	// source_format should be omitted. Currently SIMPLE is the only
+	// supported Object Metadata type.
+	//
+	// Possible values:
+	//   "OBJECT_METADATA_UNSPECIFIED" - Unspecified by default.
+	//   "DIRECTORY" - A synonym for `SIMPLE`.
+	//   "SIMPLE" - Directory listing of objects.
 	ObjectMetadata string `json:"objectMetadata,omitempty"`
 
-	// ParquetOptions: Additional properties to set if sourceFormat is set
-	// to Parquet.
+	// ParquetOptions: Optional. Additional properties to set if
+	// sourceFormat is set to PARQUET.
 	ParquetOptions *ParquetOptions `json:"parquetOptions,omitempty"`
 
-	// ReferenceFileSchemaUri: [Optional] Provide a referencing file with
-	// the expected table schema. Enabled for the format: AVRO, PARQUET,
-	// ORC.
+	// ReferenceFileSchemaUri: Optional. When creating an external table,
+	// the user can provide a reference file with the table schema. This is
+	// enabled for the following formats: AVRO, PARQUET, ORC.
 	ReferenceFileSchemaUri string `json:"referenceFileSchemaUri,omitempty"`
 
-	// Schema: [Optional] The schema for the data. Schema is required for
-	// CSV and JSON formats. Schema is disallowed for Google Cloud Bigtable,
-	// Cloud Datastore backups, and Avro formats.
+	// Schema: Optional. The schema for the data. Schema is required for CSV
+	// and JSON formats if autodetect is not on. Schema is disallowed for
+	// Google Cloud Bigtable, Cloud Datastore backups, Avro, ORC and Parquet
+	// formats.
 	Schema *TableSchema `json:"schema,omitempty"`
 
 	// SourceFormat: [Required] The data format. For CSV files, specify
 	// "CSV". For Google sheets, specify "GOOGLE_SHEETS". For
 	// newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". For Avro
 	// files, specify "AVRO". For Google Cloud Datastore backups, specify
-	// "DATASTORE_BACKUP". [Beta] For Google Cloud Bigtable, specify
-	// "BIGTABLE".
+	// "DATASTORE_BACKUP". For Apache Iceberg tables, specify "ICEBERG". For
+	// ORC files, specify "ORC". For Parquet files, specify "PARQUET".
+	// [Beta] For Google Cloud Bigtable, specify "BIGTABLE".
 	SourceFormat string `json:"sourceFormat,omitempty"`
 
 	// SourceUris: [Required] The fully-qualified URIs that point to your
@@ -3479,14 +3783,16 @@ func (s *ExternalDataConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ExternalDatasetReference: Configures the access a dataset defined in
+// an external metadata storage.
 type ExternalDatasetReference struct {
-	// Connection: [Required] The connection id that is used to access the
+	// Connection: Required. The connection id that is used to access the
 	// external_source. Format:
 	// projects/{project_id}/locations/{location_id}/connections/{connection_
 	// id}
 	Connection string `json:"connection,omitempty"`
 
-	// ExternalSource: [Required] External source that backs this dataset.
+	// ExternalSource: Required. External source that backs this dataset.
 	ExternalSource string `json:"externalSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Connection") to
@@ -3508,6 +3814,59 @@ type ExternalDatasetReference struct {
 
 func (s *ExternalDatasetReference) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalDatasetReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExternalServiceCost: The external service cost is a portion of the
+// total cost, these costs are not additive with total_bytes_billed.
+// Moreover, this field only track external service costs that will show
+// up as BigQuery costs (e.g. training BigQuery ML job with google cloud
+// CAIP or Automl Tables services), not other costs which may be accrued
+// by running the query (e.g. reading from Bigtable or Cloud Storage).
+// The external service costs with different billing sku (e.g. CAIP job
+// is charged based on VM usage) are converted to BigQuery billed_bytes
+// and slot_ms with equivalent amount of US dollars. Services may not
+// directly correlate to these metrics, but these are the equivalents
+// for billing purposes. Output only.
+type ExternalServiceCost struct {
+	// BytesBilled: External service cost in terms of bigquery bytes billed.
+	BytesBilled int64 `json:"bytesBilled,omitempty,string"`
+
+	// BytesProcessed: External service cost in terms of bigquery bytes
+	// processed.
+	BytesProcessed int64 `json:"bytesProcessed,omitempty,string"`
+
+	// ExternalService: External service name.
+	ExternalService string `json:"externalService,omitempty"`
+
+	// ReservedSlotCount: Non-preemptable reserved slots used for external
+	// job. For example, reserved slots for Cloua AI Platform job are the VM
+	// usages converted to BigQuery slot with equivalent mount of price.
+	ReservedSlotCount int64 `json:"reservedSlotCount,omitempty,string"`
+
+	// SlotMs: External service cost in terms of bigquery slot milliseconds.
+	SlotMs int64 `json:"slotMs,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "BytesBilled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BytesBilled") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExternalServiceCost) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalServiceCost
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3633,14 +3992,17 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GetQueryResultsResponse: Response object of GetQueryResults.
 type GetQueryResultsResponse struct {
 	// CacheHit: Whether the query result was fetched from the query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
 
-	// Errors: [Output-only] The first errors or warnings encountered during
+	// Errors: Output only. The first errors or warnings encountered during
 	// the running of the job. The final message includes the number of
 	// errors that caused the process to stop. Errors here do not
-	// necessarily mean that the job has completed or was unsuccessful.
+	// necessarily mean that the job has completed or was unsuccessful. For
+	// more information about error messages, see Error messages
+	// (https://cloud.google.com/bigquery/docs/error-messages).
 	Errors []*ErrorProto `json:"errors,omitempty"`
 
 	// Etag: A hash of this response.
@@ -3662,18 +4024,20 @@ type GetQueryResultsResponse struct {
 	// Kind: The resource type of the response.
 	Kind string `json:"kind,omitempty"`
 
-	// NumDmlAffectedRows: [Output-only] The number of rows affected by a
-	// DML statement. Present only for DML statements INSERT, UPDATE or
-	// DELETE.
+	// NumDmlAffectedRows: Output only. The number of rows affected by a DML
+	// statement. Present only for DML statements INSERT, UPDATE or DELETE.
 	NumDmlAffectedRows int64 `json:"numDmlAffectedRows,omitempty,string"`
 
-	// PageToken: A token used for paging results.
+	// PageToken: A token used for paging results. When this token is
+	// non-empty, it indicates additional results are available.
 	PageToken string `json:"pageToken,omitempty"`
 
 	// Rows: An object with as many results as can be contained within the
 	// maximum permitted reply size. To get any additional rows, you can
 	// call GetQueryResults and specify the jobReference returned above.
-	// Present only when the query completes successfully.
+	// Present only when the query completes successfully. The REST-based
+	// representation of this data leverages a series of JSON f,v objects
+	// for indicating fields and values.
 	Rows []*TableRow `json:"rows,omitempty"`
 
 	// Schema: The schema of the results. Present only when the query
@@ -3716,6 +4080,7 @@ func (s *GetQueryResultsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GetServiceAccountResponse: Response object of GetServiceAccount
 type GetServiceAccountResponse struct {
 	// Email: The service account email address.
 	Email string `json:"email,omitempty"`
@@ -3785,17 +4150,18 @@ func (s *GlobalExplanation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleSheetsOptions: Options specific to Google Sheets data sources.
 type GoogleSheetsOptions struct {
-	// Range: [Optional] Range of a sheet to query from. Only used when
+	// Range: Optional. Range of a sheet to query from. Only used when
 	// non-empty. Typical format:
 	// sheet_name!top_left_cell_id:bottom_right_cell_id For example:
 	// sheet1!A1:B20
 	Range string `json:"range,omitempty"`
 
-	// SkipLeadingRows: [Optional] The number of rows at the top of a sheet
+	// SkipLeadingRows: Optional. The number of rows at the top of a sheet
 	// that BigQuery will skip when reading the data. The default value is
 	// 0. This property is useful if you have header rows that should be
-	// skipped. When autodetect is on, behavior is the following: *
+	// skipped. When autodetect is on, the behavior is the following: *
 	// skipLeadingRows unspecified - Autodetect tries to detect headers in
 	// the first row. If they are not detected, the row is read as data.
 	// Otherwise data is read starting from the second row. *
@@ -3830,8 +4196,48 @@ func (s *GoogleSheetsOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// HighCardinalityJoin: High cardinality join detailed information.
+type HighCardinalityJoin struct {
+	// LeftRows: Output only. Count of left input rows.
+	LeftRows int64 `json:"leftRows,omitempty,string"`
+
+	// OutputRows: Output only. Count of the output rows.
+	OutputRows int64 `json:"outputRows,omitempty,string"`
+
+	// RightRows: Output only. Count of right input rows.
+	RightRows int64 `json:"rightRows,omitempty,string"`
+
+	// StepIndex: Output only. The index of the join operator in the
+	// ExplainQueryStep lists.
+	StepIndex int64 `json:"stepIndex,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LeftRows") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LeftRows") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HighCardinalityJoin) MarshalJSON() ([]byte, error) {
+	type NoMethod HighCardinalityJoin
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HivePartitioningOptions: Options for configuring hive partitioning
+// detect.
 type HivePartitioningOptions struct {
-	// Fields: [Output-only] For permanent external tables, this field is
+	// Fields: Output only. For permanent external tables, this field is
 	// populated with the hive partition keys in the order they were
 	// inferred. The types of the partition keys can be deduced by checking
 	// the table schema (which will include the partition keys). Not every
@@ -3839,35 +4245,39 @@ type HivePartitioningOptions struct {
 	// will populate it, but Tables.List will not contain this field.
 	Fields []string `json:"fields,omitempty"`
 
-	// Mode: [Optional] When set, what mode of hive partitioning to use when
-	// reading data. The following modes are supported. (1) AUTO:
-	// automatically infer partition key name(s) and type(s). (2) STRINGS:
-	// automatically infer partition key name(s). All types are interpreted
-	// as strings. (3) CUSTOM: partition key schema is encoded in the source
-	// URI prefix. Not all storage formats support hive partitioning.
-	// Requesting hive partitioning on an unsupported format will lead to an
-	// error. Currently supported types include: AVRO, CSV, JSON, ORC and
-	// Parquet.
+	// Mode: Optional. When set, what mode of hive partitioning to use when
+	// reading data. The following modes are supported: * AUTO:
+	// automatically infer partition key name(s) and type(s). * STRINGS:
+	// automatically infer partition key name(s). All types are strings. *
+	// CUSTOM: partition key schema is encoded in the source URI prefix. Not
+	// all storage formats support hive partitioning. Requesting hive
+	// partitioning on an unsupported format will lead to an error.
+	// Currently supported formats are: JSON, CSV, ORC, Avro and Parquet.
 	Mode string `json:"mode,omitempty"`
 
-	// RequirePartitionFilter: [Optional] If set to true, queries over this
+	// RequirePartitionFilter: Optional. If set to true, queries over this
 	// table require a partition filter that can be used for partition
 	// elimination to be specified. Note that this field should only be true
 	// when creating a permanent external table or querying a temporary
-	// external table. Hive-partitioned loads with requirePartitionFilter
+	// external table. Hive-partitioned loads with require_partition_filter
 	// explicitly set to true will fail.
 	RequirePartitionFilter bool `json:"requirePartitionFilter,omitempty"`
 
-	// SourceUriPrefix: [Optional] When hive partition detection is
-	// requested, a common prefix for all source uris should be supplied.
-	// The prefix must end immediately before the partition key encoding
-	// begins. For example, consider files following this data layout.
-	// gs://bucket/path_to_table/dt=2019-01-01/country=BR/id=7/file.avro
-	// gs://bucket/path_to_table/dt=2018-12-31/country=CA/id=3/file.avro
+	// SourceUriPrefix: Optional. When hive partition detection is
+	// requested, a common prefix for all source uris must be required. The
+	// prefix must end immediately before the partition key encoding begins.
+	// For example, consider files following this data layout:
+	// gs://bucket/path_to_table/dt=2019-06-01/country=USA/id=7/file.avro
+	// gs://bucket/path_to_table/dt=2019-05-31/country=CA/id=3/file.avro
 	// When hive partitioning is requested with either AUTO or STRINGS
 	// detection, the common prefix can be either of
-	// gs://bucket/path_to_table or gs://bucket/path_to_table/ (trailing
-	// slash does not matter).
+	// gs://bucket/path_to_table or gs://bucket/path_to_table/. CUSTOM
+	// detection requires encoding the partitioning schema immediately after
+	// the common prefix. For CUSTOM, any of *
+	// gs://bucket/path_to_table/{dt:DATE}/{country:STRING}/{id:INTEGER} *
+	// gs://bucket/path_to_table/{dt:STRING}/{country:STRING}/{id:INTEGER} *
+	// gs://bucket/path_to_table/{dt:DATE}/{country:STRING}/{id:STRING}
+	// would all be valid source URI prefixes.
 	SourceUriPrefix string `json:"sourceUriPrefix,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fields") to
@@ -4078,21 +4488,73 @@ func (s *HparamTuningTrial) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// IndexUnusedReason: Reason about why no search index was used in the
+// search query (or sub-query).
 type IndexUnusedReason struct {
-	// BaseTable: [Output-only] Specifies the base table involved in the
-	// reason that no search index was used.
+	// BaseTable: Specifies the base table involved in the reason that no
+	// search index was used.
 	BaseTable *TableReference `json:"baseTable,omitempty"`
 
-	// Code: [Output-only] Specifies the high-level reason for the scenario
-	// when no search index was used.
+	// Code: Specifies the high-level reason for the scenario when no search
+	// index was used.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - Code not specified.
+	//   "INDEX_CONFIG_NOT_AVAILABLE" - Indicates the search index
+	// configuration has not been created.
+	//   "PENDING_INDEX_CREATION" - Indicates the search index creation has
+	// not been completed.
+	//   "BASE_TABLE_TRUNCATED" - Indicates the base table has been
+	// truncated (rows have been removed from table with TRUNCATE TABLE
+	// statement) since the last time the search index was refreshed.
+	//   "INDEX_CONFIG_MODIFIED" - Indicates the search index configuration
+	// has been changed since the last time the search index was refreshed.
+	//   "TIME_TRAVEL_QUERY" - Indicates the search query accesses data at a
+	// timestamp before the last time the search index was refreshed.
+	//   "NO_PRUNING_POWER" - Indicates the usage of search index will not
+	// contribute to any pruning improvement for the search function, e.g.
+	// when the search predicate is in a disjunction with other non-search
+	// predicates.
+	//   "UNINDEXED_SEARCH_FIELDS" - Indicates the search index does not
+	// cover all fields in the search function.
+	//   "UNSUPPORTED_SEARCH_PATTERN" - Indicates the search index does not
+	// support the given search query pattern.
+	//   "OPTIMIZED_WITH_MATERIALIZED_VIEW" - Indicates the query has been
+	// optimized by using a materialized view.
+	//   "SECURED_BY_DATA_MASKING" - Indicates the query has been secured by
+	// data masking, and thus search indexes are not applicable.
+	//   "MISMATCHED_TEXT_ANALYZER" - Indicates that the search index and
+	// the search function call do not have the same text analyzer.
+	//   "BASE_TABLE_TOO_SMALL" - Indicates the base table is too small
+	// (below a certain threshold). The index does not provide noticeable
+	// search performance gains when the base table is too small.
+	//   "BASE_TABLE_TOO_LARGE" - Indicates that the total size of indexed
+	// base tables in your organization exceeds your region's limit and the
+	// index is not used in the query. To index larger base tables, you can
+	// use your own reservation for index-management jobs.
+	//   "ESTIMATED_PERFORMANCE_GAIN_TOO_LOW" - Indicates that the estimated
+	// performance gain from using the search index is too low for the given
+	// search query.
+	//   "NOT_SUPPORTED_IN_STANDARD_EDITION" - Indicates that search indexes
+	// can not be used for search query with STANDARD edition.
+	//   "INDEX_SUPPRESSED_BY_FUNCTION_OPTION" - Indicates that an option in
+	// the search function that cannot make use of the index has been
+	// selected.
+	//   "QUERY_CACHE_HIT" - Indicates that the query was cached, and thus
+	// the search index was not used.
+	//   "INTERNAL_ERROR" - Indicates an internal error that causes the
+	// search index to be unused.
+	//   "OTHER_REASON" - Indicates that the reason search indexes cannot be
+	// used in the query is not covered by any of the other
+	// IndexUnusedReason options.
 	Code string `json:"code,omitempty"`
 
-	// IndexName: [Output-only] Specifies the name of the unused search
-	// index, if available.
+	// IndexName: Specifies the name of the unused search index, if
+	// available.
 	IndexName string `json:"indexName,omitempty"`
 
-	// Message: [Output-only] Free form human-readable reason for the
-	// scenario when no search index was used.
+	// Message: Free form human-readable reason for the scenario when no
+	// search index was used.
 	Message string `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BaseTable") to
@@ -4116,6 +4578,51 @@ func (s *IndexUnusedReason) MarshalJSON() ([]byte, error) {
 	type NoMethod IndexUnusedReason
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InputDataChange: Details about the input data change insight.
+type InputDataChange struct {
+	// RecordsReadDiffPercentage: Output only. Records read difference
+	// percentage compared to a previous run.
+	RecordsReadDiffPercentage float64 `json:"recordsReadDiffPercentage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "RecordsReadDiffPercentage") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "RecordsReadDiffPercentage") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InputDataChange) MarshalJSON() ([]byte, error) {
+	type NoMethod InputDataChange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *InputDataChange) UnmarshalJSON(data []byte) error {
+	type NoMethod InputDataChange
+	var s1 struct {
+		RecordsReadDiffPercentage gensupport.JSONFloat64 `json:"recordsReadDiffPercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.RecordsReadDiffPercentage = float64(s1.RecordsReadDiffPercentage)
+	return nil
 }
 
 // IntArray: An array of int.
@@ -4264,7 +4771,15 @@ func (s *IntRange) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IterationResult: Information about a single iteration of the training
+// run.
 type IterationResult struct {
+	// ArimaResult: Arima result.
+	ArimaResult *ArimaResult `json:"arimaResult,omitempty"`
+
+	// ClusterInfos: Information about top clusters for clustering models.
+	ClusterInfos []*ClusterInfo `json:"clusterInfos,omitempty"`
+
 	// DurationMs: Time taken to run the iteration in milliseconds.
 	DurationMs int64 `json:"durationMs,omitempty,string"`
 
@@ -4277,11 +4792,14 @@ type IterationResult struct {
 	// LearnRate: Learn rate used for this iteration.
 	LearnRate float64 `json:"learnRate,omitempty"`
 
+	// PrincipalComponentInfos: The information of the principal components.
+	PrincipalComponentInfos []*PrincipalComponentInfo `json:"principalComponentInfos,omitempty"`
+
 	// TrainingLoss: Loss computed on the training data at the end of
 	// iteration.
 	TrainingLoss float64 `json:"trainingLoss,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DurationMs") to
+	// ForceSendFields is a list of field names (e.g. "ArimaResult") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4289,10 +4807,10 @@ type IterationResult struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DurationMs") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "ArimaResult") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -4323,41 +4841,47 @@ func (s *IterationResult) UnmarshalJSON(data []byte) error {
 }
 
 type Job struct {
-	// Configuration: [Required] Describes the job configuration.
+	// Configuration: Required. Describes the job configuration.
 	Configuration *JobConfiguration `json:"configuration,omitempty"`
 
-	// Etag: [Output-only] A hash of this resource.
+	// Etag: Output only. A hash of this resource.
 	Etag string `json:"etag,omitempty"`
 
-	// Id: [Output-only] Opaque ID field of the job
+	// Id: Output only. Opaque ID field of the job.
 	Id string `json:"id,omitempty"`
 
-	// JobCreationReason: [Output-only] If set, it provides the reason why a
+	// JobCreationReason: Output only. If set, it provides the reason why a
 	// Job was created. If not set, it should be treated as the default:
 	// REQUESTED. This feature is not yet available. Jobs will always be
 	// created.
-	JobCreationReason interface{} `json:"jobCreationReason,omitempty"`
+	JobCreationReason *JobCreationReason `json:"jobCreationReason,omitempty"`
 
-	// JobReference: [Optional] Reference describing the unique-per-user
-	// name of the job.
+	// JobReference: Optional. Reference describing the unique-per-user name
+	// of the job.
 	JobReference *JobReference `json:"jobReference,omitempty"`
 
-	// Kind: [Output-only] The type of the resource.
+	// Kind: Output only. The type of the resource.
 	Kind string `json:"kind,omitempty"`
 
-	// SelfLink: [Output-only] A URL that can be used to access this
-	// resource again.
+	// PrincipalSubject: Output only. [Full-projection-only] String
+	// representation of identity of requesting party. Populated for both
+	// first- and third-party identities. Only present for APIs that support
+	// third-party identities.
+	PrincipalSubject string `json:"principal_subject,omitempty"`
+
+	// SelfLink: Output only. A URL that can be used to access the resource
+	// again.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Statistics: [Output-only] Information about the job, including
+	// Statistics: Output only. Information about the job, including
 	// starting time and ending time of the job.
 	Statistics *JobStatistics `json:"statistics,omitempty"`
 
-	// Status: [Output-only] The status of this job. Examine this value when
+	// Status: Output only. The status of this job. Examine this value when
 	// polling an asynchronous job to see if the job is complete.
 	Status *JobStatus `json:"status,omitempty"`
 
-	// UserEmail: [Output-only] Email address of the user who ran the job.
+	// UserEmail: Output only. Email address of the user who ran the job.
 	UserEmail string `json:"user_email,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4387,6 +4911,7 @@ func (s *Job) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobCancelResponse: Describes format of a jobs cancellation response.
 type JobCancelResponse struct {
 	// Job: The final state of the job.
 	Job *Job `json:"job,omitempty"`
@@ -4425,7 +4950,7 @@ type JobConfiguration struct {
 	// Copy: [Pick one] Copies a table.
 	Copy *JobConfigurationTableCopy `json:"copy,omitempty"`
 
-	// DryRun: [Optional] If set, don't actually run this job. A valid query
+	// DryRun: Optional. If set, don't actually run this job. A valid query
 	// will return a mostly empty response with some processing statistics,
 	// while an invalid query will return the same error it would if it
 	// wasn't a dry run. Behavior of non-query jobs is undefined.
@@ -4434,11 +4959,11 @@ type JobConfiguration struct {
 	// Extract: [Pick one] Configures an extract job.
 	Extract *JobConfigurationExtract `json:"extract,omitempty"`
 
-	// JobTimeoutMs: [Optional] Job timeout in milliseconds. If this time
-	// limit is exceeded, BigQuery may attempt to terminate the job.
+	// JobTimeoutMs: Optional. Job timeout in milliseconds. If this time
+	// limit is exceeded, BigQuery might attempt to stop the job.
 	JobTimeoutMs int64 `json:"jobTimeoutMs,omitempty,string"`
 
-	// JobType: [Output-only] The type of the job. Can be QUERY, LOAD,
+	// JobType: Output only. The type of the job. Can be QUERY, LOAD,
 	// EXTRACT, COPY or UNKNOWN.
 	JobType string `json:"jobType,omitempty"`
 
@@ -4479,15 +5004,18 @@ func (s *JobConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobConfigurationExtract: JobConfigurationExtract configures a job
+// that exports data from a BigQuery table into Google Cloud Storage.
 type JobConfigurationExtract struct {
-	// Compression: [Optional] The compression type to use for exported
-	// files. Possible values include GZIP, DEFLATE, SNAPPY, and NONE. The
-	// default value is NONE. DEFLATE and SNAPPY are only supported for
-	// Avro. Not applicable when extracting models.
+	// Compression: Optional. The compression type to use for exported
+	// files. Possible values include DEFLATE, GZIP, NONE, SNAPPY, and ZSTD.
+	// The default value is NONE. Not all compression formats are support
+	// for all file formats. DEFLATE is only supported for Avro. ZSTD is
+	// only supported for Parquet. Not applicable when extracting models.
 	Compression string `json:"compression,omitempty"`
 
-	// DestinationFormat: [Optional] The exported file format. Possible
-	// values include CSV, NEWLINE_DELIMITED_JSON, PARQUET or AVRO for
+	// DestinationFormat: Optional. The exported file format. Possible
+	// values include CSV, NEWLINE_DELIMITED_JSON, PARQUET, or AVRO for
 	// tables and ML_TF_SAVED_MODEL or ML_XGBOOST_BOOSTER for models. The
 	// default value for tables is CSV. Tables with nested or repeated
 	// fields cannot be exported as CSV. The default value for models is
@@ -4503,11 +5031,16 @@ type JobConfigurationExtract struct {
 	// Storage URIs where the extracted table should be written.
 	DestinationUris []string `json:"destinationUris,omitempty"`
 
-	// FieldDelimiter: [Optional] Delimiter to use between fields in the
-	// exported data. Default is ','. Not applicable when extracting models.
+	// FieldDelimiter: Optional. When extracting data in CSV format, this
+	// defines the delimiter to use between fields in the exported data.
+	// Default is ','. Not applicable when extracting models.
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
 
-	// PrintHeader: [Optional] Whether to print out a header row in the
+	// ModelExtractOptions: Optional. Model extract options only applicable
+	// when extracting models.
+	ModelExtractOptions *ModelExtractOptions `json:"modelExtractOptions,omitempty"`
+
+	// PrintHeader: Optional. Whether to print out a header row in the
 	// results. Default is true. Not applicable when extracting models.
 	//
 	// Default: true
@@ -4519,11 +5052,8 @@ type JobConfigurationExtract struct {
 	// SourceTable: A reference to the table being exported.
 	SourceTable *TableReference `json:"sourceTable,omitempty"`
 
-	// UseAvroLogicalTypes: [Optional] If destinationFormat is set to
-	// "AVRO", this flag indicates whether to enable extracting applicable
-	// column types (such as TIMESTAMP) to their corresponding AVRO logical
-	// types (timestamp-micros), instead of only using their raw types
-	// (avro-long). Not applicable when extracting models.
+	// UseAvroLogicalTypes: Whether to use logical types when extracting to
+	// AVRO format. Not applicable when extracting models.
 	UseAvroLogicalTypes bool `json:"useAvroLogicalTypes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Compression") to
@@ -4549,8 +5079,10 @@ func (s *JobConfigurationExtract) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobConfigurationLoad: JobConfigurationLoad contains the configuration
+// properties for loading data into a destination table.
 type JobConfigurationLoad struct {
-	// AllowJaggedRows: [Optional] Accept rows that are missing trailing
+	// AllowJaggedRows: Optional. Accept rows that are missing trailing
 	// optional columns. The missing values are treated as nulls. If false,
 	// records with missing trailing columns are treated as bad records, and
 	// if there are too many bad records, an invalid error is returned in
@@ -4563,132 +5095,188 @@ type JobConfigurationLoad struct {
 	// value is false.
 	AllowQuotedNewlines bool `json:"allowQuotedNewlines,omitempty"`
 
-	// Autodetect: [Optional] Indicates if we should automatically infer the
+	// Autodetect: Optional. Indicates if we should automatically infer the
 	// options and schema for CSV and JSON sources.
 	Autodetect bool `json:"autodetect,omitempty"`
 
-	// Clustering: [Beta] Clustering specification for the destination
-	// table. Must be specified with time-based partitioning, data in the
-	// table will be first partitioned and subsequently clustered.
+	// Clustering: Clustering specification for the destination table.
 	Clustering *Clustering `json:"clustering,omitempty"`
 
-	// ConnectionProperties: Connection properties.
+	// ConnectionProperties: Optional. Connection properties which can
+	// modify the load job behavior. Currently, only the 'session_id'
+	// connection property is supported, and is used to resolve _SESSION
+	// appearing as the dataset id.
 	ConnectionProperties []*ConnectionProperty `json:"connectionProperties,omitempty"`
 
-	// CreateDisposition: [Optional] Specifies whether the job is allowed to
-	// create new tables. The following values are supported:
+	// CopyFilesOnly: Optional. [Experimental] Configures the load job to
+	// only copy files to the destination BigLake managed table with an
+	// external storage_uri, without reading file content and writing them
+	// to new files. Copying files only is supported when: * source_uris are
+	// in the same external storage system as the destination table but they
+	// do not overlap with storage_uri of the destination table. *
+	// source_format is the same file format as the destination table. *
+	// destination_table is an existing BigLake managed table. Its schema
+	// does not have default value expression. It schema does not have type
+	// parameters other than precision and scale. * No options other than
+	// the above are specified.
+	CopyFilesOnly bool `json:"copyFilesOnly,omitempty"`
+
+	// CreateDisposition: Optional. Specifies whether the job is allowed to
+	// create new tables. The following values are supported: *
 	// CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the
-	// table. CREATE_NEVER: The table must already exist. If it does not, a
-	// 'notFound' error is returned in the job result. The default value is
-	// CREATE_IF_NEEDED. Creation, truncation and append actions occur as
+	// table. * CREATE_NEVER: The table must already exist. If it does not,
+	// a 'notFound' error is returned in the job result. The default value
+	// is CREATE_IF_NEEDED. Creation, truncation and append actions occur as
 	// one atomic update upon job completion.
 	CreateDisposition string `json:"createDisposition,omitempty"`
 
-	// CreateSession: If true, creates a new session, where session id will
-	// be a server generated random id. If false, runs query with an
-	// existing session_id passed in ConnectionProperty, otherwise runs the
-	// load job in non-session mode.
+	// CreateSession: Optional. If this property is true, the job creates a
+	// new session using a randomly generated session_id. To continue using
+	// a created session with subsequent queries, pass the existing session
+	// identifier as a `ConnectionProperty` value. The session identifier is
+	// returned as part of the `SessionInfo` message within the query
+	// statistics. The new session's location will be set to
+	// `Job.JobReference.location` if it is present, otherwise it's set to
+	// the default location based on existing routing logic.
 	CreateSession bool `json:"createSession,omitempty"`
 
-	// DecimalTargetTypes: [Optional] Defines the list of possible SQL data
-	// types to which the source decimal values are converted. This list and
-	// the precision and the scale parameters of the decimal field determine
-	// the target type. In the order of NUMERIC, BIGNUMERIC, and STRING, a
-	// type is picked if it is in the specified list and if it supports the
+	// DecimalTargetTypes: Defines the list of possible SQL data types to
+	// which the source decimal values are converted. This list and the
+	// precision and the scale parameters of the decimal field determine the
+	// target type. In the order of NUMERIC, BIGNUMERIC, and STRING, a type
+	// is picked if it is in the specified list and if it supports the
 	// precision and the scale. STRING supports all precision and scale
 	// values. If none of the listed types supports the precision and the
 	// scale, the type supporting the widest range in the specified list is
 	// picked, and if a value exceeds the supported range when reading the
 	// data, an error will be thrown. Example: Suppose the value of this
-	// field is ["NUMERIC", "BIGNUMERIC"]. If (precision,scale) is: (38,9)
-	// -> NUMERIC; (39,9) -> BIGNUMERIC (NUMERIC cannot hold 30 integer
-	// digits); (38,10) -> BIGNUMERIC (NUMERIC cannot hold 10 fractional
-	// digits); (76,38) -> BIGNUMERIC; (77,38) -> BIGNUMERIC (error if value
-	// exeeds supported range). This field cannot contain duplicate types.
-	// The order of the types in this field is ignored. For example,
+	// field is ["NUMERIC", "BIGNUMERIC"]. If (precision,scale) is: * (38,9)
+	// -> NUMERIC; * (39,9) -> BIGNUMERIC (NUMERIC cannot hold 30 integer
+	// digits); * (38,10) -> BIGNUMERIC (NUMERIC cannot hold 10 fractional
+	// digits); * (76,38) -> BIGNUMERIC; * (77,38) -> BIGNUMERIC (error if
+	// value exeeds supported range). This field cannot contain duplicate
+	// types. The order of the types in this field is ignored. For example,
 	// ["BIGNUMERIC", "NUMERIC"] is the same as ["NUMERIC", "BIGNUMERIC"]
 	// and NUMERIC always takes precedence over BIGNUMERIC. Defaults to
 	// ["NUMERIC", "STRING"] for ORC and ["NUMERIC"] for the other file
 	// formats.
+	//
+	// Possible values:
+	//   "DECIMAL_TARGET_TYPE_UNSPECIFIED" - Invalid type.
+	//   "NUMERIC" - Decimal values could be converted to NUMERIC type.
+	//   "BIGNUMERIC" - Decimal values could be converted to BIGNUMERIC
+	// type.
+	//   "STRING" - Decimal values could be converted to STRING type.
 	DecimalTargetTypes []string `json:"decimalTargetTypes,omitempty"`
 
 	// DestinationEncryptionConfiguration: Custom encryption configuration
-	// (e.g., Cloud KMS keys).
+	// (e.g., Cloud KMS keys)
 	DestinationEncryptionConfiguration *EncryptionConfiguration `json:"destinationEncryptionConfiguration,omitempty"`
 
 	// DestinationTable: [Required] The destination table to load the data
 	// into.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 
-	// DestinationTableProperties: [Beta] [Optional] Properties with which
-	// to create the destination table if it is new.
+	// DestinationTableProperties: Optional. [Experimental] Properties with
+	// which to create the destination table if it is new.
 	DestinationTableProperties *DestinationTableProperties `json:"destinationTableProperties,omitempty"`
 
-	// Encoding: [Optional] The character encoding of the data. The
-	// supported values are UTF-8 or ISO-8859-1. The default value is UTF-8.
-	// BigQuery decodes the data after the raw, binary data has been split
-	// using the values of the quote and fieldDelimiter properties.
+	// Encoding: Optional. The character encoding of the data. The supported
+	// values are UTF-8, ISO-8859-1, UTF-16BE, UTF-16LE, UTF-32BE, and
+	// UTF-32LE. The default value is UTF-8. BigQuery decodes the data after
+	// the raw, binary data has been split using the values of the `quote`
+	// and `fieldDelimiter` properties. If you don't specify an encoding, or
+	// if you specify a UTF-8 encoding when the CSV file is not UTF-8
+	// encoded, BigQuery attempts to convert the data to UTF-8. Generally,
+	// your data loads successfully, but it may not match byte-for-byte what
+	// you expect. To avoid this, specify the correct encoding by using the
+	// `--encoding` flag. If BigQuery can't convert a character other than
+	// the ASCII `0` character, BigQuery converts the character to the
+	// standard Unicode replacement character: �.
 	Encoding string `json:"encoding,omitempty"`
 
-	// FieldDelimiter: [Optional] The separator for fields in a CSV file.
-	// The separator can be any ISO-8859-1 single-byte character. To use a
-	// character in the range 128-255, you must encode the character as
-	// UTF8. BigQuery converts the string to ISO-8859-1 encoding, and then
-	// uses the first byte of the encoded string to split the data in its
-	// raw, binary state. BigQuery also supports the escape sequence "\t" to
-	// specify a tab separator. The default value is a comma (',').
+	// FieldDelimiter: Optional. The separator character for fields in a CSV
+	// file. The separator is interpreted as a single byte. For files
+	// encoded in ISO-8859-1, any single character can be used as a
+	// separator. For files encoded in UTF-8, characters represented in
+	// decimal range 1-127 (U+0001-U+007F) can be used without any
+	// modification. UTF-8 characters encoded with multiple bytes (i.e.
+	// U+0080 and above) will have only the first byte used for separating
+	// fields. The remaining bytes will be treated as a part of the field.
+	// BigQuery also supports the escape sequence "\t" (U+0009) to specify a
+	// tab separator. The default value is comma (",", U+002C).
 	FieldDelimiter string `json:"fieldDelimiter,omitempty"`
 
-	// FileSetSpecType: [Optional] Specifies how source URIs are interpreted
-	// for constructing the file set to load. By default source URIs are
-	// expanded against the underlying storage. Other options include
-	// specifying manifest files. Only applicable to object storage systems.
+	// FileSetSpecType: Optional. Specifies how source URIs are interpreted
+	// for constructing the file set to load. By default, source URIs are
+	// expanded against the underlying storage. You can also specify
+	// manifest files to control how the file set is constructed. This
+	// option is only applicable to object storage systems.
+	//
+	// Possible values:
+	//   "FILE_SET_SPEC_TYPE_FILE_SYSTEM_MATCH" - This option expands source
+	// URIs by listing files from the object store. It is the default
+	// behavior if FileSetSpecType is not set.
+	//   "FILE_SET_SPEC_TYPE_NEW_LINE_DELIMITED_MANIFEST" - This option
+	// indicates that the provided URIs are newline-delimited manifest
+	// files, with one URI per line. Wildcard URIs are not supported.
 	FileSetSpecType string `json:"fileSetSpecType,omitempty"`
 
-	// HivePartitioningOptions: [Optional] Options to configure hive
-	// partitioning support.
+	// HivePartitioningOptions: Optional. When set, configures hive
+	// partitioning support. Not all storage formats support hive
+	// partitioning -- requesting hive partitioning on an unsupported format
+	// will lead to an error, as will providing an invalid specification.
 	HivePartitioningOptions *HivePartitioningOptions `json:"hivePartitioningOptions,omitempty"`
 
-	// IgnoreUnknownValues: [Optional] Indicates if BigQuery should allow
+	// IgnoreUnknownValues: Optional. Indicates if BigQuery should allow
 	// extra values that are not represented in the table schema. If true,
 	// the extra values are ignored. If false, records with extra columns
 	// are treated as bad records, and if there are too many bad records, an
 	// invalid error is returned in the job result. The default value is
 	// false. The sourceFormat property determines what BigQuery treats as
 	// an extra value: CSV: Trailing columns JSON: Named values that don't
-	// match any column names
+	// match any column names in the table schema Avro, Parquet, ORC: Fields
+	// in the file schema that don't exist in the table schema.
 	IgnoreUnknownValues bool `json:"ignoreUnknownValues,omitempty"`
 
-	// JsonExtension: [Optional] If sourceFormat is set to newline-delimited
-	// JSON, indicates whether it should be processed as a JSON variant such
-	// as GeoJSON. For a sourceFormat other than JSON, omit this field. If
-	// the sourceFormat is newline-delimited JSON: - for newline-delimited
-	// GeoJSON: set to GEOJSON.
+	// JsonExtension: Optional. Load option to be used together with
+	// source_format newline-delimited JSON to indicate that a variant of
+	// JSON is being loaded. To load newline-delimited GeoJSON, specify
+	// GEOJSON (and source_format must be set to NEWLINE_DELIMITED_JSON).
+	//
+	// Possible values:
+	//   "JSON_EXTENSION_UNSPECIFIED" - The default if provided value is not
+	// one included in the enum, or the value is not specified. The source
+	// formate is parsed without any modification.
+	//   "GEOJSON" - Use GeoJSON variant of JSON. See
+	// https://tools.ietf.org/html/rfc7946.
 	JsonExtension string `json:"jsonExtension,omitempty"`
 
-	// MaxBadRecords: [Optional] The maximum number of bad records that
+	// MaxBadRecords: Optional. The maximum number of bad records that
 	// BigQuery can ignore when running the job. If the number of bad
 	// records exceeds this value, an invalid error is returned in the job
-	// result. This is only valid for CSV and JSON. The default value is 0,
-	// which requires that all records are valid.
+	// result. The default value is 0, which requires that all records are
+	// valid. This is only supported for CSV and NEWLINE_DELIMITED_JSON file
+	// formats.
 	MaxBadRecords int64 `json:"maxBadRecords,omitempty"`
 
-	// NullMarker: [Optional] Specifies a string that represents a null
-	// value in a CSV file. For example, if you specify "\N", BigQuery
-	// interprets "\N" as a null value when loading a CSV file. The default
-	// value is the empty string. If you set this property to a custom
-	// value, BigQuery throws an error if an empty string is present for all
-	// data types except for STRING and BYTE. For STRING and BYTE columns,
+	// NullMarker: Optional. Specifies a string that represents a null value
+	// in a CSV file. For example, if you specify "\N", BigQuery interprets
+	// "\N" as a null value when loading a CSV file. The default value is
+	// the empty string. If you set this property to a custom value,
+	// BigQuery throws an error if an empty string is present for all data
+	// types except for STRING and BYTE. For STRING and BYTE columns,
 	// BigQuery interprets the empty string as an empty value.
 	NullMarker string `json:"nullMarker,omitempty"`
 
-	// ParquetOptions: [Optional] Options to configure parquet support.
+	// ParquetOptions: Optional. Additional properties to set if
+	// sourceFormat is set to PARQUET.
 	ParquetOptions *ParquetOptions `json:"parquetOptions,omitempty"`
 
-	// PreserveAsciiControlCharacters: [Optional] Preserves the embedded
-	// ASCII control characters (the first 32 characters in the ASCII-table,
-	// from '\x00' to '\x1F') when loading from CSV. Only applicable to CSV,
-	// ignored for other formats.
+	// PreserveAsciiControlCharacters: Optional. When sourceFormat is set to
+	// "CSV", this indicates whether the embedded ASCII control characters
+	// (the first 32 characters in the ASCII-table, from '\x00' to '\x1F')
+	// are preserved.
 	PreserveAsciiControlCharacters bool `json:"preserveAsciiControlCharacters,omitempty"`
 
 	// ProjectionFields: If sourceFormat is set to "DATASTORE_BACKUP",
@@ -4699,27 +5287,32 @@ type JobConfigurationLoad struct {
 	// Datastore backup, an invalid error is returned in the job result.
 	ProjectionFields []string `json:"projectionFields,omitempty"`
 
-	// Quote: [Optional] The value that is used to quote data sections in a
+	// Quote: Optional. The value that is used to quote data sections in a
 	// CSV file. BigQuery converts the string to ISO-8859-1 encoding, and
 	// then uses the first byte of the encoded string to split the data in
 	// its raw, binary state. The default value is a double-quote ('"'). If
 	// your data does not contain quoted sections, set the property value to
 	// an empty string. If your data contains quoted newline characters, you
-	// must also set the allowQuotedNewlines property to true.
+	// must also set the allowQuotedNewlines property to true. To include
+	// the specific quote character within a quoted value, precede it with
+	// an additional matching quote character. For example, if you want to
+	// escape the default character ' " ', use ' "" '. @default "
 	//
 	// Default: "
 	Quote *string `json:"quote,omitempty"`
 
-	// RangePartitioning: [TrustedTester] Range partitioning specification
-	// for this table. Only one of timePartitioning and rangePartitioning
+	// RangePartitioning: Range partitioning specification for the
+	// destination table. Only one of timePartitioning and rangePartitioning
 	// should be specified.
 	RangePartitioning *RangePartitioning `json:"rangePartitioning,omitempty"`
 
-	// ReferenceFileSchemaUri: User provided referencing file with the
-	// expected reader schema, Available for the format: AVRO, PARQUET, ORC.
+	// ReferenceFileSchemaUri: Optional. The user can provide a reference
+	// file with the reader schema. This file is only loaded if it is part
+	// of source URIs, but is not loaded otherwise. It is enabled for the
+	// following formats: AVRO, PARQUET, ORC.
 	ReferenceFileSchemaUri string `json:"referenceFileSchemaUri,omitempty"`
 
-	// Schema: [Optional] The schema for the destination table. The schema
+	// Schema: Optional. The schema for the destination table. The schema
 	// can be omitted if the destination table already exists, or if you're
 	// loading data from Google Cloud Datastore.
 	Schema *TableSchema `json:"schema,omitempty"`
@@ -4740,18 +5333,27 @@ type JobConfigurationLoad struct {
 	// writeDisposition is WRITE_TRUNCATE and the destination table is a
 	// partition of a table, specified by partition decorators. For normal
 	// tables, WRITE_TRUNCATE will always overwrite the schema. One or more
-	// of the following values are specified: ALLOW_FIELD_ADDITION: allow
-	// adding a nullable field to the schema. ALLOW_FIELD_RELAXATION: allow
-	// relaxing a required field in the original schema to nullable.
+	// of the following values are specified: * ALLOW_FIELD_ADDITION: allow
+	// adding a nullable field to the schema. * ALLOW_FIELD_RELAXATION:
+	// allow relaxing a required field in the original schema to nullable.
 	SchemaUpdateOptions []string `json:"schemaUpdateOptions,omitempty"`
 
-	// SkipLeadingRows: [Optional] The number of rows at the top of a CSV
+	// SkipLeadingRows: Optional. The number of rows at the top of a CSV
 	// file that BigQuery will skip when loading the data. The default value
 	// is 0. This property is useful if you have header rows in the file
-	// that should be skipped.
+	// that should be skipped. When autodetect is on, the behavior is the
+	// following: * skipLeadingRows unspecified - Autodetect tries to detect
+	// headers in the first row. If they are not detected, the row is read
+	// as data. Otherwise data is read starting from the second row. *
+	// skipLeadingRows is 0 - Instructs autodetect that there are no headers
+	// and data should be read starting from the first row. *
+	// skipLeadingRows = N > 0 - Autodetect skips N-1 rows and tries to
+	// detect headers in row N. If headers are not detected, row N is just
+	// skipped. Otherwise row N is used to extract column names for the
+	// detected schema.
 	SkipLeadingRows int64 `json:"skipLeadingRows,omitempty"`
 
-	// SourceFormat: [Optional] The format of the data files. For CSV files,
+	// SourceFormat: Optional. The format of the data files. For CSV files,
 	// specify "CSV". For datastore backups, specify "DATASTORE_BACKUP". For
 	// newline-delimited JSON, specify "NEWLINE_DELIMITED_JSON". For Avro,
 	// specify "AVRO". For parquet, specify "PARQUET". For orc, specify
@@ -4774,22 +5376,23 @@ type JobConfigurationLoad struct {
 	// should be specified.
 	TimePartitioning *TimePartitioning `json:"timePartitioning,omitempty"`
 
-	// UseAvroLogicalTypes: [Optional] If sourceFormat is set to "AVRO",
+	// UseAvroLogicalTypes: Optional. If sourceFormat is set to "AVRO",
 	// indicates whether to interpret logical types as the corresponding
 	// BigQuery data type (for example, TIMESTAMP), instead of using the raw
 	// type (for example, INTEGER).
 	UseAvroLogicalTypes bool `json:"useAvroLogicalTypes,omitempty"`
 
-	// WriteDisposition: [Optional] Specifies the action that occurs if the
+	// WriteDisposition: Optional. Specifies the action that occurs if the
 	// destination table already exists. The following values are supported:
-	// WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the
-	// table data. WRITE_APPEND: If the table already exists, BigQuery
-	// appends the data to the table. WRITE_EMPTY: If the table already
-	// exists and contains data, a 'duplicate' error is returned in the job
-	// result. The default value is WRITE_APPEND. Each action is atomic and
-	// only occurs if BigQuery is able to complete the job successfully.
-	// Creation, truncation and append actions occur as one atomic update
-	// upon job completion.
+	// * WRITE_TRUNCATE: If the table already exists, BigQuery overwrites
+	// the data, removes the constraints and uses the schema from the load
+	// job. * WRITE_APPEND: If the table already exists, BigQuery appends
+	// the data to the table. * WRITE_EMPTY: If the table already exists and
+	// contains data, a 'duplicate' error is returned in the job result. The
+	// default value is WRITE_APPEND. Each action is atomic and only occurs
+	// if BigQuery is able to complete the job successfully. Creation,
+	// truncation and append actions occur as one atomic update upon job
+	// completion.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowJaggedRows") to
@@ -4816,80 +5419,94 @@ func (s *JobConfigurationLoad) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobConfigurationQuery: JobConfigurationQuery configures a BigQuery
+// query job.
 type JobConfigurationQuery struct {
-	// AllowLargeResults: [Optional] If true and query uses legacy SQL
+	// AllowLargeResults: Optional. If true and query uses legacy SQL
 	// dialect, allows the query to produce arbitrarily large result tables
 	// at a slight cost in performance. Requires destinationTable to be set.
-	// For standard SQL queries, this flag is ignored and large results are
+	// For GoogleSQL queries, this flag is ignored and large results are
 	// always allowed. However, you must still set destinationTable when
 	// result size exceeds the allowed maximum response size.
 	AllowLargeResults bool `json:"allowLargeResults,omitempty"`
 
-	// Clustering: [Beta] Clustering specification for the destination
-	// table. Must be specified with time-based partitioning, data in the
-	// table will be first partitioned and subsequently clustered.
+	// Clustering: Clustering specification for the destination table.
 	Clustering *Clustering `json:"clustering,omitempty"`
 
-	// ConnectionProperties: Connection properties.
+	// ConnectionProperties: Connection properties which can modify the
+	// query behavior.
 	ConnectionProperties []*ConnectionProperty `json:"connectionProperties,omitempty"`
 
 	// Continuous: [Optional] Specifies whether the query should be executed
 	// as a continuous query. The default value is false.
 	Continuous bool `json:"continuous,omitempty"`
 
-	// CreateDisposition: [Optional] Specifies whether the job is allowed to
-	// create new tables. The following values are supported:
+	// CreateDisposition: Optional. Specifies whether the job is allowed to
+	// create new tables. The following values are supported: *
 	// CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the
-	// table. CREATE_NEVER: The table must already exist. If it does not, a
-	// 'notFound' error is returned in the job result. The default value is
-	// CREATE_IF_NEEDED. Creation, truncation and append actions occur as
+	// table. * CREATE_NEVER: The table must already exist. If it does not,
+	// a 'notFound' error is returned in the job result. The default value
+	// is CREATE_IF_NEEDED. Creation, truncation and append actions occur as
 	// one atomic update upon job completion.
 	CreateDisposition string `json:"createDisposition,omitempty"`
 
-	// CreateSession: If true, creates a new session, where session id will
-	// be a server generated random id. If false, runs query with an
-	// existing session_id passed in ConnectionProperty, otherwise runs
-	// query in non-session mode.
+	// CreateSession: If this property is true, the job creates a new
+	// session using a randomly generated session_id. To continue using a
+	// created session with subsequent queries, pass the existing session
+	// identifier as a `ConnectionProperty` value. The session identifier is
+	// returned as part of the `SessionInfo` message within the query
+	// statistics. The new session's location will be set to
+	// `Job.JobReference.location` if it is present, otherwise it's set to
+	// the default location based on existing routing logic.
 	CreateSession bool `json:"createSession,omitempty"`
 
-	// DefaultDataset: [Optional] Specifies the default dataset to use for
-	// unqualified table names in the query. Note that this does not alter
-	// behavior of unqualified dataset names.
+	// DefaultDataset: Optional. Specifies the default dataset to use for
+	// unqualified table names in the query. This setting does not alter
+	// behavior of unqualified dataset names. Setting the system variable
+	// `@@dataset_id` achieves the same behavior. See
+	// https://cloud.google.com/bigquery/docs/reference/system-variables for
+	// more information on system variables.
 	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
 
 	// DestinationEncryptionConfiguration: Custom encryption configuration
-	// (e.g., Cloud KMS keys).
+	// (e.g., Cloud KMS keys)
 	DestinationEncryptionConfiguration *EncryptionConfiguration `json:"destinationEncryptionConfiguration,omitempty"`
 
-	// DestinationTable: [Optional] Describes the table where the query
-	// results should be stored. If not present, a new table will be created
-	// to store the results. This property must be set for large results
-	// that exceed the maximum response size.
+	// DestinationTable: Optional. Describes the table where the query
+	// results should be stored. This property must be set for large results
+	// that exceed the maximum response size. For queries that produce
+	// anonymous (cached) results, this field will be populated by BigQuery.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 
-	// FlattenResults: [Optional] If true and query uses legacy SQL dialect,
+	// FlattenResults: Optional. If true and query uses legacy SQL dialect,
 	// flattens all nested and repeated fields in the query results.
-	// allowLargeResults must be true if this is set to false. For standard
-	// SQL queries, this flag is ignored and results are never flattened.
+	// allowLargeResults must be true if this is set to false. For GoogleSQL
+	// queries, this flag is ignored and results are never flattened.
 	//
 	// Default: true
 	FlattenResults *bool `json:"flattenResults,omitempty"`
 
-	// MaximumBillingTier: [Optional] Limits the billing tier for this job.
-	// Queries that have resource usage beyond this tier will fail (without
-	// incurring a charge). If unspecified, this will be set to your project
-	// default.
+	// MaximumBillingTier: Optional. [Deprecated] Maximum billing tier
+	// allowed for this query. The billing tier controls the amount of
+	// compute resources allotted to the query, and multiplies the on-demand
+	// cost of the query accordingly. A query that runs within its allotted
+	// resources will succeed and indicate its billing tier in
+	// statistics.query.billingTier, but if the query exceeds its allotted
+	// resources, it will fail with billingTierLimitExceeded. WARNING: The
+	// billed byte amount can be multiplied by an amount up to this number!
+	// Most users should not need to alter this setting, and we recommend
+	// that you avoid introducing new uses of it.
 	//
 	// Default: 1
 	MaximumBillingTier *int64 `json:"maximumBillingTier,omitempty"`
 
-	// MaximumBytesBilled: [Optional] Limits the bytes billed for this job.
-	// Queries that will have bytes billed beyond this limit will fail
-	// (without incurring a charge). If unspecified, this will be set to
-	// your project default.
+	// MaximumBytesBilled: Limits the bytes billed for this job. Queries
+	// that will have bytes billed beyond this limit will fail (without
+	// incurring a charge). If unspecified, this will be set to your project
+	// default.
 	MaximumBytesBilled int64 `json:"maximumBytesBilled,omitempty,string"`
 
-	// ParameterMode: Standard SQL only. Set to POSITIONAL to use positional
+	// ParameterMode: GoogleSQL only. Set to POSITIONAL to use positional
 	// (?) query parameters or to NAMED to use named (@myparam) query
 	// parameters in this query.
 	ParameterMode string `json:"parameterMode,omitempty"`
@@ -4897,21 +5514,21 @@ type JobConfigurationQuery struct {
 	// PreserveNulls: [Deprecated] This property is deprecated.
 	PreserveNulls bool `json:"preserveNulls,omitempty"`
 
-	// Priority: [Optional] Specifies a priority for the query. Possible
+	// Priority: Optional. Specifies a priority for the query. Possible
 	// values include INTERACTIVE and BATCH. The default value is
 	// INTERACTIVE.
 	Priority string `json:"priority,omitempty"`
 
 	// Query: [Required] SQL query text to execute. The useLegacySql field
-	// can be used to indicate whether the query uses legacy SQL or standard
-	// SQL.
+	// can be used to indicate whether the query uses legacy SQL or
+	// GoogleSQL.
 	Query string `json:"query,omitempty"`
 
-	// QueryParameters: Query parameters for standard SQL queries.
+	// QueryParameters: Query parameters for GoogleSQL queries.
 	QueryParameters []*QueryParameter `json:"queryParameters,omitempty"`
 
-	// RangePartitioning: [TrustedTester] Range partitioning specification
-	// for this table. Only one of timePartitioning and rangePartitioning
+	// RangePartitioning: Range partitioning specification for the
+	// destination table. Only one of timePartitioning and rangePartitioning
 	// should be specified.
 	RangePartitioning *RangePartitioning `json:"rangePartitioning,omitempty"`
 
@@ -4921,15 +5538,25 @@ type JobConfigurationQuery struct {
 	// writeDisposition is WRITE_TRUNCATE and the destination table is a
 	// partition of a table, specified by partition decorators. For normal
 	// tables, WRITE_TRUNCATE will always overwrite the schema. One or more
-	// of the following values are specified: ALLOW_FIELD_ADDITION: allow
-	// adding a nullable field to the schema. ALLOW_FIELD_RELAXATION: allow
-	// relaxing a required field in the original schema to nullable.
+	// of the following values are specified: * ALLOW_FIELD_ADDITION: allow
+	// adding a nullable field to the schema. * ALLOW_FIELD_RELAXATION:
+	// allow relaxing a required field in the original schema to nullable.
 	SchemaUpdateOptions []string `json:"schemaUpdateOptions,omitempty"`
 
-	// TableDefinitions: [Optional] If querying an external data source
-	// outside of BigQuery, describes the data format, location and other
-	// properties of the data source. By defining these properties, the data
-	// source can then be queried as if it were a standard BigQuery table.
+	// ScriptOptions: Options controlling the execution of scripts.
+	ScriptOptions *ScriptOptions `json:"scriptOptions,omitempty"`
+
+	// SystemVariables: Output only. System variables for GoogleSQL queries.
+	// A system variable is output if the variable is settable and its value
+	// differs from the system default. "@@" prefix is not included in the
+	// name of the System variables.
+	SystemVariables *SystemVariables `json:"systemVariables,omitempty"`
+
+	// TableDefinitions: Optional. You can specify external table
+	// definitions, which operate as ephemeral tables that can be queried.
+	// These definitions are configured using a JSON map, where the string
+	// key represents the table identifier, and the value is the
+	// corresponding external data configuration object.
 	TableDefinitions map[string]ExternalDataConfiguration `json:"tableDefinitions,omitempty"`
 
 	// TimePartitioning: Time-based partitioning specification for the
@@ -4937,9 +5564,9 @@ type JobConfigurationQuery struct {
 	// should be specified.
 	TimePartitioning *TimePartitioning `json:"timePartitioning,omitempty"`
 
-	// UseLegacySql: Specifies whether to use BigQuery's legacy SQL dialect
-	// for this query. The default value is true. If set to false, the query
-	// will use BigQuery's standard SQL:
+	// UseLegacySql: Optional. Specifies whether to use BigQuery's legacy
+	// SQL dialect for this query. The default value is true. If set to
+	// false, the query will use BigQuery's GoogleSQL:
 	// https://cloud.google.com/bigquery/sql-reference/ When useLegacySql is
 	// set to false, the value of flattenResults is ignored; query will be
 	// run as if flattenResults is false.
@@ -4947,7 +5574,7 @@ type JobConfigurationQuery struct {
 	// Default: true
 	UseLegacySql *bool `json:"useLegacySql,omitempty"`
 
-	// UseQueryCache: [Optional] Whether to look for the result in the query
+	// UseQueryCache: Optional. Whether to look for the result in the query
 	// cache. The query cache is a best-effort cache that will be flushed
 	// whenever tables in the query are modified. Moreover, the query cache
 	// is only available when a query does not have a destination table
@@ -4960,16 +5587,17 @@ type JobConfigurationQuery struct {
 	// resources used in the query.
 	UserDefinedFunctionResources []*UserDefinedFunctionResource `json:"userDefinedFunctionResources,omitempty"`
 
-	// WriteDisposition: [Optional] Specifies the action that occurs if the
+	// WriteDisposition: Optional. Specifies the action that occurs if the
 	// destination table already exists. The following values are supported:
-	// WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the
-	// table data and uses the schema from the query result. WRITE_APPEND:
-	// If the table already exists, BigQuery appends the data to the table.
-	// WRITE_EMPTY: If the table already exists and contains data, a
-	// 'duplicate' error is returned in the job result. The default value is
-	// WRITE_EMPTY. Each action is atomic and only occurs if BigQuery is
-	// able to complete the job successfully. Creation, truncation and
-	// append actions occur as one atomic update upon job completion.
+	// * WRITE_TRUNCATE: If the table already exists, BigQuery overwrites
+	// the data, removes the constraints, and uses the schema from the query
+	// result. * WRITE_APPEND: If the table already exists, BigQuery appends
+	// the data to the table. * WRITE_EMPTY: If the table already exists and
+	// contains data, a 'duplicate' error is returned in the job result. The
+	// default value is WRITE_EMPTY. Each action is atomic and only occurs
+	// if BigQuery is able to complete the job successfully. Creation,
+	// truncation and append actions occur as one atomic update upon job
+	// completion.
 	WriteDisposition string `json:"writeDisposition,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowLargeResults")
@@ -4996,13 +5624,17 @@ func (s *JobConfigurationQuery) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobConfigurationTableCopy: JobConfigurationTableCopy configures a job
+// that copies data from one table to another. For more information on
+// copying tables, see Copy a table
+// (https://cloud.google.com/bigquery/docs/managing-tables#copy-table).
 type JobConfigurationTableCopy struct {
-	// CreateDisposition: [Optional] Specifies whether the job is allowed to
-	// create new tables. The following values are supported:
+	// CreateDisposition: Optional. Specifies whether the job is allowed to
+	// create new tables. The following values are supported: *
 	// CREATE_IF_NEEDED: If the table does not exist, BigQuery creates the
-	// table. CREATE_NEVER: The table must already exist. If it does not, a
-	// 'notFound' error is returned in the job result. The default value is
-	// CREATE_IF_NEEDED. Creation, truncation and append actions occur as
+	// table. * CREATE_NEVER: The table must already exist. If it does not,
+	// a 'notFound' error is returned in the job result. The default value
+	// is CREATE_IF_NEEDED. Creation, truncation and append actions occur as
 	// one atomic update upon job completion.
 	CreateDisposition string `json:"createDisposition,omitempty"`
 
@@ -5010,16 +5642,25 @@ type JobConfigurationTableCopy struct {
 	// (e.g., Cloud KMS keys).
 	DestinationEncryptionConfiguration *EncryptionConfiguration `json:"destinationEncryptionConfiguration,omitempty"`
 
-	// DestinationExpirationTime: [Optional] The time when the destination
+	// DestinationExpirationTime: Optional. The time when the destination
 	// table expires. Expired tables will be deleted and their storage
 	// reclaimed.
-	DestinationExpirationTime interface{} `json:"destinationExpirationTime,omitempty"`
+	DestinationExpirationTime string `json:"destinationExpirationTime,omitempty"`
 
-	// DestinationTable: [Required] The destination table
+	// DestinationTable: [Required] The destination table.
 	DestinationTable *TableReference `json:"destinationTable,omitempty"`
 
-	// OperationType: [Optional] Supported operation types in table copy
-	// job.
+	// OperationType: Optional. Supported operation types in table copy job.
+	//
+	// Possible values:
+	//   "OPERATION_TYPE_UNSPECIFIED" - Unspecified operation type.
+	//   "COPY" - The source and destination table have the same table type.
+	//   "SNAPSHOT" - The source table type is TABLE and the destination
+	// table type is SNAPSHOT.
+	//   "RESTORE" - The source table type is SNAPSHOT and the destination
+	// table type is TABLE.
+	//   "CLONE" - The source and destination table have the same table
+	// type, but only bill for unique data.
 	OperationType string `json:"operationType,omitempty"`
 
 	// SourceTable: [Pick one] Source table to copy.
@@ -5028,11 +5669,12 @@ type JobConfigurationTableCopy struct {
 	// SourceTables: [Pick one] Source tables to copy.
 	SourceTables []*TableReference `json:"sourceTables,omitempty"`
 
-	// WriteDisposition: [Optional] Specifies the action that occurs if the
+	// WriteDisposition: Optional. Specifies the action that occurs if the
 	// destination table already exists. The following values are supported:
-	// WRITE_TRUNCATE: If the table already exists, BigQuery overwrites the
-	// table data. WRITE_APPEND: If the table already exists, BigQuery
-	// appends the data to the table. WRITE_EMPTY: If the table already
+	// * WRITE_TRUNCATE: If the table already exists, BigQuery overwrites
+	// the table data and uses the schema and table constraints from the
+	// source table. * WRITE_APPEND: If the table already exists, BigQuery
+	// appends the data to the table. * WRITE_EMPTY: If the table already
 	// exists and contains data, a 'duplicate' error is returned in the job
 	// result. The default value is WRITE_EMPTY. Each action is atomic and
 	// only occurs if BigQuery is able to complete the job successfully.
@@ -5113,6 +5755,7 @@ func (s *JobCreationReason) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobList: JobList is the response format for a jobs.list call.
 type JobList struct {
 	// Etag: A hash of this page of results.
 	Etag string `json:"etag,omitempty"`
@@ -5125,6 +5768,12 @@ type JobList struct {
 
 	// NextPageToken: A token to request the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: A list of skipped locations that were unreachable. For
+	// more information about BigQuery locations, see:
+	// https://cloud.google.com/bigquery/docs/locations. Example:
+	// "europe-west5"
+	Unreachable []string `json:"unreachable,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -5153,9 +5802,10 @@ func (s *JobList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobListJobs: ListFormatJob is a partial projection of job information
+// returned as part of a jobs.list response.
 type JobListJobs struct {
-	// Configuration: [Full-projection-only] Specifies the job
-	// configuration.
+	// Configuration: Required. Describes the job configuration.
 	Configuration *JobConfiguration `json:"configuration,omitempty"`
 
 	// ErrorResult: A result object that will be present only if the job has
@@ -5165,21 +5815,27 @@ type JobListJobs struct {
 	// Id: Unique opaque ID of the job.
 	Id string `json:"id,omitempty"`
 
-	// JobReference: Job reference uniquely identifying the job.
+	// JobReference: Unique opaque ID of the job.
 	JobReference *JobReference `json:"jobReference,omitempty"`
 
 	// Kind: The resource type.
 	Kind string `json:"kind,omitempty"`
 
+	// PrincipalSubject: [Full-projection-only] String representation of
+	// identity of requesting party. Populated for both first- and
+	// third-party identities. Only present for APIs that support
+	// third-party identities.
+	PrincipalSubject string `json:"principal_subject,omitempty"`
+
 	// State: Running state of the job. When the state is DONE, errorResult
 	// can be checked to determine whether the job succeeded or failed.
 	State string `json:"state,omitempty"`
 
-	// Statistics: [Output-only] Information about the job, including
+	// Statistics: Output only. Information about the job, including
 	// starting time and ending time of the job.
 	Statistics *JobStatistics `json:"statistics,omitempty"`
 
-	// Status: [Full-projection-only] Describes the state of the job.
+	// Status: [Full-projection-only] Describes the status of this job.
 	Status *JobStatus `json:"status,omitempty"`
 
 	// UserEmail: [Full-projection-only] Email address of the user who ran
@@ -5209,17 +5865,20 @@ func (s *JobListJobs) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobReference: A job reference is a fully qualified identifier for
+// referring to a job.
 type JobReference struct {
-	// JobId: [Required] The ID of the job. The ID must contain only letters
+	// JobId: Required. The ID of the job. The ID must contain only letters
 	// (a-z, A-Z), numbers (0-9), underscores (_), or dashes (-). The
 	// maximum length is 1,024 characters.
 	JobId string `json:"jobId,omitempty"`
 
-	// Location: The geographic location of the job. See details at
-	// https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
+	// Location: Optional. The geographic location of the job. The default
+	// value is US. For more information about BigQuery locations, see:
+	// https://cloud.google.com/bigquery/docs/locations
 	Location string `json:"location,omitempty"`
 
-	// ProjectId: [Required] The ID of the project containing this job.
+	// ProjectId: Required. The ID of the project containing this job.
 	ProjectId string `json:"projectId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "JobId") to
@@ -5245,83 +5904,93 @@ func (s *JobReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobStatistics: Statistics for a single job execution.
 type JobStatistics struct {
-	// CompletionRatio: [TrustedTester] [Output-only] Job progress (0.0 ->
+	// CompletionRatio: Output only. [TrustedTester] Job progress (0.0 ->
 	// 1.0) for LOAD and EXTRACT jobs.
 	CompletionRatio float64 `json:"completionRatio,omitempty"`
 
-	// Copy: [Output-only] Statistics for a copy job.
+	// Copy: Output only. Statistics for a copy job.
 	Copy *JobStatistics5 `json:"copy,omitempty"`
 
-	// CreationTime: [Output-only] Creation time of this job, in
-	// milliseconds since the epoch. This field will be present on all jobs.
+	// CreationTime: Output only. Creation time of this job, in milliseconds
+	// since the epoch. This field will be present on all jobs.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
-	// DataMaskingStatistics: [Output-only] Statistics for data masking.
+	// DataMaskingStatistics: Output only. Statistics for data-masking.
 	// Present only for query and extract jobs.
 	DataMaskingStatistics *DataMaskingStatistics `json:"dataMaskingStatistics,omitempty"`
 
-	// EndTime: [Output-only] End time of this job, in milliseconds since
-	// the epoch. This field will be present whenever a job is in the DONE
+	// EndTime: Output only. End time of this job, in milliseconds since the
+	// epoch. This field will be present whenever a job is in the DONE
 	// state.
 	EndTime int64 `json:"endTime,omitempty,string"`
 
-	// Extract: [Output-only] Statistics for an extract job.
+	// Extract: Output only. Statistics for an extract job.
 	Extract *JobStatistics4 `json:"extract,omitempty"`
 
-	// Load: [Output-only] Statistics for a load job.
+	// FinalExecutionDurationMs: Output only. The duration in milliseconds
+	// of the execution of the final attempt of this job, as BigQuery may
+	// internally re-attempt to execute the job.
+	FinalExecutionDurationMs int64 `json:"finalExecutionDurationMs,omitempty,string"`
+
+	// Load: Output only. Statistics for a load job.
 	Load *JobStatistics3 `json:"load,omitempty"`
 
-	// NumChildJobs: [Output-only] Number of child jobs executed.
+	// NumChildJobs: Output only. Number of child jobs executed.
 	NumChildJobs int64 `json:"numChildJobs,omitempty,string"`
 
-	// ParentJobId: [Output-only] If this is a child job, the id of the
-	// parent.
+	// ParentJobId: Output only. If this is a child job, specifies the job
+	// ID of the parent.
 	ParentJobId string `json:"parentJobId,omitempty"`
 
-	// Query: [Output-only] Statistics for a query job.
+	// Query: Output only. Statistics for a query job.
 	Query *JobStatistics2 `json:"query,omitempty"`
 
-	// QuotaDeferments: [Output-only] Quotas which delayed this job's start
+	// QuotaDeferments: Output only. Quotas which delayed this job's start
 	// time.
 	QuotaDeferments []string `json:"quotaDeferments,omitempty"`
 
-	// ReservationUsage: [Output-only] Job resource usage breakdown by
-	// reservation.
+	// ReservationUsage: Output only. Job resource usage breakdown by
+	// reservation. This field reported misleading information and will no
+	// longer be populated.
 	ReservationUsage []*JobStatisticsReservationUsage `json:"reservationUsage,omitempty"`
 
-	// ReservationId: [Output-only] Name of the primary reservation assigned
+	// ReservationId: Output only. Name of the primary reservation assigned
 	// to this job. Note that this could be different than reservations
 	// reported in the reservation usage field if parent reservations were
 	// used to execute this job.
 	ReservationId string `json:"reservation_id,omitempty"`
 
-	// RowLevelSecurityStatistics: [Output-only] [Preview] Statistics for
-	// row-level security. Present only for query and extract jobs.
+	// RowLevelSecurityStatistics: Output only. Statistics for row-level
+	// security. Present only for query and extract jobs.
 	RowLevelSecurityStatistics *RowLevelSecurityStatistics `json:"rowLevelSecurityStatistics,omitempty"`
 
-	// ScriptStatistics: [Output-only] Statistics for a child job of a
+	// ScriptStatistics: Output only. If this a child job of a script,
+	// specifies information about the context of this job within the
 	// script.
 	ScriptStatistics *ScriptStatistics `json:"scriptStatistics,omitempty"`
 
-	// SessionInfo: [Output-only] [Preview] Information of the session if
-	// this job is part of one.
+	// SessionInfo: Output only. Information of the session if this job is
+	// part of one.
 	SessionInfo *SessionInfo `json:"sessionInfo,omitempty"`
 
-	// StartTime: [Output-only] Start time of this job, in milliseconds
-	// since the epoch. This field will be present when the job transitions
-	// from the PENDING state to either RUNNING or DONE.
+	// StartTime: Output only. Start time of this job, in milliseconds since
+	// the epoch. This field will be present when the job transitions from
+	// the PENDING state to either RUNNING or DONE.
 	StartTime int64 `json:"startTime,omitempty,string"`
 
-	// TotalBytesProcessed: [Output-only] [Deprecated] Use the bytes
-	// processed in the query statistics instead.
+	// TotalBytesProcessed: Output only. Total bytes processed for the job.
 	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
 
-	// TotalSlotMs: [Output-only] Slot-milliseconds for the job.
+	// TotalSlotMs: Output only. Slot-milliseconds for the job.
 	TotalSlotMs int64 `json:"totalSlotMs,omitempty,string"`
 
-	// TransactionInfo: [Output-only] [Alpha] Information of the
-	// multi-statement transaction if this job is part of one.
+	// TransactionInfo: Output only. [Alpha] Information of the
+	// multi-statement transaction if this job is part of one. This property
+	// is only expected on a child job or a job that is in a session. A
+	// script parent job is not part of the transaction started in the
+	// script.
 	TransactionInfo *TransactionInfo `json:"transactionInfo,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CompletionRatio") to
@@ -5362,13 +6031,14 @@ func (s *JobStatistics) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// JobStatisticsReservationUsage: Job resource usage breakdown by
+// reservation.
 type JobStatisticsReservationUsage struct {
-	// Name: [Output-only] Reservation name or "unreserved" for on-demand
-	// resources usage.
+	// Name: Reservation name or "unreserved" for on-demand resources usage.
 	Name string `json:"name,omitempty"`
 
-	// SlotMs: [Output-only] Slot-milliseconds the job spent in the given
-	// reservation.
+	// SlotMs: Total slot milliseconds used by the reservation for a
+	// particular job.
 	SlotMs int64 `json:"slotMs,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -5394,142 +6064,254 @@ func (s *JobStatisticsReservationUsage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobStatistics2: Statistics for a query job.
 type JobStatistics2 struct {
-	// BiEngineStatistics: BI Engine specific Statistics. [Output only] BI
-	// Engine specific Statistics.
+	// BiEngineStatistics: Output only. BI Engine specific Statistics.
 	BiEngineStatistics *BiEngineStatistics `json:"biEngineStatistics,omitempty"`
 
-	// BillingTier: [Output only] Billing tier for the job.
+	// BillingTier: Output only. Billing tier for the job. This is a
+	// BigQuery-specific concept which is not related to the Google Cloud
+	// notion of "free tier". The value here is a measure of the query's
+	// resource consumption relative to the amount of data scanned. For
+	// on-demand queries, the limit is 100, and all queries within this
+	// limit are billed at the standard on-demand rates. On-demand queries
+	// that exceed this limit will fail with a billingTierLimitExceeded
+	// error.
 	BillingTier int64 `json:"billingTier,omitempty"`
 
-	// CacheHit: [Output only] Whether the query result was fetched from the
+	// CacheHit: Output only. Whether the query result was fetched from the
 	// query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
 
-	// DdlAffectedRowAccessPolicyCount: [Output only] [Preview] The number
-	// of row access policies affected by a DDL statement. Present only for
-	// DROP ALL ROW ACCESS POLICIES queries.
+	// DclTargetDataset: Output only. Referenced dataset for DCL statement.
+	DclTargetDataset *DatasetReference `json:"dclTargetDataset,omitempty"`
+
+	// DclTargetTable: Output only. Referenced table for DCL statement.
+	DclTargetTable *TableReference `json:"dclTargetTable,omitempty"`
+
+	// DclTargetView: Output only. Referenced view for DCL statement.
+	DclTargetView *TableReference `json:"dclTargetView,omitempty"`
+
+	// DdlAffectedRowAccessPolicyCount: Output only. The number of row
+	// access policies affected by a DDL statement. Present only for DROP
+	// ALL ROW ACCESS POLICIES queries.
 	DdlAffectedRowAccessPolicyCount int64 `json:"ddlAffectedRowAccessPolicyCount,omitempty,string"`
 
-	// DdlDestinationTable: [Output only] The DDL destination table. Present
-	// only for ALTER TABLE RENAME TO queries. Note that ddl_target_table is
-	// used just for its type information.
+	// DdlDestinationTable: Output only. The table after rename. Present
+	// only for ALTER TABLE RENAME TO query.
 	DdlDestinationTable *TableReference `json:"ddlDestinationTable,omitempty"`
 
-	// DdlOperationPerformed: The DDL operation performed, possibly
-	// dependent on the pre-existence of the DDL target. Possible values
-	// (new values might be added in the future): "CREATE": The query
-	// created the DDL target. "SKIP": No-op. Example cases: the query is
-	// CREATE TABLE IF NOT EXISTS while the table already exists, or the
-	// query is DROP TABLE IF EXISTS while the table does not exist.
-	// "REPLACE": The query replaced the DDL target. Example case: the query
-	// is CREATE OR REPLACE TABLE, and the table already exists. "DROP": The
-	// query deleted the DDL target.
+	// DdlOperationPerformed: Output only. The DDL operation performed,
+	// possibly dependent on the pre-existence of the DDL target.
 	DdlOperationPerformed string `json:"ddlOperationPerformed,omitempty"`
 
-	// DdlTargetDataset: [Output only] The DDL target dataset. Present only
-	// for CREATE/ALTER/DROP/UNDROP SCHEMA queries.
+	// DdlTargetDataset: Output only. The DDL target dataset. Present only
+	// for CREATE/ALTER/DROP SCHEMA(dataset) queries.
 	DdlTargetDataset *DatasetReference `json:"ddlTargetDataset,omitempty"`
 
-	// DdlTargetRoutine: The DDL target routine. Present only for
-	// CREATE/DROP FUNCTION/PROCEDURE queries.
+	// DdlTargetRoutine: Output only. [Beta] The DDL target routine. Present
+	// only for CREATE/DROP FUNCTION/PROCEDURE queries.
 	DdlTargetRoutine *RoutineReference `json:"ddlTargetRoutine,omitempty"`
 
-	// DdlTargetRowAccessPolicy: [Output only] [Preview] The DDL target row
-	// access policy. Present only for CREATE/DROP ROW ACCESS POLICY
-	// queries.
+	// DdlTargetRowAccessPolicy: Output only. The DDL target row access
+	// policy. Present only for CREATE/DROP ROW ACCESS POLICY queries.
 	DdlTargetRowAccessPolicy *RowAccessPolicyReference `json:"ddlTargetRowAccessPolicy,omitempty"`
 
-	// DdlTargetTable: [Output only] The DDL target table. Present only for
+	// DdlTargetTable: Output only. The DDL target table. Present only for
 	// CREATE/DROP TABLE/VIEW and DROP ALL ROW ACCESS POLICIES queries.
 	DdlTargetTable *TableReference `json:"ddlTargetTable,omitempty"`
 
-	// DmlStats: [Output only] Detailed statistics for DML statements
-	// Present only for DML statements INSERT, UPDATE, DELETE or TRUNCATE.
+	// DmlStats: Output only. Detailed statistics for DML statements INSERT,
+	// UPDATE, DELETE, MERGE or TRUNCATE.
 	DmlStats *DmlStatistics `json:"dmlStats,omitempty"`
 
-	// EstimatedBytesProcessed: [Output only] The original estimate of bytes
+	// EstimatedBytesProcessed: Output only. The original estimate of bytes
 	// processed for the job.
 	EstimatedBytesProcessed int64 `json:"estimatedBytesProcessed,omitempty,string"`
 
-	// MlStatistics: [Output only] Statistics of a BigQuery ML training job.
+	// ExportDataStatistics: Output only. Stats for EXPORT DATA statement.
+	ExportDataStatistics *ExportDataStatistics `json:"exportDataStatistics,omitempty"`
+
+	// ExternalServiceCosts: Output only. Job cost breakdown as bigquery
+	// internal cost and external service costs.
+	ExternalServiceCosts []*ExternalServiceCost `json:"externalServiceCosts,omitempty"`
+
+	// LoadQueryStatistics: Output only. Statistics for a LOAD query.
+	LoadQueryStatistics *LoadQueryStatistics `json:"loadQueryStatistics,omitempty"`
+
+	// MaterializedViewStatistics: Output only. Statistics of materialized
+	// views of a query job.
+	MaterializedViewStatistics *MaterializedViewStatistics `json:"materializedViewStatistics,omitempty"`
+
+	// MetadataCacheStatistics: Output only. Statistics of metadata cache
+	// usage in a query for BigLake tables.
+	MetadataCacheStatistics *MetadataCacheStatistics `json:"metadataCacheStatistics,omitempty"`
+
+	// MlStatistics: Output only. Statistics of a BigQuery ML training job.
 	MlStatistics *MlStatistics `json:"mlStatistics,omitempty"`
 
-	// ModelTraining: [Output only, Beta] Information about create model
-	// query job progress.
+	// ModelTraining: Deprecated.
 	ModelTraining *BigQueryModelTraining `json:"modelTraining,omitempty"`
 
-	// ModelTrainingCurrentIteration: [Output only, Beta] Deprecated; do not
-	// use.
+	// ModelTrainingCurrentIteration: Deprecated.
 	ModelTrainingCurrentIteration int64 `json:"modelTrainingCurrentIteration,omitempty"`
 
-	// ModelTrainingExpectedTotalIteration: [Output only, Beta] Deprecated;
-	// do not use.
+	// ModelTrainingExpectedTotalIteration: Deprecated.
 	ModelTrainingExpectedTotalIteration int64 `json:"modelTrainingExpectedTotalIteration,omitempty,string"`
 
-	// NumDmlAffectedRows: [Output only] The number of rows affected by a
-	// DML statement. Present only for DML statements INSERT, UPDATE or
-	// DELETE.
+	// NumDmlAffectedRows: Output only. The number of rows affected by a DML
+	// statement. Present only for DML statements INSERT, UPDATE or DELETE.
 	NumDmlAffectedRows int64 `json:"numDmlAffectedRows,omitempty,string"`
 
-	// QueryPlan: [Output only] Describes execution plan for the query.
+	// PerformanceInsights: Output only. Performance insights.
+	PerformanceInsights *PerformanceInsights `json:"performanceInsights,omitempty"`
+
+	// QueryInfo: Output only. Query optimization information for a QUERY
+	// job.
+	QueryInfo *QueryInfo `json:"queryInfo,omitempty"`
+
+	// QueryPlan: Output only. Describes execution plan for the query.
 	QueryPlan []*ExplainQueryStage `json:"queryPlan,omitempty"`
 
-	// ReferencedRoutines: [Output only] Referenced routines (persistent
-	// user-defined functions and stored procedures) for the job.
+	// ReferencedRoutines: Output only. Referenced routines for the job.
 	ReferencedRoutines []*RoutineReference `json:"referencedRoutines,omitempty"`
 
-	// ReferencedTables: [Output only] Referenced tables for the job.
-	// Queries that reference more than 50 tables will not have a complete
-	// list.
+	// ReferencedTables: Output only. Referenced tables for the job. Queries
+	// that reference more than 50 tables will not have a complete list.
 	ReferencedTables []*TableReference `json:"referencedTables,omitempty"`
 
-	// ReservationUsage: [Output only] Job resource usage breakdown by
-	// reservation.
+	// ReservationUsage: Output only. Job resource usage breakdown by
+	// reservation. This field reported misleading information and will no
+	// longer be populated.
 	ReservationUsage []*JobStatistics2ReservationUsage `json:"reservationUsage,omitempty"`
 
-	// Schema: [Output only] The schema of the results. Present only for
+	// Schema: Output only. The schema of the results. Present only for
 	// successful dry run of non-legacy SQL queries.
 	Schema *TableSchema `json:"schema,omitempty"`
 
-	// SearchStatistics: [Output only] Search query specific statistics.
+	// SearchStatistics: Output only. Search query specific statistics.
 	SearchStatistics *SearchStatistics `json:"searchStatistics,omitempty"`
 
-	// SparkStatistics: [Output only] Statistics of a Spark procedure job.
+	// SparkStatistics: Output only. Statistics of a Spark procedure job.
 	SparkStatistics *SparkStatistics `json:"sparkStatistics,omitempty"`
 
-	// StatementType: The type of query statement, if valid. Possible values
-	// (new values might be added in the future): "SELECT": SELECT query.
-	// "INSERT": INSERT query; see
-	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language.
-	// "UPDATE": UPDATE query; see
-	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language.
-	// "DELETE": DELETE query; see
-	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language.
-	// "MERGE": MERGE query; see
-	// https://cloud.google.com/bigquery/docs/reference/standard-sql/data-manipulation-language.
-	// "ALTER_TABLE": ALTER TABLE query. "ALTER_VIEW": ALTER VIEW query.
-	// "ASSERT": ASSERT condition AS 'description'. "CREATE_FUNCTION":
-	// CREATE FUNCTION query. "CREATE_MODEL": CREATE [OR REPLACE] MODEL ...
-	// AS SELECT ... . "CREATE_PROCEDURE": CREATE PROCEDURE query.
-	// "CREATE_TABLE": CREATE [OR REPLACE] TABLE without AS SELECT.
-	// "CREATE_TABLE_AS_SELECT": CREATE [OR REPLACE] TABLE ... AS SELECT ...
-	// . "CREATE_VIEW": CREATE [OR REPLACE] VIEW ... AS SELECT ... .
-	// "DROP_FUNCTION" : DROP FUNCTION query. "DROP_PROCEDURE": DROP
-	// PROCEDURE query. "DROP_TABLE": DROP TABLE query. "DROP_VIEW": DROP
-	// VIEW query.
+	// StatementType: Output only. The type of query statement, if valid.
+	// Possible values: * `SELECT`: `SELECT`
+	// (/bigquery/docs/reference/standard-sql/query-syntax#select_list)
+	// statement. * `ASSERT`: `ASSERT`
+	// (/bigquery/docs/reference/standard-sql/debugging-statements#assert)
+	// statement. * `INSERT`: `INSERT`
+	// (/bigquery/docs/reference/standard-sql/dml-syntax#insert_statement)
+	// statement. * `UPDATE`: `UPDATE`
+	// (/bigquery/docs/reference/standard-sql/query-syntax#update_statement)
+	// statement. * `DELETE`: `DELETE`
+	// (/bigquery/docs/reference/standard-sql/data-manipulation-language)
+	// statement. * `MERGE`: `MERGE`
+	// (/bigquery/docs/reference/standard-sql/data-manipulation-language)
+	// statement. * `CREATE_TABLE`: `CREATE TABLE`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#create
+	// _table_statement) statement, without `AS SELECT`. *
+	// `CREATE_TABLE_AS_SELECT`: `CREATE TABLE AS SELECT`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#query_
+	// statement) statement. * `CREATE_VIEW`: `CREATE VIEW`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#create
+	// _view_statement) statement. * `CREATE_MODEL`: `CREATE MODEL`
+	// (/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-create#cre
+	// ate_model_statement) statement. * `CREATE_MATERIALIZED_VIEW`: `CREATE
+	// MATERIALIZED VIEW`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#create
+	// _materialized_view_statement) statement. * `CREATE_FUNCTION`: `CREATE
+	// FUNCTION`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#create
+	// _function_statement) statement. * `CREATE_TABLE_FUNCTION`: `CREATE
+	// TABLE FUNCTION`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#create
+	// _table_function_statement) statement. * `CREATE_PROCEDURE`: `CREATE
+	// PROCEDURE`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#create
+	// _procedure) statement. * `CREATE_ROW_ACCESS_POLICY`: `CREATE ROW
+	// ACCESS POLICY`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#create
+	// _row_access_policy_statement) statement. * `CREATE_SCHEMA`: `CREATE
+	// SCHEMA`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#create
+	// _schema_statement) statement. * `CREATE_SNAPSHOT_TABLE`: `CREATE
+	// SNAPSHOT TABLE`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#create
+	// _snapshot_table_statement) statement. * `CREATE_SEARCH_INDEX`:
+	// `CREATE SEARCH INDEX`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#create
+	// _search_index_statement) statement. * `DROP_TABLE`: `DROP TABLE`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#drop_t
+	// able_statement) statement. * `DROP_EXTERNAL_TABLE`: `DROP EXTERNAL
+	// TABLE`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#drop_e
+	// xternal_table_statement) statement. * `DROP_VIEW`: `DROP VIEW`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#drop_v
+	// iew_statement) statement. * `DROP_MODEL`: `DROP MODEL`
+	// (/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-drop-model
+	// ) statement. * `DROP_MATERIALIZED_VIEW`: `DROP MATERIALIZED VIEW`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#drop_m
+	// aterialized_view_statement) statement. * `DROP_FUNCTION` : `DROP
+	// FUNCTION`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#drop_f
+	// unction_statement) statement. * `DROP_TABLE_FUNCTION` : `DROP TABLE
+	// FUNCTION`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#drop_t
+	// able_function) statement. * `DROP_PROCEDURE`: `DROP PROCEDURE`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#drop_p
+	// rocedure_statement) statement. * `DROP_SEARCH_INDEX`: `DROP SEARCH
+	// INDEX`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#drop_s
+	// earch_index) statement. * `DROP_SCHEMA`: `DROP SCHEMA`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#drop_s
+	// chema_statement) statement. * `DROP_SNAPSHOT_TABLE`: `DROP SNAPSHOT
+	// TABLE`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#drop_s
+	// napshot_table_statement) statement. * `DROP_ROW_ACCESS_POLICY`:
+	// [`DROP ALL] ROW ACCESS POLICY|POLICIES`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#drop_r
+	// ow_access_policy_statement) statement. * `ALTER_TABLE`: `ALTER TABLE`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#alter_
+	// table_set_options_statement) statement. * `ALTER_VIEW`: `ALTER VIEW`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#alter_
+	// view_set_options_statement) statement. * `ALTER_MATERIALIZED_VIEW`:
+	// `ALTER MATERIALIZED VIEW`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#alter_
+	// materialized_view_set_options_statement) statement. * `ALTER_SCHEMA`:
+	// `ALTER SCHEMA`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#aalter
+	// _schema_set_options_statement) statement. * `SCRIPT`: `SCRIPT`
+	// (/bigquery/docs/reference/standard-sql/procedural-language). *
+	// `TRUNCATE_TABLE`: `TRUNCATE TABLE`
+	// (/bigquery/docs/reference/standard-sql/dml-syntax#truncate_table_state
+	// ment) statement. * `CREATE_EXTERNAL_TABLE`: `CREATE EXTERNAL TABLE`
+	// (/bigquery/docs/reference/standard-sql/data-definition-language#create
+	// _external_table_statement) statement. * `EXPORT_DATA`: `EXPORT DATA`
+	// (/bigquery/docs/reference/standard-sql/other-statements#export_data_st
+	// atement) statement. * `EXPORT_MODEL`: `EXPORT MODEL`
+	// (/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-export-mod
+	// el) statement. * `LOAD_DATA`: `LOAD DATA`
+	// (/bigquery/docs/reference/standard-sql/other-statements#load_data_stat
+	// ement) statement. * `CALL`: `CALL`
+	// (/bigquery/docs/reference/standard-sql/procedural-language#call)
+	// statement.
 	StatementType string `json:"statementType,omitempty"`
 
-	// Timeline: [Output only] [Beta] Describes a timeline of job execution.
+	// Timeline: Output only. Describes a timeline of job execution.
 	Timeline []*QueryTimelineSample `json:"timeline,omitempty"`
 
-	// TotalBytesBilled: [Output only] Total bytes billed for the job.
+	// TotalBytesBilled: Output only. If the project is configured to use
+	// on-demand pricing, then this field contains the total bytes billed
+	// for the job. If the project is configured to use flat-rate pricing,
+	// then you are not billed for bytes and this field is informational
+	// only.
 	TotalBytesBilled int64 `json:"totalBytesBilled,omitempty,string"`
 
-	// TotalBytesProcessed: [Output only] Total bytes processed for the job.
+	// TotalBytesProcessed: Output only. Total bytes processed for the job.
 	TotalBytesProcessed int64 `json:"totalBytesProcessed,omitempty,string"`
 
-	// TotalBytesProcessedAccuracy: [Output only] For dry-run jobs,
+	// TotalBytesProcessedAccuracy: Output only. For dry-run jobs,
 	// totalBytesProcessed is an estimate and this field specifies the
 	// accuracy of the estimate. Possible values can be: UNKNOWN: accuracy
 	// of the estimate is unknown. PRECISE: estimate is precise.
@@ -5537,21 +6319,25 @@ type JobStatistics2 struct {
 	// UPPER_BOUND: estimate is upper bound of what the query would cost.
 	TotalBytesProcessedAccuracy string `json:"totalBytesProcessedAccuracy,omitempty"`
 
-	// TotalPartitionsProcessed: [Output only] Total number of partitions
+	// TotalPartitionsProcessed: Output only. Total number of partitions
 	// processed from all partitioned tables referenced in the job.
 	TotalPartitionsProcessed int64 `json:"totalPartitionsProcessed,omitempty,string"`
 
-	// TotalSlotMs: [Output only] Slot-milliseconds for the job.
+	// TotalSlotMs: Output only. Slot-milliseconds for the job.
 	TotalSlotMs int64 `json:"totalSlotMs,omitempty,string"`
 
-	// TransferredBytes: [Output-only] Total bytes transferred for
+	// TransferredBytes: Output only. Total bytes transferred for
 	// cross-cloud queries such as Cross Cloud Transfer and CREATE TABLE AS
 	// SELECT (CTAS).
 	TransferredBytes int64 `json:"transferredBytes,omitempty,string"`
 
-	// UndeclaredQueryParameters: Standard SQL only: list of undeclared
-	// query parameters detected during a dry run validation.
+	// UndeclaredQueryParameters: Output only. GoogleSQL only: list of
+	// undeclared query parameters detected during a dry run validation.
 	UndeclaredQueryParameters []*QueryParameter `json:"undeclaredQueryParameters,omitempty"`
+
+	// VectorSearchStatistics: Output only. Vector Search query specific
+	// statistics.
+	VectorSearchStatistics *VectorSearchStatistics `json:"vectorSearchStatistics,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BiEngineStatistics")
 	// to unconditionally include in API requests. By default, fields with
@@ -5577,13 +6363,14 @@ func (s *JobStatistics2) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobStatistics2ReservationUsage: Job resource usage breakdown by
+// reservation.
 type JobStatistics2ReservationUsage struct {
-	// Name: [Output only] Reservation name or "unreserved" for on-demand
-	// resources usage.
+	// Name: Reservation name or "unreserved" for on-demand resources usage.
 	Name string `json:"name,omitempty"`
 
-	// SlotMs: [Output only] Slot-milliseconds the job spent in the given
-	// reservation.
+	// SlotMs: Total slot milliseconds used by the reservation for a
+	// particular job.
 	SlotMs int64 `json:"slotMs,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -5609,29 +6396,33 @@ func (s *JobStatistics2ReservationUsage) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobStatistics3: Statistics for a load job.
 type JobStatistics3 struct {
-	// BadRecords: [Output-only] The number of bad records encountered. Note
+	// BadRecords: Output only. The number of bad records encountered. Note
 	// that if the job has failed because of more bad records encountered
 	// than the maximum allowed in the load job configuration, then this
 	// number can be less than the total number of bad records present in
 	// the input data.
 	BadRecords int64 `json:"badRecords,omitempty,string"`
 
-	// InputFileBytes: [Output-only] Number of bytes of source data in a
-	// load job.
+	// InputFileBytes: Output only. Number of bytes of source data in a load
+	// job.
 	InputFileBytes int64 `json:"inputFileBytes,omitempty,string"`
 
-	// InputFiles: [Output-only] Number of source files in a load job.
+	// InputFiles: Output only. Number of source files in a load job.
 	InputFiles int64 `json:"inputFiles,omitempty,string"`
 
-	// OutputBytes: [Output-only] Size of the loaded data in bytes. Note
-	// that while a load job is in the running state, this value may change.
+	// OutputBytes: Output only. Size of the loaded data in bytes. Note that
+	// while a load job is in the running state, this value may change.
 	OutputBytes int64 `json:"outputBytes,omitempty,string"`
 
-	// OutputRows: [Output-only] Number of rows imported in a load job. Note
+	// OutputRows: Output only. Number of rows imported in a load job. Note
 	// that while an import job is in the running state, this value may
 	// change.
 	OutputRows int64 `json:"outputRows,omitempty,string"`
+
+	// Timeline: Output only. Describes a timeline of job execution.
+	Timeline []*QueryTimelineSample `json:"timeline,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BadRecords") to
 	// unconditionally include in API requests. By default, fields with
@@ -5656,17 +6447,22 @@ func (s *JobStatistics3) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobStatistics4: Statistics for an extract job.
 type JobStatistics4 struct {
-	// DestinationUriFileCounts: [Output-only] Number of files per
+	// DestinationUriFileCounts: Output only. Number of files per
 	// destination URI or URI pattern specified in the extract
 	// configuration. These values will be in the same order as the URIs
 	// specified in the 'destinationUris' field.
 	DestinationUriFileCounts googleapi.Int64s `json:"destinationUriFileCounts,omitempty"`
 
-	// InputBytes: [Output-only] Number of user bytes extracted into the
+	// InputBytes: Output only. Number of user bytes extracted into the
 	// result. This is the byte count as computed by BigQuery for billing
-	// purposes.
+	// purposes and doesn't have any relationship with the number of actual
+	// result bytes extracted in the desired format.
 	InputBytes int64 `json:"inputBytes,omitempty,string"`
+
+	// Timeline: Output only. Describes a timeline of job execution.
+	Timeline []*QueryTimelineSample `json:"timeline,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DestinationUriFileCounts") to unconditionally include in API
@@ -5693,12 +6489,13 @@ func (s *JobStatistics4) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JobStatistics5: Statistics for a copy job.
 type JobStatistics5 struct {
-	// CopiedLogicalBytes: [Output-only] Number of logical bytes copied to
+	// CopiedLogicalBytes: Output only. Number of logical bytes copied to
 	// the destination table.
 	CopiedLogicalBytes int64 `json:"copiedLogicalBytes,omitempty,string"`
 
-	// CopiedRows: [Output-only] Number of rows copied to the destination
+	// CopiedRows: Output only. Number of rows copied to the destination
 	// table.
 	CopiedRows int64 `json:"copiedRows,omitempty,string"`
 
@@ -5727,17 +6524,18 @@ func (s *JobStatistics5) MarshalJSON() ([]byte, error) {
 }
 
 type JobStatus struct {
-	// ErrorResult: [Output-only] Final error result of the job. If present,
+	// ErrorResult: Output only. Final error result of the job. If present,
 	// indicates that the job has completed and was unsuccessful.
 	ErrorResult *ErrorProto `json:"errorResult,omitempty"`
 
-	// Errors: [Output-only] The first errors encountered during the running
+	// Errors: Output only. The first errors encountered during the running
 	// of the job. The final message includes the number of errors that
 	// caused the process to stop. Errors here do not necessarily mean that
-	// the job has completed or was unsuccessful.
+	// the job has not completed or was unsuccessful.
 	Errors []*ErrorProto `json:"errors,omitempty"`
 
-	// State: [Output-only] Running state of the job.
+	// State: Output only. Running state of the job. Valid states include
+	// 'PENDING', 'RUNNING', and 'DONE'.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ErrorResult") to
@@ -5763,10 +6561,11 @@ func (s *JobStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JsonOptions: Json Options for load and make external tables.
 type JsonOptions struct {
-	// Encoding: [Optional] The character encoding of the data. The
-	// supported values are UTF-8, UTF-16BE, UTF-16LE, UTF-32BE, and
-	// UTF-32LE. The default value is UTF-8.
+	// Encoding: Optional. The character encoding of the data. The supported
+	// values are UTF-8, UTF-16BE, UTF-16LE, UTF-32BE, and UTF-32LE. The
+	// default value is UTF-8.
 	Encoding string `json:"encoding,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Encoding") to
@@ -5793,6 +6592,74 @@ func (s *JsonOptions) MarshalJSON() ([]byte, error) {
 }
 
 type JsonValue interface{}
+
+// LinkedDatasetMetadata: Metadata about the Linked Dataset.
+type LinkedDatasetMetadata struct {
+	// LinkState: Output only. Specifies whether Linked Dataset is currently
+	// in a linked state or not.
+	//
+	// Possible values:
+	//   "LINK_STATE_UNSPECIFIED" - The default value. Default to the LINKED
+	// state.
+	//   "LINKED" - Normal Linked Dataset state. Data is queryable via the
+	// Linked Dataset.
+	//   "UNLINKED" - Data publisher or owner has unlinked this Linked
+	// Dataset. It means you can no longer query or see the data in the
+	// Linked Dataset.
+	LinkState string `json:"linkState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LinkState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LinkState") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LinkedDatasetMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod LinkedDatasetMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LinkedDatasetSource: A dataset source type which refers to another
+// BigQuery dataset.
+type LinkedDatasetSource struct {
+	// SourceDataset: The source dataset reference contains project numbers
+	// and not project ids.
+	SourceDataset *DatasetReference `json:"sourceDataset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SourceDataset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SourceDataset") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LinkedDatasetSource) MarshalJSON() ([]byte, error) {
+	type NoMethod LinkedDatasetSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
 
 // ListModelsResponse: Response format for a single page when listing
 // BigQuery ML models.
@@ -5907,6 +6774,60 @@ func (s *ListRowAccessPoliciesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LoadQueryStatistics: Statistics for a LOAD query.
+type LoadQueryStatistics struct {
+	// BadRecords: Output only. The number of bad records encountered while
+	// processing a LOAD query. Note that if the job has failed because of
+	// more bad records encountered than the maximum allowed in the load job
+	// configuration, then this number can be less than the total number of
+	// bad records present in the input data.
+	BadRecords int64 `json:"badRecords,omitempty,string"`
+
+	// BytesTransferred: Output only. This field is deprecated. The number
+	// of bytes of source data copied over the network for a `LOAD` query.
+	// `transferred_bytes` has the canonical value for physical transferred
+	// bytes, which is used for BigQuery Omni billing.
+	BytesTransferred int64 `json:"bytesTransferred,omitempty,string"`
+
+	// InputFileBytes: Output only. Number of bytes of source data in a LOAD
+	// query.
+	InputFileBytes int64 `json:"inputFileBytes,omitempty,string"`
+
+	// InputFiles: Output only. Number of source files in a LOAD query.
+	InputFiles int64 `json:"inputFiles,omitempty,string"`
+
+	// OutputBytes: Output only. Size of the loaded data in bytes. Note that
+	// while a LOAD query is in the running state, this value may change.
+	OutputBytes int64 `json:"outputBytes,omitempty,string"`
+
+	// OutputRows: Output only. Number of rows imported in a LOAD query.
+	// Note that while a LOAD query is in the running state, this value may
+	// change.
+	OutputRows int64 `json:"outputRows,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "BadRecords") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BadRecords") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LoadQueryStatistics) MarshalJSON() ([]byte, error) {
+	type NoMethod LoadQueryStatistics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // LocationMetadata: BigQuery-specific metadata about a location. This
 // will be set on google.cloud.location.Location.metadata in Cloud
 // Location API responses.
@@ -5940,18 +6861,96 @@ func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MaterializedView: A materialized view considered for a query job.
+type MaterializedView struct {
+	// Chosen: Whether the materialized view is chosen for the query. A
+	// materialized view can be chosen to rewrite multiple parts of the same
+	// query. If a materialized view is chosen to rewrite any part of the
+	// query, then this field is true, even if the materialized view was not
+	// chosen to rewrite others parts.
+	Chosen bool `json:"chosen,omitempty"`
+
+	// EstimatedBytesSaved: If present, specifies a best-effort estimation
+	// of the bytes saved by using the materialized view rather than its
+	// base tables.
+	EstimatedBytesSaved int64 `json:"estimatedBytesSaved,omitempty,string"`
+
+	// RejectedReason: If present, specifies the reason why the materialized
+	// view was not chosen for the query.
+	//
+	// Possible values:
+	//   "REJECTED_REASON_UNSPECIFIED" - Default unspecified value.
+	//   "NO_DATA" - View has no cached data because it has not refreshed
+	// yet.
+	//   "COST" - The estimated cost of the view is more expensive than
+	// another view or the base table. Note: The estimate cost might not
+	// match the billed cost.
+	//   "BASE_TABLE_TRUNCATED" - View has no cached data because a base
+	// table is truncated.
+	//   "BASE_TABLE_DATA_CHANGE" - View is invalidated because of a data
+	// change in one or more base tables. It could be any recent change if
+	// the
+	// [`max_staleness`](https://cloud.google.com/bigquery/docs/materialized-
+	// views-create#max_staleness) option is not set for the view, or
+	// otherwise any change outside of the staleness window.
+	//   "BASE_TABLE_PARTITION_EXPIRATION_CHANGE" - View is invalidated
+	// because a base table's partition expiration has changed.
+	//   "BASE_TABLE_EXPIRED_PARTITION" - View is invalidated because a base
+	// table's partition has expired.
+	//   "BASE_TABLE_INCOMPATIBLE_METADATA_CHANGE" - View is invalidated
+	// because a base table has an incompatible metadata change.
+	//   "TIME_ZONE" - View is invalidated because it was refreshed with a
+	// time zone other than that of the current job.
+	//   "OUT_OF_TIME_TRAVEL_WINDOW" - View is outside the time travel
+	// window.
+	//   "BASE_TABLE_FINE_GRAINED_SECURITY_POLICY" - View is inaccessible to
+	// the user because of a fine-grained security policy on one of its base
+	// tables.
+	//   "BASE_TABLE_TOO_STALE" - One of the view's base tables is too
+	// stale. For example, the cached metadata of a biglake table needs to
+	// be updated.
+	RejectedReason string `json:"rejectedReason,omitempty"`
+
+	// TableReference: The candidate materialized view.
+	TableReference *TableReference `json:"tableReference,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Chosen") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Chosen") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaterializedView) MarshalJSON() ([]byte, error) {
+	type NoMethod MaterializedView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MaterializedViewDefinition: Definition and configuration of a
+// materialized view.
 type MaterializedViewDefinition struct {
-	// AllowNonIncrementalDefinition: [Optional] Allow non incremental
-	// materialized view definition. The default value is "false".
+	// AllowNonIncrementalDefinition: Optional. This option declares authors
+	// intention to construct a materialized view that will not be refreshed
+	// incrementally.
 	AllowNonIncrementalDefinition bool `json:"allowNonIncrementalDefinition,omitempty"`
 
-	// EnableRefresh: [Optional] [TrustedTester] Enable automatic refresh of
-	// the materialized view when the base table is updated. The default
-	// value is "true".
+	// EnableRefresh: Optional. Enable automatic refresh of the materialized
+	// view when the base table is updated. The default value is "true".
 	EnableRefresh bool `json:"enableRefresh,omitempty"`
 
-	// LastRefreshTime: [Output-only] [TrustedTester] The time when this
-	// materialized view was last modified, in milliseconds since the epoch.
+	// LastRefreshTime: Output only. The time when this materialized view
+	// was last refreshed, in milliseconds since the epoch.
 	LastRefreshTime int64 `json:"lastRefreshTime,omitempty,string"`
 
 	// MaxStaleness: [Optional] Max staleness of data that could be returned
@@ -5959,12 +6958,12 @@ type MaterializedViewDefinition struct {
 	// type).
 	MaxStaleness string `json:"maxStaleness,omitempty"`
 
-	// Query: [Required] A query whose result is persisted.
+	// Query: Required. A query whose results are persisted.
 	Query string `json:"query,omitempty"`
 
-	// RefreshIntervalMs: [Optional] [TrustedTester] The maximum frequency
-	// at which this materialized view will be refreshed. The default value
-	// is "1800000" (30 minutes).
+	// RefreshIntervalMs: Optional. The maximum frequency at which this
+	// materialized view will be refreshed. The default value is "1800000"
+	// (30 minutes).
 	RefreshIntervalMs int64 `json:"refreshIntervalMs,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -5992,16 +6991,16 @@ func (s *MaterializedViewDefinition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type MlStatistics struct {
-	// IterationResults: Results for all completed iterations.
-	IterationResults []*IterationResult `json:"iterationResults,omitempty"`
+// MaterializedViewStatistics: Statistics of materialized views
+// considered in a query job.
+type MaterializedViewStatistics struct {
+	// MaterializedView: Materialized views considered for the query job.
+	// Only certain materialized views are used. For a detailed list, see
+	// the child message. If many materialized views are considered, then
+	// the list might be incomplete.
+	MaterializedView []*MaterializedView `json:"materializedView,omitempty"`
 
-	// MaxIterations: Maximum number of iterations specified as
-	// max_iterations in the 'CREATE MODEL' query. The actual number of
-	// iterations may be less than this number due to early stop.
-	MaxIterations int64 `json:"maxIterations,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "IterationResults") to
+	// ForceSendFields is a list of field names (e.g. "MaterializedView") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -6009,13 +7008,164 @@ type MlStatistics struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IterationResults") to
+	// NullFields is a list of field names (e.g. "MaterializedView") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaterializedViewStatistics) MarshalJSON() ([]byte, error) {
+	type NoMethod MaterializedViewStatistics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MaterializedViewStatus: Status of a materialized view. The last
+// refresh timestamp status is omitted here, but is present in the
+// MaterializedViewDefinition message.
+type MaterializedViewStatus struct {
+	// LastRefreshStatus: Output only. Error result of the last automatic
+	// refresh. If present, indicates that the last automatic refresh was
+	// unsuccessful.
+	LastRefreshStatus *ErrorProto `json:"lastRefreshStatus,omitempty"`
+
+	// RefreshWatermark: Output only. Refresh watermark of materialized
+	// view. The base tables' data were collected into the materialized view
+	// cache until this time.
+	RefreshWatermark string `json:"refreshWatermark,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LastRefreshStatus")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LastRefreshStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaterializedViewStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod MaterializedViewStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MetadataCacheStatistics: Statistics for metadata caching in BigLake
+// tables.
+type MetadataCacheStatistics struct {
+	// TableMetadataCacheUsage: Set for the Metadata caching eligible tables
+	// referenced in the query.
+	TableMetadataCacheUsage []*TableMetadataCacheUsage `json:"tableMetadataCacheUsage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "TableMetadataCacheUsage") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TableMetadataCacheUsage")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MetadataCacheStatistics) MarshalJSON() ([]byte, error) {
+	type NoMethod MetadataCacheStatistics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MlStatistics: Job statistics specific to a BigQuery ML training job.
+type MlStatistics struct {
+	// HparamTrials: Output only. Trials of a hyperparameter tuning job
+	// (/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-
+	// overview) sorted by trial_id.
+	HparamTrials []*HparamTuningTrial `json:"hparamTrials,omitempty"`
+
+	// IterationResults: Results for all completed iterations. Empty for
+	// hyperparameter tuning jobs
+	// (/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-hp-tuning-
+	// overview).
+	IterationResults []*IterationResult `json:"iterationResults,omitempty"`
+
+	// MaxIterations: Output only. Maximum number of iterations specified as
+	// max_iterations in the 'CREATE MODEL' query. The actual number of
+	// iterations may be less than this number due to early stop.
+	MaxIterations int64 `json:"maxIterations,omitempty,string"`
+
+	// ModelType: Output only. The type of the model that is being trained.
+	//
+	// Possible values:
+	//   "MODEL_TYPE_UNSPECIFIED" - Default value.
+	//   "LINEAR_REGRESSION" - Linear regression model.
+	//   "LOGISTIC_REGRESSION" - Logistic regression based classification
+	// model.
+	//   "KMEANS" - K-means clustering model.
+	//   "MATRIX_FACTORIZATION" - Matrix factorization model.
+	//   "DNN_CLASSIFIER" - DNN classifier model.
+	//   "TENSORFLOW" - An imported TensorFlow model.
+	//   "DNN_REGRESSOR" - DNN regressor model.
+	//   "XGBOOST" - An imported XGBoost model.
+	//   "BOOSTED_TREE_REGRESSOR" - Boosted tree regressor model.
+	//   "BOOSTED_TREE_CLASSIFIER" - Boosted tree classifier model.
+	//   "ARIMA" - ARIMA model.
+	//   "AUTOML_REGRESSOR" - AutoML Tables regression model.
+	//   "AUTOML_CLASSIFIER" - AutoML Tables classification model.
+	//   "PCA" - Prinpical Component Analysis model.
+	//   "DNN_LINEAR_COMBINED_CLASSIFIER" - Wide-and-deep classifier model.
+	//   "DNN_LINEAR_COMBINED_REGRESSOR" - Wide-and-deep regressor model.
+	//   "AUTOENCODER" - Autoencoder model.
+	//   "ARIMA_PLUS" - New name for the ARIMA model.
+	//   "ARIMA_PLUS_XREG" - ARIMA with external regressors.
+	//   "RANDOM_FOREST_REGRESSOR" - Random forest regressor model.
+	//   "RANDOM_FOREST_CLASSIFIER" - Random forest classifier model.
+	//   "TENSORFLOW_LITE" - An imported TensorFlow Lite model.
+	//   "ONNX" - An imported ONNX model.
+	ModelType string `json:"modelType,omitempty"`
+
+	// TrainingType: Output only. Training type of the job.
+	//
+	// Possible values:
+	//   "TRAINING_TYPE_UNSPECIFIED" - Unspecified training type.
+	//   "SINGLE_TRAINING" - Single training with fixed parameter space.
+	//   "HPARAM_TUNING" - [Hyperparameter tuning
+	// training](/bigquery-ml/docs/reference/standard-sql/bigqueryml-syntax-h
+	// p-tuning-overview).
+	TrainingType string `json:"trainingType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HparamTrials") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HparamTrials") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -6186,16 +7336,10 @@ func (s *Model) MarshalJSON() ([]byte, error) {
 }
 
 type ModelDefinition struct {
-	// ModelOptions: [Output-only, Beta] Model options used for the first
-	// training run. These options are immutable for subsequent training
-	// runs. Default values are used for any options not specified in the
-	// input query.
+	// ModelOptions: Deprecated.
 	ModelOptions *ModelDefinitionModelOptions `json:"modelOptions,omitempty"`
 
-	// TrainingRuns: [Output-only, Beta] Information about ml training runs,
-	// each training run comprises of multiple iterations and there may be
-	// multiple training runs for the model if warm start is used or if a
-	// user decides to continue a previously cancelled query.
+	// TrainingRuns: Deprecated.
 	TrainingRuns []*BqmlTrainingRun `json:"trainingRuns,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ModelOptions") to
@@ -6221,10 +7365,7 @@ func (s *ModelDefinition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ModelDefinitionModelOptions: [Output-only, Beta] Model options used
-// for the first training run. These options are immutable for
-// subsequent training runs. Default values are used for any options not
-// specified in the input query.
+// ModelDefinitionModelOptions: Deprecated.
 type ModelDefinitionModelOptions struct {
 	Labels []string `json:"labels,omitempty"`
 
@@ -6255,6 +7396,40 @@ func (s *ModelDefinitionModelOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ModelExtractOptions: Options related to model extraction.
+type ModelExtractOptions struct {
+	// TrialId: The 1-based ID of the trial to be exported from a
+	// hyperparameter tuning model. If not specified, the trial with id =
+	// Model
+	// (/bigquery/docs/reference/rest/v2/models#resource:-model).defaultTrial
+	// Id is exported. This field is ignored for models not trained with
+	// hyperparameter tuning.
+	TrialId int64 `json:"trialId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "TrialId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TrialId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ModelExtractOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ModelExtractOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ModelReference: Id path of a model.
 type ModelReference struct {
 	// DatasetId: Required. The ID of the dataset containing this model.
 	DatasetId string `json:"datasetId,omitempty"`
@@ -6324,12 +7499,13 @@ func (s *MultiClassClassificationMetrics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ParquetOptions: Parquet Options for load and make external tables.
 type ParquetOptions struct {
-	// EnableListInference: [Optional] Indicates whether to use schema
+	// EnableListInference: Optional. Indicates whether to use schema
 	// inference specifically for Parquet LIST logical type.
 	EnableListInference bool `json:"enableListInference,omitempty"`
 
-	// EnumAsString: [Optional] Indicates whether to infer Parquet ENUM
+	// EnumAsString: Optional. Indicates whether to infer Parquet ENUM
 	// logical type as STRING instead of BYTES by default.
 	EnumAsString bool `json:"enumAsString,omitempty"`
 
@@ -6353,6 +7529,108 @@ type ParquetOptions struct {
 
 func (s *ParquetOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod ParquetOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartitionedColumn: The partitioning column information.
+type PartitionedColumn struct {
+	// Field: Output only. The name of the partition column.
+	Field string `json:"field,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartitionedColumn) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitionedColumn
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PartitioningDefinition: The partitioning information, which includes
+// managed table and external table partition information.
+type PartitioningDefinition struct {
+	// PartitionedColumn: Output only. Details about each partitioning
+	// column. BigQuery native tables only support 1 partitioning column.
+	// Other table types may support 0, 1 or more partitioning columns.
+	PartitionedColumn []*PartitionedColumn `json:"partitionedColumn,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PartitionedColumn")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PartitionedColumn") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartitioningDefinition) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitioningDefinition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PerformanceInsights: Performance insights for the job.
+type PerformanceInsights struct {
+	// AvgPreviousExecutionMs: Output only. Average execution ms of previous
+	// runs. Indicates the job ran slow compared to previous executions. To
+	// find previous executions, use INFORMATION_SCHEMA tables and filter
+	// jobs with same query hash.
+	AvgPreviousExecutionMs int64 `json:"avgPreviousExecutionMs,omitempty,string"`
+
+	// StagePerformanceChangeInsights: Output only. Query stage performance
+	// insights compared to previous runs, for diagnosing performance
+	// regression.
+	StagePerformanceChangeInsights []*StagePerformanceChangeInsight `json:"stagePerformanceChangeInsights,omitempty"`
+
+	// StagePerformanceStandaloneInsights: Output only. Standalone query
+	// stage performance insights, for exploring potential improvements.
+	StagePerformanceStandaloneInsights []*StagePerformanceStandaloneInsight `json:"stagePerformanceStandaloneInsights,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AvgPreviousExecutionMs") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AvgPreviousExecutionMs")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerformanceInsights) MarshalJSON() ([]byte, error) {
+	type NoMethod PerformanceInsights
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6563,20 +7841,23 @@ func (s *PrivacyPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ProjectList: Response object of ListProjects
 type ProjectList struct {
-	// Etag: A hash of the page of results
+	// Etag: A hash of the page of results.
 	Etag string `json:"etag,omitempty"`
 
-	// Kind: The type of list.
+	// Kind: The resource type of the response.
 	Kind string `json:"kind,omitempty"`
 
-	// NextPageToken: A token to request the next page of results.
+	// NextPageToken: Use this token to request the next page of results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// Projects: Projects to which you have at least READ access.
+	// Projects: Projects to which the user has at least READ access.
 	Projects []*ProjectListProjects `json:"projects,omitempty"`
 
-	// TotalItems: The total number of projects in the list.
+	// TotalItems: The total number of projects in the page. A wrapper is
+	// used here because the field should still be in the response when the
+	// value is 0.
 	TotalItems int64 `json:"totalItems,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -6606,8 +7887,10 @@ func (s *ProjectList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ProjectListProjects: Information about a single project.
 type ProjectListProjects struct {
-	// FriendlyName: A descriptive name for this project.
+	// FriendlyName: A descriptive name for this project. A wrapper is used
+	// here because friendlyName can be set to the empty string.
 	FriendlyName string `json:"friendlyName,omitempty"`
 
 	// Id: An opaque ID of this project.
@@ -6645,8 +7928,9 @@ func (s *ProjectListProjects) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ProjectReference: A unique reference to a project.
 type ProjectReference struct {
-	// ProjectId: [Required] ID of the project. Can be either the numeric ID
+	// ProjectId: Required. ID of the project. Can be either the numeric ID
 	// or the assigned ID of the project.
 	ProjectId string `json:"projectId,omitempty"`
 
@@ -6673,15 +7957,46 @@ func (s *ProjectReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryInfo: Query optimization information for a QUERY job.
+type QueryInfo struct {
+	// OptimizationDetails: Output only. Information about query
+	// optimizations.
+	OptimizationDetails googleapi.RawMessage `json:"optimizationDetails,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OptimizationDetails")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OptimizationDetails") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueryInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod QueryInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// QueryParameter: A parameter given to a query.
 type QueryParameter struct {
-	// Name: [Optional] If unset, this is a positional parameter. Otherwise,
+	// Name: Optional. If unset, this is a positional parameter. Otherwise,
 	// should be unique within a query.
 	Name string `json:"name,omitempty"`
 
-	// ParameterType: [Required] The type of this parameter.
+	// ParameterType: Required. The type of this parameter.
 	ParameterType *QueryParameterType `json:"parameterType,omitempty"`
 
-	// ParameterValue: [Required] The value of this parameter.
+	// ParameterValue: Required. The value of this parameter.
 	ParameterValue *QueryParameterValue `json:"parameterValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -6707,16 +8022,21 @@ func (s *QueryParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryParameterType: The type of a query parameter.
 type QueryParameterType struct {
-	// ArrayType: [Optional] The type of the array's elements, if this is an
+	// ArrayType: Optional. The type of the array's elements, if this is an
 	// array.
 	ArrayType *QueryParameterType `json:"arrayType,omitempty"`
 
-	// StructTypes: [Optional] The types of the fields of this struct, in
+	// RangeElementType: Optional. The element type of the range, if this is
+	// a range.
+	RangeElementType *QueryParameterType `json:"rangeElementType,omitempty"`
+
+	// StructTypes: Optional. The types of the fields of this struct, in
 	// order, if this is a struct.
 	StructTypes []*QueryParameterTypeStructTypes `json:"structTypes,omitempty"`
 
-	// Type: [Required] The top level type of this field.
+	// Type: Required. The top level type of this field.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ArrayType") to
@@ -6742,14 +8062,15 @@ func (s *QueryParameterType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryParameterTypeStructTypes: The type of a struct parameter.
 type QueryParameterTypeStructTypes struct {
-	// Description: [Optional] Human-oriented description of the field.
+	// Description: Optional. Human-oriented description of the field.
 	Description string `json:"description,omitempty"`
 
-	// Name: [Optional] The name of this field.
+	// Name: Optional. The name of this field.
 	Name string `json:"name,omitempty"`
 
-	// Type: [Required] The type of this field.
+	// Type: Required. The type of this field.
 	Type *QueryParameterType `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -6775,15 +8096,18 @@ func (s *QueryParameterTypeStructTypes) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryParameterValue: The value of a query parameter.
 type QueryParameterValue struct {
-	// ArrayValues: [Optional] The array values, if this is an array type.
+	// ArrayValues: Optional. The array values, if this is an array type.
 	ArrayValues []*QueryParameterValue `json:"arrayValues,omitempty"`
 
-	// StructValues: [Optional] The struct field values, in order of the
-	// struct type's declaration.
+	// RangeValue: Optional. The range value, if this is a range type.
+	RangeValue *RangeValue `json:"rangeValue,omitempty"`
+
+	// StructValues: The struct field values.
 	StructValues map[string]QueryParameterValue `json:"structValues,omitempty"`
 
-	// Value: [Optional] The value of this value, if a simple scalar type.
+	// Value: Optional. The value of this value, if a simple scalar type.
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ArrayValues") to
@@ -6809,47 +8133,65 @@ func (s *QueryParameterValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryRequest: Describes the format of the jobs.query request.
 type QueryRequest struct {
-	// ConnectionProperties: Connection properties.
+	// ConnectionProperties: Optional. Connection properties which can
+	// modify the query behavior.
 	ConnectionProperties []*ConnectionProperty `json:"connectionProperties,omitempty"`
 
 	// Continuous: [Optional] Specifies whether the query should be executed
 	// as a continuous query. The default value is false.
 	Continuous bool `json:"continuous,omitempty"`
 
-	// CreateSession: If true, creates a new session, where session id will
-	// be a server generated random id. If false, runs query with an
-	// existing session_id passed in ConnectionProperty, otherwise runs
-	// query in non-session mode.
+	// CreateSession: Optional. If true, creates a new session using a
+	// randomly generated session_id. If false, runs query with an existing
+	// session_id passed in ConnectionProperty, otherwise runs query in
+	// non-session mode. The session location will be set to
+	// QueryRequest.location if it is present, otherwise it's set to the
+	// default location based on existing routing logic.
 	CreateSession bool `json:"createSession,omitempty"`
 
-	// DefaultDataset: [Optional] Specifies the default datasetId and
+	// DefaultDataset: Optional. Specifies the default datasetId and
 	// projectId to assume for any unqualified table names in the query. If
 	// not set, all table names in the query string must be qualified in the
 	// format 'datasetId.tableId'.
 	DefaultDataset *DatasetReference `json:"defaultDataset,omitempty"`
 
-	// DryRun: [Optional] If set to true, BigQuery doesn't run the job.
+	// DryRun: Optional. If set to true, BigQuery doesn't run the job.
 	// Instead, if the query is valid, BigQuery returns statistics about the
 	// job such as how many bytes would be processed. If the query is
 	// invalid, an error returns. The default value is false.
 	DryRun bool `json:"dryRun,omitempty"`
 
+	// FormatOptions: Optional. Output format adjustments.
+	FormatOptions *DataFormatOptions `json:"formatOptions,omitempty"`
+
 	// JobCreationMode: Optional. If not set, jobs are always required. If
 	// set, the query request will follow the behavior described
 	// JobCreationMode. This feature is not yet available. Jobs will always
 	// be created.
+	//
+	// Possible values:
+	//   "JOB_CREATION_MODE_UNSPECIFIED" - If unspecified
+	// JOB_CREATION_REQUIRED is the default.
+	//   "JOB_CREATION_REQUIRED" - Default. Job creation is always required.
+	//   "JOB_CREATION_OPTIONAL" - Job creation is optional. Returning
+	// immediate results is prioritized. BigQuery will automatically
+	// determine if a Job needs to be created. The conditions under which
+	// BigQuery can decide to not create a Job are subject to change. If Job
+	// creation is required, JOB_CREATION_REQUIRED mode should be used,
+	// which is the default.
 	JobCreationMode string `json:"jobCreationMode,omitempty"`
 
 	// Kind: The resource type of the request.
 	Kind string `json:"kind,omitempty"`
 
-	// Labels: The labels associated with this job. You can use these to
-	// organize and group your jobs. Label keys and values can be no longer
-	// than 63 characters, can only contain lowercase letters, numeric
-	// characters, underscores and dashes. International characters are
-	// allowed. Label values are optional. Label keys must start with a
-	// letter and each label in the list must have a different key.
+	// Labels: Optional. The labels associated with this query. Labels can
+	// be used to organize and group query jobs. Label keys and values can
+	// be no longer than 63 characters, can only contain lowercase letters,
+	// numeric characters, underscores and dashes. International characters
+	// are allowed. Label keys must start with a letter and each label in
+	// the list must have a different key.
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Location: The geographic location where the job should run. See
@@ -6857,7 +8199,7 @@ type QueryRequest struct {
 	// https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
 	Location string `json:"location,omitempty"`
 
-	// MaxResults: [Optional] The maximum number of rows of data to return
+	// MaxResults: Optional. The maximum number of rows of data to return
 	// per page of results. Setting this flag to a small value such as 1000
 	// and then paging through results might improve reliability when the
 	// query result set is large. In addition to this limit, responses are
@@ -6865,63 +8207,68 @@ type QueryRequest struct {
 	// only the byte limit applies.
 	MaxResults int64 `json:"maxResults,omitempty"`
 
-	// MaximumBytesBilled: [Optional] Limits the bytes billed for this job.
-	// Queries that will have bytes billed beyond this limit will fail
-	// (without incurring a charge). If unspecified, this will be set to
-	// your project default.
+	// MaximumBytesBilled: Optional. Limits the bytes billed for this query.
+	// Queries with bytes billed above this limit will fail (without
+	// incurring a charge). If unspecified, the project default is used.
 	MaximumBytesBilled int64 `json:"maximumBytesBilled,omitempty,string"`
 
-	// ParameterMode: Standard SQL only. Set to POSITIONAL to use positional
+	// ParameterMode: GoogleSQL only. Set to POSITIONAL to use positional
 	// (?) query parameters or to NAMED to use named (@myparam) query
 	// parameters in this query.
 	ParameterMode string `json:"parameterMode,omitempty"`
 
-	// PreserveNulls: [Deprecated] This property is deprecated.
+	// PreserveNulls: This property is deprecated.
 	PreserveNulls bool `json:"preserveNulls,omitempty"`
 
-	// Query: [Required] A query string, following the BigQuery query
-	// syntax, of the query to execute. Example: "SELECT count(f1) FROM
-	// [myProjectId:myDatasetId.myTableId]".
+	// Query: Required. A query string to execute, using Google Standard SQL
+	// or legacy SQL syntax. Example: "SELECT COUNT(f1) FROM
+	// myProjectId.myDatasetId.myTableId".
 	Query string `json:"query,omitempty"`
 
-	// QueryParameters: Query parameters for Standard SQL queries.
+	// QueryParameters: Query parameters for GoogleSQL queries.
 	QueryParameters []*QueryParameter `json:"queryParameters,omitempty"`
 
-	// RequestId: A unique user provided identifier to ensure idempotent
-	// behavior for queries. Note that this is different from the job_id. It
-	// has the following properties: 1. It is case-sensitive, limited to up
-	// to 36 ASCII characters. A UUID is recommended. 2. Read only queries
-	// can ignore this token since they are nullipotent by definition. 3.
-	// For the purposes of idempotency ensured by the request_id, a request
-	// is considered duplicate of another only if they have the same
-	// request_id and are actually duplicates. When determining whether a
-	// request is a duplicate of the previous request, all parameters in the
-	// request that may affect the behavior are considered. For example,
-	// query, connection_properties, query_parameters, use_legacy_sql are
-	// parameters that affect the result and are considered when determining
-	// whether a request is a duplicate, but properties like timeout_ms
-	// don't affect the result and are thus not considered. Dry run query
-	// requests are never considered duplicate of another request. 4. When a
-	// duplicate mutating query request is detected, it returns: a. the
-	// results of the mutation if it completes successfully within the
-	// timeout. b. the running operation if it is still in progress at the
-	// end of the timeout. 5. Its lifetime is limited to 15 minutes. In
-	// other words, if two requests are sent with the same request_id, but
-	// more than 15 minutes apart, idempotency is not guaranteed.
+	// RequestId: Optional. A unique user provided identifier to ensure
+	// idempotent behavior for queries. Note that this is different from the
+	// job_id. It has the following properties: 1. It is case-sensitive,
+	// limited to up to 36 ASCII characters. A UUID is recommended. 2. Read
+	// only queries can ignore this token since they are nullipotent by
+	// definition. 3. For the purposes of idempotency ensured by the
+	// request_id, a request is considered duplicate of another only if they
+	// have the same request_id and are actually duplicates. When
+	// determining whether a request is a duplicate of another request, all
+	// parameters in the request that may affect the result are considered.
+	// For example, query, connection_properties, query_parameters,
+	// use_legacy_sql are parameters that affect the result and are
+	// considered when determining whether a request is a duplicate, but
+	// properties like timeout_ms don't affect the result and are thus not
+	// considered. Dry run query requests are never considered duplicate of
+	// another request. 4. When a duplicate mutating query request is
+	// detected, it returns: a. the results of the mutation if it completes
+	// successfully within the timeout. b. the running operation if it is
+	// still in progress at the end of the timeout. 5. Its lifetime is
+	// limited to 15 minutes. In other words, if two requests are sent with
+	// the same request_id, but more than 15 minutes apart, idempotency is
+	// not guaranteed.
 	RequestId string `json:"requestId,omitempty"`
 
-	// TimeoutMs: [Optional] How long to wait for the query to complete, in
-	// milliseconds, before the request times out and returns. Note that
-	// this is only a timeout for the request, not the query. If the query
-	// takes longer to run than the timeout value, the call returns without
-	// any results and with the 'jobComplete' flag set to false. You can
-	// call GetQueryResults() to wait for the query to complete and read the
-	// results. The default value is 10000 milliseconds (10 seconds).
+	// TimeoutMs: Optional. Optional: Specifies the maximum amount of time,
+	// in milliseconds, that the client is willing to wait for the query to
+	// complete. By default, this limit is 10 seconds (10,000 milliseconds).
+	// If the query is complete, the jobComplete field in the response is
+	// true. If the query has not yet completed, jobComplete is false. You
+	// can request a longer timeout period in the timeoutMs field. However,
+	// the call is not guaranteed to wait for the specified timeout; it
+	// typically returns after around 200 seconds (200,000 milliseconds),
+	// even if the query is not complete. If jobComplete is false, you can
+	// continue to wait for the query to complete by calling the
+	// getQueryResults method until the jobComplete field in the
+	// getQueryResults response is true.
 	TimeoutMs int64 `json:"timeoutMs,omitempty"`
 
 	// UseLegacySql: Specifies whether to use BigQuery's legacy SQL dialect
 	// for this query. The default value is true. If set to false, the query
-	// will use BigQuery's standard SQL:
+	// will use BigQuery's GoogleSQL:
 	// https://cloud.google.com/bigquery/sql-reference/ When useLegacySql is
 	// set to false, the value of flattenResults is ignored; query will be
 	// run as if flattenResults is false.
@@ -6929,7 +8276,7 @@ type QueryRequest struct {
 	// Default: true
 	UseLegacySql *bool `json:"useLegacySql,omitempty"`
 
-	// UseQueryCache: [Optional] Whether to look for the result in the query
+	// UseQueryCache: Optional. Whether to look for the result in the query
 	// cache. The query cache is a best-effort cache that will be flushed
 	// whenever tables in the query are modified. The default value is true.
 	//
@@ -6965,14 +8312,16 @@ type QueryResponse struct {
 	// CacheHit: Whether the query result was fetched from the query cache.
 	CacheHit bool `json:"cacheHit,omitempty"`
 
-	// DmlStats: [Output-only] Detailed statistics for DML statements
-	// Present only for DML statements INSERT, UPDATE, DELETE or TRUNCATE.
+	// DmlStats: Output only. Detailed statistics for DML statements INSERT,
+	// UPDATE, DELETE, MERGE or TRUNCATE.
 	DmlStats *DmlStatistics `json:"dmlStats,omitempty"`
 
-	// Errors: [Output-only] The first errors or warnings encountered during
+	// Errors: Output only. The first errors or warnings encountered during
 	// the running of the job. The final message includes the number of
 	// errors that caused the process to stop. Errors here do not
-	// necessarily mean that the job has completed or was unsuccessful.
+	// necessarily mean that the job has completed or was unsuccessful. For
+	// more information about error messages, see Error messages
+	// (https://cloud.google.com/bigquery/docs/error-messages).
 	Errors []*ErrorProto `json:"errors,omitempty"`
 
 	// JobComplete: Whether the query has completed or not. If rows or
@@ -6987,7 +8336,7 @@ type QueryResponse struct {
 	// Job was created. If not set, it should be treated as the default:
 	// REQUESTED. This feature is not yet available. Jobs will always be
 	// created.
-	JobCreationReason interface{} `json:"jobCreationReason,omitempty"`
+	JobCreationReason *JobCreationReason `json:"jobCreationReason,omitempty"`
 
 	// JobReference: Reference to the Job that was created to run the query.
 	// This field will be present even if the original request timed out, in
@@ -7000,12 +8349,16 @@ type QueryResponse struct {
 	// Kind: The resource type.
 	Kind string `json:"kind,omitempty"`
 
-	// NumDmlAffectedRows: [Output-only] The number of rows affected by a
-	// DML statement. Present only for DML statements INSERT, UPDATE or
-	// DELETE.
+	// NumDmlAffectedRows: Output only. The number of rows affected by a DML
+	// statement. Present only for DML statements INSERT, UPDATE or DELETE.
 	NumDmlAffectedRows int64 `json:"numDmlAffectedRows,omitempty,string"`
 
-	// PageToken: A token used for paging results.
+	// PageToken: A token used for paging results. A non-empty token
+	// indicates that additional results are available. To see additional
+	// results, query the `jobs.getQueryResults`
+	// (https://cloud.google.com/bigquery/docs/reference/rest/v2/jobs/getQueryResults)
+	// method. For more information, see Paging through table data
+	// (https://cloud.google.com/bigquery/docs/paging-results).
 	PageToken string `json:"pageToken,omitempty"`
 
 	// QueryId: Query ID for the completed query. This ID will be
@@ -7022,8 +8375,8 @@ type QueryResponse struct {
 	// completes successfully.
 	Schema *TableSchema `json:"schema,omitempty"`
 
-	// SessionInfo: [Output-only] [Preview] Information of the session if
-	// this job is part of one.
+	// SessionInfo: Output only. Information of the session if this job is
+	// part of one.
 	SessionInfo *SessionInfo `json:"sessionInfo,omitempty"`
 
 	// TotalBytesProcessed: The total number of bytes processed for this
@@ -7063,10 +8416,12 @@ func (s *QueryResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueryTimelineSample: Summary of the state of query execution at a
+// given time.
 type QueryTimelineSample struct {
-	// ActiveUnits: Total number of units currently being processed by
-	// workers. This does not correspond directly to slot usage. This is the
-	// largest value observed since the last sample.
+	// ActiveUnits: Total number of active workers. This does not correspond
+	// directly to slot usage. This is the largest value observed since the
+	// last sample.
 	ActiveUnits int64 `json:"activeUnits,omitempty,string"`
 
 	// CompletedUnits: Total parallel units of work completed by this query.
@@ -7077,7 +8432,7 @@ type QueryTimelineSample struct {
 
 	// EstimatedRunnableUnits: Units of work that can be scheduled
 	// immediately. Providing additional slots for these units of work will
-	// speed up the query, provided no other query in the reservation needs
+	// accelerate the query, if no other query in the reservation needs
 	// additional slots.
 	EstimatedRunnableUnits int64 `json:"estimatedRunnableUnits,omitempty,string"`
 
@@ -7113,13 +8468,12 @@ func (s *QueryTimelineSample) MarshalJSON() ([]byte, error) {
 }
 
 type RangePartitioning struct {
-	// Field: [TrustedTester] [Required] The table is partitioned by this
+	// Field: Required. [Experimental] The table is partitioned by this
 	// field. The field must be a top-level NULLABLE/REQUIRED field. The
 	// only supported type is INTEGER/INT64.
 	Field string `json:"field,omitempty"`
 
-	// Range: [TrustedTester] [Required] Defines the ranges for range
-	// partitioning.
+	// Range: [Experimental] Defines the ranges for range partitioning.
 	Range *RangePartitioningRange `json:"range,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Field") to
@@ -7145,18 +8499,16 @@ func (s *RangePartitioning) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RangePartitioningRange: [TrustedTester] [Required] Defines the ranges
-// for range partitioning.
+// RangePartitioningRange: [Experimental] Defines the ranges for range
+// partitioning.
 type RangePartitioningRange struct {
-	// End: [TrustedTester] [Required] The end of range partitioning,
-	// exclusive.
+	// End: [Experimental] The end of range partitioning, exclusive.
 	End int64 `json:"end,omitempty,string"`
 
-	// Interval: [TrustedTester] [Required] The width of each interval.
+	// Interval: [Experimental] The width of each interval.
 	Interval int64 `json:"interval,omitempty,string"`
 
-	// Start: [TrustedTester] [Required] The start of range partitioning,
-	// inclusive.
+	// Start: [Experimental] The start of range partitioning, inclusive.
 	Start int64 `json:"start,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "End") to
@@ -7178,6 +8530,39 @@ type RangePartitioningRange struct {
 
 func (s *RangePartitioningRange) MarshalJSON() ([]byte, error) {
 	type NoMethod RangePartitioningRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RangeValue: Represents the value of a range.
+type RangeValue struct {
+	// End: Optional. The end value of the range. A missing value represents
+	// an unbounded end.
+	End *QueryParameterValue `json:"end,omitempty"`
+
+	// Start: Optional. The start value of the range. A missing value
+	// represents an unbounded start.
+	Start *QueryParameterValue `json:"start,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "End") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "End") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RangeValue) MarshalJSON() ([]byte, error) {
+	type NoMethod RangeValue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7396,7 +8781,20 @@ type RemoteModelInfo struct {
 	// See more details at [REST Resource:
 	// documents](https://cloud.google.com/natural-language/docs/reference/re
 	// st/v1/documents).
+	//   "CLOUD_AI_SPEECH_TO_TEXT_V2" - V2 Speech-to-Text API. See more
+	// details at [Google Cloud Speech-to-Text V2
+	// API](https://cloud.google.com/speech-to-text/v2/docs)
 	RemoteServiceType string `json:"remoteServiceType,omitempty"`
+
+	// SpeechRecognizer: Output only. The name of the speech recognizer to
+	// use for speech recognition. The expected format is
+	// `projects/{project}/locations/{location}/recognizers/{recognizer}`.
+	// Customers can specify this field at model creation. If not specified,
+	// a default recognizer `projects/{model
+	// project}/locations/global/recognizers/_` will be used. See more
+	// details at recognizers
+	// (https://cloud.google.com/speech-to-text/v2/docs/reference/rest/v2/projects.locations.recognizers)
+	SpeechRecognizer string `json:"speechRecognizer,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Connection") to
 	// unconditionally include in API requests. By default, fields with
@@ -7550,12 +8948,17 @@ type Routine struct {
 	// SparkOptions: Optional. Spark specific options.
 	SparkOptions *SparkOptions `json:"sparkOptions,omitempty"`
 
-	// StrictMode: Optional. Can be set for procedures only. If true
-	// (default), the definition body will be validated in the creation and
-	// the updates of the procedure. For procedures with an argument of ANY
-	// TYPE, the definition body validtion is not supported at
-	// creation/update time, and thus this field must be set to false
-	// explicitly.
+	// StrictMode: Optional. Use this option to catch many common errors.
+	// Error checking is not exhaustive, and successfully creating a
+	// procedure doesn't guarantee that the procedure will successfully
+	// execute at runtime. If `strictMode` is set to `TRUE`, the procedure
+	// body is further checked for errors such as non-existent tables or
+	// columns. The `CREATE PROCEDURE` statement fails if the body fails any
+	// of these checks. If `strictMode` is set to `FALSE`, the procedure
+	// body is checked only for syntax. For procedures that invoke
+	// themselves recursively, specify `strictMode=FALSE` to avoid
+	// non-existent procedure errors during validation. Default value is
+	// `TRUE`.
 	StrictMode bool `json:"strictMode,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -7585,6 +8988,7 @@ func (s *Routine) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RoutineReference: Id path of a routine.
 type RoutineReference struct {
 	// DatasetId: Required. The ID of the dataset containing this routine.
 	DatasetId string `json:"datasetId,omitempty"`
@@ -7701,6 +9105,7 @@ func (s *RowAccessPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RowAccessPolicyReference: Id path of a row access policy.
 type RowAccessPolicyReference struct {
 	// DatasetId: Required. The ID of the dataset containing this row access
 	// policy.
@@ -7742,9 +9147,10 @@ func (s *RowAccessPolicyReference) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RowLevelSecurityStatistics: Statistics for row-level security.
 type RowLevelSecurityStatistics struct {
-	// RowLevelSecurityApplied: [Output-only] [Preview] Whether any accessed
-	// data was protected by row access policies.
+	// RowLevelSecurityApplied: Whether any accessed data was protected by
+	// row access policies.
 	RowLevelSecurityApplied bool `json:"rowLevelSecurityApplied,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -7772,24 +9178,82 @@ func (s *RowLevelSecurityStatistics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ScriptOptions: Options related to script execution.
+type ScriptOptions struct {
+	// KeyResultStatement: Determines which statement in the script
+	// represents the "key result", used to populate the schema and query
+	// results of the script job. Default is LAST.
+	//
+	// Possible values:
+	//   "KEY_RESULT_STATEMENT_KIND_UNSPECIFIED" - Default value.
+	//   "LAST" - The last result determines the key result.
+	//   "FIRST_SELECT" - The first SELECT statement determines the key
+	// result.
+	KeyResultStatement string `json:"keyResultStatement,omitempty"`
+
+	// StatementByteBudget: Limit on the number of bytes billed per
+	// statement. Exceeding this budget results in an error.
+	StatementByteBudget int64 `json:"statementByteBudget,omitempty,string"`
+
+	// StatementTimeoutMs: Timeout period for each statement in a script.
+	StatementTimeoutMs int64 `json:"statementTimeoutMs,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "KeyResultStatement")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KeyResultStatement") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ScriptOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ScriptOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ScriptStackFrame: Represents the location of the statement/expression
+// being evaluated. Line and column numbers are defined as follows: -
+// Line and column numbers start with one. That is, line 1 column 1
+// denotes the start of the script. - When inside a stored procedure,
+// all line/column numbers are relative to the procedure body, not the
+// script in which the procedure was defined. - Start/end positions
+// exclude leading/trailing comments and whitespace. The end position
+// always ends with a ";", when present. - Multi-byte Unicode characters
+// are treated as just one column. - If the original script (or
+// procedure definition) contains TAB characters, a tab "snaps" the
+// indentation forward to the nearest multiple of 8 characters, plus 1.
+// For example, a TAB on column 1, 2, 3, 4, 5, 6 , or 8 will advance the
+// next character to column 9. A TAB on column 9, 10, 11, 12, 13, 14,
+// 15, or 16 will advance the next character to column 17.
 type ScriptStackFrame struct {
-	// EndColumn: [Output-only] One-based end column.
+	// EndColumn: Output only. One-based end column.
 	EndColumn int64 `json:"endColumn,omitempty"`
 
-	// EndLine: [Output-only] One-based end line.
+	// EndLine: Output only. One-based end line.
 	EndLine int64 `json:"endLine,omitempty"`
 
-	// ProcedureId: [Output-only] Name of the active procedure, empty if in
-	// a top-level script.
+	// ProcedureId: Output only. Name of the active procedure, empty if in a
+	// top-level script.
 	ProcedureId string `json:"procedureId,omitempty"`
 
-	// StartColumn: [Output-only] One-based start column.
+	// StartColumn: Output only. One-based start column.
 	StartColumn int64 `json:"startColumn,omitempty"`
 
-	// StartLine: [Output-only] One-based start line.
+	// StartLine: Output only. One-based start line.
 	StartLine int64 `json:"startLine,omitempty"`
 
-	// Text: [Output-only] Text of the current statement/expression.
+	// Text: Output only. Text of the current statement/expression.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndColumn") to
@@ -7815,9 +9279,16 @@ func (s *ScriptStackFrame) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ScriptStatistics: Job statistics specific to the child job of a
+// script.
 type ScriptStatistics struct {
-	// EvaluationKind: [Output-only] Whether this child job was a statement
-	// or expression.
+	// EvaluationKind: Whether this child job was a statement or expression.
+	//
+	// Possible values:
+	//   "EVALUATION_KIND_UNSPECIFIED" - Default value.
+	//   "STATEMENT" - The statement appears directly in the script.
+	//   "EXPRESSION" - The statement evaluates an expression that appears
+	// in the script.
 	EvaluationKind string `json:"evaluationKind,omitempty"`
 
 	// StackFrames: Stack trace showing the line/column/procedure name of
@@ -7850,14 +9321,28 @@ func (s *ScriptStatistics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SearchStatistics: Statistics for a search query. Populated as part of
+// JobStatistics2.
 type SearchStatistics struct {
-	// IndexUnusedReasons: When index_usage_mode is UNUSED or
-	// PARTIALLY_USED, this field explains why index was not used in all or
-	// part of the search query. If index_usage_mode is FULLLY_USED, this
-	// field is not populated.
+	// IndexUnusedReasons: When `indexUsageMode` is `UNUSED` or
+	// `PARTIALLY_USED`, this field explains why indexes were not used in
+	// all or part of the search query. If `indexUsageMode` is `FULLY_USED`,
+	// this field is not populated.
 	IndexUnusedReasons []*IndexUnusedReason `json:"indexUnusedReasons,omitempty"`
 
-	// IndexUsageMode: Specifies index usage mode for the query.
+	// IndexUsageMode: Specifies the index usage mode for the query.
+	//
+	// Possible values:
+	//   "INDEX_USAGE_MODE_UNSPECIFIED" - Index usage mode not specified.
+	//   "UNUSED" - No search indexes were used in the search query. See
+	// [`indexUnusedReasons`]
+	// (/bigquery/docs/reference/rest/v2/Job#IndexUnusedReason) for detailed
+	// reasons.
+	//   "PARTIALLY_USED" - Part of the search query used search indexes.
+	// See [`indexUnusedReasons`]
+	// (/bigquery/docs/reference/rest/v2/Job#IndexUnusedReason) for why
+	// other parts of the query did not use search indexes.
+	//   "FULLY_USED" - The entire search query used search indexes.
 	IndexUsageMode string `json:"indexUsageMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IndexUnusedReasons")
@@ -7884,8 +9369,9 @@ func (s *SearchStatistics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SessionInfo: [Preview] Information related to sessions.
 type SessionInfo struct {
-	// SessionId: [Output-only] // [Preview] Id of the session.
+	// SessionId: Output only. The id of the session.
 	SessionId string `json:"sessionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "SessionId") to
@@ -7948,12 +9434,14 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SnapshotDefinition: Information about base table and snapshot time of
+// the snapshot.
 type SnapshotDefinition struct {
-	// BaseTableReference: [Required] Reference describing the ID of the
+	// BaseTableReference: Required. Reference describing the ID of the
 	// table that was snapshot.
 	BaseTableReference *TableReference `json:"baseTableReference,omitempty"`
 
-	// SnapshotTime: [Required] The time at which the base table was
+	// SnapshotTime: Required. The time at which the base table was
 	// snapshot. This value is reported in the JSON response using RFC3339
 	// format.
 	SnapshotTime string `json:"snapshotTime,omitempty"`
@@ -7982,11 +9470,13 @@ func (s *SnapshotDefinition) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SparkLoggingInfo: Spark job logs can be filtered by these fields in
+// Cloud Logging.
 type SparkLoggingInfo struct {
-	// ProjectId: [Output-only] Project ID used for logging
+	// ProjectId: Output only. Project ID where the Spark logs were written.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// ResourceType: [Output-only] Resource type used for logging
+	// ResourceType: Output only. Resource type used for logging.
 	ResourceType string `json:"resourceType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ProjectId") to
@@ -8090,20 +9580,48 @@ func (s *SparkOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SparkStatistics: Statistics for a BigSpark query. Populated as part
+// of JobStatistics2
 type SparkStatistics struct {
-	// Endpoints: [Output-only] Endpoints generated for the Spark job.
+	// Endpoints: Output only. Endpoints returned from Dataproc. Key list: -
+	// history_server_endpoint: A link to Spark job UI.
 	Endpoints map[string]string `json:"endpoints,omitempty"`
 
-	// LoggingInfo: [Output-only] Logging info is used to generate a link to
+	// GcsStagingBucket: Output only. The Google Cloud Storage bucket that
+	// is used as the default file system by the Spark application. This
+	// field is only filled when the Spark procedure uses the invoker
+	// security mode. The `gcsStagingBucket` bucket is inferred from the
+	// `@@spark_proc_properties.staging_bucket` system variable (if it is
+	// provided). Otherwise, BigQuery creates a default staging bucket for
+	// the job and returns the bucket name in this field. Example: *
+	// `gs://[bucket_name]`
+	GcsStagingBucket string `json:"gcsStagingBucket,omitempty"`
+
+	// KmsKeyName: Output only. The Cloud KMS encryption key that is used to
+	// protect the resources created by the Spark job. If the Spark
+	// procedure uses the invoker security mode, the Cloud KMS encryption
+	// key is either inferred from the provided system variable,
+	// `@@spark_proc_properties.kms_key_name`, or the default key of the
+	// BigQuery job's project (if the CMEK organization policy is enforced).
+	// Otherwise, the Cloud KMS key is either inferred from the Spark
+	// connection associated with the procedure (if it is provided), or from
+	// the default key of the Spark connection's project if the CMEK
+	// organization policy is enforced. Example: *
+	// `projects/[kms_project_id]/locations/[region]/keyRings/[key_region]/cr
+	// yptoKeys/[key]`
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// LoggingInfo: Output only. Logging info is used to generate a link to
 	// Cloud Logging.
 	LoggingInfo *SparkLoggingInfo `json:"loggingInfo,omitempty"`
 
-	// SparkJobId: [Output-only] Spark job id if a Spark job is created
+	// SparkJobId: Output only. Spark job ID if a Spark job is created
 	// successfully.
 	SparkJobId string `json:"sparkJobId,omitempty"`
 
-	// SparkJobLocation: [Output-only] Location where the Spark job is
-	// executed.
+	// SparkJobLocation: Output only. Location where the Spark job is
+	// executed. A location is selected by BigQueury for jobs configured to
+	// run in a multi-region.
 	SparkJobLocation string `json:"sparkJobLocation,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Endpoints") to
@@ -8125,6 +9643,86 @@ type SparkStatistics struct {
 
 func (s *SparkStatistics) MarshalJSON() ([]byte, error) {
 	type NoMethod SparkStatistics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StagePerformanceChangeInsight: Performance insights compared to the
+// previous executions for a specific stage.
+type StagePerformanceChangeInsight struct {
+	// InputDataChange: Output only. Input data change insight of the query
+	// stage.
+	InputDataChange *InputDataChange `json:"inputDataChange,omitempty"`
+
+	// StageId: Output only. The stage id that the insight mapped to.
+	StageId int64 `json:"stageId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "InputDataChange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InputDataChange") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StagePerformanceChangeInsight) MarshalJSON() ([]byte, error) {
+	type NoMethod StagePerformanceChangeInsight
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StagePerformanceStandaloneInsight: Standalone performance insights
+// for a specific stage.
+type StagePerformanceStandaloneInsight struct {
+	// BiEngineReasons: Output only. If present, the stage had the following
+	// reasons for being disqualified from BI Engine execution.
+	BiEngineReasons []*BiEngineReason `json:"biEngineReasons,omitempty"`
+
+	// HighCardinalityJoins: Output only. High cardinality joins in the
+	// stage.
+	HighCardinalityJoins []*HighCardinalityJoin `json:"highCardinalityJoins,omitempty"`
+
+	// InsufficientShuffleQuota: Output only. True if the stage has
+	// insufficient shuffle quota.
+	InsufficientShuffleQuota bool `json:"insufficientShuffleQuota,omitempty"`
+
+	// SlotContention: Output only. True if the stage has a slot contention
+	// issue.
+	SlotContention bool `json:"slotContention,omitempty"`
+
+	// StageId: Output only. The stage id that the insight mapped to.
+	StageId int64 `json:"stageId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "BiEngineReasons") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BiEngineReasons") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StagePerformanceStandaloneInsight) MarshalJSON() ([]byte, error) {
+	type NoMethod StagePerformanceStandaloneInsight
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8295,15 +9893,15 @@ func (s *StandardSqlTableType) MarshalJSON() ([]byte, error) {
 }
 
 type Streamingbuffer struct {
-	// EstimatedBytes: [Output-only] A lower-bound estimate of the number of
+	// EstimatedBytes: Output only. A lower-bound estimate of the number of
 	// bytes currently in the streaming buffer.
 	EstimatedBytes uint64 `json:"estimatedBytes,omitempty,string"`
 
-	// EstimatedRows: [Output-only] A lower-bound estimate of the number of
+	// EstimatedRows: Output only. A lower-bound estimate of the number of
 	// rows currently in the streaming buffer.
 	EstimatedRows uint64 `json:"estimatedRows,omitempty,string"`
 
-	// OldestEntryTime: [Output-only] Contains the timestamp of the oldest
+	// OldestEntryTime: Output only. Contains the timestamp of the oldest
 	// entry in the streaming buffer, in milliseconds since the epoch, if
 	// the streaming buffer is available.
 	OldestEntryTime uint64 `json:"oldestEntryTime,omitempty,string"`
@@ -8361,45 +9959,96 @@ func (s *StringHparamSearchSpace) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SystemVariables: System variables given to a query.
+type SystemVariables struct {
+	// Types: Output only. Data type for each system variable.
+	Types map[string]StandardSqlDataType `json:"types,omitempty"`
+
+	// Values: Output only. Value for each system variable.
+	Values googleapi.RawMessage `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Types") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Types") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SystemVariables) MarshalJSON() ([]byte, error) {
+	type NoMethod SystemVariables
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Table struct {
-	// BiglakeConfiguration: [Optional] Specifies the configuration of a
+	// BiglakeConfiguration: Optional. Specifies the configuration of a
 	// BigLake managed table.
 	BiglakeConfiguration *BigLakeConfiguration `json:"biglakeConfiguration,omitempty"`
 
-	// CloneDefinition: [Output-only] Clone definition.
+	// CloneDefinition: Output only. Contains information about the clone.
+	// This value is set via the clone operation.
 	CloneDefinition *CloneDefinition `json:"cloneDefinition,omitempty"`
 
-	// Clustering: [Beta] Clustering specification for the table. Must be
-	// specified with partitioning, data in the table will be first
+	// Clustering: Clustering specification for the table. Must be specified
+	// with time-based partitioning, data in the table will be first
 	// partitioned and subsequently clustered.
 	Clustering *Clustering `json:"clustering,omitempty"`
 
-	// CreationTime: [Output-only] The time when this table was created, in
+	// CreationTime: Output only. The time when this table was created, in
 	// milliseconds since the epoch.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
-	// DefaultCollation: [Output-only] The default collation of the table.
+	// DefaultCollation: Optional. Defines the default collation
+	// specification of new STRING fields in the table. During table
+	// creation or update, if a STRING field is added to this table without
+	// explicit collation specified, then the table inherits the table
+	// default collation. A change to this field affects only fields added
+	// afterwards, and does not alter the existing fields. The following
+	// values are supported: * 'und:ci': undetermined locale, case
+	// insensitive. * '': empty string. Default to case-sensitive behavior.
 	DefaultCollation string `json:"defaultCollation,omitempty"`
 
-	// DefaultRoundingMode: [Output-only] The default rounding mode of the
-	// table.
+	// DefaultRoundingMode: Optional. Defines the default rounding mode
+	// specification of new decimal fields (NUMERIC OR BIGNUMERIC) in the
+	// table. During table creation or update, if a decimal field is added
+	// to this table without an explicit rounding mode specified, then the
+	// field inherits the table default rounding mode. Changing this field
+	// doesn't affect existing fields.
+	//
+	// Possible values:
+	//   "ROUNDING_MODE_UNSPECIFIED" - Unspecified will default to using
+	// ROUND_HALF_AWAY_FROM_ZERO.
+	//   "ROUND_HALF_AWAY_FROM_ZERO" - ROUND_HALF_AWAY_FROM_ZERO rounds half
+	// values away from zero when applying precision and scale upon writing
+	// of NUMERIC and BIGNUMERIC values. For Scale: 0 1.1, 1.2, 1.3, 1.4 =>
+	// 1 1.5, 1.6, 1.7, 1.8, 1.9 => 2
+	//   "ROUND_HALF_EVEN" - ROUND_HALF_EVEN rounds half values to the
+	// nearest even value when applying precision and scale upon writing of
+	// NUMERIC and BIGNUMERIC values. For Scale: 0 1.1, 1.2, 1.3, 1.4 => 1
+	// 1.5 => 2 1.6, 1.7, 1.8, 1.9 => 2 2.5 => 2
 	DefaultRoundingMode string `json:"defaultRoundingMode,omitempty"`
 
-	// Description: [Optional] A user-friendly description of this table.
+	// Description: Optional. A user-friendly description of this table.
 	Description string `json:"description,omitempty"`
 
 	// EncryptionConfiguration: Custom encryption configuration (e.g., Cloud
 	// KMS keys).
 	EncryptionConfiguration *EncryptionConfiguration `json:"encryptionConfiguration,omitempty"`
 
-	// Etag: [Output-only] A hash of the table metadata. Used to ensure
-	// there were no concurrent modifications to the resource when
-	// attempting an update. Not guaranteed to change when the table
-	// contents or the fields numRows, numBytes, numLongTermBytes or
-	// lastModifiedTime change.
+	// Etag: Output only. A hash of this resource.
 	Etag string `json:"etag,omitempty"`
 
-	// ExpirationTime: [Optional] The time when this table expires, in
+	// ExpirationTime: Optional. The time when this table expires, in
 	// milliseconds since the epoch. If not present, the table will persist
 	// indefinitely. Expired tables will be deleted and their storage
 	// reclaimed. The defaultTableExpirationMs property of the encapsulating
@@ -8407,19 +10056,19 @@ type Table struct {
 	// tables.
 	ExpirationTime int64 `json:"expirationTime,omitempty,string"`
 
-	// ExternalDataConfiguration: [Optional] Describes the data format,
+	// ExternalDataConfiguration: Optional. Describes the data format,
 	// location, and other properties of a table stored outside of BigQuery.
 	// By defining these properties, the data source can then be queried as
 	// if it were a standard BigQuery table.
 	ExternalDataConfiguration *ExternalDataConfiguration `json:"externalDataConfiguration,omitempty"`
 
-	// FriendlyName: [Optional] A descriptive name for this table.
+	// FriendlyName: Optional. A descriptive name for this table.
 	FriendlyName string `json:"friendlyName,omitempty"`
 
-	// Id: [Output-only] An opaque ID uniquely identifying the table.
+	// Id: Output only. An opaque ID uniquely identifying the table.
 	Id string `json:"id,omitempty"`
 
-	// Kind: [Output-only] The type of the resource.
+	// Kind: The type of resource ID.
 	Kind string `json:"kind,omitempty"`
 
 	// Labels: The labels associated with this table. You can use these to
@@ -8430,89 +10079,97 @@ type Table struct {
 	// letter and each label in the list must have a different key.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// LastModifiedTime: [Output-only] The time when this table was last
+	// LastModifiedTime: Output only. The time when this table was last
 	// modified, in milliseconds since the epoch.
 	LastModifiedTime uint64 `json:"lastModifiedTime,omitempty,string"`
 
-	// Location: [Output-only] The geographic location where the table
+	// Location: Output only. The geographic location where the table
 	// resides. This value is inherited from the dataset.
 	Location string `json:"location,omitempty"`
 
-	// MaterializedView: [Optional] Materialized view definition.
+	// MaterializedView: Optional. The materialized view definition.
 	MaterializedView *MaterializedViewDefinition `json:"materializedView,omitempty"`
 
-	// MaxStaleness: [Optional] Max staleness of data that could be returned
-	// when table or materialized view is queried (formatted as Google SQL
-	// Interval type).
+	// MaterializedViewStatus: Output only. The materialized view status.
+	MaterializedViewStatus *MaterializedViewStatus `json:"materializedViewStatus,omitempty"`
+
+	// MaxStaleness: Optional. The maximum staleness of data that could be
+	// returned when the table (or stale MV) is queried. Staleness encoded
+	// as a string encoding of sql IntervalValue type.
 	MaxStaleness string `json:"maxStaleness,omitempty"`
 
-	// Model: [Output-only, Beta] Present iff this table represents a ML
-	// model. Describes the training information for the model, and it is
-	// required to run 'PREDICT' queries.
+	// Model: Deprecated.
 	Model *ModelDefinition `json:"model,omitempty"`
 
-	// NumActiveLogicalBytes: [Output-only] Number of logical bytes that are
+	// NumActiveLogicalBytes: Output only. Number of logical bytes that are
 	// less than 90 days old.
 	NumActiveLogicalBytes int64 `json:"numActiveLogicalBytes,omitempty,string"`
 
-	// NumActivePhysicalBytes: [Output-only] Number of physical bytes less
+	// NumActivePhysicalBytes: Output only. Number of physical bytes less
 	// than 90 days old. This data is not kept in real time, and might be
 	// delayed by a few seconds to a few minutes.
 	NumActivePhysicalBytes int64 `json:"numActivePhysicalBytes,omitempty,string"`
 
-	// NumBytes: [Output-only] The size of this table in bytes, excluding
-	// any data in the streaming buffer.
+	// NumBytes: Output only. The size of this table in logical bytes,
+	// excluding any data in the streaming buffer.
 	NumBytes int64 `json:"numBytes,omitempty,string"`
 
-	// NumLongTermBytes: [Output-only] The number of bytes in the table that
-	// are considered "long-term storage".
+	// NumLongTermBytes: Output only. The number of logical bytes in the
+	// table that are considered "long-term storage".
 	NumLongTermBytes int64 `json:"numLongTermBytes,omitempty,string"`
 
-	// NumLongTermLogicalBytes: [Output-only] Number of logical bytes that
+	// NumLongTermLogicalBytes: Output only. Number of logical bytes that
 	// are more than 90 days old.
 	NumLongTermLogicalBytes int64 `json:"numLongTermLogicalBytes,omitempty,string"`
 
-	// NumLongTermPhysicalBytes: [Output-only] Number of physical bytes more
+	// NumLongTermPhysicalBytes: Output only. Number of physical bytes more
 	// than 90 days old. This data is not kept in real time, and might be
 	// delayed by a few seconds to a few minutes.
 	NumLongTermPhysicalBytes int64 `json:"numLongTermPhysicalBytes,omitempty,string"`
 
-	// NumPartitions: [Output-only] The number of partitions present in the
+	// NumPartitions: Output only. The number of partitions present in the
 	// table or materialized view. This data is not kept in real time, and
 	// might be delayed by a few seconds to a few minutes.
 	NumPartitions int64 `json:"numPartitions,omitempty,string"`
 
-	// NumPhysicalBytes: [Output-only] [TrustedTester] The physical size of
-	// this table in bytes, excluding any data in the streaming buffer. This
-	// includes compression and storage used for time travel.
+	// NumPhysicalBytes: Output only. The physical size of this table in
+	// bytes. This includes storage used for time travel.
 	NumPhysicalBytes int64 `json:"numPhysicalBytes,omitempty,string"`
 
-	// NumRows: [Output-only] The number of rows of data in this table,
+	// NumRows: Output only. The number of rows of data in this table,
 	// excluding any data in the streaming buffer.
 	NumRows uint64 `json:"numRows,omitempty,string"`
 
-	// NumTimeTravelPhysicalBytes: [Output-only] Number of physical bytes
+	// NumTimeTravelPhysicalBytes: Output only. Number of physical bytes
 	// used by time travel storage (deleted or changed data). This data is
 	// not kept in real time, and might be delayed by a few seconds to a few
 	// minutes.
 	NumTimeTravelPhysicalBytes int64 `json:"numTimeTravelPhysicalBytes,omitempty,string"`
 
-	// NumTotalLogicalBytes: [Output-only] Total number of logical bytes in
+	// NumTotalLogicalBytes: Output only. Total number of logical bytes in
 	// the table or materialized view.
 	NumTotalLogicalBytes int64 `json:"numTotalLogicalBytes,omitempty,string"`
 
-	// NumTotalPhysicalBytes: [Output-only] The physical size of this table
+	// NumTotalPhysicalBytes: Output only. The physical size of this table
 	// in bytes. This also includes storage used for time travel. This data
 	// is not kept in real time, and might be delayed by a few seconds to a
 	// few minutes.
 	NumTotalPhysicalBytes int64 `json:"numTotalPhysicalBytes,omitempty,string"`
 
-	// RangePartitioning: [TrustedTester] Range partitioning specification
-	// for this table. Only one of timePartitioning and rangePartitioning
-	// should be specified.
+	// PartitionDefinition: Output only. The partition information for all
+	// table formats, including managed partitioned tables, hive partitioned
+	// tables, and iceberg partitioned tables.
+	PartitionDefinition *PartitioningDefinition `json:"partitionDefinition,omitempty"`
+
+	// RangePartitioning: If specified, configures range partitioning for
+	// this table.
 	RangePartitioning *RangePartitioning `json:"rangePartitioning,omitempty"`
 
-	// RequirePartitionFilter: [Optional] If set to true, queries over this
+	// Replicas: Optional. Output only. Table references of all replicas
+	// currently active on the table.
+	Replicas []*TableReference `json:"replicas,omitempty"`
+
+	// RequirePartitionFilter: Optional. If set to true, queries over this
 	// table require a partition filter that can be used for partition
 	// elimination to be specified.
 	RequirePartitionFilter bool `json:"requirePartitionFilter,omitempty"`
@@ -8526,43 +10183,51 @@ type Table struct {
 	// tag value, e.g. "production".
 	ResourceTags map[string]string `json:"resourceTags,omitempty"`
 
-	// Schema: [Optional] Describes the schema of this table.
+	// Schema: Optional. Describes the schema of this table.
 	Schema *TableSchema `json:"schema,omitempty"`
 
-	// SelfLink: [Output-only] A URL that can be used to access this
-	// resource again.
+	// SelfLink: Output only. A URL that can be used to access this resource
+	// again.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// SnapshotDefinition: [Output-only] Snapshot definition.
+	// SnapshotDefinition: Output only. Contains information about the
+	// snapshot. This value is set via snapshot creation.
 	SnapshotDefinition *SnapshotDefinition `json:"snapshotDefinition,omitempty"`
 
-	// StreamingBuffer: [Output-only] Contains information regarding this
+	// StreamingBuffer: Output only. Contains information regarding this
 	// table's streaming buffer, if one is present. This field will be
 	// absent if the table is not being streamed to or if there is no data
 	// in the streaming buffer.
 	StreamingBuffer *Streamingbuffer `json:"streamingBuffer,omitempty"`
 
-	// TableConstraints: [Optional] The table constraints on the table.
+	// TableConstraints: Optional. Tables Primary Key and Foreign Key
+	// information
 	TableConstraints *TableConstraints `json:"tableConstraints,omitempty"`
 
-	// TableReference: [Required] Reference describing the ID of this table.
+	// TableReference: Required. Reference describing the ID of this table.
 	TableReference *TableReference `json:"tableReference,omitempty"`
 
-	// TimePartitioning: Time-based partitioning specification for this
-	// table. Only one of timePartitioning and rangePartitioning should be
-	// specified.
+	// TableReplicationInfo: Optional. Table replication info for table
+	// created `AS REPLICA` DDL like: `CREATE MATERIALIZED VIEW mv1 AS
+	// REPLICA OF src_mv`
+	TableReplicationInfo *TableReplicationInfo `json:"tableReplicationInfo,omitempty"`
+
+	// TimePartitioning: If specified, configures time-based partitioning
+	// for this table.
 	TimePartitioning *TimePartitioning `json:"timePartitioning,omitempty"`
 
-	// Type: [Output-only] Describes the table type. The following values
-	// are supported: TABLE: A normal BigQuery table. VIEW: A virtual table
-	// defined by a SQL query. SNAPSHOT: An immutable, read-only table that
-	// is a copy of another table. [TrustedTester] MATERIALIZED_VIEW: SQL
-	// query whose result is persisted. EXTERNAL: A table that references
+	// Type: Output only. Describes the table type. The following values are
+	// supported: * `TABLE`: A normal BigQuery table. * `VIEW`: A virtual
+	// table defined by a SQL query. * `EXTERNAL`: A table that references
 	// data stored in an external storage system, such as Google Cloud
-	// Storage. The default value is TABLE.
+	// Storage. * `MATERIALIZED_VIEW`: A precomputed view defined by a SQL
+	// query. * `SNAPSHOT`: An immutable BigQuery table that preserves the
+	// contents of a base table at a particular time. See additional
+	// information on table snapshots
+	// (/bigquery/docs/table-snapshots-intro). The default value is `TABLE`.
 	Type string `json:"type,omitempty"`
 
-	// View: [Optional] The view definition.
+	// View: Optional. The view definition.
 	View *ViewDefinition `json:"view,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8620,11 +10285,15 @@ func (s *TableCell) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TableConstraints: The TableConstraints defines the primary key and
+// foreign key.
 type TableConstraints struct {
-	// ForeignKeys: [Optional] The foreign keys of the tables.
+	// ForeignKeys: Optional. Present only if the table has a foreign key.
+	// The foreign key is not enforced.
 	ForeignKeys []*TableConstraintsForeignKeys `json:"foreignKeys,omitempty"`
 
-	// PrimaryKey: [Optional] The primary key of the table.
+	// PrimaryKey: Represents the primary key constraint on a table's
+	// columns.
 	PrimaryKey *TableConstraintsPrimaryKey `json:"primaryKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ForeignKeys") to
@@ -8650,9 +10319,13 @@ func (s *TableConstraints) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TableConstraintsForeignKeys: Represents a foreign key constraint on a
+// table's columns.
 type TableConstraintsForeignKeys struct {
+	// ColumnReferences: Required. The columns that compose the foreign key.
 	ColumnReferences []*TableConstraintsForeignKeysColumnReferences `json:"columnReferences,omitempty"`
 
+	// Name: Optional. Set only if the foreign key constraint is named.
 	Name string `json:"name,omitempty"`
 
 	ReferencedTable *TableConstraintsForeignKeysReferencedTable `json:"referencedTable,omitempty"`
@@ -8681,9 +10354,15 @@ func (s *TableConstraintsForeignKeys) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TableConstraintsForeignKeysColumnReferences: The pair of the foreign
+// key column and primary key column.
 type TableConstraintsForeignKeysColumnReferences struct {
+	// ReferencedColumn: Required. The column in the primary key that are
+	// referenced by the referencing_column.
 	ReferencedColumn string `json:"referencedColumn,omitempty"`
 
+	// ReferencingColumn: Required. The column that composes the foreign
+	// key.
 	ReferencingColumn string `json:"referencingColumn,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ReferencedColumn") to
@@ -8740,8 +10419,11 @@ func (s *TableConstraintsForeignKeysReferencedTable) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TableConstraintsPrimaryKey: [Optional] The primary key of the table.
+// TableConstraintsPrimaryKey: Represents the primary key constraint on
+// a table's columns.
 type TableConstraintsPrimaryKey struct {
+	// Columns: Required. The columns that are composed of the primary key
+	// constraint.
 	Columns []string `json:"columns,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Columns") to
@@ -8767,30 +10449,39 @@ func (s *TableConstraintsPrimaryKey) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TableDataInsertAllRequest: Request for sending a single streaming
+// insert.
 type TableDataInsertAllRequest struct {
-	// IgnoreUnknownValues: [Optional] Accept rows that contain values that
+	// IgnoreUnknownValues: Optional. Accept rows that contain values that
 	// do not match the schema. The unknown values are ignored. Default is
 	// false, which treats unknown values as errors.
 	IgnoreUnknownValues bool `json:"ignoreUnknownValues,omitempty"`
 
-	// Kind: The resource type of the response.
+	// Kind: Optional. The resource type of the response. The value is not
+	// checked at the backend. Historically, it has been set to
+	// "bigquery#tableDataInsertAllRequest" but you are not required to set
+	// it.
 	Kind string `json:"kind,omitempty"`
 
-	// Rows: The rows to insert.
 	Rows []*TableDataInsertAllRequestRows `json:"rows,omitempty"`
 
-	// SkipInvalidRows: [Optional] Insert all valid rows of a request, even
+	// SkipInvalidRows: Optional. Insert all valid rows of a request, even
 	// if invalid rows exist. The default value is false, which causes the
 	// entire request to fail if any invalid rows exist.
 	SkipInvalidRows bool `json:"skipInvalidRows,omitempty"`
 
-	// TemplateSuffix: If specified, treats the destination table as a base
-	// template, and inserts the rows into an instance table named
+	// TemplateSuffix: Optional. If specified, treats the destination table
+	// as a base template, and inserts the rows into an instance table named
 	// "{destination}{templateSuffix}". BigQuery will manage creation of the
 	// instance table, using the schema of the base template table. See
 	// https://cloud.google.com/bigquery/streaming-data-into-bigquery#template-tables
 	// for considerations when working with templates tables.
 	TemplateSuffix string `json:"templateSuffix,omitempty"`
+
+	// TraceId: Optional. Unique request trace id. Used for debugging
+	// purposes only. It is case-sensitive, limited to up to 36 ASCII
+	// characters. A UUID is recommended.
+	TraceId string `json:"traceId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IgnoreUnknownValues")
 	// to unconditionally include in API requests. By default, fields with
@@ -8816,15 +10507,14 @@ func (s *TableDataInsertAllRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TableDataInsertAllRequestRows: Data for a single insertion row.
 type TableDataInsertAllRequestRows struct {
-	// InsertId: [Optional] A unique ID for each row. BigQuery uses this
-	// property to detect duplicate insertion requests on a best-effort
-	// basis.
+	// InsertId: Insertion ID for best-effort deduplication. This feature is
+	// not recommended, and users seeking stronger insertion semantics are
+	// encouraged to use other mechanisms such as the BigQuery Write API.
 	InsertId string `json:"insertId,omitempty"`
 
-	// Json: [Required] A JSON object that contains a row of data. The
-	// object's properties and values must match the destination table's
-	// schema.
+	// Json: Data for a single row.
 	Json map[string]JsonValue `json:"json,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "InsertId") to
@@ -8850,11 +10540,14 @@ func (s *TableDataInsertAllRequestRows) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TableDataInsertAllResponse: Describes the format of a streaming
+// insert response.
 type TableDataInsertAllResponse struct {
-	// InsertErrors: An array of errors for rows that were not inserted.
+	// InsertErrors: Describes specific errors encountered while processing
+	// the request.
 	InsertErrors []*TableDataInsertAllResponseInsertErrors `json:"insertErrors,omitempty"`
 
-	// Kind: The resource type of the response.
+	// Kind: Returns "bigquery#tableDataInsertAllResponse".
 	Kind string `json:"kind,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8884,6 +10577,8 @@ func (s *TableDataInsertAllResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TableDataInsertAllResponseInsertErrors: Error details about a single
+// row's insertion.
 type TableDataInsertAllResponseInsertErrors struct {
 	// Errors: Error information for the row indicated by the index
 	// property.
@@ -8930,7 +10625,8 @@ type TableDataList struct {
 	// Rows: Rows of results.
 	Rows []*TableRow `json:"rows,omitempty"`
 
-	// TotalRows: The total number of rows in the complete table.
+	// TotalRows: Total rows of the entire table. In order to show default
+	// value 0 we have to present it as string.
 	TotalRows int64 `json:"totalRows,omitempty,string"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -8960,35 +10656,32 @@ func (s *TableDataList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TableFieldSchema: A field in TableSchema
 type TableFieldSchema struct {
-	// Categories: [Optional] The categories attached to this field, used
-	// for field-level access control.
+	// Categories: Deprecated.
 	Categories *TableFieldSchemaCategories `json:"categories,omitempty"`
 
-	// Collation: Optional. Collation specification of the field. It only
-	// can be set on string type field.
+	// Collation: Optional. Field collation can be set only when the type of
+	// field is STRING. The following values are supported: * 'und:ci':
+	// undetermined locale, case insensitive. * '': empty string. Default to
+	// case-sensitive behavior.
 	Collation string `json:"collation,omitempty"`
 
 	// DefaultValueExpression: Optional. A SQL expression to specify the
-	// default value for this field. It can only be set for top level fields
-	// (columns). You can use struct or array expression to specify default
-	// value for the entire struct or array. The valid SQL expressions are:
-	// - Literals for all data types, including STRUCT and ARRAY. -
-	// Following functions: - CURRENT_TIMESTAMP - CURRENT_TIME -
-	// CURRENT_DATE - CURRENT_DATETIME - GENERATE_UUID - RAND - SESSION_USER
-	// - ST_GEOGPOINT - Struct or array composed with the above allowed
-	// functions, for example, [CURRENT_DATE(), DATE '2020-01-01']
+	// [default value]
+	// (https://cloud.google.com/bigquery/docs/default-values) for this
+	// field.
 	DefaultValueExpression string `json:"defaultValueExpression,omitempty"`
 
-	// Description: [Optional] The field description. The maximum length is
+	// Description: Optional. The field description. The maximum length is
 	// 1,024 characters.
 	Description string `json:"description,omitempty"`
 
-	// Fields: [Optional] Describes the nested schema fields if the type
+	// Fields: Optional. Describes the nested schema fields if the type
 	// property is set to RECORD.
 	Fields []*TableFieldSchema `json:"fields,omitempty"`
 
-	// MaxLength: [Optional] Maximum length of values of this field for
+	// MaxLength: Optional. Maximum length of values of this field for
 	// STRINGS or BYTES. If max_length is not specified, no maximum length
 	// constraint is imposed on this field. If type = "STRING", then
 	// max_length represents the maximum UTF-8 length of strings in this
@@ -8997,57 +10690,69 @@ type TableFieldSchema struct {
 	// type ≠ "STRING" and ≠ "BYTES".
 	MaxLength int64 `json:"maxLength,omitempty,string"`
 
-	// Mode: [Optional] The field mode. Possible values include NULLABLE,
+	// Mode: Optional. The field mode. Possible values include NULLABLE,
 	// REQUIRED and REPEATED. The default value is NULLABLE.
 	Mode string `json:"mode,omitempty"`
 
-	// Name: [Required] The field name. The name must contain only letters
+	// Name: Required. The field name. The name must contain only letters
 	// (a-z, A-Z), numbers (0-9), or underscores (_), and must start with a
 	// letter or underscore. The maximum length is 300 characters.
 	Name string `json:"name,omitempty"`
 
+	// PolicyTags: Optional. The policy tags attached to this field, used
+	// for field-level access control. If not set, defaults to empty
+	// policy_tags.
 	PolicyTags *TableFieldSchemaPolicyTags `json:"policyTags,omitempty"`
 
-	// Precision: [Optional] Precision (maximum number of total digits in
+	// Precision: Optional. Precision (maximum number of total digits in
 	// base 10) and scale (maximum number of digits in the fractional part
 	// in base 10) constraints for values of this field for NUMERIC or
 	// BIGNUMERIC. It is invalid to set precision or scale if type ≠
 	// "NUMERIC" and ≠ "BIGNUMERIC". If precision and scale are not
 	// specified, no value range constraint is imposed on this field insofar
 	// as values are permitted by the type. Values of this NUMERIC or
-	// BIGNUMERIC field must be in this range when: - Precision (P) and
-	// scale (S) are specified: [-10P-S + 10-S, 10P-S - 10-S] - Precision
+	// BIGNUMERIC field must be in this range when: * Precision (P) and
+	// scale (S) are specified: [-10P-S + 10-S, 10P-S - 10-S] * Precision
 	// (P) is specified but not scale (and thus scale is interpreted to be
 	// equal to zero): [-10P + 1, 10P - 1]. Acceptable values for precision
-	// and scale if both are specified: - If type = "NUMERIC": 1 ≤
-	// precision - scale ≤ 29 and 0 ≤ scale ≤ 9. - If type =
+	// and scale if both are specified: * If type = "NUMERIC": 1 ≤
+	// precision - scale ≤ 29 and 0 ≤ scale ≤ 9. * If type =
 	// "BIGNUMERIC": 1 ≤ precision - scale ≤ 38 and 0 ≤ scale ≤ 38.
 	// Acceptable values for precision if only precision is specified but
-	// not scale (and thus scale is interpreted to be equal to zero): - If
-	// type = "NUMERIC": 1 ≤ precision ≤ 29. - If type = "BIGNUMERIC": 1
+	// not scale (and thus scale is interpreted to be equal to zero): * If
+	// type = "NUMERIC": 1 ≤ precision ≤ 29. * If type = "BIGNUMERIC": 1
 	// ≤ precision ≤ 38. If scale is specified but not precision, then
 	// it is invalid.
 	Precision int64 `json:"precision,omitempty,string"`
 
-	// RangeElementType: Optional. The subtype of the RANGE, if the type of
-	// this field is RANGE. If the type is RANGE, this field is required.
-	// Possible values for the field element type of a RANGE include: - DATE
-	// - DATETIME - TIMESTAMP
+	// RangeElementType: Represents the type of a field element.
 	RangeElementType *TableFieldSchemaRangeElementType `json:"rangeElementType,omitempty"`
 
-	// RoundingMode: Optional. Rounding Mode specification of the field. It
-	// only can be set on NUMERIC or BIGNUMERIC type fields.
+	// RoundingMode: Optional. Specifies the rounding mode to be used when
+	// storing values of NUMERIC and BIGNUMERIC type.
+	//
+	// Possible values:
+	//   "ROUNDING_MODE_UNSPECIFIED" - Unspecified will default to using
+	// ROUND_HALF_AWAY_FROM_ZERO.
+	//   "ROUND_HALF_AWAY_FROM_ZERO" - ROUND_HALF_AWAY_FROM_ZERO rounds half
+	// values away from zero when applying precision and scale upon writing
+	// of NUMERIC and BIGNUMERIC values. For Scale: 0 1.1, 1.2, 1.3, 1.4 =>
+	// 1 1.5, 1.6, 1.7, 1.8, 1.9 => 2
+	//   "ROUND_HALF_EVEN" - ROUND_HALF_EVEN rounds half values to the
+	// nearest even value when applying precision and scale upon writing of
+	// NUMERIC and BIGNUMERIC values. For Scale: 0 1.1, 1.2, 1.3, 1.4 => 1
+	// 1.5 => 2 1.6, 1.7, 1.8, 1.9 => 2 2.5 => 2
 	RoundingMode string `json:"roundingMode,omitempty"`
 
-	// Scale: [Optional] See documentation for precision.
+	// Scale: Optional. See documentation for precision.
 	Scale int64 `json:"scale,omitempty,string"`
 
-	// Type: [Required] The field data type. Possible values include STRING,
-	// BYTES, INTEGER, INT64 (same as INTEGER), FLOAT, FLOAT64 (same as
-	// FLOAT), NUMERIC, BIGNUMERIC, BOOLEAN, BOOL (same as BOOLEAN),
-	// TIMESTAMP, DATE, TIME, DATETIME, INTERVAL, RECORD (where RECORD
-	// indicates that the field contains a nested schema) or STRUCT (same as
-	// RECORD).
+	// Type: Required. The field data type. Possible values include: *
+	// STRING * BYTES * INTEGER (or INT64) * FLOAT (or FLOAT64) * BOOLEAN
+	// (or BOOL) * TIMESTAMP * DATE * TIME * DATETIME * GEOGRAPHY * NUMERIC
+	// * BIGNUMERIC * JSON * RECORD (or STRUCT) * RANGE (Preview
+	// (/products/#product-launch-stages)) Use of RECORD/STRUCT indicates
+	// that the field contains a nested schema.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Categories") to
@@ -9073,12 +10778,9 @@ func (s *TableFieldSchema) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TableFieldSchemaCategories: [Optional] The categories attached to
-// this field, used for field-level access control.
+// TableFieldSchemaCategories: Deprecated.
 type TableFieldSchemaCategories struct {
-	// Names: A list of category resource names. For example,
-	// "projects/1/taxonomies/2/categories/3". At most 5 categories are
-	// allowed.
+	// Names: Deprecated.
 	Names []string `json:"names,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Names") to
@@ -9104,10 +10806,13 @@ func (s *TableFieldSchemaCategories) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TableFieldSchemaPolicyTags: Optional. The policy tags attached to
+// this field, used for field-level access control. If not set, defaults
+// to empty policy_tags.
 type TableFieldSchemaPolicyTags struct {
-	// Names: A list of category resource names. For example,
-	// "projects/1/location/eu/taxonomies/2/policyTags/3". At most 1 policy
-	// tag is allowed.
+	// Names: A list of policy tag resource names. For example,
+	// "projects/1/locations/eu/taxonomies/2/policyTags/3". At most 1 policy
+	// tag is currently allowed.
 	Names []string `json:"names,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Names") to
@@ -9133,12 +10838,11 @@ func (s *TableFieldSchemaPolicyTags) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TableFieldSchemaRangeElementType: Optional. The subtype of the RANGE,
-// if the type of this field is RANGE. If the type is RANGE, this field
-// is required. Possible values for the field element type of a RANGE
-// include: - DATE - DATETIME - TIMESTAMP
+// TableFieldSchemaRangeElementType: Represents the type of a field
+// element.
 type TableFieldSchemaRangeElementType struct {
-	// Type: The field element type of a RANGE
+	// Type: Required. The type of a field element. For more information,
+	// see TableFieldSchema.type.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to
@@ -9164,6 +10868,8 @@ func (s *TableFieldSchemaRangeElementType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TableList: Partial projection of the metadata for a given table in a
+// list response.
 type TableList struct {
 	// Etag: A hash of this page of results.
 	Etag string `json:"etag,omitempty"`
@@ -9208,24 +10914,22 @@ func (s *TableList) MarshalJSON() ([]byte, error) {
 }
 
 type TableListTables struct {
-	// Clustering: [Beta] Clustering specification for this table, if
-	// configured.
+	// Clustering: Clustering specification for this table, if configured.
 	Clustering *Clustering `json:"clustering,omitempty"`
 
-	// CreationTime: The time when this table was created, in milliseconds
-	// since the epoch.
+	// CreationTime: Output only. The time when this table was created, in
+	// milliseconds since the epoch.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
 
-	// ExpirationTime: [Optional] The time when this table expires, in
-	// milliseconds since the epoch. If not present, the table will persist
-	// indefinitely. Expired tables will be deleted and their storage
-	// reclaimed.
+	// ExpirationTime: The time when this table expires, in milliseconds
+	// since the epoch. If not present, the table will persist indefinitely.
+	// Expired tables will be deleted and their storage reclaimed.
 	ExpirationTime int64 `json:"expirationTime,omitempty,string"`
 
 	// FriendlyName: The user-friendly name for this table.
 	FriendlyName string `json:"friendlyName,omitempty"`
 
-	// Id: An opaque ID of the table
+	// Id: An opaque ID of the table.
 	Id string `json:"id,omitempty"`
 
 	// Kind: The resource type.
@@ -9235,21 +10939,24 @@ type TableListTables struct {
 	// organize and group your tables.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// RangePartitioning: The range partitioning specification for this
-	// table, if configured.
+	// RangePartitioning: The range partitioning for this table.
 	RangePartitioning *RangePartitioning `json:"rangePartitioning,omitempty"`
 
-	// TableReference: A reference uniquely identifying the table.
+	// RequirePartitionFilter: Optional. If set to true, queries including
+	// this table must specify a partition filter. This filter is used for
+	// partition elimination.
+	RequirePartitionFilter bool `json:"requirePartitionFilter,omitempty"`
+
+	// TableReference: A reference uniquely identifying table.
 	TableReference *TableReference `json:"tableReference,omitempty"`
 
-	// TimePartitioning: The time-based partitioning specification for this
-	// table, if configured.
+	// TimePartitioning: The time-based partitioning for this table.
 	TimePartitioning *TimePartitioning `json:"timePartitioning,omitempty"`
 
-	// Type: The type of table. Possible values are: TABLE, VIEW.
+	// Type: The type of table.
 	Type string `json:"type,omitempty"`
 
-	// View: Additional details for a view.
+	// View: Information about a logical view.
 	View *TableListTablesView `json:"view,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Clustering") to
@@ -9275,13 +10982,16 @@ func (s *TableListTables) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TableListTablesView: Additional details for a view.
+// TableListTablesView: Information about a logical view.
 type TableListTablesView struct {
+	// PrivacyPolicy: Specifices the privacy policy for the view.
+	PrivacyPolicy *PrivacyPolicy `json:"privacyPolicy,omitempty"`
+
 	// UseLegacySql: True if view is defined in legacy SQL dialect, false if
-	// in standard SQL.
+	// in GoogleSQL.
 	UseLegacySql bool `json:"useLegacySql,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "UseLegacySql") to
+	// ForceSendFields is a list of field names (e.g. "PrivacyPolicy") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -9289,7 +10999,7 @@ type TableListTablesView struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "UseLegacySql") to include
+	// NullFields is a list of field names (e.g. "PrivacyPolicy") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -9304,16 +11014,73 @@ func (s *TableListTablesView) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TableMetadataCacheUsage: Table level detail on the usage of metadata
+// caching. Only set for Metadata caching eligible tables referenced in
+// the query.
+type TableMetadataCacheUsage struct {
+	// Explanation: Free form human-readable reason metadata caching was
+	// unused for the job.
+	Explanation string `json:"explanation,omitempty"`
+
+	// TableReference: Metadata caching eligible table referenced in the
+	// query.
+	TableReference *TableReference `json:"tableReference,omitempty"`
+
+	// TableType: Table type
+	// (/bigquery/docs/reference/rest/v2/tables#Table.FIELDS.type).
+	TableType string `json:"tableType,omitempty"`
+
+	// UnusedReason: Reason for not using metadata caching for the table.
+	//
+	// Possible values:
+	//   "UNUSED_REASON_UNSPECIFIED" - Unused reasons not specified.
+	//   "EXCEEDED_MAX_STALENESS" - Metadata cache was outside the table's
+	// maxStaleness.
+	//   "METADATA_CACHING_NOT_ENABLED" - Metadata caching feature is not
+	// enabled. [Update BigLake tables]
+	// (/bigquery/docs/create-cloud-storage-table-biglake#update-biglake-tabl
+	// es) to enable the metadata caching.
+	//   "OTHER_REASON" - Other unknown reason.
+	UnusedReason string `json:"unusedReason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Explanation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Explanation") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TableMetadataCacheUsage) MarshalJSON() ([]byte, error) {
+	type NoMethod TableMetadataCacheUsage
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type TableReference struct {
-	// DatasetId: [Required] The ID of the dataset containing this table.
+	// DatasetId: Required. The ID of the dataset containing this table.
 	DatasetId string `json:"datasetId,omitempty"`
 
-	// ProjectId: [Required] The ID of the project containing this table.
+	// ProjectId: Required. The ID of the project containing this table.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// TableId: [Required] The ID of the table. The ID must contain only
-	// letters (a-z, A-Z), numbers (0-9), or underscores (_). The maximum
-	// length is 1,024 characters.
+	// TableId: Required. The ID of the table. The ID can contain Unicode
+	// characters in category L (letter), M (mark), N (number), Pc
+	// (connector, including underscore), Pd (dash), and Zs (space). For
+	// more information, see General Category
+	// (https://wikipedia.org/wiki/Unicode_character_property#General_Category).
+	// The maximum length is 1,024 characters. Certain operations allow
+	// suffixing of the table ID with a partition decorator, such as
+	// `sample_table$20190123`.
 	TableId string `json:"tableId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DatasetId") to
@@ -9335,6 +11102,63 @@ type TableReference struct {
 
 func (s *TableReference) MarshalJSON() ([]byte, error) {
 	type NoMethod TableReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TableReplicationInfo: Replication info of a table created using `AS
+// REPLICA` DDL like: `CREATE MATERIALIZED VIEW mv1 AS REPLICA OF
+// src_mv`
+type TableReplicationInfo struct {
+	// ReplicatedSourceLastRefreshTime: Optional. Output only. If source is
+	// a materialized view, this field signifies the last refresh time of
+	// the source.
+	ReplicatedSourceLastRefreshTime int64 `json:"replicatedSourceLastRefreshTime,omitempty,string"`
+
+	// ReplicationError: Optional. Output only. Replication error that will
+	// permanently stopped table replication.
+	ReplicationError *ErrorProto `json:"replicationError,omitempty"`
+
+	// ReplicationIntervalMs: Required. Specifies the interval at which the
+	// source table is polled for updates.
+	ReplicationIntervalMs int64 `json:"replicationIntervalMs,omitempty,string"`
+
+	// ReplicationStatus: Optional. Output only. Replication status of
+	// configured replication.
+	//
+	// Possible values:
+	//   "REPLICATION_STATUS_UNSPECIFIED" - Default value.
+	//   "ACTIVE" - Replication is Active with no errors.
+	//   "SOURCE_DELETED" - Source object is deleted.
+	//   "PERMISSION_DENIED" - Source revoked replication permissions.
+	//   "UNSUPPORTED_CONFIGURATION" - Source configuration doesn’t allow
+	// replication.
+	ReplicationStatus string `json:"replicationStatus,omitempty"`
+
+	// SourceTable: Required. Source table reference that is replicated.
+	SourceTable *TableReference `json:"sourceTable,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ReplicatedSourceLastRefreshTime") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ReplicatedSourceLastRefreshTime") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TableReplicationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod TableReplicationInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9367,6 +11191,7 @@ func (s *TableRow) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TableSchema: Schema of a table
 type TableSchema struct {
 	// Fields: Describes the fields in a table.
 	Fields []*TableFieldSchema `json:"fields,omitempty"`
@@ -9461,25 +11286,29 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 }
 
 type TimePartitioning struct {
-	// ExpirationMs: [Optional] Number of milliseconds for which to keep the
-	// storage for partitions in the table. The storage in a partition will
-	// have an expiration time of its partition time plus this value.
+	// ExpirationMs: Optional. Number of milliseconds for which to keep the
+	// storage for a partition. A wrapper is used here because 0 is an
+	// invalid value.
 	ExpirationMs int64 `json:"expirationMs,omitempty,string"`
 
-	// Field: [Beta] [Optional] If not set, the table is partitioned by
-	// pseudo column, referenced via either '_PARTITIONTIME' as TIMESTAMP
-	// type, or '_PARTITIONDATE' as DATE type. If field is specified, the
-	// table is instead partitioned by this field. The field must be a
-	// top-level TIMESTAMP or DATE field. Its mode must be NULLABLE or
-	// REQUIRED.
+	// Field: Optional. If not set, the table is partitioned by pseudo
+	// column '_PARTITIONTIME'; if set, the table is partitioned by this
+	// field. The field must be a top-level TIMESTAMP or DATE field. Its
+	// mode must be NULLABLE or REQUIRED. A wrapper is used here because an
+	// empty string is an invalid value.
 	Field string `json:"field,omitempty"`
 
+	// RequirePartitionFilter: If set to true, queries over this table
+	// require a partition filter that can be used for partition elimination
+	// to be specified. This field is deprecated; please set the field with
+	// the same name on the table itself instead. This field needs a wrapper
+	// because we want to output the default value, false, if the user
+	// explicitly set it.
 	RequirePartitionFilter bool `json:"requirePartitionFilter,omitempty"`
 
-	// Type: [Required] The supported types are DAY, HOUR, MONTH, and YEAR,
+	// Type: Required. The supported types are DAY, HOUR, MONTH, and YEAR,
 	// which will generate one partition per day, hour, month, and year,
-	// respectively. When the type is not specified, the default behavior is
-	// DAY.
+	// respectively.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExpirationMs") to
@@ -10279,8 +12108,10 @@ func (s *TrainingRun) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TransactionInfo: [Alpha] Information of a multi-statement
+// transaction.
 type TransactionInfo struct {
-	// TransactionId: [Output-only] // [Alpha] Id of the transaction.
+	// TransactionId: Output only. [Alpha] Id of the transaction.
 	TransactionId string `json:"transactionId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TransactionId") to
@@ -10341,9 +12172,38 @@ func (s *TransformColumn) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UserDefinedFunctionResource: This is used for defining User Defined
+// UndeleteDatasetRequest: Request format for undeleting a dataset.
+type UndeleteDatasetRequest struct {
+	// DeletionTime: Optional. The exact time when the dataset was deleted.
+	// If not specified, it will undelete the most recently deleted version.
+	DeletionTime string `json:"deletionTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeletionTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeletionTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UndeleteDatasetRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UndeleteDatasetRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UserDefinedFunctionResource:  This is used for defining User Defined
 // Function (UDF) resources only when using legacy SQL. Users of
-// Standard SQL should leverage either DDL (e.g. CREATE [TEMPORARY]
+// GoogleSQL should leverage either DDL (e.g. CREATE [TEMPORARY]
 // FUNCTION ... ) or the Routines API to define UDF resources. For
 // additional information on migrating, see:
 // https://cloud.google.com/bigquery/docs/reference/standard-sql/migrating-from-legacy-sql#differences_in_user-defined_javascript_functions
@@ -10380,29 +12240,81 @@ func (s *UserDefinedFunctionResource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// VectorSearchStatistics: Statistics for a vector search query.
+// Populated as part of JobStatistics2.
+type VectorSearchStatistics struct {
+	// IndexUnusedReasons: When `indexUsageMode` is `UNUSED` or
+	// `PARTIALLY_USED`, this field explains why indexes were not used in
+	// all or part of the vector search query. If `indexUsageMode` is
+	// `FULLY_USED`, this field is not populated.
+	IndexUnusedReasons []*IndexUnusedReason `json:"indexUnusedReasons,omitempty"`
+
+	// IndexUsageMode: Specifies the index usage mode for the query.
+	//
+	// Possible values:
+	//   "INDEX_USAGE_MODE_UNSPECIFIED" - Index usage mode not specified.
+	//   "UNUSED" - No vector indexes were used in the vector search query.
+	// See [`indexUnusedReasons`]
+	// (/bigquery/docs/reference/rest/v2/Job#IndexUnusedReason) for detailed
+	// reasons.
+	//   "PARTIALLY_USED" - Part of the vector search query used vector
+	// indexes. See [`indexUnusedReasons`]
+	// (/bigquery/docs/reference/rest/v2/Job#IndexUnusedReason) for why
+	// other parts of the query did not use vector indexes.
+	//   "FULLY_USED" - The entire vector search query used vector indexes.
+	IndexUsageMode string `json:"indexUsageMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IndexUnusedReasons")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IndexUnusedReasons") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *VectorSearchStatistics) MarshalJSON() ([]byte, error) {
+	type NoMethod VectorSearchStatistics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ViewDefinition: Describes the definition of a logical view.
 type ViewDefinition struct {
-	// Query: [Required] A query that BigQuery executes when the view is
+	// PrivacyPolicy: Optional. Specifices the privacy policy for the view.
+	PrivacyPolicy *PrivacyPolicy `json:"privacyPolicy,omitempty"`
+
+	// Query: Required. A query that BigQuery executes when the view is
 	// referenced.
 	Query string `json:"query,omitempty"`
 
 	// UseExplicitColumnNames: True if the column names are explicitly
 	// specified. For example by using the 'CREATE VIEW v(c1, c2) AS ...'
-	// syntax. Can only be set using BigQuery's standard SQL:
-	// https://cloud.google.com/bigquery/sql-reference/
+	// syntax. Can only be set for GoogleSQL views.
 	UseExplicitColumnNames bool `json:"useExplicitColumnNames,omitempty"`
 
 	// UseLegacySql: Specifies whether to use BigQuery's legacy SQL for this
 	// view. The default value is true. If set to false, the view will use
-	// BigQuery's standard SQL:
+	// BigQuery's GoogleSQL:
 	// https://cloud.google.com/bigquery/sql-reference/ Queries and views
-	// that reference this view must use the same flag value.
+	// that reference this view must use the same flag value. A wrapper is
+	// used here because the default value is True.
 	UseLegacySql bool `json:"useLegacySql,omitempty"`
 
 	// UserDefinedFunctionResources: Describes user-defined function
 	// resources used in the query.
 	UserDefinedFunctionResources []*UserDefinedFunctionResource `json:"userDefinedFunctionResources,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Query") to
+	// ForceSendFields is a list of field names (e.g. "PrivacyPolicy") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -10410,10 +12322,10 @@ type ViewDefinition struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Query") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "PrivacyPolicy") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -10493,7 +12405,7 @@ func (c *DatasetsDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -10521,6 +12433,7 @@ func (c *DatasetsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes the dataset specified by the datasetId value. Before you can delete a dataset, you must delete all its tables, either manually or by specifying deleteContents. Immediately after deletion, you can create another dataset with the same name.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "bigquery.datasets.delete",
 	//   "parameterOrder": [
@@ -10529,8 +12442,9 @@ func (c *DatasetsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   ],
 	//   "parameters": {
 	//     "datasetId": {
-	//       "description": "Dataset ID of dataset being deleted",
+	//       "description": "Required. Dataset ID of dataset being deleted",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -10540,13 +12454,14 @@ func (c *DatasetsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//       "type": "boolean"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the dataset being deleted",
+	//       "description": "Required. Project ID of the dataset being deleted",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}",
+	//   "path": "projects/{+projectId}/datasets/{+datasetId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -10580,8 +12495,23 @@ func (r *DatasetsService) Get(projectId string, datasetId string) *DatasetsGetCa
 
 // DatasetView sets the optional parameter "datasetView": Specifies the
 // view that determines which dataset information is returned. By
-// default, metadata and ACL information are returned. Allowed values:
-// METADATA, ACL, FULL.
+// default, metadata and ACL information are returned.
+//
+// Possible values:
+//
+//	"DATASET_VIEW_UNSPECIFIED" - The default value. Default to the FULL
+//
+// view.
+//
+//	"METADATA" - Includes metadata information for the dataset, such as
+//
+// location, etag, lastModifiedTime, etc.
+//
+//	"ACL" - Includes ACL information for the dataset, which defines
+//
+// dataset access for one or more entities.
+//
+//	"FULL" - Includes both dataset metadata and ACL information.
 func (c *DatasetsGetCall) DatasetView(datasetView string) *DatasetsGetCall {
 	c.urlParams_.Set("datasetView", datasetView)
 	return c
@@ -10635,7 +12565,7 @@ func (c *DatasetsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -10688,6 +12618,7 @@ func (c *DatasetsGetCall) Do(opts ...googleapi.CallOption) (*Dataset, error) {
 	return ret, nil
 	// {
 	//   "description": "Returns the dataset specified by datasetID.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.datasets.get",
 	//   "parameterOrder": [
@@ -10696,24 +12627,38 @@ func (c *DatasetsGetCall) Do(opts ...googleapi.CallOption) (*Dataset, error) {
 	//   ],
 	//   "parameters": {
 	//     "datasetId": {
-	//       "description": "Dataset ID of the requested dataset",
+	//       "description": "Required. Dataset ID of the requested dataset",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "datasetView": {
-	//       "description": "Specifies the view that determines which dataset information is returned. By default, metadata and ACL information are returned. Allowed values: METADATA, ACL, FULL.",
+	//       "description": "Optional. Specifies the view that determines which dataset information is returned. By default, metadata and ACL information are returned.",
+	//       "enum": [
+	//         "DATASET_VIEW_UNSPECIFIED",
+	//         "METADATA",
+	//         "ACL",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "The default value. Default to the FULL view.",
+	//         "Includes metadata information for the dataset, such as location, etag, lastModifiedTime, etc.",
+	//         "Includes ACL information for the dataset, which defines dataset access for one or more entities.",
+	//         "Includes both dataset metadata and ACL information."
+	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the requested dataset",
+	//       "description": "Required. Project ID of the requested dataset",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}",
+	//   "path": "projects/{+projectId}/datasets/{+datasetId}",
 	//   "response": {
 	//     "$ref": "Dataset"
 	//   },
@@ -10787,7 +12732,7 @@ func (c *DatasetsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -10839,6 +12784,7 @@ func (c *DatasetsInsertCall) Do(opts ...googleapi.CallOption) (*Dataset, error) 
 	return ret, nil
 	// {
 	//   "description": "Creates a new empty dataset.",
+	//   "flatPath": "projects/{projectsId}/datasets",
 	//   "httpMethod": "POST",
 	//   "id": "bigquery.datasets.insert",
 	//   "parameterOrder": [
@@ -10846,13 +12792,14 @@ func (c *DatasetsInsertCall) Do(opts ...googleapi.CallOption) (*Dataset, error) 
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "Project ID of the new dataset",
+	//       "description": "Required. Project ID of the new dataset",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/datasets",
+	//   "path": "projects/{+projectId}/datasets",
 	//   "request": {
 	//     "$ref": "Dataset"
 	//   },
@@ -10878,8 +12825,8 @@ type DatasetsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all datasets in the specified project to which you have
-// been granted the READER dataset role.
+// List: Lists all datasets in the specified project to which the user
+// has been granted the READER dataset role.
 //
 // - projectId: Project ID of the datasets to be listed.
 func (r *DatasetsService) List(projectId string) *DatasetsListCall {
@@ -10897,16 +12844,19 @@ func (c *DatasetsListCall) All(all bool) *DatasetsListCall {
 
 // Filter sets the optional parameter "filter": An expression for
 // filtering the results of the request by label. The syntax is
-// "labels.<name>[:<value>]". Multiple filters can be ANDed together by
-// connecting with a space. Example: "labels.department:receiving
-// labels.active". See Filtering datasets using labels for details.
+// \"labels.<name>[:<value>]\". Multiple filters can be ANDed together
+// by connecting with a space. Example: \"labels.department:receiving
+// labels.active\". See Filtering datasets using labels
+// (/bigquery/docs/labeling-datasets#filtering_datasets_using_labels)
+// for details.
 func (c *DatasetsListCall) Filter(filter string) *DatasetsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
 // MaxResults sets the optional parameter "maxResults": The maximum
-// number of results to return
+// number of results to return in a single response page. Leverage the
+// page tokens to iterate through the entire collection.
 func (c *DatasetsListCall) MaxResults(maxResults int64) *DatasetsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -10967,7 +12917,7 @@ func (c *DatasetsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -11018,7 +12968,8 @@ func (c *DatasetsListCall) Do(opts ...googleapi.CallOption) (*DatasetList, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all datasets in the specified project to which you have been granted the READER dataset role.",
+	//   "description": "Lists all datasets in the specified project to which the user has been granted the READER dataset role.",
+	//   "flatPath": "projects/{projectsId}/datasets",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.datasets.list",
 	//   "parameterOrder": [
@@ -11031,12 +12982,12 @@ func (c *DatasetsListCall) Do(opts ...googleapi.CallOption) (*DatasetList, error
 	//       "type": "boolean"
 	//     },
 	//     "filter": {
-	//       "description": "An expression for filtering the results of the request by label. The syntax is \"labels.\u003cname\u003e[:\u003cvalue\u003e]\". Multiple filters can be ANDed together by connecting with a space. Example: \"labels.department:receiving labels.active\". See Filtering datasets using labels for details.",
+	//       "description": "An expression for filtering the results of the request by label. The syntax is \\\"labels.\u003cname\u003e[:\u003cvalue\u003e]\\\". Multiple filters can be ANDed together by connecting with a space. Example: \\\"labels.department:receiving labels.active\\\". See [Filtering datasets using labels](/bigquery/docs/labeling-datasets#filtering_datasets_using_labels) for details.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "The maximum number of results to return",
+	//       "description": "The maximum number of results to return in a single response page. Leverage the page tokens to iterate through the entire collection.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -11047,13 +12998,14 @@ func (c *DatasetsListCall) Do(opts ...googleapi.CallOption) (*DatasetList, error
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the datasets to be listed",
+	//       "description": "Required. Project ID of the datasets to be listed",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/datasets",
+	//   "path": "projects/{+projectId}/datasets",
 	//   "response": {
 	//     "$ref": "DatasetList"
 	//   },
@@ -11102,7 +13054,7 @@ type DatasetsPatchCall struct {
 // Patch: Updates information in an existing dataset. The update method
 // replaces the entire dataset resource, whereas the patch method only
 // replaces fields that are provided in the submitted dataset resource.
-// This method supports patch semantics.
+// This method supports RFC5789 patch semantics.
 //
 // - datasetId: Dataset ID of the dataset being updated.
 // - projectId: Project ID of the dataset being updated.
@@ -11154,7 +13106,7 @@ func (c *DatasetsPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -11206,7 +13158,8 @@ func (c *DatasetsPatchCall) Do(opts ...googleapi.CallOption) (*Dataset, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates information in an existing dataset. The update method replaces the entire dataset resource, whereas the patch method only replaces fields that are provided in the submitted dataset resource. This method supports patch semantics.",
+	//   "description": "Updates information in an existing dataset. The update method replaces the entire dataset resource, whereas the patch method only replaces fields that are provided in the submitted dataset resource. This method supports RFC5789 patch semantics.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "bigquery.datasets.patch",
 	//   "parameterOrder": [
@@ -11215,21 +13168,181 @@ func (c *DatasetsPatchCall) Do(opts ...googleapi.CallOption) (*Dataset, error) {
 	//   ],
 	//   "parameters": {
 	//     "datasetId": {
-	//       "description": "Dataset ID of the dataset being updated",
+	//       "description": "Required. Dataset ID of the dataset being updated",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the dataset being updated",
+	//       "description": "Required. Project ID of the dataset being updated",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}",
+	//   "path": "projects/{+projectId}/datasets/{+datasetId}",
 	//   "request": {
 	//     "$ref": "Dataset"
+	//   },
+	//   "response": {
+	//     "$ref": "Dataset"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigquery.datasets.undelete":
+
+type DatasetsUndeleteCall struct {
+	s                      *Service
+	projectId              string
+	datasetId              string
+	undeletedatasetrequest *UndeleteDatasetRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Undelete: Undeletes a dataset which is within time travel window
+// based on datasetId. If a time is specified, the dataset version
+// deleted at that time is undeleted, else the last live version is
+// undeleted.
+//
+// - datasetId: Dataset ID of dataset being deleted.
+// - projectId: Project ID of the dataset to be undeleted.
+func (r *DatasetsService) Undelete(projectId string, datasetId string, undeletedatasetrequest *UndeleteDatasetRequest) *DatasetsUndeleteCall {
+	c := &DatasetsUndeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.projectId = projectId
+	c.datasetId = datasetId
+	c.undeletedatasetrequest = undeletedatasetrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *DatasetsUndeleteCall) Fields(s ...googleapi.Field) *DatasetsUndeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *DatasetsUndeleteCall) Context(ctx context.Context) *DatasetsUndeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *DatasetsUndeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *DatasetsUndeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.undeletedatasetrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}:undelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"projectId": c.projectId,
+		"datasetId": c.datasetId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquery.datasets.undelete" call.
+// Exactly one of *Dataset or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Dataset.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *DatasetsUndeleteCall) Do(opts ...googleapi.CallOption) (*Dataset, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Dataset{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Undeletes a dataset which is within time travel window based on datasetId. If a time is specified, the dataset version deleted at that time is undeleted, else the last live version is undeleted.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}:undelete",
+	//   "httpMethod": "POST",
+	//   "id": "bigquery.datasets.undelete",
+	//   "parameterOrder": [
+	//     "projectId",
+	//     "datasetId"
+	//   ],
+	//   "parameters": {
+	//     "datasetId": {
+	//       "description": "Required. Dataset ID of dataset being deleted",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "projectId": {
+	//       "description": "Required. Project ID of the dataset to be undeleted",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "projects/{+projectId}/datasets/{+datasetId}:undelete",
+	//   "request": {
+	//     "$ref": "UndeleteDatasetRequest"
 	//   },
 	//   "response": {
 	//     "$ref": "Dataset"
@@ -11308,7 +13421,7 @@ func (c *DatasetsUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -11361,6 +13474,7 @@ func (c *DatasetsUpdateCall) Do(opts ...googleapi.CallOption) (*Dataset, error) 
 	return ret, nil
 	// {
 	//   "description": "Updates information in an existing dataset. The update method replaces the entire dataset resource, whereas the patch method only replaces fields that are provided in the submitted dataset resource.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}",
 	//   "httpMethod": "PUT",
 	//   "id": "bigquery.datasets.update",
 	//   "parameterOrder": [
@@ -11369,19 +13483,21 @@ func (c *DatasetsUpdateCall) Do(opts ...googleapi.CallOption) (*Dataset, error) 
 	//   ],
 	//   "parameters": {
 	//     "datasetId": {
-	//       "description": "Dataset ID of the dataset being updated",
+	//       "description": "Required. Dataset ID of the dataset being updated",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the dataset being updated",
+	//       "description": "Required. Project ID of the dataset being updated",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}",
+	//   "path": "projects/{+projectId}/datasets/{+datasetId}",
 	//   "request": {
 	//     "$ref": "Dataset"
 	//   },
@@ -11412,8 +13528,8 @@ type JobsCancelCall struct {
 // see if the cancel completed successfully. Cancelled jobs may still
 // incur costs.
 //
-// - jobId: [Required] Job ID of the job to cancel.
-// - projectId: [Required] Project ID of the job to cancel.
+// - jobId: Job ID of the job to cancel.
+// - projectId: Project ID of the job to cancel.
 func (r *JobsService) Cancel(projectId string, jobId string) *JobsCancelCall {
 	c := &JobsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11422,7 +13538,11 @@ func (r *JobsService) Cancel(projectId string, jobId string) *JobsCancelCall {
 }
 
 // Location sets the optional parameter "location": The geographic
-// location of the job. Required except for US and EU. See details at
+// location of the job. You must specify the location to run the job for
+// the following scenarios: - If the location to run a job is not in the
+// `us` or the `eu` multi-regional location - If the job's location is
+// in a single region (for example, `us-central1`) For more information,
+// see
 // https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
 func (c *JobsCancelCall) Location(location string) *JobsCancelCall {
 	c.urlParams_.Set("location", location)
@@ -11464,7 +13584,7 @@ func (c *JobsCancelCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs/{jobId}/cancel")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/jobs/{+jobId}/cancel")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -11517,6 +13637,7 @@ func (c *JobsCancelCall) Do(opts ...googleapi.CallOption) (*JobCancelResponse, e
 	return ret, nil
 	// {
 	//   "description": "Requests that a job be cancelled. This call will return immediately, and the client will need to poll for the job status to see if the cancel completed successfully. Cancelled jobs may still incur costs.",
+	//   "flatPath": "projects/{projectsId}/jobs/{jobsId}/cancel",
 	//   "httpMethod": "POST",
 	//   "id": "bigquery.jobs.cancel",
 	//   "parameterOrder": [
@@ -11525,24 +13646,26 @@ func (c *JobsCancelCall) Do(opts ...googleapi.CallOption) (*JobCancelResponse, e
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "[Required] Job ID of the job to cancel",
+	//       "description": "Required. Job ID of the job to cancel",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The geographic location of the job. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/locations#specifying_your_location.",
+	//       "description": "The geographic location of the job. You must specify the location to run the job for the following scenarios: - If the location to run a job is not in the `us` or the `eu` multi-regional location - If the job's location is in a single region (for example, `us-central1`) For more information, see https://cloud.google.com/bigquery/docs/locations#specifying_your_location.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "[Required] Project ID of the job to cancel",
+	//       "description": "Required. Project ID of the job to cancel",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/jobs/{jobId}/cancel",
+	//   "path": "projects/{+projectId}/jobs/{+jobId}/cancel",
 	//   "response": {
 	//     "$ref": "JobCancelResponse"
 	//   },
@@ -11705,8 +13828,8 @@ type JobsGetCall struct {
 // available for a six month period after creation. Requires that you're
 // the person who ran the job, or have the Is Owner project role.
 //
-// - jobId: [Required] Job ID of the requested job.
-// - projectId: [Required] Project ID of the requested job.
+// - jobId: Job ID of the requested job.
+// - projectId: Project ID of the requested job.
 func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
 	c := &JobsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11715,7 +13838,11 @@ func (r *JobsService) Get(projectId string, jobId string) *JobsGetCall {
 }
 
 // Location sets the optional parameter "location": The geographic
-// location of the job. Required except for US and EU. See details at
+// location of the job. You must specify the location to run the job for
+// the following scenarios: - If the location to run a job is not in the
+// `us` or the `eu` multi-regional location - If the job's location is
+// in a single region (for example, `us-central1`) For more information,
+// see
 // https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
 func (c *JobsGetCall) Location(location string) *JobsGetCall {
 	c.urlParams_.Set("location", location)
@@ -11770,7 +13897,7 @@ func (c *JobsGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs/{jobId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/jobs/{+jobId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -11823,6 +13950,7 @@ func (c *JobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	return ret, nil
 	// {
 	//   "description": "Returns information about a specific job. Job information is available for a six month period after creation. Requires that you're the person who ran the job, or have the Is Owner project role.",
+	//   "flatPath": "projects/{projectsId}/jobs/{jobsId}",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.jobs.get",
 	//   "parameterOrder": [
@@ -11831,24 +13959,26 @@ func (c *JobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//   ],
 	//   "parameters": {
 	//     "jobId": {
-	//       "description": "[Required] Job ID of the requested job",
+	//       "description": "Required. Job ID of the requested job.",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The geographic location of the job. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/locations#specifying_your_location.",
+	//       "description": "The geographic location of the job. You must specify the location to run the job for the following scenarios: - If the location to run a job is not in the `us` or the `eu` multi-regional location - If the job's location is in a single region (for example, `us-central1`) For more information, see https://cloud.google.com/bigquery/docs/locations#specifying_your_location.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "[Required] Project ID of the requested job",
+	//       "description": "Required. Project ID of the requested job.",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/jobs/{jobId}",
+	//   "path": "projects/{+projectId}/jobs/{+jobId}",
 	//   "response": {
 	//     "$ref": "Job"
 	//   },
@@ -11873,10 +14003,10 @@ type JobsGetQueryResultsCall struct {
 	header_      http.Header
 }
 
-// GetQueryResults: Retrieves the results of a query job.
+// GetQueryResults: RPC to get the results of a query job.
 //
-// - jobId: [Required] Job ID of the query job.
-// - projectId: [Required] Project ID of the query job.
+// - jobId: Job ID of the query job.
+// - projectId: Project ID of the query job.
 func (r *JobsService) GetQueryResults(projectId string, jobId string) *JobsGetQueryResultsCall {
 	c := &JobsGetQueryResultsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -11884,9 +14014,20 @@ func (r *JobsService) GetQueryResults(projectId string, jobId string) *JobsGetQu
 	return c
 }
 
+// FormatOptionsUseInt64Timestamp sets the optional parameter
+// "formatOptions.useInt64Timestamp": Output timestamp as usec int64.
+// Default is false.
+func (c *JobsGetQueryResultsCall) FormatOptionsUseInt64Timestamp(formatOptionsUseInt64Timestamp bool) *JobsGetQueryResultsCall {
+	c.urlParams_.Set("formatOptions.useInt64Timestamp", fmt.Sprint(formatOptionsUseInt64Timestamp))
+	return c
+}
+
 // Location sets the optional parameter "location": The geographic
-// location where the job should run. Required except for US and EU. See
-// details at
+// location of the job. You must specify the location to run the job for
+// the following scenarios: - If the location to run a job is not in the
+// `us` or the `eu` multi-regional location - If the job's location is
+// in a single region (for example, `us-central1`) For more information,
+// see
 // https://cloud.google.com/bigquery/docs/locations#specifying_your_location.
 func (c *JobsGetQueryResultsCall) Location(location string) *JobsGetQueryResultsCall {
 	c.urlParams_.Set("location", location)
@@ -11894,30 +14035,38 @@ func (c *JobsGetQueryResultsCall) Location(location string) *JobsGetQueryResults
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to read
+// of results to read.
 func (c *JobsGetQueryResultsCall) MaxResults(maxResults int64) *JobsGetQueryResultsCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token,
-// returned by a previous call, to request the next page of results
+// returned by a previous call, to request the next page of results.
 func (c *JobsGetQueryResultsCall) PageToken(pageToken string) *JobsGetQueryResultsCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // StartIndex sets the optional parameter "startIndex": Zero-based index
-// of the starting row
+// of the starting row.
 func (c *JobsGetQueryResultsCall) StartIndex(startIndex uint64) *JobsGetQueryResultsCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
 }
 
-// TimeoutMs sets the optional parameter "timeoutMs": How long to wait
-// for the query to complete, in milliseconds, before returning. Default
-// is 10 seconds. If the timeout passes before the job completes, the
-// 'jobComplete' field in the response will be false
+// TimeoutMs sets the optional parameter "timeoutMs": Optional:
+// Specifies the maximum amount of time, in milliseconds, that the
+// client is willing to wait for the query to complete. By default, this
+// limit is 10 seconds (10,000 milliseconds). If the query is complete,
+// the jobComplete field in the response is true. If the query has not
+// yet completed, jobComplete is false. You can request a longer timeout
+// period in the timeoutMs field. However, the call is not guaranteed to
+// wait for the specified timeout; it typically returns after around 200
+// seconds (200,000 milliseconds), even if the query is not complete. If
+// jobComplete is false, you can continue to wait for the query to
+// complete by calling the getQueryResults method until the jobComplete
+// field in the getQueryResults response is true.
 func (c *JobsGetQueryResultsCall) TimeoutMs(timeoutMs int64) *JobsGetQueryResultsCall {
 	c.urlParams_.Set("timeoutMs", fmt.Sprint(timeoutMs))
 	return c
@@ -11971,7 +14120,7 @@ func (c *JobsGetQueryResultsCall) doRequest(alt string) (*http.Response, error) 
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/queries/{jobId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/queries/{+jobId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -12023,7 +14172,8 @@ func (c *JobsGetQueryResultsCall) Do(opts ...googleapi.CallOption) (*GetQueryRes
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves the results of a query job.",
+	//   "description": "RPC to get the results of a query job.",
+	//   "flatPath": "projects/{projectsId}/queries/{queriesId}",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.jobs.getQueryResults",
 	//   "parameterOrder": [
@@ -12031,48 +14181,55 @@ func (c *JobsGetQueryResultsCall) Do(opts ...googleapi.CallOption) (*GetQueryRes
 	//     "jobId"
 	//   ],
 	//   "parameters": {
+	//     "formatOptions.useInt64Timestamp": {
+	//       "description": "Optional. Output timestamp as usec int64. Default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "jobId": {
-	//       "description": "[Required] Job ID of the query job",
+	//       "description": "Required. Job ID of the query job.",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "location": {
-	//       "description": "The geographic location where the job should run. Required except for US and EU. See details at https://cloud.google.com/bigquery/docs/locations#specifying_your_location.",
+	//       "description": "The geographic location of the job. You must specify the location to run the job for the following scenarios: - If the location to run a job is not in the `us` or the `eu` multi-regional location - If the job's location is in a single region (for example, `us-central1`) For more information, see https://cloud.google.com/bigquery/docs/locations#specifying_your_location.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of results to read",
+	//       "description": "Maximum number of results to read.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token, returned by a previous call, to request the next page of results",
+	//       "description": "Page token, returned by a previous call, to request the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "[Required] Project ID of the query job",
+	//       "description": "Required. Project ID of the query job.",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "startIndex": {
-	//       "description": "Zero-based index of the starting row",
+	//       "description": "Zero-based index of the starting row.",
 	//       "format": "uint64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "timeoutMs": {
-	//       "description": "How long to wait for the query to complete, in milliseconds, before returning. Default is 10 seconds. If the timeout passes before the job completes, the 'jobComplete' field in the response will be false",
+	//       "description": "Optional: Specifies the maximum amount of time, in milliseconds, that the client is willing to wait for the query to complete. By default, this limit is 10 seconds (10,000 milliseconds). If the query is complete, the jobComplete field in the response is true. If the query has not yet completed, jobComplete is false. You can request a longer timeout period in the timeoutMs field. However, the call is not guaranteed to wait for the specified timeout; it typically returns after around 200 seconds (200,000 milliseconds), even if the query is not complete. If jobComplete is false, you can continue to wait for the query to complete by calling the getQueryResults method until the jobComplete field in the getQueryResults response is true.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/queries/{jobId}",
+	//   "path": "projects/{+projectId}/queries/{+jobId}",
 	//   "response": {
 	//     "$ref": "GetQueryResultsResponse"
 	//   },
@@ -12118,11 +14275,15 @@ type JobsInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Starts a new asynchronous job. Requires the Can View project
-// role.
+// Insert: Starts a new asynchronous job. This API has two different
+// kinds of endpoint URIs, as this method supports a variety of use
+// cases. * The *Metadata* URI is used for most interactions, as it
+// accepts the job configuration directly. * The *Upload* URI is ONLY
+// for the case when you're sending both a load job configuration and a
+// data stream together. In this case, the Upload URI accepts the job
+// configuration and the data as two distinct multipart MIME parts.
 //
-//   - projectId: Project ID of the project that will be billed for the
-//     job.
+// - projectId: Project ID of project that will be billed for the job.
 func (r *JobsService) Insert(projectId string, job *Job) *JobsInsertCall {
 	c := &JobsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12209,9 +14370,9 @@ func (c *JobsInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/jobs")
 	if c.mediaInfo_ != nil {
-		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/bigquery/v2/projects/{projectId}/jobs")
+		urls = googleapi.ResolveRelative(c.s.BasePath, "/upload/bigquery/v2/projects/{+projectId}/jobs")
 		c.urlParams_.Set("uploadType", c.mediaInfo_.UploadType())
 	}
 	if body == nil {
@@ -12288,7 +14449,8 @@ func (c *JobsInsertCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Starts a new asynchronous job. Requires the Can View project role.",
+	//   "description": "Starts a new asynchronous job. This API has two different kinds of endpoint URIs, as this method supports a variety of use cases. * The *Metadata* URI is used for most interactions, as it accepts the job configuration directly. * The *Upload* URI is ONLY for the case when you're sending both a load job configuration and a data stream together. In this case, the Upload URI accepts the job configuration and the data as two distinct multipart MIME parts.",
+	//   "flatPath": "projects/{projectsId}/jobs",
 	//   "httpMethod": "POST",
 	//   "id": "bigquery.jobs.insert",
 	//   "mediaUpload": {
@@ -12298,11 +14460,11 @@ func (c *JobsInsertCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//     "protocols": {
 	//       "resumable": {
 	//         "multipart": true,
-	//         "path": "/resumable/upload/bigquery/v2/projects/{projectId}/jobs"
+	//         "path": "/resumable/upload/bigquery/v2/projects/{+projectId}/jobs"
 	//       },
 	//       "simple": {
 	//         "multipart": true,
-	//         "path": "/upload/bigquery/v2/projects/{projectId}/jobs"
+	//         "path": "/upload/bigquery/v2/projects/{+projectId}/jobs"
 	//       }
 	//     }
 	//   },
@@ -12311,13 +14473,14 @@ func (c *JobsInsertCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "Project ID of the project that will be billed for the job",
+	//       "description": "Project ID of project that will be billed for the job.",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/jobs",
+	//   "path": "projects/{+projectId}/jobs",
 	//   "request": {
 	//     "$ref": "Job"
 	//   },
@@ -12361,7 +14524,7 @@ func (r *JobsService) List(projectId string) *JobsListCall {
 }
 
 // AllUsers sets the optional parameter "allUsers": Whether to display
-// jobs owned by all users in the project. Default false
+// jobs owned by all users in the project. Default False.
 func (c *JobsListCall) AllUsers(allUsers bool) *JobsListCall {
 	c.urlParams_.Set("allUsers", fmt.Sprint(allUsers))
 	return c
@@ -12369,14 +14532,15 @@ func (c *JobsListCall) AllUsers(allUsers bool) *JobsListCall {
 
 // MaxCreationTime sets the optional parameter "maxCreationTime": Max
 // value for job creation time, in milliseconds since the POSIX epoch.
-// If set, only jobs created before or at this timestamp are returned
+// If set, only jobs created before or at this timestamp are returned.
 func (c *JobsListCall) MaxCreationTime(maxCreationTime uint64) *JobsListCall {
 	c.urlParams_.Set("maxCreationTime", fmt.Sprint(maxCreationTime))
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results to return in a single response page. Leverage the
+// page tokens to iterate through the entire collection.
 func (c *JobsListCall) MaxResults(maxResults int64) *JobsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -12384,22 +14548,22 @@ func (c *JobsListCall) MaxResults(maxResults int64) *JobsListCall {
 
 // MinCreationTime sets the optional parameter "minCreationTime": Min
 // value for job creation time, in milliseconds since the POSIX epoch.
-// If set, only jobs created after or at this timestamp are returned
+// If set, only jobs created after or at this timestamp are returned.
 func (c *JobsListCall) MinCreationTime(minCreationTime uint64) *JobsListCall {
 	c.urlParams_.Set("minCreationTime", fmt.Sprint(minCreationTime))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token,
-// returned by a previous call, to request the next page of results
+// returned by a previous call, to request the next page of results.
 func (c *JobsListCall) PageToken(pageToken string) *JobsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ParentJobId sets the optional parameter "parentJobId": If set,
-// retrieves only jobs whose parent is this job. Otherwise, retrieves
-// only jobs which have no parent
+// ParentJobId sets the optional parameter "parentJobId": If set, show
+// only child jobs of the specified parent. Otherwise, show all
+// top-level jobs.
 func (c *JobsListCall) ParentJobId(parentJobId string) *JobsListCall {
 	c.urlParams_.Set("parentJobId", parentJobId)
 	return c
@@ -12478,7 +14642,7 @@ func (c *JobsListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/jobs")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/jobs")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -12530,6 +14694,7 @@ func (c *JobsListCall) Do(opts ...googleapi.CallOption) (*JobList, error) {
 	return ret, nil
 	// {
 	//   "description": "Lists all jobs that you started in the specified project. Job information is available for a six month period after creation. The job list is sorted in reverse chronological order, by job creation time. Requires the Can View project role, or the Is Owner project role if you set the allUsers property.",
+	//   "flatPath": "projects/{projectsId}/jobs",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.jobs.list",
 	//   "parameterOrder": [
@@ -12537,41 +14702,42 @@ func (c *JobsListCall) Do(opts ...googleapi.CallOption) (*JobList, error) {
 	//   ],
 	//   "parameters": {
 	//     "allUsers": {
-	//       "description": "Whether to display jobs owned by all users in the project. Default false",
+	//       "description": "Whether to display jobs owned by all users in the project. Default False.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "maxCreationTime": {
-	//       "description": "Max value for job creation time, in milliseconds since the POSIX epoch. If set, only jobs created before or at this timestamp are returned",
+	//       "description": "Max value for job creation time, in milliseconds since the POSIX epoch. If set, only jobs created before or at this timestamp are returned.",
 	//       "format": "uint64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of results to return",
+	//       "description": "The maximum number of results to return in a single response page. Leverage the page tokens to iterate through the entire collection.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "minCreationTime": {
-	//       "description": "Min value for job creation time, in milliseconds since the POSIX epoch. If set, only jobs created after or at this timestamp are returned",
+	//       "description": "Min value for job creation time, in milliseconds since the POSIX epoch. If set, only jobs created after or at this timestamp are returned.",
 	//       "format": "uint64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token, returned by a previous call, to request the next page of results",
+	//       "description": "Page token, returned by a previous call, to request the next page of results.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parentJobId": {
-	//       "description": "If set, retrieves only jobs whose parent is this job. Otherwise, retrieves only jobs which have no parent",
+	//       "description": "If set, show only child jobs of the specified parent. Otherwise, show all top-level jobs.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the jobs to list",
+	//       "description": "Project ID of the jobs to list.",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -12605,7 +14771,7 @@ func (c *JobsListCall) Do(opts ...googleapi.CallOption) (*JobList, error) {
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/jobs",
+	//   "path": "projects/{+projectId}/jobs",
 	//   "response": {
 	//     "$ref": "JobList"
 	//   },
@@ -12653,7 +14819,7 @@ type JobsQueryCall struct {
 // Query: Runs a BigQuery SQL query synchronously and returns query
 // results if the query completes within a specified timeout.
 //
-// - projectId: Project ID of the project billed for the query.
+// - projectId: Project ID of the query request.
 func (r *JobsService) Query(projectId string, queryrequest *QueryRequest) *JobsQueryCall {
 	c := &JobsQueryCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -12701,7 +14867,7 @@ func (c *JobsQueryCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/queries")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/queries")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -12753,6 +14919,7 @@ func (c *JobsQueryCall) Do(opts ...googleapi.CallOption) (*QueryResponse, error)
 	return ret, nil
 	// {
 	//   "description": "Runs a BigQuery SQL query synchronously and returns query results if the query completes within a specified timeout.",
+	//   "flatPath": "projects/{projectsId}/queries",
 	//   "httpMethod": "POST",
 	//   "id": "bigquery.jobs.query",
 	//   "parameterOrder": [
@@ -12760,13 +14927,14 @@ func (c *JobsQueryCall) Do(opts ...googleapi.CallOption) (*QueryResponse, error)
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "Project ID of the project billed for the query",
+	//       "description": "Required. Project ID of the query request.",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/queries",
+	//   "path": "projects/{+projectId}/queries",
 	//   "request": {
 	//     "$ref": "QueryRequest"
 	//   },
@@ -13471,10 +15639,10 @@ type ProjectsGetServiceAccountCall struct {
 	header_      http.Header
 }
 
-// GetServiceAccount: Returns the email address of the service account
-// for your project used for interactions with Google Cloud KMS.
+// GetServiceAccount: RPC to get the service account for a project used
+// for interactions with Google Cloud KMS
 //
-// - projectId: Project ID for which the service account is requested.
+// - projectId: ID of the project.
 func (r *ProjectsService) GetServiceAccount(projectId string) *ProjectsGetServiceAccountCall {
 	c := &ProjectsGetServiceAccountCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -13529,7 +15697,7 @@ func (c *ProjectsGetServiceAccountCall) doRequest(alt string) (*http.Response, e
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/serviceAccount")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/serviceAccount")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -13580,7 +15748,8 @@ func (c *ProjectsGetServiceAccountCall) Do(opts ...googleapi.CallOption) (*GetSe
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns the email address of the service account for your project used for interactions with Google Cloud KMS.",
+	//   "description": "RPC to get the service account for a project used for interactions with Google Cloud KMS",
+	//   "flatPath": "projects/{projectsId}/serviceAccount",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.projects.getServiceAccount",
 	//   "parameterOrder": [
@@ -13588,13 +15757,14 @@ func (c *ProjectsGetServiceAccountCall) Do(opts ...googleapi.CallOption) (*GetSe
 	//   ],
 	//   "parameters": {
 	//     "projectId": {
-	//       "description": "Project ID for which the service account is requested.",
+	//       "description": "Required. ID of the project.",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/serviceAccount",
+	//   "path": "projects/{+projectId}/serviceAccount",
 	//   "response": {
 	//     "$ref": "GetServiceAccountResponse"
 	//   },
@@ -13617,22 +15787,29 @@ type ProjectsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists all projects to which you have been granted any project
-// role.
+// List: RPC to list projects to which the user has been granted any
+// project role. Users of this method are encouraged to consider the
+// Resource Manager (https://cloud.google.com/resource-manager/docs/)
+// API, which provides the underlying data for this method and has more
+// capabilities.
 func (r *ProjectsService) List() *ProjectsListCall {
 	c := &ProjectsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return
+// MaxResults sets the optional parameter "maxResults": `maxResults`
+// unset returns all results, up to 50 per page. Additionally, the
+// number of projects in a page may be fewer than `maxResults` because
+// projects are retrieved and then filtered to only projects with the
+// BigQuery API enabled.
 func (c *ProjectsListCall) MaxResults(maxResults int64) *ProjectsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token,
-// returned by a previous call, to request the next page of results
+// returned by a previous call, to request the next page of results. If
+// not present, no further pages are present.
 func (c *ProjectsListCall) PageToken(pageToken string) *ProjectsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -13734,18 +15911,20 @@ func (c *ProjectsListCall) Do(opts ...googleapi.CallOption) (*ProjectList, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists all projects to which you have been granted any project role.",
+	//   "description": "RPC to list projects to which the user has been granted any project role. Users of this method are encouraged to consider the [Resource Manager](https://cloud.google.com/resource-manager/docs/) API, which provides the underlying data for this method and has more capabilities.",
+	//   "flatPath": "projects",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.projects.list",
+	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "maxResults": {
-	//       "description": "Maximum number of results to return",
+	//       "description": "`maxResults` unset returns all results, up to 50 per page. Additionally, the number of projects in a page may be fewer than `maxResults` because projects are retrieved and then filtered to only projects with the BigQuery API enabled.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token, returned by a previous call, to request the next page of results",
+	//       "description": "Page token, returned by a previous call, to request the next page of results. If not present, no further pages are present.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -15195,11 +17374,11 @@ type TabledataInsertAllCall struct {
 }
 
 // InsertAll: Streams data into BigQuery one record at a time without
-// needing to run a load job. Requires the WRITER dataset role.
+// needing to run a load job.
 //
-// - datasetId: Dataset ID of the destination table.
-// - projectId: Project ID of the destination table.
-// - tableId: Table ID of the destination table.
+// - datasetId: Dataset ID of the destination.
+// - projectId: Project ID of the destination.
+// - tableId: Table ID of the destination.
 func (r *TabledataService) InsertAll(projectId string, datasetId string, tableId string, tabledatainsertallrequest *TableDataInsertAllRequest) *TabledataInsertAllCall {
 	c := &TabledataInsertAllCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15249,7 +17428,7 @@ func (c *TabledataInsertAllCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/insertAll")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}/insertAll")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -15302,7 +17481,8 @@ func (c *TabledataInsertAllCall) Do(opts ...googleapi.CallOption) (*TableDataIns
 	}
 	return ret, nil
 	// {
-	//   "description": "Streams data into BigQuery one record at a time without needing to run a load job. Requires the WRITER dataset role.",
+	//   "description": "Streams data into BigQuery one record at a time without needing to run a load job.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/tables/{tablesId}/insertAll",
 	//   "httpMethod": "POST",
 	//   "id": "bigquery.tabledata.insertAll",
 	//   "parameterOrder": [
@@ -15312,25 +17492,28 @@ func (c *TabledataInsertAllCall) Do(opts ...googleapi.CallOption) (*TableDataIns
 	//   ],
 	//   "parameters": {
 	//     "datasetId": {
-	//       "description": "Dataset ID of the destination table.",
+	//       "description": "Required. Dataset ID of the destination.",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the destination table.",
+	//       "description": "Required. Project ID of the destination.",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "tableId": {
-	//       "description": "Table ID of the destination table.",
+	//       "description": "Required. Table ID of the destination.",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/insertAll",
+	//   "path": "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}/insertAll",
 	//   "request": {
 	//     "$ref": "TableDataInsertAllRequest"
 	//   },
@@ -15359,12 +17542,11 @@ type TabledataListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieves table data from a specified set of rows. Requires the
-// READER dataset role.
+// List: List the content of a table in rows.
 //
-// - datasetId: Dataset ID of the table to read.
-// - projectId: Project ID of the table to read.
-// - tableId: Table ID of the table to read.
+// - datasetId: Dataset id of the table to list.
+// - projectId: Project id of the table to list.
+// - tableId: Table id of the table to list.
 func (r *TabledataService) List(projectId string, datasetId string, tableId string) *TabledataListCall {
 	c := &TabledataListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.projectId = projectId
@@ -15373,30 +17555,40 @@ func (r *TabledataService) List(projectId string, datasetId string, tableId stri
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return
+// FormatOptionsUseInt64Timestamp sets the optional parameter
+// "formatOptions.useInt64Timestamp": Output timestamp as usec int64.
+// Default is false.
+func (c *TabledataListCall) FormatOptionsUseInt64Timestamp(formatOptionsUseInt64Timestamp bool) *TabledataListCall {
+	c.urlParams_.Set("formatOptions.useInt64Timestamp", fmt.Sprint(formatOptionsUseInt64Timestamp))
+	return c
+}
+
+// MaxResults sets the optional parameter "maxResults": Row limit of the
+// table.
 func (c *TabledataListCall) MaxResults(maxResults int64) *TabledataListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Page token,
-// returned by a previous call, identifying the result set
+// PageToken sets the optional parameter "pageToken": To retrieve the
+// next page of table data, set this field to the string provided in the
+// pageToken field of the response body from your previous call to
+// tabledata.list.
 func (c *TabledataListCall) PageToken(pageToken string) *TabledataListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// SelectedFields sets the optional parameter "selectedFields": List of
-// fields to return (comma-separated). If unspecified, all fields are
-// returned
+// SelectedFields sets the optional parameter "selectedFields": Subset
+// of fields to return, supports select into sub fields. Example:
+// selected_fields = "a,e.d.f";
 func (c *TabledataListCall) SelectedFields(selectedFields string) *TabledataListCall {
 	c.urlParams_.Set("selectedFields", selectedFields)
 	return c
 }
 
-// StartIndex sets the optional parameter "startIndex": Zero-based index
-// of the starting row to read
+// StartIndex sets the optional parameter "startIndex": Start row index
+// of the table.
 func (c *TabledataListCall) StartIndex(startIndex uint64) *TabledataListCall {
 	c.urlParams_.Set("startIndex", fmt.Sprint(startIndex))
 	return c
@@ -15450,7 +17642,7 @@ func (c *TabledataListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}/data")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -15503,7 +17695,8 @@ func (c *TabledataListCall) Do(opts ...googleapi.CallOption) (*TableDataList, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Retrieves table data from a specified set of rows. Requires the READER dataset role.",
+	//   "description": "List the content of a table in rows.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/tables/{tablesId}/data",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.tabledata.list",
 	//   "parameterOrder": [
@@ -15513,47 +17706,55 @@ func (c *TabledataListCall) Do(opts ...googleapi.CallOption) (*TableDataList, er
 	//   ],
 	//   "parameters": {
 	//     "datasetId": {
-	//       "description": "Dataset ID of the table to read",
+	//       "description": "Required. Dataset id of the table to list.",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
+	//     "formatOptions.useInt64Timestamp": {
+	//       "description": "Optional. Output timestamp as usec int64. Default is false.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of results to return",
+	//       "description": "Row limit of the table.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Page token, returned by a previous call, identifying the result set",
+	//       "description": "To retrieve the next page of table data, set this field to the string provided in the pageToken field of the response body from your previous call to tabledata.list.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the table to read",
+	//       "description": "Required. Project id of the table to list.",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "selectedFields": {
-	//       "description": "List of fields to return (comma-separated). If unspecified, all fields are returned",
+	//       "description": "Subset of fields to return, supports select into sub fields. Example: selected_fields = \"a,e.d.f\";",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "startIndex": {
-	//       "description": "Zero-based index of the starting row to read",
+	//       "description": "Start row index of the table.",
 	//       "format": "uint64",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "tableId": {
-	//       "description": "Table ID of the table to read",
+	//       "description": "Required. Table id of the table to list.",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}/data",
+	//   "path": "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}/data",
 	//   "response": {
 	//     "$ref": "TableDataList"
 	//   },
@@ -15648,7 +17849,7 @@ func (c *TablesDeleteCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("DELETE", urls, body)
 	if err != nil {
@@ -15677,6 +17878,7 @@ func (c *TablesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	return nil
 	// {
 	//   "description": "Deletes the table specified by tableId from the dataset. If the table contains data, all the data will be deleted.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/tables/{tablesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "bigquery.tables.delete",
 	//   "parameterOrder": [
@@ -15686,25 +17888,28 @@ func (c *TablesDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//   ],
 	//   "parameters": {
 	//     "datasetId": {
-	//       "description": "Dataset ID of the table to delete",
+	//       "description": "Required. Dataset ID of the table to delete",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the table to delete",
+	//       "description": "Required. Project ID of the table to delete",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "tableId": {
-	//       "description": "Table ID of the table to delete",
+	//       "description": "Required. Table ID of the table to delete",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}",
+	//   "path": "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}",
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -15742,8 +17947,11 @@ func (r *TablesService) Get(projectId string, datasetId string, tableId string) 
 }
 
 // SelectedFields sets the optional parameter "selectedFields": List of
-// fields to return (comma-separated). If unspecified, all fields are
-// returned
+// table schema fields to return (comma-separated). If unspecified, all
+// fields are returned. A fieldMask cannot be used here because the
+// fields will automatically be converted from camelCase to snake_case
+// and the conversion will fail if there are underscores. Since these
+// are fields in BigQuery table schemas, underscores are allowed.
 func (c *TablesGetCall) SelectedFields(selectedFields string) *TablesGetCall {
 	c.urlParams_.Set("selectedFields", selectedFields)
 	return c
@@ -15756,25 +17964,25 @@ func (c *TablesGetCall) SelectedFields(selectedFields string) *TablesGetCall {
 //
 // Possible values:
 //
+//	"TABLE_METADATA_VIEW_UNSPECIFIED" - The default value. Default to
+//
+// the STORAGE_STATS view.
+//
 //	"BASIC" - Includes basic table information including schema and
 //
 // partitioning specification. This view does not include storage
 // statistics such as numRows or numBytes. This view is significantly
 // more efficient and should be used to support high query rates.
 //
-//	"FULL" - Includes all table information, including storage
-//
-// statistics. It returns same information as STORAGE_STATS view, but
-// may contain additional information in the future.
-//
 //	"STORAGE_STATS" - Includes all information in the BASIC view as
 //
 // well as storage statistics (numBytes, numLongTermBytes, numRows and
 // lastModifiedTime).
 //
-//	"TABLE_METADATA_VIEW_UNSPECIFIED" - The default value. Default to
+//	"FULL" - Includes all table information, including storage
 //
-// the STORAGE_STATS view.
+// statistics. It returns same information as STORAGE_STATS view, but
+// may contain additional information in the future.
 func (c *TablesGetCall) View(view string) *TablesGetCall {
 	c.urlParams_.Set("view", view)
 	return c
@@ -15828,7 +18036,7 @@ func (c *TablesGetCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -15882,6 +18090,7 @@ func (c *TablesGetCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	return ret, nil
 	// {
 	//   "description": "Gets the specified table resource by table ID. This method does not return the data in the table, it only returns the table resource, which describes the structure of this table.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/tables/{tablesId}",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.tables.get",
 	//   "parameterOrder": [
@@ -15891,47 +18100,50 @@ func (c *TablesGetCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	//   ],
 	//   "parameters": {
 	//     "datasetId": {
-	//       "description": "Dataset ID of the requested table",
+	//       "description": "Required. Dataset ID of the requested table",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the requested table",
+	//       "description": "Required. Project ID of the requested table",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "selectedFields": {
-	//       "description": "List of fields to return (comma-separated). If unspecified, all fields are returned",
+	//       "description": "List of table schema fields to return (comma-separated). If unspecified, all fields are returned. A fieldMask cannot be used here because the fields will automatically be converted from camelCase to snake_case and the conversion will fail if there are underscores. Since these are fields in BigQuery table schemas, underscores are allowed.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "tableId": {
-	//       "description": "Table ID of the requested table",
+	//       "description": "Required. Table ID of the requested table",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "view": {
-	//       "description": "Specifies the view that determines which table information is returned. By default, basic table information and storage statistics (STORAGE_STATS) are returned.",
+	//       "description": "Optional. Specifies the view that determines which table information is returned. By default, basic table information and storage statistics (STORAGE_STATS) are returned.",
 	//       "enum": [
+	//         "TABLE_METADATA_VIEW_UNSPECIFIED",
 	//         "BASIC",
-	//         "FULL",
 	//         "STORAGE_STATS",
-	//         "TABLE_METADATA_VIEW_UNSPECIFIED"
+	//         "FULL"
 	//       ],
 	//       "enumDescriptions": [
+	//         "The default value. Default to the STORAGE_STATS view.",
 	//         "Includes basic table information including schema and partitioning specification. This view does not include storage statistics such as numRows or numBytes. This view is significantly more efficient and should be used to support high query rates.",
-	//         "Includes all table information, including storage statistics. It returns same information as STORAGE_STATS view, but may contain additional information in the future.",
 	//         "Includes all information in the BASIC view as well as storage statistics (numBytes, numLongTermBytes, numRows and lastModifiedTime).",
-	//         "The default value. Default to the STORAGE_STATS view."
+	//         "Includes all table information, including storage statistics. It returns same information as STORAGE_STATS view, but may contain additional information in the future."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}",
+	//   "path": "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}",
 	//   "response": {
 	//     "$ref": "Table"
 	//   },
@@ -16157,7 +18369,7 @@ func (c *TablesInsertCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}/tables")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("POST", urls, body)
 	if err != nil {
@@ -16210,6 +18422,7 @@ func (c *TablesInsertCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	return ret, nil
 	// {
 	//   "description": "Creates a new, empty table in the dataset.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/tables",
 	//   "httpMethod": "POST",
 	//   "id": "bigquery.tables.insert",
 	//   "parameterOrder": [
@@ -16218,19 +18431,21 @@ func (c *TablesInsertCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	//   ],
 	//   "parameters": {
 	//     "datasetId": {
-	//       "description": "Dataset ID of the new table",
+	//       "description": "Required. Dataset ID of the new table",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the new table",
+	//       "description": "Required. Project ID of the new table",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}/tables",
+	//   "path": "projects/{+projectId}/datasets/{+datasetId}/tables",
 	//   "request": {
 	//     "$ref": "Table"
 	//   },
@@ -16269,8 +18484,9 @@ func (r *TablesService) List(projectId string, datasetId string) *TablesListCall
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of results to return
+// MaxResults sets the optional parameter "maxResults": The maximum
+// number of results to return in a single response page. Leverage the
+// page tokens to iterate through the entire collection.
 func (c *TablesListCall) MaxResults(maxResults int64) *TablesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -16331,7 +18547,7 @@ func (c *TablesListCall) doRequest(alt string) (*http.Response, error) {
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}/tables")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("GET", urls, body)
 	if err != nil {
@@ -16384,6 +18600,7 @@ func (c *TablesListCall) Do(opts ...googleapi.CallOption) (*TableList, error) {
 	return ret, nil
 	// {
 	//   "description": "Lists all tables in the specified dataset. Requires the READER dataset role.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/tables",
 	//   "httpMethod": "GET",
 	//   "id": "bigquery.tables.list",
 	//   "parameterOrder": [
@@ -16392,13 +18609,14 @@ func (c *TablesListCall) Do(opts ...googleapi.CallOption) (*TableList, error) {
 	//   ],
 	//   "parameters": {
 	//     "datasetId": {
-	//       "description": "Dataset ID of the tables to list",
+	//       "description": "Required. Dataset ID of the tables to list",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of results to return",
+	//       "description": "The maximum number of results to return in a single response page. Leverage the page tokens to iterate through the entire collection.",
 	//       "format": "uint32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -16409,13 +18627,14 @@ func (c *TablesListCall) Do(opts ...googleapi.CallOption) (*TableList, error) {
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the tables to list",
+	//       "description": "Required. Project ID of the tables to list",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}/tables",
+	//   "path": "projects/{+projectId}/datasets/{+datasetId}/tables",
 	//   "response": {
 	//     "$ref": "TableList"
 	//   },
@@ -16465,7 +18684,7 @@ type TablesPatchCall struct {
 // Patch: Updates information in an existing table. The update method
 // replaces the entire table resource, whereas the patch method only
 // replaces fields that are provided in the submitted table resource.
-// This method supports patch semantics.
+// This method supports RFC5789 patch semantics.
 //
 // - datasetId: Dataset ID of the table to update.
 // - projectId: Project ID of the table to update.
@@ -16526,7 +18745,7 @@ func (c *TablesPatchCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PATCH", urls, body)
 	if err != nil {
@@ -16579,7 +18798,8 @@ func (c *TablesPatchCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource. This method supports patch semantics.",
+	//   "description": "Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource. This method supports RFC5789 patch semantics.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/tables/{tablesId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "bigquery.tables.patch",
 	//   "parameterOrder": [
@@ -16589,30 +18809,33 @@ func (c *TablesPatchCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	//   ],
 	//   "parameters": {
 	//     "autodetect_schema": {
-	//       "description": "When true will autodetect schema, else will keep original schema",
+	//       "description": "Optional.  When true will autodetect schema, else will keep original schema",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "datasetId": {
-	//       "description": "Dataset ID of the table to update",
+	//       "description": "Required. Dataset ID of the table to update",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the table to update",
+	//       "description": "Required. Project ID of the table to update",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "tableId": {
-	//       "description": "Table ID of the table to update",
+	//       "description": "Required. Table ID of the table to update",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}",
+	//   "path": "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}",
 	//   "request": {
 	//     "$ref": "Table"
 	//   },
@@ -16941,8 +19164,8 @@ type TablesUpdateCall struct {
 }
 
 // Update: Updates information in an existing table. The update method
-// replaces the entire table resource, whereas the patch method only
-// replaces fields that are provided in the submitted table resource.
+// replaces the entire Table resource, whereas the patch method only
+// replaces fields that are provided in the submitted Table resource.
 //
 // - datasetId: Dataset ID of the table to update.
 // - projectId: Project ID of the table to update.
@@ -17003,7 +19226,7 @@ func (c *TablesUpdateCall) doRequest(alt string) (*http.Response, error) {
 	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{projectId}/datasets/{datasetId}/tables/{tableId}")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}")
 	urls += "?" + c.urlParams_.Encode()
 	req, err := http.NewRequest("PUT", urls, body)
 	if err != nil {
@@ -17056,7 +19279,8 @@ func (c *TablesUpdateCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates information in an existing table. The update method replaces the entire table resource, whereas the patch method only replaces fields that are provided in the submitted table resource.",
+	//   "description": "Updates information in an existing table. The update method replaces the entire Table resource, whereas the patch method only replaces fields that are provided in the submitted Table resource.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/tables/{tablesId}",
 	//   "httpMethod": "PUT",
 	//   "id": "bigquery.tables.update",
 	//   "parameterOrder": [
@@ -17066,30 +19290,33 @@ func (c *TablesUpdateCall) Do(opts ...googleapi.CallOption) (*Table, error) {
 	//   ],
 	//   "parameters": {
 	//     "autodetect_schema": {
-	//       "description": "When true will autodetect schema, else will keep original schema",
+	//       "description": "Optional.  When true will autodetect schema, else will keep original schema",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
 	//     "datasetId": {
-	//       "description": "Dataset ID of the table to update",
+	//       "description": "Required. Dataset ID of the table to update",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "projectId": {
-	//       "description": "Project ID of the table to update",
+	//       "description": "Required. Project ID of the table to update",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "tableId": {
-	//       "description": "Table ID of the table to update",
+	//       "description": "Required. Table ID of the table to update",
 	//       "location": "path",
+	//       "pattern": "^[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     }
 	//   },
-	//   "path": "projects/{projectId}/datasets/{datasetId}/tables/{tableId}",
+	//   "path": "projects/{+projectId}/datasets/{+datasetId}/tables/{+tableId}",
 	//   "request": {
 	//     "$ref": "Table"
 	//   },

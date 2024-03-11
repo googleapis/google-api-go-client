@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "datamigration:v1"
 const apiName = "datamigration"
 const apiVersion = "v1"
 const basePath = "https://datamigration.googleapis.com/"
+const basePathTemplate = "https://datamigration.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://datamigration.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -280,6 +284,17 @@ func (s *AlloyDbConnectionProfile) MarshalJSON() ([]byte, error) {
 
 // AlloyDbSettings: Settings for creating an AlloyDB cluster.
 type AlloyDbSettings struct {
+	// DatabaseVersion: Optional. The database engine major version. This is
+	// an optional field. If a database version is not supplied at cluster
+	// creation time, then a default database version will be used.
+	//
+	// Possible values:
+	//   "DATABASE_VERSION_UNSPECIFIED" - This is an unknown database
+	// version.
+	//   "POSTGRES_14" - The database version is Postgres 14.
+	//   "POSTGRES_15" - The database version is Postgres 15.
+	DatabaseVersion string `json:"databaseVersion,omitempty"`
+
 	// EncryptionConfig: Optional. The encryption config can be specified to
 	// encrypt the data disks and other persistent data resources of a
 	// cluster with a customer-managed encryption key (CMEK). When this
@@ -305,7 +320,7 @@ type AlloyDbSettings struct {
 	// required to create a cluster.
 	VpcNetwork string `json:"vpcNetwork,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "EncryptionConfig") to
+	// ForceSendFields is a list of field names (e.g. "DatabaseVersion") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -313,7 +328,7 @@ type AlloyDbSettings struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EncryptionConfig") to
+	// NullFields is a list of field names (e.g. "DatabaseVersion") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -674,11 +689,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -690,11 +728,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -863,6 +910,8 @@ type CloudSqlSettings struct {
 	// minor version is 33.
 	//   "MYSQL_8_0_34" - The database major version is MySQL 8.0 and the
 	// minor version is 34.
+	//   "MYSQL_8_0_35" - The database major version is MySQL 8.0 and the
+	// minor version is 35.
 	//   "POSTGRES_9_6" - PostgreSQL 9.6.
 	//   "POSTGRES_11" - PostgreSQL 11.
 	//   "POSTGRES_10" - PostgreSQL 10.
@@ -3592,6 +3641,9 @@ type MigrationJobVerificationError struct {
 	// or user defined entities (for example databases, tables, or
 	// functions). You can only migrate to empty instances. Clear your
 	// destination instance and retry the migration job.
+	//   "SOURCE_MAX_SUBSCRIPTIONS" - The migration job is configured to use
+	// max number of subscriptions to migrate data from the source to the
+	// destination.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ErrorDetailMessage: Output only. A specific detailed error message,
@@ -11877,8 +11929,8 @@ type ProjectsLocationsMigrationJobsDemoteDestinationCall struct {
 
 // DemoteDestination: Demotes the destination database to become a read
 // replica of the source. This is applicable for the following
-// migrations: 1. MySQL to Cloud SQL (for MySQL) 2. PostgreSQL to Cloud
-// SQL (for PostgreSQL) 3. PostgreSQL to AlloyDB.
+// migrations: 1. MySQL to Cloud SQL for MySQL 2. PostgreSQL to Cloud
+// SQL for PostgreSQL 3. PostgreSQL to AlloyDB for PostgreSQL.
 //
 // - name: Name of the migration job resource to demote its destination.
 func (r *ProjectsLocationsMigrationJobsService) DemoteDestination(name string, demotedestinationrequest *DemoteDestinationRequest) *ProjectsLocationsMigrationJobsDemoteDestinationCall {
@@ -11979,7 +12031,7 @@ func (c *ProjectsLocationsMigrationJobsDemoteDestinationCall) Do(opts ...googlea
 	}
 	return ret, nil
 	// {
-	//   "description": "Demotes the destination database to become a read replica of the source. This is applicable for the following migrations: 1. MySQL to Cloud SQL (for MySQL) 2. PostgreSQL to Cloud SQL (for PostgreSQL) 3. PostgreSQL to AlloyDB.",
+	//   "description": "Demotes the destination database to become a read replica of the source. This is applicable for the following migrations: 1. MySQL to Cloud SQL for MySQL 2. PostgreSQL to Cloud SQL for PostgreSQL 3. PostgreSQL to AlloyDB for PostgreSQL.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/migrationJobs/{migrationJobsId}:demoteDestination",
 	//   "httpMethod": "POST",
 	//   "id": "datamigration.projects.locations.migrationJobs.demoteDestination",

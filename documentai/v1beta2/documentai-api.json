@@ -292,7 +292,7 @@
       }
     }
   },
-  "revision": "20231026",
+  "revision": "20240223",
   "rootUrl": "https://documentai.googleapis.com/",
   "schemas": {
     "GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadata": {
@@ -325,11 +325,6 @@
         "documentId": {
           "$ref": "GoogleCloudDocumentaiUiv1beta3DocumentId",
           "description": "The document id of the auto-labeled document. This will replace the gcs_uri."
-        },
-        "gcsUri": {
-          "deprecated": true,
-          "description": "The gcs_uri of the auto-labeling document, which uniquely identifies a dataset document.",
-          "type": "string"
         },
         "status": {
           "$ref": "GoogleRpcStatus",
@@ -1956,7 +1951,7 @@
       "properties": {
         "boundingPoly": {
           "$ref": "GoogleCloudDocumentaiV1beta1BoundingPoly",
-          "description": "Optional. Identifies the bounding polygon of a layout element on the page."
+          "description": "Optional. Identifies the bounding polygon of a layout element on the page. If `layout_type` is set, the bounding polygon must be exactly the same to the layout element it's referring to."
         },
         "confidence": {
           "description": "Optional. Confidence of detected page element, if applicable. Range `[0, 1]`.",
@@ -3382,7 +3377,7 @@
       "properties": {
         "boundingPoly": {
           "$ref": "GoogleCloudDocumentaiV1beta2BoundingPoly",
-          "description": "Optional. Identifies the bounding polygon of a layout element on the page."
+          "description": "Optional. Identifies the bounding polygon of a layout element on the page. If `layout_type` is set, the bounding polygon must be exactly the same to the layout element it's referring to."
         },
         "confidence": {
           "description": "Optional. Confidence of detected page element, if applicable. Range `[0, 1]`.",
@@ -4728,7 +4723,7 @@
         "documentWarehouseConfig": {
           "$ref": "GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig",
           "deprecated": true,
-          "description": "Optional. Derepcated. Warehouse-based dataset configuration is not supported today."
+          "description": "Optional. Deprecated. Warehouse-based dataset configuration is not supported."
         },
         "gcsManagedConfig": {
           "$ref": "GoogleCloudDocumentaiV1beta3DatasetGCSManagedConfig",

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "places:v1"
 const apiName = "places"
 const apiVersion = "v1"
 const basePath = "https://places.googleapis.com/"
+const basePathTemplate = "https://places.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://places.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -105,6 +107,10 @@ const (
 
 	// Private Service: https://www.googleapis.com/auth/maps-platform.places
 	MapsPlatformPlacesScope = "https://www.googleapis.com/auth/maps-platform.places"
+
+	// Private Service:
+	// https://www.googleapis.com/auth/maps-platform.places.autocomplete
+	MapsPlatformPlacesAutocompleteScope = "https://www.googleapis.com/auth/maps-platform.places.autocomplete"
 
 	// Private Service:
 	// https://www.googleapis.com/auth/maps-platform.places.details
@@ -124,6 +130,7 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	scopesOption := internaloption.WithDefaultScopes(
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/maps-platform.places",
+		"https://www.googleapis.com/auth/maps-platform.places.autocomplete",
 		"https://www.googleapis.com/auth/maps-platform.places.details",
 		"https://www.googleapis.com/auth/maps-platform.places.nearbysearch",
 		"https://www.googleapis.com/auth/maps-platform.places.textsearch",
@@ -131,7 +138,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -275,6 +284,486 @@ type GoogleMapsPlacesV1AuthorAttribution struct {
 
 func (s *GoogleMapsPlacesV1AuthorAttribution) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleMapsPlacesV1AuthorAttribution
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1AutocompletePlacesRequest: Request proto for
+// AutocompletePlaces.
+type GoogleMapsPlacesV1AutocompletePlacesRequest struct {
+	// IncludeQueryPredictions: Optional. If true, the response will include
+	// both Place and query predictions. Otherwise the response will only
+	// return Place predictions.
+	IncludeQueryPredictions bool `json:"includeQueryPredictions,omitempty"`
+
+	// IncludedPrimaryTypes: Optional. Included primary Place type (for
+	// example, "restaurant" or "gas_station") from
+	// https://developers.google.com/maps/documentation/places/web-service/place-types.
+	// A Place is only returned if its primary type is included in this
+	// list. Up to 5 values can be specified. If no types are specified, all
+	// Place types are returned.
+	IncludedPrimaryTypes []string `json:"includedPrimaryTypes,omitempty"`
+
+	// IncludedRegionCodes: Optional. Only include results in the specified
+	// regions, specified as up to 15 CLDR two-character region codes. An
+	// empty set will not restrict the results. If both
+	// `location_restriction` and `included_region_codes` are set, the
+	// results will be located in the area of intersection.
+	IncludedRegionCodes []string `json:"includedRegionCodes,omitempty"`
+
+	// Input: Required. The text string on which to search.
+	Input string `json:"input,omitempty"`
+
+	// InputOffset: Optional. A zero-based Unicode character offset of
+	// `input` indicating the cursor position in `input`. The cursor
+	// position may influence what predictions are returned. If empty,
+	// defaults to the length of `input`.
+	InputOffset int64 `json:"inputOffset,omitempty"`
+
+	// LanguageCode: Optional. The language in which to return results.
+	// Defaults to en-US. The results may be in mixed languages if the
+	// language used in `input` is different from `language_code` or if the
+	// returned Place does not have a translation from the local language to
+	// `language_code`.
+	LanguageCode string `json:"languageCode,omitempty"`
+
+	// LocationBias: Optional. Bias results to a specified location. At most
+	// one of `location_bias` or `location_restriction` should be set. If
+	// neither are set, the results will be biased by IP address, meaning
+	// the IP address will be mapped to an imprecise location and used as a
+	// biasing signal.
+	LocationBias *GoogleMapsPlacesV1AutocompletePlacesRequestLocationBias `json:"locationBias,omitempty"`
+
+	// LocationRestriction: Optional. Restrict results to a specified
+	// location. At most one of `location_bias` or `location_restriction`
+	// should be set. If neither are set, the results will be biased by IP
+	// address, meaning the IP address will be mapped to an imprecise
+	// location and used as a biasing signal.
+	LocationRestriction *GoogleMapsPlacesV1AutocompletePlacesRequestLocationRestriction `json:"locationRestriction,omitempty"`
+
+	// Origin: Optional. The origin point from which to calculate geodesic
+	// distance to the destination (returned as `distance_meters`). If this
+	// value is omitted, geodesic distance will not be returned.
+	Origin *GoogleTypeLatLng `json:"origin,omitempty"`
+
+	// RegionCode: Optional. The region code, specified as a CLDR
+	// two-character region code. This affects address formatting, result
+	// ranking, and may influence what results are returned. This does not
+	// restrict results to the specified region. To restrict results to a
+	// region, use `region_code_restriction`.
+	RegionCode string `json:"regionCode,omitempty"`
+
+	// SessionToken: Optional. A string which identifies an Autocomplete
+	// session for billing purposes. Must be a URL and filename safe base64
+	// string with at most 36 ASCII characters in length. Otherwise an
+	// INVALID_ARGUMENT error is returned. The session begins when the user
+	// starts typing a query, and concludes when they select a place and a
+	// call to Place Details or Address Validation is made. Each session can
+	// have multiple queries, followed by one Place Details or Address
+	// Validation request. The credentials used for each request within a
+	// session must belong to the same Google Cloud Console project. Once a
+	// session has concluded, the token is no longer valid; your app must
+	// generate a fresh token for each session. If the `session_token`
+	// parameter is omitted, or if you reuse a session token, the session is
+	// charged as if no session token was provided (each request is billed
+	// separately). We recommend the following guidelines: * Use session
+	// tokens for all Place Autocomplete calls. * Generate a fresh token for
+	// each session. Using a version 4 UUID is recommended. * Ensure that
+	// the credentials used for all Place Autocomplete, Place Details, and
+	// Address Validation requests within a session belong to the same Cloud
+	// Console project. * Be sure to pass a unique session token for each
+	// new session. Using the same token for more than one session will
+	// result in each request being billed individually.
+	SessionToken string `json:"sessionToken,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "IncludeQueryPredictions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IncludeQueryPredictions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1AutocompletePlacesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1AutocompletePlacesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1AutocompletePlacesRequestLocationBias: The region
+// to search. The results may be biased around the specified region.
+type GoogleMapsPlacesV1AutocompletePlacesRequestLocationBias struct {
+	// Circle: A circle defined by a center point and radius.
+	Circle *GoogleMapsPlacesV1Circle `json:"circle,omitempty"`
+
+	// Rectangle: A viewport defined by a northeast and a southwest corner.
+	Rectangle *GoogleGeoTypeViewport `json:"rectangle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Circle") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Circle") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1AutocompletePlacesRequestLocationBias) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1AutocompletePlacesRequestLocationBias
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1AutocompletePlacesRequestLocationRestriction: The
+// region to search. The results will be restricted to the specified
+// region.
+type GoogleMapsPlacesV1AutocompletePlacesRequestLocationRestriction struct {
+	// Circle: A circle defined by a center point and radius.
+	Circle *GoogleMapsPlacesV1Circle `json:"circle,omitempty"`
+
+	// Rectangle: A viewport defined by a northeast and a southwest corner.
+	Rectangle *GoogleGeoTypeViewport `json:"rectangle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Circle") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Circle") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1AutocompletePlacesRequestLocationRestriction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1AutocompletePlacesRequestLocationRestriction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1AutocompletePlacesResponse: Response proto for
+// AutocompletePlaces.
+type GoogleMapsPlacesV1AutocompletePlacesResponse struct {
+	// Suggestions: Contains a list of suggestions, ordered in descending
+	// order of relevance.
+	Suggestions []*GoogleMapsPlacesV1AutocompletePlacesResponseSuggestion `json:"suggestions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Suggestions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Suggestions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1AutocompletePlacesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1AutocompletePlacesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1AutocompletePlacesResponseSuggestion: An
+// Autocomplete suggestion result.
+type GoogleMapsPlacesV1AutocompletePlacesResponseSuggestion struct {
+	// PlacePrediction: A prediction for a Place.
+	PlacePrediction *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionPlacePrediction `json:"placePrediction,omitempty"`
+
+	// QueryPrediction: A prediction for a query.
+	QueryPrediction *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionQueryPrediction `json:"queryPrediction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PlacePrediction") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PlacePrediction") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1AutocompletePlacesResponseSuggestion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionFormattableText:
+//
+//	Text representing a Place or query prediction. The text may be used
+//
+// as is or formatted.
+type GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionFormattableText struct {
+	// Matches: A list of string ranges identifying where the input request
+	// matched in `text`. The ranges can be used to format specific parts of
+	// `text`. The substrings may not be exact matches of `input` if the
+	// matching was determined by criteria other than string matching (for
+	// example, spell corrections or transliterations). These values are
+	// Unicode character offsets of `text`. The ranges are guaranteed to be
+	// ordered in increasing offset values.
+	Matches []*GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStringRange `json:"matches,omitempty"`
+
+	// Text: Text that may be used as is or formatted with `matches`.
+	Text string `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Matches") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Matches") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionFormattableText) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionFormattableText
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionPlacePrediction:
+//
+//	Prediction results for a Place Autocomplete prediction.
+type GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionPlacePrediction struct {
+	// DistanceMeters: The length of the geodesic in meters from `origin` if
+	// `origin` is specified. Certain predictions such as routes may not
+	// populate this field.
+	DistanceMeters int64 `json:"distanceMeters,omitempty"`
+
+	// Place: The resource name of the suggested Place. This name can be
+	// used in other APIs that accept Place names.
+	Place string `json:"place,omitempty"`
+
+	// PlaceId: The unique identifier of the suggested Place. This
+	// identifier can be used in other APIs that accept Place IDs.
+	PlaceId string `json:"placeId,omitempty"`
+
+	// StructuredFormat: A breakdown of the Place prediction into main text
+	// containing the name of the Place and secondary text containing
+	// additional disambiguating features (such as a city or region).
+	// `structured_format` is recommended for developers who wish to show
+	// two separate, but related, UI elements. Developers who wish to show a
+	// single UI element may want to use `text` instead. They are two
+	// different ways to represent a Place prediction. Users should not try
+	// to parse `structured_format` into `text` or vice versa.
+	StructuredFormat *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStructuredFormat `json:"structuredFormat,omitempty"`
+
+	// Text: Contains the human-readable name for the returned result. For
+	// establishment results, this is usually the business name and address.
+	// `text` is recommended for developers who wish to show a single UI
+	// element. Developers who wish to show two separate, but related, UI
+	// elements may want to use `structured_format` instead. They are two
+	// different ways to represent a Place prediction. Users should not try
+	// to parse `structured_format` into `text` or vice versa. This text may
+	// be different from the `display_name` returned by GetPlace. May be in
+	// mixed languages if the request `input` and `language_code` are in
+	// different languages or if the Place does not have a translation from
+	// the local language to `language_code`.
+	Text *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionFormattableText `json:"text,omitempty"`
+
+	// Types: List of types that apply to this Place from Table A or Table B
+	// in
+	// https://developers.google.com/maps/documentation/places/web-service/place-types.
+	// A type is a categorization of a Place. Places with shared types will
+	// share similar characteristics.
+	Types []string `json:"types,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DistanceMeters") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DistanceMeters") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionPlacePrediction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionPlacePrediction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionQueryPrediction:
+//
+//	Prediction results for a Query Autocomplete prediction.
+type GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionQueryPrediction struct {
+	// StructuredFormat: A breakdown of the query prediction into main text
+	// containing the query and secondary text containing additional
+	// disambiguating features (such as a city or region).
+	// `structured_format` is recommended for developers who wish to show
+	// two separate, but related, UI elements. Developers who wish to show a
+	// single UI element may want to use `text` instead. They are two
+	// different ways to represent a query prediction. Users should not try
+	// to parse `structured_format` into `text` or vice versa.
+	StructuredFormat *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStructuredFormat `json:"structuredFormat,omitempty"`
+
+	// Text: The predicted text. This text does not represent a Place, but
+	// rather a text query that could be used in a search endpoint (for
+	// example, TextSearch). `text` is recommended for developers who wish
+	// to show a single UI element. Developers who wish to show two
+	// separate, but related, UI elements may want to use
+	// `structured_format` instead. They are two different ways to represent
+	// a query prediction. Users should not try to parse `structured_format`
+	// into `text` or vice versa. May be in mixed languages if the request
+	// `input` and `language_code` are in different languages or if part of
+	// the query does not have a translation from the local language to
+	// `language_code`.
+	Text *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionFormattableText `json:"text,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "StructuredFormat") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "StructuredFormat") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionQueryPrediction) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionQueryPrediction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStringRange:
+// Identifies a substring within a given text.
+type GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStringRange struct {
+	// EndOffset: Zero-based offset of the last Unicode character
+	// (exclusive).
+	EndOffset int64 `json:"endOffset,omitempty"`
+
+	// StartOffset: Zero-based offset of the first Unicode character of the
+	// string (inclusive).
+	StartOffset int64 `json:"startOffset,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndOffset") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndOffset") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStringRange) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStringRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStructuredFormat
+// : Contains a breakdown of a Place or query prediction into main text
+// and secondary text. For Place predictions, the main text contains the
+// specific name of the Place. For query predictions, the main text
+// contains the query. The secondary text contains additional
+// disambiguating features (such as a city or region) to further
+// identify the Place or refine the query.
+type GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStructuredFormat struct {
+	// MainText: Represents the name of the Place or query.
+	MainText *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionFormattableText `json:"mainText,omitempty"`
+
+	// SecondaryText: Represents additional disambiguating features (such as
+	// a city or region) to further identify the Place or refine the query.
+	SecondaryText *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionFormattableText `json:"secondaryText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MainText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MainText") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStructuredFormat) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionStructuredFormat
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -553,8 +1042,8 @@ type GoogleMapsPlacesV1Photo struct {
 	HeightPx int64 `json:"heightPx,omitempty"`
 
 	// Name: Identifier. A reference representing this place photo which may
-	// be used to look up this place photo again (a.k.a. the API "resource"
-	// name: places/{place_id}/photos/{photo}).
+	// be used to look up this place photo again (also called the API
+	// "resource" name: `places/{place_id}/photos/{photo}`).
 	Name string `json:"name,omitempty"`
 
 	// WidthPx: The maximum available width, in pixels.
@@ -587,7 +1076,7 @@ func (s *GoogleMapsPlacesV1Photo) MarshalJSON() ([]byte, error) {
 // GoogleMapsPlacesV1PhotoMedia: A photo media from Places API.
 type GoogleMapsPlacesV1PhotoMedia struct {
 	// Name: The resource name of a photo media in the format:
-	// `places/place_id/photos/photo_reference/media`.
+	// `places/{place_id}/photos/{photo_reference}/media`.
 	Name string `json:"name,omitempty"`
 
 	// PhotoUri: A short-lived uri that can be used to render the photo.
@@ -750,8 +1239,8 @@ type GoogleMapsPlacesV1Place struct {
 	// MenuForChildren: Place has a children's menu.
 	MenuForChildren bool `json:"menuForChildren,omitempty"`
 
-	// Name: An ID representing this place which may be used to look up this
-	// place again (a.k.a. the API "resource" name: places/place_id).
+	// Name: This Place's resource name, in `places/{place_id}` format. Can
+	// be used to look up the Place.
 	Name string `json:"name,omitempty"`
 
 	// NationalPhoneNumber: A human-readable phone number for the place, in
@@ -769,7 +1258,7 @@ type GoogleMapsPlacesV1Place struct {
 	PaymentOptions *GoogleMapsPlacesV1PlacePaymentOptions `json:"paymentOptions,omitempty"`
 
 	// Photos: Information (including references) about photos of this
-	// place.
+	// place. A maximum of 10 photos can be returned.
 	Photos []*GoogleMapsPlacesV1Photo `json:"photos,omitempty"`
 
 	// PlusCode: Plus code of the place location lat/long.
@@ -823,7 +1312,8 @@ type GoogleMapsPlacesV1Place struct {
 	// Restroom: Place has restroom.
 	Restroom bool `json:"restroom,omitempty"`
 
-	// Reviews: List of reviews about this place, sorted by relevance.
+	// Reviews: List of reviews about this place, sorted by relevance. A
+	// maximum of 5 reviews can be returned.
 	Reviews []*GoogleMapsPlacesV1Review `json:"reviews,omitempty"`
 
 	// ServesBeer: Specifies if the place serves beer.
@@ -1400,7 +1890,7 @@ type GoogleMapsPlacesV1Review struct {
 
 	// Name: A reference representing this place review which may be used to
 	// look up this place review again (also called the API "resource" name:
-	// places/place_id/reviews/review).
+	// `places/{place_id}/reviews/{review}`).
 	Name string `json:"name,omitempty"`
 
 	// OriginalText: The review text in its original language.
@@ -1465,25 +1955,29 @@ type GoogleMapsPlacesV1SearchNearbyRequest struct {
 	// ExcludedPrimaryTypes: Excluded primary Place type (e.g. "restaurant"
 	// or "gas_station") from
 	// https://developers.google.com/maps/documentation/places/web-service/place-types.
-	// If there are any conflicting primary types, i.e. a type appears in
-	// both included_primary_types and excluded_primary_types, an
-	// INVALID_ARGUMENT error is returned. If a Place type is specified with
-	// multiple type restrictions, only places that satisfy all of the
-	// restrictions are returned. For example, if we have {included_types =
-	// ["restaurant"], excluded_primary_types = ["restaurant"]}, the
-	// returned places provide "restaurant" related services but do not
-	// operate primarily as "restaurants".
+	// Up to 50 types from Table A
+	// (https://developers.google.com/maps/documentation/places/web-service/place-types#table-a)
+	// may be specified. If there are any conflicting primary types, i.e. a
+	// type appears in both included_primary_types and
+	// excluded_primary_types, an INVALID_ARGUMENT error is returned. If a
+	// Place type is specified with multiple type restrictions, only places
+	// that satisfy all of the restrictions are returned. For example, if we
+	// have {included_types = ["restaurant"], excluded_primary_types =
+	// ["restaurant"]}, the returned places provide "restaurant" related
+	// services but do not operate primarily as "restaurants".
 	ExcludedPrimaryTypes []string `json:"excludedPrimaryTypes,omitempty"`
 
 	// ExcludedTypes: Excluded Place type (eg, "restaurant" or
 	// "gas_station") from
 	// https://developers.google.com/maps/documentation/places/web-service/place-types.
-	// If the client provides both included_types (e.g. restaurant) and
-	// excluded_types (e.g. cafe), then the response should include places
-	// that are restaurant but not cafe. The response includes places that
-	// match at least one of the included_types and none of the
-	// excluded_types. If there are any conflicting types, i.e. a type
-	// appears in both included_types and excluded_types, an
+	// Up to 50 types from Table A
+	// (https://developers.google.com/maps/documentation/places/web-service/place-types#table-a)
+	// may be specified. If the client provides both included_types (e.g.
+	// restaurant) and excluded_types (e.g. cafe), then the response should
+	// include places that are restaurant but not cafe. The response
+	// includes places that match at least one of the included_types and
+	// none of the excluded_types. If there are any conflicting types, i.e.
+	// a type appears in both included_types and excluded_types, an
 	// INVALID_ARGUMENT error is returned. If a Place type is specified with
 	// multiple type restrictions, only places that satisfy all of the
 	// restrictions are returned. For example, if we have {included_types =
@@ -1496,8 +1990,10 @@ type GoogleMapsPlacesV1SearchNearbyRequest struct {
 	// or "gas_station") from
 	// https://developers.google.com/maps/documentation/places/web-service/place-types.
 	// A place can only have a single primary type from the supported types
-	// table associated with it. If there are any conflicting primary types,
-	// i.e. a type appears in both included_primary_types and
+	// table associated with it. Up to 50 types from Table A
+	// (https://developers.google.com/maps/documentation/places/web-service/place-types#table-a)
+	// may be specified. If there are any conflicting primary types, i.e. a
+	// type appears in both included_primary_types and
 	// excluded_primary_types, an INVALID_ARGUMENT error is returned. If a
 	// Place type is specified with multiple type restrictions, only places
 	// that satisfy all of the restrictions are returned. For example, if we
@@ -1509,14 +2005,16 @@ type GoogleMapsPlacesV1SearchNearbyRequest struct {
 	// IncludedTypes: Included Place type (eg, "restaurant" or
 	// "gas_station") from
 	// https://developers.google.com/maps/documentation/places/web-service/place-types.
-	// If there are any conflicting types, i.e. a type appears in both
-	// included_types and excluded_types, an INVALID_ARGUMENT error is
-	// returned. If a Place type is specified with multiple type
-	// restrictions, only places that satisfy all of the restrictions are
-	// returned. For example, if we have {included_types = ["restaurant"],
-	// excluded_primary_types = ["restaurant"]}, the returned places provide
-	// "restaurant" related services but do not operate primarily as
-	// "restaurants".
+	// Up to 50 types from Table A
+	// (https://developers.google.com/maps/documentation/places/web-service/place-types#table-a)
+	// may be specified. If there are any conflicting types, i.e. a type
+	// appears in both included_types and excluded_types, an
+	// INVALID_ARGUMENT error is returned. If a Place type is specified with
+	// multiple type restrictions, only places that satisfy all of the
+	// restrictions are returned. For example, if we have {included_types =
+	// ["restaurant"], excluded_primary_types = ["restaurant"]}, the
+	// returned places provide "restaurant" related services but do not
+	// operate primarily as "restaurants".
 	IncludedTypes []string `json:"includedTypes,omitempty"`
 
 	// LanguageCode: Place details will be displayed with the preferred
@@ -1675,12 +2173,11 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	MaxResultCount int64 `json:"maxResultCount,omitempty"`
 
 	// MinRating: Filter out results whose average user rating is strictly
-	// less than this limit. A valid value must be an float between 0 and 5
+	// less than this limit. A valid value must be a float between 0 and 5
 	// (inclusively) at a 0.5 cadence i.e. [0, 0.5, 1.0, ... , 5.0]
-	// inclusively. This is to keep parity with LocalRefinement_UserRating.
-	// The input rating will round up to the nearest 0.5(ceiling). For
-	// instance, a rating of 0.6 will eliminate all results with a less than
-	// 1.0 rating.
+	// inclusively. The input rating will round up to the nearest
+	// 0.5(ceiling). For instance, a rating of 0.6 will eliminate all
+	// results with a less than 1.0 rating.
 	MinRating float64 `json:"minRating,omitempty"`
 
 	// OpenNow: Used to restrict the search to places that are currently
@@ -1709,7 +2206,7 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	// default to DISTANCE.
 	//   "DISTANCE" - Ranks results by distance.
 	//   "RELEVANCE" - Ranks results by relevance. Sort order determined by
-	// normal ranking stack. See SortRefinement::RELEVANCE.
+	// normal ranking stack.
 	RankPreference string `json:"rankPreference,omitempty"`
 
 	// RegionCode: The Unicode country/region code (CLDR) of the location
@@ -1776,7 +2273,10 @@ type GoogleMapsPlacesV1SearchTextRequestLocationBias struct {
 	// Rectangle: A rectangle box defined by northeast and southwest corner.
 	// `rectangle.high()` must be the northeast point of the rectangle
 	// viewport. `rectangle.low()` must be the southwest point of the
-	// rectangle viewport.
+	// rectangle viewport. `rectangle.low().latitude()` cannot be greater
+	// than `rectangle.high().latitude()`. This will result in an empty
+	// latitude range. A rectangle viewport cannot be wider than 180
+	// degrees.
 	Rectangle *GoogleGeoTypeViewport `json:"rectangle,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Circle") to
@@ -1809,7 +2309,10 @@ type GoogleMapsPlacesV1SearchTextRequestLocationRestriction struct {
 	// Rectangle: A rectangle box defined by northeast and southwest corner.
 	// `rectangle.high()` must be the northeast point of the rectangle
 	// viewport. `rectangle.low()` must be the southwest point of the
-	// rectangle viewport.
+	// rectangle viewport. `rectangle.low().latitude()` cannot be greater
+	// than `rectangle.high().latitude()`. This will result in an empty
+	// latitude range. A rectangle viewport cannot be wider than 180
+	// degrees.
 	Rectangle *GoogleGeoTypeViewport `json:"rectangle,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Rectangle") to
@@ -2043,6 +2546,135 @@ func (s *GoogleTypeMoney) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "places.places.autocomplete":
+
+type PlacesAutocompleteCall struct {
+	s                                           *Service
+	googlemapsplacesv1autocompleteplacesrequest *GoogleMapsPlacesV1AutocompletePlacesRequest
+	urlParams_                                  gensupport.URLParams
+	ctx_                                        context.Context
+	header_                                     http.Header
+}
+
+// Autocomplete: Returns predictions for the given input.
+func (r *PlacesService) Autocomplete(googlemapsplacesv1autocompleteplacesrequest *GoogleMapsPlacesV1AutocompletePlacesRequest) *PlacesAutocompleteCall {
+	c := &PlacesAutocompleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.googlemapsplacesv1autocompleteplacesrequest = googlemapsplacesv1autocompleteplacesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PlacesAutocompleteCall) Fields(s ...googleapi.Field) *PlacesAutocompleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PlacesAutocompleteCall) Context(ctx context.Context) *PlacesAutocompleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PlacesAutocompleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PlacesAutocompleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlemapsplacesv1autocompleteplacesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/places:autocomplete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "places.places.autocomplete" call.
+// Exactly one of *GoogleMapsPlacesV1AutocompletePlacesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleMapsPlacesV1AutocompletePlacesResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PlacesAutocompleteCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlacesV1AutocompletePlacesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleMapsPlacesV1AutocompletePlacesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns predictions for the given input.",
+	//   "flatPath": "v1/places:autocomplete",
+	//   "httpMethod": "POST",
+	//   "id": "places.places.autocomplete",
+	//   "parameterOrder": [],
+	//   "parameters": {},
+	//   "path": "v1/places:autocomplete",
+	//   "request": {
+	//     "$ref": "GoogleMapsPlacesV1AutocompletePlacesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleMapsPlacesV1AutocompletePlacesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/maps-platform.places",
+	//     "https://www.googleapis.com/auth/maps-platform.places.autocomplete"
+	//   ]
+	// }
+
+}
+
 // method id "places.places.get":
 
 type PlacesGetCall struct {
@@ -2054,10 +2686,11 @@ type PlacesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Get place details with a place id (in a name) string.
+// Get: Get the details of a place based on its resource name, which is
+// a string in the `places/{place_id}` format.
 //
-//   - name: A place ID returned in a Place (with "places/" prefix), or
-//     equivalently the name in the same Place. Format: places/*place_id*.
+//   - name: The resource name of a place, in the `places/{place_id}`
+//     format.
 func (r *PlacesService) Get(name string) *PlacesGetCall {
 	c := &PlacesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2082,6 +2715,33 @@ func (c *PlacesGetCall) LanguageCode(languageCode string) *PlacesGetCall {
 // Note that 3-digit region codes are not currently supported.
 func (c *PlacesGetCall) RegionCode(regionCode string) *PlacesGetCall {
 	c.urlParams_.Set("regionCode", regionCode)
+	return c
+}
+
+// SessionToken sets the optional parameter "sessionToken": A string
+// which identifies an Autocomplete session for billing purposes. Must
+// be a URL and filename safe base64 string with at most 36 ASCII
+// characters in length. Otherwise an INVALID_ARGUMENT error is
+// returned. The session begins when the user starts typing a query, and
+// concludes when they select a place and a call to Place Details or
+// Address Validation is made. Each session can have multiple queries,
+// followed by one Place Details or Address Validation request. The
+// credentials used for each request within a session must belong to the
+// same Google Cloud Console project. Once a session has concluded, the
+// token is no longer valid; your app must generate a fresh token for
+// each session. If the `session_token` parameter is omitted, or if you
+// reuse a session token, the session is charged as if no session token
+// was provided (each request is billed separately). We recommend the
+// following guidelines: * Use session tokens for all Place Autocomplete
+// calls. * Generate a fresh token for each session. Using a version 4
+// UUID is recommended. * Ensure that the credentials used for all Place
+// Autocomplete, Place Details, and Address Validation requests within a
+// session belong to the same Cloud Console project. * Be sure to pass a
+// unique session token for each new session. Using the same token for
+// more than one session will result in each request being billed
+// individually.
+func (c *PlacesGetCall) SessionToken(sessionToken string) *PlacesGetCall {
+	c.urlParams_.Set("sessionToken", sessionToken)
 	return c
 }
 
@@ -2184,7 +2844,7 @@ func (c *PlacesGetCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlacesV1Pla
 	}
 	return ret, nil
 	// {
-	//   "description": "Get place details with a place id (in a name) string.",
+	//   "description": "Get the details of a place based on its resource name, which is a string in the `places/{place_id}` format.",
 	//   "flatPath": "v1/places/{placesId}",
 	//   "httpMethod": "GET",
 	//   "id": "places.places.get",
@@ -2198,7 +2858,7 @@ func (c *PlacesGetCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlacesV1Pla
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. A place ID returned in a Place (with \"places/\" prefix), or equivalently the name in the same Place. Format: places/*place_id*.",
+	//       "description": "Required. The resource name of a place, in the `places/{place_id}` format.",
 	//       "location": "path",
 	//       "pattern": "^places/[^/]+$",
 	//       "required": true,
@@ -2206,6 +2866,11 @@ func (c *PlacesGetCall) Do(opts ...googleapi.CallOption) (*GoogleMapsPlacesV1Pla
 	//     },
 	//     "regionCode": {
 	//       "description": "Optional. The Unicode country/region code (CLDR) of the location where the request is coming from. This parameter is used to display the place details, like region-specific place name, if available. The parameter can affect results based on applicable law. For more information, see https://www.unicode.org/cldr/charts/latest/supplemental/territory_language_information.html. Note that 3-digit region codes are not currently supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "sessionToken": {
+	//       "description": "Optional. A string which identifies an Autocomplete session for billing purposes. Must be a URL and filename safe base64 string with at most 36 ASCII characters in length. Otherwise an INVALID_ARGUMENT error is returned. The session begins when the user starts typing a query, and concludes when they select a place and a call to Place Details or Address Validation is made. Each session can have multiple queries, followed by one Place Details or Address Validation request. The credentials used for each request within a session must belong to the same Google Cloud Console project. Once a session has concluded, the token is no longer valid; your app must generate a fresh token for each session. If the `session_token` parameter is omitted, or if you reuse a session token, the session is charged as if no session token was provided (each request is billed separately). We recommend the following guidelines: * Use session tokens for all Place Autocomplete calls. * Generate a fresh token for each session. Using a version 4 UUID is recommended. * Ensure that the credentials used for all Place Autocomplete, Place Details, and Address Validation requests within a session belong to the same Cloud Console project. * Be sure to pass a unique session token for each new session. Using the same token for more than one session will result in each request being billed individually.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }
@@ -2493,11 +3158,11 @@ type PlacesPhotosGetMediaCall struct {
 // GetMedia: Get a photo media with a photo reference string.
 //
 //   - name: The resource name of a photo media in the format:
-//     "places/place_id/photos/photo_reference/media". The resource name
-//     of a photo as returned in a Place object's `photos.name` field
-//     comes with the format "places/place_id/photos/photo_reference".
-//     You need to append "/media" at the end of the photo resource to
-//     get the photo media resource name.
+//     `places/{place_id}/photos/{photo_reference}/media`. The resource
+//     name of a photo as returned in a Place object's `photos.name` field
+//     comes with the format `places/{place_id}/photos/{photo_reference}`.
+//     You need to append `/media` at the end of the photo resource to get
+//     the photo media resource name.
 func (r *PlacesPhotosService) GetMedia(name string) *PlacesPhotosGetMediaCall {
 	c := &PlacesPhotosGetMediaCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2666,7 +3331,7 @@ func (c *PlacesPhotosGetMediaCall) Do(opts ...googleapi.CallOption) (*GoogleMaps
 	//       "type": "integer"
 	//     },
 	//     "name": {
-	//       "description": "Required. The resource name of a photo media in the format: `\"places/place_id/photos/photo_reference/media\"`. The resource name of a photo as returned in a Place object's `photos.name` field comes with the format `\"places/place_id/photos/photo_reference\"`. You need to append `\"/media\"` at the end of the photo resource to get the photo media resource name.",
+	//       "description": "Required. The resource name of a photo media in the format: `places/{place_id}/photos/{photo_reference}/media`. The resource name of a photo as returned in a Place object's `photos.name` field comes with the format `places/{place_id}/photos/{photo_reference}`. You need to append `/media` at the end of the photo resource to get the photo media resource name.",
 	//       "location": "path",
 	//       "pattern": "^places/[^/]+/photos/[^/]+/media$",
 	//       "required": true,

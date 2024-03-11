@@ -357,3 +357,16 @@ type withTokenProvider struct{ tp auth.TokenProvider }
 func (w withTokenProvider) Apply(o *internal.DialSettings) {
 	o.TokenProvider = w.tp
 }
+
+// WithUniverseDomain returns a ClientOption that sets the universe domain.
+//
+// This is an EXPERIMENTAL API and may be changed or removed in the future.
+func WithUniverseDomain(ud string) ClientOption {
+	return withUniverseDomain(ud)
+}
+
+type withUniverseDomain string
+
+func (w withUniverseDomain) Apply(o *internal.DialSettings) {
+	o.UniverseDomain = string(w)
+}

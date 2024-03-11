@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "bigqueryreservation:v1"
 const apiName = "bigqueryreservation"
 const apiVersion = "v1"
 const basePath = "https://bigqueryreservation.googleapis.com/"
+const basePathTemplate = "https://bigqueryreservation.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://bigqueryreservation.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -117,7 +119,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -238,6 +242,9 @@ type Assignment struct {
 	// from other reservations.
 	//   "BACKGROUND" - Background jobs that BigQuery runs for the customers
 	// in the background.
+	//   "CONTINUOUS" - Continuous SQL jobs will use this reservation.
+	// Reservations with continuous assignments cannot be mixed with
+	// non-continuous assignments.
 	JobType string `json:"jobType,omitempty"`
 
 	// Name: Output only. Name of the resource. E.g.:
@@ -741,8 +748,8 @@ type Reservation struct {
 	// This is a soft target due to asynchronous nature of the system and
 	// various optimizations for small queries. Default value is 0 which
 	// means that concurrency target will be automatically computed by the
-	// system. NOTE: this field is exposed as `target_job_concurrency` in
-	// the Information Schema, DDL and BQ CLI.
+	// system. NOTE: this field is exposed as target job concurrency in the
+	// Information Schema, DDL and BQ CLI.
 	Concurrency int64 `json:"concurrency,omitempty,string"`
 
 	// CreationTime: Output only. Creation time of the reservation.

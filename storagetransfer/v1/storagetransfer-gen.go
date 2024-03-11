@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "storagetransfer:v1"
 const apiName = "storagetransfer"
 const apiVersion = "v1"
 const basePath = "https://storagetransfer.googleapis.com/"
+const basePathTemplate = "https://storagetransfer.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://storagetransfer.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -358,21 +362,23 @@ type AwsS3Data struct {
 	// (https://docs.aws.amazon.com/AmazonS3/latest/dev/create-bucket-get-location-example.html)).
 	BucketName string `json:"bucketName,omitempty"`
 
-	// CloudfrontDomain: Optional. Cloudfront domain name pointing to this
-	// bucket (as origin), to use when fetching. Format:
-	// `https://{id}.cloudfront.net` or any valid custom domain
-	// `https://...`
+	// CloudfrontDomain: Optional. The CloudFront distribution domain name
+	// pointing to this bucket, to use when fetching. See Transfer from S3
+	// via CloudFront
+	// (https://cloud.google.com/storage-transfer/docs/s3-cloudfront) for
+	// more information. Format: `https://{id}.cloudfront.net` or any valid
+	// custom domain. Must begin with `https://`.
 	CloudfrontDomain string `json:"cloudfrontDomain,omitempty"`
 
 	// CredentialsSecret: Optional. The Resource name of a secret in Secret
-	// Manager. The Azure SAS token must be stored in Secret Manager in JSON
-	// format: { "sas_token" : "SAS_TOKEN" } GoogleServiceAccount must be
-	// granted `roles/secretmanager.secretAccessor` for the resource. See
-	// [Configure access to a source: Microsoft Azure Blob Storage]
-	// (https://cloud.google.com/storage-transfer/docs/source-microsoft-azure#secret_manager)
+	// Manager. AWS credentials must be stored in Secret Manager in JSON
+	// format: { "access_key_id": "ACCESS_KEY_ID", "secret_access_key":
+	// "SECRET_ACCESS_KEY" } GoogleServiceAccount must be granted
+	// `roles/secretmanager.secretAccessor` for the resource. See [Configure
+	// access to a source: Amazon S3]
+	// (https://cloud.google.com/storage-transfer/docs/source-amazon-s3#secret_manager)
 	// for more information. If `credentials_secret` is specified, do not
-	// specify azure_credentials. This feature is in preview
-	// (https://cloud.google.com/terms/service-terms#1). Format:
+	// specify role_arn or aws_access_key. Format:
 	// `projects/{project_number}/secrets/{secret_name}`
 	CredentialsSecret string `json:"credentialsSecret,omitempty"`
 
@@ -440,8 +446,7 @@ type AzureBlobStorageData struct {
 	// [Configure access to a source: Microsoft Azure Blob Storage]
 	// (https://cloud.google.com/storage-transfer/docs/source-microsoft-azure#secret_manager)
 	// for more information. If `credentials_secret` is specified, do not
-	// specify azure_credentials. This feature is in preview
-	// (https://cloud.google.com/terms/service-terms#1). Format:
+	// specify azure_credentials. Format:
 	// `projects/{project_number}/secrets/{secret_name}`
 	CredentialsSecret string `json:"credentialsSecret,omitempty"`
 
@@ -815,6 +820,15 @@ type GcsData struct {
 	// Name Requirements (/storage/docs/naming#requirements).
 	BucketName string `json:"bucketName,omitempty"`
 
+	// ManagedFolderTransferEnabled: Preview. Enables the transfer of
+	// managed folders between Cloud Storage buckets. Set this option on the
+	// gcs_data_source. If set to true: - Managed folders in the source
+	// bucket are transferred to the destination bucket. - Managed folders
+	// in the destination bucket are overwritten. Other OVERWRITE options
+	// are not supported. See Transfer Cloud Storage managed folders
+	// (/storage-transfer/docs/managed-folders).
+	ManagedFolderTransferEnabled bool `json:"managedFolderTransferEnabled,omitempty"`
+
 	// Path: Root path to transfer objects. Must be an empty string or full
 	// path name that ends with a '/'. This field is treated as an object
 	// prefix. As such, it should generally not begin with a '/'. The root
@@ -876,6 +890,37 @@ type GoogleServiceAccount struct {
 
 func (s *GoogleServiceAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleServiceAccount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HdfsData: An HdfsData resource specifies a path within an HDFS entity
+// (e.g. a cluster). All cluster-specific settings, such as namenodes
+// and ports, are configured on the transfer agents servicing requests,
+// so HdfsData only contains the root path to the data in our transfer.
+type HdfsData struct {
+	// Path: Root path to transfer files.
+	Path string `json:"path,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HdfsData) MarshalJSON() ([]byte, error) {
+	type NoMethod HdfsData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1207,17 +1252,18 @@ type MetadataOptions struct {
 	TemporaryHold string `json:"temporaryHold,omitempty"`
 
 	// TimeCreated: Specifies how each object's `timeCreated` metadata is
-	// preserved for transfers between Google Cloud Storage buckets. If
-	// unspecified, the default behavior is the same as TIME_CREATED_SKIP.
+	// preserved for transfers. If unspecified, the default behavior is the
+	// same as TIME_CREATED_SKIP.
 	//
 	// Possible values:
 	//   "TIME_CREATED_UNSPECIFIED" - TimeCreated behavior is unspecified.
 	//   "TIME_CREATED_SKIP" - Do not preserve the `timeCreated` metadata
 	// from the source object.
 	//   "TIME_CREATED_PRESERVE_AS_CUSTOM_TIME" - Preserves the source
-	// object's `timeCreated` metadata in the `customTime` field in the
-	// destination object. Note that any value stored in the source object's
-	// `customTime` field will not be propagated to the destination object.
+	// object's `timeCreated` or `lastModified` metadata in the `customTime`
+	// field in the destination object. Note that any value stored in the
+	// source object's `customTime` field will not be propagated to the
+	// destination object.
 	TimeCreated string `json:"timeCreated,omitempty"`
 
 	// Uid: Specifies how each file's POSIX user ID (UID) attribute should
@@ -2208,6 +2254,9 @@ type TransferSpec struct {
 	// (https://cloud.google.com/storage-transfer/docs/file-to-file) for
 	// more information.
 	GcsIntermediateDataLocation *GcsData `json:"gcsIntermediateDataLocation,omitempty"`
+
+	// HdfsDataSource: An HDFS cluster data source.
+	HdfsDataSource *HdfsData `json:"hdfsDataSource,omitempty"`
 
 	// HttpDataSource: An HTTP URL data source.
 	HttpDataSource *HttpData `json:"httpDataSource,omitempty"`
@@ -4504,15 +4553,21 @@ type TransferOperationsListCall struct {
 //
 //   - filter: A list of query parameters specified as JSON text in the
 //     form of: `{"projectId":"my_project_id",
-//     "jobNames":["jobid1","jobid2",...],
-//     "operationNames":["opid1","opid2",...],
-//     "transferStatuses":["status1","status2",...]}` Since `jobNames`,
-//     `operationNames`, and `transferStatuses` support multiple values,
-//     they must be specified with array notation. `projectId` is
-//     required. `jobNames`, `operationNames`, and `transferStatuses` are
-//     optional. The valid values for `transferStatuses` are
-//     case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and
-//     ABORTED.
+//     "jobNames":["jobid1","jobid2",...], "jobNamePattern":
+//     "job_name_pattern", "operationNames":["opid1","opid2",...],
+//     "operationNamePattern": "operation_name_pattern",
+//     "minCreationTime": "min_creation_time", "maxCreationTime":
+//     "max_creation_time", "transferStatuses":["status1","status2",...]}`
+//     Since `jobNames`, `operationNames`, and `transferStatuses` support
+//     multiple values, they must be specified with array notation.
+//     `projectId` is the only argument that is required. If specified,
+//     `jobNamePattern` and `operationNamePattern` must match the full job
+//     or operation name respectively. '*' is a wildcard matching 0 or
+//     more characters. `minCreationTime` and `maxCreationTime` should be
+//     timestamps encoded as a string in the RFC 3339
+//     (https://www.ietf.org/rfc/rfc3339.txt) format. The valid values for
+//     `transferStatuses` are case-insensitive: IN_PROGRESS, PAUSED,
+//     SUCCESS, FAILED, and ABORTED.
 //   - name: The name of the type being listed; must be
 //     `transferOperations`.
 func (r *TransferOperationsService) List(name string, filter string) *TransferOperationsListCall {
@@ -4645,7 +4700,7 @@ func (c *TransferOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOper
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Required. A list of query parameters specified as JSON text in the form of: `{\"projectId\":\"my_project_id\", \"jobNames\":[\"jobid1\",\"jobid2\",...], \"operationNames\":[\"opid1\",\"opid2\",...], \"transferStatuses\":[\"status1\",\"status2\",...]}` Since `jobNames`, `operationNames`, and `transferStatuses` support multiple values, they must be specified with array notation. `projectId` is required. `jobNames`, `operationNames`, and `transferStatuses` are optional. The valid values for `transferStatuses` are case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and ABORTED.",
+	//       "description": "Required. A list of query parameters specified as JSON text in the form of: `{\"projectId\":\"my_project_id\", \"jobNames\":[\"jobid1\",\"jobid2\",...], \"jobNamePattern\": \"job_name_pattern\", \"operationNames\":[\"opid1\",\"opid2\",...], \"operationNamePattern\": \"operation_name_pattern\", \"minCreationTime\": \"min_creation_time\", \"maxCreationTime\": \"max_creation_time\", \"transferStatuses\":[\"status1\",\"status2\",...]}` Since `jobNames`, `operationNames`, and `transferStatuses` support multiple values, they must be specified with array notation. `projectId` is the only argument that is required. If specified, `jobNamePattern` and `operationNamePattern` must match the full job or operation name respectively. '*' is a wildcard matching 0 or more characters. `minCreationTime` and `maxCreationTime` should be timestamps encoded as a string in the [RFC 3339](https://www.ietf.org/rfc/rfc3339.txt) format. The valid values for `transferStatuses` are case-insensitive: IN_PROGRESS, PAUSED, SUCCESS, FAILED, and ABORTED.",
 	//       "location": "query",
 	//       "required": true,
 	//       "type": "string"

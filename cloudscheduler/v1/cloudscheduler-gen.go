@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "cloudscheduler:v1"
 const apiName = "cloudscheduler"
 const apiVersion = "v1"
 const basePath = "https://cloudscheduler.googleapis.com/"
+const basePathTemplate = "https://cloudscheduler.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudscheduler.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -212,10 +216,10 @@ type AppEngineHttpTarget struct {
 	// `X-CloudScheduler`: This header will be set to true. *
 	// `X-CloudScheduler-JobName`: This header will contain the job name. *
 	// `X-CloudScheduler-ScheduleTime`: For Cloud Scheduler jobs specified
-	// in the unix-cron format, this header will contain the job schedule
-	// time in RFC3339 UTC "Zulu" format. If the job has a body and the
-	// following headers are not set by the user, Cloud Scheduler sets
-	// default values: * `Content-Type`: This will be set to
+	// in the unix-cron format, this header will contain the job schedule as
+	// an offset of UTC parsed according to RFC3339. If the job has a body
+	// and the following headers are not set by the user, Cloud Scheduler
+	// sets default values: * `Content-Type`: This will be set to
 	// "application/octet-stream". You can override this default by
 	// explicitly setting `Content-Type` to a particular media type when
 	// creating the job. For example, you can set `Content-Type` to
@@ -390,10 +394,10 @@ type HttpTarget struct {
 	// `X-CloudScheduler`: This header will be set to true. *
 	// `X-CloudScheduler-JobName`: This header will contain the job name. *
 	// `X-CloudScheduler-ScheduleTime`: For Cloud Scheduler jobs specified
-	// in the unix-cron format, this header will contain the job schedule
-	// time in RFC3339 UTC "Zulu" format. If the job has a body and the
-	// following headers are not set by the user, Cloud Scheduler sets
-	// default values: * `Content-Type`: This will be set to
+	// in the unix-cron format, this header will contain the job schedule as
+	// an offset of UTC parsed according to RFC3339. If the job has a body
+	// and the following headers are not set by the user, Cloud Scheduler
+	// sets default values: * `Content-Type`: This will be set to
 	// "application/octet-stream". You can override this default by
 	// explicitly setting `Content-Type` to a particular media type when
 	// creating the job. For example, you can set `Content-Type` to
@@ -830,11 +834,11 @@ type PubsubMessage struct {
 	// message must contain at least one attribute.
 	Data string `json:"data,omitempty"`
 
-	// MessageId: Optional. ID of this message, assigned by the server when
-	// the message is published. Guaranteed to be unique within the topic.
-	// This value may be read by a subscriber that receives a
-	// `PubsubMessage` via a `Pull` call or a push delivery. It must not be
-	// populated by the publisher in a `Publish` call.
+	// MessageId: ID of this message, assigned by the server when the
+	// message is published. Guaranteed to be unique within the topic. This
+	// value may be read by a subscriber that receives a `PubsubMessage` via
+	// a `Pull` call or a push delivery. It must not be populated by the
+	// publisher in a `Publish` call.
 	MessageId string `json:"messageId,omitempty"`
 
 	// OrderingKey: Optional. If non-empty, identifies related messages for
@@ -847,9 +851,9 @@ type PubsubMessage struct {
 	// messages (https://cloud.google.com/pubsub/docs/ordering).
 	OrderingKey string `json:"orderingKey,omitempty"`
 
-	// PublishTime: Optional. The time at which the message was published,
-	// populated by the server when it receives the `Publish` call. It must
-	// not be populated by the publisher in a `Publish` call.
+	// PublishTime: The time at which the message was published, populated
+	// by the server when it receives the `Publish` call. It must not be
+	// populated by the publisher in a `Publish` call.
 	PublishTime string `json:"publishTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to

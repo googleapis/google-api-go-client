@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "androidmanagement:v1"
 const apiName = "androidmanagement"
 const apiVersion = "v1"
 const basePath = "https://androidmanagement.googleapis.com/"
+const basePathTemplate = "https://androidmanagement.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://androidmanagement.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -106,7 +108,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -161,6 +165,7 @@ func NewEnterprisesService(s *Service) *EnterprisesService {
 	rs.Applications = NewEnterprisesApplicationsService(s)
 	rs.Devices = NewEnterprisesDevicesService(s)
 	rs.EnrollmentTokens = NewEnterprisesEnrollmentTokensService(s)
+	rs.MigrationTokens = NewEnterprisesMigrationTokensService(s)
 	rs.Policies = NewEnterprisesPoliciesService(s)
 	rs.WebApps = NewEnterprisesWebAppsService(s)
 	rs.WebTokens = NewEnterprisesWebTokensService(s)
@@ -175,6 +180,8 @@ type EnterprisesService struct {
 	Devices *EnterprisesDevicesService
 
 	EnrollmentTokens *EnterprisesEnrollmentTokensService
+
+	MigrationTokens *EnterprisesMigrationTokensService
 
 	Policies *EnterprisesPoliciesService
 
@@ -219,6 +226,15 @@ func NewEnterprisesEnrollmentTokensService(s *Service) *EnterprisesEnrollmentTok
 }
 
 type EnterprisesEnrollmentTokensService struct {
+	s *Service
+}
+
+func NewEnterprisesMigrationTokensService(s *Service) *EnterprisesMigrationTokensService {
+	rs := &EnterprisesMigrationTokensService{s: s}
+	return rs
+}
+
+type EnterprisesMigrationTokensService struct {
 	s *Service
 }
 
@@ -303,9 +319,8 @@ func (s *AdbShellCommandEvent) MarshalJSON() ([]byte, error) {
 type AdbShellInteractiveEvent struct {
 }
 
-// AdvancedSecurityOverrides: Security policies set to secure values by
-// default. To maintain the security posture of a device, we don't
-// recommend overriding any of the default values.
+// AdvancedSecurityOverrides: Advanced security settings. In most cases,
+// setting these is not needed.
 type AdvancedSecurityOverrides struct {
 	// CommonCriteriaMode: Controls Common Criteria Mode—security
 	// standards defined in the Common Criteria for Information Technology
@@ -350,6 +365,33 @@ type AdvancedSecurityOverrides struct {
 	//   "VERIFY_APPS_USER_CHOICE" - Allows the user to choose whether to
 	// enable app verification.
 	GooglePlayProtectVerifyApps string `json:"googlePlayProtectVerifyApps,omitempty"`
+
+	// MtePolicy: Optional. Controls Memory Tagging Extension (MTE)
+	// (https://source.android.com/docs/security/test/memory-safety/arm-mte)
+	// on the device. The device needs to be rebooted to apply changes to
+	// the MTE policy.
+	//
+	// Possible values:
+	//   "MTE_POLICY_UNSPECIFIED" - Unspecified. Defaults to
+	// MTE_USER_CHOICE.
+	//   "MTE_USER_CHOICE" - The user can choose to enable or disable MTE on
+	// the device if the device supports this.
+	//   "MTE_ENFORCED" - MTE is enabled on the device and the user is not
+	// allowed to change this setting. This can be set on fully managed
+	// devices and work profiles on company-owned devices. A
+	// nonComplianceDetail with MANAGEMENT_MODE is reported for other
+	// management modes. A nonComplianceDetail with DEVICE_INCOMPATIBLE is
+	// reported if the device does not support MTE.Supported on Android 14
+	// and above. A nonComplianceDetail with API_LEVEL is reported if the
+	// Android version is less than 14.
+	//   "MTE_DISABLED" - MTE is disabled on the device and the user is not
+	// allowed to change this setting. This applies only on fully managed
+	// devices. In other cases, a nonComplianceDetail with MANAGEMENT_MODE
+	// is reported. A nonComplianceDetail with DEVICE_INCOMPATIBLE is
+	// reported if the device does not support MTE.Supported on Android 14
+	// and above. A nonComplianceDetail with API_LEVEL is reported if the
+	// Android version is less than 14.
+	MtePolicy string `json:"mtePolicy,omitempty"`
 
 	// PersonalAppsThatCanReadWorkNotifications: Personal apps that can read
 	// work profile notifications using a NotificationListenerService
@@ -840,7 +882,7 @@ func (s *ApplicationPermission) MarshalJSON() ([]byte, error) {
 // ApplicationPolicy: Policy for an individual app. Note: Application
 // availability on a given device cannot be changed using this policy if
 // installAppsDisabled is enabled. The maximum number of applications
-// that you can specify per enterprise policy is 3,000.
+// that you can specify per policy is 3,000.
 type ApplicationPolicy struct {
 	// AccessibleTrackIds: List of the app’s track IDs that a device
 	// belonging to the enterprise can access. If the list contains multiple
@@ -911,6 +953,16 @@ type ApplicationPolicy struct {
 	// communicate across profiles after receiving user consent.
 	ConnectedWorkAndPersonalApp string `json:"connectedWorkAndPersonalApp,omitempty"`
 
+	// CredentialProviderPolicy: Optional. Whether the app is allowed to act
+	// as a credential provider on Android 14 and above.
+	//
+	// Possible values:
+	//   "CREDENTIAL_PROVIDER_POLICY_UNSPECIFIED" - Unspecified. The
+	// behaviour is governed by credentialProviderPolicyDefault.
+	//   "CREDENTIAL_PROVIDER_ALLOWED" - App is allowed to act as a
+	// credential provider.
+	CredentialProviderPolicy string `json:"credentialProviderPolicy,omitempty"`
+
 	// DefaultPermissionPolicy: The default policy for all permissions
 	// requested by the app. If specified, this overrides the policy-level
 	// default_permission_policy which applies to all apps. It does not
@@ -921,7 +973,24 @@ type ApplicationPolicy struct {
 	// policy is specified for a permission at any level, then the PROMPT
 	// behavior is used by default.
 	//   "PROMPT" - Prompt the user to grant a permission.
-	//   "GRANT" - Automatically grant a permission.
+	//   "GRANT" - Automatically grant a permission.On Android 12 and above,
+	// Manifest.permission.READ_SMS
+	// (https://developer.android.com/reference/android/Manifest.permission#READ_SMS)
+	// and following sensor-related permissions can only be granted on fully
+	// managed devices: Manifest.permission.ACCESS_FINE_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_FINE_LOCATION)
+	// Manifest.permission.ACCESS_BACKGROUND_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_BACKGROUND_LOCATION)
+	// Manifest.permission.ACCESS_COARSE_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_COARSE_LOCATION)
+	// Manifest.permission.CAMERA
+	// (https://developer.android.com/reference/android/Manifest.permission#CAMERA)
+	// Manifest.permission.RECORD_AUDIO
+	// (https://developer.android.com/reference/android/Manifest.permission#RECORD_AUDIO)
+	// Manifest.permission.ACTIVITY_RECOGNITION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACTIVITY_RECOGNITION)
+	// Manifest.permission.BODY_SENSORS
+	// (https://developer.android.com/reference/android/Manifest.permission#BODY_SENSORS)
 	//   "DENY" - Automatically deny a permission.
 	DefaultPermissionPolicy string `json:"defaultPermissionPolicy,omitempty"`
 
@@ -987,6 +1056,19 @@ type ApplicationPolicy struct {
 	// app, with the capability of interacting with Android Device Policy
 	// offline.This field can be set for at most one app.
 	ExtensionConfig *ExtensionConfig `json:"extensionConfig,omitempty"`
+
+	// InstallConstraint: Optional. The constraints for installing the app.
+	// You can specify a maximum of one InstallConstraint. Multiple
+	// constraints are rejected.
+	InstallConstraint []*InstallConstraint `json:"installConstraint,omitempty"`
+
+	// InstallPriority: Optional. Amongst apps with installType set to:
+	// FORCE_INSTALLED PREINSTALLEDthis controls the relative priority of
+	// installation. A value of 0 (default) means this app has no priority
+	// over other apps. For values between 1 and 10,000, a lower value means
+	// a higher priority. Values outside of the range 0 to 10,000 inclusive
+	// are rejected.
+	InstallPriority int64 `json:"installPriority,omitempty"`
 
 	// InstallType: The type of installation to perform.
 	//
@@ -2130,6 +2212,9 @@ type Device struct {
 	// devices are in this state until they have a policy applied.
 	//   "LOST" - The device is lost. This state is only possible on
 	// organization-owned devices.
+	//   "PREPARING_FOR_MIGRATION" - The device is preparing for migrating
+	// to Android Management API. No further action is needed for the
+	// migration to continue.
 	AppliedState string `json:"appliedState,omitempty"`
 
 	// CommonCriteriaModeInfo: Information about Common Criteria
@@ -2153,6 +2238,11 @@ type Device struct {
 	// information is only available if displayInfoEnabled is true in the
 	// device's policy.
 	Displays []*Display `json:"displays,omitempty"`
+
+	// DpcMigrationInfo: Output only. Information related to whether this
+	// device was migrated from being managed by another Device Policy
+	// Controller (DPC).
+	DpcMigrationInfo *DpcMigrationInfo `json:"dpcMigrationInfo,omitempty"`
 
 	// EnrollmentTime: The time of device enrollment.
 	EnrollmentTime string `json:"enrollmentTime,omitempty"`
@@ -2196,7 +2286,8 @@ type Device struct {
 
 	// MemoryEvents: Events related to memory and storage measurements in
 	// chronological order. This information is only available if
-	// memoryInfoEnabled is true in the device's policy.
+	// memoryInfoEnabled is true in the device's policy.Events are retained
+	// for a certain period of time and old events are deleted.
 	MemoryEvents []*MemoryEvent `json:"memoryEvents,omitempty"`
 
 	// MemoryInfo: Memory information: contains information about device
@@ -2275,6 +2366,9 @@ type Device struct {
 	// devices are in this state until they have a policy applied.
 	//   "LOST" - The device is lost. This state is only possible on
 	// organization-owned devices.
+	//   "PREPARING_FOR_MIGRATION" - The device is preparing for migrating
+	// to Android Management API. No further action is needed for the
+	// migration to continue.
 	State string `json:"state,omitempty"`
 
 	// SystemProperties: Map of selected system properties name and value
@@ -2460,6 +2554,27 @@ type DeviceRadioState struct {
 	// nonComplianceDetail with API_LEVEL is reported if the Android version
 	// is less than 14.
 	CellularTwoGState string `json:"cellularTwoGState,omitempty"`
+
+	// MinimumWifiSecurityLevel: The minimum required security level of
+	// Wi-Fi networks that the device can connect to.
+	//
+	// Possible values:
+	//   "MINIMUM_WIFI_SECURITY_LEVEL_UNSPECIFIED" - Defaults to
+	// OPEN_NETWORK_SECURITY, which means the device will be able to connect
+	// to all types of Wi-Fi networks.
+	//   "OPEN_NETWORK_SECURITY" - The device will be able to connect to all
+	// types of Wi-Fi networks.
+	//   "PERSONAL_NETWORK_SECURITY" - A personal network such as WEP,
+	// WPA2-PSK is the minimum required security. The device will not be
+	// able to connect to open wifi networks. This is stricter than
+	// OPEN_NETWORK_SECURITY. A nonComplianceDetail with API_LEVEL is
+	// reported if the Android version is less than 13.
+	//   "ENTERPRISE_NETWORK_SECURITY" - An enterprise EAP network is the
+	// minimum required security level. The device will not be able to
+	// connect to Wi-Fi network below this security level. This is stricter
+	// than PERSONAL_NETWORK_SECURITY. A nonComplianceDetail with API_LEVEL
+	// is reported if the Android version is less than 13.
+	MinimumWifiSecurityLevel string `json:"minimumWifiSecurityLevel,omitempty"`
 
 	// UltraWidebandState: Controls the state of the ultra wideband setting
 	// and whether the user can toggle it on or off.
@@ -2672,6 +2787,43 @@ type DnsEvent struct {
 
 func (s *DnsEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod DnsEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DpcMigrationInfo: Information related to whether this device was
+// migrated from being managed by another Device Policy Controller
+// (DPC).
+type DpcMigrationInfo struct {
+	// AdditionalData: Output only. If this device was migrated from another
+	// DPC, the additionalData field of the migration token is populated
+	// here.
+	AdditionalData string `json:"additionalData,omitempty"`
+
+	// PreviousDpc: Output only. If this device was migrated from another
+	// DPC, this is its package name. Not populated otherwise.
+	PreviousDpc string `json:"previousDpc,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalData") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DpcMigrationInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod DpcMigrationInfo
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3322,6 +3474,66 @@ func (s *HardwareStatus) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// InstallConstraint: Amongst apps with InstallType set to:
+// FORCE_INSTALLED PREINSTALLEDthis defines a set of restrictions for
+// the app installation. At least one of the fields must be set. When
+// multiple fields are set, then all the constraints need to be
+// satisfied for the app to be installed.
+type InstallConstraint struct {
+	// ChargingConstraint: Optional. Charging constraint.
+	//
+	// Possible values:
+	//   "CHARGING_CONSTRAINT_UNSPECIFIED" - Unspecified. Default to
+	// CHARGING_NOT_REQUIRED.
+	//   "CHARGING_NOT_REQUIRED" - Device doesn't have to be charging.
+	//   "INSTALL_ONLY_WHEN_CHARGING" - Device has to be charging.
+	ChargingConstraint string `json:"chargingConstraint,omitempty"`
+
+	// DeviceIdleConstraint: Optional. Device idle constraint.
+	//
+	// Possible values:
+	//   "DEVICE_IDLE_CONSTRAINT_UNSPECIFIED" - Unspecified. Default to
+	// DEVICE_IDLE_NOT_REQUIRED.
+	//   "DEVICE_IDLE_NOT_REQUIRED" - Device doesn't have to be idle, app
+	// can be installed while the user is interacting with the device.
+	//   "INSTALL_ONLY_WHEN_DEVICE_IDLE" - Device has to be idle.
+	DeviceIdleConstraint string `json:"deviceIdleConstraint,omitempty"`
+
+	// NetworkTypeConstraint: Optional. Network type constraint.
+	//
+	// Possible values:
+	//   "NETWORK_TYPE_CONSTRAINT_UNSPECIFIED" - Unspecified. Default to
+	// INSTALL_ON_ANY_NETWORK.
+	//   "INSTALL_ON_ANY_NETWORK" - Any active networks (Wi-Fi, cellular,
+	// etc.).
+	//   "INSTALL_ONLY_ON_UNMETERED_NETWORK" - Any unmetered network (e.g.
+	// Wi-FI).
+	NetworkTypeConstraint string `json:"networkTypeConstraint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChargingConstraint")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChargingConstraint") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstallConstraint) MarshalJSON() ([]byte, error) {
+	type NoMethod InstallConstraint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // IssueCommandResponse: Response on issuing a command. This is
 // currently empty as a placeholder.
 type IssueCommandResponse struct {
@@ -3819,6 +4031,45 @@ func (s *ListEnterprisesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListMigrationTokensResponse: Response to a request to list migration
+// tokens for a given enterprise.
+type ListMigrationTokensResponse struct {
+	// MigrationTokens: The migration tokens from the specified enterprise.
+	MigrationTokens []*MigrationToken `json:"migrationTokens,omitempty"`
+
+	// NextPageToken: A token, which can be sent as page_token to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "MigrationTokens") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MigrationTokens") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListMigrationTokensResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMigrationTokensResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListOperationsResponse: The response message for
 // Operations.ListOperations.
 type ListOperationsResponse struct {
@@ -4227,7 +4478,9 @@ func (s *MediaUnmountEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MemoryEvent: An event related to memory and storage measurements.
+// MemoryEvent: An event related to memory and storage measurements.To
+// distinguish between new and old events, we recommend using the
+// createTime field.
 type MemoryEvent struct {
 	// ByteCount: The number of free bytes in the medium, or for
 	// EXTERNAL_STORAGE_DETECTED, the total capacity in bytes of the storage
@@ -4306,6 +4559,103 @@ type MemoryInfo struct {
 
 func (s *MemoryInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod MemoryInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MigrationToken: A token to initiate the migration of a device from
+// being managed by a third-party DPC to being managed by Android
+// Management API. A migration token is valid only for a single device.
+type MigrationToken struct {
+	// AdditionalData: Immutable. Optional EMM-specified additional data.
+	// Once the device is migrated this will be populated in the
+	// migrationAdditionalData field of the Device resource. This must be at
+	// most 1024 characters.
+	AdditionalData string `json:"additionalData,omitempty"`
+
+	// CreateTime: Output only. Time when this migration token was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Device: Output only. Once this migration token is used to migrate a
+	// device, the name of the resulting Device resource will be populated
+	// here, in the form enterprises/{enterprise}/devices/{device}.
+	Device string `json:"device,omitempty"`
+
+	// DeviceId: Required. Immutable. The id of the device, as in the Play
+	// EMM API. This corresponds to the deviceId parameter in Play EMM API's
+	// Devices.get
+	// (https://developers.google.com/android/work/play/emm-api/v1/devices/get#parameters)
+	// call.
+	DeviceId string `json:"deviceId,omitempty"`
+
+	// ExpireTime: Immutable. The time when this migration token expires.
+	// This can be at most seven days from the time of creation. The
+	// migration token is deleted seven days after it expires.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// ManagementMode: Required. Immutable. The management mode of the
+	// device or profile being migrated.
+	//
+	// Possible values:
+	//   "MANAGEMENT_MODE_UNSPECIFIED" - This value must not be used.
+	//   "WORK_PROFILE_PERSONALLY_OWNED" - A work profile on a personally
+	// owned device. Supported only on devices running Android 9 and above.
+	//   "WORK_PROFILE_COMPANY_OWNED" - A work profile on a company-owned
+	// device. Supported only on devices running Android 11 and above.
+	//   "FULLY_MANAGED" - A fully-managed device. Supported only on devices
+	// running Android 9 and above.
+	ManagementMode string `json:"managementMode,omitempty"`
+
+	// Name: Output only. The name of the migration token, which is
+	// generated by the server during creation, in the form
+	// enterprises/{enterprise}/migrationTokens/{migration_token}.
+	Name string `json:"name,omitempty"`
+
+	// Policy: Required. Immutable. The name of the policy initially applied
+	// to the enrolled device, in the form
+	// enterprises/{enterprise}/policies/{policy}.
+	Policy string `json:"policy,omitempty"`
+
+	// Ttl: Input only. The time that this migration token is valid for.
+	// This is input-only, and for returning a migration token the server
+	// will populate the expireTime field. This can be at most seven days.
+	// The default is seven days.
+	Ttl string `json:"ttl,omitempty"`
+
+	// UserId: Required. Immutable. The user id of the Managed Google Play
+	// account on the device, as in the Play EMM API. This corresponds to
+	// the userId parameter in Play EMM API's Devices.get
+	// (https://developers.google.com/android/work/play/emm-api/v1/devices/get#parameters)
+	// call.
+	UserId string `json:"userId,omitempty"`
+
+	// Value: Output only. The value of the migration token.
+	Value string `json:"value,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalData") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MigrationToken) MarshalJSON() ([]byte, error) {
+	type NoMethod MigrationToken
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4481,6 +4831,16 @@ type NonComplianceDetail struct {
 	//   "ONC_WIFI_INVALID_ENTERPRISE_CONFIG" - The enterprise Wi-Fi network
 	// is missing either the root CA or domain name. nonComplianceReason is
 	// set to INVALID_VALUE.
+	//   "ONC_WIFI_USER_SHOULD_REMOVE_NETWORK" - User needs to remove the
+	// configured Wi-Fi network manually. This is applicable only on work
+	// profiles on personally-owned devices. nonComplianceReason is set to
+	// USER_ACTION.
+	//   "ONC_WIFI_KEY_PAIR_ALIAS_NOT_CORRESPONDING_TO_EXISTING_KEY" - Key
+	// pair alias specified via ClientCertKeyPairAlias
+	// (https://chromium.googlesource.com/chromium/src/+/main/components/onc/docs/onc_spec.md#eap-type)
+	// field in openNetworkConfiguration does not correspond to an existing
+	// key installed on the device. nonComplianceReason is set to
+	// INVALID_VALUE.
 	SpecificNonComplianceReason string `json:"specificNonComplianceReason,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CurrentValue") to
@@ -5060,7 +5420,24 @@ type PermissionGrant struct {
 	// policy is specified for a permission at any level, then the PROMPT
 	// behavior is used by default.
 	//   "PROMPT" - Prompt the user to grant a permission.
-	//   "GRANT" - Automatically grant a permission.
+	//   "GRANT" - Automatically grant a permission.On Android 12 and above,
+	// Manifest.permission.READ_SMS
+	// (https://developer.android.com/reference/android/Manifest.permission#READ_SMS)
+	// and following sensor-related permissions can only be granted on fully
+	// managed devices: Manifest.permission.ACCESS_FINE_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_FINE_LOCATION)
+	// Manifest.permission.ACCESS_BACKGROUND_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_BACKGROUND_LOCATION)
+	// Manifest.permission.ACCESS_COARSE_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_COARSE_LOCATION)
+	// Manifest.permission.CAMERA
+	// (https://developer.android.com/reference/android/Manifest.permission#CAMERA)
+	// Manifest.permission.RECORD_AUDIO
+	// (https://developer.android.com/reference/android/Manifest.permission#RECORD_AUDIO)
+	// Manifest.permission.ACTIVITY_RECOGNITION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACTIVITY_RECOGNITION)
+	// Manifest.permission.BODY_SENSORS
+	// (https://developer.android.com/reference/android/Manifest.permission#BODY_SENSORS)
 	//   "DENY" - Automatically deny a permission.
 	Policy string `json:"policy,omitempty"`
 
@@ -5257,19 +5634,16 @@ type Policy struct {
 	// disabled. Also mutes the device.
 	AdjustVolumeDisabled bool `json:"adjustVolumeDisabled,omitempty"`
 
-	// AdvancedSecurityOverrides: Security policies set to secure values by
-	// default. To maintain the security posture of a device, we don't
-	// recommend overriding any of the default values.
+	// AdvancedSecurityOverrides: Advanced security settings. In most cases,
+	// setting these is not needed.
 	AdvancedSecurityOverrides *AdvancedSecurityOverrides `json:"advancedSecurityOverrides,omitempty"`
 
 	// AlwaysOnVpnPackage: Configuration for an always-on VPN connection.
 	// Use with vpn_config_disabled to prevent modification of this setting.
 	AlwaysOnVpnPackage *AlwaysOnVpnPackage `json:"alwaysOnVpnPackage,omitempty"`
 
-	// AndroidDevicePolicyTracks: The app tracks for Android Device Policy
-	// the device can access. The device receives the latest version among
-	// all accessible tracks. If no tracks are specified, then the device
-	// only uses the production track.
+	// AndroidDevicePolicyTracks: This setting is not supported. Any value
+	// is ignored.
 	//
 	// Possible values:
 	//   "APP_TRACK_UNSPECIFIED" - This value is ignored.
@@ -5295,7 +5669,8 @@ type Policy struct {
 	// apply.
 	AppAutoUpdatePolicy string `json:"appAutoUpdatePolicy,omitempty"`
 
-	// Applications: Policy applied to apps.
+	// Applications: Policy applied to apps. This can have at most 3,000
+	// elements.
 	Applications []*ApplicationPolicy `json:"applications,omitempty"`
 
 	// AutoDateAndTimeZone: Whether auto date, time, and time zone are
@@ -5390,6 +5765,26 @@ type Policy struct {
 	// is disabled.
 	CreateWindowsDisabled bool `json:"createWindowsDisabled,omitempty"`
 
+	// CredentialProviderPolicyDefault: Controls which apps are allowed to
+	// act as credential providers on Android 14 and above. These apps store
+	// credentials, see this
+	// (https://developer.android.com/training/sign-in/passkeys) and this
+	// (https://developer.android.com/reference/androidx/credentials/CredentialManager)
+	// for details. See also credentialProviderPolicy.
+	//
+	// Possible values:
+	//   "CREDENTIAL_PROVIDER_POLICY_DEFAULT_UNSPECIFIED" - Unspecified.
+	// Defaults to CREDENTIAL_PROVIDER_DEFAULT_DISALLOWED.
+	//   "CREDENTIAL_PROVIDER_DEFAULT_DISALLOWED" - Apps with
+	// credentialProviderPolicy unspecified are not allowed to act as a
+	// credential provider.
+	//   "CREDENTIAL_PROVIDER_DEFAULT_DISALLOWED_EXCEPT_SYSTEM" - Apps with
+	// credentialProviderPolicy unspecified are not allowed to act as a
+	// credential provider except for the OEM default credential providers.
+	// OEM default credential providers are always allowed to act as
+	// credential providers.
+	CredentialProviderPolicyDefault string `json:"credentialProviderPolicyDefault,omitempty"`
+
 	// CredentialsConfigDisabled: Whether configuring user credentials is
 	// disabled.
 	CredentialsConfigDisabled bool `json:"credentialsConfigDisabled,omitempty"`
@@ -5412,7 +5807,24 @@ type Policy struct {
 	// policy is specified for a permission at any level, then the PROMPT
 	// behavior is used by default.
 	//   "PROMPT" - Prompt the user to grant a permission.
-	//   "GRANT" - Automatically grant a permission.
+	//   "GRANT" - Automatically grant a permission.On Android 12 and above,
+	// Manifest.permission.READ_SMS
+	// (https://developer.android.com/reference/android/Manifest.permission#READ_SMS)
+	// and following sensor-related permissions can only be granted on fully
+	// managed devices: Manifest.permission.ACCESS_FINE_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_FINE_LOCATION)
+	// Manifest.permission.ACCESS_BACKGROUND_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_BACKGROUND_LOCATION)
+	// Manifest.permission.ACCESS_COARSE_LOCATION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACCESS_COARSE_LOCATION)
+	// Manifest.permission.CAMERA
+	// (https://developer.android.com/reference/android/Manifest.permission#CAMERA)
+	// Manifest.permission.RECORD_AUDIO
+	// (https://developer.android.com/reference/android/Manifest.permission#RECORD_AUDIO)
+	// Manifest.permission.ACTIVITY_RECOGNITION
+	// (https://developer.android.com/reference/android/Manifest.permission#ACTIVITY_RECOGNITION)
+	// Manifest.permission.BODY_SENSORS
+	// (https://developer.android.com/reference/android/Manifest.permission#BODY_SENSORS)
 	//   "DENY" - Automatically deny a permission.
 	DefaultPermissionPolicy string `json:"defaultPermissionPolicy,omitempty"`
 
@@ -5687,6 +6099,18 @@ type Policy struct {
 	// service is enabled on the work profile.
 	PreferentialNetworkService string `json:"preferentialNetworkService,omitempty"`
 
+	// PrintingPolicy: Optional. Controls whether printing is allowed. This
+	// is supported on devices running Android 9 and above. .
+	//
+	// Possible values:
+	//   "PRINTING_POLICY_UNSPECIFIED" - Unspecified. Defaults to
+	// PRINTING_ALLOWED.
+	//   "PRINTING_DISALLOWED" - Printing is disallowed. A
+	// nonComplianceDetail with API_LEVEL is reported if the Android version
+	// is less than 9.
+	//   "PRINTING_ALLOWED" - Printing is allowed.
+	PrintingPolicy string `json:"printingPolicy,omitempty"`
+
 	// PrivateKeySelectionEnabled: Allows showing UI on a device for a user
 	// to choose a private key alias if there are no matching rules in
 	// ChoosePrivateKeyRules. For devices below Android P, setting this may
@@ -5907,14 +6331,16 @@ type PostureDetail struct {
 	//
 	// Possible values:
 	//   "SECURITY_RISK_UNSPECIFIED" - Unspecified.
-	//   "UNKNOWN_OS" - SafetyNet detects that the device is running an
-	// unknown OS (basicIntegrity check succeeds but ctsProfileMatch fails).
-	//   "COMPROMISED_OS" - SafetyNet detects that the device is running a
-	// compromised OS (basicIntegrity check fails).
-	//   "HARDWARE_BACKED_EVALUATION_FAILED" - SafetyNet detects that the
-	// device does not have a strong guarantee of system integrity, such as
-	// a hardware-backed keystore
-	// (https://developer.android.com/training/articles/security-key-attestation).
+	//   "UNKNOWN_OS" - Play Integrity API detects that the device is
+	// running an unknown OS (basicIntegrity check succeeds but
+	// ctsProfileMatch fails).
+	//   "COMPROMISED_OS" - Play Integrity API detects that the device is
+	// running a compromised OS (basicIntegrity check fails).
+	//   "HARDWARE_BACKED_EVALUATION_FAILED" - Play Integrity API detects
+	// that the device does not have a strong guarantee of system integrity,
+	// if the MEETS_STRONG_INTEGRITY label doesn't show in the device
+	// integrity field
+	// (https://developer.android.com/google/play/integrity/verdicts#device-integrity-field).
 	SecurityRisk string `json:"securityRisk,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Advice") to
@@ -7695,8 +8121,10 @@ type EnterprisesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes an enterprise. Only available for EMM-managed
-// enterprises.
+// Delete: Permanently deletes an enterprise and all accounts and data
+// associated with it. Warning: this will result in a cascaded deletion
+// of all AM API devices associated with the deleted enterprise. Only
+// available for EMM-managed enterprises.
 //
 //   - name: The name of the enterprise in the form
 //     enterprises/{enterpriseId}.
@@ -7792,7 +8220,7 @@ func (c *EnterprisesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes an enterprise. Only available for EMM-managed enterprises.",
+	//   "description": "Permanently deletes an enterprise and all accounts and data associated with it. Warning: this will result in a cascaded deletion of all AM API devices associated with the deleted enterprise. Only available for EMM-managed enterprises.",
 	//   "flatPath": "v1/enterprises/{enterprisesId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "androidmanagement.enterprises.delete",
@@ -9467,141 +9895,6 @@ func (c *EnterprisesDevicesOperationsCancelCall) Do(opts ...googleapi.CallOption
 
 }
 
-// method id "androidmanagement.enterprises.devices.operations.delete":
-
-type EnterprisesDevicesOperationsDeleteCall struct {
-	s          *Service
-	name       string
-	urlParams_ gensupport.URLParams
-	ctx_       context.Context
-	header_    http.Header
-}
-
-// Delete: Deletes a long-running operation. This method indicates that
-// the client is no longer interested in the operation result. It does
-// not cancel the operation. If the server doesn't support this method,
-// it returns google.rpc.Code.UNIMPLEMENTED.
-//
-// - name: The name of the operation resource to be deleted.
-func (r *EnterprisesDevicesOperationsService) Delete(name string) *EnterprisesDevicesOperationsDeleteCall {
-	c := &EnterprisesDevicesOperationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.name = name
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *EnterprisesDevicesOperationsDeleteCall) Fields(s ...googleapi.Field) *EnterprisesDevicesOperationsDeleteCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *EnterprisesDevicesOperationsDeleteCall) Context(ctx context.Context) *EnterprisesDevicesOperationsDeleteCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *EnterprisesDevicesOperationsDeleteCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *EnterprisesDevicesOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("DELETE", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"name": c.name,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "androidmanagement.enterprises.devices.operations.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
-func (c *EnterprisesDevicesOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &Empty{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns google.rpc.Code.UNIMPLEMENTED.",
-	//   "flatPath": "v1/enterprises/{enterprisesId}/devices/{devicesId}/operations/{operationsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "androidmanagement.enterprises.devices.operations.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be deleted.",
-	//       "location": "path",
-	//       "pattern": "^enterprises/[^/]+/devices/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/androidmanagement"
-	//   ]
-	// }
-
-}
-
 // method id "androidmanagement.enterprises.devices.operations.get":
 
 type EnterprisesDevicesOperationsGetCall struct {
@@ -10574,6 +10867,497 @@ func (c *EnterprisesEnrollmentTokensListCall) Do(opts ...googleapi.CallOption) (
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *EnterprisesEnrollmentTokensListCall) Pages(ctx context.Context, f func(*ListEnrollmentTokensResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "androidmanagement.enterprises.migrationTokens.create":
+
+type EnterprisesMigrationTokensCreateCall struct {
+	s              *Service
+	parent         string
+	migrationtoken *MigrationToken
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Creates a migration token, to migrate an existing device from
+// being managed by the EMM's Device Policy Controller (DPC) to being
+// managed by the Android Management API.
+//
+//   - parent: The enterprise in which this migration token will be
+//     created. Format: enterprises/{enterprise}.
+func (r *EnterprisesMigrationTokensService) Create(parent string, migrationtoken *MigrationToken) *EnterprisesMigrationTokensCreateCall {
+	c := &EnterprisesMigrationTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.migrationtoken = migrationtoken
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesMigrationTokensCreateCall) Fields(s ...googleapi.Field) *EnterprisesMigrationTokensCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesMigrationTokensCreateCall) Context(ctx context.Context) *EnterprisesMigrationTokensCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesMigrationTokensCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EnterprisesMigrationTokensCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.migrationtoken)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/migrationTokens")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidmanagement.enterprises.migrationTokens.create" call.
+// Exactly one of *MigrationToken or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *MigrationToken.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *EnterprisesMigrationTokensCreateCall) Do(opts ...googleapi.CallOption) (*MigrationToken, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &MigrationToken{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a migration token, to migrate an existing device from being managed by the EMM's Device Policy Controller (DPC) to being managed by the Android Management API.",
+	//   "flatPath": "v1/enterprises/{enterprisesId}/migrationTokens",
+	//   "httpMethod": "POST",
+	//   "id": "androidmanagement.enterprises.migrationTokens.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The enterprise in which this migration token will be created. Format: enterprises/{enterprise}",
+	//       "location": "path",
+	//       "pattern": "^enterprises/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/migrationTokens",
+	//   "request": {
+	//     "$ref": "MigrationToken"
+	//   },
+	//   "response": {
+	//     "$ref": "MigrationToken"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidmanagement"
+	//   ]
+	// }
+
+}
+
+// method id "androidmanagement.enterprises.migrationTokens.get":
+
+type EnterprisesMigrationTokensGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets a migration token.
+//
+//   - name: The name of the migration token to retrieve. Format:
+//     enterprises/{enterprise}/migrationTokens/{migration_token}.
+func (r *EnterprisesMigrationTokensService) Get(name string) *EnterprisesMigrationTokensGetCall {
+	c := &EnterprisesMigrationTokensGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesMigrationTokensGetCall) Fields(s ...googleapi.Field) *EnterprisesMigrationTokensGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *EnterprisesMigrationTokensGetCall) IfNoneMatch(entityTag string) *EnterprisesMigrationTokensGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesMigrationTokensGetCall) Context(ctx context.Context) *EnterprisesMigrationTokensGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesMigrationTokensGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EnterprisesMigrationTokensGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidmanagement.enterprises.migrationTokens.get" call.
+// Exactly one of *MigrationToken or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *MigrationToken.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *EnterprisesMigrationTokensGetCall) Do(opts ...googleapi.CallOption) (*MigrationToken, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &MigrationToken{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets a migration token.",
+	//   "flatPath": "v1/enterprises/{enterprisesId}/migrationTokens/{migrationTokensId}",
+	//   "httpMethod": "GET",
+	//   "id": "androidmanagement.enterprises.migrationTokens.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the migration token to retrieve. Format: enterprises/{enterprise}/migrationTokens/{migration_token}",
+	//       "location": "path",
+	//       "pattern": "^enterprises/[^/]+/migrationTokens/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "MigrationToken"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidmanagement"
+	//   ]
+	// }
+
+}
+
+// method id "androidmanagement.enterprises.migrationTokens.list":
+
+type EnterprisesMigrationTokensListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists migration tokens.
+//
+//   - parent: The enterprise which the migration tokens belong to.
+//     Format: enterprises/{enterprise}.
+func (r *EnterprisesMigrationTokensService) List(parent string) *EnterprisesMigrationTokensListCall {
+	c := &EnterprisesMigrationTokensListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of migration tokens to return. Fewer migration tokens may be
+// returned. If unspecified, at most 100 migration tokens will be
+// returned. The maximum value is 100; values above 100 will be coerced
+// to 100.
+func (c *EnterprisesMigrationTokensListCall) PageSize(pageSize int64) *EnterprisesMigrationTokensListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous ListMigrationTokens call. Provide this to
+// retrieve the subsequent page.When paginating, all other parameters
+// provided to ListMigrationTokens must match the call that provided the
+// page token.
+func (c *EnterprisesMigrationTokensListCall) PageToken(pageToken string) *EnterprisesMigrationTokensListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *EnterprisesMigrationTokensListCall) Fields(s ...googleapi.Field) *EnterprisesMigrationTokensListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *EnterprisesMigrationTokensListCall) IfNoneMatch(entityTag string) *EnterprisesMigrationTokensListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *EnterprisesMigrationTokensListCall) Context(ctx context.Context) *EnterprisesMigrationTokensListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *EnterprisesMigrationTokensListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *EnterprisesMigrationTokensListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/migrationTokens")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidmanagement.enterprises.migrationTokens.list" call.
+// Exactly one of *ListMigrationTokensResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMigrationTokensResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *EnterprisesMigrationTokensListCall) Do(opts ...googleapi.CallOption) (*ListMigrationTokensResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMigrationTokensResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists migration tokens.",
+	//   "flatPath": "v1/enterprises/{enterprisesId}/migrationTokens",
+	//   "httpMethod": "GET",
+	//   "id": "androidmanagement.enterprises.migrationTokens.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of migration tokens to return. Fewer migration tokens may be returned. If unspecified, at most 100 migration tokens will be returned. The maximum value is 100; values above 100 will be coerced to 100.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous ListMigrationTokens call. Provide this to retrieve the subsequent page.When paginating, all other parameters provided to ListMigrationTokens must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The enterprise which the migration tokens belong to. Format: enterprises/{enterprise}",
+	//       "location": "path",
+	//       "pattern": "^enterprises/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/migrationTokens",
+	//   "response": {
+	//     "$ref": "ListMigrationTokensResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidmanagement"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *EnterprisesMigrationTokensListCall) Pages(ctx context.Context, f func(*ListMigrationTokensResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

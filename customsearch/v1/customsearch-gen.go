@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,12 +90,16 @@ const apiId = "customsearch:v1"
 const apiName = "customsearch"
 const apiVersion = "v1"
 const basePath = "https://customsearch.googleapis.com/"
+const basePathTemplate = "https://customsearch.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://customsearch.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -1616,9 +1620,7 @@ func (c *CseListCall) Q(q string) *CseListCall {
 	return c
 }
 
-// RelatedSite sets the optional parameter "relatedSite": Specifies that
-// all search results should be pages that are related to the specified
-// URL.
+// RelatedSite sets the optional parameter "relatedSite": Deprecated.
 func (c *CseListCall) RelatedSite(relatedSite string) *CseListCall {
 	c.urlParams_.Set("relatedSite", relatedSite)
 	return c
@@ -2015,7 +2017,8 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//       "type": "string"
 	//     },
 	//     "relatedSite": {
-	//       "description": "Specifies that all search results should be pages that are related to the specified URL.",
+	//       "deprecated": true,
+	//       "description": "Deprecated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2396,9 +2399,7 @@ func (c *CseSiterestrictListCall) Q(q string) *CseSiterestrictListCall {
 	return c
 }
 
-// RelatedSite sets the optional parameter "relatedSite": Specifies that
-// all search results should be pages that are related to the specified
-// URL.
+// RelatedSite sets the optional parameter "relatedSite": Deprecated.
 func (c *CseSiterestrictListCall) RelatedSite(relatedSite string) *CseSiterestrictListCall {
 	c.urlParams_.Set("relatedSite", relatedSite)
 	return c
@@ -2795,7 +2796,8 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	//       "type": "string"
 	//     },
 	//     "relatedSite": {
-	//       "description": "Specifies that all search results should be pages that are related to the specified URL.",
+	//       "deprecated": true,
+	//       "description": "Deprecated.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

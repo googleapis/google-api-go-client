@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -92,7 +92,9 @@ const apiId = "texttospeech:v1"
 const apiName = "texttospeech"
 const apiVersion = "v1"
 const basePath = "https://texttospeech.googleapis.com/"
+const basePathTemplate = "https://texttospeech.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://texttospeech.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -109,7 +111,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -390,6 +394,9 @@ type Empty struct {
 // GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata: Metadata for
 // response returned by the `SynthesizeLongAudio` method.
 type GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata struct {
+	// LastUpdateTime: Deprecated. Do not use.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
 	// ProgressPercentage: The progress of the most recent processing update
 	// in percentage, ie. 70.0%.
 	ProgressPercentage float64 `json:"progressPercentage,omitempty"`
@@ -397,15 +404,15 @@ type GoogleCloudTexttospeechV1SynthesizeLongAudioMetadata struct {
 	// StartTime: Time when the request was received.
 	StartTime string `json:"startTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ProgressPercentage")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "LastUpdateTime") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ProgressPercentage") to
+	// NullFields is a list of field names (e.g. "LastUpdateTime") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -651,6 +658,9 @@ func (s *SynthesisInput) MarshalJSON() ([]byte, error) {
 // SynthesizeLongAudioMetadata: Metadata for response returned by the
 // `SynthesizeLongAudio` method.
 type SynthesizeLongAudioMetadata struct {
+	// LastUpdateTime: Deprecated. Do not use.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
 	// ProgressPercentage: The progress of the most recent processing update
 	// in percentage, ie. 70.0%.
 	ProgressPercentage float64 `json:"progressPercentage,omitempty"`
@@ -658,15 +668,15 @@ type SynthesizeLongAudioMetadata struct {
 	// StartTime: Time when the request was received.
 	StartTime string `json:"startTime,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ProgressPercentage")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "LastUpdateTime") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ProgressPercentage") to
+	// NullFields is a list of field names (e.g. "LastUpdateTime") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

@@ -392,7 +392,7 @@
                   ]
                 },
                 "getJwks": {
-                  "description": "Gets the public component of the cluster signing keys in JSON Web Key format. This API is not yet intended for general use, and is not available for all clusters.",
+                  "description": "Gets the public component of the cluster signing keys in JSON Web Key format.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/jwks",
                   "httpMethod": "GET",
                   "id": "container.projects.locations.clusters.getJwks",
@@ -1133,7 +1133,7 @@
                 "well-known": {
                   "methods": {
                     "getOpenid-configuration": {
-                      "description": "Gets the OIDC discovery document for the cluster. See the [OpenID Connect Discovery 1.0 specification](https://openid.net/specs/openid-connect-discovery-1_0.html) for details. This API is not yet intended for general use, and is not available for all clusters.",
+                      "description": "Gets the OIDC discovery document for the cluster. See the [OpenID Connect Discovery 1.0 specification](https://openid.net/specs/openid-connect-discovery-1_0.html) for details.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/.well-known/openid-configuration",
                       "httpMethod": "GET",
                       "id": "container.projects.locations.clusters.well-known.getOpenid-configuration",
@@ -2565,7 +2565,7 @@
       }
     }
   },
-  "revision": "20231024",
+  "revision": "20240214",
   "rootUrl": "https://container.googleapis.com/",
   "schemas": {
     "AcceleratorConfig": {
@@ -2716,6 +2716,10 @@
         "networkPolicyConfig": {
           "$ref": "NetworkPolicyConfig",
           "description": "Configuration for NetworkPolicy. This only tracks whether the addon is enabled or not on the Master, it does not track whether network policy is enabled for the nodes."
+        },
+        "statefulHaConfig": {
+          "$ref": "StatefulHAConfig",
+          "description": "Optional. Configuration for the StatefulHA add-on."
         }
       },
       "type": "object"
@@ -2726,6 +2730,10 @@
       "properties": {
         "enableMetrics": {
           "description": "Expose flow metrics on nodes",
+          "type": "boolean"
+        },
+        "enableRelay": {
+          "description": "Enable Relay component",
           "type": "boolean"
         },
         "relayMode": {
@@ -2793,6 +2801,11 @@
       "description": "Autopilot is the configuration for Autopilot settings on the cluster.",
       "id": "Autopilot",
       "properties": {
+        "conversionStatus": {
+          "$ref": "AutopilotConversionStatus",
+          "description": "Output only. ConversionStatus shows conversion status.",
+          "readOnly": true
+        },
         "enabled": {
           "description": "Enable Autopilot",
           "type": "boolean"
@@ -2851,6 +2864,26 @@
       },
       "type": "object"
     },
+    "AutopilotConversionStatus": {
+      "description": "AutopilotConversionStatus represents conversion status.",
+      "id": "AutopilotConversionStatus",
+      "properties": {
+        "state": {
+          "description": "Output only. The current state of the conversion.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "DONE"
+          ],
+          "enumDescriptions": [
+            "STATE_UNSPECIFIED indicates the state is unspecified.",
+            "DONE indicates the conversion has been completed. Old node pools will continue being deleted in the background."
+          ],
+          "readOnly": true,
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "AutoprovisioningNodePoolDefaults": {
       "description": "AutoprovisioningNodePoolDefaults contains defaults for a node pool created by NAP.",
       "id": "AutoprovisioningNodePoolDefaults",
@@ -2905,6 +2938,12 @@
           "description": "Upgrade settings control disruption and speed of the upgrade."
         }
       },
+      "type": "object"
+    },
+    "AutoscaledRolloutPolicy": {
+      "description": "Autoscaled rollout policy uses cluster autoscaler during blue-green upgrades to scale both the green and blue pools.",
+      "id": "AutoscaledRolloutPolicy",
+      "properties": {},
       "type": "object"
     },
     "AvailableVersion": {
@@ -2972,8 +3011,8 @@
             "Default value",
             "Disable BinaryAuthorization",
             "Enforce Kubernetes admission requests with BinaryAuthorization using the project's singleton policy. This is equivalent to setting the enabled boolean to true.",
-            "Use Binary Authorization with the policies specified in policy_bindings.",
-            "Use Binary Authorization with the policies specified in policy_bindings, and also with the project's singleton policy in enforcement mode."
+            "Use Binary Authorization Continuous Validation with the policies specified in policy_bindings.",
+            "Use Binary Authorization Continuous Validation with the policies specified in policy_bindings and enforce Kubernetes admission requests with Binary Authorization using the project's singleton policy."
           ],
           "type": "string"
         },
@@ -3046,6 +3085,10 @@
       "description": "Settings for blue-green upgrade.",
       "id": "BlueGreenSettings",
       "properties": {
+        "autoscaledRolloutPolicy": {
+          "$ref": "AutoscaledRolloutPolicy",
+          "description": "Autoscaled policy for cluster autoscaler enabled blue-green upgrade."
+        },
         "nodePoolSoakDuration": {
           "description": "Time needed after draining entire blue pool. After this period, blue pool will be cleaned up.",
           "format": "google-duration",
@@ -5503,7 +5546,7 @@
           "type": "string"
         },
         "enableConfidentialStorage": {
-          "description": "Optional. Enable confidential storage on Hyperdisk. boot_disk_kms_key is required when enable_confidential_storage is true. This is only available for private preview.",
+          "description": "Optional. Reserved for future use.",
           "type": "boolean"
         },
         "ephemeralStorageConfig": {
@@ -5610,6 +5653,13 @@
         "sandboxConfig": {
           "$ref": "SandboxConfig",
           "description": "Sandbox configuration for this node."
+        },
+        "secondaryBootDisks": {
+          "description": "List of secondary boot disks attached to the nodes.",
+          "items": {
+            "$ref": "SecondaryBootDisk"
+          },
+          "type": "array"
         },
         "serviceAccount": {
           "description": "The Google Cloud Platform Service Account to be used by the node VMs. Specify the email address of the Service Account; otherwise, if no Service Account is specified, the \"default\" service account is used.",
@@ -5784,7 +5834,7 @@
       "type": "object"
     },
     "NodePool": {
-      "description": "NodePool contains the name and configuration for a cluster's node pool. Node pools are a set of nodes (i.e. VM's), with a common configuration and specification, under the control of the cluster master. They may have a set of Kubernetes labels applied to them, which may be used to reference them during pod scheduling. They may also be resized up or down, to accommodate the workload. These upgrade settings control the level of parallelism and the level of disruption caused by an upgrade. maxUnavailable controls the number of nodes that can be simultaneously unavailable. maxSurge controls the number of additional nodes that can be added to the node pool temporarily for the time of the upgrade to increase the number of available nodes. (maxUnavailable + maxSurge) determines the level of parallelism (how many nodes are being upgraded at the same time). Note: upgrades inevitably introduce some disruption since workloads need to be moved from old nodes to new, upgraded ones. Even if maxUnavailable=0, this holds true. (Disruption stays within the limits of PodDisruptionBudget, if it is configured.) Consider a hypothetical node pool with 5 nodes having maxSurge=2, maxUnavailable=1. This means the upgrade process upgrades 3 nodes simultaneously. It creates 2 additional (upgraded) nodes, then it brings down 3 old (not yet upgraded) nodes at the same time. This ensures that there are always at least 4 nodes available.",
+      "description": "NodePool contains the name and configuration for a cluster's node pool. Node pools are a set of nodes (i.e. VM's), with a common configuration and specification, under the control of the cluster master. They may have a set of Kubernetes labels applied to them, which may be used to reference them during pod scheduling. They may also be resized up or down, to accommodate the workload.",
       "id": "NodePool",
       "properties": {
         "autoscaling": {
@@ -5853,6 +5903,10 @@
           "description": "[Output only] The pod CIDR block size per node in this node pool.",
           "format": "int32",
           "type": "integer"
+        },
+        "queuedProvisioning": {
+          "$ref": "QueuedProvisioning",
+          "description": "Specifies the configuration of queued provisioning."
         },
         "selfLink": {
           "description": "[Output only] Server-defined URL for the resource.",
@@ -6436,6 +6490,17 @@
       },
       "type": "object"
     },
+    "QueuedProvisioning": {
+      "description": "QueuedProvisioning defines the queued provisioning used by the node pool.",
+      "id": "QueuedProvisioning",
+      "properties": {
+        "enabled": {
+          "description": "Denotes that this nodepool is QRM specific, meaning nodes can be only obtained through queuing via the Cluster Autoscaler ProvisioningRequest API.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "RangeInfo": {
       "description": "RangeInfo contains the range name and the range utilization by this cluster.",
       "id": "RangeInfo",
@@ -6689,6 +6754,29 @@
           "enumDescriptions": [
             "Default value. This should not be used.",
             "Run sandbox using gvisor."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SecondaryBootDisk": {
+      "description": "SecondaryBootDisk represents a persistent disk attached to a node with special configurations based on its mode.",
+      "id": "SecondaryBootDisk",
+      "properties": {
+        "diskImage": {
+          "description": "Fully-qualified resource ID for an existing disk image.",
+          "type": "string"
+        },
+        "mode": {
+          "description": "Disk mode (container image cache, etc.)",
+          "enum": [
+            "MODE_UNSPECIFIED",
+            "CONTAINER_IMAGE_CACHE"
+          ],
+          "enumDescriptions": [
+            "MODE_UNSPECIFIED is when mode is not set.",
+            "CONTAINER_IMAGE_CACHE is for using the secondary boot disk as a container image cache."
           ],
           "type": "string"
         }
@@ -7340,6 +7428,17 @@
       },
       "type": "object"
     },
+    "StatefulHAConfig": {
+      "description": "Configuration for the Stateful HA add-on.",
+      "id": "StatefulHAConfig",
+      "properties": {
+        "enabled": {
+          "description": "Whether the Stateful HA add-on is enabled for this cluster.",
+          "type": "boolean"
+        }
+      },
+      "type": "object"
+    },
     "Status": {
       "description": "The `Status` type defines a logical error model that is suitable for different programming environments, including REST APIs and RPC APIs. It is used by [gRPC](https://github.com/grpc). Each `Status` message contains three pieces of data: error code, error message, and error details. You can find out more about this error model and how to work with it in the [API Design Guide](https://cloud.google.com/apis/design/errors).",
       "id": "Status",
@@ -7645,6 +7744,10 @@
           "description": "Required. Deprecated. The Google Developers Console [project ID or project number](https://cloud.google.com/resource-manager/docs/creating-managing-projects). This field has been deprecated and replaced by the name field.",
           "type": "string"
         },
+        "queuedProvisioning": {
+          "$ref": "QueuedProvisioning",
+          "description": "Specifies the configuration of queued provisioning."
+        },
         "resourceLabels": {
           "$ref": "ResourceLabels",
           "description": "The resource labels for the node pool to use to annotate any related Google Compute Engine resources."
@@ -7761,7 +7864,7 @@
       "type": "object"
     },
     "UpgradeSettings": {
-      "description": "These upgrade settings configure the upgrade strategy for the node pool. Use strategy to switch between the strategies applied to the node pool. If the strategy is SURGE, use max_surge and max_unavailable to control the level of parallelism and the level of disruption caused by upgrade. 1. maxSurge controls the number of additional nodes that can be added to the node pool temporarily for the time of the upgrade to increase the number of available nodes. 2. maxUnavailable controls the number of nodes that can be simultaneously unavailable. 3. (maxUnavailable + maxSurge) determines the level of parallelism (how many nodes are being upgraded at the same time). If the strategy is BLUE_GREEN, use blue_green_settings to configure the blue-green upgrade related settings. 1. standard_rollout_policy is the default policy. The policy is used to control the way blue pool gets drained. The draining is executed in the batch mode. The batch size could be specified as either percentage of the node pool size or the number of nodes. batch_soak_duration is the soak time after each batch gets drained. 2. node_pool_soak_duration is the soak time after all blue nodes are drained. After this period, the blue pool nodes will be deleted.",
+      "description": "These upgrade settings control the level of parallelism and the level of disruption caused by an upgrade. maxUnavailable controls the number of nodes that can be simultaneously unavailable. maxSurge controls the number of additional nodes that can be added to the node pool temporarily for the time of the upgrade to increase the number of available nodes. (maxUnavailable + maxSurge) determines the level of parallelism (how many nodes are being upgraded at the same time). Note: upgrades inevitably introduce some disruption since workloads need to be moved from old nodes to new, upgraded ones. Even if maxUnavailable=0, this holds true. (Disruption stays within the limits of PodDisruptionBudget, if it is configured.) Consider a hypothetical node pool with 5 nodes having maxSurge=2, maxUnavailable=1. This means the upgrade process upgrades 3 nodes simultaneously. It creates 2 additional (upgraded) nodes, then it brings down 3 old (not yet upgraded) nodes at the same time. This ensures that there are always at least 4 nodes available. These upgrade settings configure the upgrade strategy for the node pool. Use strategy to switch between the strategies applied to the node pool. If the strategy is SURGE, use max_surge and max_unavailable to control the level of parallelism and the level of disruption caused by upgrade. 1. maxSurge controls the number of additional nodes that can be added to the node pool temporarily for the time of the upgrade to increase the number of available nodes. 2. maxUnavailable controls the number of nodes that can be simultaneously unavailable. 3. (maxUnavailable + maxSurge) determines the level of parallelism (how many nodes are being upgraded at the same time). If the strategy is BLUE_GREEN, use blue_green_settings to configure the blue-green upgrade related settings. 1. standard_rollout_policy is the default policy. The policy is used to control the way blue pool gets drained. The draining is executed in the batch mode. The batch size could be specified as either percentage of the node pool size or the number of nodes. batch_soak_duration is the soak time after each batch gets drained. 2. node_pool_soak_duration is the soak time after all blue nodes are drained. After this period, the blue pool nodes will be deleted.",
       "id": "UpgradeSettings",
       "properties": {
         "blueGreenSettings": {

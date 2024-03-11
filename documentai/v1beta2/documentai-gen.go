@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "documentai:v1beta2"
 const apiName = "documentai"
 const apiVersion = "v1beta2"
 const basePath = "https://documentai.googleapis.com/"
+const basePathTemplate = "https://documentai.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://documentai.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -264,10 +268,6 @@ type GoogleCloudDocumentaiUiv1beta3AutoLabelDocumentsMetadataIndividualAutoLabel
 	// DocumentId: The document id of the auto-labeled document. This will
 	// replace the gcs_uri.
 	DocumentId *GoogleCloudDocumentaiUiv1beta3DocumentId `json:"documentId,omitempty"`
-
-	// GcsUri: The gcs_uri of the auto-labeling document, which uniquely
-	// identifies a dataset document.
-	GcsUri string `json:"gcsUri,omitempty"`
 
 	// Status: The status of the document auto-labeling.
 	Status *GoogleRpcStatus `json:"status,omitempty"`
@@ -3091,7 +3091,8 @@ func (s *GoogleCloudDocumentaiV1beta1DocumentPageAnchor) MarshalJSON() ([]byte, 
 // weak reference to a page element within a document.
 type GoogleCloudDocumentaiV1beta1DocumentPageAnchorPageRef struct {
 	// BoundingPoly: Optional. Identifies the bounding polygon of a layout
-	// element on the page.
+	// element on the page. If `layout_type` is set, the bounding polygon
+	// must be exactly the same to the layout element it's referring to.
 	BoundingPoly *GoogleCloudDocumentaiV1beta1BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Optional. Confidence of detected page element, if
@@ -5426,7 +5427,8 @@ func (s *GoogleCloudDocumentaiV1beta2DocumentPageAnchor) MarshalJSON() ([]byte, 
 // weak reference to a page element within a document.
 type GoogleCloudDocumentaiV1beta2DocumentPageAnchorPageRef struct {
 	// BoundingPoly: Optional. Identifies the bounding polygon of a layout
-	// element on the page.
+	// element on the page. If `layout_type` is set, the bounding polygon
+	// must be exactly the same to the layout element it's referring to.
 	BoundingPoly *GoogleCloudDocumentaiV1beta2BoundingPoly `json:"boundingPoly,omitempty"`
 
 	// Confidence: Optional. Confidence of detected page element, if
@@ -7663,8 +7665,8 @@ func (s *GoogleCloudDocumentaiV1beta3CommonOperationMetadata) MarshalJSON() ([]b
 // GoogleCloudDocumentaiV1beta3Dataset: A singleton resource under a
 // Processor which configures a collection of documents.
 type GoogleCloudDocumentaiV1beta3Dataset struct {
-	// DocumentWarehouseConfig: Optional. Derepcated. Warehouse-based
-	// dataset configuration is not supported today.
+	// DocumentWarehouseConfig: Optional. Deprecated. Warehouse-based
+	// dataset configuration is not supported.
 	DocumentWarehouseConfig *GoogleCloudDocumentaiV1beta3DatasetDocumentWarehouseConfig `json:"documentWarehouseConfig,omitempty"`
 
 	// GcsManagedConfig: Optional. User-managed Cloud Storage dataset

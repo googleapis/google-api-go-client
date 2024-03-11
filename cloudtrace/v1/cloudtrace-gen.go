@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "cloudtrace:v1"
 const apiName = "cloudtrace"
 const apiVersion = "v1"
 const basePath = "https://cloudtrace.googleapis.com/"
+const basePathTemplate = "https://cloudtrace.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudtrace.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -120,7 +122,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -283,7 +287,8 @@ func (s *Trace) MarshalJSON() ([]byte, error) {
 // optionally, one or more subspans for its suboperations. Spans do not
 // need to be contiguous. There may be gaps between spans in a trace.
 type TraceSpan struct {
-	// EndTime: End time of the span in nanoseconds from the UNIX epoch.
+	// EndTime: End time of the span in seconds and nanoseconds from the
+	// UNIX epoch.
 	EndTime string `json:"endTime,omitempty"`
 
 	// Kind: Distinguishes between spans generated in a particular context.
@@ -330,7 +335,8 @@ type TraceSpan struct {
 	// 0 and unique within a trace. For example, `2205310701640571284`.
 	SpanId uint64 `json:"spanId,omitempty,string"`
 
-	// StartTime: Start time of the span in nanoseconds from the UNIX epoch.
+	// StartTime: Start time of the span in seconds and nanoseconds from the
+	// UNIX epoch.
 	StartTime string `json:"startTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EndTime") to

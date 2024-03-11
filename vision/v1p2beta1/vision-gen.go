@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -97,7 +97,9 @@ const apiId = "vision:v1p2beta1"
 const apiName = "vision"
 const apiVersion = "v1p2beta1"
 const basePath = "https://vision.googleapis.com/"
+const basePathTemplate = "https://vision.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://vision.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -118,7 +120,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -3070,6 +3074,8 @@ type GoogleCloudVisionV1p1beta1SafeSearchAnnotation struct {
 	Spoof string `json:"spoof,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
+	// Violent content may include death, serious harm, or injury to
+	// individuals or groups of individuals.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -6090,6 +6096,8 @@ type GoogleCloudVisionV1p2beta1SafeSearchAnnotation struct {
 	Spoof string `json:"spoof,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
+	// Violent content may include death, serious harm, or injury to
+	// individuals or groups of individuals.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -6469,8 +6477,7 @@ func (s *GoogleCloudVisionV1p2beta1WebDetection) MarshalJSON() ([]byte, error) {
 // GoogleCloudVisionV1p2beta1WebDetectionParams: Parameters for web
 // detection request.
 type GoogleCloudVisionV1p2beta1WebDetectionParams struct {
-	// IncludeGeoResults: Whether to include results derived from the geo
-	// information in the image.
+	// IncludeGeoResults: This field has no effect on results.
 	IncludeGeoResults bool `json:"includeGeoResults,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "IncludeGeoResults")
@@ -8598,6 +8605,8 @@ type GoogleCloudVisionV1p3beta1SafeSearchAnnotation struct {
 	Spoof string `json:"spoof,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
+	// Violent content may include death, serious harm, or injury to
+	// individuals or groups of individuals.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -11183,6 +11192,8 @@ type GoogleCloudVisionV1p4beta1SafeSearchAnnotation struct {
 	Spoof string `json:"spoof,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
+	// Violent content may include death, serious harm, or injury to
+	// individuals or groups of individuals.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.
@@ -12886,6 +12897,8 @@ type SafeSearchAnnotation struct {
 	Spoof string `json:"spoof,omitempty"`
 
 	// Violence: Likelihood that this image contains violent content.
+	// Violent content may include death, serious harm, or injury to
+	// individuals or groups of individuals.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Unknown likelihood.

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "monitoring:v1"
 const apiName = "monitoring"
 const apiVersion = "v1"
 const basePath = "https://monitoring.googleapis.com/"
+const basePathTemplate = "https://monitoring.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://monitoring.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -126,7 +128,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -959,7 +963,7 @@ type Dashboard struct {
 	// content widget occupying one or more grid blocks.
 	MosaicLayout *MosaicLayout `json:"mosaicLayout,omitempty"`
 
-	// Name: Immutable. The resource name of the dashboard.
+	// Name: Identifier. The resource name of the dashboard.
 	Name string `json:"name,omitempty"`
 
 	// RowLayout: The content is divided into equally spaced rows and the
@@ -1126,9 +1130,8 @@ func (s *DataSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Dimension: Preview: A chart dimension for an SQL query. This is
-// applied over the x-axis. This is a preview feature and may be subject
-// to change before final release.
+// Dimension: A chart dimension. Dimensions are a structured label,
+// class, or category for a set of measurements in your data.
 type Dimension struct {
 	// Column: Required. The name of the column in the source SQL query that
 	// is used to chart the dimension.
@@ -1586,6 +1589,44 @@ func (s *IncidentList) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Interval: Represents a time interval, encoded as a Timestamp start
+// (inclusive) and a Timestamp end (exclusive).The start must be less
+// than or equal to the end. When the start equals the end, the interval
+// is empty (matches no time). When both start and end are unspecified,
+// the interval matches any time.
+type Interval struct {
+	// EndTime: Optional. Exclusive end of the interval.If specified, a
+	// Timestamp matching this interval will have to be before the end.
+	EndTime string `json:"endTime,omitempty"`
+
+	// StartTime: Optional. Inclusive start of the interval.If specified, a
+	// Timestamp matching this interval will have to be the same or after
+	// the start.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Interval) MarshalJSON() ([]byte, error) {
+	type NoMethod Interval
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListDashboardsResponse: The ListDashboards request.
 type ListDashboardsResponse struct {
 	// Dashboards: The list of requested dashboards.
@@ -1695,9 +1736,9 @@ func (s *LogsPanel) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Measure: Preview: A chart measure for an SQL query. This is applied
-// over the y-axis. This is a preview feature and may be subject to
-// change before final release.
+// Measure: A chart measure. Measures represent a measured property in
+// your chart data such as rainfall in inches, number of units sold,
+// revenue gained, etc.
 type Measure struct {
 	// AggregationFunction: Required. The aggregation function applied to
 	// the input column. This must not be set to "none" unless binning is
@@ -2146,6 +2187,10 @@ type PickTimeSeriesFilter struct {
 	//   "BOTTOM" - Pass the lowest num_time_series ranking inputs.
 	Direction string `json:"direction,omitempty"`
 
+	// Interval: Select the top N streams/time series within this time
+	// interval
+	Interval *Interval `json:"interval,omitempty"`
+
 	// NumTimeSeries: How many time series to allow to pass through the
 	// filter.
 	NumTimeSeries int64 `json:"numTimeSeries,omitempty"`
@@ -2232,6 +2277,15 @@ func (s *PieChart) MarshalJSON() ([]byte, error) {
 
 // PieChartDataSet: Groups a time series query definition.
 type PieChartDataSet struct {
+	// Dimensions: A dimension is a structured label, class, or category for
+	// a set of measurements in your data.
+	Dimensions []*Dimension `json:"dimensions,omitempty"`
+
+	// Measures: A measure is a measured value of a property in your data.
+	// For example, rainfall in inches, number of units sold, revenue
+	// gained, etc.
+	Measures []*Measure `json:"measures,omitempty"`
+
 	// MinAlignmentPeriod: Optional. The lower bound on data point frequency
 	// for this data set, implemented by specifying the minimum alignment
 	// period to use in a time series query. For example, if the data is
@@ -2251,21 +2305,20 @@ type PieChartDataSet struct {
 	// google.monitoring.dashboard.v1.TimeSeriesQuery.
 	TimeSeriesQuery *TimeSeriesQuery `json:"timeSeriesQuery,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MinAlignmentPeriod")
-	// to unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "Dimensions") to
+	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MinAlignmentPeriod") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Dimensions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2637,6 +2690,46 @@ func (s *Scorecard) MarshalJSON() ([]byte, error) {
 	type NoMethod Scorecard
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SectionHeader: A widget that defines a new section header. Sections
+// populate a table of contents and allow easier navigation of long-form
+// content.
+type SectionHeader struct {
+	// DividerBelow: Whether to insert a divider below the section in the
+	// table of contents
+	DividerBelow bool `json:"dividerBelow,omitempty"`
+
+	// Subtitle: The subtitle of the section
+	Subtitle string `json:"subtitle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DividerBelow") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DividerBelow") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SectionHeader) MarshalJSON() ([]byte, error) {
+	type NoMethod SectionHeader
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SingleViewGroup: A widget that groups the other widgets by using a
+// dropdown menu. All widgets that are within the area spanned by the
+// grouping widget are considered member widgets.
+type SingleViewGroup struct {
 }
 
 // SourceContext: SourceContext represents information about the source
@@ -3466,6 +3559,14 @@ type Widget struct {
 
 	// Scorecard: A scorecard summarizing time series data.
 	Scorecard *Scorecard `json:"scorecard,omitempty"`
+
+	// SectionHeader: A widget that defines a section header for easier
+	// navigation of the dashboard.
+	SectionHeader *SectionHeader `json:"sectionHeader,omitempty"`
+
+	// SingleViewGroup: A widget that groups the other widgets by using a
+	// dropdown menu.
+	SingleViewGroup *SingleViewGroup `json:"singleViewGroup,omitempty"`
 
 	// Text: A raw string or markdown displaying textual content.
 	Text *Text `json:"text,omitempty"`
@@ -4901,7 +5002,7 @@ func (c *ProjectsDashboardsListCall) Do(opts ...googleapi.CallOption) (*ListDash
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "If this field is not empty then it must contain the nextPageToken value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
+	//       "description": "Optional. If this field is not empty then it must contain the nextPageToken value returned by a previous call to this method. Using this field causes the method to return additional results from the previous method call.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4963,7 +5064,7 @@ type ProjectsDashboardsPatchCall struct {
 // permission on the specified dashboard. For more information, see
 // Cloud Identity and Access Management (https://cloud.google.com/iam).
 //
-// - name: Immutable. The resource name of the dashboard.
+// - name: Identifier. The resource name of the dashboard.
 func (r *ProjectsDashboardsService) Patch(name string, dashboard *Dashboard) *ProjectsDashboardsPatchCall {
 	c := &ProjectsDashboardsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5079,7 +5180,7 @@ func (c *ProjectsDashboardsPatchCall) Do(opts ...googleapi.CallOption) (*Dashboa
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Immutable. The resource name of the dashboard.",
+	//       "description": "Identifier. The resource name of the dashboard.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/dashboards/[^/]+$",
 	//       "required": true,

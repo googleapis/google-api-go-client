@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "clouddeploy:v1"
 const apiName = "clouddeploy"
 const apiVersion = "v1"
 const basePath = "https://clouddeploy.googleapis.com/"
+const basePathTemplate = "https://clouddeploy.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://clouddeploy.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -165,6 +169,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.CustomTargetTypes = NewProjectsLocationsCustomTargetTypesService(s)
 	rs.DeliveryPipelines = NewProjectsLocationsDeliveryPipelinesService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
 	rs.Targets = NewProjectsLocationsTargetsService(s)
@@ -174,11 +179,22 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	CustomTargetTypes *ProjectsLocationsCustomTargetTypesService
+
 	DeliveryPipelines *ProjectsLocationsDeliveryPipelinesService
 
 	Operations *ProjectsLocationsOperationsService
 
 	Targets *ProjectsLocationsTargetsService
+}
+
+func NewProjectsLocationsCustomTargetTypesService(s *Service) *ProjectsLocationsCustomTargetTypesService {
+	rs := &ProjectsLocationsCustomTargetTypesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsCustomTargetTypesService struct {
+	s *Service
 }
 
 func NewProjectsLocationsDeliveryPipelinesService(s *Service) *ProjectsLocationsDeliveryPipelinesService {
@@ -287,9 +303,8 @@ type AdvanceChildRolloutJob struct {
 // information specific to a advanceChildRollout `JobRun`.
 type AdvanceChildRolloutJobRun struct {
 	// Rollout: Output only. Name of the `ChildRollout`. Format is
-	// projects/{project}/
-	// locations/{location}/deliveryPipelines/{deliveryPipeline}/
-	// releases/{release}/rollouts/a-z{0,62}.
+	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPi
+	// peline}/releases/{release}/rollouts/a-z{0,62}`.
 	Rollout string `json:"rollout,omitempty"`
 
 	// RolloutPhaseId: Output only. the ID of the ChildRollout's Phase.
@@ -321,8 +336,8 @@ func (s *AdvanceChildRolloutJobRun) MarshalJSON() ([]byte, error) {
 // AdvanceRolloutOperation: Contains the information of an automated
 // advance-rollout operation.
 type AdvanceRolloutOperation struct {
-	// DestinationPhase: Output only. The phase to which the rollout will be
-	// advanced to.
+	// DestinationPhase: Output only. The phase the rollout will be advanced
+	// to.
 	DestinationPhase string `json:"destinationPhase,omitempty"`
 
 	// Rollout: Output only. The name of the rollout that initiates the
@@ -404,7 +419,7 @@ type AdvanceRolloutRule struct {
 
 	// Id: Required. ID of the rule. This id must be unique in the
 	// `Automation` resource to which this rule belongs. The format is
-	// a-z{0,62}.
+	// `a-z{0,62}`.
 	Id string `json:"id,omitempty"`
 
 	// SourcePhases: Optional. Proceeds only after phase name matched any
@@ -605,7 +620,7 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 
 // Automation: An `Automation` resource in the Cloud Deploy API. An
 // `Automation` enables the automation of manually driven actions for a
-// Delivery Pipeline, which includes Release promotion amongst Targets,
+// Delivery Pipeline, which includes Release promotion among Targets,
 // Rollout repair and Rollout deployment strategy advancement. The
 // intention of Automation is to reduce manual intervention in the
 // continuous delivery process.
@@ -614,13 +629,13 @@ type Automation struct {
 	// set and used by the user, and not by Cloud Deploy. Annotations must
 	// meet the following constraints: * Annotations are key/value pairs. *
 	// Valid annotation keys have two segments: an optional prefix and name,
-	// separated by a slash (/). * The name segment is required and must be
-	// 63 characters or less, beginning and ending with an alphanumeric
-	// character ([a-z0-9A-Z]) with dashes (-), underscores (_), dots (.),
-	// and alphanumerics between. * The prefix is optional. If specified,
-	// the prefix must be a DNS subdomain: a series of DNS labels separated
-	// by dots(.), not longer than 253 characters in total, followed by a
-	// slash (/). See
+	// separated by a slash (`/`). * The name segment is required and must
+	// be 63 characters or less, beginning and ending with an alphanumeric
+	// character (`[a-z0-9A-Z]`) with dashes (`-`), underscores (`_`), dots
+	// (`.`), and alphanumerics between. * The prefix is optional. If
+	// specified, the prefix must be a DNS subdomain: a series of DNS labels
+	// separated by dots(`.`), not longer than 253 characters in total,
+	// followed by a slash (`/`). See
 	// https://kubernetes.io/docs/concepts/overview/working-with-objects/annotations/#syntax-and-character-set
 	// for more details.
 	Annotations map[string]string `json:"annotations,omitempty"`
@@ -649,8 +664,8 @@ type Automation struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Output only. Name of the `Automation`. Format is
-	// projects/{project}/locations/{location}/deliveryPipelines/{delivery_pi
-	// peline}/automations/{automation}.
+	// `projects/{project}/locations/{location}/deliveryPipelines/{delivery_p
+	// ipeline}/automations/{automation}`.
 	Name string `json:"name,omitempty"`
 
 	// Rules: Required. List of Automation rules associated with the
@@ -731,6 +746,7 @@ type AutomationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -794,6 +810,10 @@ type AutomationRolloutMetadata struct {
 	// AdvanceAutomationRuns: Output only. The IDs of the AutomationRuns
 	// initiated by an advance rollout rule.
 	AdvanceAutomationRuns []string `json:"advanceAutomationRuns,omitempty"`
+
+	// CurrentRepairAutomationRun: Output only. The current AutomationRun
+	// repairing the rollout.
+	CurrentRepairAutomationRun string `json:"currentRepairAutomationRun,omitempty"`
 
 	// PromoteAutomationRun: Output only. The ID of the AutomationRun
 	// initiated by a promote release rule.
@@ -899,8 +919,8 @@ func (s *AutomationRuleCondition) MarshalJSON() ([]byte, error) {
 }
 
 // AutomationRun: An `AutomationRun` resource in the Cloud Deploy API.
-// An `AutomationResource` represents an automation execution instance
-// of an automation rule.
+// An `AutomationRun` represents an execution instance of an automation
+// rule.
 type AutomationRun struct {
 	// AdvanceRolloutOperation: Output only. Advances a rollout to the next
 	// phase.
@@ -924,13 +944,13 @@ type AutomationRun struct {
 	// client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
 
-	// ExpireTime: Output only. Time the `AutomationRun` will expire. An
-	// `AutomationRun` will expire after 14 days from its creation date.
+	// ExpireTime: Output only. Time the `AutomationRun` expires. An
+	// `AutomationRun` expires after 14 days from its creation date.
 	ExpireTime string `json:"expireTime,omitempty"`
 
 	// Name: Output only. Name of the `AutomationRun`. Format is
-	// projects/{project}/locations/{location}/deliveryPipelines/{delivery_pi
-	// peline}/automationRuns/{automation_run}.
+	// `projects/{project}/locations/{location}/deliveryPipelines/{delivery_p
+	// ipeline}/automationRuns/{automation_run}`.
 	Name string `json:"name,omitempty"`
 
 	// PromoteReleaseOperation: Output only. Promotes a release to a
@@ -958,10 +978,11 @@ type AutomationRun struct {
 	//   "FAILED" - The `AutomationRun` has failed.
 	//   "IN_PROGRESS" - The `AutomationRun` is in progress.
 	//   "PENDING" - The `AutomationRun` is pending.
+	//   "ABORTED" - The `AutomationRun` was aborted.
 	State string `json:"state,omitempty"`
 
 	// StateDescription: Output only. Explains the current state of the
-	// `AutomationRun`. Present only an explanation is needed.
+	// `AutomationRun`. Present only when an explanation is needed.
 	StateDescription string `json:"stateDescription,omitempty"`
 
 	// TargetId: Output only. The ID of the target that represents the
@@ -1042,6 +1063,7 @@ type AutomationRunEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -1101,11 +1123,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -1117,11 +1162,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -1336,6 +1390,18 @@ type CloudRunConfig struct {
 	// CanaryDeployments, but optional for CustomCanaryDeployments.
 	AutomaticTrafficControl bool `json:"automaticTrafficControl,omitempty"`
 
+	// CanaryRevisionTags: Optional. A list of tags that are added to the
+	// canary revision while the canary phase is in progress.
+	CanaryRevisionTags []string `json:"canaryRevisionTags,omitempty"`
+
+	// PriorRevisionTags: Optional. A list of tags that are added to the
+	// prior revision while the canary phase is in progress.
+	PriorRevisionTags []string `json:"priorRevisionTags,omitempty"`
+
+	// StableRevisionTags: Optional. A list of tags that are added to the
+	// final stable revision when the stable phase is applied.
+	StableRevisionTags []string `json:"stableRevisionTags,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AutomaticTrafficControl") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -1396,7 +1462,7 @@ func (s *CloudRunLocation) MarshalJSON() ([]byte, error) {
 type CloudRunMetadata struct {
 	// Job: Output only. The name of the Cloud Run job that is associated
 	// with a `Rollout`. Format is
-	// projects/{project}/locations/{location}/jobs/{job_name}.
+	// `projects/{project}/locations/{location}/jobs/{job_name}`.
 	Job string `json:"job,omitempty"`
 
 	// Revision: Output only. The Cloud Run Revision id associated with a
@@ -1405,7 +1471,7 @@ type CloudRunMetadata struct {
 
 	// Service: Output only. The name of the Cloud Run Service that is
 	// associated with a `Rollout`. Format is
-	// projects/{project}/locations/{location}/services/{service}.
+	// `projects/{project}/locations/{location}/services/{service}`.
 	Service string `json:"service,omitempty"`
 
 	// ServiceUrls: Output only. The Cloud Run Service urls that are
@@ -1440,7 +1506,7 @@ func (s *CloudRunMetadata) MarshalJSON() ([]byte, error) {
 type CloudRunRenderMetadata struct {
 	// Service: Output only. The name of the Cloud Run Service in the
 	// rendered manifest. Format is
-	// projects/{project}/locations/{location}/services/{service}.
+	// `projects/{project}/locations/{location}/services/{service}`.
 	Service string `json:"service,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Service") to
@@ -1515,9 +1581,8 @@ type CreateChildRolloutJob struct {
 // information specific to a createChildRollout `JobRun`.
 type CreateChildRolloutJobRun struct {
 	// Rollout: Output only. Name of the `ChildRollout`. Format is
-	// projects/{project}/
-	// locations/{location}/deliveryPipelines/{deliveryPipeline}/
-	// releases/{release}/rollouts/a-z{0,62}.
+	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPi
+	// peline}/releases/{release}/rollouts/a-z{0,62}`.
 	Rollout string `json:"rollout,omitempty"`
 
 	// RolloutPhaseId: Output only. The ID of the childRollout Phase
@@ -1573,6 +1638,218 @@ type CustomCanaryDeployment struct {
 
 func (s *CustomCanaryDeployment) MarshalJSON() ([]byte, error) {
 	type NoMethod CustomCanaryDeployment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomMetadata: CustomMetadata contains information from a
+// user-defined operation.
+type CustomMetadata struct {
+	// Values: Output only. Key-value pairs provided by the user-defined
+	// operation.
+	Values map[string]string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Values") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomTarget: Information specifying a Custom Target.
+type CustomTarget struct {
+	// CustomTargetType: Required. The name of the CustomTargetType. Format
+	// must be
+	// `projects/{project}/locations/{location}/customTargetTypes/{custom_tar
+	// get_type}`.
+	CustomTargetType string `json:"customTargetType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomTargetType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomTargetType") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomTarget
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomTargetDeployMetadata: CustomTargetDeployMetadata contains
+// information from a Custom Target deploy operation.
+type CustomTargetDeployMetadata struct {
+	// SkipMessage: Output only. Skip message provided in the results of a
+	// custom deploy operation.
+	SkipMessage string `json:"skipMessage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SkipMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SkipMessage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomTargetDeployMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomTargetDeployMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomTargetSkaffoldActions: CustomTargetSkaffoldActions represents
+// the `CustomTargetType` configuration using Skaffold custom actions.
+type CustomTargetSkaffoldActions struct {
+	// DeployAction: Required. The Skaffold custom action responsible for
+	// deploy operations.
+	DeployAction string `json:"deployAction,omitempty"`
+
+	// IncludeSkaffoldModules: Optional. List of Skaffold modules Cloud
+	// Deploy will include in the Skaffold Config as required before
+	// performing diagnose.
+	IncludeSkaffoldModules []*SkaffoldModules `json:"includeSkaffoldModules,omitempty"`
+
+	// RenderAction: Optional. The Skaffold custom action responsible for
+	// render operations. If not provided then Cloud Deploy will perform the
+	// render operations via `skaffold render`.
+	RenderAction string `json:"renderAction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeployAction") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeployAction") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomTargetSkaffoldActions) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomTargetSkaffoldActions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomTargetType: A `CustomTargetType` resource in the Cloud Deploy
+// API. A `CustomTargetType` defines a type of custom target that can be
+// referenced in a `Target` in order to facilitate deploying to other
+// systems besides the supported runtimes.
+type CustomTargetType struct {
+	// Annotations: Optional. User annotations. These attributes can only be
+	// set and used by the user, and not by Cloud Deploy. See
+	// https://google.aip.dev/128#annotations for more details such as
+	// format and size limitations.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
+	// CreateTime: Output only. Time at which the `CustomTargetType` was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// CustomActions: Configures render and deploy for the
+	// `CustomTargetType` using Skaffold custom actions.
+	CustomActions *CustomTargetSkaffoldActions `json:"customActions,omitempty"`
+
+	// CustomTargetTypeId: Output only. Resource id of the
+	// `CustomTargetType`.
+	CustomTargetTypeId string `json:"customTargetTypeId,omitempty"`
+
+	// Description: Optional. Description of the `CustomTargetType`. Max
+	// length is 255 characters.
+	Description string `json:"description,omitempty"`
+
+	// Etag: Optional. This checksum is computed by the server based on the
+	// value of other fields, and may be sent on update and delete requests
+	// to ensure the client has an up-to-date value before proceeding.
+	Etag string `json:"etag,omitempty"`
+
+	// Labels: Optional. Labels are attributes that can be set and used by
+	// both the user and by Cloud Deploy. Labels must meet the following
+	// constraints: * Keys and values can contain only lowercase letters,
+	// numeric characters, underscores, and dashes. * All characters must
+	// use UTF-8 encoding, and international characters are allowed. * Keys
+	// must start with a lowercase letter or international character. * Each
+	// resource is limited to a maximum of 64 labels. Both keys and values
+	// are additionally constrained to be <= 128 bytes.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Optional. Name of the `CustomTargetType`. Format is
+	// `projects/{project}/locations/{location}/customTargetTypes/a-z{0,62}`.
+	Name string `json:"name,omitempty"`
+
+	// Uid: Output only. Unique identifier of the `CustomTargetType`.
+	Uid string `json:"uid,omitempty"`
+
+	// UpdateTime: Output only. Most recent time at which the
+	// `CustomTargetType` was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomTargetType) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomTargetType
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1697,7 +1974,7 @@ type DeliveryPipeline struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// Name: Optional. Name of the `DeliveryPipeline`. Format is
-	// projects/{project}/ locations/{location}/deliveryPipelines/a-z{0,62}.
+	// `projects/{project}/locations/{location}/deliveryPipelines/a-z{0,62}`.
 	Name string `json:"name,omitempty"`
 
 	// SerialPipeline: SerialPipeline defines a sequential set of stages for
@@ -1753,6 +2030,9 @@ type DeliveryPipelineNotificationEvent struct {
 	// Message: Debug message for when a notification fails to send.
 	Message string `json:"message,omitempty"`
 
+	// PipelineUid: Unique identifier of the `DeliveryPipeline`.
+	PipelineUid string `json:"pipelineUid,omitempty"`
+
 	// Type: Type of this notification, e.g. for a Pub/Sub failure.
 	//
 	// Possible values:
@@ -1764,6 +2044,7 @@ type DeliveryPipelineNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -1838,7 +2119,7 @@ type DeployJobRun struct {
 
 	// Build: Output only. The resource name of the Cloud Build `Build`
 	// object that is used to deploy. Format is
-	// projects/{project}/locations/{location}/builds/{build}.
+	// `projects/{project}/locations/{location}/builds/{build}`.
 	Build string `json:"build,omitempty"`
 
 	// FailureCause: Output only. The reason the deploy failed. This will
@@ -1861,6 +2142,8 @@ type DeployJobRun struct {
 	// Cloud Build logs for more information.
 	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Cloud
 	// Deploy's request. See failure_message for additional details.
+	//   "DEPLOY_FEATURE_NOT_SUPPORTED" - The deploy operation had a feature
+	// configured that is not supported.
 	FailureCause string `json:"failureCause,omitempty"`
 
 	// FailureMessage: Output only. Additional information about the deploy
@@ -1900,6 +2183,14 @@ type DeployJobRunMetadata struct {
 	// CloudRun: Output only. The name of the Cloud Run Service that is
 	// associated with a `DeployJobRun`.
 	CloudRun *CloudRunMetadata `json:"cloudRun,omitempty"`
+
+	// Custom: Output only. Custom metadata provided by user-defined deploy
+	// operation.
+	Custom *CustomMetadata `json:"custom,omitempty"`
+
+	// CustomTarget: Output only. Custom Target metadata associated with a
+	// `DeployJobRun`.
+	CustomTarget *CustomTargetDeployMetadata `json:"customTarget,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CloudRun") to
 	// unconditionally include in API requests. By default, fields with
@@ -2157,6 +2448,12 @@ type GatewayServiceMesh struct {
 	// Service: Required. Name of the Kubernetes Service.
 	Service string `json:"service,omitempty"`
 
+	// StableCutbackDuration: Optional. The amount of time to migrate
+	// traffic back from the canary Service to the original Service during
+	// the stable phase deployment. If specified, must be between 15s and
+	// 3600s. If unspecified, there is no cutback time.
+	StableCutbackDuration string `json:"stableCutbackDuration,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Deployment") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2183,7 +2480,7 @@ func (s *GatewayServiceMesh) MarshalJSON() ([]byte, error) {
 // GkeCluster: Information specifying a GKE Cluster.
 type GkeCluster struct {
 	// Cluster: Information specifying a GKE Cluster. Format is
-	// `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}.
+	// `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`.
 	Cluster string `json:"cluster,omitempty"`
 
 	// InternalIp: Optional. If true, `cluster` is accessed using the
@@ -2358,9 +2655,8 @@ type JobRun struct {
 	JobId string `json:"jobId,omitempty"`
 
 	// Name: Optional. Name of the `JobRun`. Format is
-	// projects/{project}/locations/{location}/
-	// deliveryPipelines/{deliveryPipeline}/releases/{releases}/rollouts/
-	// {rollouts}/jobRuns/{uuid}.
+	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPi
+	// peline}/releases/{releases}/rollouts/{rollouts}/jobRuns/{uuid}`.
 	Name string `json:"name,omitempty"`
 
 	// PhaseId: Output only. ID of the `Rollout` phase this `JobRun` belongs
@@ -2438,8 +2734,14 @@ type JobRunNotificationEvent struct {
 	// PipelineUid: Unique identifier of the `DeliveryPipeline`.
 	PipelineUid string `json:"pipelineUid,omitempty"`
 
+	// Release: The name of the `Release`.
+	Release string `json:"release,omitempty"`
+
 	// ReleaseUid: Unique identifier of the `Release`.
 	ReleaseUid string `json:"releaseUid,omitempty"`
+
+	// Rollout: The name of the `Rollout`.
+	Rollout string `json:"rollout,omitempty"`
 
 	// RolloutUid: Unique identifier of the `Rollout`.
 	RolloutUid string `json:"rolloutUid,omitempty"`
@@ -2458,6 +2760,7 @@ type JobRunNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -2563,7 +2866,7 @@ func (s *ListAutomationRunsResponse) MarshalJSON() ([]byte, error) {
 
 // ListAutomationsResponse: The response object from `ListAutomations`.
 type ListAutomationsResponse struct {
-	// Automations: The `Automations` objects.
+	// Automations: The `Automation` objects.
 	Automations []*Automation `json:"automations,omitempty"`
 
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve
@@ -2597,6 +2900,48 @@ type ListAutomationsResponse struct {
 
 func (s *ListAutomationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAutomationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListCustomTargetTypesResponse: The response object from
+// `ListCustomTargetTypes.`
+type ListCustomTargetTypesResponse struct {
+	// CustomTargetTypes: The `CustomTargetType` objects.
+	CustomTargetTypes []*CustomTargetType `json:"customTargetTypes,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomTargetTypes")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomTargetTypes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCustomTargetTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCustomTargetTypesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2939,6 +3284,10 @@ type Metadata struct {
 	// CloudRun: Output only. The name of the Cloud Run Service that is
 	// associated with a `Rollout`.
 	CloudRun *CloudRunMetadata `json:"cloudRun,omitempty"`
+
+	// Custom: Output only. Custom metadata provided by user-defined
+	// `Rollout` operations.
+	Custom *CustomMetadata `json:"custom,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Automation") to
 	// unconditionally include in API requests. By default, fields with
@@ -3501,7 +3850,7 @@ type PostdeployJobRun struct {
 	// Build: Output only. The resource name of the Cloud Build `Build`
 	// object that is used to execute the custom actions associated with the
 	// postdeploy Job. Format is
-	// projects/{project}/locations/{location}/builds/{build}.
+	// `projects/{project}/locations/{location}/builds/{build}`.
 	Build string `json:"build,omitempty"`
 
 	// FailureCause: Output only. The reason the postdeploy failed. This
@@ -3615,7 +3964,7 @@ type PredeployJobRun struct {
 	// Build: Output only. The resource name of the Cloud Build `Build`
 	// object that is used to execute the custom actions associated with the
 	// predeploy Job. Format is
-	// projects/{project}/locations/{location}/builds/{build}.
+	// `projects/{project}/locations/{location}/builds/{build}`.
 	Build string `json:"build,omitempty"`
 
 	// FailureCause: Output only. The reason the predeploy failed. This will
@@ -3771,7 +4120,7 @@ type PromoteReleaseRule struct {
 
 	// Id: Required. ID of the rule. This id must be unique in the
 	// `Automation` resource to which this rule belongs. The format is
-	// a-z{0,62}.
+	// `a-z{0,62}`.
 	Id string `json:"id,omitempty"`
 
 	// Wait: Optional. How long the release need to be paused until being
@@ -3825,6 +4174,10 @@ type Release struct {
 	// CreateTime: Output only. Time at which the `Release` was created.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// CustomTargetTypeSnapshots: Output only. Snapshot of the custom target
+	// types referenced by the targets taken at release creation time.
+	CustomTargetTypeSnapshots []*CustomTargetType `json:"customTargetTypeSnapshots,omitempty"`
+
 	// DeliveryPipelineSnapshot: Output only. Snapshot of the parent
 	// pipeline taken at release creation time.
 	DeliveryPipelineSnapshot *DeliveryPipeline `json:"deliveryPipelineSnapshot,omitempty"`
@@ -3852,9 +4205,9 @@ type Release struct {
 	// additionally constrained to be <= 128 bytes.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Optional. Name of the `Release`. Format is projects/{project}/
-	// locations/{location}/deliveryPipelines/{deliveryPipeline}/
-	// releases/a-z{0,62}.
+	// Name: Optional. Name of the `Release`. Format is
+	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPi
+	// peline}/releases/a-z{0,62}`.
 	Name string `json:"name,omitempty"`
 
 	// RenderEndTime: Output only. Time at which the render completed.
@@ -3936,7 +4289,7 @@ type ReleaseCondition struct {
 	ReleaseReadyCondition *ReleaseReadyCondition `json:"releaseReadyCondition,omitempty"`
 
 	// SkaffoldSupportedCondition: Details around the support state of the
-	// release's skaffold version.
+	// release's Skaffold version.
 	SkaffoldSupportedCondition *SkaffoldSupportedCondition `json:"skaffoldSupportedCondition,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3972,8 +4325,14 @@ type ReleaseNotificationEvent struct {
 	// Message: Debug message for when a notification fails to send.
 	Message string `json:"message,omitempty"`
 
+	// PipelineUid: Unique identifier of the `DeliveryPipeline`.
+	PipelineUid string `json:"pipelineUid,omitempty"`
+
 	// Release: The name of the `Release`.
 	Release string `json:"release,omitempty"`
+
+	// ReleaseUid: Unique identifier of the `Release`.
+	ReleaseUid string `json:"releaseUid,omitempty"`
 
 	// Type: Type of this notification, e.g. for a Pub/Sub failure.
 	//
@@ -3986,6 +4345,7 @@ type ReleaseNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -4054,7 +4414,12 @@ type ReleaseRenderEvent struct {
 	// further details as rendering progresses through render states.
 	Message string `json:"message,omitempty"`
 
-	// Release: The name of the release.
+	// PipelineUid: Unique identifier of the `DeliveryPipeline`.
+	PipelineUid string `json:"pipelineUid,omitempty"`
+
+	// Release: The name of the release. release_uid is not in this log
+	// message because we write some of these log messages at release
+	// creation time, before we've generated the uid.
 	Release string `json:"release,omitempty"`
 
 	// ReleaseRenderState: The state of the release render.
@@ -4066,6 +4431,23 @@ type ReleaseRenderEvent struct {
 	// have failed.
 	//   "IN_PROGRESS" - Rendering has started and is not complete.
 	ReleaseRenderState string `json:"releaseRenderState,omitempty"`
+
+	// Type: Type of this notification, e.g. for a release render state
+	// change event.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED" - Type is unspecified.
+	//   "TYPE_PUBSUB_NOTIFICATION_FAILURE" - A Pub/Sub notification failed
+	// to be sent.
+	//   "TYPE_RESOURCE_STATE_CHANGE" - Resource state changed.
+	//   "TYPE_PROCESS_ABORTED" - A process aborted.
+	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
+	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
+	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
+	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
+	// used. Use release_render log type instead.
+	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Message") to
 	// unconditionally include in API requests. By default, fields with
@@ -4096,6 +4478,10 @@ type RenderMetadata struct {
 	// CloudRun: Output only. Metadata associated with rendering for Cloud
 	// Run.
 	CloudRun *CloudRunRenderMetadata `json:"cloudRun,omitempty"`
+
+	// Custom: Output only. Custom metadata provided by user-defined render
+	// operation.
+	Custom *CustomMetadata `json:"custom,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CloudRun") to
 	// unconditionally include in API requests. By default, fields with
@@ -4191,6 +4577,13 @@ type RepairRolloutOperation struct {
 	// action in the repair sequence.
 	CurrentRepairModeIndex int64 `json:"currentRepairModeIndex,omitempty,string"`
 
+	// JobId: Output only. The job ID for the Job to repair.
+	JobId string `json:"jobId,omitempty"`
+
+	// PhaseId: Output only. The phase ID of the phase that includes the job
+	// being repaired.
+	PhaseId string `json:"phaseId,omitempty"`
+
 	// RepairPhases: Output only. Records of the repair attempts. Each
 	// repair phase may have multiple retry attempts or single rollback
 	// attempt.
@@ -4234,7 +4627,7 @@ type RepairRolloutRule struct {
 
 	// Id: Required. ID of the rule. This id must be unique in the
 	// `Automation` resource to which this rule belongs. The format is
-	// a-z{0,62}.
+	// `a-z{0,62}`.
 	Id string `json:"id,omitempty"`
 
 	// Jobs: Optional. Jobs to repair. Proceeds only after job name matched
@@ -4284,8 +4677,8 @@ func (s *RepairRolloutRule) MarshalJSON() ([]byte, error) {
 
 // Retry: Retries the failed job.
 type Retry struct {
-	// Attempts: Required. Total number of retries. Retry will skipped if
-	// set to 0; The minimum value is 1, and the maximum value is 10.
+	// Attempts: Required. Total number of retries. Retry is skipped if set
+	// to 0; The minimum value is 1, and the maximum value is 10.
 	Attempts int64 `json:"attempts,omitempty,string"`
 
 	// BackoffMode: Optional. The pattern of how wait time will be
@@ -4341,6 +4734,7 @@ type RetryAttempt struct {
 	//   "REPAIR_STATE_IN_PROGRESS" - The `repair` action is in progress.
 	//   "REPAIR_STATE_PENDING" - The `repair` action is pending.
 	//   "REPAIR_STATE_SKIPPED" - The `repair` action was skipped.
+	//   "REPAIR_STATE_ABORTED" - The `repair` action was aborted.
 	State string `json:"state,omitempty"`
 
 	// StateDesc: Output only. Description of the state of the Retry.
@@ -4510,6 +4904,7 @@ type RollbackAttempt struct {
 	//   "REPAIR_STATE_IN_PROGRESS" - The `repair` action is in progress.
 	//   "REPAIR_STATE_PENDING" - The `repair` action is pending.
 	//   "REPAIR_STATE_SKIPPED" - The `repair` action was skipped.
+	//   "REPAIR_STATE_ABORTED" - The `repair` action was aborted.
 	State string `json:"state,omitempty"`
 
 	// StateDesc: Output only. Description of the state of the Rollback.
@@ -4676,9 +5071,9 @@ type Rollout struct {
 	ApproveTime string `json:"approveTime,omitempty"`
 
 	// ControllerRollout: Output only. Name of the `ControllerRollout`.
-	// Format is projects/{project}/
-	// locations/{location}/deliveryPipelines/{deliveryPipeline}/
-	// releases/{release}/rollouts/a-z{0,62}.
+	// Format is
+	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPi
+	// peline}/releases/{release}/rollouts/a-z{0,62}`.
 	ControllerRollout string `json:"controllerRollout,omitempty"`
 
 	// CreateTime: Output only. Time at which the `Rollout` was created.
@@ -4704,10 +5099,12 @@ type Rollout struct {
 	// alloted time.
 	//   "RELEASE_FAILED" - Release is in a failed state.
 	//   "RELEASE_ABANDONED" - Release is abandoned.
-	//   "VERIFICATION_CONFIG_NOT_FOUND" - No skaffold verify configuration
+	//   "VERIFICATION_CONFIG_NOT_FOUND" - No Skaffold verify configuration
 	// was found.
 	//   "CLOUD_BUILD_REQUEST_FAILED" - Cloud Build failed to fulfill Cloud
 	// Deploy's request. See failure_message for additional details.
+	//   "OPERATION_FEATURE_NOT_SUPPORTED" - A Rollout operation had a
+	// feature configured that is not supported.
 	DeployFailureCause string `json:"deployFailureCause,omitempty"`
 
 	// DeployStartTime: Output only. Time at which the `Rollout` started
@@ -4749,9 +5146,9 @@ type Rollout struct {
 	// rollout.
 	Metadata *Metadata `json:"metadata,omitempty"`
 
-	// Name: Optional. Name of the `Rollout`. Format is projects/{project}/
-	// locations/{location}/deliveryPipelines/{deliveryPipeline}/
-	// releases/{release}/rollouts/a-z{0,62}.
+	// Name: Optional. Name of the `Rollout`. Format is
+	// `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPi
+	// peline}/releases/{release}/rollouts/a-z{0,62}`.
 	Name string `json:"name,omitempty"`
 
 	// Phases: Output only. The phases that represent the workflows of this
@@ -4830,11 +5227,17 @@ type RolloutNotificationEvent struct {
 	// PipelineUid: Unique identifier of the `DeliveryPipeline`.
 	PipelineUid string `json:"pipelineUid,omitempty"`
 
+	// Release: The name of the `Release`.
+	Release string `json:"release,omitempty"`
+
 	// ReleaseUid: Unique identifier of the `Release`.
 	ReleaseUid string `json:"releaseUid,omitempty"`
 
 	// Rollout: The name of the `Rollout`.
 	Rollout string `json:"rollout,omitempty"`
+
+	// RolloutUid: Unique identifier of the `Rollout`.
+	RolloutUid string `json:"rolloutUid,omitempty"`
 
 	// TargetId: ID of the `Target` that the rollout is deployed to.
 	TargetId string `json:"targetId,omitempty"`
@@ -4850,6 +5253,7 @@ type RolloutNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -4887,10 +5291,15 @@ type RolloutUpdateEvent struct {
 	// PipelineUid: Unique identifier of the pipeline.
 	PipelineUid string `json:"pipelineUid,omitempty"`
 
+	// Release: The name of the `Release`.
+	Release string `json:"release,omitempty"`
+
 	// ReleaseUid: Unique identifier of the release.
 	ReleaseUid string `json:"releaseUid,omitempty"`
 
-	// Rollout: The name of the rollout.
+	// Rollout: The name of the rollout. rollout_uid is not in this log
+	// message because we write some of these log messages at rollout
+	// creation time, before we've generated the uid.
 	Rollout string `json:"rollout,omitempty"`
 
 	// RolloutUpdateType: The type of the rollout update.
@@ -4927,6 +5336,7 @@ type RolloutUpdateEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -5092,34 +5502,140 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SkaffoldGCSSource: Cloud Storage bucket containing Skaffold Config
+// modules.
+type SkaffoldGCSSource struct {
+	// Path: Optional. Relative path from the source to the Skaffold file.
+	Path string `json:"path,omitempty"`
+
+	// Source: Required. Cloud Storage source paths to copy recursively. For
+	// example, providing "gs://my-bucket/dir/configs/*" will result in
+	// Skaffold copying all files within the "dir/configs" directory in the
+	// bucket "my-bucket".
+	Source string `json:"source,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SkaffoldGCSSource) MarshalJSON() ([]byte, error) {
+	type NoMethod SkaffoldGCSSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SkaffoldGitSource: Git repository containing Skaffold Config modules.
+type SkaffoldGitSource struct {
+	// Path: Optional. Relative path from the repository root to the
+	// Skaffold file.
+	Path string `json:"path,omitempty"`
+
+	// Ref: Optional. Git ref the package should be cloned from.
+	Ref string `json:"ref,omitempty"`
+
+	// Repo: Required. Git repository the package should be cloned from.
+	Repo string `json:"repo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Path") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Path") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SkaffoldGitSource) MarshalJSON() ([]byte, error) {
+	type NoMethod SkaffoldGitSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SkaffoldModules: Skaffold Config modules and their remote source.
+type SkaffoldModules struct {
+	// Configs: Optional. The Skaffold Config modules to use from the
+	// specified source.
+	Configs []string `json:"configs,omitempty"`
+
+	// Git: Remote git repository containing the Skaffold Config modules.
+	Git *SkaffoldGitSource `json:"git,omitempty"`
+
+	// GoogleCloudStorage: Cloud Storage bucket containing the Skaffold
+	// Config modules.
+	GoogleCloudStorage *SkaffoldGCSSource `json:"googleCloudStorage,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Configs") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Configs") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SkaffoldModules) MarshalJSON() ([]byte, error) {
+	type NoMethod SkaffoldModules
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SkaffoldSupportedCondition: SkaffoldSupportedCondition contains
-// information about when support for the release's version of skaffold
+// information about when support for the release's version of Skaffold
 // ends.
 type SkaffoldSupportedCondition struct {
 	// MaintenanceModeTime: The time at which this release's version of
-	// skaffold will enter maintenance mode.
+	// Skaffold will enter maintenance mode.
 	MaintenanceModeTime string `json:"maintenanceModeTime,omitempty"`
 
-	// SkaffoldSupportState: The skaffold support state for this release's
-	// version of skaffold.
+	// SkaffoldSupportState: The Skaffold support state for this release's
+	// version of Skaffold.
 	//
 	// Possible values:
 	//   "SKAFFOLD_SUPPORT_STATE_UNSPECIFIED" - Default value. This value is
 	// unused.
-	//   "SKAFFOLD_SUPPORT_STATE_SUPPORTED" - This skaffold version is
+	//   "SKAFFOLD_SUPPORT_STATE_SUPPORTED" - This Skaffold version is
 	// currently supported.
-	//   "SKAFFOLD_SUPPORT_STATE_MAINTENANCE_MODE" - This skaffold version
+	//   "SKAFFOLD_SUPPORT_STATE_MAINTENANCE_MODE" - This Skaffold version
 	// is in maintenance mode.
-	//   "SKAFFOLD_SUPPORT_STATE_UNSUPPORTED" - This skaffold version is no
+	//   "SKAFFOLD_SUPPORT_STATE_UNSUPPORTED" - This Skaffold version is no
 	// longer supported.
 	SkaffoldSupportState string `json:"skaffoldSupportState,omitempty"`
 
-	// Status: True if the version of skaffold used by this release is
+	// Status: True if the version of Skaffold used by this release is
 	// supported.
 	Status bool `json:"status,omitempty"`
 
 	// SupportExpirationTime: The time at which this release's version of
-	// skaffold will no longer be supported.
+	// Skaffold will no longer be supported.
 	SupportExpirationTime string `json:"supportExpirationTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaintenanceModeTime")
@@ -5148,7 +5664,7 @@ func (s *SkaffoldSupportedCondition) MarshalJSON() ([]byte, error) {
 
 // SkaffoldVersion: Details of a supported Skaffold version.
 type SkaffoldVersion struct {
-	// MaintenanceModeTime: The time at which this version of skaffold will
+	// MaintenanceModeTime: The time at which this version of Skaffold will
 	// enter maintenance mode.
 	MaintenanceModeTime string `json:"maintenanceModeTime,omitempty"`
 
@@ -5156,7 +5672,7 @@ type SkaffoldVersion struct {
 	// supported.
 	SupportEndDate *Date `json:"supportEndDate,omitempty"`
 
-	// SupportExpirationTime: The time at which this version of skaffold
+	// SupportExpirationTime: The time at which this version of Skaffold
 	// will no longer be supported.
 	SupportExpirationTime string `json:"supportExpirationTime,omitempty"`
 
@@ -5361,6 +5877,9 @@ type Target struct {
 	// CreateTime: Output only. Time at which the `Target` was created.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// CustomTarget: Optional. Information specifying a Custom Target.
+	CustomTarget *CustomTarget `json:"customTarget,omitempty"`
+
 	// DeployParameters: Optional. The deploy parameters to use for this
 	// target.
 	DeployParameters map[string]string `json:"deployParameters,omitempty"`
@@ -5400,7 +5919,7 @@ type Target struct {
 	MultiTarget *MultiTarget `json:"multiTarget,omitempty"`
 
 	// Name: Optional. Name of the `Target`. Format is
-	// projects/{project}/locations/{location}/targets/a-z{0,62}.
+	// `projects/{project}/locations/{location}/targets/a-z{0,62}`.
 	Name string `json:"name,omitempty"`
 
 	// RequireApproval: Optional. Whether or not the `Target` requires
@@ -5489,11 +6008,7 @@ func (s *TargetArtifact) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TargetAttribute: Contains criteria for selecting Targets. Attributes
-// provided must match the target resource in order for policy
-// restrictions to apply. E.g. if id "prod" and labels "foo: bar" are
-// given the target resource must match both that id and have that label
-// in order to be selected.
+// TargetAttribute: Contains criteria for selecting Targets.
 type TargetAttribute struct {
 	// Id: ID of the `Target`. The value of this field could be one of the
 	// following: * The last segment of a target name. It only needs the ID
@@ -5549,6 +6064,7 @@ type TargetNotificationEvent struct {
 	//   "TYPE_RESTRICTION_VIOLATED" - Restriction check failed.
 	//   "TYPE_RESOURCE_DELETED" - Resource deleted.
 	//   "TYPE_ROLLOUT_UPDATE" - Rollout updated.
+	//   "TYPE_DEPLOY_POLICY_EVALUATION" - Deploy Policy evaluation.
 	//   "TYPE_RENDER_STATUES_CHANGE" - Deprecated: This field is never
 	// used. Use release_render log type instead.
 	Type string `json:"type,omitempty"`
@@ -5594,11 +6110,16 @@ type TargetRender struct {
 	// Deploy's request. See failure_message for additional details.
 	//   "VERIFICATION_CONFIG_NOT_FOUND" - The render operation did not
 	// complete successfully because the verification stanza required for
-	// verify was not found on the skaffold configuration.
+	// verify was not found on the Skaffold configuration.
 	//   "CUSTOM_ACTION_NOT_FOUND" - The render operation did not complete
 	// successfully because the custom action required for predeploy or
-	// postdeploy was not found in the skaffold configuration. See
+	// postdeploy was not found in the Skaffold configuration. See
 	// failure_message for additional details.
+	//   "DEPLOYMENT_STRATEGY_NOT_SUPPORTED" - Release failed during
+	// rendering because the release configuration is not supported with the
+	// specified deployment strategy.
+	//   "RENDER_FEATURE_NOT_SUPPORTED" - The render operation had a feature
+	// configured that is not supported.
 	FailureCause string `json:"failureCause,omitempty"`
 
 	// FailureMessage: Output only. Additional information about the render
@@ -5648,13 +6169,14 @@ func (s *TargetRender) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// TargetsPresentCondition: TargetsPresentCondition contains information
-// on any Targets defined in the Delivery Pipeline that do not actually
-// exist.
+// TargetsPresentCondition: `TargetsPresentCondition` contains
+// information on any Targets referenced in the Delivery Pipeline that
+// do not actually exist.
 type TargetsPresentCondition struct {
 	// MissingTargets: The list of Target names that do not exist. For
 	// example,
-	// projects/{project_id}/locations/{location_name}/targets/{target_name}.
+	// `projects/{project_id}/locations/{location_name}/targets/{target_name}
+	// `.
 	MissingTargets []string `json:"missingTargets,omitempty"`
 
 	// Status: True if there aren't any missing Targets.
@@ -5812,7 +6334,7 @@ type VerifyJobRun struct {
 
 	// Build: Output only. The resource name of the Cloud Build `Build`
 	// object that is used to verify. Format is
-	// projects/{project}/locations/{location}/builds/{build}.
+	// `projects/{project}/locations/{location}/builds/{build}`.
 	Build string `json:"build,omitempty"`
 
 	// EventLogPath: Output only. File path of the Skaffold event log
@@ -6368,6 +6890,1296 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
+// method id "clouddeploy.projects.locations.customTargetTypes.create":
+
+type ProjectsLocationsCustomTargetTypesCreateCall struct {
+	s                *Service
+	parent           string
+	customtargettype *CustomTargetType
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Create: Creates a new CustomTargetType in a given project and
+// location.
+//
+//   - parent: The parent collection in which the `CustomTargetType`
+//     should be created. Format should be
+//     `projects/{project_id}/locations/{location_name}`.
+func (r *ProjectsLocationsCustomTargetTypesService) Create(parent string, customtargettype *CustomTargetType) *ProjectsLocationsCustomTargetTypesCreateCall {
+	c := &ProjectsLocationsCustomTargetTypesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.customtargettype = customtargettype
+	return c
+}
+
+// CustomTargetTypeId sets the optional parameter "customTargetTypeId":
+// Required. ID of the `CustomTargetType`.
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) CustomTargetTypeId(customTargetTypeId string) *ProjectsLocationsCustomTargetTypesCreateCall {
+	c.urlParams_.Set("customTargetTypeId", customTargetTypeId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that for at least 60
+// minutes after the first request. For example, consider a situation
+// where you make an initial request and the request times out. If you
+// make the request again with the same request ID, the server can check
+// if original operation with the same request ID was received, and if
+// so, will ignore the second request. This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) RequestId(requestId string) *ProjectsLocationsCustomTargetTypesCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to
+// true, the request is validated and the user is provided with an
+// expected result, but no actual change is made.
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) ValidateOnly(validateOnly bool) *ProjectsLocationsCustomTargetTypesCreateCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomTargetTypesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) Context(ctx context.Context) *ProjectsLocationsCustomTargetTypesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customtargettype)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customTargetTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.customTargetTypes.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomTargetTypesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new CustomTargetType in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customTargetTypes",
+	//   "httpMethod": "POST",
+	//   "id": "clouddeploy.projects.locations.customTargetTypes.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "customTargetTypeId": {
+	//       "description": "Required. ID of the `CustomTargetType`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent collection in which the `CustomTargetType` should be created. Format should be `projects/{project_id}/locations/{location_name}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. If set to true, the request is validated and the user is provided with an expected result, but no actual change is made.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customTargetTypes",
+	//   "request": {
+	//     "$ref": "CustomTargetType"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.customTargetTypes.delete":
+
+type ProjectsLocationsCustomTargetTypesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single CustomTargetType.
+//
+//   - name: The name of the `CustomTargetType` to delete. Format must be
+//     `projects/{project_id}/locations/{location_name}/customTargetTypes/{
+//     custom_target_type}`.
+func (r *ProjectsLocationsCustomTargetTypesService) Delete(name string) *ProjectsLocationsCustomTargetTypesDeleteCall {
+	c := &ProjectsLocationsCustomTargetTypesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, then deleting an already deleted or non-existing
+// `CustomTargetType` will succeed.
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) AllowMissing(allowMissing bool) *ProjectsLocationsCustomTargetTypesDeleteCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// Etag sets the optional parameter "etag": This checksum is computed by
+// the server based on the value of other fields, and may be sent on
+// update and delete requests to ensure the client has an up-to-date
+// value before proceeding.
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) Etag(etag string) *ProjectsLocationsCustomTargetTypesDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that for at least 60
+// minutes after the first request. For example, consider a situation
+// where you make an initial request and the request times out. If you
+// make the request again with the same request ID, the server can check
+// if original operation with the same request ID was received, and if
+// so, will ignore the second request. This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) RequestId(requestId string) *ProjectsLocationsCustomTargetTypesDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to
+// true, the request is validated but no actual change is made.
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsCustomTargetTypesDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomTargetTypesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) Context(ctx context.Context) *ProjectsLocationsCustomTargetTypesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.customTargetTypes.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomTargetTypesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single CustomTargetType.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customTargetTypes/{customTargetTypesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "clouddeploy.projects.locations.customTargetTypes.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "Optional. If set to true, then deleting an already deleted or non-existing `CustomTargetType` will succeed.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "etag": {
+	//       "description": "Optional. This checksum is computed by the server based on the value of other fields, and may be sent on update and delete requests to ensure the client has an up-to-date value before proceeding.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The name of the `CustomTargetType` to delete. Format must be `projects/{project_id}/locations/{location_name}/customTargetTypes/{custom_target_type}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/customTargetTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. If set to true, the request is validated but no actual change is made.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.customTargetTypes.get":
+
+type ProjectsLocationsCustomTargetTypesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single CustomTargetType.
+//
+//   - name: Name of the `CustomTargetType`. Format must be
+//     `projects/{project_id}/locations/{location_name}/customTargetTypes/{
+//     custom_target_type}`.
+func (r *ProjectsLocationsCustomTargetTypesService) Get(name string) *ProjectsLocationsCustomTargetTypesGetCall {
+	c := &ProjectsLocationsCustomTargetTypesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomTargetTypesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomTargetTypesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCustomTargetTypesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsCustomTargetTypesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomTargetTypesGetCall) Context(ctx context.Context) *ProjectsLocationsCustomTargetTypesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomTargetTypesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomTargetTypesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.customTargetTypes.get" call.
+// Exactly one of *CustomTargetType or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CustomTargetType.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomTargetTypesGetCall) Do(opts ...googleapi.CallOption) (*CustomTargetType, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CustomTargetType{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single CustomTargetType.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customTargetTypes/{customTargetTypesId}",
+	//   "httpMethod": "GET",
+	//   "id": "clouddeploy.projects.locations.customTargetTypes.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the `CustomTargetType`. Format must be `projects/{project_id}/locations/{location_name}/customTargetTypes/{custom_target_type}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/customTargetTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "CustomTargetType"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.customTargetTypes.getIamPolicy":
+
+type ProjectsLocationsCustomTargetTypesGetIamPolicyCall struct {
+	s            *Service
+	resource     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
+// set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
+func (r *ProjectsLocationsCustomTargetTypesService) GetIamPolicy(resource string) *ProjectsLocationsCustomTargetTypesGetIamPolicyCall {
+	c := &ProjectsLocationsCustomTargetTypesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	return c
+}
+
+// OptionsRequestedPolicyVersion sets the optional parameter
+// "options.requestedPolicyVersion": The maximum policy version that
+// will be used to format the policy. Valid values are 0, 1, and 3.
+// Requests specifying an invalid value will be rejected. Requests for
+// policies with any conditional role bindings must specify version 3.
+// Policies with no conditional role bindings may specify any valid
+// value or leave the field unset. The policy in the response might use
+// the policy version that you specified, or it might use a lower policy
+// version. For example, if you specify version 3, but the policy has no
+// conditional role bindings, the response uses version 1. To learn
+// which resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies).
+func (c *ProjectsLocationsCustomTargetTypesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsCustomTargetTypesGetIamPolicyCall {
+	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomTargetTypesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomTargetTypesGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCustomTargetTypesGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsCustomTargetTypesGetIamPolicyCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomTargetTypesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsCustomTargetTypesGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomTargetTypesGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomTargetTypesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.customTargetTypes.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsCustomTargetTypesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customTargetTypes/{customTargetTypesId}:getIamPolicy",
+	//   "httpMethod": "GET",
+	//   "id": "clouddeploy.projects.locations.customTargetTypes.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "options.requestedPolicyVersion": {
+	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/customTargetTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:getIamPolicy",
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.customTargetTypes.list":
+
+type ProjectsLocationsCustomTargetTypesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists CustomTargetTypes in a given project and location.
+//
+//   - parent: The parent that owns this collection of custom target
+//     types. Format must be
+//     `projects/{project_id}/locations/{location_name}`.
+func (r *ProjectsLocationsCustomTargetTypesService) List(parent string) *ProjectsLocationsCustomTargetTypesListCall {
+	c := &ProjectsLocationsCustomTargetTypesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter custom target
+// types to be returned. See https://google.aip.dev/160 for more
+// details.
+func (c *ProjectsLocationsCustomTargetTypesListCall) Filter(filter string) *ProjectsLocationsCustomTargetTypesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to sort by. See
+// https://google.aip.dev/132#ordering for more details.
+func (c *ProjectsLocationsCustomTargetTypesListCall) OrderBy(orderBy string) *ProjectsLocationsCustomTargetTypesListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of `CustomTargetType` objects to return. The service may return fewer
+// than this value. If unspecified, at most 50 `CustomTargetType`
+// objects will be returned. The maximum value is 1000; values above
+// 1000 will be set to 1000.
+func (c *ProjectsLocationsCustomTargetTypesListCall) PageSize(pageSize int64) *ProjectsLocationsCustomTargetTypesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListCustomTargetTypes` call. Provide this
+// to retrieve the subsequent page. When paginating, all other provided
+// parameters match the call that provided the page token.
+func (c *ProjectsLocationsCustomTargetTypesListCall) PageToken(pageToken string) *ProjectsLocationsCustomTargetTypesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomTargetTypesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomTargetTypesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCustomTargetTypesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsCustomTargetTypesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomTargetTypesListCall) Context(ctx context.Context) *ProjectsLocationsCustomTargetTypesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomTargetTypesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomTargetTypesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customTargetTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.customTargetTypes.list" call.
+// Exactly one of *ListCustomTargetTypesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListCustomTargetTypesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomTargetTypesListCall) Do(opts ...googleapi.CallOption) (*ListCustomTargetTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListCustomTargetTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists CustomTargetTypes in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customTargetTypes",
+	//   "httpMethod": "GET",
+	//   "id": "clouddeploy.projects.locations.customTargetTypes.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter custom target types to be returned. See https://google.aip.dev/160 for more details.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Field to sort by. See https://google.aip.dev/132#ordering for more details.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of `CustomTargetType` objects to return. The service may return fewer than this value. If unspecified, at most 50 `CustomTargetType` objects will be returned. The maximum value is 1000; values above 1000 will be set to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListCustomTargetTypes` call. Provide this to retrieve the subsequent page. When paginating, all other provided parameters match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent that owns this collection of custom target types. Format must be `projects/{project_id}/locations/{location_name}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customTargetTypes",
+	//   "response": {
+	//     "$ref": "ListCustomTargetTypesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsCustomTargetTypesListCall) Pages(ctx context.Context, f func(*ListCustomTargetTypesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "clouddeploy.projects.locations.customTargetTypes.patch":
+
+type ProjectsLocationsCustomTargetTypesPatchCall struct {
+	s                *Service
+	name             string
+	customtargettype *CustomTargetType
+	urlParams_       gensupport.URLParams
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// Patch: Updates a single CustomTargetType.
+//
+//   - name: Optional. Name of the `CustomTargetType`. Format is
+//     `projects/{project}/locations/{location}/customTargetTypes/a-z{0,62}
+//     `.
+func (r *ProjectsLocationsCustomTargetTypesService) Patch(name string, customtargettype *CustomTargetType) *ProjectsLocationsCustomTargetTypesPatchCall {
+	c := &ProjectsLocationsCustomTargetTypesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.customtargettype = customtargettype
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, updating a `CustomTargetType` that does not exist will result
+// in the creation of a new `CustomTargetType`.
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) AllowMissing(allowMissing bool) *ProjectsLocationsCustomTargetTypesPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID to
+// identify requests. Specify a unique request ID so that if you must
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that for at least 60
+// minutes after the first request. For example, consider a situation
+// where you make an initial request and the request times out. If you
+// make the request again with the same request ID, the server can check
+// if original operation with the same request ID was received, and if
+// so, will ignore the second request. This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) RequestId(requestId string) *ProjectsLocationsCustomTargetTypesPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the
+// `CustomTargetType` resource by the update. The fields specified in
+// the update_mask are relative to the resource, not the full request. A
+// field will be overwritten if it's in the mask. If the user doesn't
+// provide a mask then all fields are overwritten.
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsCustomTargetTypesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set to
+// true, the request is validated and the user is provided with an
+// expected result, but no actual change is made.
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) ValidateOnly(validateOnly bool) *ProjectsLocationsCustomTargetTypesPatchCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomTargetTypesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) Context(ctx context.Context) *ProjectsLocationsCustomTargetTypesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customtargettype)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.customTargetTypes.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsCustomTargetTypesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a single CustomTargetType.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customTargetTypes/{customTargetTypesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "clouddeploy.projects.locations.customTargetTypes.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "Optional. If set to true, updating a `CustomTargetType` that does not exist will result in the creation of a new `CustomTargetType`.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Optional. Name of the `CustomTargetType`. Format is `projects/{project}/locations/{location}/customTargetTypes/a-z{0,62}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/customTargetTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the `CustomTargetType` resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it's in the mask. If the user doesn't provide a mask then all fields are overwritten.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. If set to true, the request is validated and the user is provided with an expected result, but no actual change is made.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "CustomTargetType"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "clouddeploy.projects.locations.customTargetTypes.setIamPolicy":
+
+type ProjectsLocationsCustomTargetTypesSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
+func (r *ProjectsLocationsCustomTargetTypesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsCustomTargetTypesSetIamPolicyCall {
+	c := &ProjectsLocationsCustomTargetTypesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCustomTargetTypesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsCustomTargetTypesSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCustomTargetTypesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsCustomTargetTypesSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCustomTargetTypesSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCustomTargetTypesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "clouddeploy.projects.locations.customTargetTypes.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsCustomTargetTypesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/customTargetTypes/{customTargetTypesId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "clouddeploy.projects.locations.customTargetTypes.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/customTargetTypes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "clouddeploy.projects.locations.deliveryPipelines.create":
 
 type ProjectsLocationsDeliveryPipelinesCreateCall struct {
@@ -6384,7 +8196,7 @@ type ProjectsLocationsDeliveryPipelinesCreateCall struct {
 //
 //   - parent: The parent collection in which the `DeliveryPipeline`
 //     should be created. Format should be
-//     projects/{project_id}/locations/{location_name}.
+//     `projects/{project_id}/locations/{location_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesService) Create(parent string, deliverypipeline *DeliveryPipeline) *ProjectsLocationsDeliveryPipelinesCreateCall {
 	c := &ProjectsLocationsDeliveryPipelinesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6401,16 +8213,16 @@ func (c *ProjectsLocationsDeliveryPipelinesCreateCall) DeliveryPipelineId(delive
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server will guarantee that for at
-// least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and the request times
-// out. If you make the request again with the same request ID, the
-// server can check if original operation with the same request ID was
-// received, and if so, will ignore the second request. This prevents
-// clients from accidentally creating duplicate commitments. The request
-// ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that for at least 60
+// minutes after the first request. For example, consider a situation
+// where you make an initial request and the request times out. If you
+// make the request again with the same request ID, the server can check
+// if original operation with the same request ID was received, and if
+// so, will ignore the second request. This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsDeliveryPipelinesCreateCall) RequestId(requestId string) *ProjectsLocationsDeliveryPipelinesCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -6529,14 +8341,14 @@ func (c *ProjectsLocationsDeliveryPipelinesCreateCall) Do(opts ...googleapi.Call
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent collection in which the `DeliveryPipeline` should be created. Format should be projects/{project_id}/locations/{location_name}.",
+	//       "description": "Required. The parent collection in which the `DeliveryPipeline` should be created. Format should be `projects/{project_id}/locations/{location_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6574,8 +8386,8 @@ type ProjectsLocationsDeliveryPipelinesDeleteCall struct {
 //
 //   - name: The name of the `DeliveryPipeline` to delete. Format should
 //     be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesService) Delete(name string) *ProjectsLocationsDeliveryPipelinesDeleteCall {
 	c := &ProjectsLocationsDeliveryPipelinesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6609,16 +8421,16 @@ func (c *ProjectsLocationsDeliveryPipelinesDeleteCall) Force(force bool) *Projec
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server will guarantee that for at
-// least 60 minutes after the first request. For example, consider a
-// situation where you make an initial request and the request times
-// out. If you make the request again with the same request ID, the
-// server can check if original operation with the same request ID was
-// received, and if so, will ignore the second request. This prevents
-// clients from accidentally creating duplicate commitments. The request
-// ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that for at least 60
+// minutes after the first request. For example, consider a situation
+// where you make an initial request and the request times out. If you
+// make the request again with the same request ID, the server can check
+// if original operation with the same request ID was received, and if
+// so, will ignore the second request. This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsDeliveryPipelinesDeleteCall) RequestId(requestId string) *ProjectsLocationsDeliveryPipelinesDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -6742,14 +8554,14 @@ func (c *ProjectsLocationsDeliveryPipelinesDeleteCall) Do(opts ...googleapi.Call
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the `DeliveryPipeline` to delete. Format should be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}.",
+	//       "description": "Required. The name of the `DeliveryPipeline` to delete. Format should be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6784,8 +8596,8 @@ type ProjectsLocationsDeliveryPipelinesGetCall struct {
 // Get: Gets details of a single DeliveryPipeline.
 //
 //   - name: Name of the `DeliveryPipeline`. Format must be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesService) Get(name string) *ProjectsLocationsDeliveryPipelinesGetCall {
 	c := &ProjectsLocationsDeliveryPipelinesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6900,7 +8712,7 @@ func (c *ProjectsLocationsDeliveryPipelinesGetCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `DeliveryPipeline`. Format must be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}.",
+	//       "description": "Required. Name of the `DeliveryPipeline`. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -7107,7 +8919,7 @@ type ProjectsLocationsDeliveryPipelinesListCall struct {
 // List: Lists DeliveryPipelines in a given project and location.
 //
 //   - parent: The parent, which owns this collection of pipelines. Format
-//     must be projects/{project_id}/locations/{location_name}.
+//     must be `projects/{project_id}/locations/{location_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesService) List(parent string) *ProjectsLocationsDeliveryPipelinesListCall {
 	c := &ProjectsLocationsDeliveryPipelinesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -7275,7 +9087,7 @@ func (c *ProjectsLocationsDeliveryPipelinesListCall) Do(opts ...googleapi.CallOp
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of pipelines. Format must be projects/{project_id}/locations/{location_name}.",
+	//       "description": "Required. The parent, which owns this collection of pipelines. Format must be `projects/{project_id}/locations/{location_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -7328,8 +9140,8 @@ type ProjectsLocationsDeliveryPipelinesPatchCall struct {
 // Patch: Updates the parameters of a single DeliveryPipeline.
 //
 //   - name: Optional. Name of the `DeliveryPipeline`. Format is
-//     projects/{project}/
-//     locations/{location}/deliveryPipelines/a-z{0,62}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/a-z{0,62}
+//     `.
 func (r *ProjectsLocationsDeliveryPipelinesService) Patch(name string, deliverypipeline *DeliveryPipeline) *ProjectsLocationsDeliveryPipelinesPatchCall {
 	c := &ProjectsLocationsDeliveryPipelinesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7347,16 +9159,16 @@ func (c *ProjectsLocationsDeliveryPipelinesPatchCall) AllowMissing(allowMissing 
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server will guarantee that for at
-// least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and the request times
-// out. If you make the request again with the same request ID, the
-// server can check if original operation with the same request ID was
-// received, and if so, will ignore the second request. This prevents
-// clients from accidentally creating duplicate commitments. The request
-// ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that for at least 60
+// minutes after the first request. For example, consider a situation
+// where you make an initial request and the request times out. If you
+// make the request again with the same request ID, the server can check
+// if original operation with the same request ID was received, and if
+// so, will ignore the second request. This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsDeliveryPipelinesPatchCall) RequestId(requestId string) *ProjectsLocationsDeliveryPipelinesPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -7366,8 +9178,8 @@ func (c *ProjectsLocationsDeliveryPipelinesPatchCall) RequestId(requestId string
 // mask is used to specify the fields to be overwritten in the
 // `DeliveryPipeline` resource by the update. The fields specified in
 // the update_mask are relative to the resource, not the full request. A
-// field will be overwritten if it is in the mask. If the user does not
-// provide a mask then all fields will be overwritten.
+// field will be overwritten if it's in the mask. If the user doesn't
+// provide a mask then all fields are overwritten.
 func (c *ProjectsLocationsDeliveryPipelinesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDeliveryPipelinesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7486,19 +9298,19 @@ func (c *ProjectsLocationsDeliveryPipelinesPatchCall) Do(opts ...googleapi.CallO
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Optional. Name of the `DeliveryPipeline`. Format is projects/{project}/ locations/{location}/deliveryPipelines/a-z{0,62}.",
+	//       "description": "Optional. Name of the `DeliveryPipeline`. Format is `projects/{project}/locations/{location}/deliveryPipelines/a-z{0,62}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the `DeliveryPipeline` resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the `DeliveryPipeline` resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it's in the mask. If the user doesn't provide a mask then all fields are overwritten.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7539,8 +9351,8 @@ type ProjectsLocationsDeliveryPipelinesRollbackTargetCall struct {
 //
 //   - name: The `DeliveryPipeline` for which the rollback `Rollout`
 //     should be created. Format should be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesService) RollbackTarget(name string, rollbacktargetrequest *RollbackTargetRequest) *ProjectsLocationsDeliveryPipelinesRollbackTargetCall {
 	c := &ProjectsLocationsDeliveryPipelinesRollbackTargetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7648,7 +9460,7 @@ func (c *ProjectsLocationsDeliveryPipelinesRollbackTargetCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The `DeliveryPipeline` for which the rollback `Rollout` should be created. Format should be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}.",
+	//       "description": "Required. The `DeliveryPipeline` for which the rollback `Rollout` should be created. Format should be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -7984,8 +9796,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall struct {
 // error.
 //
 //   - name: Name of the `AutomationRun`. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{delivery_
-//     pipeline}/automationRuns/{automation_run}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     _pipeline}/automationRuns/{automation_run}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationRunsService) Cancel(name string, cancelautomationrunrequest *CancelAutomationRunRequest) *ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8093,7 +9905,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsCancelCall) Do(opts ...
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `AutomationRun`. Format is projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automationRuns/{automation_run}.",
+	//       "description": "Required. Name of the `AutomationRun`. Format is `projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automationRuns/{automation_run}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/automationRuns/[^/]+$",
 	//       "required": true,
@@ -8128,8 +9940,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall struct {
 // Get: Gets details of a single AutomationRun.
 //
 //   - name: Name of the `AutomationRun`. Format must be
-//     projects/{project}/locations/{location}/deliveryPipelines/{delivery_
-//     pipeline}/automationRuns/{automation_run}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     _pipeline}/automationRuns/{automation_run}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationRunsService) Get(name string) *ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8244,7 +10056,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsGetCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `AutomationRun`. Format must be projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automationRuns/{automation_run}.",
+	//       "description": "Required. Name of the `AutomationRun`. Format must be `projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automationRuns/{automation_run}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/automationRuns/[^/]+$",
 	//       "required": true,
@@ -8275,10 +10087,10 @@ type ProjectsLocationsDeliveryPipelinesAutomationRunsListCall struct {
 
 // List: Lists AutomationRuns in a given project and location.
 //
-//   - parent: The parent, which owns this collection of automationRuns.
-//     Format must be
-//     projects/{project}/locations/{location}/deliveryPipelines/{delivery_
-//     pipeline}.
+//   - parent: The parent `Delivery Pipeline`, which owns this collection
+//     of automationRuns. Format must be
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     _pipeline}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationRunsService) List(parent string) *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationRunsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8445,7 +10257,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationRunsListCall) Do(opts ...go
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of automationRuns. Format must be projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}.",
+	//       "description": "Required. The parent `Delivery Pipeline`, which owns this collection of automationRuns. Format must be `projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -8499,8 +10311,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationsCreateCall struct {
 //
 //   - parent: The parent collection in which the `Automation` should be
 //     created. Format should be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) Create(parent string, automation *Automation) *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8517,16 +10329,16 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall) AutomationId(a
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server will guarantee that for at
-// least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and the request times
-// out. If you make the request again with the same request ID, the
-// server can check if original operation with the same request ID was
-// received, and if so, will ignore the second request. This prevents
-// clients from accidentally creating duplicate commitments. The request
-// ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that for at least 60
+// minutes after the first request. For example, consider a situation
+// where you make an initial request and the request times out. If you
+// make the request again with the same request ID, the server can check
+// if original operation with the same request ID was received, and if
+// so, will ignore the second request. This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall) RequestId(requestId string) *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -8645,14 +10457,14 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsCreateCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent collection in which the `Automation` should be created. Format should be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}.",
+	//       "description": "Required. The parent collection in which the `Automation` should be created. Format should be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8689,8 +10501,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall struct {
 // Delete: Deletes a single Automation resource.
 //
 //   - name: The name of the `Automation` to delete. Format should be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}/automations/{automation_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}/automations/{automation_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) Delete(name string) *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8716,16 +10528,16 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall) Etag(etag stri
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server will guarantee that for at
-// least 60 minutes after the first request. For example, consider a
-// situation where you make an initial request and the request times
-// out. If you make the request again with the same request ID, the
-// server can check if original operation with the same request ID was
-// received, and if so, will ignore the second request. This prevents
-// clients from accidentally creating duplicate commitments. The request
-// ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that for at least 60
+// minutes after the first request. For example, consider a situation
+// where you make an initial request and the request times out. If you
+// make the request again with the same request ID, the server can check
+// if original operation with the same request ID was received, and if
+// so, will ignore the second request. This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall) RequestId(requestId string) *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -8844,14 +10656,14 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsDeleteCall) Do(opts ...goo
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the `Automation` to delete. Format should be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/automations/{automation_name}.",
+	//       "description": "Required. The name of the `Automation` to delete. Format should be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/automations/{automation_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/automations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8886,8 +10698,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationsGetCall struct {
 // Get: Gets details of a single Automation.
 //
 //   - name: Name of the `Automation`. Format must be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}/automations/{automation_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}/automations/{automation_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) Get(name string) *ProjectsLocationsDeliveryPipelinesAutomationsGetCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9002,7 +10814,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsGetCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `Automation`. Format must be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/automations/{automation_name}.",
+	//       "description": "Required. Name of the `Automation`. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/automations/{automation_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/automations/[^/]+$",
 	//       "required": true,
@@ -9033,10 +10845,10 @@ type ProjectsLocationsDeliveryPipelinesAutomationsListCall struct {
 
 // List: Lists Automations in a given project and location.
 //
-//   - parent: The parent, which owns this collection of automations.
-//     Format must be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}.
+//   - parent: The parent `Delivery Pipeline`, which owns this collection
+//     of automations. Format must be
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) List(parent string) *ProjectsLocationsDeliveryPipelinesAutomationsListCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9203,7 +11015,7 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsListCall) Do(opts ...googl
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of automations. Format must be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}.",
+	//       "description": "Required. The parent `Delivery Pipeline`, which owns this collection of automations. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -9256,8 +11068,8 @@ type ProjectsLocationsDeliveryPipelinesAutomationsPatchCall struct {
 // Patch: Updates the parameters of a single Automation resource.
 //
 //   - name: Output only. Name of the `Automation`. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{delivery_
-//     pipeline}/automations/{automation}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     _pipeline}/automations/{automation}`.
 func (r *ProjectsLocationsDeliveryPipelinesAutomationsService) Patch(name string, automation *Automation) *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall {
 	c := &ProjectsLocationsDeliveryPipelinesAutomationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9275,16 +11087,16 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) AllowMissing(al
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server will guarantee that for at
-// least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and the request times
-// out. If you make the request again with the same request ID, the
-// server can check if original operation with the same request ID was
-// received, and if so, will ignore the second request. This prevents
-// clients from accidentally creating duplicate commitments. The request
-// ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that for at least 60
+// minutes after the first request. For example, consider a situation
+// where you make an initial request and the request times out. If you
+// make the request again with the same request ID, the server can check
+// if original operation with the same request ID was received, and if
+// so, will ignore the second request. This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) RequestId(requestId string) *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -9294,8 +11106,8 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) RequestId(reque
 // mask is used to specify the fields to be overwritten in the
 // `Automation` resource by the update. The fields specified in the
 // update_mask are relative to the resource, not the full request. A
-// field will be overwritten if it is in the mask. If the user does not
-// provide a mask then all fields will be overwritten.
+// field will be overwritten if it's in the mask. If the user doesn't
+// provide a mask then all fields are overwritten.
 func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -9414,19 +11226,19 @@ func (c *ProjectsLocationsDeliveryPipelinesAutomationsPatchCall) Do(opts ...goog
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Output only. Name of the `Automation`. Format is projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automations/{automation}.",
+	//       "description": "Output only. Name of the `Automation`. Format is `projects/{project}/locations/{location}/deliveryPipelines/{delivery_pipeline}/automations/{automation}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/automations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the `Automation` resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the `Automation` resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it's in the mask. If the user doesn't provide a mask then all fields are overwritten.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -9465,8 +11277,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesAbandonCall struct {
 // Abandon: Abandons a Release in the Delivery Pipeline.
 //
 //   - name: Name of the Release. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     Pipeline}/releases/{release}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesService) Abandon(name string, abandonreleaserequest *AbandonReleaseRequest) *ProjectsLocationsDeliveryPipelinesReleasesAbandonCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesAbandonCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9574,7 +11386,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesAbandonCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Release. Format is projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}.",
+	//       "description": "Required. Name of the Release. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+$",
 	//       "required": true,
@@ -9610,8 +11422,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesCreateCall struct {
 //
 //   - parent: The parent collection in which the `Release` should be
 //     created. Format should be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesService) Create(parent string, release *Release) *ProjectsLocationsDeliveryPipelinesReleasesCreateCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -9628,16 +11440,16 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesCreateCall) ReleaseId(release
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server will guarantee that for at
-// least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and the request times
-// out. If you make the request again with the same request ID, the
-// server can check if original operation with the same request ID was
-// received, and if so, will ignore the second request. This prevents
-// clients from accidentally creating duplicate commitments. The request
-// ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that for at least 60
+// minutes after the first request. For example, consider a situation
+// where you make an initial request and the request times out. If you
+// make the request again with the same request ID, the server can check
+// if original operation with the same request ID was received, and if
+// so, will ignore the second request. This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsDeliveryPipelinesReleasesCreateCall) RequestId(requestId string) *ProjectsLocationsDeliveryPipelinesReleasesCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -9751,7 +11563,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesCreateCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent collection in which the `Release` should be created. Format should be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}.",
+	//       "description": "Required. The parent collection in which the `Release` should be created. Format should be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+$",
 	//       "required": true,
@@ -9763,7 +11575,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesCreateCall) Do(opts ...google
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -9801,8 +11613,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesGetCall struct {
 // Get: Gets details of a single Release.
 //
 //   - name: Name of the `Release`. Format must be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}/releases/{release_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}/releases/{release_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesService) Get(name string) *ProjectsLocationsDeliveryPipelinesReleasesGetCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9917,7 +11729,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesGetCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `Release`. Format must be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}.",
+	//       "description": "Required. Name of the `Release`. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+$",
 	//       "required": true,
@@ -10171,8 +11983,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsAdvanceCall struct {
 // Advance: Advances a Rollout in a given project and location.
 //
 //   - name: Name of the Rollout. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}/rollouts/{rollout}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     Pipeline}/releases/{release}/rollouts/{rollout}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Advance(name string, advancerolloutrequest *AdvanceRolloutRequest) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsAdvanceCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsAdvanceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10280,7 +12092,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsAdvanceCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Rollout. Format is projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}/rollouts/{rollout}.",
+	//       "description": "Required. Name of the Rollout. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+$",
 	//       "required": true,
@@ -10315,8 +12127,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsApproveCall struct {
 // Approve: Approves a Rollout.
 //
 //   - name: Name of the Rollout. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}/rollouts/{rollout}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     Pipeline}/releases/{release}/rollouts/{rollout}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Approve(name string, approverolloutrequest *ApproveRolloutRequest) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsApproveCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsApproveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10424,7 +12236,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsApproveCall) Do(opts 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Rollout. Format is projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}/rollouts/{rollout}.",
+	//       "description": "Required. Name of the Rollout. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+$",
 	//       "required": true,
@@ -10459,8 +12271,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsCancelCall struct {
 // Cancel: Cancels a Rollout in a given project and location.
 //
 //   - name: Name of the Rollout. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}/rollouts/{rollout}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     Pipeline}/releases/{release}/rollouts/{rollout}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Cancel(name string, cancelrolloutrequest *CancelRolloutRequest) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCancelCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10568,7 +12380,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCancelCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the Rollout. Format is projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}/rollouts/{rollout}.",
+	//       "description": "Required. Name of the Rollout. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+$",
 	//       "required": true,
@@ -10604,8 +12416,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall struct {
 //
 //   - parent: The parent collection in which the `Rollout` should be
 //     created. Format should be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}/releases/{release_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}/releases/{release_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Create(parent string, rollout *Rollout) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10615,16 +12427,16 @@ func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Create(paren
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server will guarantee that for at
-// least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and the request times
-// out. If you make the request again with the same request ID, the
-// server can check if original operation with the same request ID was
-// received, and if so, will ignore the second request. This prevents
-// clients from accidentally creating duplicate commitments. The request
-// ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that for at least 60
+// minutes after the first request. For example, consider a situation
+// where you make an initial request and the request times out. If you
+// make the request again with the same request ID, the server can check
+// if original operation with the same request ID was received, and if
+// so, will ignore the second request. This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall) RequestId(requestId string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -10753,14 +12565,14 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsCreateCall) Do(opts .
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent collection in which the `Rollout` should be created. Format should be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}.",
+	//       "description": "Required. The parent collection in which the `Rollout` should be created. Format should be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -10808,8 +12620,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsGetCall struct {
 // Get: Gets details of a single Rollout.
 //
 //   - name: Name of the `Rollout`. Format must be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}/releases/{release_name}/rollouts/{rollout_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}/releases/{release_name}/rollouts/{rollout_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) Get(name string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsGetCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10924,7 +12736,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsGetCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `Rollout`. Format must be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}/rollouts/{rollout_name}.",
+	//       "description": "Required. Name of the `Rollout`. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}/rollouts/{rollout_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+$",
 	//       "required": true,
@@ -10956,8 +12768,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsIgnoreJobCall struct {
 // IgnoreJob: Ignores the specified Job in a Rollout.
 //
 //   - rollout: Name of the Rollout. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}/rollouts/{rollout}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     Pipeline}/releases/{release}/rollouts/{rollout}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) IgnoreJob(rollout string, ignorejobrequest *IgnoreJobRequest) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsIgnoreJobCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsIgnoreJobCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.rollout = rollout
@@ -11065,7 +12877,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsIgnoreJobCall) Do(opt
 	//   ],
 	//   "parameters": {
 	//     "rollout": {
-	//       "description": "Required. Name of the Rollout. Format is projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}/rollouts/{rollout}.",
+	//       "description": "Required. Name of the Rollout. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+$",
 	//       "required": true,
@@ -11322,8 +13134,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall struct {
 // RetryJob: Retries the specified Job in a Rollout.
 //
 //   - rollout: Name of the Rollout. Format is
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}/rollouts/{rollout}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     Pipeline}/releases/{release}/rollouts/{rollout}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsService) RetryJob(rollout string, retryjobrequest *RetryJobRequest) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.rollout = rollout
@@ -11431,7 +13243,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsRetryJobCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "rollout": {
-	//       "description": "Required. Name of the Rollout. Format is projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}/rollouts/{rollout}.",
+	//       "description": "Required. Name of the Rollout. Format is `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+$",
 	//       "required": true,
@@ -11466,9 +13278,9 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall struct {
 // Get: Gets details of a single JobRun.
 //
 //   - name: Name of the `JobRun`. Format must be
-//     projects/{project_id}/locations/{location_name}/deliveryPipelines/{p
-//     ipeline_name}/releases/{release_name}/rollouts/{rollout_name}/jobRun
-//     s/{job_run_name}.
+//     `projects/{project_id}/locations/{location_name}/deliveryPipelines/{
+//     pipeline_name}/releases/{release_name}/rollouts/{rollout_name}/jobRu
+//     ns/{job_run_name}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsService) Get(name string) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11583,7 +13395,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsGetCall) Do(op
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `JobRun`. Format must be projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}/rollouts/{rollout_name}/jobRuns/{job_run_name}.",
+	//       "description": "Required. Name of the `JobRun`. Format must be `projects/{project_id}/locations/{location_name}/deliveryPipelines/{pipeline_name}/releases/{release_name}/rollouts/{rollout_name}/jobRuns/{job_run_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+/jobRuns/[^/]+$",
 	//       "required": true,
@@ -11836,8 +13648,8 @@ type ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsTerminateCall stru
 // Terminate: Terminates a Job Run in a given project and location.
 //
 //   - name: Name of the `JobRun`. Format must be
-//     projects/{project}/locations/{location}/deliveryPipelines/{deliveryP
-//     ipeline}/ releases/{release}/rollouts/{rollout}/jobRuns/{jobRun}.
+//     `projects/{project}/locations/{location}/deliveryPipelines/{delivery
+//     Pipeline}/releases/{release}/rollouts/{rollout}/jobRuns/{jobRun}`.
 func (r *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsService) Terminate(name string, terminatejobrunrequest *TerminateJobRunRequest) *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsTerminateCall {
 	c := &ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsTerminateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11945,7 +13757,7 @@ func (c *ProjectsLocationsDeliveryPipelinesReleasesRolloutsJobRunsTerminateCall)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `JobRun`. Format must be projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/ releases/{release}/rollouts/{rollout}/jobRuns/{jobRun}.",
+	//       "description": "Required. Name of the `JobRun`. Format must be `projects/{project}/locations/{location}/deliveryPipelines/{deliveryPipeline}/releases/{release}/rollouts/{rollout}/jobRuns/{jobRun}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/deliveryPipelines/[^/]+/releases/[^/]+/rollouts/[^/]+/jobRuns/[^/]+$",
 	//       "required": true,
@@ -12621,7 +14433,7 @@ type ProjectsLocationsTargetsCreateCall struct {
 //
 //   - parent: The parent collection in which the `Target` should be
 //     created. Format should be
-//     projects/{project_id}/locations/{location_name}.
+//     `projects/{project_id}/locations/{location_name}`.
 func (r *ProjectsLocationsTargetsService) Create(parent string, target *Target) *ProjectsLocationsTargetsCreateCall {
 	c := &ProjectsLocationsTargetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -12631,16 +14443,16 @@ func (r *ProjectsLocationsTargetsService) Create(parent string, target *Target) 
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server will guarantee that for at
-// least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and the request times
-// out. If you make the request again with the same request ID, the
-// server can check if original operation with the same request ID was
-// received, and if so, will ignore the second request. This prevents
-// clients from accidentally creating duplicate commitments. The request
-// ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that for at least 60
+// minutes after the first request. For example, consider a situation
+// where you make an initial request and the request times out. If you
+// make the request again with the same request ID, the server can check
+// if original operation with the same request ID was received, and if
+// so, will ignore the second request. This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsTargetsCreateCall) RequestId(requestId string) *ProjectsLocationsTargetsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -12761,14 +14573,14 @@ func (c *ProjectsLocationsTargetsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent collection in which the `Target` should be created. Format should be projects/{project_id}/locations/{location_name}.",
+	//       "description": "Required. The parent collection in which the `Target` should be created. Format should be `projects/{project_id}/locations/{location_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -12810,8 +14622,8 @@ type ProjectsLocationsTargetsDeleteCall struct {
 // Delete: Deletes a single Target.
 //
 //   - name: The name of the `Target` to delete. Format should be
-//     projects/{project_id}/locations/{location_name}/targets/{target_name
-//     }.
+//     `projects/{project_id}/locations/{location_name}/targets/{target_nam
+//     e}`.
 func (r *ProjectsLocationsTargetsService) Delete(name string) *ProjectsLocationsTargetsDeleteCall {
 	c := &ProjectsLocationsTargetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12837,16 +14649,16 @@ func (c *ProjectsLocationsTargetsDeleteCall) Etag(etag string) *ProjectsLocation
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server will guarantee that for at
-// least 60 minutes after the first request. For example, consider a
-// situation where you make an initial request and the request times
-// out. If you make the request again with the same request ID, the
-// server can check if original operation with the same request ID was
-// received, and if so, will ignore the second request. This prevents
-// clients from accidentally creating duplicate commitments. The request
-// ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that for at least 60
+// minutes after the first request. For example, consider a situation
+// where you make an initial request and the request times out. If you
+// make the request again with the same request ID, the server can check
+// if original operation with the same request ID was received, and if
+// so, will ignore the second request. This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsTargetsDeleteCall) RequestId(requestId string) *ProjectsLocationsTargetsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -12965,14 +14777,14 @@ func (c *ProjectsLocationsTargetsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The name of the `Target` to delete. Format should be projects/{project_id}/locations/{location_name}/targets/{target_name}.",
+	//       "description": "Required. The name of the `Target` to delete. Format should be `projects/{project_id}/locations/{location_name}/targets/{target_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/targets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -13007,8 +14819,8 @@ type ProjectsLocationsTargetsGetCall struct {
 // Get: Gets details of a single Target.
 //
 //   - name: Name of the `Target`. Format must be
-//     projects/{project_id}/locations/{location_name}/targets/{target_name
-//     }.
+//     `projects/{project_id}/locations/{location_name}/targets/{target_nam
+//     e}`.
 func (r *ProjectsLocationsTargetsService) Get(name string) *ProjectsLocationsTargetsGetCall {
 	c := &ProjectsLocationsTargetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13123,7 +14935,7 @@ func (c *ProjectsLocationsTargetsGetCall) Do(opts ...googleapi.CallOption) (*Tar
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the `Target`. Format must be projects/{project_id}/locations/{location_name}/targets/{target_name}.",
+	//       "description": "Required. Name of the `Target`. Format must be `projects/{project_id}/locations/{location_name}/targets/{target_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/targets/[^/]+$",
 	//       "required": true,
@@ -13330,7 +15142,7 @@ type ProjectsLocationsTargetsListCall struct {
 // List: Lists Targets in a given project and location.
 //
 //   - parent: The parent, which owns this collection of targets. Format
-//     must be projects/{project_id}/locations/{location_name}.
+//     must be `projects/{project_id}/locations/{location_name}`.
 func (r *ProjectsLocationsTargetsService) List(parent string) *ProjectsLocationsTargetsListCall {
 	c := &ProjectsLocationsTargetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -13498,7 +15310,7 @@ func (c *ProjectsLocationsTargetsListCall) Do(opts ...googleapi.CallOption) (*Li
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of targets. Format must be projects/{project_id}/locations/{location_name}.",
+	//       "description": "Required. The parent, which owns this collection of targets. Format must be `projects/{project_id}/locations/{location_name}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -13551,7 +15363,7 @@ type ProjectsLocationsTargetsPatchCall struct {
 // Patch: Updates the parameters of a single Target.
 //
 //   - name: Optional. Name of the `Target`. Format is
-//     projects/{project}/locations/{location}/targets/a-z{0,62}.
+//     `projects/{project}/locations/{location}/targets/a-z{0,62}`.
 func (r *ProjectsLocationsTargetsService) Patch(name string, target *Target) *ProjectsLocationsTargetsPatchCall {
 	c := &ProjectsLocationsTargetsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -13569,16 +15381,16 @@ func (c *ProjectsLocationsTargetsPatchCall) AllowMissing(allowMissing bool) *Pro
 
 // RequestId sets the optional parameter "requestId": A request ID to
 // identify requests. Specify a unique request ID so that if you must
-// retry your request, the server will know to ignore the request if it
-// has already been completed. The server will guarantee that for at
-// least 60 minutes since the first request. For example, consider a
-// situation where you make an initial request and the request times
-// out. If you make the request again with the same request ID, the
-// server can check if original operation with the same request ID was
-// received, and if so, will ignore the second request. This prevents
-// clients from accidentally creating duplicate commitments. The request
-// ID must be a valid UUID with the exception that zero UUID is not
-// supported (00000000-0000-0000-0000-000000000000).
+// retry your request, the server knows to ignore the request if it has
+// already been completed. The server guarantees that for at least 60
+// minutes after the first request. For example, consider a situation
+// where you make an initial request and the request times out. If you
+// make the request again with the same request ID, the server can check
+// if original operation with the same request ID was received, and if
+// so, will ignore the second request. This prevents clients from
+// accidentally creating duplicate commitments. The request ID must be a
+// valid UUID with the exception that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
 func (c *ProjectsLocationsTargetsPatchCall) RequestId(requestId string) *ProjectsLocationsTargetsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
@@ -13588,8 +15400,8 @@ func (c *ProjectsLocationsTargetsPatchCall) RequestId(requestId string) *Project
 // mask is used to specify the fields to be overwritten in the Target
 // resource by the update. The fields specified in the update_mask are
 // relative to the resource, not the full request. A field will be
-// overwritten if it is in the mask. If the user does not provide a mask
-// then all fields will be overwritten.
+// overwritten if it's in the mask. If the user doesn't provide a mask
+// then all fields are overwritten.
 func (c *ProjectsLocationsTargetsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsTargetsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -13708,19 +15520,19 @@ func (c *ProjectsLocationsTargetsPatchCall) Do(opts ...googleapi.CallOption) (*O
 	//       "type": "boolean"
 	//     },
 	//     "name": {
-	//       "description": "Optional. Name of the `Target`. Format is projects/{project}/locations/{location}/targets/a-z{0,62}.",
+	//       "description": "Optional. Name of the `Target`. Format is `projects/{project}/locations/{location}/targets/a-z{0,62}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/targets/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "requestId": {
-	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "description": "Optional. A request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server knows to ignore the request if it has already been completed. The server guarantees that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the Target resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. If the user does not provide a mask then all fields will be overwritten.",
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the Target resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it's in the mask. If the user doesn't provide a mask then all fields are overwritten.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "playdeveloperreporting:v1beta1"
 const apiName = "playdeveloperreporting"
 const apiVersion = "v1beta1"
 const basePath = "https://playdeveloperreporting.googleapis.com/"
+const basePathTemplate = "https://playdeveloperreporting.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://playdeveloperreporting.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -330,7 +334,8 @@ type GooglePlayDeveloperReportingV1beta1Anomaly struct {
 	// MetricSet: Metric set resource where the anomaly was detected.
 	MetricSet string `json:"metricSet,omitempty"`
 
-	// Name: Name of the anomaly. Format: apps/{app}/anomalies/{anomaly}
+	// Name: Identifier. Name of the anomaly. Format:
+	// apps/{app}/anomalies/{anomaly}
 	Name string `json:"name,omitempty"`
 
 	// TimelineSpec: Timeline specification that covers the anomaly period.
@@ -433,7 +438,8 @@ type GooglePlayDeveloperReportingV1beta1AnrRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
 
-	// Name: The resource name. Format: apps/{app}/anrRateMetricSet
+	// Name: Identifier. The resource name. Format:
+	// apps/{app}/anrRateMetricSet
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -471,7 +477,7 @@ type GooglePlayDeveloperReportingV1beta1App struct {
 	// the Play Store. Example: `Google Maps`.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: The resource name. Format: apps/{app}
+	// Name: Identifier. The resource name. Format: apps/{app}
 	Name string `json:"name,omitempty"`
 
 	// PackageName: Package name of the app. Example: `com.example.app123`.
@@ -608,7 +614,8 @@ type GooglePlayDeveloperReportingV1beta1CrashRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
 
-	// Name: The resource name. Format: apps/{app}/crashRateMetricSet
+	// Name: Identifier. The resource name. Format:
+	// apps/{app}/crashRateMetricSet
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -931,9 +938,14 @@ type GooglePlayDeveloperReportingV1beta1ErrorIssue struct {
 	// method name that caused the error.
 	Location string `json:"location,omitempty"`
 
-	// Name: The resource name of the issue. Format:
-	// apps/{app}/errorIssues/{issue}
+	// Name: Identifier. The resource name of the issue. Format:
+	// apps/{app}/{issue}
 	Name string `json:"name,omitempty"`
+
+	// SampleErrorReports: Output only. Sample error reports which belong to
+	// this ErrorIssue. *Note:* currently a maximum of 1 per ErrorIssue is
+	// supported. Format: "apps/{app}/{report}"
+	SampleErrorReports []string `json:"sampleErrorReports,omitempty"`
 
 	// Type: Type of the errors grouped in this issue.
 	//
@@ -978,6 +990,10 @@ func (s *GooglePlayDeveloperReportingV1beta1ErrorIssue) MarshalJSON() ([]byte, e
 // resource, the calling user needs the _View app information
 // (read-only)_ permission for the app.
 type GooglePlayDeveloperReportingV1beta1ErrorReport struct {
+	// AppVersion: The app version on which an event in this error report
+	// occurred on.
+	AppVersion *GooglePlayDeveloperReportingV1beta1AppVersion `json:"appVersion,omitempty"`
+
 	// DeviceModel: A device model on which an event in this error report
 	// occurred on.
 	DeviceModel *GooglePlayDeveloperReportingV1beta1DeviceModelSummary `json:"deviceModel,omitempty"`
@@ -992,8 +1008,7 @@ type GooglePlayDeveloperReportingV1beta1ErrorReport struct {
 	// reports being assigned to a different issue.
 	Issue string `json:"issue,omitempty"`
 
-	// Name: The resource name of the report. Format:
-	// apps/{app}/errorReports/{report}
+	// Name: The resource name of the report. Format: apps/{app}/{report}
 	Name string `json:"name,omitempty"`
 
 	// OsVersion: The OS version on which an event in this error report
@@ -1021,7 +1036,13 @@ type GooglePlayDeveloperReportingV1beta1ErrorReport struct {
 	// SIGSEGV.
 	Type string `json:"type,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DeviceModel") to
+	// VcsInformation: Version control system information from
+	// BUNDLE-METADATA/version-control-info.textproto or
+	// META-INF/version-control-info.textproto of the app bundle or APK,
+	// respectively.
+	VcsInformation string `json:"vcsInformation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppVersion") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1029,10 +1050,10 @@ type GooglePlayDeveloperReportingV1beta1ErrorReport struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DeviceModel") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AppVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1103,7 +1124,7 @@ type GooglePlayDeveloperReportingV1beta1ExcessiveWakeupRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
 
-	// Name: The resource name. Format:
+	// Name: Identifier. The resource name. Format:
 	// apps/{app}/excessiveWakeupRateMetricSet
 	Name string `json:"name,omitempty"`
 
@@ -2725,7 +2746,7 @@ type GooglePlayDeveloperReportingV1beta1SlowRenderingRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
 
-	// Name: The resource name. Format:
+	// Name: Identifier. The resource name. Format:
 	// apps/{app}/slowRenderingRateMetricSet
 	Name string `json:"name,omitempty"`
 
@@ -2815,7 +2836,8 @@ type GooglePlayDeveloperReportingV1beta1SlowStartRateMetricSet struct {
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
 
-	// Name: The resource name. Format: apps/{app}/slowStartRateMetricSet
+	// Name: Identifier. The resource name. Format:
+	// apps/{app}/slowStartRateMetricSet
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2905,7 +2927,7 @@ type GooglePlayDeveloperReportingV1beta1StuckBackgroundWakelockRateMetricSet str
 	// FreshnessInfo: Summary about data freshness in this resource.
 	FreshnessInfo *GooglePlayDeveloperReportingV1beta1FreshnessInfo `json:"freshnessInfo,omitempty"`
 
-	// Name: The resource name. Format:
+	// Name: Identifier. The resource name. Format:
 	// apps/{app}/stuckBackgroundWakelockRateMetricSet
 	Name string `json:"name,omitempty"`
 
@@ -4984,6 +5006,15 @@ func (c *VitalsErrorsIssuesSearchCall) PageToken(pageToken string) *VitalsErrors
 	return c
 }
 
+// SampleErrorReportLimit sets the optional parameter
+// "sampleErrorReportLimit": Number of sample error reports to return
+// per ErrorIssue. If unspecified, 0 will be used. *Note:* currently
+// only 0 and 1 are supported.
+func (c *VitalsErrorsIssuesSearchCall) SampleErrorReportLimit(sampleErrorReportLimit int64) *VitalsErrorsIssuesSearchCall {
+	c.urlParams_.Set("sampleErrorReportLimit", fmt.Sprint(sampleErrorReportLimit))
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -5237,6 +5268,12 @@ func (c *VitalsErrorsIssuesSearchCall) Do(opts ...googleapi.CallOption) (*Google
 	//       "pattern": "^apps/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
+	//     },
+	//     "sampleErrorReportLimit": {
+	//       "description": "Optional. Number of sample error reports to return per ErrorIssue. If unspecified, 0 will be used. *Note:* currently only 0 and 1 are supported.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
 	//     }
 	//   },
 	//   "path": "v1beta1/{+parent}/errorIssues:search",
@@ -5310,7 +5347,9 @@ func (r *VitalsErrorsReportsService) Search(parent string) *VitalsErrorsReportsS
 // `NATIVE_CRASH`, `ANR`. Example: `errorIssueType = JAVA_CRASH OR
 // errorIssueType = NATIVE_CRASH`. * `errorIssueId`: Matches error
 // reports belonging to the requested error issue ids only. Example:
-// `errorIssueId = 1234 OR errorIssueId = 4567`. * `appProcessState`:
+// `errorIssueId = 1234 OR errorIssueId = 4567`. * `errorReportId`:
+// Matches error reports with the requested error report id. Example:
+// `errorReportId = 1234 OR errorReportId = 4567`. * `appProcessState`:
 // Matches error reports on the process state of an app, indicating
 // whether an app runs in the foreground (user-visible) or background.
 // Valid candidates: `FOREGROUND`, `BACKGROUND`. Example:
@@ -5633,7 +5672,7 @@ func (c *VitalsErrorsReportsSearchCall) Do(opts ...googleapi.CallOption) (*Googl
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "A selection predicate to retrieve only a subset of the reports. For filtering basics, please check [AIP-160](https://google.aip.dev/160). ** Supported field names:** * `apiLevel`: Matches error reports that occurred in the requested Android versions (specified as the numeric API level) only. Example: `apiLevel = 28 OR apiLevel = 29`. * `versionCode`: Matches error reports that occurred in the requested app version codes only. Example: `versionCode = 123 OR versionCode = 456`. * `deviceModel`: Matches error issues that occurred in the requested devices. Example: `deviceModel = \"google/walleye\" OR deviceModel = \"google/marlin\"`. * `deviceBrand`: Matches error issues that occurred in the requested device brands. Example: `deviceBrand = \"Google\". * `deviceType`: Matches error reports that occurred in the requested device types. Example: `deviceType = \"PHONE\"`. * `errorIssueType`: Matches error reports of the requested types only. Valid candidates: `JAVA_CRASH`, `NATIVE_CRASH`, `ANR`. Example: `errorIssueType = JAVA_CRASH OR errorIssueType = NATIVE_CRASH`. * `errorIssueId`: Matches error reports belonging to the requested error issue ids only. Example: `errorIssueId = 1234 OR errorIssueId = 4567`. * `appProcessState`: Matches error reports on the process state of an app, indicating whether an app runs in the foreground (user-visible) or background. Valid candidates: `FOREGROUND`, `BACKGROUND`. Example: `appProcessState = FOREGROUND`. * `isUserPerceived`: Matches error reports that are user-perceived. It is not accompanied by any operators. Example: `isUserPerceived`. ** Supported operators:** * Comparison operators: The only supported comparison operator is equality. The filtered field must appear on the left hand side of the comparison. * Logical Operators: Logical operators `AND` and `OR` can be used to build complex filters following a conjunctive normal form (CNF), i.e., conjunctions of disjunctions. The `OR` operator takes precedence over `AND` so the use of parenthesis is not necessary when building CNF. The `OR` operator is only supported to build disjunctions that apply to the same field, e.g., `versionCode = 123 OR versionCode = ANR`. The filter expression `versionCode = 123 OR errorIssueType = ANR` is not valid. ** Examples ** Some valid filtering expressions: * `versionCode = 123 AND errorIssueType = ANR` * `versionCode = 123 AND errorIssueType = OR errorIssueType = CRASH` * `versionCode = 123 AND (errorIssueType = OR errorIssueType = CRASH)`",
+	//       "description": "A selection predicate to retrieve only a subset of the reports. For filtering basics, please check [AIP-160](https://google.aip.dev/160). ** Supported field names:** * `apiLevel`: Matches error reports that occurred in the requested Android versions (specified as the numeric API level) only. Example: `apiLevel = 28 OR apiLevel = 29`. * `versionCode`: Matches error reports that occurred in the requested app version codes only. Example: `versionCode = 123 OR versionCode = 456`. * `deviceModel`: Matches error issues that occurred in the requested devices. Example: `deviceModel = \"google/walleye\" OR deviceModel = \"google/marlin\"`. * `deviceBrand`: Matches error issues that occurred in the requested device brands. Example: `deviceBrand = \"Google\". * `deviceType`: Matches error reports that occurred in the requested device types. Example: `deviceType = \"PHONE\"`. * `errorIssueType`: Matches error reports of the requested types only. Valid candidates: `JAVA_CRASH`, `NATIVE_CRASH`, `ANR`. Example: `errorIssueType = JAVA_CRASH OR errorIssueType = NATIVE_CRASH`. * `errorIssueId`: Matches error reports belonging to the requested error issue ids only. Example: `errorIssueId = 1234 OR errorIssueId = 4567`. * `errorReportId`: Matches error reports with the requested error report id. Example: `errorReportId = 1234 OR errorReportId = 4567`. * `appProcessState`: Matches error reports on the process state of an app, indicating whether an app runs in the foreground (user-visible) or background. Valid candidates: `FOREGROUND`, `BACKGROUND`. Example: `appProcessState = FOREGROUND`. * `isUserPerceived`: Matches error reports that are user-perceived. It is not accompanied by any operators. Example: `isUserPerceived`. ** Supported operators:** * Comparison operators: The only supported comparison operator is equality. The filtered field must appear on the left hand side of the comparison. * Logical Operators: Logical operators `AND` and `OR` can be used to build complex filters following a conjunctive normal form (CNF), i.e., conjunctions of disjunctions. The `OR` operator takes precedence over `AND` so the use of parenthesis is not necessary when building CNF. The `OR` operator is only supported to build disjunctions that apply to the same field, e.g., `versionCode = 123 OR versionCode = ANR`. The filter expression `versionCode = 123 OR errorIssueType = ANR` is not valid. ** Examples ** Some valid filtering expressions: * `versionCode = 123 AND errorIssueType = ANR` * `versionCode = 123 AND errorIssueType = OR errorIssueType = CRASH` * `versionCode = 123 AND (errorIssueType = OR errorIssueType = CRASH)`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

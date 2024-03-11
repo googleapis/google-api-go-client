@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "networkconnectivity:v1"
 const apiName = "networkconnectivity"
 const apiVersion = "v1"
 const basePath = "https://networkconnectivity.googleapis.com/"
+const basePathTemplate = "https://networkconnectivity.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://networkconnectivity.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -527,11 +531,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -543,11 +570,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -678,6 +714,10 @@ type ConsumerPscConnection struct {
 	// PscConnectionId: The PSC connection id of the PSC forwarding rule
 	// connected to the service attachments in this service connection map.
 	PscConnectionId string `json:"pscConnectionId,omitempty"`
+
+	// SelectedSubnetwork: Output only. The URI of the selected subnetwork
+	// selected to allocate IP address for this connection.
+	SelectedSubnetwork string `json:"selectedSubnetwork,omitempty"`
 
 	// ServiceAttachmentUri: The URI of a service attachment which is the
 	// target of the PSC connection.
@@ -2554,6 +2594,10 @@ type PscConnection struct {
 	// PscConnectionId: The PSC connection id of the PSC forwarding rule.
 	PscConnectionId string `json:"pscConnectionId,omitempty"`
 
+	// SelectedSubnetwork: Output only. The URI of the subnetwork selected
+	// to allocate IP address for this connection.
+	SelectedSubnetwork string `json:"selectedSubnetwork,omitempty"`
+
 	// State: State of the PSC Connection
 	//
 	// Possible values:
@@ -2680,8 +2724,8 @@ type Route struct {
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-labels#requirements).
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Location: Output only. The location of the route. Uses the following
-	// form: "projects/{project}/locations/{location}" Example:
+	// Location: Output only. The origin location of the route. Uses the
+	// following form: "projects/{project}/locations/{location}" Example:
 	// projects/1234/locations/us-central1
 	Location string `json:"location,omitempty"`
 
@@ -6969,7 +7013,7 @@ type ProjectsLocationsGlobalHubsRouteTablesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists route tables in a given project.
+// List: Lists route tables in a given hub.
 //
 // - parent: The parent resource's name.
 func (r *ProjectsLocationsGlobalHubsRouteTablesService) List(parent string) *ProjectsLocationsGlobalHubsRouteTablesListCall {
@@ -7104,7 +7148,7 @@ func (c *ProjectsLocationsGlobalHubsRouteTablesListCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists route tables in a given project.",
+	//   "description": "Lists route tables in a given hub.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}/routeTables",
 	//   "httpMethod": "GET",
 	//   "id": "networkconnectivity.projects.locations.global.hubs.routeTables.list",
@@ -7330,7 +7374,7 @@ type ProjectsLocationsGlobalHubsRouteTablesRoutesListCall struct {
 	header_      http.Header
 }
 
-// List: Lists routes in a given project.
+// List: Lists routes in a given route table.
 //
 // - parent: The parent resource's name.
 func (r *ProjectsLocationsGlobalHubsRouteTablesRoutesService) List(parent string) *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall {
@@ -7465,7 +7509,7 @@ func (c *ProjectsLocationsGlobalHubsRouteTablesRoutesListCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists routes in a given project.",
+	//   "description": "Lists routes in a given route table.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/hubs/{hubsId}/routeTables/{routeTablesId}/routes",
 	//   "httpMethod": "GET",
 	//   "id": "networkconnectivity.projects.locations.global.hubs.routeTables.routes.list",

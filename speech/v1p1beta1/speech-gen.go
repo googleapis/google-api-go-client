@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -92,7 +92,9 @@ const apiId = "speech:v1p1beta1"
 const apiName = "speech"
 const apiVersion = "v1p1beta1"
 const basePath = "https://speech.googleapis.com/"
+const basePathTemplate = "https://speech.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://speech.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -109,7 +111,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -1453,6 +1457,10 @@ type RecognizeResponse struct {
 	// TotalBilledTime: When available, billed audio seconds for the
 	// corresponding request.
 	TotalBilledTime string `json:"totalBilledTime,omitempty"`
+
+	// UsingLegacyModels: Whether request used legacy asr models (was not
+	// automatically migrated to use conformer models).
+	UsingLegacyModels bool `json:"usingLegacyModels,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

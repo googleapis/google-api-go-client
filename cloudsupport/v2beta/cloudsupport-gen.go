@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "cloudsupport:v2beta"
 const apiName = "cloudsupport"
 const apiVersion = "v2beta"
 const basePath = "https://cloudsupport.googleapis.com/"
+const basePathTemplate = "https://cloudsupport.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudsupport.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -208,8 +212,10 @@ type MediaService struct {
 	s *Service
 }
 
-// Actor: An object containing information about the effective user and
-// authenticated principal responsible for an action.
+// Actor: An Actor represents an entity that performed an action. For
+// example, an actor could be a user who posted a comment on a support
+// case, a user who uploaded an attachment, or a service account that
+// created a support case.
 type Actor struct {
 	// DisplayName: The name to display for the actor. If not provided, it
 	// is inferred from credentials supplied during case creation. When an
@@ -218,15 +224,22 @@ type Actor struct {
 	DisplayName string `json:"displayName,omitempty"`
 
 	// Email: The email address of the actor. If not provided, it is
-	// inferred from credentials supplied during case creation. If the
-	// authenticated principal does not have an email address, one must be
-	// provided. When a name is provided, an email must also be provided.
-	// This will be obfuscated if the user is a Google Support agent.
+	// inferred from the credentials supplied during case creation. When a
+	// name is provided, an email must also be provided. If the user is a
+	// Google Support agent, this is obfuscated. This field is deprecated.
+	// Use **username** field instead.
 	Email string `json:"email,omitempty"`
 
 	// GoogleSupport: Output only. Whether the actor is a Google support
 	// actor.
 	GoogleSupport bool `json:"googleSupport,omitempty"`
+
+	// Username: Output only. The username of the actor. It may look like an
+	// email or other format provided by the identity provider. If not
+	// provided, it is inferred from the credentials supplied. When a name
+	// is provided, a username must also be provided. If the user is a
+	// Google Support agent, this will not be set.
+	Username string `json:"username,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
@@ -251,7 +264,12 @@ func (s *Actor) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Attachment: Represents a file attached to a support case.
+// Attachment: An Attachment contains metadata about a file that was
+// uploaded to a case - it is NOT a file itself. That being said, the
+// name of an Attachment object can be used to download its accompanying
+// file through the `media.download` endpoint. While attachments can be
+// uploaded in the console at the same time as a comment, they're
+// associated on a "case" level, not a "comment" level.
 type Attachment struct {
 	// CreateTime: Output only. The time at which the attachment was
 	// created.
@@ -347,7 +365,17 @@ func (s *Blobstore2Info) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Case: A support case.
+// Case: A Case is an object that contains the details of a support
+// case. It contains fields for the time it was created, its priority,
+// its classification, and more. Cases can also have comments and
+// attachments that get added over time. A case is parented by a Google
+// Cloud organization or project. Organizations are identified by a
+// number, so the name of a case parented by an organization would look
+// like this: ``` organizations/123/cases/456 ``` Projects have two
+// unique identifiers, an ID and a number, and they look like this: ```
+// projects/abc/cases/456 ``` ``` projects/123/cases/456 ``` You can use
+// either of them when calling the API. To learn more about project
+// identifiers, see AIP-2510 (https://google.aip.dev/cloud/2510).
 type Case struct {
 	// Classification: The issue classification applicable to this case.
 	Classification *CaseClassification `json:"classification,omitempty"`
@@ -478,8 +506,11 @@ func (s *Case) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CaseClassification: A classification object with a product type and
-// value.
+// CaseClassification: A Case Classification represents the topic that a
+// case is about. It's very important to use accurate classifications,
+// because they're used to route your cases to specialists who can help
+// you. A classification always has an ID that is its unique identifier.
+// A valid ID is required when creating a case.
 type CaseClassification struct {
 	// DisplayName: A display name for the classification. The display name
 	// is not static and can change. To uniquely and consistently identify
@@ -494,6 +525,9 @@ type CaseClassification struct {
 	// immediately stop being returned. After 6 months, `case.create`
 	// requests using the classification ID will fail.
 	Id string `json:"id,omitempty"`
+
+	// Product: The full product the classification corresponds to.
+	Product *Product `json:"product,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
@@ -522,7 +556,9 @@ func (s *CaseClassification) MarshalJSON() ([]byte, error) {
 type CloseCaseRequest struct {
 }
 
-// Comment: A comment associated with a support case.
+// Comment: Case comments are the main way Google Support communicates
+// with a user who has opened a case. When a user responds to Google
+// Support, the user's responses also appear as comments.
 type Comment struct {
 	// Body: The full comment body. Maximum of 12800 characters. This can
 	// contain rich text syntax.
@@ -1299,6 +1335,44 @@ func (s *ObjectId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Product: The full product a case may be associated with, including
+// Product Line and Product Subline.
+type Product struct {
+	// ProductLine: The Product Line of the Product.
+	//
+	// Possible values:
+	//   "PRODUCT_LINE_UNSPECIFIED" - Unknown product type.
+	//   "GOOGLE_CLOUD" - Google Cloud
+	//   "GOOGLE_MAPS" - Google Maps
+	ProductLine string `json:"productLine,omitempty"`
+
+	// ProductSubline: The Product Subline of the Product, such as "Maps
+	// Billing".
+	ProductSubline string `json:"productSubline,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProductLine") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProductLine") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Product) MarshalJSON() ([]byte, error) {
+	type NoMethod Product
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SearchCaseClassificationsResponse: The response message for
 // SearchCaseClassifications endpoint.
 type SearchCaseClassificationsResponse struct {
@@ -1479,6 +1553,27 @@ func (c *CaseClassificationsSearchCall) PageToken(pageToken string) *CaseClassif
 	return c
 }
 
+// ProductProductLine sets the optional parameter "product.productLine":
+// The Product Line of the Product.
+//
+// Possible values:
+//
+//	"PRODUCT_LINE_UNSPECIFIED" - Unknown product type.
+//	"GOOGLE_CLOUD" - Google Cloud
+//	"GOOGLE_MAPS" - Google Maps
+func (c *CaseClassificationsSearchCall) ProductProductLine(productProductLine string) *CaseClassificationsSearchCall {
+	c.urlParams_.Set("product.productLine", productProductLine)
+	return c
+}
+
+// ProductProductSubline sets the optional parameter
+// "product.productSubline": The Product Subline of the Product, such as
+// "Maps Billing".
+func (c *CaseClassificationsSearchCall) ProductProductSubline(productProductSubline string) *CaseClassificationsSearchCall {
+	c.urlParams_.Set("product.productSubline", productProductSubline)
+	return c
+}
+
 // Query sets the optional parameter "query": An expression used to
 // filter case classifications. If it's an empty string, then no
 // filtering happens. Otherwise, case classifications will be returned
@@ -1599,6 +1694,26 @@ func (c *CaseClassificationsSearchCall) Do(opts ...googleapi.CallOption) (*Searc
 	//     },
 	//     "pageToken": {
 	//       "description": "A token identifying the page of results to return. If unspecified, the first page is retrieved.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "product.productLine": {
+	//       "description": "The Product Line of the Product.",
+	//       "enum": [
+	//         "PRODUCT_LINE_UNSPECIFIED",
+	//         "GOOGLE_CLOUD",
+	//         "GOOGLE_MAPS"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unknown product type.",
+	//         "Google Cloud",
+	//         "Google Maps"
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "product.productSubline": {
+	//       "description": "The Product Subline of the Product, such as \"Maps Billing\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2342,6 +2457,20 @@ func (c *CasesListCall) PageToken(pageToken string) *CasesListCall {
 	return c
 }
 
+// ProductLine sets the optional parameter "productLine": The product
+// line for which to request cases for. If unspecified, only Google
+// Cloud cases will be returned.
+//
+// Possible values:
+//
+//	"PRODUCT_LINE_UNSPECIFIED" - Unknown product type.
+//	"GOOGLE_CLOUD" - Google Cloud
+//	"GOOGLE_MAPS" - Google Maps
+func (c *CasesListCall) ProductLine(productLine string) *CasesListCall {
+	c.urlParams_.Set("productLine", productLine)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2470,6 +2599,21 @@ func (c *CasesListCall) Do(opts ...googleapi.CallOption) (*ListCasesResponse, er
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productLine": {
+	//       "description": "The product line for which to request cases for. If unspecified, only Google Cloud cases will be returned.",
+	//       "enum": [
+	//         "PRODUCT_LINE_UNSPECIFIED",
+	//         "GOOGLE_CLOUD",
+	//         "GOOGLE_MAPS"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Unknown product type.",
+	//         "Google Cloud",
+	//         "Google Maps"
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "dfareporting:v4"
 const apiName = "dfareporting"
 const apiVersion = "v4"
 const basePath = "https://dfareporting.googleapis.com/dfareporting/v4/"
+const basePathTemplate = "https://dfareporting.UNIVERSE_DOMAIN/dfareporting/v4/"
 const mtlsBasePath = "https://dfareporting.mtls.googleapis.com/dfareporting/v4/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -120,7 +122,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -3797,6 +3801,13 @@ func (s *ContentCategory) MarshalJSON() ([]byte, error) {
 // Conversion: A Conversion represents when a user successfully performs
 // a desired action after seeing an ad.
 type Conversion struct {
+	// AdUserDataConsent: This represents consent for ad user data.
+	//
+	// Possible values:
+	//   "GRANTED" - Granted.
+	//   "DENIED" - Denied.
+	AdUserDataConsent string `json:"adUserDataConsent,omitempty"`
+
 	// ChildDirectedTreatment: Whether this particular request may come from
 	// a user under the age of 13, under COPPA compliance.
 	ChildDirectedTreatment bool `json:"childDirectedTreatment,omitempty"`
@@ -3905,19 +3916,18 @@ type Conversion struct {
 	// Value: The value of the conversion. This is a required field.
 	Value float64 `json:"value,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ChildDirectedTreatment") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdUserDataConsent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ChildDirectedTreatment")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "AdUserDataConsent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
@@ -10843,6 +10853,10 @@ type Placement struct {
 	// placement.
 	ContentCategoryId int64 `json:"contentCategoryId,omitempty,string"`
 
+	// ConversionDomainOverride: Optional. Conversion domain overrides for a
+	// placement.
+	ConversionDomainOverride *PlacementConversionDomainOverride `json:"conversionDomainOverride,omitempty"`
+
 	// CreateInfo: Information about the creation of this placement. This is
 	// a read-only field.
 	CreateInfo *LastModifiedInfo `json:"createInfo,omitempty"`
@@ -11113,6 +11127,33 @@ func (s *PlacementAssignment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+type PlacementConversionDomainOverride struct {
+	ConversionDomains []*PlacementSingleConversionDomain `json:"conversionDomains,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversionDomains")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversionDomains") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PlacementConversionDomainOverride) MarshalJSON() ([]byte, error) {
+	type NoMethod PlacementConversionDomainOverride
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PlacementGroup: Contains properties of a package or roadblock.
 type PlacementGroup struct {
 	// AccountId: Account ID of this placement group. This is a read-only
@@ -11307,6 +11348,35 @@ type PlacementGroupsListResponse struct {
 
 func (s *PlacementGroupsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PlacementGroupsListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type PlacementSingleConversionDomain struct {
+	ConversionDomainId int64 `json:"conversionDomainId,omitempty,string"`
+
+	ConversionDomainValue string `json:"conversionDomainValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConversionDomainId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConversionDomainId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PlacementSingleConversionDomain) MarshalJSON() ([]byte, error) {
+	type NoMethod PlacementSingleConversionDomain
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -14125,7 +14195,8 @@ type TagSetting struct {
 	AdditionalKeyValues string `json:"additionalKeyValues,omitempty"`
 
 	// IncludeClickThroughUrls: Whether static landing page URLs should be
-	// included in the tags. This setting applies only to placements.
+	// included in the tags. New placements will default to the value set on
+	// their site.
 	IncludeClickThroughUrls bool `json:"includeClickThroughUrls,omitempty"`
 
 	// IncludeClickTracking: Whether click-tracking string should be
@@ -14719,6 +14790,7 @@ type UniversalAdId struct {
 	//   "AD_ID_OFFICIAL"
 	//   "CLEARCAST"
 	//   "DCM"
+	//   "ARPP"
 	Registry string `json:"registry,omitempty"`
 
 	// Value: ID value for this creative. Only alphanumeric characters and

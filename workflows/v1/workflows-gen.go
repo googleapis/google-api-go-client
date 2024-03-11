@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "workflows:v1"
 const apiName = "workflows"
 const apiVersion = "v1"
 const basePath = "https://workflows.googleapis.com/"
+const basePathTemplate = "https://workflows.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://workflows.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -691,8 +695,8 @@ type Workflow struct {
 
 	// UserEnvVars: Optional. User-defined environment variables associated
 	// with this workflow revision. This map has a maximum length of 20.
-	// Each string can take up to 40KiB. Keys cannot be empty strings and
-	// cannot start with “GOOGLE” or “WORKFLOWS".
+	// Each string can take up to 4KiB. Keys cannot be empty strings and
+	// cannot start with "GOOGLE" or "WORKFLOWS".
 	UserEnvVars map[string]string `json:"userEnvVars,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

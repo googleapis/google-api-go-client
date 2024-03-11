@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "privateca:v1"
 const apiName = "privateca"
 const apiVersion = "v1"
 const basePath = "https://privateca.googleapis.com/"
+const basePathTemplate = "https://privateca.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://privateca.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -493,11 +497,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -509,11 +536,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -931,6 +967,12 @@ type CertificateConfig struct {
 	// certificate that are related to the subject.
 	SubjectConfig *SubjectConfig `json:"subjectConfig,omitempty"`
 
+	// SubjectKeyId: Optional. When specified this provides a custom SKI to
+	// be used in the certificate. This should only be used to maintain a
+	// SKI of an existing CA originally created outside CAS, which was not
+	// generated using method (1) described in RFC 5280 section 4.2.1.2.
+	SubjectKeyId *CertificateConfigKeyId `json:"subjectKeyId,omitempty"`
+
 	// X509Config: Required. Describes how some of the technical X.509
 	// fields in a certificate should be populated.
 	X509Config *X509Parameters `json:"x509Config,omitempty"`
@@ -954,6 +996,37 @@ type CertificateConfig struct {
 
 func (s *CertificateConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CertificateConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CertificateConfigKeyId: A KeyId identifies a specific public key,
+// usually by hashing the public key.
+type CertificateConfigKeyId struct {
+	// KeyId: Optional. The value of this KeyId encoded in lowercase
+	// hexadecimal. This is most likely the 160 bit SHA-1 hash of the public
+	// key.
+	KeyId string `json:"keyId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "KeyId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KeyId") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CertificateConfigKeyId) MarshalJSON() ([]byte, error) {
+	type NoMethod CertificateConfigKeyId
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1620,8 +1693,9 @@ func (s *FetchCaCertsRequest) MarshalJSON() ([]byte, error) {
 // FetchCaCertsResponse: Response message for
 // CertificateAuthorityService.FetchCaCerts.
 type FetchCaCertsResponse struct {
-	// CaCerts: The PEM encoded CA certificate chains of all ACTIVE
-	// CertificateAuthority resources in this CaPool.
+	// CaCerts: The PEM encoded CA certificate chains of all Certificate
+	// Authorities in this CaPool in the ENABLED, DISABLED, or STAGED
+	// states.
 	CaCerts []*CertChain `json:"caCerts,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4248,8 +4322,8 @@ type ProjectsLocationsCaPoolsFetchCaCertsCall struct {
 }
 
 // FetchCaCerts: FetchCaCerts returns the current trust anchor for the
-// CaPool. This will include CA certificate chains for all ACTIVE
-// CertificateAuthority resources in the CaPool.
+// CaPool. This will include CA certificate chains for all Certificate
+// Authorities in the ENABLED, DISABLED, or STAGED states.
 //
 //   - caPool: The resource name for the CaPool in the format
 //     `projects/*/locations/*/caPools/*`.
@@ -4351,7 +4425,7 @@ func (c *ProjectsLocationsCaPoolsFetchCaCertsCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "FetchCaCerts returns the current trust anchor for the CaPool. This will include CA certificate chains for all ACTIVE CertificateAuthority resources in the CaPool.",
+	//   "description": "FetchCaCerts returns the current trust anchor for the CaPool. This will include CA certificate chains for all Certificate Authorities in the ENABLED, DISABLED, or STAGED states.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/caPools/{caPoolsId}:fetchCaCerts",
 	//   "httpMethod": "POST",
 	//   "id": "privateca.projects.locations.caPools.fetchCaCerts",

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "chromemanagement:v1"
 const apiName = "chromemanagement"
 const apiVersion = "v1"
 const basePath = "https://chromemanagement.googleapis.com/"
+const basePathTemplate = "https://chromemanagement.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://chromemanagement.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -122,7 +124,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -662,11 +666,13 @@ type GoogleChromeManagementV1BatteryStatusReport struct {
 	//
 	// Possible values:
 	//   "BATTERY_HEALTH_UNSPECIFIED" - Health unknown.
-	//   "BATTERY_HEALTH_NORMAL" - Battery is healthy.
-	//   "BATTERY_REPLACE_SOON" - Battery is moderately unhealthy and should
-	// be replaced soon.
-	//   "BATTERY_REPLACE_NOW" - Battery is unhealthy and should be
-	// replaced.
+	//   "BATTERY_HEALTH_NORMAL" - Battery is healthy, full charge capacity
+	// / design capacity > 80%
+	//   "BATTERY_REPLACE_SOON" - Battery is moderately unhealthy and
+	// suggested to be replaced soon, full charge capacity / design capacity
+	// 75% - 80%
+	//   "BATTERY_REPLACE_NOW" - Battery is unhealthy and suggested to be
+	// replaced, full charge capacity / design capacity < 75%
 	BatteryHealth string `json:"batteryHealth,omitempty"`
 
 	// CycleCount: Output only. Cycle count.
@@ -3088,6 +3094,56 @@ func (s *GoogleChromeManagementV1PrinterReport) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1RuntimeCountersReport: Runtime counters
+// retrieved from CPU. Currently the runtime counters telemetry is only
+// supported by Intel vPro PSR on Gen 14+.
+type GoogleChromeManagementV1RuntimeCountersReport struct {
+	// EnterHibernationCount: Number of times that the device has entered
+	// into the hibernation state. Currently obtained via the PSR, count
+	// from S0->S4.
+	EnterHibernationCount int64 `json:"enterHibernationCount,omitempty,string"`
+
+	// EnterPoweroffCount: Number of times that the device has entered into
+	// the power-off state. Currently obtained via the PSR, count from
+	// S0->S5.
+	EnterPoweroffCount int64 `json:"enterPoweroffCount,omitempty,string"`
+
+	// EnterSleepCount: Number of times that the device has entered into the
+	// sleep state. Currently obtained via the PSR, count from S0->S3.
+	EnterSleepCount int64 `json:"enterSleepCount,omitempty,string"`
+
+	// ReportTime: Timestamp when the report was collected.
+	ReportTime string `json:"reportTime,omitempty"`
+
+	// UptimeRuntimeDuration: Total lifetime runtime. Currently always S0
+	// runtime from Intel vPro PSR.
+	UptimeRuntimeDuration string `json:"uptimeRuntimeDuration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnterHibernationCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EnterHibernationCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1RuntimeCountersReport) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1RuntimeCountersReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1StorageInfo: Status data for storage. * This
 // field is telemetry information and this will change over time as the
 // device is utilized. * Data for this field is controlled via policy:
@@ -3307,6 +3363,12 @@ type GoogleChromeManagementV1TelemetryDevice struct {
 	// PeripheralsReport: Output only. Peripherals reports collected
 	// periodically sorted in a decreasing order of report_time.
 	PeripheralsReport []*GoogleChromeManagementV1PeripheralsReport `json:"peripheralsReport,omitempty"`
+
+	// RuntimeCountersReport: Output only. Runtime counters reports
+	// collected device lifetime runtime, as well as the counts of S0->S3,
+	// S0->S4, and S0->S5 transitions, meaning entering into sleep,
+	// hibernation, and power-off states
+	RuntimeCountersReport []*GoogleChromeManagementV1RuntimeCountersReport `json:"runtimeCountersReport,omitempty"`
 
 	// SerialNumber: Output only. Device serial number. This value is the
 	// same as the Admin Console's Serial Number in the ChromeOS Devices
@@ -7178,7 +7240,16 @@ func (r *CustomersTelemetryDevicesService) Get(name string) *CustomersTelemetryD
 }
 
 // ReadMask sets the optional parameter "readMask": Required. Read mask
-// to specify which fields to return.
+// to specify which fields to return. Supported read_mask paths are: -
+// name - org_unit_id - device_id - serial_number - cpu_info -
+// cpu_status_report - memory_info - memory_status_report - network_info
+// - network_diagnostics_report - network_status_report -
+// os_update_status - graphics_info - graphics_status_report -
+// battery_info - battery_status_report - storage_info -
+// storage_status_report - thunderbolt_info - audio_status_report -
+// boot_performance_report - heartbeat_status_report -
+// network_bandwidth_report - peripherals_report -
+// kiosk_app_status_report - app_report - runtime_counters_report
 func (c *CustomersTelemetryDevicesGetCall) ReadMask(readMask string) *CustomersTelemetryDevicesGetCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
@@ -7300,7 +7371,7 @@ func (c *CustomersTelemetryDevicesGetCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "Required. Read mask to specify which fields to return.",
+	//       "description": "Required. Read mask to specify which fields to return. Supported read_mask paths are: - name - org_unit_id - device_id - serial_number - cpu_info - cpu_status_report - memory_info - memory_status_report - network_info - network_diagnostics_report - network_status_report - os_update_status - graphics_info - graphics_status_report - battery_info - battery_status_report - storage_info - storage_status_report - thunderbolt_info - audio_status_report - boot_performance_report - heartbeat_status_report - network_bandwidth_report - peripherals_report - kiosk_app_status_report - app_report - runtime_counters_report ",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7366,7 +7437,16 @@ func (c *CustomersTelemetryDevicesListCall) PageToken(pageToken string) *Custome
 }
 
 // ReadMask sets the optional parameter "readMask": Required. Read mask
-// to specify which fields to return.
+// to specify which fields to return. Supported read_mask paths are: -
+// name - org_unit_id - device_id - serial_number - cpu_info -
+// cpu_status_report - memory_info - memory_status_report - network_info
+// - network_diagnostics_report - network_status_report -
+// os_update_status - graphics_info - graphics_status_report -
+// battery_info - battery_status_report - storage_info -
+// storage_status_report - thunderbolt_info - audio_status_report -
+// boot_performance_report - heartbeat_status_report -
+// network_bandwidth_report - peripherals_report -
+// kiosk_app_status_report - app_report - runtime_counters_report
 func (c *CustomersTelemetryDevicesListCall) ReadMask(readMask string) *CustomersTelemetryDevicesListCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
@@ -7505,7 +7585,7 @@ func (c *CustomersTelemetryDevicesListCall) Do(opts ...googleapi.CallOption) (*G
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "Required. Read mask to specify which fields to return.",
+	//       "description": "Required. Read mask to specify which fields to return. Supported read_mask paths are: - name - org_unit_id - device_id - serial_number - cpu_info - cpu_status_report - memory_info - memory_status_report - network_info - network_diagnostics_report - network_status_report - os_update_status - graphics_info - graphics_status_report - battery_info - battery_status_report - storage_info - storage_status_report - thunderbolt_info - audio_status_report - boot_performance_report - heartbeat_status_report - network_bandwidth_report - peripherals_report - kiosk_app_status_report - app_report - runtime_counters_report ",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7596,7 +7676,11 @@ func (c *CustomersTelemetryEventsListCall) PageToken(pageToken string) *Customer
 // ReadMask sets the optional parameter "readMask": Required. Read mask
 // to specify which fields to return. Although currently required, this
 // field will become optional, while the filter parameter with an event
-// type will be come required.
+// type will be come required. Supported read_mask paths are: - device -
+// user - audio_severe_underrun_event - usb_peripherals_event -
+// https_latency_change_event - network_state_change_event -
+// wifi_signal_strength_event - vpn_connection_state_change_event -
+// app_install_event - app_uninstall_event - app_launch_event
 func (c *CustomersTelemetryEventsListCall) ReadMask(readMask string) *CustomersTelemetryEventsListCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
@@ -7735,7 +7819,7 @@ func (c *CustomersTelemetryEventsListCall) Do(opts ...googleapi.CallOption) (*Go
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "Required. Read mask to specify which fields to return. Although currently required, this field will become optional, while the filter parameter with an event type will be come required.",
+	//       "description": "Required. Read mask to specify which fields to return. Although currently required, this field will become optional, while the filter parameter with an event type will be come required. Supported read_mask paths are: - device - user - audio_severe_underrun_event - usb_peripherals_event - https_latency_change_event - network_state_change_event - wifi_signal_strength_event - vpn_connection_state_change_event - app_install_event - app_uninstall_event - app_launch_event ",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -8274,7 +8358,11 @@ func (r *CustomersTelemetryUsersService) Get(name string) *CustomersTelemetryUse
 }
 
 // ReadMask sets the optional parameter "readMask": Read mask to specify
-// which fields to return.
+// which fields to return. Supported read_mask paths are: - name -
+// org_unit_id - user_id - user_email - user_device.device_id -
+// user_device.audio_status_report - user_device.device_activity_report
+// - user_device.network_bandwidth_report -
+// user_device.peripherals_report
 func (c *CustomersTelemetryUsersGetCall) ReadMask(readMask string) *CustomersTelemetryUsersGetCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
@@ -8396,7 +8484,7 @@ func (c *CustomersTelemetryUsersGetCall) Do(opts ...googleapi.CallOption) (*Goog
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "Read mask to specify which fields to return.",
+	//       "description": "Read mask to specify which fields to return. Supported read_mask paths are: - name - org_unit_id - user_id - user_email - user_device.device_id - user_device.audio_status_report - user_device.device_activity_report - user_device.network_bandwidth_report - user_device.peripherals_report ",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -8457,7 +8545,11 @@ func (c *CustomersTelemetryUsersListCall) PageToken(pageToken string) *Customers
 }
 
 // ReadMask sets the optional parameter "readMask": Read mask to specify
-// which fields to return.
+// which fields to return. Supported read_mask paths are: - name -
+// org_unit_id - user_id - user_email - user_device.device_id -
+// user_device.audio_status_report - user_device.device_activity_report
+// - user_device.network_bandwidth_report -
+// user_device.peripherals_report
 func (c *CustomersTelemetryUsersListCall) ReadMask(readMask string) *CustomersTelemetryUsersListCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
@@ -8596,7 +8688,7 @@ func (c *CustomersTelemetryUsersListCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "readMask": {
-	//       "description": "Read mask to specify which fields to return.",
+	//       "description": "Read mask to specify which fields to return. Supported read_mask paths are: - name - org_unit_id - user_id - user_email - user_device.device_id - user_device.audio_status_report - user_device.device_activity_report - user_device.network_bandwidth_report - user_device.peripherals_report ",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

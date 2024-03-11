@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "migrationcenter:v1alpha1"
 const apiName = "migrationcenter"
 const apiVersion = "v1alpha1"
 const basePath = "https://migrationcenter.googleapis.com/"
+const basePathTemplate = "https://migrationcenter.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://migrationcenter.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -1253,6 +1257,11 @@ func (s *ComputeEngineShapeDescriptor) MarshalJSON() ([]byte, error) {
 	type NoMethod ComputeEngineShapeDescriptor
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ComputeEngineSoleTenantMigrationTarget: Compute engine sole tenant
+// migration target.
+type ComputeEngineSoleTenantMigrationTarget struct {
 }
 
 // ComputeStorageDescriptor: Compute Engine storage option descriptor.
@@ -2434,6 +2443,9 @@ func (s *GuestConfigDetails) MarshalJSON() ([]byte, error) {
 
 // GuestInstalledApplication: Guest installed application information.
 type GuestInstalledApplication struct {
+	// Licenses: License strings associated with the installed application.
+	Licenses []string `json:"licenses,omitempty"`
+
 	// Name: Installed application name.
 	Name string `json:"name,omitempty"`
 
@@ -2449,7 +2461,7 @@ type GuestInstalledApplication struct {
 	// Version: Installed application version.
 	Version string `json:"version,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
+	// ForceSendFields is a list of field names (e.g. "Licenses") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2457,8 +2469,8 @@ type GuestInstalledApplication struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
+	// NullFields is a list of field names (e.g. "Licenses") to include in
+	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
@@ -3571,6 +3583,10 @@ func (s *MemoryUsageSample) UnmarshalJSON(data []byte) error {
 
 // MigrationInsight: An insight about potential migrations for an asset.
 type MigrationInsight struct {
+	// ComputeEngineSoleTenantTarget: Output only. A Google Compute Engine
+	// Sole Tenant target.
+	ComputeEngineSoleTenantTarget *ComputeEngineSoleTenantMigrationTarget `json:"computeEngineSoleTenantTarget,omitempty"`
+
 	// ComputeEngineTarget: Output only. A Google Compute Engine target.
 	ComputeEngineTarget *ComputeEngineMigrationTarget `json:"computeEngineTarget,omitempty"`
 
@@ -3584,21 +3600,22 @@ type MigrationInsight struct {
 	// VmwareEngineTarget: Output only. A VMWare Engine target.
 	VmwareEngineTarget *VmwareEngineMigrationTarget `json:"vmwareEngineTarget,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ComputeEngineTarget")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "ComputeEngineSoleTenantTarget") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ComputeEngineTarget") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g.
+	// "ComputeEngineSoleTenantTarget") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4460,8 +4477,8 @@ type Report struct {
 	// Type: Report type.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED" - Default Report type.
-	//   "TOTAL_COST_OF_OWNERSHIP" - Total cost of ownership Report type.
+	//   "TYPE_UNSPECIFIED" - Default report type.
+	//   "TOTAL_COST_OF_OWNERSHIP" - Total cost of ownership report type.
 	Type string `json:"type,omitempty"`
 
 	// UpdateTime: Output only. Last update timestamp.
@@ -4589,8 +4606,8 @@ func (s *ReportConfigGroupPreferenceSetAssignment) MarshalJSON() ([]byte, error)
 // aggregated values for all the groups and preference sets included in
 // this Report.
 type ReportSummary struct {
-	// AllAssetsStats: Aggregate statistics for all the assets across all
-	// the groups.
+	// AllAssetsStats: Aggregate statistics for unique assets across all the
+	// groups.
 	AllAssetsStats *ReportSummaryAssetAggregateStats `json:"allAssetsStats,omitempty"`
 
 	// GroupFindings: Findings for each Group included in this report.
@@ -4641,10 +4658,10 @@ type ReportSummaryAssetAggregateStats struct {
 	MemoryUtilizationChart *ReportSummaryUtilizationChartData `json:"memoryUtilizationChart,omitempty"`
 
 	// OperatingSystem: Count of assets grouped by Operating System
-	// families.
+	// families. Only present for virtual machines.
 	OperatingSystem *ReportSummaryChartData `json:"operatingSystem,omitempty"`
 
-	// StorageBytesHistogram: Histogram showing a distribution of memory
+	// StorageBytesHistogram: Histogram showing a distribution of storage
 	// sizes.
 	StorageBytesHistogram *ReportSummaryHistogramChartData `json:"storageBytesHistogram,omitempty"`
 
@@ -4775,10 +4792,10 @@ type ReportSummaryGroupFinding struct {
 	// group.
 	AssetAggregateStats *ReportSummaryAssetAggregateStats `json:"assetAggregateStats,omitempty"`
 
-	// Description: Description for the Group.
+	// Description: Description for this group finding.
 	Description string `json:"description,omitempty"`
 
-	// DisplayName: Display Name for the Group.
+	// DisplayName: Display Name for this group finding.
 	DisplayName string `json:"displayName,omitempty"`
 
 	// OverlappingAssetCount: This field is deprecated, do not rely on it
@@ -4822,8 +4839,8 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	// DisplayName: Display Name of the Preference Set
 	DisplayName string `json:"displayName,omitempty"`
 
-	// MachineFinding: A set of findings that applies to all machines in the
-	// input.
+	// MachineFinding: Output only. A set of findings that applies to all
+	// virtual machines in the input. Only present for virtual machines.
 	MachineFinding *ReportSummaryMachineFinding `json:"machineFinding,omitempty"`
 
 	// MachinePreferences: A set of preferences that applies to all machines
@@ -4834,10 +4851,11 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	MonthlyCostCompute *Money `json:"monthlyCostCompute,omitempty"`
 
 	// MonthlyCostNetworkEgress: Network Egress monthly cost for this
-	// preference set.
+	// preference set. Only present for virtual machines.
 	MonthlyCostNetworkEgress *Money `json:"monthlyCostNetworkEgress,omitempty"`
 
-	// MonthlyCostOsLicense: Licensing monthly cost for this preference set.
+	// MonthlyCostOsLicense: Operating system licensing monthly cost for
+	// this preference set. Only present for virtual machines.
 	MonthlyCostOsLicense *Money `json:"monthlyCostOsLicense,omitempty"`
 
 	// MonthlyCostOther: Miscellaneous monthly cost for this preference set.
@@ -4857,7 +4875,7 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	PricingTrack string `json:"pricingTrack,omitempty"`
 
 	// SoleTenantFinding: A set of findings that applies to Stole-Tenant
-	// machines in the input.
+	// machines in the input. Only present for virtual machines.
 	SoleTenantFinding *ReportSummarySoleTenantFinding `json:"soleTenantFinding,omitempty"`
 
 	// TopPriority: Text describing the business priority specified for this
@@ -4865,7 +4883,7 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	TopPriority string `json:"topPriority,omitempty"`
 
 	// VmwareEngineFinding: A set of findings that applies to VMWare
-	// machines in the input.
+	// machines in the input. Only present for virtual machines.
 	VmwareEngineFinding *ReportSummaryVMWareEngineFinding `json:"vmwareEngineFinding,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
@@ -6239,7 +6257,9 @@ type VirtualMachinePreferences struct {
 
 	// RegionPreferences: Region preferences for assets using this
 	// preference set. If you are unsure which value to set, the migration
-	// service API region is often a good value to start with.
+	// service API region is often a good value to start with. If
+	// PreferenceSet.RegionPreferences is specified, it overrides this
+	// field.
 	RegionPreferences *RegionPreferences `json:"regionPreferences,omitempty"`
 
 	// SizingOptimizationCustomParameters: Optional. Custom data to use for

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,12 +90,16 @@ const apiId = "mybusinessbusinessinformation:v1"
 const apiName = "mybusinessbusinessinformation"
 const apiVersion = "v1"
 const basePath = "https://mybusinessbusinessinformation.googleapis.com/"
+const basePathTemplate = "https://mybusinessbusinessinformation.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://mybusinessbusinessinformation.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -1083,7 +1087,8 @@ type ListLocationsResponse struct {
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
 	// TotalSize: The approximate number of Locations in the list
-	// irrespective of pagination.
+	// irrespective of pagination. This field will only be returned if
+	// `filter` is used as a query parameter.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

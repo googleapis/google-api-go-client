@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "cloudasset:v1"
 const apiName = "cloudasset"
 const apiVersion = "v1"
 const basePath = "https://cloudasset.googleapis.com/"
+const basePathTemplate = "https://cloudasset.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudasset.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -744,8 +748,7 @@ type AttachedResource struct {
 	// AssetType: The type of this attached resource. Example:
 	// `osconfig.googleapis.com/Inventory` You can find the supported
 	// attached asset types of each resource in this table:
-	// `https://cloud.google.com/asset-inventory/docs/supported-asset-types#s
-	// earchable_asset_types`
+	// `https://cloud.google.com/asset-inventory/docs/supported-asset-types`
 	AssetType string `json:"assetType,omitempty"`
 
 	// VersionedResources: Versioned resource representations of this
@@ -1065,11 +1068,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -1081,11 +1107,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -1141,7 +1176,7 @@ func (s *ConditionContext) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ConditionEvaluation: The Condition evaluation.
+// ConditionEvaluation: The condition evaluation.
 type ConditionEvaluation struct {
 	// EvaluationValue: The evaluation result.
 	//
@@ -1151,7 +1186,7 @@ type ConditionEvaluation struct {
 	//   "FALSE" - The evaluation result is `false`.
 	//   "CONDITIONAL" - The evaluation result is `conditional` when the
 	// condition expression contains variables that are either missing input
-	// values or have not been supported by Analyzer yet.
+	// values or have not been supported by Policy Analyzer yet.
 	EvaluationValue string `json:"evaluationValue,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EvaluationValue") to
@@ -1867,6 +1902,14 @@ func (s *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedAsset) 
 // icy: The IAM policies governed by the organization policies of the
 // AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
 type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy struct {
+	// AssetType: The asset type of the
+	// AnalyzeOrgPolicyGovernedAssetsResponse.GovernedIamPolicy.attached_reso
+	// urce. Example: `cloudresourcemanager.googleapis.com/Project` See
+	// Cloud Asset Inventory Supported Asset Types
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+	// for all supported asset types.
+	AssetType string `json:"assetType,omitempty"`
+
 	// AttachedResource: The full resource name of the resource on which
 	// this IAM policy is set. Example:
 	// `//compute.googleapis.com/projects/my_project_123/zones/zone1/instance
@@ -1894,7 +1937,7 @@ type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy s
 	// policy belongs to a project.
 	Project string `json:"project,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AttachedResource") to
+	// ForceSendFields is a list of field names (e.g. "AssetType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1902,13 +1945,12 @@ type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPolicy s
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AttachedResource") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AssetType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1922,6 +1964,17 @@ func (s *GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedIamPoli
 // ce: The Google Cloud resources governed by the organization policies
 // of the AnalyzeOrgPolicyGovernedAssetsRequest.constraint.
 type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource struct {
+	// AssetType: The asset type of the
+	// AnalyzeOrgPolicyGovernedAssetsResponse.GovernedResource.full_resource_
+	// name Example: `cloudresourcemanager.googleapis.com/Project` See Cloud
+	// Asset Inventory Supported Asset Types
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
+	// for all supported asset types.
+	AssetType string `json:"assetType,omitempty"`
+
+	// EffectiveTags: The effective tags on this resource.
+	EffectiveTags []*EffectiveTagDetails `json:"effectiveTags,omitempty"`
+
 	// Folders: The folder(s) that this resource belongs to, in the format
 	// of folders/{FOLDER_NUMBER}. This field is available when the resource
 	// belongs (directly or cascadingly) to one or more folders.
@@ -1950,7 +2003,7 @@ type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource st
 	// belongs to a project.
 	Project string `json:"project,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Folders") to
+	// ForceSendFields is a list of field names (e.g. "AssetType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1958,7 +2011,7 @@ type GoogleCloudAssetV1AnalyzeOrgPolicyGovernedAssetsResponseGovernedResource st
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Folders") to include in
+	// NullFields is a list of field names (e.g. "AssetType") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as
@@ -2252,10 +2305,24 @@ type GoogleCloudAssetV1GovernedContainer struct {
 	// (https://cloud.google.com/resource-manager/docs/organization-policy/understanding-hierarchy).
 	ConsolidatedPolicy *AnalyzerOrgPolicy `json:"consolidatedPolicy,omitempty"`
 
+	// EffectiveTags: The effective tags on this resource.
+	EffectiveTags []*EffectiveTagDetails `json:"effectiveTags,omitempty"`
+
+	// Folders: The folder(s) that this resource belongs to, in the format
+	// of folders/{FOLDER_NUMBER}. This field is available when the resource
+	// belongs (directly or cascadingly) to one or more folders.
+	Folders []string `json:"folders,omitempty"`
+
 	// FullResourceName: The [full resource name]
 	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
 	// of an organization/folder/project resource.
 	FullResourceName string `json:"fullResourceName,omitempty"`
+
+	// Organization: The organization that this resource belongs to, in the
+	// format of organizations/{ORGANIZATION_NUMBER}. This field is
+	// available when the resource belongs (directly or cascadingly) to an
+	// organization.
+	Organization string `json:"organization,omitempty"`
 
 	// Parent: The [full resource name]
 	// (https://cloud.google.com/asset-inventory/docs/resource-name-format)
@@ -2269,6 +2336,11 @@ type GoogleCloudAssetV1GovernedContainer struct {
 	// d_resource. to the scope specified in the request. If the constraint
 	// is defined with default policy, it will also appear in the list.
 	PolicyBundle []*AnalyzerOrgPolicy `json:"policyBundle,omitempty"`
+
+	// Project: The project that this resource belongs to, in the format of
+	// projects/{PROJECT_NUMBER}. This field is available when the resource
+	// belongs to a project.
+	Project string `json:"project,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConsolidatedPolicy")
 	// to unconditionally include in API requests. By default, fields with
@@ -2499,6 +2571,17 @@ type GoogleCloudAssetV1Rule struct {
 	// Condition: The evaluating condition for this rule.
 	Condition *Expr `json:"condition,omitempty"`
 
+	// ConditionEvaluation: The condition evaluation result for this rule.
+	// Only populated if it meets all the following criteria: * There is a
+	// condition defined for this rule. * This rule is within
+	// AnalyzeOrgPolicyGovernedContainersResponse.GovernedContainer.consolida
+	// ted_policy, or
+	// AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset.consolidated_poli
+	// cy when the AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset has
+	// AnalyzeOrgPolicyGovernedAssetsResponse.GovernedAsset.governed_resource
+	// .
+	ConditionEvaluation *ConditionEvaluation `json:"conditionEvaluation,omitempty"`
+
 	// DenyAll: Setting this to true means that all values are denied. This
 	// field can be set only in Policies for list constraints.
 	DenyAll bool `json:"denyAll,omitempty"`
@@ -2508,8 +2591,8 @@ type GoogleCloudAssetV1Rule struct {
 	// Policies for boolean constraints.
 	Enforce bool `json:"enforce,omitempty"`
 
-	// Values: List of values to be used for this PolicyRule. This field can
-	// be set only in Policies for list constraints.
+	// Values: List of values to be used for this policy rule. This field
+	// can be set only in policies for list constraints.
 	Values *GoogleCloudAssetV1StringValues `json:"values,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowAll") to
@@ -3520,8 +3603,8 @@ func (s *GoogleIdentityAccesscontextmanagerV1DevicePolicy) MarshalJSON() ([]byte
 // succeed.
 type GoogleIdentityAccesscontextmanagerV1EgressFrom struct {
 	// Identities: A list of identities that are allowed access through this
-	// [EgressPolicy]. Should be in the format of email address. The email
-	// address should represent individual user or service account only.
+	// [EgressPolicy], in the format of `user:{email_id}` or
+	// `serviceAccount:{email_id}`.
 	Identities []string `json:"identities,omitempty"`
 
 	// IdentityType: Specifies the type of identities that are allowed
@@ -3729,8 +3812,8 @@ func (s *GoogleIdentityAccesscontextmanagerV1EgressTo) MarshalJSON() ([]byte, er
 // in order to match.
 type GoogleIdentityAccesscontextmanagerV1IngressFrom struct {
 	// Identities: A list of identities that are allowed access through this
-	// ingress policy. Should be in the format of email address. The email
-	// address should represent individual user or service account only.
+	// ingress policy, in the format of `user:{email_id}` or
+	// `serviceAccount:{email_id}`.
 	Identities []string `json:"identities,omitempty"`
 
 	// IdentityType: Specifies the type of identities that are allowed
@@ -3909,13 +3992,13 @@ func (s *GoogleIdentityAccesscontextmanagerV1IngressTo) MarshalJSON() ([]byte, e
 // GoogleIdentityAccesscontextmanagerV1MethodSelector: An allowed method
 // or permission of a service specified in ApiOperation.
 type GoogleIdentityAccesscontextmanagerV1MethodSelector struct {
-	// Method: Value for `method` should be a valid method name for the
-	// corresponding `service_name` in ApiOperation. If `*` used as value
-	// for `method`, then ALL methods and permissions are allowed.
+	// Method: A valid method name for the corresponding `service_name` in
+	// ApiOperation. If `*` is used as the value for the `method`, then ALL
+	// methods and permissions are allowed.
 	Method string `json:"method,omitempty"`
 
-	// Permission: Value for `permission` should be a valid Cloud IAM
-	// permission for the corresponding `service_name` in ApiOperation.
+	// Permission: A valid Cloud IAM permission for the corresponding
+	// `service_name` in ApiOperation.
 	Permission string `json:"permission,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Method") to
@@ -4355,9 +4438,9 @@ type IamPolicyAnalysisQuery struct {
 	// an organization number (such as "organizations/123"), a folder number
 	// (such as "folders/123"), a project ID (such as
 	// "projects/my-project-id"), or a project number (such as
-	// "projects/12345"). To know how to get organization id, visit here
+	// "projects/12345"). To know how to get organization ID, visit here
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
-	// To know how to get folder or project id, visit here
+	// To know how to get folder or project ID, visit here
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 	Scope string `json:"scope,omitempty"`
 
@@ -5168,11 +5251,28 @@ type OrgPolicyResult struct {
 	// (https://cloud.google.com/resource-manager/docs/organization-policy/understanding-hierarchy).
 	ConsolidatedPolicy *AnalyzerOrgPolicy `json:"consolidatedPolicy,omitempty"`
 
+	// Folders: The folder(s) that this consolidated policy belongs to, in
+	// the format of folders/{FOLDER_NUMBER}. This field is available when
+	// the consolidated policy belongs (directly or cascadingly) to one or
+	// more folders.
+	Folders []string `json:"folders,omitempty"`
+
+	// Organization: The organization that this consolidated policy belongs
+	// to, in the format of organizations/{ORGANIZATION_NUMBER}. This field
+	// is available when the consolidated policy belongs (directly or
+	// cascadingly) to an organization.
+	Organization string `json:"organization,omitempty"`
+
 	// PolicyBundle: The ordered list of all organization policies from the
 	// AnalyzeOrgPoliciesResponse.OrgPolicyResult.consolidated_policy.attache
 	// d_resource. to the scope specified in the request. If the constraint
 	// is defined with default policy, it will also appear in the list.
 	PolicyBundle []*AnalyzerOrgPolicy `json:"policyBundle,omitempty"`
+
+	// Project: The project that this consolidated policy belongs to, in the
+	// format of projects/{PROJECT_NUMBER}. This field is available when the
+	// consolidated policy belongs to a project.
+	Project string `json:"project,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConsolidatedPolicy")
 	// to unconditionally include in API requests. By default, fields with
@@ -5984,8 +6084,7 @@ type Resource struct {
 	// parent resource defined in the IAM policy hierarchy
 	// (https://cloud.google.com/iam/docs/overview#policy_hierarchy).
 	// Example:
-	// `//cloudresourcemanager.googleapis.com/projects/my_project_123` For
-	// third-party assets, this field may be set differently.
+	// `//cloudresourcemanager.googleapis.com/projects/my_project_123`
 	Parent string `json:"parent,omitempty"`
 
 	// ResourceUrl: The REST URL for accessing the resource. An HTTP `GET`
@@ -6030,7 +6129,7 @@ type ResourceSearchResult struct {
 	// returned by the List or Get APIs provided by the corresponding Google
 	// Cloud service (e.g., Compute Engine). see API references and
 	// supported searchable attributes
-	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types)
+	// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 	// to see which fields are included. You can search values of these
 	// fields through free text search. However, you should not consume the
 	// field programically as the field names and values may change as the
@@ -6660,7 +6759,7 @@ func (s *TableSchema) MarshalJSON() ([]byte, error) {
 }
 
 // Tag: The key and value for a tag
-// (https://cloud.google.com/resource-manager/docs/tags/tags-overview),
+// (https://cloud.google.com/resource-manager/docs/tags/tags-overview).
 type Tag struct {
 	// TagKey: TagKey namespaced name, in the format of
 	// {ORG_ID}/{TAG_KEY_SHORT_NAME}.
@@ -6865,8 +6964,7 @@ type VersionedResource struct {
 	// `https://cloud.google.com/compute/docs/reference/rest/v1/instances`.
 	// You can find the resource definition for each supported resource type
 	// in this table:
-	// `https://cloud.google.com/asset-inventory/docs/supported-asset-types#s
-	// earchable_asset_types`
+	// `https://cloud.google.com/asset-inventory/docs/supported-asset-types`
 	Resource googleapi.RawMessage `json:"resource,omitempty"`
 
 	// Version: API version of the resource. Example: If the resource is an
@@ -7448,10 +7546,10 @@ type EffectiveIamPoliciesBatchGetCall struct {
 //     This can only be an organization number (such as
 //     "organizations/123"), a folder number (such as "folders/123"), a
 //     project ID (such as "projects/my-project-id"), or a project number
-//     (such as "projects/12345"). To know how to get organization id,
+//     (such as "projects/12345"). To know how to get organization ID,
 //     visit here
 //     (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
-//     To know how to get folder or project id, visit here
+//     To know how to get folder or project ID, visit here
 //     (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 func (r *EffectiveIamPoliciesService) BatchGet(scope string) *EffectiveIamPoliciesBatchGetCall {
 	c := &EffectiveIamPoliciesBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7462,8 +7560,8 @@ func (r *EffectiveIamPoliciesService) BatchGet(scope string) *EffectiveIamPolici
 // Names sets the optional parameter "names": Required. The names refer
 // to the [full_resource_names]
 // (https://cloud.google.com/asset-inventory/docs/resource-name-format)
-// of searchable asset types
-// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+// of the asset types supported by search APIs
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types).
 // A maximum of 20 resources' effective policies can be retrieved in a
 // batch.
 func (c *EffectiveIamPoliciesBatchGetCall) Names(names ...string) *EffectiveIamPoliciesBatchGetCall {
@@ -7580,13 +7678,13 @@ func (c *EffectiveIamPoliciesBatchGetCall) Do(opts ...googleapi.CallOption) (*Ba
 	//   ],
 	//   "parameters": {
 	//     "names": {
-	//       "description": "Required. The names refer to the [full_resource_names] (https://cloud.google.com/asset-inventory/docs/resource-name-format) of [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types). A maximum of 20 resources' effective policies can be retrieved in a batch.",
+	//       "description": "Required. The names refer to the [full_resource_names] (https://cloud.google.com/asset-inventory/docs/resource-name-format) of the asset types [supported by search APIs](https://cloud.google.com/asset-inventory/docs/supported-asset-types). A maximum of 20 resources' effective policies can be retrieved in a batch.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "scope": {
-	//       "description": "Required. Only IAM policies on or below the scope will be returned. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
+	//       "description": "Required. Only IAM policies on or below the scope will be returned. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization ID, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project ID, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -9323,9 +9421,9 @@ type V1AnalyzeIamPolicyCall struct {
 //     organization number (such as "organizations/123"), a folder number
 //     (such as "folders/123"), a project ID (such as
 //     "projects/my-project-id"), or a project number (such as
-//     "projects/12345"). To know how to get organization id, visit here
+//     "projects/12345"). To know how to get organization ID, visit here
 //     (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
-//     To know how to get folder or project id, visit here
+//     To know how to get folder or project ID, visit here
 //     (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 func (r *V1Service) AnalyzeIamPolicy(scope string) *V1AnalyzeIamPolicyCall {
 	c := &V1AnalyzeIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9693,7 +9791,7 @@ func (c *V1AnalyzeIamPolicyCall) Do(opts ...googleapi.CallOption) (*AnalyzeIamPo
 	//       "type": "string"
 	//     },
 	//     "scope": {
-	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the scope will be analyzed. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
+	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the scope will be analyzed. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization ID, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project ID, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -9737,9 +9835,9 @@ type V1AnalyzeIamPolicyLongrunningCall struct {
 //     organization number (such as "organizations/123"), a folder number
 //     (such as "folders/123"), a project ID (such as
 //     "projects/my-project-id"), or a project number (such as
-//     "projects/12345"). To know how to get organization id, visit here
+//     "projects/12345"). To know how to get organization ID, visit here
 //     (https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id).
-//     To know how to get folder or project id, visit here
+//     To know how to get folder or project ID, visit here
 //     (https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).
 func (r *V1Service) AnalyzeIamPolicyLongrunning(scope string, analyzeiampolicylongrunningrequest *AnalyzeIamPolicyLongrunningRequest) *V1AnalyzeIamPolicyLongrunningCall {
 	c := &V1AnalyzeIamPolicyLongrunningCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -9848,7 +9946,7 @@ func (c *V1AnalyzeIamPolicyLongrunningCall) Do(opts ...googleapi.CallOption) (*O
 	//   ],
 	//   "parameters": {
 	//     "scope": {
-	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the scope will be analyzed. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project id, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
+	//       "description": "Required. The relative name of the root asset. Only resources and IAM policies within the scope will be analyzed. This can only be an organization number (such as \"organizations/123\"), a folder number (such as \"folders/123\"), a project ID (such as \"projects/my-project-id\"), or a project number (such as \"projects/12345\"). To know how to get organization ID, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-organization#retrieving_your_organization_id). To know how to get folder or project ID, visit [here ](https://cloud.google.com/resource-manager/docs/creating-managing-folders#viewing_or_listing_folders_and_projects).",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -10317,16 +10415,50 @@ type V1AnalyzeOrgPolicyGovernedAssetsCall struct {
 
 // AnalyzeOrgPolicyGovernedAssets: Analyzes organization policies
 // governed assets (Google Cloud resources or policies) under a scope.
-// This RPC supports custom constraints and the following 10 canned
-// constraints: * storage.uniformBucketLevelAccess *
-// iam.disableServiceAccountKeyCreation * iam.allowedPolicyMemberDomains
-// * compute.vmExternalIpAccess *
-// appengine.enforceServiceAccountActAsCheck * gcp.resourceLocations *
-// compute.trustedImageProjects * compute.skipDefaultNetworkCreation *
-// compute.requireOsLogin * compute.disableNestedVirtualization This RPC
-// only returns either resources of types supported by searchable asset
-// types
-// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types),
+// This RPC supports custom constraints and the following canned
+// constraints: * constraints/ainotebooks.accessMode *
+// constraints/ainotebooks.disableFileDownloads *
+// constraints/ainotebooks.disableRootAccess *
+// constraints/ainotebooks.disableTerminal *
+// constraints/ainotebooks.environmentOptions *
+// constraints/ainotebooks.requireAutoUpgradeSchedule *
+// constraints/ainotebooks.restrictVpcNetworks *
+// constraints/compute.disableGuestAttributesAccess *
+// constraints/compute.disableInstanceDataAccessApis *
+// constraints/compute.disableNestedVirtualization *
+// constraints/compute.disableSerialPortAccess *
+// constraints/compute.disableSerialPortLogging *
+// constraints/compute.disableVpcExternalIpv6 *
+// constraints/compute.requireOsLogin *
+// constraints/compute.requireShieldedVm *
+// constraints/compute.restrictLoadBalancerCreationForTypes *
+// constraints/compute.restrictProtocolForwardingCreationForTypes *
+// constraints/compute.restrictXpnProjectLienRemoval *
+// constraints/compute.setNewProjectDefaultToZonalDNSOnly *
+// constraints/compute.skipDefaultNetworkCreation *
+// constraints/compute.trustedImageProjects *
+// constraints/compute.vmCanIpForward *
+// constraints/compute.vmExternalIpAccess *
+// constraints/gcp.detailedAuditLoggingMode *
+// constraints/gcp.resourceLocations *
+// constraints/iam.allowedPolicyMemberDomains *
+// constraints/iam.automaticIamGrantsForDefaultServiceAccounts *
+// constraints/iam.disableServiceAccountCreation *
+// constraints/iam.disableServiceAccountKeyCreation *
+// constraints/iam.disableServiceAccountKeyUpload *
+// constraints/iam.restrictCrossProjectServiceAccountLienRemoval *
+// constraints/iam.serviceAccountKeyExpiryHours *
+// constraints/resourcemanager.accessBoundaries *
+// constraints/resourcemanager.allowedExportDestinations *
+// constraints/sql.restrictAuthorizedNetworks *
+// constraints/sql.restrictNoncompliantDiagnosticDataAccess *
+// constraints/sql.restrictNoncompliantResourceCreation *
+// constraints/sql.restrictPublicIp *
+// constraints/storage.publicAccessPrevention *
+// constraints/storage.restrictAuthTypes *
+// constraints/storage.uniformBucketLevelAccess This RPC only returns
+// either resources of types supported by search APIs
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 // or IAM policies.
 //
 //   - scope: The organization to scope the request. Only organization
@@ -10491,7 +10623,7 @@ func (c *V1AnalyzeOrgPolicyGovernedAssetsCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Analyzes organization policies governed assets (Google Cloud resources or policies) under a scope. This RPC supports custom constraints and the following 10 canned constraints: * storage.uniformBucketLevelAccess * iam.disableServiceAccountKeyCreation * iam.allowedPolicyMemberDomains * compute.vmExternalIpAccess * appengine.enforceServiceAccountActAsCheck * gcp.resourceLocations * compute.trustedImageProjects * compute.skipDefaultNetworkCreation * compute.requireOsLogin * compute.disableNestedVirtualization This RPC only returns either resources of types supported by [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types), or IAM policies.",
+	//   "description": "Analyzes organization policies governed assets (Google Cloud resources or policies) under a scope. This RPC supports custom constraints and the following canned constraints: * constraints/ainotebooks.accessMode * constraints/ainotebooks.disableFileDownloads * constraints/ainotebooks.disableRootAccess * constraints/ainotebooks.disableTerminal * constraints/ainotebooks.environmentOptions * constraints/ainotebooks.requireAutoUpgradeSchedule * constraints/ainotebooks.restrictVpcNetworks * constraints/compute.disableGuestAttributesAccess * constraints/compute.disableInstanceDataAccessApis * constraints/compute.disableNestedVirtualization * constraints/compute.disableSerialPortAccess * constraints/compute.disableSerialPortLogging * constraints/compute.disableVpcExternalIpv6 * constraints/compute.requireOsLogin * constraints/compute.requireShieldedVm * constraints/compute.restrictLoadBalancerCreationForTypes * constraints/compute.restrictProtocolForwardingCreationForTypes * constraints/compute.restrictXpnProjectLienRemoval * constraints/compute.setNewProjectDefaultToZonalDNSOnly * constraints/compute.skipDefaultNetworkCreation * constraints/compute.trustedImageProjects * constraints/compute.vmCanIpForward * constraints/compute.vmExternalIpAccess * constraints/gcp.detailedAuditLoggingMode * constraints/gcp.resourceLocations * constraints/iam.allowedPolicyMemberDomains * constraints/iam.automaticIamGrantsForDefaultServiceAccounts * constraints/iam.disableServiceAccountCreation * constraints/iam.disableServiceAccountKeyCreation * constraints/iam.disableServiceAccountKeyUpload * constraints/iam.restrictCrossProjectServiceAccountLienRemoval * constraints/iam.serviceAccountKeyExpiryHours * constraints/resourcemanager.accessBoundaries * constraints/resourcemanager.allowedExportDestinations * constraints/sql.restrictAuthorizedNetworks * constraints/sql.restrictNoncompliantDiagnosticDataAccess * constraints/sql.restrictNoncompliantResourceCreation * constraints/sql.restrictPublicIp * constraints/storage.publicAccessPrevention * constraints/storage.restrictAuthTypes * constraints/storage.uniformBucketLevelAccess This RPC only returns either resources of types [supported by search APIs](https://cloud.google.com/asset-inventory/docs/supported-asset-types) or IAM policies.",
 	//   "flatPath": "v1/{v1Id}/{v1Id1}:analyzeOrgPolicyGovernedAssets",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.analyzeOrgPolicyGovernedAssets",
@@ -11407,8 +11539,9 @@ func (r *V1Service) SearchAllIamPolicies(scope string) *V1SearchAllIamPoliciesCa
 
 // AssetTypes sets the optional parameter "assetTypes": A list of asset
 // types that the IAM policies are attached to. If empty, it will search
-// the IAM policies that are attached to all the searchable asset types
-// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+// the IAM policies that are attached to all the asset types supported
+// by search APIs
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types)
 // Regular expressions are also supported. For example: *
 // "compute.googleapis.com.*" snapshots IAM policies attached to asset
 // type starts with "compute.googleapis.com". * ".*Instance" snapshots
@@ -11607,7 +11740,7 @@ func (c *V1SearchAllIamPoliciesCall) Do(opts ...googleapi.CallOption) (*SearchAl
 	//   ],
 	//   "parameters": {
 	//     "assetTypes": {
-	//       "description": "Optional. A list of asset types that the IAM policies are attached to. If empty, it will search the IAM policies that are attached to all the [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types). Regular expressions are also supported. For example: * \"compute.googleapis.com.*\" snapshots IAM policies attached to asset type starts with \"compute.googleapis.com\". * \".*Instance\" snapshots IAM policies attached to asset type ends with \"Instance\". * \".*Instance.*\" snapshots IAM policies attached to asset type contains \"Instance\". See [RE2](https://github.com/google/re2/wiki/Syntax) for all supported regular expression syntax. If the regular expression does not match any supported asset type, an INVALID_ARGUMENT error will be returned.",
+	//       "description": "Optional. A list of asset types that the IAM policies are attached to. If empty, it will search the IAM policies that are attached to all the asset types [supported by search APIs](https://cloud.google.com/asset-inventory/docs/supported-asset-types) Regular expressions are also supported. For example: * \"compute.googleapis.com.*\" snapshots IAM policies attached to asset type starts with \"compute.googleapis.com\". * \".*Instance\" snapshots IAM policies attached to asset type ends with \"Instance\". * \".*Instance.*\" snapshots IAM policies attached to asset type contains \"Instance\". See [RE2](https://github.com/google/re2/wiki/Syntax) for all supported regular expression syntax. If the regular expression does not match any supported asset type, an INVALID_ARGUMENT error will be returned.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"
@@ -11707,8 +11840,8 @@ func (r *V1Service) SearchAllResources(scope string) *V1SearchAllResourcesCall {
 
 // AssetTypes sets the optional parameter "assetTypes": A list of asset
 // types that this request searches for. If empty, it will search all
-// the searchable asset types
-// (https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types).
+// the asset types supported by search APIs
+// (https://cloud.google.com/asset-inventory/docs/supported-asset-types).
 // Regular expressions are also supported. For example: *
 // "compute.googleapis.com.*" snapshots resources whose asset type
 // starts with "compute.googleapis.com". * ".*Instance" snapshots
@@ -11961,7 +12094,7 @@ func (c *V1SearchAllResourcesCall) Do(opts ...googleapi.CallOption) (*SearchAllR
 	//   ],
 	//   "parameters": {
 	//     "assetTypes": {
-	//       "description": "Optional. A list of asset types that this request searches for. If empty, it will search all the [searchable asset types](https://cloud.google.com/asset-inventory/docs/supported-asset-types#searchable_asset_types). Regular expressions are also supported. For example: * \"compute.googleapis.com.*\" snapshots resources whose asset type starts with \"compute.googleapis.com\". * \".*Instance\" snapshots resources whose asset type ends with \"Instance\". * \".*Instance.*\" snapshots resources whose asset type contains \"Instance\". See [RE2](https://github.com/google/re2/wiki/Syntax) for all supported regular expression syntax. If the regular expression does not match any supported asset type, an INVALID_ARGUMENT error will be returned.",
+	//       "description": "Optional. A list of asset types that this request searches for. If empty, it will search all the asset types [supported by search APIs](https://cloud.google.com/asset-inventory/docs/supported-asset-types). Regular expressions are also supported. For example: * \"compute.googleapis.com.*\" snapshots resources whose asset type starts with \"compute.googleapis.com\". * \".*Instance\" snapshots resources whose asset type ends with \"Instance\". * \".*Instance.*\" snapshots resources whose asset type contains \"Instance\". See [RE2](https://github.com/google/re2/wiki/Syntax) for all supported regular expression syntax. If the regular expression does not match any supported asset type, an INVALID_ARGUMENT error will be returned.",
 	//       "location": "query",
 	//       "repeated": true,
 	//       "type": "string"

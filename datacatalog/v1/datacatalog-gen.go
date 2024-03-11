@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "datacatalog:v1"
 const apiName = "datacatalog"
 const apiVersion = "v1"
 const basePath = "https://datacatalog.googleapis.com/"
+const basePathTemplate = "https://datacatalog.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://datacatalog.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -348,11 +352,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -364,11 +391,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -915,6 +951,12 @@ type GoogleCloudDatacatalogV1ColumnSchema struct {
 	// OrdinalPosition: Optional. Ordinal position
 	OrdinalPosition int64 `json:"ordinalPosition,omitempty"`
 
+	// RangeElementType: Optional. The subtype of the RANGE, if the type of
+	// this field is RANGE. If the type is RANGE, this field is required.
+	// Possible values for the field element type of a RANGE include: * DATE
+	// * DATETIME * TIMESTAMP
+	RangeElementType *GoogleCloudDatacatalogV1ColumnSchemaFieldElementType `json:"rangeElementType,omitempty"`
+
 	// Subcolumns: Optional. Schema of sub-columns. A column can have zero
 	// or more sub-columns.
 	Subcolumns []*GoogleCloudDatacatalogV1ColumnSchema `json:"subcolumns,omitempty"`
@@ -942,6 +984,35 @@ type GoogleCloudDatacatalogV1ColumnSchema struct {
 
 func (s *GoogleCloudDatacatalogV1ColumnSchema) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ColumnSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1ColumnSchemaFieldElementType: Represents the
+// type of a field element.
+type GoogleCloudDatacatalogV1ColumnSchemaFieldElementType struct {
+	// Type: Required. The type of a field element. See ColumnSchema.type.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1ColumnSchemaFieldElementType) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1ColumnSchemaFieldElementType
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1549,6 +1620,10 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// when encoded in UTF-8. Default value is an empty string.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// FeatureOnlineStoreSpec: FeatureonlineStore spec for Vertex AI Feature
+	// Store.
+	FeatureOnlineStoreSpec *GoogleCloudDatacatalogV1FeatureOnlineStoreSpec `json:"featureOnlineStoreSpec,omitempty"`
+
 	// FilesetSpec: Specification that applies to a fileset resource. Valid
 	// only for entries with the `FILESET` type.
 	FilesetSpec *GoogleCloudDatacatalogV1FilesetSpec `json:"filesetSpec,omitempty"`
@@ -1670,6 +1745,11 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// (https://developers.looker.com/api/explorer/4.0/methods/LookmlModel/lookml_model_explore).
 	//   "LOOK" - A Looker Look. For more information, see [Looker Look API]
 	// (https://developers.looker.com/api/explorer/4.0/methods/Look).
+	//   "FEATURE_ONLINE_STORE" - Feature Online Store resource in Vertex AI
+	// Feature Store.
+	//   "FEATURE_VIEW" - Feature View resource in Vertex AI Feature Store.
+	//   "FEATURE_GROUP" - Feature Group resource in Vertex AI Feature
+	// Store.
 	Type string `json:"type,omitempty"`
 
 	// UsageSignal: Resource usage statistics.
@@ -1841,6 +1921,41 @@ type GoogleCloudDatacatalogV1ExportTaxonomiesResponse struct {
 
 func (s *GoogleCloudDatacatalogV1ExportTaxonomiesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDatacatalogV1ExportTaxonomiesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDatacatalogV1FeatureOnlineStoreSpec: Detail description of
+// the source information of a Vertex Feature Online Store.
+type GoogleCloudDatacatalogV1FeatureOnlineStoreSpec struct {
+	// StorageType: Output only. Type of underelaying storage for the
+	// FeatureOnlineStore.
+	//
+	// Possible values:
+	//   "STORAGE_TYPE_UNSPECIFIED" - Should not be used.
+	//   "BIGTABLE" - Underlsying storgae is Bigtable.
+	//   "OPTIMIZED" - Underlaying is optimized online server (Lightning).
+	StorageType string `json:"storageType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "StorageType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "StorageType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDatacatalogV1FeatureOnlineStoreSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDatacatalogV1FeatureOnlineStoreSpec
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2797,9 +2912,9 @@ type GoogleCloudDatacatalogV1PolicyTag struct {
 	// and spaces, and be at most 200 bytes long when encoded in UTF-8.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Output only. Resource name of this policy tag in the URL
-	// format. The policy tag manager generates unique taxonomy IDs and
-	// policy tag IDs.
+	// Name: Identifier. Resource name of this policy tag in the URL format.
+	// The policy tag manager generates unique taxonomy IDs and policy tag
+	// IDs.
 	Name string `json:"name,omitempty"`
 
 	// ParentPolicyTag: Resource name of this policy tag's parent policy
@@ -4115,8 +4230,8 @@ type GoogleCloudDatacatalogV1Taxonomy struct {
 	// within an organization.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: Output only. Resource name of this taxonomy in URL format.
-	// Note: Policy tag manager generates unique taxonomy IDs.
+	// Name: Identifier. Resource name of this taxonomy in URL format. Note:
+	// Policy tag manager generates unique taxonomy IDs.
 	Name string `json:"name,omitempty"`
 
 	// PolicyTagCount: Output only. Number of policy tags in this taxonomy.
@@ -13437,7 +13552,7 @@ type ProjectsLocationsTaxonomiesPatchCall struct {
 // Patch: Updates a taxonomy, including its display name, description,
 // and activated policy types.
 //
-//   - name: Output only. Resource name of this taxonomy in URL format.
+//   - name: Identifier. Resource name of this taxonomy in URL format.
 //     Note: Policy tag manager generates unique taxonomy IDs.
 func (r *ProjectsLocationsTaxonomiesService) Patch(name string, googleclouddatacatalogv1taxonomy *GoogleCloudDatacatalogV1Taxonomy) *ProjectsLocationsTaxonomiesPatchCall {
 	c := &ProjectsLocationsTaxonomiesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -13555,7 +13670,7 @@ func (c *ProjectsLocationsTaxonomiesPatchCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Resource name of this taxonomy in URL format. Note: Policy tag manager generates unique taxonomy IDs.",
+	//       "description": "Identifier. Resource name of this taxonomy in URL format. Note: Policy tag manager generates unique taxonomy IDs.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+$",
 	//       "required": true,
@@ -14804,7 +14919,7 @@ type ProjectsLocationsTaxonomiesPolicyTagsPatchCall struct {
 // Patch: Updates a policy tag, including its display name, description,
 // and parent policy tag.
 //
-//   - name: Output only. Resource name of this policy tag in the URL
+//   - name: Identifier. Resource name of this policy tag in the URL
 //     format. The policy tag manager generates unique taxonomy IDs and
 //     policy tag IDs.
 func (r *ProjectsLocationsTaxonomiesPolicyTagsService) Patch(name string, googleclouddatacatalogv1policytag *GoogleCloudDatacatalogV1PolicyTag) *ProjectsLocationsTaxonomiesPolicyTagsPatchCall {
@@ -14925,7 +15040,7 @@ func (c *ProjectsLocationsTaxonomiesPolicyTagsPatchCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. Resource name of this policy tag in the URL format. The policy tag manager generates unique taxonomy IDs and policy tag IDs.",
+	//       "description": "Identifier. Resource name of this policy tag in the URL format. The policy tag manager generates unique taxonomy IDs and policy tag IDs.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/taxonomies/[^/]+/policyTags/[^/]+$",
 	//       "required": true,

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -97,7 +97,9 @@ const apiId = "oslogin:v1beta"
 const apiName = "oslogin"
 const apiVersion = "v1beta"
 const basePath = "https://oslogin.googleapis.com/"
+const basePathTemplate = "https://oslogin.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://oslogin.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -127,7 +129,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -825,6 +829,15 @@ func (c *UsersImportSshPublicKeyCall) ProjectId(projectId string) *UsersImportSs
 	return c
 }
 
+// Regions sets the optional parameter "regions": The regions to which
+// to assert that the key was written. If unspecified, defaults to all
+// regions. Regions are listed at
+// https://cloud.google.com/about/locations#region.
+func (c *UsersImportSshPublicKeyCall) Regions(regions ...string) *UsersImportSshPublicKeyCall {
+	c.urlParams_.SetMulti("regions", append([]string{}, regions...))
+	return c
+}
+
 // View sets the optional parameter "view": The view configures whether
 // to retrieve security keys information.
 //
@@ -950,6 +963,12 @@ func (c *UsersImportSshPublicKeyCall) Do(opts ...googleapi.CallOption) (*ImportS
 	//     "projectId": {
 	//       "description": "The project ID of the Google Cloud Platform project.",
 	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "regions": {
+	//       "description": "Optional. The regions to which to assert that the key was written. If unspecified, defaults to all regions. Regions are listed at https://cloud.google.com/about/locations#region.",
+	//       "location": "query",
+	//       "repeated": true,
 	//       "type": "string"
 	//     },
 	//     "view": {

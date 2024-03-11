@@ -29,7 +29,9 @@ import (
 )
 
 const (
-	googleDiscoveryURL = "https://www.googleapis.com/discovery/v1/apis"
+	googleDiscoveryURL        = "https://www.googleapis.com/discovery/v1/apis"
+	googleDefaultUniverse     = "googleapis.com"
+	universeDomainPlaceholder = "UNIVERSE_DOMAIN"
 )
 
 var (
@@ -498,6 +500,14 @@ func (a *API) apiBaseURL() string {
 	return resolveRelative(base, rel)
 }
 
+// apiBaseURLTemplate returns the value returned by apiBaseURL with the
+// Google Default Universe (googleapis.com) replaced with the placeholder
+// UNIVERSE_DOMAIN for universe domain substitution.
+func (a *API) apiBaseURLTemplate() (string, error) {
+	base := a.apiBaseURL()
+	return strings.Replace(base, googleDefaultUniverse, universeDomainPlaceholder, 1), nil
+}
+
 func (a *API) mtlsAPIBaseURL() string {
 	if a.doc.MTLSRootURL != "" {
 		return resolveRelative(a.doc.MTLSRootURL, a.doc.ServicePath)
@@ -760,9 +770,15 @@ func (a *API) GenerateCode() ([]byte, error) {
 	pn("const apiName = %q", a.doc.Name)
 	pn("const apiVersion = %q", a.doc.Version)
 	pn("const basePath = %q", a.apiBaseURL())
+	basePathTemplate, err := a.apiBaseURLTemplate()
+	if err != nil {
+		return buf.Bytes(), err
+	}
+	pn("const basePathTemplate = %q", basePathTemplate)
 	if mtlsBase := a.mtlsAPIBaseURL(); mtlsBase != "" {
 		pn("const mtlsBasePath = %q", mtlsBase)
 	}
+	pn("const defaultUniverseDomain = %q", googleDefaultUniverse)
 
 	a.generateScopeConstants()
 	a.PopulateSchemas()
@@ -785,9 +801,11 @@ func (a *API) GenerateCode() ([]byte, error) {
 		pn("opts = append([]option.ClientOption{scopesOption}, opts...)")
 	}
 	pn("opts = append(opts, internaloption.WithDefaultEndpoint(basePath))")
+	pn("opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))")
 	if a.mtlsAPIBaseURL() != "" {
 		pn("opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))")
 	}
+	pn("opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))")
 	pn("client, endpoint, err := htransport.NewClient(ctx, opts...)")
 	pn("if err != nil { return nil, err }")
 	pn("s, err := New(client)")
@@ -1948,6 +1966,9 @@ func (meth *Method) generateCode() {
 	for _, opt := range meth.OptParams() {
 		if opt.p.Location != "query" {
 			panicf("optional parameter has unsupported location %q", opt.p.Location)
+		}
+		if opt.p.Repeated && opt.p.Type == "object" {
+			panic(fmt.Sprintf("field %q: repeated fields of type message are prohibited as query parameters", opt.p.Name))
 		}
 		setter := initialCap(opt.p.Name)
 		des := opt.p.Description

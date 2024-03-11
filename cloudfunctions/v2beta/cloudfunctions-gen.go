@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "cloudfunctions:v2beta"
 const apiName = "cloudfunctions"
 const apiVersion = "v2beta"
 const basePath = "https://cloudfunctions.googleapis.com/"
+const basePathTemplate = "https://cloudfunctions.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudfunctions.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -208,6 +212,11 @@ type ProjectsLocationsRuntimesService struct {
 	s *Service
 }
 
+// AbortFunctionUpgradeRequest: Request for the `AbortFunctionUpgrade`
+// method.
+type AbortFunctionUpgradeRequest struct {
+}
+
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
 // identities, if any, are exempted from logging. An AuditConfig must
@@ -305,6 +314,11 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AutomaticUpdatePolicy: Security patches are applied automatically to
+// the runtime without requiring the function to be redeployed.
+type AutomaticUpdatePolicy struct {
+}
+
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
@@ -337,11 +351,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -353,11 +390,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -386,6 +432,8 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 // BuildConfig: Describes the Build step of the function that builds a
 // container from the given source.
 type BuildConfig struct {
+	AutomaticUpdatePolicy *AutomaticUpdatePolicy `json:"automaticUpdatePolicy,omitempty"`
+
 	// Build: Output only. The Cloud Build name of the latest successful
 	// deployment of the function.
 	Build string `json:"build,omitempty"`
@@ -409,12 +457,12 @@ type BuildConfig struct {
 	// by the user using the `docker_repository` field.
 	DockerRegistry string `json:"dockerRegistry,omitempty"`
 
-	// DockerRepository: User managed repository created in Artifact
-	// Registry optionally with a customer managed encryption key. This is
-	// the repository to which the function docker image will be pushed
-	// after it is built by Cloud Build. If unspecified, GCF will create and
-	// use a repository named 'gcf-artifacts' for every deployed region. It
-	// must match the pattern
+	// DockerRepository: Repository in Artifact Registry to which the
+	// function docker image will be pushed after it is built by Cloud
+	// Build. If specified by user, it is created and managed by user with a
+	// customer managed encryption key. Otherwise, GCF will create and use a
+	// repository named 'gcf-artifacts' for every deployed region. It must
+	// match the pattern
 	// `projects/{project}/locations/{location}/repositories/{repository}`.
 	// Cross-project repositories are not supported. Cross-location
 	// repositories are not supported. Repository format must be 'DOCKER'.
@@ -432,12 +480,18 @@ type BuildConfig struct {
 	// for the function
 	EnvironmentVariables map[string]string `json:"environmentVariables,omitempty"`
 
+	OnDeployUpdatePolicy *OnDeployUpdatePolicy `json:"onDeployUpdatePolicy,omitempty"`
+
 	// Runtime: The runtime in which to run the function. Required when
 	// deploying a new function, optional when updating an existing
 	// function. For a complete list of possible choices, see the `gcloud`
 	// command reference
 	// (https://cloud.google.com/sdk/gcloud/reference/functions/deploy#--runtime).
 	Runtime string `json:"runtime,omitempty"`
+
+	// ServiceAccount: [Preview] Service account to be used for building the
+	// container
+	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// Source: The location of the function source code.
 	Source *Source `json:"source,omitempty"`
@@ -462,20 +516,22 @@ type BuildConfig struct {
 	// (roles/cloudbuild.customworkers.builder) in the project.
 	WorkerPool string `json:"workerPool,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Build") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AutomaticUpdatePolicy") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Build") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AutomaticUpdatePolicy") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -483,6 +539,11 @@ func (s *BuildConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod BuildConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CommitFunctionUpgradeRequest: Request for the `CommitFunctionUpgrade`
+// method.
+type CommitFunctionUpgradeRequest struct {
 }
 
 // Date: Represents a whole or partial calendar date, such as a
@@ -606,6 +667,14 @@ type EventTrigger struct {
 	// with an exponential backoff (capped at 10 seconds).
 	RetryPolicy string `json:"retryPolicy,omitempty"`
 
+	// Service: Optional. The hostname of the service that 1st Gen function
+	// should be observed. If no string is provided, the default service
+	// implementing the API will be used. For example,
+	// `storage.googleapis.com` is the default for all event types in the
+	// `google.storage` namespace. The field is only applicable to 1st Gen
+	// functions.
+	Service string `json:"service,omitempty"`
+
 	// ServiceAccountEmail: Optional. The email of the trigger's service
 	// account. The service account must have permission to invoke Cloud Run
 	// services, the permission is `run.routes.invoke`. If empty, defaults
@@ -716,6 +785,10 @@ type Function struct {
 	// container from the given source.
 	BuildConfig *BuildConfig `json:"buildConfig,omitempty"`
 
+	// CreateTime: Output only. The create timestamp of a Cloud Function.
+	// This is only applicable to 2nd Gen functions.
+	CreateTime string `json:"createTime,omitempty"`
+
 	// Description: User-provided description of a function.
 	Description string `json:"description,omitempty"`
 
@@ -773,6 +846,9 @@ type Function struct {
 	// UpdateTime: Output only. The last update timestamp of a Cloud
 	// Function.
 	UpdateTime string `json:"updateTime,omitempty"`
+
+	// UpgradeInfo: Output only. UpgradeInfo for this Cloud Function
+	UpgradeInfo *UpgradeInfo `json:"upgradeInfo,omitempty"`
 
 	// Url: Output only. The deployed url for the function.
 	Url string `json:"url,omitempty"`
@@ -845,6 +921,17 @@ func (s *GenerateDownloadUrlResponse) MarshalJSON() ([]byte, error) {
 // GenerateUploadUrlRequest: Request of `GenerateSourceUploadUrl`
 // method.
 type GenerateUploadUrlRequest struct {
+	// Environment: The function environment the generated upload url will
+	// be used for. The upload url for 2nd Gen functions can also be used
+	// for 1st gen functions, but not vice versa. If not specified, 2nd
+	// generation-style upload URLs are generated.
+	//
+	// Possible values:
+	//   "ENVIRONMENT_UNSPECIFIED" - Unspecified
+	//   "GEN_1" - Gen 1
+	//   "GEN_2" - Gen 2
+	Environment string `json:"environment,omitempty"`
+
 	// KmsKeyName: [Preview] Resource name of a KMS crypto key (managed by
 	// the user) used to encrypt/decrypt function source code objects in
 	// intermediate Cloud Storage buckets. When you generate an upload url
@@ -860,7 +947,7 @@ type GenerateUploadUrlRequest struct {
 	// Key/KeyRing/Project/Organization (least access preferred).
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "KmsKeyName") to
+	// ForceSendFields is a list of field names (e.g. "Environment") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -868,10 +955,10 @@ type GenerateUploadUrlRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "KmsKeyName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Environment") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -977,6 +1064,22 @@ type GoogleCloudFunctionsV2OperationMetadata struct {
 
 	// EndTime: The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
+
+	// OperationType: The operation type.
+	//
+	// Possible values:
+	//   "OPERATIONTYPE_UNSPECIFIED" - Unspecified
+	//   "CREATE_FUNCTION" - CreateFunction
+	//   "UPDATE_FUNCTION" - UpdateFunction
+	//   "DELETE_FUNCTION" - DeleteFunction
+	//   "REDIRECT_FUNCTION_UPGRADE_TRAFFIC" -
+	// RedirectFunctionUpgradeTraffic
+	//   "ROLLBACK_FUNCTION_UPGRADE_TRAFFIC" -
+	// RollbackFunctionUpgradeTraffic
+	//   "SETUP_FUNCTION_UPGRADE_CONFIG" - SetupFunctionUpgradeConfig
+	//   "ABORT_FUNCTION_UPGRADE" - AbortFunctionUpgrade
+	//   "COMMIT_FUNCTION_UPGRADE" - CommitFunctionUpgrade
+	OperationType string `json:"operationType,omitempty"`
 
 	// RequestResource: The original request that started the operation.
 	RequestResource googleapi.RawMessage `json:"requestResource,omitempty"`
@@ -1171,6 +1274,22 @@ type GoogleCloudFunctionsV2alphaOperationMetadata struct {
 	// EndTime: The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
 
+	// OperationType: The operation type.
+	//
+	// Possible values:
+	//   "OPERATIONTYPE_UNSPECIFIED" - Unspecified
+	//   "CREATE_FUNCTION" - CreateFunction
+	//   "UPDATE_FUNCTION" - UpdateFunction
+	//   "DELETE_FUNCTION" - DeleteFunction
+	//   "REDIRECT_FUNCTION_UPGRADE_TRAFFIC" -
+	// RedirectFunctionUpgradeTraffic
+	//   "ROLLBACK_FUNCTION_UPGRADE_TRAFFIC" -
+	// RollbackFunctionUpgradeTraffic
+	//   "SETUP_FUNCTION_UPGRADE_CONFIG" - SetupFunctionUpgradeConfig
+	//   "ABORT_FUNCTION_UPGRADE" - AbortFunctionUpgrade
+	//   "COMMIT_FUNCTION_UPGRADE" - CommitFunctionUpgrade
+	OperationType string `json:"operationType,omitempty"`
+
 	// RequestResource: The original request that started the operation.
 	RequestResource googleapi.RawMessage `json:"requestResource,omitempty"`
 
@@ -1364,6 +1483,22 @@ type GoogleCloudFunctionsV2betaOperationMetadata struct {
 
 	// EndTime: The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
+
+	// OperationType: The operation type.
+	//
+	// Possible values:
+	//   "OPERATIONTYPE_UNSPECIFIED" - Unspecified
+	//   "CREATE_FUNCTION" - CreateFunction
+	//   "UPDATE_FUNCTION" - UpdateFunction
+	//   "DELETE_FUNCTION" - DeleteFunction
+	//   "REDIRECT_FUNCTION_UPGRADE_TRAFFIC" -
+	// RedirectFunctionUpgradeTraffic
+	//   "ROLLBACK_FUNCTION_UPGRADE_TRAFFIC" -
+	// RollbackFunctionUpgradeTraffic
+	//   "SETUP_FUNCTION_UPGRADE_CONFIG" - SetupFunctionUpgradeConfig
+	//   "ABORT_FUNCTION_UPGRADE" - AbortFunctionUpgrade
+	//   "COMMIT_FUNCTION_UPGRADE" - CommitFunctionUpgrade
+	OperationType string `json:"operationType,omitempty"`
 
 	// RequestResource: The original request that started the operation.
 	RequestResource googleapi.RawMessage `json:"requestResource,omitempty"`
@@ -1699,6 +1834,37 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OnDeployUpdatePolicy: Security patches are only applied when a
+// function is redeployed.
+type OnDeployUpdatePolicy struct {
+	// RuntimeVersion: Output only. contains the runtime version which was
+	// used during latest function deployment.
+	RuntimeVersion string `json:"runtimeVersion,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RuntimeVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RuntimeVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OnDeployUpdatePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod OnDeployUpdatePolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Operation: This resource represents a long-running operation that is
 // the result of a network API call.
 type Operation struct {
@@ -1933,6 +2099,11 @@ func (s *Policy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RedirectFunctionUpgradeTrafficRequest: Request for the
+// `RedirectFunctionUpgradeTraffic` method.
+type RedirectFunctionUpgradeTrafficRequest struct {
+}
+
 // RepoSource: Location of the source in a Google Cloud Source
 // Repository.
 type RepoSource struct {
@@ -1983,6 +2154,11 @@ func (s *RepoSource) MarshalJSON() ([]byte, error) {
 	type NoMethod RepoSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RollbackFunctionUpgradeTrafficRequest: Request for the
+// `RollbackFunctionUpgradeTraffic` method.
+type RollbackFunctionUpgradeTrafficRequest struct {
 }
 
 // Runtime: Describes a runtime and any special information (e.g.,
@@ -2190,9 +2366,9 @@ type ServiceConfig struct {
 	// will be returned if the latest revision is serving 100% of traffic.
 	AllTrafficOnLatestRevision bool `json:"allTrafficOnLatestRevision,omitempty"`
 
-	// AvailableCpu: [Preview] The number of CPUs used in a single container
-	// instance. Default value is calculated from available memory. Supports
-	// the same values as Cloud Run, see
+	// AvailableCpu: The number of CPUs used in a single container instance.
+	// Default value is calculated from available memory. Supports the same
+	// values as Cloud Run, see
 	// https://cloud.google.com/run/docs/reference/rest/v1/Container#resourcerequirements
 	// Example: "1" indicates 1 vCPU
 	AvailableCpu string `json:"availableCpu,omitempty"`
@@ -2231,8 +2407,8 @@ type ServiceConfig struct {
 	// more details.
 	MaxInstanceCount int64 `json:"maxInstanceCount,omitempty"`
 
-	// MaxInstanceRequestConcurrency: [Preview] Sets the maximum number of
-	// concurrent requests that each instance can receive. Defaults to 1.
+	// MaxInstanceRequestConcurrency: Sets the maximum number of concurrent
+	// requests that each instance can receive. Defaults to 1.
 	MaxInstanceRequestConcurrency int64 `json:"maxInstanceRequestConcurrency,omitempty"`
 
 	// MinInstanceCount: The limit on the minimum number of function
@@ -2365,6 +2541,11 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SetupFunctionUpgradeConfigRequest: Request for the
+// `SetupFunctionUpgradeConfig` method.
+type SetupFunctionUpgradeConfigRequest struct {
 }
 
 // Source: The location of the function source code.
@@ -2593,6 +2774,72 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UpgradeInfo: Information related to: * A function's eligibility for
+// 1st Gen to 2nd Gen migration * Current state of migration for
+// function undergoing migration.
+type UpgradeInfo struct {
+	// BuildConfig: Describes the Build step of the function that builds a
+	// container to prepare for 2nd gen upgrade.
+	BuildConfig *BuildConfig `json:"buildConfig,omitempty"`
+
+	// EventTrigger: Describes the Event trigger which has been setup to
+	// prepare for 2nd gen upgrade.
+	EventTrigger *EventTrigger `json:"eventTrigger,omitempty"`
+
+	// ServiceConfig: Describes the Cloud Run service which has been setup
+	// to prepare for 2nd gen upgrade.
+	ServiceConfig *ServiceConfig `json:"serviceConfig,omitempty"`
+
+	// UpgradeState: UpgradeState of the function
+	//
+	// Possible values:
+	//   "UPGRADE_STATE_UNSPECIFIED" - Unspecified state. Most functions are
+	// in this upgrade state.
+	//   "ELIGIBLE_FOR_2ND_GEN_UPGRADE" - Functions in this state are
+	// eligible for 1st Gen -> 2nd Gen upgrade.
+	//   "UPGRADE_OPERATION_IN_PROGRESS" - An upgrade related operation is
+	// in progress.
+	//   "SETUP_FUNCTION_UPGRADE_CONFIG_SUCCESSFUL" -
+	// SetupFunctionUpgradeConfig API was successful and a 2nd Gen function
+	// has been created based on 1st Gen function instance.
+	//   "SETUP_FUNCTION_UPGRADE_CONFIG_ERROR" - SetupFunctionUpgradeConfig
+	// API was un-successful.
+	//   "ABORT_FUNCTION_UPGRADE_ERROR" - AbortFunctionUpgrade API was
+	// un-successful.
+	//   "REDIRECT_FUNCTION_UPGRADE_TRAFFIC_SUCCESSFUL" -
+	// RedirectFunctionUpgradeTraffic API was successful and traffic is
+	// served by 2nd Gen function stack.
+	//   "REDIRECT_FUNCTION_UPGRADE_TRAFFIC_ERROR" -
+	// RedirectFunctionUpgradeTraffic API was un-successful.
+	//   "ROLLBACK_FUNCTION_UPGRADE_TRAFFIC_ERROR" -
+	// RollbackFunctionUpgradeTraffic API was un-successful.
+	//   "COMMIT_FUNCTION_UPGRADE_ERROR" - CommitFunctionUpgrade API was
+	// un-successful.
+	UpgradeState string `json:"upgradeState,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BuildConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BuildConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpgradeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod UpgradeInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // method id "cloudfunctions.projects.locations.list":
 
 type ProjectsLocationsListCall struct {
@@ -2800,6 +3047,297 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "cloudfunctions.projects.locations.functions.abortFunctionUpgrade":
+
+type ProjectsLocationsFunctionsAbortFunctionUpgradeCall struct {
+	s                           *Service
+	name                        string
+	abortfunctionupgraderequest *AbortFunctionUpgradeRequest
+	urlParams_                  gensupport.URLParams
+	ctx_                        context.Context
+	header_                     http.Header
+}
+
+// AbortFunctionUpgrade: Aborts generation upgrade process for a
+// function with the given name from the specified project. Deletes all
+// 2nd Gen copy related configuration and resources which were created
+// during the upgrade process.
+//
+// - name: The name of the function for which upgrade should be aborted.
+func (r *ProjectsLocationsFunctionsService) AbortFunctionUpgrade(name string, abortfunctionupgraderequest *AbortFunctionUpgradeRequest) *ProjectsLocationsFunctionsAbortFunctionUpgradeCall {
+	c := &ProjectsLocationsFunctionsAbortFunctionUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.abortfunctionupgraderequest = abortfunctionupgraderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFunctionsAbortFunctionUpgradeCall) Fields(s ...googleapi.Field) *ProjectsLocationsFunctionsAbortFunctionUpgradeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFunctionsAbortFunctionUpgradeCall) Context(ctx context.Context) *ProjectsLocationsFunctionsAbortFunctionUpgradeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFunctionsAbortFunctionUpgradeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFunctionsAbortFunctionUpgradeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.abortfunctionupgraderequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}:abortFunctionUpgrade")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudfunctions.projects.locations.functions.abortFunctionUpgrade" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFunctionsAbortFunctionUpgradeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Aborts generation upgrade process for a function with the given name from the specified project. Deletes all 2nd Gen copy related configuration and resources which were created during the upgrade process.",
+	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/functions/{functionsId}:abortFunctionUpgrade",
+	//   "httpMethod": "POST",
+	//   "id": "cloudfunctions.projects.locations.functions.abortFunctionUpgrade",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the function for which upgrade should be aborted.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta/{+name}:abortFunctionUpgrade",
+	//   "request": {
+	//     "$ref": "AbortFunctionUpgradeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudfunctions.projects.locations.functions.commitFunctionUpgrade":
+
+type ProjectsLocationsFunctionsCommitFunctionUpgradeCall struct {
+	s                            *Service
+	name                         string
+	commitfunctionupgraderequest *CommitFunctionUpgradeRequest
+	urlParams_                   gensupport.URLParams
+	ctx_                         context.Context
+	header_                      http.Header
+}
+
+// CommitFunctionUpgrade: Finalizes the upgrade after which function
+// upgrade can not be rolled back. This is the last step of the multi
+// step process to upgrade 1st Gen functions to 2nd Gen. Deletes all
+// original 1st Gen related configuration and resources.
+//
+//   - name: The name of the function for which upgrade should be
+//     finalized.
+func (r *ProjectsLocationsFunctionsService) CommitFunctionUpgrade(name string, commitfunctionupgraderequest *CommitFunctionUpgradeRequest) *ProjectsLocationsFunctionsCommitFunctionUpgradeCall {
+	c := &ProjectsLocationsFunctionsCommitFunctionUpgradeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.commitfunctionupgraderequest = commitfunctionupgraderequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeCall) Fields(s ...googleapi.Field) *ProjectsLocationsFunctionsCommitFunctionUpgradeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeCall) Context(ctx context.Context) *ProjectsLocationsFunctionsCommitFunctionUpgradeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.commitfunctionupgraderequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}:commitFunctionUpgrade")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudfunctions.projects.locations.functions.commitFunctionUpgrade" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFunctionsCommitFunctionUpgradeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Finalizes the upgrade after which function upgrade can not be rolled back. This is the last step of the multi step process to upgrade 1st Gen functions to 2nd Gen. Deletes all original 1st Gen related configuration and resources.",
+	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/functions/{functionsId}:commitFunctionUpgrade",
+	//   "httpMethod": "POST",
+	//   "id": "cloudfunctions.projects.locations.functions.commitFunctionUpgrade",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the function for which upgrade should be finalized.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta/{+name}:commitFunctionUpgrade",
+	//   "request": {
+	//     "$ref": "CommitFunctionUpgradeRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "cloudfunctions.projects.locations.functions.create":
@@ -3420,6 +3958,18 @@ func (r *ProjectsLocationsFunctionsService) Get(name string) *ProjectsLocationsF
 	return c
 }
 
+// Revision sets the optional parameter "revision": The optional version
+// of the 1st gen function whose details should be obtained. The version
+// of a 1st gen function is an integer that starts from 1 and gets
+// incremented on redeployments. GCF may keep historical configs for old
+// versions of 1st gen function. This field can be specified to fetch
+// the historical configs. This field is valid only for GCF 1st gen
+// function.
+func (c *ProjectsLocationsFunctionsGetCall) Revision(revision string) *ProjectsLocationsFunctionsGetCall {
+	c.urlParams_.Set("revision", revision)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -3532,6 +4082,11 @@ func (c *ProjectsLocationsFunctionsGetCall) Do(opts ...googleapi.CallOption) (*F
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "revision": {
+	//       "description": "Optional. The optional version of the 1st gen function whose details should be obtained. The version of a 1st gen function is an integer that starts from 1 and gets incremented on redeployments. GCF may keep historical configs for old versions of 1st gen function. This field can be specified to fetch the historical configs. This field is valid only for GCF 1st gen function.",
+	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },
@@ -4110,6 +4665,298 @@ func (c *ProjectsLocationsFunctionsPatchCall) Do(opts ...googleapi.CallOption) (
 
 }
 
+// method id "cloudfunctions.projects.locations.functions.redirectFunctionUpgradeTraffic":
+
+type ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall struct {
+	s                                     *Service
+	name                                  string
+	redirectfunctionupgradetrafficrequest *RedirectFunctionUpgradeTrafficRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// RedirectFunctionUpgradeTraffic: Changes the traffic target of a
+// function from the original 1st Gen function to the 2nd Gen copy. This
+// is the second step of the multi step process to upgrade 1st Gen
+// functions to 2nd Gen. After this operation, all new traffic will be
+// served by 2nd Gen copy.
+//
+//   - name: The name of the function for which traffic target should be
+//     changed to 2nd Gen from 1st Gen.
+func (r *ProjectsLocationsFunctionsService) RedirectFunctionUpgradeTraffic(name string, redirectfunctionupgradetrafficrequest *RedirectFunctionUpgradeTrafficRequest) *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall {
+	c := &ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.redirectfunctionupgradetrafficrequest = redirectfunctionupgradetrafficrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall) Fields(s ...googleapi.Field) *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall) Context(ctx context.Context) *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.redirectfunctionupgradetrafficrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}:redirectFunctionUpgradeTraffic")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudfunctions.projects.locations.functions.redirectFunctionUpgradeTraffic" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFunctionsRedirectFunctionUpgradeTrafficCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Changes the traffic target of a function from the original 1st Gen function to the 2nd Gen copy. This is the second step of the multi step process to upgrade 1st Gen functions to 2nd Gen. After this operation, all new traffic will be served by 2nd Gen copy.",
+	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/functions/{functionsId}:redirectFunctionUpgradeTraffic",
+	//   "httpMethod": "POST",
+	//   "id": "cloudfunctions.projects.locations.functions.redirectFunctionUpgradeTraffic",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the function for which traffic target should be changed to 2nd Gen from 1st Gen.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta/{+name}:redirectFunctionUpgradeTraffic",
+	//   "request": {
+	//     "$ref": "RedirectFunctionUpgradeTrafficRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudfunctions.projects.locations.functions.rollbackFunctionUpgradeTraffic":
+
+type ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall struct {
+	s                                     *Service
+	name                                  string
+	rollbackfunctionupgradetrafficrequest *RollbackFunctionUpgradeTrafficRequest
+	urlParams_                            gensupport.URLParams
+	ctx_                                  context.Context
+	header_                               http.Header
+}
+
+// RollbackFunctionUpgradeTraffic: Reverts the traffic target of a
+// function from the 2nd Gen copy to the original 1st Gen function.
+// After this operation, all new traffic would be served by the 1st Gen.
+//
+//   - name: The name of the function for which traffic target should be
+//     changed back to 1st Gen from 2nd Gen.
+func (r *ProjectsLocationsFunctionsService) RollbackFunctionUpgradeTraffic(name string, rollbackfunctionupgradetrafficrequest *RollbackFunctionUpgradeTrafficRequest) *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall {
+	c := &ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.rollbackfunctionupgradetrafficrequest = rollbackfunctionupgradetrafficrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall) Fields(s ...googleapi.Field) *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall) Context(ctx context.Context) *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.rollbackfunctionupgradetrafficrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}:rollbackFunctionUpgradeTraffic")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudfunctions.projects.locations.functions.rollbackFunctionUpgradeTraffic" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFunctionsRollbackFunctionUpgradeTrafficCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reverts the traffic target of a function from the 2nd Gen copy to the original 1st Gen function. After this operation, all new traffic would be served by the 1st Gen.",
+	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/functions/{functionsId}:rollbackFunctionUpgradeTraffic",
+	//   "httpMethod": "POST",
+	//   "id": "cloudfunctions.projects.locations.functions.rollbackFunctionUpgradeTraffic",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the function for which traffic target should be changed back to 1st Gen from 2nd Gen.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta/{+name}:rollbackFunctionUpgradeTraffic",
+	//   "request": {
+	//     "$ref": "RollbackFunctionUpgradeTrafficRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "cloudfunctions.projects.locations.functions.setIamPolicy":
 
 type ProjectsLocationsFunctionsSetIamPolicyCall struct {
@@ -4249,6 +5096,153 @@ func (c *ProjectsLocationsFunctionsSetIamPolicyCall) Do(opts ...googleapi.CallOp
 	//   },
 	//   "response": {
 	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudfunctions.projects.locations.functions.setupFunctionUpgradeConfig":
+
+type ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall struct {
+	s                                 *Service
+	name                              string
+	setupfunctionupgradeconfigrequest *SetupFunctionUpgradeConfigRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// SetupFunctionUpgradeConfig: Creates a 2nd Gen copy of the function
+// configuration based on the 1st Gen function with the given name. This
+// is the first step of the multi step process to upgrade 1st Gen
+// functions to 2nd Gen. Only 2nd Gen configuration is setup as part of
+// this request and traffic continues to be served by 1st Gen.
+//
+//   - name: The name of the function which should have configuration
+//     copied for upgrade.
+func (r *ProjectsLocationsFunctionsService) SetupFunctionUpgradeConfig(name string, setupfunctionupgradeconfigrequest *SetupFunctionUpgradeConfigRequest) *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall {
+	c := &ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.setupfunctionupgradeconfigrequest = setupfunctionupgradeconfigrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall) Context(ctx context.Context) *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setupfunctionupgradeconfigrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta/{+name}:setupFunctionUpgradeConfig")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudfunctions.projects.locations.functions.setupFunctionUpgradeConfig" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsFunctionsSetupFunctionUpgradeConfigCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a 2nd Gen copy of the function configuration based on the 1st Gen function with the given name. This is the first step of the multi step process to upgrade 1st Gen functions to 2nd Gen. Only 2nd Gen configuration is setup as part of this request and traffic continues to be served by 1st Gen.",
+	//   "flatPath": "v2beta/projects/{projectsId}/locations/{locationsId}/functions/{functionsId}:setupFunctionUpgradeConfig",
+	//   "httpMethod": "POST",
+	//   "id": "cloudfunctions.projects.locations.functions.setupFunctionUpgradeConfig",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the function which should have configuration copied for upgrade.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/functions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta/{+name}:setupFunctionUpgradeConfig",
+	//   "request": {
+	//     "$ref": "SetupFunctionUpgradeConfigRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -4570,36 +5564,29 @@ type ProjectsLocationsOperationsListCall struct {
 // request. If the server doesn't support this method, it returns
 // `UNIMPLEMENTED`.
 //
-// - name: Must not be set.
+// - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
 	c := &ProjectsLocationsOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": Required. A filter for
-// matching the requested operations. The supported formats of *filter*
-// are: To query for a specific function:
-// project:*,location:*,function:* To query for all of the latest
-// operations for a project: project:*,latest:true
+// Filter sets the optional parameter "filter": The standard list
+// filter.
 func (c *ProjectsLocationsOperationsListCall) Filter(filter string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of records that should be returned. Requested page size cannot exceed
-// 100. If not set, the default page size is 100. Pagination is only
-// supported when querying for a specific function.
+// PageSize sets the optional parameter "pageSize": The standard list
+// page size.
 func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token identifying
-// which result to start with, which is returned by a previous list
-// call. Pagination is only supported when querying for a specific
-// function.
+// PageToken sets the optional parameter "pageToken": The standard list
+// page token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -4713,25 +5700,25 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Required. A filter for matching the requested operations. The supported formats of *filter* are: To query for a specific function: project:*,location:*,function:* To query for all of the latest operations for a project: project:*,latest:true",
+	//       "description": "The standard list filter.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Must not be set.",
+	//       "description": "The name of the operation's parent resource.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of records that should be returned. Requested page size cannot exceed 100. If not set, the default page size is 100. Pagination is only supported when querying for a specific function.",
+	//       "description": "The standard list page size.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token identifying which result to start with, which is returned by a previous list call. Pagination is only supported when querying for a specific function.",
+	//       "description": "The standard list page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     }

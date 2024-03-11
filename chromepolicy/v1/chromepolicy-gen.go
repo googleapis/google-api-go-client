@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "chromepolicy:v1"
 const apiName = "chromepolicy"
 const apiVersion = "v1"
 const basePath = "https://chromepolicy.googleapis.com/"
+const basePathTemplate = "https://chromepolicy.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://chromepolicy.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -117,7 +119,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -660,6 +664,11 @@ func (s *GoogleChromePolicyVersionsV1DeleteGroupPolicyRequest) MarshalJSON() ([]
 type GoogleChromePolicyVersionsV1FieldConstraints struct {
 	// NumericRangeConstraint: The allowed range for numeric fields.
 	NumericRangeConstraint *GoogleChromePolicyVersionsV1NumericRangeConstraint `json:"numericRangeConstraint,omitempty"`
+
+	// UploadedFileConstraints: Constraints on the uploaded file of a file
+	// policy. If present, this policy requires a URL that can be fetched by
+	// uploading a file with the constraints specified in this proto.
+	UploadedFileConstraints *GoogleChromePolicyVersionsV1UploadedFileConstraints `json:"uploadedFileConstraints,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "NumericRangeConstraint") to unconditionally include in API requests.
@@ -1218,6 +1227,17 @@ type GoogleChromePolicyVersionsV1PolicySchema struct {
 	// SupportUri: Output only. URI to related support article for this
 	// schema.
 	SupportUri string `json:"supportUri,omitempty"`
+
+	// SupportedPlatforms: Output only. List indicates that the policy will
+	// only apply to devices/users on these platforms.
+	//
+	// Possible values:
+	//   "PLATFORM_UNSPECIFIED" - Unspecified platform.
+	//   "CHROME_OS" - ChromeOS.
+	//   "CHROME_BROWSER" - Chrome Browser for OSX/Windows/Linux.
+	//   "CHROME_BROWSER_FOR_ANDROID" - Chrome Browser for Android.
+	//   "CHROME_BROWSER_FOR_IOS" - Chrome Browser for iOS.
+	SupportedPlatforms []string `json:"supportedPlatforms,omitempty"`
 
 	// ValidTargetResources: Output only. Information about applicable
 	// target resources for the policy.
@@ -1912,6 +1932,54 @@ func (s *GoogleChromePolicyVersionsV1UploadPolicyFileResponse) MarshalJSON() ([]
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromePolicyVersionsV1UploadedFileConstraints: Constraints on
+// the uploaded file of a file policy.
+type GoogleChromePolicyVersionsV1UploadedFileConstraints struct {
+	// SizeLimitBytes: The size limit of uploaded files for a setting, in
+	// bytes.
+	SizeLimitBytes int64 `json:"sizeLimitBytes,omitempty,string"`
+
+	// SupportedContentTypes: File types that can be uploaded for a setting.
+	//
+	// Possible values:
+	//   "CONTENT_TYPE_UNSPECIFIED" - Unspecified content type.
+	//   "CONTENT_TYPE_PLAIN_TEXT" - Plain text.
+	//   "CONTENT_TYPE_HTML" - HTML.
+	//   "CONTENT_TYPE_IMAGE_JPEG" - JPEG.
+	//   "CONTENT_TYPE_IMAGE_GIF" - GIF.
+	//   "CONTENT_TYPE_IMAGE_PNG" - PNG.
+	//   "CONTENT_TYPE_JSON" - JSON.
+	//   "CONTENT_TYPE_ZIP" - ZIP.
+	//   "CONTENT_TYPE_GZIP" - GZIP.
+	//   "CONTENT_TYPE_CSV" - CSV.
+	//   "CONTENT_TYPE_YAML" - YAML.
+	//   "CONTENT_TYPE_IMAGE_WEBP" - WEBP.
+	SupportedContentTypes []string `json:"supportedContentTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SizeLimitBytes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SizeLimitBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromePolicyVersionsV1UploadedFileConstraints) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromePolicyVersionsV1UploadedFileConstraints
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleProtobufEmpty: A generic empty message that you can re-use to
 // avoid defining duplicated empty messages in your APIs. A typical
 // example is to use it as the request or the response type of an API
@@ -2096,10 +2164,10 @@ type Proto2FieldDescriptorProto struct {
 
 	// Proto3Optional: If true, this is a proto3 "optional". When a proto3
 	// field is optional, it tracks presence regardless of field type. When
-	// proto3_optional is true, this field must be belong to a oneof to
-	// signal to old proto3 clients that presence is tracked for this field.
-	// This oneof is known as a "synthetic" oneof, and this field must be
-	// its sole member (each proto3 optional field gets its own synthetic
+	// proto3_optional is true, this field must belong to a oneof to signal
+	// to old proto3 clients that presence is tracked for this field. This
+	// oneof is known as a "synthetic" oneof, and this field must be its
+	// sole member (each proto3 optional field gets its own synthetic
 	// oneof). Synthetic oneofs exist in the descriptor only, and do not
 	// generate any API. Synthetic oneofs must be ordered after all "real"
 	// oneofs. For message fields, proto3_optional doesn't create any

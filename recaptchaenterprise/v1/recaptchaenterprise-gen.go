@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "recaptchaenterprise:v1"
 const apiName = "recaptchaenterprise"
 const apiVersion = "v1"
 const basePath = "https://recaptchaenterprise.googleapis.com/"
+const basePathTemplate = "https://recaptchaenterprise.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://recaptchaenterprise.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -316,7 +320,8 @@ type GoogleCloudRecaptchaenterpriseV1AccountVerificationInfo struct {
 	LatestVerificationResult string `json:"latestVerificationResult,omitempty"`
 
 	// Username: Username of the account that is being verified. Deprecated.
-	// Customers should now provide the hashed account ID field in Event.
+	// Customers should now provide the `account_id` field in
+	// `event.user_info`.
 	Username string `json:"username,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Endpoints") to
@@ -569,8 +574,8 @@ type GoogleCloudRecaptchaenterpriseV1Assessment struct {
 	// involved in a payment transaction.
 	FraudSignals *GoogleCloudRecaptchaenterpriseV1FraudSignals `json:"fraudSignals,omitempty"`
 
-	// Name: Output only. The resource name for the Assessment in the format
-	// `projects/{project}/assessments/{assessment}`.
+	// Name: Output only. Identifier. The resource name for the Assessment
+	// in the format `projects/{project}/assessments/{assessment}`.
 	Name string `json:"name,omitempty"`
 
 	// PrivatePasswordLeakVerification: Optional. The private password leak
@@ -803,6 +808,10 @@ type GoogleCloudRecaptchaenterpriseV1FirewallAction struct {
 	// get an HTTP error code.
 	Block *GoogleCloudRecaptchaenterpriseV1FirewallActionBlockAction `json:"block,omitempty"`
 
+	// IncludeRecaptchaScript: This action will inject reCAPTCHA JavaScript
+	// code into the HTML page returned by the site backend.
+	IncludeRecaptchaScript *GoogleCloudRecaptchaenterpriseV1FirewallActionIncludeRecaptchaScriptAction `json:"includeRecaptchaScript,omitempty"`
+
 	// Redirect: This action will redirect the request to a ReCaptcha
 	// interstitial to attach a token.
 	Redirect *GoogleCloudRecaptchaenterpriseV1FirewallActionRedirectAction `json:"redirect,omitempty"`
@@ -847,6 +856,15 @@ type GoogleCloudRecaptchaenterpriseV1FirewallActionAllowAction struct {
 // action serves an HTTP error code a prevents the request from hitting
 // the backend.
 type GoogleCloudRecaptchaenterpriseV1FirewallActionBlockAction struct {
+}
+
+// GoogleCloudRecaptchaenterpriseV1FirewallActionIncludeRecaptchaScriptAc
+// tion: An include reCAPTCHA script action involves injecting reCAPTCHA
+// JavaScript code into the HTML returned by the site backend. This
+// reCAPTCHA script is tasked with collecting user signals on the
+// requested web page, issuing tokens as a cookie within the site
+// domain, and enabling their utilization in subsequent page requests.
+type GoogleCloudRecaptchaenterpriseV1FirewallActionIncludeRecaptchaScriptAction struct {
 }
 
 // GoogleCloudRecaptchaenterpriseV1FirewallActionRedirectAction: A
@@ -949,8 +967,8 @@ type GoogleCloudRecaptchaenterpriseV1FirewallPolicy struct {
 	// include 256 UTF-8 characters.
 	Description string `json:"description,omitempty"`
 
-	// Name: The resource name for the FirewallPolicy in the format
-	// `projects/{project}/firewallpolicies/{firewallpolicy}`.
+	// Name: Identifier. The resource name for the FirewallPolicy in the
+	// format `projects/{project}/firewallpolicies/{firewallpolicy}`.
 	Name string `json:"name,omitempty"`
 
 	// Path: Optional. The path for which this policy applies, specified as
@@ -1408,7 +1426,7 @@ type GoogleCloudRecaptchaenterpriseV1Key struct {
 	// (https://cloud.google.com/recaptcha-enterprise/docs/labels).
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: The resource name for the Key in the format
+	// Name: Identifier. The resource name for the Key in the format
 	// `projects/{project}/keys/{key}`.
 	Name string `json:"name,omitempty"`
 
@@ -1608,7 +1626,7 @@ type GoogleCloudRecaptchaenterpriseV1Metrics struct {
 	// INVISIBLE), will have challenge-based data.
 	ChallengeMetrics []*GoogleCloudRecaptchaenterpriseV1ChallengeMetrics `json:"challengeMetrics,omitempty"`
 
-	// Name: Output only. The name of the metrics, in the format
+	// Name: Output only. Identifier. The name of the metrics, in the format
 	// `projects/{project}/keys/{key}/metrics`.
 	Name string `json:"name,omitempty"`
 
@@ -1739,8 +1757,8 @@ func (s *GoogleCloudRecaptchaenterpriseV1PrivatePasswordLeakVerification) Marsha
 // GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup: A group of
 // related accounts.
 type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup struct {
-	// Name: Required. The resource name for the related account group in
-	// the format
+	// Name: Required. Identifier. The resource name for the related account
+	// group in the format
 	// `projects/{project}/relatedaccountgroups/{related_account_group}`.
 	Name string `json:"name,omitempty"`
 
@@ -1770,17 +1788,24 @@ func (s *GoogleCloudRecaptchaenterpriseV1RelatedAccountGroup) MarshalJSON() ([]b
 // GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership: A
 // membership in a group of related accounts.
 type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership struct {
-	// HashedAccountId: The unique stable hashed user identifier of the
-	// member. The identifier corresponds to a `hashed_account_id` provided
-	// in a previous `CreateAssessment` or `AnnotateAssessment` call.
+	// AccountId: The unique stable account identifier of the member. The
+	// identifier corresponds to an `account_id` provided in a previous
+	// `CreateAssessment` or `AnnotateAssessment` call.
+	AccountId string `json:"accountId,omitempty"`
+
+	// HashedAccountId: Deprecated: use `account_id` instead. The unique
+	// stable hashed account identifier of the member. The identifier
+	// corresponds to a `hashed_account_id` provided in a previous
+	// `CreateAssessment` or `AnnotateAssessment` call.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 
-	// Name: Required. The resource name for this membership in the format
+	// Name: Required. Identifier. The resource name for this membership in
+	// the format
 	// `projects/{project}/relatedaccountgroups/{relatedaccountgroup}/members
 	// hips/{membership}`.
 	Name string `json:"name,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "HashedAccountId") to
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1788,13 +1813,12 @@ type GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "HashedAccountId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -1802,6 +1826,45 @@ func (s *GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership) MarshalJ
 	type NoMethod GoogleCloudRecaptchaenterpriseV1RelatedAccountGroupMembership
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesRequest: The
+// reorder firewall policies request message.
+type GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesRequest struct {
+	// Names: Required. A list containing all policy names, in the new
+	// order. Each name is in the format
+	// `projects/{project}/firewallpolicies/{firewallpolicy}`.
+	Names []string `json:"names,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Names") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Names") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesResponse: The
+// reorder firewall policies response message.
+type GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // GoogleCloudRecaptchaenterpriseV1RetrieveLegacySecretKeyResponse:
@@ -1984,10 +2047,18 @@ func (s *GoogleCloudRecaptchaenterpriseV1ScoreMetrics) MarshalJSON() ([]byte, er
 // quest: The request message to search related account group
 // memberships.
 type GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest struct {
-	// HashedAccountId: Optional. The unique stable hashed user identifier
-	// used to search connections. The identifier should correspond to a
-	// `hashed_account_id` provided in a previous `CreateAssessment` or
-	// `AnnotateAssessment` call.
+	// AccountId: Optional. The unique stable account identifier used to
+	// search connections. The identifier should correspond to an
+	// `account_id` provided in a previous `CreateAssessment` or
+	// `AnnotateAssessment` call. Either hashed_account_id or account_id
+	// must be set, but not both.
+	AccountId string `json:"accountId,omitempty"`
+
+	// HashedAccountId: Optional. Deprecated: use `account_id` instead. The
+	// unique stable hashed account identifier used to search connections.
+	// The identifier should correspond to a `hashed_account_id` provided in
+	// a previous `CreateAssessment` or `AnnotateAssessment` call. Either
+	// hashed_account_id or account_id must be set, but not both.
 	HashedAccountId string `json:"hashedAccountId,omitempty"`
 
 	// PageSize: Optional. The maximum number of groups to return. The
@@ -2003,7 +2074,7 @@ type GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest
 	// provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "HashedAccountId") to
+	// ForceSendFields is a list of field names (e.g. "AccountId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2011,13 +2082,12 @@ type GoogleCloudRecaptchaenterpriseV1SearchRelatedAccountGroupMembershipsRequest
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "HashedAccountId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2721,6 +2791,7 @@ type GoogleCloudRecaptchaenterpriseV1WafSettings struct {
 	//   "WAF_SERVICE_UNSPECIFIED" - Undefined WAF
 	//   "CA" - Cloud Armor
 	//   "FASTLY" - Fastly
+	//   "CLOUDFLARE" - Cloudflare
 	WafService string `json:"wafService,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "WafFeature") to
@@ -3806,8 +3877,8 @@ type ProjectsFirewallpoliciesPatchCall struct {
 
 // Patch: Updates the specified firewall policy.
 //
-//   - name: The resource name for the FirewallPolicy in the format
-//     `projects/{project}/firewallpolicies/{firewallpolicy}`.
+//   - name: Identifier. The resource name for the FirewallPolicy in the
+//     format `projects/{project}/firewallpolicies/{firewallpolicy}`.
 func (r *ProjectsFirewallpoliciesService) Patch(name string, googlecloudrecaptchaenterprisev1firewallpolicy *GoogleCloudRecaptchaenterpriseV1FirewallPolicy) *ProjectsFirewallpoliciesPatchCall {
 	c := &ProjectsFirewallpoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3925,7 +3996,7 @@ func (c *ProjectsFirewallpoliciesPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name for the FirewallPolicy in the format `projects/{project}/firewallpolicies/{firewallpolicy}`.",
+	//       "description": "Identifier. The resource name for the FirewallPolicy in the format `projects/{project}/firewallpolicies/{firewallpolicy}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/firewallpolicies/[^/]+$",
 	//       "required": true,
@@ -3944,6 +4015,152 @@ func (c *ProjectsFirewallpoliciesPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudRecaptchaenterpriseV1FirewallPolicy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "recaptchaenterprise.projects.firewallpolicies.reorder":
+
+type ProjectsFirewallpoliciesReorderCall struct {
+	s                                                              *Service
+	parent                                                         string
+	googlecloudrecaptchaenterprisev1reorderfirewallpoliciesrequest *GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesRequest
+	urlParams_                                                     gensupport.URLParams
+	ctx_                                                           context.Context
+	header_                                                        http.Header
+}
+
+// Reorder: Reorders all firewall policies.
+//
+//   - parent: The name of the project to list the policies for, in the
+//     format `projects/{project}`.
+func (r *ProjectsFirewallpoliciesService) Reorder(parent string, googlecloudrecaptchaenterprisev1reorderfirewallpoliciesrequest *GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesRequest) *ProjectsFirewallpoliciesReorderCall {
+	c := &ProjectsFirewallpoliciesReorderCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudrecaptchaenterprisev1reorderfirewallpoliciesrequest = googlecloudrecaptchaenterprisev1reorderfirewallpoliciesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsFirewallpoliciesReorderCall) Fields(s ...googleapi.Field) *ProjectsFirewallpoliciesReorderCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsFirewallpoliciesReorderCall) Context(ctx context.Context) *ProjectsFirewallpoliciesReorderCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsFirewallpoliciesReorderCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsFirewallpoliciesReorderCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrecaptchaenterprisev1reorderfirewallpoliciesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/firewallpolicies:reorder")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "recaptchaenterprise.projects.firewallpolicies.reorder" call.
+// Exactly one of
+// *GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesResponse.Serve
+// rResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsFirewallpoliciesReorderCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reorders all firewall policies.",
+	//   "flatPath": "v1/projects/{projectsId}/firewallpolicies:reorder",
+	//   "httpMethod": "POST",
+	//   "id": "recaptchaenterprise.projects.firewallpolicies.reorder",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the project to list the policies for, in the format `projects/{project}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/firewallpolicies:reorder",
+	//   "request": {
+	//     "$ref": "GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRecaptchaenterpriseV1ReorderFirewallPoliciesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -4884,7 +5101,7 @@ type ProjectsKeysPatchCall struct {
 
 // Patch: Updates the specified key.
 //
-//   - name: The resource name for the Key in the format
+//   - name: Identifier. The resource name for the Key in the format
 //     `projects/{project}/keys/{key}`.
 func (r *ProjectsKeysService) Patch(name string, googlecloudrecaptchaenterprisev1key *GoogleCloudRecaptchaenterpriseV1Key) *ProjectsKeysPatchCall {
 	c := &ProjectsKeysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5002,7 +5219,7 @@ func (c *ProjectsKeysPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRe
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name for the Key in the format `projects/{project}/keys/{key}`.",
+	//       "description": "Identifier. The resource name for the Key in the format `projects/{project}/keys/{key}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/keys/[^/]+$",
 	//       "required": true,

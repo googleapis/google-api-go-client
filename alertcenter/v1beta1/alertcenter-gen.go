@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "alertcenter:v1beta1"
 const apiName = "alertcenter"
 const apiVersion = "v1beta1"
 const basePath = "https://alertcenter.googleapis.com/"
+const basePathTemplate = "https://alertcenter.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://alertcenter.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -106,7 +108,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -1274,6 +1278,53 @@ type DeviceCompromisedSecurityDetail struct {
 
 func (s *DeviceCompromisedSecurityDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod DeviceCompromisedSecurityDetail
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeviceManagementRule: Alerts from Device Management Rules configured
+// by Admin.
+type DeviceManagementRule struct {
+	// DeviceId: Required. The device ID.
+	DeviceId string `json:"deviceId,omitempty"`
+
+	// DeviceModel: The model of the device.
+	DeviceModel string `json:"deviceModel,omitempty"`
+
+	// DeviceType: The type of the device.
+	DeviceType string `json:"deviceType,omitempty"`
+
+	// Email: The email of the user this alert was created for.
+	Email string `json:"email,omitempty"`
+
+	// IosVendorId: Required for iOS, empty for others.
+	IosVendorId string `json:"iosVendorId,omitempty"`
+
+	// ResourceId: The device resource ID.
+	ResourceId string `json:"resourceId,omitempty"`
+
+	// SerialNumber: The serial number of the device.
+	SerialNumber string `json:"serialNumber,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeviceManagementRule) MarshalJSON() ([]byte, error) {
+	type NoMethod DeviceManagementRule
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

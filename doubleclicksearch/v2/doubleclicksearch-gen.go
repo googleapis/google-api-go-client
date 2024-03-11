@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "doubleclicksearch:v2"
 const apiName = "doubleclicksearch"
 const apiVersion = "v2"
 const basePath = "https://doubleclicksearch.googleapis.com/"
+const basePathTemplate = "https://doubleclicksearch.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://doubleclicksearch.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -106,7 +108,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -244,7 +248,11 @@ type Conversion struct {
 	// AdId: DS ad ID.
 	AdId int64 `json:"adId,omitempty,string"`
 
-	// AdUserDataConsent: Ad user data consent for this conversion.
+	// AdUserDataConsent: Represents consent for core platform services
+	// (CPS) preferences in settings. No default value. Acceptable values
+	// are: GRANTED: The desired consent status is to grant. Read the CPS
+	// preferences from GTE settings. DENIED: The desired consent status is
+	// to deny; CPS list is empty.
 	//
 	// Possible values:
 	//   "UNKNOWN" - Not specified.

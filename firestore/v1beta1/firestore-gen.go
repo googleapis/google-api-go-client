@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -97,7 +97,9 @@ const apiId = "firestore:v1beta1"
 const apiName = "firestore"
 const apiVersion = "v1beta1"
 const basePath = "https://firestore.googleapis.com/"
+const basePathTemplate = "https://firestore.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://firestore.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -118,7 +120,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -890,6 +894,23 @@ type Document struct {
 	// the `read_time` of a query.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// Fields: The document's fields. The map keys represent field names.
+	// Field names matching the regular expression `__.*__` are reserved.
+	// Reserved field names are forbidden except in certain documented
+	// contexts. The field names, represented as UTF-8, must not exceed
+	// 1,500 bytes and cannot be empty. Field paths may be used in other
+	// contexts to refer to structured fields defined here. For `map_value`,
+	// the field path is represented by a dot-delimited (`.`) string of
+	// segments. Each segment is either a simple field name (defined below)
+	// or a quoted field name. For example, the structured field "foo" : {
+	// map_value: { "x&y" : { string_value: "hello" }}}` would be
+	// represented by the field path `` foo.`x&y` ``. A simple field name
+	// contains only characters `a` to `z`, `A` to `Z`, `0` to `9`, or `_`,
+	// and must not start with `0` to `9`. For example, `foo_bar_17`. A
+	// quoted field name starts and ends with `` ` `` and may contain any
+	// character. Some characters, including `` ` ``, must be escaped using
+	// a `\`. For example, `` `x&y` `` represents `x&y` and `` `bak\`tik` ``
+	// represents `` bak`tik ``.
 	Fields map[string]Value `json:"fields,omitempty"`
 
 	// Name: The resource name of the document, for example
@@ -2959,7 +2980,9 @@ func (s *StructuredAggregationQuery) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// StructuredQuery: A Firestore query.
+// StructuredQuery: A Firestore query. The query stages are executed in
+// the following order: 1. from 2. where 3. select 4. order_by +
+// start_at + end_at 5. offset 6. limit
 type StructuredQuery struct {
 	// EndAt: A potential prefix of a position in the result set to end the
 	// query at. This is similar to `START_AT` but with it controlling the

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "recommender:v1"
 const apiName = "recommender"
 const apiVersion = "v1"
 const basePath = "https://recommender.googleapis.com/"
+const basePathTemplate = "https://recommender.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://recommender.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -446,6 +450,10 @@ type GoogleCloudRecommenderV1CostProjection struct {
 	// cost is computed using list prices or custom contract prices.
 	Cost *GoogleTypeMoney `json:"cost,omitempty"`
 
+	// CostInLocalCurrency: The approximate cost savings in the billing
+	// account's local currency.
+	CostInLocalCurrency *GoogleTypeMoney `json:"costInLocalCurrency,omitempty"`
+
 	// Duration: Duration for which this cost applies.
 	Duration string `json:"duration,omitempty"`
 
@@ -496,7 +504,7 @@ type GoogleCloudRecommenderV1Impact struct {
 	// CostProjection: Use with CategoryType.COST
 	CostProjection *GoogleCloudRecommenderV1CostProjection `json:"costProjection,omitempty"`
 
-	// ReliabilityProjection: Use with CategoryType.RELAIBILITY
+	// ReliabilityProjection: Use with CategoryType.RELIABILITY
 	ReliabilityProjection *GoogleCloudRecommenderV1ReliabilityProjection `json:"reliabilityProjection,omitempty"`
 
 	// SecurityProjection: Use with CategoryType.SECURITY
@@ -1224,6 +1232,10 @@ type GoogleCloudRecommenderV1Recommendation struct {
 
 	// StateInfo: Information for state. Contains state and metadata.
 	StateInfo *GoogleCloudRecommenderV1RecommendationStateInfo `json:"stateInfo,omitempty"`
+
+	// TargetResources: Fully qualified resource names that this
+	// recommendation is targeting.
+	TargetResources []string `json:"targetResources,omitempty"`
 
 	// XorGroupId: Corresponds to a mutually exclusive group ID within a
 	// recommender. A non-empty ID indicates that the recommendation belongs
@@ -2176,12 +2188,15 @@ func (r *BillingAccountsLocationsInsightTypesInsightsService) List(parent string
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the insights returned. Supported filter fields: *
-// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
-// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
-// OR severity = HIGH)` (These expressions are based on the filter
-// language described at https://google.aip.dev/160)
+// `stateInfo.state` * `insightSubtype` * `severity` * `targetResources`
+// Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED`
+// * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR
+// severity = HIGH)` The max allowed filter length is 500 characters.
+// (These expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *BillingAccountsLocationsInsightTypesInsightsListCall) Filter(filter string) *BillingAccountsLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -2316,7 +2331,7 @@ func (c *BillingAccountsLocationsInsightTypesInsightsListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3035,12 +3050,16 @@ func (r *BillingAccountsLocationsRecommendersRecommendationsService) List(parent
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the recommendations returned. Supported filter fields: *
-// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
-// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
-// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
-// based on the filter language described at https://google.aip.dev/160)
+// `state_info.state` * `recommenderSubtype` * `priority` *
+// `targetResources` Examples: * `stateInfo.state = ACTIVE OR
+// stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR
+// recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2`
+// * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority
+// = P2)` The max allowed filter length is 500 characters. (These
+// expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) Filter(filter string) *BillingAccountsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3175,7 +3194,7 @@ func (c *BillingAccountsLocationsRecommendersRecommendationsListCall) Do(opts ..
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4012,12 +4031,15 @@ func (r *FoldersLocationsInsightTypesInsightsService) List(parent string) *Folde
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the insights returned. Supported filter fields: *
-// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
-// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
-// OR severity = HIGH)` (These expressions are based on the filter
-// language described at https://google.aip.dev/160)
+// `stateInfo.state` * `insightSubtype` * `severity` * `targetResources`
+// Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED`
+// * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR
+// severity = HIGH)` The max allowed filter length is 500 characters.
+// (These expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *FoldersLocationsInsightTypesInsightsListCall) Filter(filter string) *FoldersLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4152,7 +4174,7 @@ func (c *FoldersLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -4540,12 +4562,16 @@ func (r *FoldersLocationsRecommendersRecommendationsService) List(parent string)
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the recommendations returned. Supported filter fields: *
-// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
-// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
-// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
-// based on the filter language described at https://google.aip.dev/160)
+// `state_info.state` * `recommenderSubtype` * `priority` *
+// `targetResources` Examples: * `stateInfo.state = ACTIVE OR
+// stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR
+// recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2`
+// * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority
+// = P2)` The max allowed filter length is 500 characters. (These
+// expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *FoldersLocationsRecommendersRecommendationsListCall) Filter(filter string) *FoldersLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -4680,7 +4706,7 @@ func (c *FoldersLocationsRecommendersRecommendationsListCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -5847,12 +5873,15 @@ func (r *OrganizationsLocationsInsightTypesInsightsService) List(parent string) 
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the insights returned. Supported filter fields: *
-// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
-// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
-// OR severity = HIGH)` (These expressions are based on the filter
-// language described at https://google.aip.dev/160)
+// `stateInfo.state` * `insightSubtype` * `severity` * `targetResources`
+// Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED`
+// * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR
+// severity = HIGH)` The max allowed filter length is 500 characters.
+// (These expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *OrganizationsLocationsInsightTypesInsightsListCall) Filter(filter string) *OrganizationsLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5987,7 +6016,7 @@ func (c *OrganizationsLocationsInsightTypesInsightsListCall) Do(opts ...googleap
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6706,12 +6735,16 @@ func (r *OrganizationsLocationsRecommendersRecommendationsService) List(parent s
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the recommendations returned. Supported filter fields: *
-// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
-// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
-// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
-// based on the filter language described at https://google.aip.dev/160)
+// `state_info.state` * `recommenderSubtype` * `priority` *
+// `targetResources` Examples: * `stateInfo.state = ACTIVE OR
+// stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR
+// recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2`
+// * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority
+// = P2)` The max allowed filter length is 500 characters. (These
+// expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *OrganizationsLocationsRecommendersRecommendationsListCall) Filter(filter string) *OrganizationsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -6846,7 +6879,7 @@ func (c *OrganizationsLocationsRecommendersRecommendationsListCall) Do(opts ...g
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8013,12 +8046,15 @@ func (r *ProjectsLocationsInsightTypesInsightsService) List(parent string) *Proj
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the insights returned. Supported filter fields: *
-// `stateInfo.state` * `insightSubtype` * `severity` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
-// severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL
-// OR severity = HIGH)` (These expressions are based on the filter
-// language described at https://google.aip.dev/160)
+// `stateInfo.state` * `insightSubtype` * `severity` * `targetResources`
+// Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED`
+// * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR
+// severity = HIGH` * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR
+// severity = HIGH)` The max allowed filter length is 500 characters.
+// (These expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *ProjectsLocationsInsightTypesInsightsListCall) Filter(filter string) *ProjectsLocationsInsightTypesInsightsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -8153,7 +8189,7 @@ func (c *ProjectsLocationsInsightTypesInsightsListCall) Do(opts ...googleapi.Cal
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Optional. Filter expression to restrict the insights returned. Supported filter fields: * `stateInfo.state` * `insightSubtype` * `severity` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `insightSubtype = PERMISSIONS_USAGE` * `severity = CRITICAL OR severity = HIGH` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (severity = CRITICAL OR severity = HIGH)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8872,12 +8908,16 @@ func (r *ProjectsLocationsRecommendersRecommendationsService) List(parent string
 
 // Filter sets the optional parameter "filter": Filter expression to
 // restrict the recommendations returned. Supported filter fields: *
-// `state_info.state` * `recommenderSubtype` * `priority` Examples: *
-// `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` *
-// `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype =
-// REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state =
-// ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are
-// based on the filter language described at https://google.aip.dev/160)
+// `state_info.state` * `recommenderSubtype` * `priority` *
+// `targetResources` Examples: * `stateInfo.state = ACTIVE OR
+// stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR
+// recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2`
+// * `targetResources :
+// //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/i
+// nstance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority
+// = P2)` The max allowed filter length is 500 characters. (These
+// expressions are based on the filter language described at
+// https://google.aip.dev/160)
 func (c *ProjectsLocationsRecommendersRecommendationsListCall) Filter(filter string) *ProjectsLocationsRecommendersRecommendationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -9012,7 +9052,7 @@ func (c *ProjectsLocationsRecommendersRecommendationsListCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` (These expressions are based on the filter language described at https://google.aip.dev/160)",
+	//       "description": "Filter expression to restrict the recommendations returned. Supported filter fields: * `state_info.state` * `recommenderSubtype` * `priority` * `targetResources` Examples: * `stateInfo.state = ACTIVE OR stateInfo.state = DISMISSED` * `recommenderSubtype = REMOVE_ROLE OR recommenderSubtype = REPLACE_ROLE` * `priority = P1 OR priority = P2` * `targetResources : //compute.googleapis.com/projects/1234/zones/us-central1-a/instances/instance-1` * `stateInfo.state = ACTIVE AND (priority = P1 OR priority = P2)` The max allowed filter length is 500 characters. (These expressions are based on the filter language described at https://google.aip.dev/160)",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

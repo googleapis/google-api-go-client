@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -37,7 +37,7 @@
 // By default, all available scopes (see "Constants") are used to authenticate.
 // To restrict scopes, use [google.golang.org/api/option.WithScopes]:
 //
-//	dataflowService, err := dataflow.NewService(ctx, option.WithScopes(dataflow.UserinfoEmailScope))
+//	dataflowService, err := dataflow.NewService(ctx, option.WithScopes(dataflow.ComputeReadonlyScope))
 //
 // To use an API key for authentication (note: some APIs do not support API
 // keys), use [google.golang.org/api/option.WithAPIKey]:
@@ -95,7 +95,9 @@ const apiId = "dataflow:v1b3"
 const apiName = "dataflow"
 const apiVersion = "v1b3"
 const basePath = "https://dataflow.googleapis.com/"
+const basePathTemplate = "https://dataflow.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://dataflow.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -108,9 +110,6 @@ const (
 
 	// View your Google Compute Engine resources
 	ComputeReadonlyScope = "https://www.googleapis.com/auth/compute.readonly"
-
-	// See your primary Google Account email address
-	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 )
 
 // NewService creates a new Service.
@@ -119,12 +118,13 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/cloud-platform",
 		"https://www.googleapis.com/auth/compute",
 		"https://www.googleapis.com/auth/compute.readonly",
-		"https://www.googleapis.com/auth/userinfo.email",
 	)
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -661,6 +661,42 @@ func (s *AutoscalingSettings) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Base2Exponent: Exponential buckets where the growth factor between
+// buckets is `2**(2**-scale)`. e.g. for `scale=1` growth factor is
+// `2**(2**(-1))=sqrt(2)`. `n` buckets will have the following
+// boundaries. - 0th: [0, gf) - i in [1, n-1]: [gf^(i), gf^(i+1))
+type Base2Exponent struct {
+	// NumberOfBuckets: Must be greater than 0.
+	NumberOfBuckets int64 `json:"numberOfBuckets,omitempty"`
+
+	// Scale: Must be between -3 and 3. This forces the growth factor of the
+	// bucket boundaries to be between `2^(1/8)` and `256`.
+	Scale int64 `json:"scale,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NumberOfBuckets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NumberOfBuckets") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Base2Exponent) MarshalJSON() ([]byte, error) {
+	type NoMethod Base2Exponent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // BigQueryIODetails: Metadata for a BigQuery connector used by the job.
 type BigQueryIODetails struct {
 	// Dataset: Dataset accessed in the connection.
@@ -729,6 +765,38 @@ type BigTableIODetails struct {
 
 func (s *BigTableIODetails) MarshalJSON() ([]byte, error) {
 	type NoMethod BigTableIODetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BucketOptions: `BucketOptions` describes the bucket boundaries used
+// in the histogram.
+type BucketOptions struct {
+	// Exponential: Bucket boundaries grow exponentially.
+	Exponential *Base2Exponent `json:"exponential,omitempty"`
+
+	// Linear: Bucket boundaries grow linearly.
+	Linear *Linear `json:"linear,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Exponential") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Exponential") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BucketOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod BucketOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1460,6 +1528,52 @@ func (s *DataSamplingReport) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DataflowHistogramValue: Summary statistics for a population of
+// values. HistogramValue contains a sequence of buckets and gives a
+// count of values that fall into each bucket. Bucket boundares are
+// defined by a formula and bucket widths are either fixed or
+// exponentially increasing.
+type DataflowHistogramValue struct {
+	// BucketCounts: Optional. The number of values in each bucket of the
+	// histogram, as described in `bucket_options`. `bucket_counts` should
+	// contain N values, where N is the number of buckets specified in
+	// `bucket_options`. If `bucket_counts` has fewer than N values, the
+	// remaining values are assumed to be 0.
+	BucketCounts googleapi.Int64s `json:"bucketCounts,omitempty"`
+
+	// BucketOptions: Describes the bucket boundaries used in the histogram.
+	BucketOptions *BucketOptions `json:"bucketOptions,omitempty"`
+
+	// Count: Number of values recorded in this histogram.
+	Count int64 `json:"count,omitempty,string"`
+
+	// OutlierStats: Statistics on the values recorded in the histogram that
+	// fall out of the bucket boundaries.
+	OutlierStats *OutlierStats `json:"outlierStats,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BucketCounts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BucketCounts") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataflowHistogramValue) MarshalJSON() ([]byte, error) {
+	type NoMethod DataflowHistogramValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DatastoreIODetails: Metadata for a Datastore connector used by the
 // job.
 type DatastoreIODetails struct {
@@ -1876,6 +1990,23 @@ type Environment struct {
 	//   "SERVICE_BASED" - Shuffle is done on the service side.
 	ShuffleMode string `json:"shuffleMode,omitempty"`
 
+	// StreamingMode: Optional. Specifies the Streaming Engine message
+	// processing guarantees. Reduces cost and latency but might result in
+	// duplicate messages committed to storage. Designed to run simple
+	// mapping streaming ETL jobs at the lowest cost. For example, Change
+	// Data Capture (CDC) to BigQuery is a canonical use case.
+	//
+	// Possible values:
+	//   "STREAMING_MODE_UNSPECIFIED" - Run in the default mode.
+	//   "STREAMING_MODE_EXACTLY_ONCE" - In this mode, message deduplication
+	// is performed against persistent state to make sure each message is
+	// processed and committed to storage exactly once.
+	//   "STREAMING_MODE_AT_LEAST_ONCE" - Message deduplication is not
+	// performed. Messages might be processed multiple times, and the
+	// results are applied multiple times. Note: Setting this value also
+	// enables Streaming Engine and Streaming Engine resource-based billing.
+	StreamingMode string `json:"streamingMode,omitempty"`
+
 	// TempStoragePrefix: The prefix of the resources the system should use
 	// for temporary storage. The system will append the suffix
 	// "/temp-{JOBNAME} to this resource prefix, where {JOBNAME} is the
@@ -1888,7 +2019,7 @@ type Environment struct {
 	TempStoragePrefix string `json:"tempStoragePrefix,omitempty"`
 
 	// UseStreamingEngineResourceBasedBilling: Output only. Whether the job
-	// uses the new streaming engine billing model based on resource usage.
+	// uses the Streaming Engine resource-based billing model.
 	UseStreamingEngineResourceBasedBilling bool `json:"useStreamingEngineResourceBasedBilling,omitempty"`
 
 	// UserAgent: A description of the process that generated the request.
@@ -2191,7 +2322,7 @@ func (s *FlattenInstruction) MarshalJSON() ([]byte, error) {
 }
 
 // FlexTemplateRuntimeEnvironment: The environment values to be set at
-// runtime for flex template.
+// runtime for flex template. LINT.IfChange
 type FlexTemplateRuntimeEnvironment struct {
 	// AdditionalExperiments: Additional experiment flags for the job.
 	AdditionalExperiments []string `json:"additionalExperiments,omitempty"`
@@ -2293,6 +2424,23 @@ type FlexTemplateRuntimeEnvironment struct {
 	// StagingLocation: The Cloud Storage path for staging local files. Must
 	// be a valid Cloud Storage URL, beginning with `gs://`.
 	StagingLocation string `json:"stagingLocation,omitempty"`
+
+	// StreamingMode: Optional. Specifies the Streaming Engine message
+	// processing guarantees. Reduces cost and latency but might result in
+	// duplicate messages committed to storage. Designed to run simple
+	// mapping streaming ETL jobs at the lowest cost. For example, Change
+	// Data Capture (CDC) to BigQuery is a canonical use case.
+	//
+	// Possible values:
+	//   "STREAMING_MODE_UNSPECIFIED" - Run in the default mode.
+	//   "STREAMING_MODE_EXACTLY_ONCE" - In this mode, message deduplication
+	// is performed against persistent state to make sure each message is
+	// processed and committed to storage exactly once.
+	//   "STREAMING_MODE_AT_LEAST_ONCE" - Message deduplication is not
+	// performed. Messages might be processed multiple times, and the
+	// results are applied multiple times. Note: Setting this value also
+	// enables Streaming Engine and Streaming Engine resource-based billing.
+	StreamingMode string `json:"streamingMode,omitempty"`
 
 	// Subnetwork: Subnetwork to which VMs will be assigned, if desired. You
 	// can specify a subnetwork using either a complete URL or an
@@ -2917,7 +3065,7 @@ type Job struct {
 	// `JOB_STATE_STOPPED` state unless otherwise specified. A job in the
 	// `JOB_STATE_RUNNING` state may asynchronously enter a terminal state.
 	// After a job has reached a terminal state, no further state updates
-	// may be made. This field may be mutated by the Cloud Dataflow service;
+	// may be made. This field might be mutated by the Dataflow service;
 	// callers cannot mutate it.
 	//
 	// Possible values:
@@ -2983,9 +3131,9 @@ type Job struct {
 	// ExecutionInfo: Deprecated.
 	ExecutionInfo *JobExecutionInfo `json:"executionInfo,omitempty"`
 
-	// Id: The unique ID of this job. This field is set by the Cloud
-	// Dataflow service when the Job is created, and is immutable for the
-	// life of the job.
+	// Id: The unique ID of this job. This field is set by the Dataflow
+	// service when the job is created, and is immutable for the life of the
+	// job.
 	Id string `json:"id,omitempty"`
 
 	// JobMetadata: This field is populated by the Dataflow service to
@@ -3006,12 +3154,12 @@ type Job struct {
 	// that contains this job.
 	Location string `json:"location,omitempty"`
 
-	// Name: The user-specified Cloud Dataflow job name. Only one Job with a
-	// given name can exist in a project within one region at any given
+	// Name: The user-specified Dataflow job name. Only one active job with
+	// a given name can exist in a project within one region at any given
 	// time. Jobs in different regions can have the same name. If a caller
-	// attempts to create a Job with the same name as an already-existing
-	// Job, the attempt returns the existing Job. The name must match the
-	// regular expression `[a-z]([-a-z0-9]{0,1022}[a-z0-9])?`
+	// attempts to create a job with the same name as an active job that
+	// already exists, the attempt returns the existing job. The name must
+	// match the regular expression `[a-z]([-a-z0-9]{0,1022}[a-z0-9])?`
 	Name string `json:"name,omitempty"`
 
 	// PipelineDescription: Preliminary field: The format of this data may
@@ -3020,7 +3168,7 @@ type Job struct {
 	// retrieved with JOB_VIEW_DESCRIPTION or JOB_VIEW_ALL.
 	PipelineDescription *PipelineDescription `json:"pipelineDescription,omitempty"`
 
-	// ProjectId: The ID of the Cloud Platform project that the job belongs
+	// ProjectId: The ID of the Google Cloud project that the job belongs
 	// to.
 	ProjectId string `json:"projectId,omitempty"`
 
@@ -3036,12 +3184,14 @@ type Job struct {
 	// that job.
 	ReplacedByJobId string `json:"replacedByJobId,omitempty"`
 
-	// RequestedState: The job's requested state. `UpdateJob` may be used to
-	// switch between the `JOB_STATE_STOPPED` and `JOB_STATE_RUNNING`
-	// states, by setting requested_state. `UpdateJob` may also be used to
-	// directly set a job's requested state to `JOB_STATE_CANCELLED` or
-	// `JOB_STATE_DONE`, irrevocably terminating the job if it has not
-	// already reached a terminal state.
+	// RequestedState: The job's requested state. Applies to `UpdateJob`
+	// requests. Set `requested_state` with `UpdateJob` requests to switch
+	// between the states `JOB_STATE_STOPPED` and `JOB_STATE_RUNNING`. You
+	// can also use `UpdateJob` requests to change a job's state from
+	// `JOB_STATE_RUNNING` to `JOB_STATE_CANCELLED`, `JOB_STATE_DONE`, or
+	// `JOB_STATE_DRAINED`. These states irrevocably terminate the job if it
+	// hasn't already reached a terminal state. This field has no effect on
+	// `CreateJob` requests.
 	//
 	// Possible values:
 	//   "JOB_STATE_UNKNOWN" - The job's run state isn't specified.
@@ -3144,7 +3294,7 @@ type Job struct {
 	// to be replaced to the corresponding name prefixes of the new job.
 	TransformNameMapping map[string]string `json:"transformNameMapping,omitempty"`
 
-	// Type: The type of Cloud Dataflow job.
+	// Type: The type of Dataflow job.
 	//
 	// Possible values:
 	//   "JOB_TYPE_UNKNOWN" - The type of the job is unspecified, or
@@ -3830,6 +3980,58 @@ func (s *LeaseWorkItemResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Linear: Linear buckets with the following boundaries for indices in 0
+// to n-1. - i in [0, n-1]: [start + (i)*width, start + (i+1)*width)
+type Linear struct {
+	// NumberOfBuckets: Must be greater than 0.
+	NumberOfBuckets int64 `json:"numberOfBuckets,omitempty"`
+
+	// Start: Lower bound of the first bucket.
+	Start float64 `json:"start,omitempty"`
+
+	// Width: Distance between bucket boundaries. Must be greater than 0.
+	Width float64 `json:"width,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NumberOfBuckets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NumberOfBuckets") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Linear) MarshalJSON() ([]byte, error) {
+	type NoMethod Linear
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Linear) UnmarshalJSON(data []byte) error {
+	type NoMethod Linear
+	var s1 struct {
+		Start gensupport.JSONFloat64 `json:"start"`
+		Width gensupport.JSONFloat64 `json:"width"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Start = float64(s1.Start)
+	s.Width = float64(s1.Width)
+	return nil
+}
+
 // ListJobMessagesResponse: Response to a request to list job messages.
 type ListJobMessagesResponse struct {
 	// AutoscalingEvents: Autoscaling events in ascending timestamp order.
@@ -4192,6 +4394,43 @@ func (s *MetricUpdate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MetricValue: The value of a metric along with its name and labels.
+type MetricValue struct {
+	// Metric: Base name for this metric.
+	Metric string `json:"metric,omitempty"`
+
+	// MetricLabels: Optional. Set of metric labels for this metric.
+	MetricLabels map[string]string `json:"metricLabels,omitempty"`
+
+	// ValueHistogram: Histogram value of this metric.
+	ValueHistogram *DataflowHistogramValue `json:"valueHistogram,omitempty"`
+
+	// ValueInt64: Integer value of this metric.
+	ValueInt64 int64 `json:"valueInt64,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Metric") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metric") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MetricValue) MarshalJSON() ([]byte, error) {
+	type NoMethod MetricValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MountedDataDisk: Describes mounted data disk.
 type MountedDataDisk struct {
 	// DataDisk: The name of the data disk. This name is local to the Google
@@ -4296,6 +4535,61 @@ func (s *NameAndKind) MarshalJSON() ([]byte, error) {
 	type NoMethod NameAndKind
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OutlierStats: Statistics for the underflow and overflow bucket.
+type OutlierStats struct {
+	// OverflowCount: Number of values that are larger than the upper bound
+	// of the largest bucket.
+	OverflowCount int64 `json:"overflowCount,omitempty,string"`
+
+	// OverflowMean: Mean of values in the overflow bucket.
+	OverflowMean float64 `json:"overflowMean,omitempty"`
+
+	// UnderflowCount: Number of values that are smaller than the lower
+	// bound of the smallest bucket.
+	UnderflowCount int64 `json:"underflowCount,omitempty,string"`
+
+	// UnderflowMean: Mean of values in the undeflow bucket.
+	UnderflowMean float64 `json:"underflowMean,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "OverflowCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OverflowCount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OutlierStats) MarshalJSON() ([]byte, error) {
+	type NoMethod OutlierStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *OutlierStats) UnmarshalJSON(data []byte) error {
+	type NoMethod OutlierStats
+	var s1 struct {
+		OverflowMean  gensupport.JSONFloat64 `json:"overflowMean"`
+		UnderflowMean gensupport.JSONFloat64 `json:"underflowMean"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.OverflowMean = float64(s1.OverflowMean)
+	s.UnderflowMean = float64(s1.UnderflowMean)
+	return nil
 }
 
 // Package: The packages that must be installed in order for a worker to
@@ -4492,6 +4786,9 @@ type ParameterMetadata struct {
 	// HelpText: Required. The help text to display for the parameter.
 	HelpText string `json:"helpText,omitempty"`
 
+	// HiddenUi: Optional. Whether the parameter should be hidden in the UI.
+	HiddenUi bool `json:"hiddenUi,omitempty"`
+
 	// IsOptional: Optional. Whether the parameter is optional. Defaults to
 	// false.
 	IsOptional bool `json:"isOptional,omitempty"`
@@ -4658,6 +4955,76 @@ type PartialGroupByKeyInstruction struct {
 
 func (s *PartialGroupByKeyInstruction) MarshalJSON() ([]byte, error) {
 	type NoMethod PartialGroupByKeyInstruction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PerStepNamespaceMetrics: Metrics for a particular unfused step and
+// namespace. A metric is uniquely identified by the
+// `metrics_namespace`, `original_step`, `metric name` and
+// `metric_labels`.
+type PerStepNamespaceMetrics struct {
+	// MetricValues: Optional. Metrics that are recorded for this namespace
+	// and unfused step.
+	MetricValues []*MetricValue `json:"metricValues,omitempty"`
+
+	// MetricsNamespace: The namespace of these metrics on the worker.
+	MetricsNamespace string `json:"metricsNamespace,omitempty"`
+
+	// OriginalStep: The original system name of the unfused step that these
+	// metrics are reported from.
+	OriginalStep string `json:"originalStep,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MetricValues") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MetricValues") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerStepNamespaceMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod PerStepNamespaceMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PerWorkerMetrics: Per worker metrics.
+type PerWorkerMetrics struct {
+	// PerStepNamespaceMetrics: Optional. Metrics for a particular unfused
+	// step and namespace.
+	PerStepNamespaceMetrics []*PerStepNamespaceMetrics `json:"perStepNamespaceMetrics,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PerStepNamespaceMetrics") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PerStepNamespaceMetrics")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerWorkerMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod PerWorkerMetrics
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5244,6 +5611,23 @@ type RuntimeEnvironment struct {
 	// account to run the job as.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
 
+	// StreamingMode: Optional. Specifies the Streaming Engine message
+	// processing guarantees. Reduces cost and latency but might result in
+	// duplicate messages committed to storage. Designed to run simple
+	// mapping streaming ETL jobs at the lowest cost. For example, Change
+	// Data Capture (CDC) to BigQuery is a canonical use case.
+	//
+	// Possible values:
+	//   "STREAMING_MODE_UNSPECIFIED" - Run in the default mode.
+	//   "STREAMING_MODE_EXACTLY_ONCE" - In this mode, message deduplication
+	// is performed against persistent state to make sure each message is
+	// processed and committed to storage exactly once.
+	//   "STREAMING_MODE_AT_LEAST_ONCE" - Message deduplication is not
+	// performed. Messages might be processed multiple times, and the
+	// results are applied multiple times. Note: Setting this value also
+	// enables Streaming Engine and Streaming Engine resource-based billing.
+	StreamingMode string `json:"streamingMode,omitempty"`
+
 	// Subnetwork: Optional. Subnetwork to which VMs will be assigned, if
 	// desired. You can specify a subnetwork using either a complete URL or
 	// an abbreviated path. Expected to be of the form
@@ -5347,6 +5731,12 @@ type RuntimeUpdatableParams struct {
 	// field is currently only supported for Streaming Engine jobs.
 	MinNumWorkers int64 `json:"minNumWorkers,omitempty"`
 
+	// WorkerUtilizationHint: Target worker utilization, compared against
+	// the aggregate utilization of the worker pool by autoscaler, to
+	// determine upscaling and downscaling when absent other constraints
+	// such as backlog.
+	WorkerUtilizationHint float64 `json:"workerUtilizationHint,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "MaxNumWorkers") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -5368,6 +5758,20 @@ func (s *RuntimeUpdatableParams) MarshalJSON() ([]byte, error) {
 	type NoMethod RuntimeUpdatableParams
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *RuntimeUpdatableParams) UnmarshalJSON(data []byte) error {
+	type NoMethod RuntimeUpdatableParams
+	var s1 struct {
+		WorkerUtilizationHint gensupport.JSONFloat64 `json:"workerUtilizationHint"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.WorkerUtilizationHint = float64(s1.WorkerUtilizationHint)
+	return nil
 }
 
 // SDKInfo: SDK Information.
@@ -7139,6 +7543,87 @@ func (s *StreamingConfigTask) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StreamingScalingReport: Contains per-user worker telemetry used in
+// streaming autoscaling.
+type StreamingScalingReport struct {
+	ActiveBundleCount int64 `json:"activeBundleCount,omitempty"`
+
+	// ActiveThreadCount: Current acive thread count.
+	ActiveThreadCount int64 `json:"activeThreadCount,omitempty"`
+
+	// MaximumBundleCount: Maximum bundle count.
+	MaximumBundleCount int64 `json:"maximumBundleCount,omitempty"`
+
+	// MaximumBytes: Maximum bytes.
+	MaximumBytes int64 `json:"maximumBytes,omitempty,string"`
+
+	MaximumBytesCount int64 `json:"maximumBytesCount,omitempty"`
+
+	// MaximumThreadCount: Maximum thread count limit.
+	MaximumThreadCount int64 `json:"maximumThreadCount,omitempty"`
+
+	// OutstandingBundleCount: Current outstanding bundle count.
+	OutstandingBundleCount int64 `json:"outstandingBundleCount,omitempty"`
+
+	// OutstandingBytes: Current outstanding bytes.
+	OutstandingBytes int64 `json:"outstandingBytes,omitempty,string"`
+
+	OutstandingBytesCount int64 `json:"outstandingBytesCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActiveBundleCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActiveBundleCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StreamingScalingReport) MarshalJSON() ([]byte, error) {
+	type NoMethod StreamingScalingReport
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StreamingScalingReportResponse: Contains per-user-worker streaming
+// scaling recommendation from the backend.
+type StreamingScalingReportResponse struct {
+	// MaximumThreadCount: Maximum thread count limit;
+	MaximumThreadCount int64 `json:"maximumThreadCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaximumThreadCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaximumThreadCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StreamingScalingReportResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod StreamingScalingReportResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // StreamingSetupTask: A task which initializes part of a streaming
 // Dataflow job.
 type StreamingSetupTask struct {
@@ -7468,6 +7953,17 @@ type TemplateMetadata struct {
 
 	// Parameters: The parameters for the template.
 	Parameters []*ParameterMetadata `json:"parameters,omitempty"`
+
+	// Streaming: Optional. Indicates if the template is streaming or not.
+	Streaming bool `json:"streaming,omitempty"`
+
+	// SupportsAtLeastOnce: Optional. Indicates if the streaming template
+	// supports at least once mode.
+	SupportsAtLeastOnce bool `json:"supportsAtLeastOnce,omitempty"`
+
+	// SupportsExactlyOnce: Optional. Indicates if the streaming template
+	// supports exactly once mode.
+	SupportsExactlyOnce bool `json:"supportsExactlyOnce,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Description") to
 	// unconditionally include in API requests. By default, fields with
@@ -8122,6 +8618,13 @@ type WorkerMessage struct {
 	// should not be used here.
 	Labels map[string]string `json:"labels,omitempty"`
 
+	// PerWorkerMetrics: System defined metrics for this worker.
+	PerWorkerMetrics *PerWorkerMetrics `json:"perWorkerMetrics,omitempty"`
+
+	// StreamingScalingReport: Contains per-user worker telemetry used in
+	// streaming autoscaling.
+	StreamingScalingReport *StreamingScalingReport `json:"streamingScalingReport,omitempty"`
+
 	// Time: The timestamp of the worker_message.
 	Time string `json:"time,omitempty"`
 
@@ -8225,6 +8728,10 @@ func (s *WorkerMessageCode) MarshalJSON() ([]byte, error) {
 // WorkerMessageResponse: A worker_message response allows the server to
 // pass information to the sender.
 type WorkerMessageResponse struct {
+	// StreamingScalingReportResponse: Service's streaming scaling response
+	// for workers.
+	StreamingScalingReportResponse *StreamingScalingReportResponse `json:"streamingScalingReportResponse,omitempty"`
+
 	// WorkerHealthReportResponse: The service's response to a worker's
 	// health report.
 	WorkerHealthReportResponse *WorkerHealthReportResponse `json:"workerHealthReportResponse,omitempty"`
@@ -8242,7 +8749,7 @@ type WorkerMessageResponse struct {
 	WorkerThreadScalingReportResponse *WorkerThreadScalingReportResponse `json:"workerThreadScalingReportResponse,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "WorkerHealthReportResponse") to unconditionally include in API
+	// "StreamingScalingReportResponse") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
 	// from API requests. However, any non-pointer, non-interface field
 	// appearing in ForceSendFields will be sent to the server regardless of
@@ -8251,7 +8758,7 @@ type WorkerMessageResponse struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
-	// "WorkerHealthReportResponse") to include in API requests with the
+	// "StreamingScalingReportResponse") to include in API requests with the
 	// JSON null value. By default, fields with empty values are omitted
 	// from API requests. However, any field with an empty value appearing
 	// in NullFields will be sent to the server as null. It is an error if a
@@ -8758,8 +9265,7 @@ func (c *ProjectsDeleteSnapshotsCall) Do(opts ...googleapi.CallOption) (*DeleteS
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -8902,8 +9408,7 @@ func (c *ProjectsWorkerMessagesCall) Do(opts ...googleapi.CallOption) (*SendWork
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -9198,8 +9703,7 @@ func (c *ProjectsJobsAggregatedCall) Do(opts ...googleapi.CallOption) (*ListJobs
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -9444,8 +9948,7 @@ func (c *ProjectsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -9672,8 +10175,7 @@ func (c *ProjectsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, error) {
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -9864,8 +10366,7 @@ func (c *ProjectsJobsGetMetricsCall) Do(opts ...googleapi.CallOption) (*JobMetri
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -10168,8 +10669,7 @@ func (c *ProjectsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJobsRespon
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -10344,8 +10844,7 @@ func (c *ProjectsJobsSnapshotCall) Do(opts ...googleapi.CallOption) (*Snapshot, 
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -10537,8 +11036,7 @@ func (c *ProjectsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job, error) 
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -10693,8 +11191,7 @@ func (c *ProjectsJobsDebugGetConfigCall) Do(opts ...googleapi.CallOption) (*GetD
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -10848,8 +11345,7 @@ func (c *ProjectsJobsDebugSendCaptureCall) Do(opts ...googleapi.CallOption) (*Se
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -11150,8 +11646,7 @@ func (c *ProjectsJobsMessagesListCall) Do(opts ...googleapi.CallOption) (*ListJo
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -11326,8 +11821,7 @@ func (c *ProjectsJobsWorkItemsLeaseCall) Do(opts ...googleapi.CallOption) (*Leas
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -11482,8 +11976,7 @@ func (c *ProjectsJobsWorkItemsReportStatusCall) Do(opts ...googleapi.CallOption)
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -11639,8 +12132,7 @@ func (c *ProjectsLocationsWorkerMessagesCall) Do(opts ...googleapi.CallOption) (
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -11797,8 +12289,7 @@ func (c *ProjectsLocationsFlexTemplatesLaunchCall) Do(opts ...googleapi.CallOpti
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -12021,8 +12512,7 @@ func (c *ProjectsLocationsJobsCreateCall) Do(opts ...googleapi.CallOption) (*Job
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -12248,8 +12738,7 @@ func (c *ProjectsLocationsJobsGetCall) Do(opts ...googleapi.CallOption) (*Job, e
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -12450,8 +12939,7 @@ func (c *ProjectsLocationsJobsGetExecutionDetailsCall) Do(opts ...googleapi.Call
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -12662,8 +13150,7 @@ func (c *ProjectsLocationsJobsGetMetricsCall) Do(opts ...googleapi.CallOption) (
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -12965,8 +13452,7 @@ func (c *ProjectsLocationsJobsListCall) Do(opts ...googleapi.CallOption) (*ListJ
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -13152,8 +13638,7 @@ func (c *ProjectsLocationsJobsSnapshotCall) Do(opts ...googleapi.CallOption) (*S
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -13344,8 +13829,7 @@ func (c *ProjectsLocationsJobsUpdateCall) Do(opts ...googleapi.CallOption) (*Job
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -13513,8 +13997,7 @@ func (c *ProjectsLocationsJobsDebugGetConfigCall) Do(opts ...googleapi.CallOptio
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -13681,8 +14164,7 @@ func (c *ProjectsLocationsJobsDebugSendCaptureCall) Do(opts ...googleapi.CallOpt
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -13982,8 +14464,7 @@ func (c *ProjectsLocationsJobsMessagesListCall) Do(opts ...googleapi.CallOption)
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -14173,8 +14654,7 @@ func (c *ProjectsLocationsJobsSnapshotsListCall) Do(opts ...googleapi.CallOption
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -14412,8 +14892,7 @@ func (c *ProjectsLocationsJobsStagesGetExecutionDetailsCall) Do(opts ...googleap
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -14601,8 +15080,7 @@ func (c *ProjectsLocationsJobsWorkItemsLeaseCall) Do(opts ...googleapi.CallOptio
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -14770,8 +15248,7 @@ func (c *ProjectsLocationsJobsWorkItemsReportStatusCall) Do(opts ...googleapi.Ca
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -14927,8 +15404,7 @@ func (c *ProjectsLocationsSnapshotsDeleteCall) Do(opts ...googleapi.CallOption) 
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -15098,8 +15574,7 @@ func (c *ProjectsLocationsSnapshotsGetCall) Do(opts ...googleapi.CallOption) (*S
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -15269,8 +15744,7 @@ func (c *ProjectsLocationsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -15428,8 +15902,7 @@ func (c *ProjectsLocationsTemplatesCreateCall) Do(opts ...googleapi.CallOption) 
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -15627,8 +16100,7 @@ func (c *ProjectsLocationsTemplatesGetCall) Do(opts ...googleapi.CallOption) (*G
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -15838,8 +16310,7 @@ func (c *ProjectsLocationsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) 
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -16010,8 +16481,7 @@ func (c *ProjectsSnapshotsGetCall) Do(opts ...googleapi.CallOption) (*Snapshot, 
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -16182,8 +16652,7 @@ func (c *ProjectsSnapshotsListCall) Do(opts ...googleapi.CallOption) (*ListSnaps
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -16328,8 +16797,7 @@ func (c *ProjectsTemplatesCreateCall) Do(opts ...googleapi.CallOption) (*Job, er
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -16528,8 +16996,7 @@ func (c *ProjectsTemplatesGetCall) Do(opts ...googleapi.CallOption) (*GetTemplat
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 
@@ -16740,8 +17207,7 @@ func (c *ProjectsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) (*LaunchT
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/compute",
-	//     "https://www.googleapis.com/auth/compute.readonly",
-	//     "https://www.googleapis.com/auth/userinfo.email"
+	//     "https://www.googleapis.com/auth/compute.readonly"
 	//   ]
 	// }
 

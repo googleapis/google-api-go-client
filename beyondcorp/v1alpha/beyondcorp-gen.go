@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "beyondcorp:v1alpha"
 const apiName = "beyondcorp"
 const apiVersion = "v1alpha"
 const basePath = "https://beyondcorp.googleapis.com/"
+const basePathTemplate = "https://beyondcorp.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://beyondcorp.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -282,6 +286,7 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs.ClientGateways = NewProjectsLocationsClientGatewaysService(s)
 	rs.Connections = NewProjectsLocationsConnectionsService(s)
 	rs.Connectors = NewProjectsLocationsConnectorsService(s)
+	rs.Global = NewProjectsLocationsGlobalService(s)
 	rs.Insights = NewProjectsLocationsInsightsService(s)
 	rs.NetConnections = NewProjectsLocationsNetConnectionsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
@@ -308,6 +313,8 @@ type ProjectsLocationsService struct {
 	Connections *ProjectsLocationsConnectionsService
 
 	Connectors *ProjectsLocationsConnectorsService
+
+	Global *ProjectsLocationsGlobalService
 
 	Insights *ProjectsLocationsInsightsService
 
@@ -394,6 +401,27 @@ func NewProjectsLocationsConnectorsService(s *Service) *ProjectsLocationsConnect
 }
 
 type ProjectsLocationsConnectorsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalService {
+	rs := &ProjectsLocationsGlobalService{s: s}
+	rs.SecurityGateways = NewProjectsLocationsGlobalSecurityGatewaysService(s)
+	return rs
+}
+
+type ProjectsLocationsGlobalService struct {
+	s *Service
+
+	SecurityGateways *ProjectsLocationsGlobalSecurityGatewaysService
+}
+
+func NewProjectsLocationsGlobalSecurityGatewaysService(s *Service) *ProjectsLocationsGlobalSecurityGatewaysService {
+	rs := &ProjectsLocationsGlobalSecurityGatewaysService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGlobalSecurityGatewaysService struct {
 	s *Service
 }
 
@@ -2711,7 +2739,7 @@ type GoogleCloudBeyondcorpPartnerservicesV1alphaProxyConfig struct {
 	// server.
 	RoutingInfo *GoogleCloudBeyondcorpPartnerservicesV1alphaRoutingInfo `json:"routingInfo,omitempty"`
 
-	// TransportInfo: Required. Transport layer information to verify for
+	// TransportInfo: Optional. Transport layer information to verify for
 	// the proxy server.
 	TransportInfo *GoogleCloudBeyondcorpPartnerservicesV1alphaTransportInfo `json:"transportInfo,omitempty"`
 
@@ -3415,6 +3443,197 @@ func (s *GoogleCloudBeyondcorpSaasplatformSubscriptionsV1alphaSubscription) Mars
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBeyondcorpSecuritygatewaysV1alphaListSecurityGatewaysRespon
+// se: Message for response to listing SecurityGateways.
+type GoogleCloudBeyondcorpSecuritygatewaysV1alphaListSecurityGatewaysResponse struct {
+	// NextPageToken: A token to retrieve the next page of results, or empty
+	// if there are no more results in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SecurityGateways: A list of BeyondCorp SecurityGateway in the
+	// project.
+	SecurityGateways []*GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway `json:"securityGateways,omitempty"`
+
+	// Unreachable: A list of locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpSecuritygatewaysV1alphaListSecurityGatewaysResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1alphaListSecurityGatewaysResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1alphaRegionConfig: Message
+// contains the configuration for each supported region for the
+// securityGateway instance.
+type GoogleCloudBeyondcorpSecuritygatewaysV1alphaRegionConfig struct {
+	// EgressIpAddresses: Output only. External IP addresses that will be
+	// used for establishing connection to the egress endpoints.
+	EgressIpAddresses []string `json:"egressIpAddresses,omitempty"`
+
+	// Region: Required. The region where the egress connectivity is
+	// required.
+	Region string `json:"region,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EgressIpAddresses")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EgressIpAddresses") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpSecuritygatewaysV1alphaRegionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1alphaRegionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway:
+// Information about a BeyoncCorp SecurityGateway resource.
+type GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway struct {
+	// CreateTime: Output only. Timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: Optional. An arbitrary user-provided name for the
+	// SecurityGateway. Cannot exceed 64 characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Name: Identifier. Name of the resource.
+	Name string `json:"name,omitempty"`
+
+	// RegionConfigs: Optional. List of regions where the egress
+	// connectivity is required.
+	RegionConfigs []*GoogleCloudBeyondcorpSecuritygatewaysV1alphaRegionConfig `json:"regionConfigs,omitempty"`
+
+	// State: Output only. The operational state of the SecurityGateway.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
+	//   "CREATING" - SecurityGateway is being created.
+	//   "UPDATING" - SecurityGateway is being updated.
+	//   "DELETING" - SecurityGateway is being deleted.
+	//   "RUNNING" - SecurityGateway is running.
+	//   "DOWN" - SecurityGateway is down and may be restored in the future.
+	// This happens when CCFE sends ProjectState = OFF.
+	//   "ERROR" - SecurityGateway encountered an error and is in an
+	// indeterministic state.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Output only. Timestamp when the resource was last
+	// modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGatewayOperationMe
+// tadata: Represents the metadata of the long-running operation.
+type GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGatewayOperationMetadata struct {
+	// ApiVersion: Output only. API version used to start the operation.
+	ApiVersion string `json:"apiVersion,omitempty"`
+
+	// CreateTime: Output only. The time the operation was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: Output only. The time the operation finished running.
+	EndTime string `json:"endTime,omitempty"`
+
+	// RequestedCancellation: Output only. Identifies whether the user has
+	// requested cancellation of the operation. Operations that have been
+	// cancelled successfully have Operation.error value with a
+	// google.rpc.Status.code of 1, corresponding to `Code.CANCELLED`.
+	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
+
+	// StatusMessage: Output only. Human-readable status of the operation,
+	// if any.
+	StatusMessage string `json:"statusMessage,omitempty"`
+
+	// Target: Output only. Server-defined resource path for the target of
+	// the operation.
+	Target string `json:"target,omitempty"`
+
+	// Verb: Output only. Name of the verb executed by the operation.
+	Verb string `json:"verb,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGatewayOperationMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGatewayOperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudLocationListLocationsResponse: The response message for
 // Locations.ListLocations.
 type GoogleCloudLocationListLocationsResponse struct {
@@ -3633,11 +3852,34 @@ type GoogleIamV1Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -3649,11 +3891,20 @@ type GoogleIamV1Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -20671,6 +20922,908 @@ func (c *ProjectsLocationsConnectorsTestIamPermissionsCall) Do(opts ...googleapi
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleIamV1TestIamPermissionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "beyondcorp.projects.locations.global.securityGateways.create":
+
+type ProjectsLocationsGlobalSecurityGatewaysCreateCall struct {
+	s                                                           *Service
+	parent                                                      string
+	googlecloudbeyondcorpsecuritygatewaysv1alphasecuritygateway *GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// Create: Creates a new SecurityGateway in a given project and global
+// location.
+//
+//   - parent: The resource project name of the SecurityGateway location
+//     using the form: `projects/{project_id}/locations/global`.
+func (r *ProjectsLocationsGlobalSecurityGatewaysService) Create(parent string, googlecloudbeyondcorpsecuritygatewaysv1alphasecuritygateway *GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway) *ProjectsLocationsGlobalSecurityGatewaysCreateCall {
+	c := &ProjectsLocationsGlobalSecurityGatewaysCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googlecloudbeyondcorpsecuritygatewaysv1alphasecuritygateway = googlecloudbeyondcorpsecuritygatewaysv1alphasecuritygateway
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore
+// request if it has already been completed. The server will guarantee
+// that for at least 60 minutes since the first request.
+func (c *ProjectsLocationsGlobalSecurityGatewaysCreateCall) RequestId(requestId string) *ProjectsLocationsGlobalSecurityGatewaysCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// SecurityGatewayId sets the optional parameter "securityGatewayId":
+// User-settable SecurityGateway resource ID. * Must start with a
+// letter. * Must contain between 4-63 characters from `/a-z-/`. * Must
+// end with a number or letter.
+func (c *ProjectsLocationsGlobalSecurityGatewaysCreateCall) SecurityGatewayId(securityGatewayId string) *ProjectsLocationsGlobalSecurityGatewaysCreateCall {
+	c.urlParams_.Set("securityGatewayId", securityGatewayId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalSecurityGatewaysCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalSecurityGatewaysCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalSecurityGatewaysCreateCall) Context(ctx context.Context) *ProjectsLocationsGlobalSecurityGatewaysCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalSecurityGatewaysCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalSecurityGatewaysCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudbeyondcorpsecuritygatewaysv1alphasecuritygateway)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/securityGateways")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.global.securityGateways.create" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalSecurityGatewaysCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new SecurityGateway in a given project and global location.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/global/securityGateways",
+	//   "httpMethod": "POST",
+	//   "id": "beyondcorp.projects.locations.global.securityGateways.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The resource project name of the SecurityGateway location using the form: `projects/{project_id}/locations/global`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "securityGatewayId": {
+	//       "description": "Optional. User-settable SecurityGateway resource ID. * Must start with a letter. * Must contain between 4-63 characters from `/a-z-/`. * Must end with a number or letter.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/securityGateways",
+	//   "request": {
+	//     "$ref": "GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "beyondcorp.projects.locations.global.securityGateways.delete":
+
+type ProjectsLocationsGlobalSecurityGatewaysDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single SecurityGateway.
+//
+//   - name: BeyondCorp SecurityGateway name using the form:
+//     `projects/{project_id}/locations/global/securityGateways/{security_g
+//     ateway_id}`.
+func (r *ProjectsLocationsGlobalSecurityGatewaysService) Delete(name string) *ProjectsLocationsGlobalSecurityGatewaysDeleteCall {
+	c := &ProjectsLocationsGlobalSecurityGatewaysDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed. The server will guarantee
+// that for at least 60 minutes after the first request. For example,
+// consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGlobalSecurityGatewaysDeleteCall) RequestId(requestId string) *ProjectsLocationsGlobalSecurityGatewaysDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// ValidateOnly sets the optional parameter "validateOnly": If set,
+// validates request by executing a dry-run which would not alter the
+// resource in any way.
+func (c *ProjectsLocationsGlobalSecurityGatewaysDeleteCall) ValidateOnly(validateOnly bool) *ProjectsLocationsGlobalSecurityGatewaysDeleteCall {
+	c.urlParams_.Set("validateOnly", fmt.Sprint(validateOnly))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalSecurityGatewaysDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalSecurityGatewaysDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalSecurityGatewaysDeleteCall) Context(ctx context.Context) *ProjectsLocationsGlobalSecurityGatewaysDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalSecurityGatewaysDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalSecurityGatewaysDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.global.securityGateways.delete" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalSecurityGatewaysDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single SecurityGateway.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/global/securityGateways/{securityGatewaysId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "beyondcorp.projects.locations.global.securityGateways.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. BeyondCorp SecurityGateway name using the form: `projects/{project_id}/locations/global/securityGateways/{security_gateway_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/securityGateways/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "validateOnly": {
+	//       "description": "Optional. If set, validates request by executing a dry-run which would not alter the resource in any way.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "beyondcorp.projects.locations.global.securityGateways.get":
+
+type ProjectsLocationsGlobalSecurityGatewaysGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single SecurityGateway.
+//
+//   - name: The resource name of the PartnerTenant using the form:
+//     `projects/{project_id}/locations/global/securityGateway/{security_ga
+//     teway_id}`.
+func (r *ProjectsLocationsGlobalSecurityGatewaysService) Get(name string) *ProjectsLocationsGlobalSecurityGatewaysGetCall {
+	c := &ProjectsLocationsGlobalSecurityGatewaysGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalSecurityGatewaysGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalSecurityGatewaysGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalSecurityGatewaysGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalSecurityGatewaysGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalSecurityGatewaysGetCall) Context(ctx context.Context) *ProjectsLocationsGlobalSecurityGatewaysGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalSecurityGatewaysGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalSecurityGatewaysGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.global.securityGateways.get" call.
+// Exactly one of
+// *GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway.ServerRes
+// ponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsGlobalSecurityGatewaysGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single SecurityGateway.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/global/securityGateways/{securityGatewaysId}",
+	//   "httpMethod": "GET",
+	//   "id": "beyondcorp.projects.locations.global.securityGateways.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the PartnerTenant using the form: `projects/{project_id}/locations/global/securityGateway/{security_gateway_id}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/securityGateways/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "beyondcorp.projects.locations.global.securityGateways.list":
+
+type ProjectsLocationsGlobalSecurityGatewaysListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists SecurityGateways in a given project and global location.
+//
+//   - parent: The parent location to which the resources belong.
+//     `projects/{project_id}/locations/global/`.
+func (r *ProjectsLocationsGlobalSecurityGatewaysService) List(parent string) *ProjectsLocationsGlobalSecurityGatewaysListCall {
+	c := &ProjectsLocationsGlobalSecurityGatewaysListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": A filter specifying
+// constraints of a list operation. All fields in the SecurityGateway
+// message are supported. For example, the following query will return
+// the SecurityGateway with displayName "test-security-gateway" For more
+// information, please refer to https://google.aip.dev/160.
+func (c *ProjectsLocationsGlobalSecurityGatewaysListCall) Filter(filter string) *ProjectsLocationsGlobalSecurityGatewaysListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Specifies the ordering
+// of results. See Sorting order
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order)
+// for more information.
+func (c *ProjectsLocationsGlobalSecurityGatewaysListCall) OrderBy(orderBy string) *ProjectsLocationsGlobalSecurityGatewaysListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return. If not specified, a default value of 50 will be
+// used by the service. Regardless of the page_size value, the response
+// may include a partial list and a caller should only rely on
+// response's next_page_token to determine if there are more instances
+// left to be queried.
+func (c *ProjectsLocationsGlobalSecurityGatewaysListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalSecurityGatewaysListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The
+// next_page_token value returned from a previous
+// ListSecurityGatewayRequest, if any.
+func (c *ProjectsLocationsGlobalSecurityGatewaysListCall) PageToken(pageToken string) *ProjectsLocationsGlobalSecurityGatewaysListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalSecurityGatewaysListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalSecurityGatewaysListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalSecurityGatewaysListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalSecurityGatewaysListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalSecurityGatewaysListCall) Context(ctx context.Context) *ProjectsLocationsGlobalSecurityGatewaysListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalSecurityGatewaysListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalSecurityGatewaysListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/securityGateways")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.global.securityGateways.list" call.
+// Exactly one of
+// *GoogleCloudBeyondcorpSecuritygatewaysV1alphaListSecurityGatewaysRespo
+// nse or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleCloudBeyondcorpSecuritygatewaysV1alphaListSecurityGatewaysRespo
+// nse.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsGlobalSecurityGatewaysListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBeyondcorpSecuritygatewaysV1alphaListSecurityGatewaysResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudBeyondcorpSecuritygatewaysV1alphaListSecurityGatewaysResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists SecurityGateways in a given project and global location.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/global/securityGateways",
+	//   "httpMethod": "GET",
+	//   "id": "beyondcorp.projects.locations.global.securityGateways.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. A filter specifying constraints of a list operation. All fields in the SecurityGateway message are supported. For example, the following query will return the SecurityGateway with displayName \"test-security-gateway\" For more information, please refer to https://google.aip.dev/160.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Specifies the ordering of results. See [Sorting order](https://cloud.google.com/apis/design/design_patterns#sorting_order) for more information.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of items to return. If not specified, a default value of 50 will be used by the service. Regardless of the page_size value, the response may include a partial list and a caller should only rely on response's next_page_token to determine if there are more instances left to be queried.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The next_page_token value returned from a previous ListSecurityGatewayRequest, if any.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent location to which the resources belong. `projects/{project_id}/locations/global/`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+parent}/securityGateways",
+	//   "response": {
+	//     "$ref": "GoogleCloudBeyondcorpSecuritygatewaysV1alphaListSecurityGatewaysResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlobalSecurityGatewaysListCall) Pages(ctx context.Context, f func(*GoogleCloudBeyondcorpSecuritygatewaysV1alphaListSecurityGatewaysResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "beyondcorp.projects.locations.global.securityGateways.patch":
+
+type ProjectsLocationsGlobalSecurityGatewaysPatchCall struct {
+	s                                                           *Service
+	name                                                        string
+	googlecloudbeyondcorpsecuritygatewaysv1alphasecuritygateway *GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway
+	urlParams_                                                  gensupport.URLParams
+	ctx_                                                        context.Context
+	header_                                                     http.Header
+}
+
+// Patch: Updates the parameters of a single SecurityGateway.
+//
+// - name: Identifier. Name of the resource.
+func (r *ProjectsLocationsGlobalSecurityGatewaysService) Patch(name string, googlecloudbeyondcorpsecuritygatewaysv1alphasecuritygateway *GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway) *ProjectsLocationsGlobalSecurityGatewaysPatchCall {
+	c := &ProjectsLocationsGlobalSecurityGatewaysPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudbeyondcorpsecuritygatewaysv1alphasecuritygateway = googlecloudbeyondcorpsecuritygatewaysv1alphasecuritygateway
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed. The server will guarantee
+// that for at least 60 minutes after the first request. For example,
+// consider a situation where you make an initial request and the
+// request timed out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsGlobalSecurityGatewaysPatchCall) RequestId(requestId string) *ProjectsLocationsGlobalSecurityGatewaysPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required.
+// Mutable fields include: display_name, gateway_regions.
+func (c *ProjectsLocationsGlobalSecurityGatewaysPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalSecurityGatewaysPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalSecurityGatewaysPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalSecurityGatewaysPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalSecurityGatewaysPatchCall) Context(ctx context.Context) *ProjectsLocationsGlobalSecurityGatewaysPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalSecurityGatewaysPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalSecurityGatewaysPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudbeyondcorpsecuritygatewaysv1alphasecuritygateway)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "beyondcorp.projects.locations.global.securityGateways.patch" call.
+// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalSecurityGatewaysPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleLongrunningOperation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the parameters of a single SecurityGateway.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/global/securityGateways/{securityGatewaysId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "beyondcorp.projects.locations.global.securityGateways.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Identifier. Name of the resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/securityGateways/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request timed out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Mutable fields include: display_name, gateway_regions.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleLongrunningOperation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

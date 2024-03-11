@@ -194,12 +194,12 @@
                   ],
                   "parameters": {
                     "datasetId": {
-                      "description": "The ID of the dataset that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
+                      "description": "Required. The ID of the dataset that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
                       "location": "query",
                       "type": "string"
                     },
                     "parent": {
-                      "description": "The name of the project where the server creates the dataset. For example, `projects/{project_id}/locations/{location_id}`.",
+                      "description": "Required. The name of the project where the server creates the dataset. For example, `projects/{project_id}/locations/{location_id}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -228,7 +228,7 @@
                   ],
                   "parameters": {
                     "sourceDataset": {
-                      "description": "Source dataset resource name. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
+                      "description": "Required. Source dataset resource name. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
                       "required": true,
@@ -257,7 +257,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name of the dataset to delete. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
+                      "description": "Required. The name of the dataset to delete. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
                       "required": true,
@@ -283,7 +283,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "The name of the dataset to read. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
+                      "description": "Required. The name of the dataset to read. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
                       "required": true,
@@ -352,7 +352,7 @@
                       "type": "string"
                     },
                     "parent": {
-                      "description": "The name of the project whose datasets should be listed. For example, `projects/{project_id}/locations/{location_id}`.",
+                      "description": "Required. The name of the project whose datasets should be listed. For example, `projects/{project_id}/locations/{location_id}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+$",
                       "required": true,
@@ -378,14 +378,14 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Resource name of the dataset, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
+                      "description": "Identifier. Resource name of the dataset, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
                       "required": true,
                       "type": "string"
                     },
                     "updateMask": {
-                      "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+                      "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
                       "format": "google-fieldmask",
                       "location": "query",
                       "type": "string"
@@ -475,12 +475,12 @@
                       ],
                       "parameters": {
                         "annotationStoreId": {
-                          "description": "The ID of the Annotation store that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
+                          "description": "Required. The ID of the Annotation store that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
                           "location": "query",
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The name of the dataset this Annotation store belongs to.",
+                          "description": "Required. The name of the dataset this Annotation store belongs to.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
                           "required": true,
@@ -509,7 +509,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The resource name of the Annotation store to delete.",
+                          "description": "Required. The resource name of the Annotation store to delete.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
                           "required": true,
@@ -535,7 +535,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The Annotation store to compare against `golden_store`, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
+                          "description": "Required. The Annotation store to compare against `golden_store`, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
                           "required": true,
@@ -564,7 +564,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The name of the Annotation store to export annotations to, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
+                          "description": "Required. The name of the Annotation store to export annotations to, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
                           "required": true,
@@ -593,7 +593,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The resource name of the Annotation store to get.",
+                          "description": "Required. The resource name of the Annotation store to get.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
                           "required": true,
@@ -651,7 +651,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The name of the Annotation store to which the server imports annotations, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
+                          "description": "Required. The name of the Annotation store to which the server imports annotations, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
                           "required": true,
@@ -696,7 +696,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Name of the dataset.",
+                          "description": "Required. Name of the dataset.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
                           "required": true,
@@ -722,14 +722,14 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Resource name of the Annotation store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
+                          "description": "Identifier. Resource name of the Annotation store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
                           "required": true,
                           "type": "string"
                         },
                         "updateMask": {
-                          "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+                          "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
                           "format": "google-fieldmask",
                           "location": "query",
                           "type": "string"
@@ -819,7 +819,7 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "The name of the Annotation store this annotation belongs to. For example, `projects/my-project/locations/us-central1/datasets/mydataset/annotationStores/myannotationstore`.",
+                              "description": "Required. The name of the Annotation store this annotation belongs to. For example, `projects/my-project/locations/us-central1/datasets/mydataset/annotationStores/myannotationstore`.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
                               "required": true,
@@ -848,7 +848,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "The resource name of the Annotation to delete.",
+                              "description": "Required. The resource name of the Annotation to delete.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+/annotations/[^/]+$",
                               "required": true,
@@ -874,7 +874,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "The resource name of the Annotation to retrieve.",
+                              "description": "Required. The resource name of the Annotation to retrieve.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+/annotations/[^/]+$",
                               "required": true,
@@ -916,7 +916,7 @@
                               "type": "string"
                             },
                             "parent": {
-                              "description": "Name of the Annotation store to retrieve Annotations from.",
+                              "description": "Required. Name of the Annotation store to retrieve Annotations from.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+$",
                               "required": true,
@@ -957,14 +957,14 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "Resource name of the Annotation, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}/annotations/{annotation_id}`.",
+                              "description": "Identifier. Resource name of the Annotation, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}/annotations/{annotation_id}`.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/annotationStores/[^/]+/annotations/[^/]+$",
                               "required": true,
                               "type": "string"
                             },
                             "updateMask": {
-                              "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+                              "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
                               "format": "google-fieldmask",
                               "location": "query",
                               "type": "string"
@@ -1470,7 +1470,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "Resource name of the Attribute definition, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/attributeDefinitions/{attribute_definition_id}`. Cannot be changed after creation.",
+                              "description": "Identifier. Resource name of the Attribute definition, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/attributeDefinitions/{attribute_definition_id}`. Cannot be changed after creation.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/attributeDefinitions/[^/]+$",
                               "required": true,
@@ -1856,7 +1856,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "Resource name of the Consent, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. Cannot be changed after creation.",
+                              "description": "Identifier. Resource name of the Consent, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. Cannot be changed after creation.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/consentStores/[^/]+/consents/[^/]+$",
                               "required": true,
@@ -2134,6 +2134,100 @@
                     }
                   }
                 },
+                "dataMapperWorkspaces": {
+                  "methods": {
+                    "getIamPolicy": {
+                      "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dataMapperWorkspaces/{dataMapperWorkspacesId}:getIamPolicy",
+                      "httpMethod": "GET",
+                      "id": "healthcare.projects.locations.datasets.dataMapperWorkspaces.getIamPolicy",
+                      "parameterOrder": [
+                        "resource"
+                      ],
+                      "parameters": {
+                        "options.requestedPolicyVersion": {
+                          "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "resource": {
+                          "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dataMapperWorkspaces/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+resource}:getIamPolicy",
+                      "response": {
+                        "$ref": "Policy"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-healthcare",
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "setIamPolicy": {
+                      "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dataMapperWorkspaces/{dataMapperWorkspacesId}:setIamPolicy",
+                      "httpMethod": "POST",
+                      "id": "healthcare.projects.locations.datasets.dataMapperWorkspaces.setIamPolicy",
+                      "parameterOrder": [
+                        "resource"
+                      ],
+                      "parameters": {
+                        "resource": {
+                          "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dataMapperWorkspaces/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+resource}:setIamPolicy",
+                      "request": {
+                        "$ref": "SetIamPolicyRequest"
+                      },
+                      "response": {
+                        "$ref": "Policy"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-healthcare",
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "testIamPermissions": {
+                      "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dataMapperWorkspaces/{dataMapperWorkspacesId}:testIamPermissions",
+                      "httpMethod": "POST",
+                      "id": "healthcare.projects.locations.datasets.dataMapperWorkspaces.testIamPermissions",
+                      "parameterOrder": [
+                        "resource"
+                      ],
+                      "parameters": {
+                        "resource": {
+                          "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dataMapperWorkspaces/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+resource}:testIamPermissions",
+                      "request": {
+                        "$ref": "TestIamPermissionsRequest"
+                      },
+                      "response": {
+                        "$ref": "TestIamPermissionsResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-healthcare",
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
+                },
                 "dicomStores": {
                   "methods": {
                     "create": {
@@ -2146,12 +2240,12 @@
                       ],
                       "parameters": {
                         "dicomStoreId": {
-                          "description": "The ID of the DICOM store that is being created. Any string value up to 256 characters in length.",
+                          "description": "Required. The ID of the DICOM store that is being created. Any string value up to 256 characters in length.",
                           "location": "query",
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The name of the dataset this DICOM store belongs to.",
+                          "description": "Required. The name of the dataset this DICOM store belongs to.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
                           "required": true,
@@ -2180,7 +2274,7 @@
                       ],
                       "parameters": {
                         "sourceStore": {
-                          "description": "Source DICOM store resource name. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                          "description": "Required. Source DICOM store resource name. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                           "required": true,
@@ -2209,7 +2303,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The resource name of the DICOM store to delete.",
+                          "description": "Required. The resource name of the DICOM store to delete.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                           "required": true,
@@ -2235,7 +2329,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The DICOM store resource name from which to export the data. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                          "description": "Required. The DICOM store resource name from which to export the data. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                           "required": true,
@@ -2264,7 +2358,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The resource name of the DICOM store to get.",
+                          "description": "Required. The resource name of the DICOM store to get.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                           "required": true,
@@ -2290,7 +2384,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The resource name of the DICOM store to get metrics for.",
+                          "description": "Required. The resource name of the DICOM store to get metrics for.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                           "required": true,
@@ -2348,7 +2442,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The name of the DICOM store resource into which the data is imported. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                          "description": "Required. The name of the DICOM store resource into which the data is imported. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                           "required": true,
@@ -2393,7 +2487,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Name of the dataset.",
+                          "description": "Required. Name of the dataset.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
                           "required": true,
@@ -2419,7 +2513,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Resource name of the DICOM store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                          "description": "Identifier. Resource name of the DICOM store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                           "required": true,
@@ -2455,14 +2549,14 @@
                       ],
                       "parameters": {
                         "dicomWebPath": {
-                          "description": "The path of the SearchForInstancesRequest DICOMweb request. For example, `instances`, `series/{series_uid}/instances`, or `studies/{study_uid}/instances`.",
+                          "description": "Required. The path of the SearchForInstancesRequest DICOMweb request. For example, `instances`, `series/{series_uid}/instances`, or `studies/{study_uid}/instances`.",
                           "location": "path",
                           "pattern": "^instances$",
                           "required": true,
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                          "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                           "required": true,
@@ -2489,14 +2583,14 @@
                       ],
                       "parameters": {
                         "dicomWebPath": {
-                          "description": "The path of the SearchForSeries DICOMweb request. For example, `series` or `studies/{study_uid}/series`.",
+                          "description": "Required. The path of the SearchForSeries DICOMweb request. For example, `series` or `studies/{study_uid}/series`.",
                           "location": "path",
                           "pattern": "^series$",
                           "required": true,
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                          "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                           "required": true,
@@ -2523,14 +2617,14 @@
                       ],
                       "parameters": {
                         "dicomWebPath": {
-                          "description": "The path of the SearchForStudies DICOMweb request. For example, `studies`.",
+                          "description": "Required. The path of the SearchForStudies DICOMweb request. For example, `studies`.",
                           "location": "path",
                           "pattern": "^studies$",
                           "required": true,
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                          "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                           "required": true,
@@ -2615,14 +2709,14 @@
                       ],
                       "parameters": {
                         "dicomWebPath": {
-                          "description": "The path of the StoreInstances DICOMweb request. For example, `studies/[{study_uid}]`. Note that the `study_uid` is optional.",
+                          "description": "Required. The path of the StoreInstances DICOMweb request. For example, `studies/[{study_uid}]`. Note that the `study_uid` is optional.",
                           "location": "path",
                           "pattern": "^studies$",
                           "required": true,
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                          "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                           "required": true,
@@ -2686,7 +2780,7 @@
                               ],
                               "parameters": {
                                 "study": {
-                                  "description": "The study resource path. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}/dicomWeb/studies/{study_uid}`.",
+                                  "description": "Required. The study resource path. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}/dicomWeb/studies/{study_uid}`.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+/dicomWeb/studies/[^/]+$",
                                   "required": true,
@@ -2745,7 +2839,7 @@
                                   ],
                                   "parameters": {
                                     "series": {
-                                      "description": "The series resource path. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}/dicomWeb/studies/{study_uid}/series/{series_uid}`.",
+                                      "description": "Required. The series resource path. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}/dicomWeb/studies/{study_uid}/series/{series_uid}`.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+/dicomWeb/studies/[^/]+/series/[^/]+$",
                                       "required": true,
@@ -2812,7 +2906,7 @@
                           ],
                           "parameters": {
                             "dicomWebPath": {
-                              "description": "The path of the DeleteStudy request. For example, `studies/{study_uid}`.",
+                              "description": "Required. The path of the DeleteStudy request. For example, `studies/{study_uid}`.",
                               "location": "path",
                               "pattern": "^studies/[^/]+$",
                               "required": true,
@@ -2845,14 +2939,14 @@
                           ],
                           "parameters": {
                             "dicomWebPath": {
-                              "description": "The path of the RetrieveStudyMetadata DICOMweb request. For example, `studies/{study_uid}/metadata`.",
+                              "description": "Required. The path of the RetrieveStudyMetadata DICOMweb request. For example, `studies/{study_uid}/metadata`.",
                               "location": "path",
                               "pattern": "^studies/[^/]+/metadata$",
                               "required": true,
                               "type": "string"
                             },
                             "parent": {
-                              "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                              "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                               "required": true,
@@ -2879,14 +2973,14 @@
                           ],
                           "parameters": {
                             "dicomWebPath": {
-                              "description": "The path of the RetrieveStudy DICOMweb request. For example, `studies/{study_uid}`.",
+                              "description": "Required. The path of the RetrieveStudy DICOMweb request. For example, `studies/{study_uid}`.",
                               "location": "path",
                               "pattern": "^studies/[^/]+$",
                               "required": true,
                               "type": "string"
                             },
                             "parent": {
-                              "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                              "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                               "required": true,
@@ -2913,14 +3007,14 @@
                           ],
                           "parameters": {
                             "dicomWebPath": {
-                              "description": "The path of the SearchForInstancesRequest DICOMweb request. For example, `instances`, `series/{series_uid}/instances`, or `studies/{study_uid}/instances`.",
+                              "description": "Required. The path of the SearchForInstancesRequest DICOMweb request. For example, `instances`, `series/{series_uid}/instances`, or `studies/{study_uid}/instances`.",
                               "location": "path",
                               "pattern": "^studies/[^/]+/instances$",
                               "required": true,
                               "type": "string"
                             },
                             "parent": {
-                              "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                              "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                               "required": true,
@@ -2947,14 +3041,14 @@
                           ],
                           "parameters": {
                             "dicomWebPath": {
-                              "description": "The path of the SearchForSeries DICOMweb request. For example, `series` or `studies/{study_uid}/series`.",
+                              "description": "Required. The path of the SearchForSeries DICOMweb request. For example, `series` or `studies/{study_uid}/series`.",
                               "location": "path",
                               "pattern": "^studies/[^/]+/series$",
                               "required": true,
                               "type": "string"
                             },
                             "parent": {
-                              "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                              "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                               "required": true,
@@ -2981,14 +3075,14 @@
                           ],
                           "parameters": {
                             "dicomWebPath": {
-                              "description": "The path of the StoreInstances DICOMweb request. For example, `studies/[{study_uid}]`. Note that the `study_uid` is optional.",
+                              "description": "Required. The path of the StoreInstances DICOMweb request. For example, `studies/[{study_uid}]`. Note that the `study_uid` is optional.",
                               "location": "path",
                               "pattern": "^studies/[^/]+$",
                               "required": true,
                               "type": "string"
                             },
                             "parent": {
-                              "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                              "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                               "required": true,
@@ -3022,14 +3116,14 @@
                               ],
                               "parameters": {
                                 "dicomWebPath": {
-                                  "description": "The path of the DeleteSeries request. For example, `studies/{study_uid}/series/{series_uid}`.",
+                                  "description": "Required. The path of the DeleteSeries request. For example, `studies/{study_uid}/series/{series_uid}`.",
                                   "location": "path",
                                   "pattern": "^studies/[^/]+/series/[^/]+$",
                                   "required": true,
                                   "type": "string"
                                 },
                                 "parent": {
-                                  "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                                  "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                   "required": true,
@@ -3056,14 +3150,14 @@
                               ],
                               "parameters": {
                                 "dicomWebPath": {
-                                  "description": "The path of the RetrieveSeriesMetadata DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/metadata`.",
+                                  "description": "Required. The path of the RetrieveSeriesMetadata DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/metadata`.",
                                   "location": "path",
                                   "pattern": "^studies/[^/]+/series/[^/]+/metadata$",
                                   "required": true,
                                   "type": "string"
                                 },
                                 "parent": {
-                                  "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                                  "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                   "required": true,
@@ -3090,14 +3184,14 @@
                               ],
                               "parameters": {
                                 "dicomWebPath": {
-                                  "description": "The path of the RetrieveSeries DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}`.",
+                                  "description": "Required. The path of the RetrieveSeries DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}`.",
                                   "location": "path",
                                   "pattern": "^studies/[^/]+/series/[^/]+$",
                                   "required": true,
                                   "type": "string"
                                 },
                                 "parent": {
-                                  "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                                  "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                   "required": true,
@@ -3124,14 +3218,14 @@
                               ],
                               "parameters": {
                                 "dicomWebPath": {
-                                  "description": "The path of the SearchForInstancesRequest DICOMweb request. For example, `instances`, `series/{series_uid}/instances`, or `studies/{study_uid}/instances`.",
+                                  "description": "Required. The path of the SearchForInstancesRequest DICOMweb request. For example, `instances`, `series/{series_uid}/instances`, or `studies/{study_uid}/instances`.",
                                   "location": "path",
                                   "pattern": "^studies/[^/]+/series/[^/]+/instances$",
                                   "required": true,
                                   "type": "string"
                                 },
                                 "parent": {
-                                  "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                                  "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                   "location": "path",
                                   "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                   "required": true,
@@ -3162,14 +3256,14 @@
                                   ],
                                   "parameters": {
                                     "dicomWebPath": {
-                                      "description": "The path of the DeleteInstance request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.",
+                                      "description": "Required. The path of the DeleteInstance request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.",
                                       "location": "path",
                                       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+$",
                                       "required": true,
                                       "type": "string"
                                     },
                                     "parent": {
-                                      "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                                      "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                       "required": true,
@@ -3196,14 +3290,14 @@
                                   ],
                                   "parameters": {
                                     "dicomWebPath": {
-                                      "description": "The path of the RetrieveInstance DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.",
+                                      "description": "Required. The path of the RetrieveInstance DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`.",
                                       "location": "path",
                                       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+$",
                                       "required": true,
                                       "type": "string"
                                     },
                                     "parent": {
-                                      "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                                      "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                       "required": true,
@@ -3230,14 +3324,14 @@
                                   ],
                                   "parameters": {
                                     "dicomWebPath": {
-                                      "description": "The path of the RetrieveInstanceMetadata DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/metadata`.",
+                                      "description": "Required. The path of the RetrieveInstanceMetadata DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/metadata`.",
                                       "location": "path",
                                       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/metadata$",
                                       "required": true,
                                       "type": "string"
                                     },
                                     "parent": {
-                                      "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                                      "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                       "required": true,
@@ -3264,14 +3358,14 @@
                                   ],
                                   "parameters": {
                                     "dicomWebPath": {
-                                      "description": "The path of the RetrieveRenderedInstance DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/rendered`.",
+                                      "description": "Required. The path of the RetrieveRenderedInstance DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/rendered`.",
                                       "location": "path",
                                       "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/rendered$",
                                       "required": true,
                                       "type": "string"
                                     },
                                     "parent": {
-                                      "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                                      "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                       "location": "path",
                                       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                       "required": true,
@@ -3289,6 +3383,44 @@
                                 }
                               },
                               "resources": {
+                                "bulkdata": {
+                                  "methods": {
+                                    "retrieveBulkdata": {
+                                      "description": "Returns uncompressed, unencoded bytes representing the referenced bulkdata tag from an instance. See [Retrieve Transaction] (http://dicom.nema.org/medical/dicom/current/output/html/part18.html#sect_10.4){: .external}. For details on the implementation of RetrieveBulkdata, see [Bulkdata resources](https://cloud.google.com/healthcare/docs/dicom#bulkdata-resources) in the Cloud Healthcare API conformance statement. For samples that show how to call RetrieveBulkdata, see [Retrieve bulkdata](https://cloud.google.com/healthcare/docs/how-tos/dicomweb#retrieve-bulkdata).",
+                                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/dicomStores/{dicomStoresId}/dicomWeb/studies/{studiesId}/series/{seriesId}/instances/{instancesId}/bulkdata/{bulkdataId}/{bulkdataId1}",
+                                      "httpMethod": "GET",
+                                      "id": "healthcare.projects.locations.datasets.dicomStores.studies.series.instances.bulkdata.retrieveBulkdata",
+                                      "parameterOrder": [
+                                        "parent",
+                                        "dicomWebPath"
+                                      ],
+                                      "parameters": {
+                                        "dicomWebPath": {
+                                          "description": "Required. The path for the `RetrieveBulkdata` DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/bukdata/{bulkdata_uri}`.",
+                                          "location": "path",
+                                          "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/bulkdata/[^/]+/.*$",
+                                          "required": true,
+                                          "type": "string"
+                                        },
+                                        "parent": {
+                                          "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                                          "location": "path",
+                                          "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
+                                          "required": true,
+                                          "type": "string"
+                                        }
+                                      },
+                                      "path": "v1beta1/{+parent}/dicomWeb/{+dicomWebPath}",
+                                      "response": {
+                                        "$ref": "HttpBody"
+                                      },
+                                      "scopes": [
+                                        "https://www.googleapis.com/auth/cloud-healthcare",
+                                        "https://www.googleapis.com/auth/cloud-platform"
+                                      ]
+                                    }
+                                  }
+                                },
                                 "frames": {
                                   "methods": {
                                     "retrieveFrames": {
@@ -3302,14 +3434,14 @@
                                       ],
                                       "parameters": {
                                         "dicomWebPath": {
-                                          "description": "The path of the RetrieveFrames DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_list}`.",
+                                          "description": "Required. The path of the RetrieveFrames DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_list}`.",
                                           "location": "path",
                                           "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/frames/[^/]+$",
                                           "required": true,
                                           "type": "string"
                                         },
                                         "parent": {
-                                          "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                                          "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                           "location": "path",
                                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                           "required": true,
@@ -3336,14 +3468,14 @@
                                       ],
                                       "parameters": {
                                         "dicomWebPath": {
-                                          "description": "The path of the RetrieveRenderedFrames DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_list}/rendered`.",
+                                          "description": "Required. The path of the RetrieveRenderedFrames DICOMweb request. For example, `studies/{study_uid}/series/{series_uid}/instances/{instance_uid}/frames/{frame_list}/rendered`.",
                                           "location": "path",
                                           "pattern": "^studies/[^/]+/series/[^/]+/instances/[^/]+/frames/[^/]+/rendered$",
                                           "required": true,
                                           "type": "string"
                                         },
                                         "parent": {
-                                          "description": "The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+                                          "description": "Required. The name of the DICOM store that is being accessed. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
                                           "location": "path",
                                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
                                           "required": true,
@@ -3381,7 +3513,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The name of the FHIR store to enforce, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+                          "description": "Required. The name of the FHIR store to enforce, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                           "required": true,
@@ -3439,7 +3571,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The name of the FHIR store to configure, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+                          "description": "Required. The name of the FHIR store to configure, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                           "required": true,
@@ -3468,12 +3600,12 @@
                       ],
                       "parameters": {
                         "fhirStoreId": {
-                          "description": "The ID of the FHIR store that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
+                          "description": "Required. The ID of the FHIR store that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
                           "location": "query",
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The name of the dataset this FHIR store belongs to.",
+                          "description": "Required. The name of the dataset this FHIR store belongs to.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
                           "required": true,
@@ -3502,7 +3634,7 @@
                       ],
                       "parameters": {
                         "sourceStore": {
-                          "description": "Source FHIR store resource name. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+                          "description": "Required. Source FHIR store resource name. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                           "required": true,
@@ -3531,7 +3663,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The resource name of the FHIR store to delete.",
+                          "description": "Required. The resource name of the FHIR store to delete.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                           "required": true,
@@ -3541,6 +3673,37 @@
                       "path": "v1beta1/{+name}",
                       "response": {
                         "$ref": "Empty"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-healthcare",
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "explainDataAccess": {
+                      "description": "Explains all the permitted/denied actor, purpose and environment for a given resource.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}:explainDataAccess",
+                      "httpMethod": "GET",
+                      "id": "healthcare.projects.locations.datasets.fhirStores.explainDataAccess",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The name of the FHIR store to enforce, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        },
+                        "resourceId": {
+                          "description": "Required. The ID (`{resourceType}/{id}`) of the resource to explain data access on.",
+                          "location": "query",
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+name}:explainDataAccess",
+                      "response": {
+                        "$ref": "ExplainDataAccessResponse"
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-healthcare",
@@ -3557,7 +3720,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The name of the FHIR store to export resource from, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+                          "description": "Required. The name of the FHIR store to export resource from, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                           "required": true,
@@ -3586,7 +3749,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The resource name of the FHIR store to get.",
+                          "description": "Required. The resource name of the FHIR store to get.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                           "required": true,
@@ -3612,7 +3775,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The resource name of the FHIR store to get metrics for.",
+                          "description": "Required. The resource name of the FHIR store to get metrics for.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                           "required": true,
@@ -3670,7 +3833,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The name of the FHIR store to import FHIR resources to, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+                          "description": "Required. The name of the FHIR store to import FHIR resources to, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                           "required": true,
@@ -3715,7 +3878,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Name of the dataset.",
+                          "description": "Required. Name of the dataset.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
                           "required": true,
@@ -3741,14 +3904,14 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Output only. Resource name of the FHIR store, of the form `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+                          "description": "Output only. Identifier. Resource name of the FHIR store, of the form `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                           "required": true,
                           "type": "string"
                         },
                         "updateMask": {
-                          "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+                          "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
                           "format": "google-fieldmask",
                           "location": "query",
                           "type": "string"
@@ -3867,7 +4030,7 @@
                           ],
                           "parameters": {
                             "code": {
-                              "description": "The code to translate.",
+                              "description": "Required. The code to translate.",
                               "location": "query",
                               "type": "string"
                             },
@@ -3877,7 +4040,7 @@
                               "type": "string"
                             },
                             "parent": {
-                              "description": "The name for the FHIR store containing the concept map(s) to use for the translation.",
+                              "description": "Required. The name for the FHIR store containing the concept map(s) to use for the translation.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                               "required": true,
@@ -3889,7 +4052,7 @@
                               "type": "string"
                             },
                             "system": {
-                              "description": "The system for the code to be translated.",
+                              "description": "Required. The system for the code to be translated.",
                               "location": "query",
                               "type": "string"
                             },
@@ -3923,7 +4086,7 @@
                           ],
                           "parameters": {
                             "code": {
-                              "description": "The code to translate.",
+                              "description": "Required. The code to translate.",
                               "location": "query",
                               "type": "string"
                             },
@@ -3933,14 +4096,14 @@
                               "type": "string"
                             },
                             "name": {
-                              "description": "The URL for the concept map to use for the translation.",
+                              "description": "Required. The URL for the concept map to use for the translation.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/ConceptMap/[^/]+$",
                               "required": true,
                               "type": "string"
                             },
                             "system": {
-                              "description": "The system for the code to be translated.",
+                              "description": "Required. The system for the code to be translated.",
                               "location": "query",
                               "type": "string"
                             }
@@ -3990,7 +4153,7 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "Name of the FHIR store to retrieve resources from.",
+                              "description": "Required. Name of the FHIR store to retrieve resources from.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                               "required": true,
@@ -4079,7 +4242,7 @@
                               "type": "string"
                             },
                             "name": {
-                              "description": "Name of the `Patient` resource for which the information is required.",
+                              "description": "Required. Name of the `Patient` resource for which the information is required.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/Patient/[^/]+$",
                               "required": true,
@@ -4162,7 +4325,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "The name of the resource to purge.",
+                              "description": "Required. The name of the resource to purge.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+$",
                               "required": true,
@@ -4189,19 +4352,19 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "The name of the FHIR store that holds the profiles being used for validation.",
+                              "description": "Required. The name of the FHIR store that holds the profiles being used for validation.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                               "required": true,
                               "type": "string"
                             },
                             "profile": {
-                              "description": "The canonical URL of a profile that this resource should be validated against. For example, to validate a Patient resource against the US Core Patient profile this parameter would be `http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient`. A StructureDefinition with this canonical URL must exist in the FHIR store.",
+                              "description": "Required. The canonical URL of a profile that this resource should be validated against. For example, to validate a Patient resource against the US Core Patient profile this parameter would be `http://hl7.org/fhir/us/core/StructureDefinition/us-core-patient`. A StructureDefinition with this canonical URL must exist in the FHIR store.",
                               "location": "query",
                               "type": "string"
                             },
                             "type": {
-                              "description": "The FHIR resource type of the resource being validated. For a complete list, see the FHIR Resource Index ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/resourcelist.html), or [R4](http://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must match the resource type in the provided content.",
+                              "description": "Required. The FHIR resource type of the resource being validated. For a complete list, see the FHIR Resource Index ([DSTU2](http://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](http://hl7.org/implement/standards/fhir/STU3/resourcelist.html), or [R4](http://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must match the resource type in the provided content.",
                               "location": "path",
                               "pattern": "^[^/]+$",
                               "required": true,
@@ -4230,7 +4393,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "Name of the FHIR store to retrieve the capabilities for.",
+                              "description": "Required. Name of the FHIR store to retrieve the capabilities for.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                               "required": true,
@@ -4257,14 +4420,14 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "The name of the FHIR store this resource belongs to.",
+                              "description": "Required. The name of the FHIR store this resource belongs to.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                               "required": true,
                               "type": "string"
                             },
                             "type": {
-                              "description": "The FHIR resource type to delete, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
+                              "description": "Required. The FHIR resource type to delete, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
                               "location": "path",
                               "pattern": "^[^/]+$",
                               "required": true,
@@ -4291,14 +4454,14 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "The name of the FHIR store this resource belongs to.",
+                              "description": "Required. The name of the FHIR store this resource belongs to.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                               "required": true,
                               "type": "string"
                             },
                             "type": {
-                              "description": "The FHIR resource type to update, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
+                              "description": "Required. The FHIR resource type to update, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
                               "location": "path",
                               "pattern": "^[^/]+$",
                               "required": true,
@@ -4328,14 +4491,14 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "The name of the FHIR store this resource belongs to.",
+                              "description": "Required. The name of the FHIR store this resource belongs to.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                               "required": true,
                               "type": "string"
                             },
                             "type": {
-                              "description": "The FHIR resource type to update, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must match the resource type in the provided content.",
+                              "description": "Required. The FHIR resource type to update, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must match the resource type in the provided content.",
                               "location": "path",
                               "pattern": "^[^/]+$",
                               "required": true,
@@ -4365,14 +4528,14 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "The name of the FHIR store this resource belongs to.",
+                              "description": "Required. The name of the FHIR store this resource belongs to.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                               "required": true,
                               "type": "string"
                             },
                             "type": {
-                              "description": "The FHIR resource type to create, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must match the resource type in the provided content.",
+                              "description": "Required. The FHIR resource type to create, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)). Must match the resource type in the provided content.",
                               "location": "path",
                               "pattern": "^[^/]+$",
                               "required": true,
@@ -4401,7 +4564,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "The name of the resource to delete.",
+                              "description": "Required. The name of the resource to delete.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+$",
                               "required": true,
@@ -4418,7 +4581,7 @@
                           ]
                         },
                         "executeBundle": {
-                          "description": "Executes all the requests in the given Bundle. Implements the FHIR standard batch/transaction interaction ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#transaction), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#transaction), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#transaction)). Supports all interactions within a bundle, except search. This method accepts Bundles of type `batch` and `transaction`, processing them according to the batch processing rules ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#2.1.0.16.1), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#2.21.0.17.1), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#brules)) and transaction processing rules ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#2.1.0.16.2), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#2.21.0.17.2), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#trules)). The request body must contain a JSON-encoded FHIR `Bundle` resource, and the request headers must contain `Content-Type: application/fhir+json`. For a batch bundle or a successful transaction, the response body contains a JSON-encoded representation of a `Bundle` resource of type `batch-response` or `transaction-response` containing one entry for each entry in the request, with the outcome of processing the entry. In the case of an error for a transaction bundle, the response body contains a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. This method checks permissions for each request in the bundle. The `executeBundle` permission is required to call this method, but you must also grant sufficient permissions to execute the individual requests in the bundle. For example, if the bundle contains a request to create a FHIR resource, the caller must also have been granted the `healthcare.fhirResources.create` permission. You can use audit logs to view the permissions for `executeBundle` and each request in the bundle. For more information, see [Viewing Cloud Audit logs](https://cloud.google.com/healthcare-api/docs/how-tos/audit-logging). For samples that show how to call `executeBundle`, see [Managing FHIR resources using FHIR bundles](https://cloud.google.com/healthcare/docs/how-tos/fhir-bundles).",
+                          "description": "Executes all the requests in the given Bundle. Implements the FHIR standard batch/transaction interaction and history operations. ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#transaction), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#transaction), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#transaction)). Supports all interactions within a bundle, except search. This method accepts Bundles of type `batch`, `transaction` and `history`, processing `batch` and `transaction` bundles according to the batch processing rules ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#2.1.0.16.1), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#2.21.0.17.1), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#brules)) and transaction processing rules ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/http.html#2.1.0.16.2), [STU3](https://hl7.org/implement/standards/fhir/STU3/http.html#2.21.0.17.2), [R4](https://hl7.org/implement/standards/fhir/R4/http.html#trules)). The request body must contain a JSON-encoded FHIR `Bundle` resource, and the request headers must contain `Content-Type: application/fhir+json`. For a batch bundle or a successful transaction, the response body contains a JSON-encoded representation of a `Bundle` resource of type `batch-response` or `transaction-response` containing one entry for each entry in the request, with the outcome of processing the entry. In the case of an error for a `transaction` or `history` bundle, the response body contains a JSON-encoded `OperationOutcome` resource describing the reason for the error. If the request cannot be mapped to a valid API method on a FHIR store, a generic GCP error might be returned instead. This method checks permissions for each request in the bundle. The `executeBundle` permission is required to call this method, but you must also grant sufficient permissions to execute the individual requests in the bundle. For example, if the bundle contains a request to create a FHIR resource, the caller must also have been granted the `healthcare.fhirResources.create` permission. `history` bundles also check the `import` permission. You can use audit logs to view the permissions for `executeBundle` and each request in the bundle. For more information, see [Viewing Cloud Audit logs](https://cloud.google.com/healthcare-api/docs/how-tos/audit-logging). For samples that show how to call `executeBundle`, see [Managing FHIR resources using FHIR bundles](https://cloud.google.com/healthcare/docs/how-tos/fhir-bundles).",
                           "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir",
                           "httpMethod": "POST",
                           "id": "healthcare.projects.locations.datasets.fhirStores.fhir.executeBundle",
@@ -4427,7 +4590,7 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "Name of the FHIR store in which this bundle will be executed.",
+                              "description": "Required. Name of the FHIR store in which this bundle will be executed.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                               "required": true,
@@ -4477,7 +4640,7 @@
                               "type": "string"
                             },
                             "name": {
-                              "description": "The name of the resource to retrieve.",
+                              "description": "Required. The name of the resource to retrieve.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+$",
                               "required": true,
@@ -4503,7 +4666,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "The name of the resource to update.",
+                              "description": "Required. The name of the resource to update.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+$",
                               "required": true,
@@ -4532,7 +4695,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "The name of the resource to retrieve.",
+                              "description": "Required. The name of the resource to retrieve.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+$",
                               "required": true,
@@ -4558,7 +4721,7 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "Name of the FHIR store to retrieve resources from.",
+                              "description": "Required. Name of the FHIR store to retrieve resources from.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                               "required": true,
@@ -4588,14 +4751,14 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "Name of the FHIR store to retrieve resources from.",
+                              "description": "Required. Name of the FHIR store to retrieve resources from.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
                               "required": true,
                               "type": "string"
                             },
                             "resourceType": {
-                              "description": "The FHIR resource type to search, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
+                              "description": "Required. The FHIR resource type to search, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
                               "location": "path",
                               "required": true,
                               "type": "string"
@@ -4623,7 +4786,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "The name of the resource to update.",
+                              "description": "Required. The name of the resource to update.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+$",
                               "required": true,
@@ -4652,7 +4815,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "The name of the resource version to retrieve.",
+                              "description": "Required. The name of the resource version to retrieve.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+/_history/[^/]+$",
                               "required": true,
@@ -4684,12 +4847,12 @@
                       ],
                       "parameters": {
                         "hl7V2StoreId": {
-                          "description": "The ID of the HL7v2 store that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
+                          "description": "Required. The ID of the HL7v2 store that is being created. The string must match the following regex: `[\\p{L}\\p{N}_\\-\\.]{1,256}`.",
                           "location": "query",
                           "type": "string"
                         },
                         "parent": {
-                          "description": "The name of the dataset this HL7v2 store belongs to.",
+                          "description": "Required. The name of the dataset this HL7v2 store belongs to.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
                           "required": true,
@@ -4718,7 +4881,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The resource name of the HL7v2 store to delete.",
+                          "description": "Required. The resource name of the HL7v2 store to delete.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
                           "required": true,
@@ -4744,7 +4907,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The name of the source HL7v2 store, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7v2Stores/{hl7v2_store_id}`",
+                          "description": "Required. The name of the source HL7v2 store, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7v2Stores/{hl7v2_store_id}`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
                           "required": true,
@@ -4773,7 +4936,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The resource name of the HL7v2 store to get.",
+                          "description": "Required. The resource name of the HL7v2 store to get.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
                           "required": true,
@@ -4799,7 +4962,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The resource name of the HL7v2 store to get metrics for, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.",
+                          "description": "Required. The resource name of the HL7v2 store to get metrics for, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
                           "required": true,
@@ -4857,7 +5020,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "The name of the target HL7v2 store, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7v2Stores/{hl7v2_store_id}`",
+                          "description": "Required. The name of the target HL7v2 store, in the format `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7v2Stores/{hl7v2_store_id}`",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
                           "required": true,
@@ -4902,7 +5065,7 @@
                           "type": "string"
                         },
                         "parent": {
-                          "description": "Name of the dataset.",
+                          "description": "Required. Name of the dataset.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+$",
                           "required": true,
@@ -4928,14 +5091,14 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Resource name of the HL7v2 store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.",
+                          "description": "Identifier. Resource name of the HL7v2 store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
                           "required": true,
                           "type": "string"
                         },
                         "updateMask": {
-                          "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+                          "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
                           "format": "google-fieldmask",
                           "location": "query",
                           "type": "string"
@@ -5031,7 +5194,7 @@
                               "type": "string"
                             },
                             "parent": {
-                              "description": "Name of the HL7v2 store to retrieve messages from, in the format: `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7v2Stores/{hl7v2_store_id}`.",
+                              "description": "Required. Name of the HL7v2 store to retrieve messages from, in the format: `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7v2Stores/{hl7v2_store_id}`.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
                               "required": true,
@@ -5078,7 +5241,7 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "The name of the HL7v2 store this message belongs to.",
+                              "description": "Required. The name of the HL7v2 store this message belongs to.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
                               "required": true,
@@ -5107,7 +5270,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "The resource name of the HL7v2 message to delete.",
+                              "description": "Required. The resource name of the HL7v2 message to delete.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+/messages/[^/]+$",
                               "required": true,
@@ -5133,7 +5296,7 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "The resource name of the HL7v2 message to retrieve.",
+                              "description": "Required. The resource name of the HL7v2 message to retrieve.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+/messages/[^/]+$",
                               "required": true,
@@ -5180,7 +5343,7 @@
                           ],
                           "parameters": {
                             "parent": {
-                              "description": "The name of the HL7v2 store this message belongs to.",
+                              "description": "Required. The name of the HL7v2 store this message belongs to.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
                               "required": true,
@@ -5230,7 +5393,7 @@
                               "type": "string"
                             },
                             "parent": {
-                              "description": "Name of the HL7v2 store to retrieve messages from.",
+                              "description": "Required. Name of the HL7v2 store to retrieve messages from.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+$",
                               "required": true,
@@ -5277,14 +5440,14 @@
                           ],
                           "parameters": {
                             "name": {
-                              "description": "Resource name of the Message, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by the server.",
+                              "description": "Output only. Resource name of the Message, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by the server.",
                               "location": "path",
                               "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/hl7V2Stores/[^/]+/messages/[^/]+$",
                               "required": true,
                               "type": "string"
                             },
                             "updateMask": {
-                              "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+                              "description": "Required. The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
                               "format": "google-fieldmask",
                               "location": "query",
                               "type": "string"
@@ -5451,7 +5614,7 @@
       }
     }
   },
-  "revision": "20231103",
+  "revision": "20240220",
   "rootUrl": "https://healthcare.googleapis.com/",
   "schemas": {
     "AccessDeterminationLogConfig": {
@@ -5469,8 +5632,8 @@
           "enumDescriptions": [
             "No log level specified. This value is unused.",
             "No additional consent-related logging is added to audit logs.",
-            "The following information is included: - One of the following [`consentMode`](https://cloud.google.com/healthcare-api/private/docs/how-tos/fhir-consent#audit_logs) fields: (`off`|`emptyScope`|`enforced`|`btg`|`bypass`). - The accessor's request headers - The `log_level` of the [AccessDeterminationLogConfig](google.cloud.healthcare.v1beta1.fhir.FhirStore.ConsentConfig.AccessDeterminationLogConfig) - The final consent evaluation (`PERMIT`, `DENY`, or `NO_CONSENT`) - A human-readable summary of the evaluation",
-            "Includes `MINIMUM` and, for each resource owner, returns: - The resource owner's name - Most specific part of the `X-Consent-Scope` resulting in consensual determination - Timestamp of the applied enforcement leading to the decision - Enforcement version at the time the applicable consents were applied - The Consent resource name - The timestamp of the Consent resource used for enforcement - Policy type (PATIENT or ADMIN) Note that this mode adds some overhead to CRUD operations."
+            "The following information is included: * One of the following [`consentMode`](https://cloud.google.com/healthcare-api/docs/fhir-consent#audit_logs) fields: (`off`|`emptyScope`|`enforced`|`btg`|`bypass`). * The accessor's request headers * The `log_level` of the [AccessDeterminationLogConfig](https://cloud.google.com/healthcare-api/docs/reference/rest/v1beta1/projects.locations.datasets.fhirStores#AccessDeterminationLogConfig) * The final consent evaluation (`PERMIT`, `DENY`, or `NO_CONSENT`) * A human-readable summary of the evaluation",
+            "Includes `MINIMUM` and, for each resource owner, returns: * The resource owner's name * Most specific part of the `X-Consent-Scope` resulting in consensual determination * Timestamp of the applied enforcement leading to the decision * Enforcement version at the time the applicable consents were applied * The Consent resource name * The timestamp of the Consent resource used for enforcement * Policy type (`PATIENT` or `ADMIN`) Note that this mode adds some overhead to CRUD operations."
           ],
           "type": "string"
         }
@@ -5636,7 +5799,7 @@
       "properties": {
         "annotationSource": {
           "$ref": "AnnotationSource",
-          "description": "Details of the source."
+          "description": "Required. Details of the source."
         },
         "customData": {
           "additionalProperties": {
@@ -5650,7 +5813,7 @@
           "description": "Annotations for images. For example, bounding polygons."
         },
         "name": {
-          "description": "Resource name of the Annotation, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}/annotations/{annotation_id}`.",
+          "description": "Identifier. Resource name of the Annotation, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}/annotations/{annotation_id}`.",
           "type": "string"
         },
         "resourceAnnotation": {
@@ -5702,7 +5865,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Resource name of the Annotation store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
+          "description": "Identifier. Resource name of the Annotation store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
           "type": "string"
         }
       },
@@ -5862,7 +6025,7 @@
           "type": "string"
         },
         "name": {
-          "description": "Resource name of the Attribute definition, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/attributeDefinitions/{attribute_definition_id}`. Cannot be changed after creation.",
+          "description": "Identifier. Resource name of the Attribute definition, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/attributeDefinitions/{attribute_definition_id}`. Cannot be changed after creation.",
           "type": "string"
         }
       },
@@ -5939,14 +6102,14 @@
           "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."
         },
         "members": {
-          "description": "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a Google service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An identifier for a [Kubernetes service account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding.",
+          "description": "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a Google service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An identifier for a [Kubernetes service account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. * `principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`: A single identity in a workforce identity pool. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/group/{group_id}`: All workforce identities in a group. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/attribute.{attribute_name}/{attribute_value}`: All workforce identities with a specific attribute value. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/*`: All identities in a workforce identity pool. * `principal://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}`: A single identity in a workload identity pool. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload identity pool group. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}`: All identities in a workload identity pool with a certain attribute. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/*`: All identities in a workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`: Deleted single identity in a workforce identity pool. For example, `deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-pool-id/subject/my-subject-attribute-value`.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "role": {
-          "description": "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
+          "description": "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview of the IAM roles and permissions, see the [IAM documentation](https://cloud.google.com/iam/docs/roles-overview). For a list of the available pre-defined roles, see [here](https://cloud.google.com/iam/docs/understanding-roles).",
           "type": "string"
         }
       },
@@ -6175,7 +6338,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Resource name of the Consent, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. Cannot be changed after creation.",
+          "description": "Identifier. Resource name of the Consent, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consents/{consent_id}`. Cannot be changed after creation.",
           "type": "string"
         },
         "policies": {
@@ -6228,6 +6391,25 @@
       },
       "type": "object"
     },
+    "ConsentAccessorScope": {
+      "description": "The accessor scope that describes who can access, for what purpose, in which environment.",
+      "id": "ConsentAccessorScope",
+      "properties": {
+        "actor": {
+          "description": "An individual, group, or access role that identifies the accessor or a characteristic of the accessor. This can be a resource ID (such as `{resourceType}/{id}`) or an external URI. This value must be present.",
+          "type": "string"
+        },
+        "environment": {
+          "description": "An abstract identifier that describes the environment or conditions under which the accessor is acting. Can be “*” if it applies to all environments.",
+          "type": "string"
+        },
+        "purpose": {
+          "description": "The intent of data use. Can be “*” if it applies to all purposes.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "ConsentArtifact": {
       "description": "Documentation of a user's consent.",
       "id": "ConsentArtifact",
@@ -6255,7 +6437,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Resource name of the Consent artifact, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}`. Cannot be changed after creation.",
+          "description": "Identifier. Resource name of the Consent artifact, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/consentStores/{consent_store_id}/consentArtifacts/{consent_artifact_id}`. Cannot be changed after creation.",
           "type": "string"
         },
         "userId": {
@@ -6282,7 +6464,7 @@
           "description": "Optional. Specifies how the server logs the consent-aware requests. If not specified, the `AccessDeterminationLogConfig.LogLevel.MINIMUM` option is used."
         },
         "accessEnforced": {
-          "description": "Optional. If set to true, when accessing FHIR resources, the consent headers provided using [SMART-on-FHIR](https://cloud.google.com/healthcare/private/docs/how-tos/smart-on-fhir) will be verified against consents given by patients. See the ConsentEnforcementVersion for the supported consent headers.",
+          "description": "Optional. If set to true, when accessing FHIR resources, the consent headers will be verified against consents given by patients. See the ConsentEnforcementVersion for the supported consent headers.",
           "type": "boolean"
         },
         "consentHeaderHandling": {
@@ -6304,7 +6486,7 @@
           ],
           "enumDescriptions": [
             "Users must specify an enforcement version or an error is returned.",
-            "Enforcement version 1. See the [FHIR Consent resources in the Cloud Healthcare API](https://cloud.google.com/healthcare-api/private/docs/how-tos/fhir-consent) guide for more details."
+            "Enforcement version 1. See the [FHIR Consent resources in the Cloud Healthcare API](https://cloud.google.com/healthcare-api/docs/fhir-consent) guide for more details."
           ],
           "type": "string"
         }
@@ -6410,7 +6592,7 @@
       "properties": {
         "message": {
           "$ref": "Message",
-          "description": "HL7v2 message."
+          "description": "Required. HL7v2 message."
         }
       },
       "type": "object"
@@ -6442,7 +6624,7 @@
       "id": "Dataset",
       "properties": {
         "name": {
-          "description": "Resource name of the dataset, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
+          "description": "Identifier. Resource name of the dataset, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}`.",
           "type": "string"
         },
         "timeZone": {
@@ -6544,7 +6726,7 @@
           "description": "Deidentify configuration. Only one of `config` and `gcs_config_uri` can be specified."
         },
         "destinationDataset": {
-          "description": "The name of the dataset resource to create and write the redacted data to. * The destination dataset must not exist. * The destination dataset must be in the same location as the source dataset. De-identifying data across multiple locations is not supported.",
+          "description": "Required. The name of the dataset resource to create and write the redacted data to. * The destination dataset must not exist. * The destination dataset must be in the same location as the source dataset. De-identifying data across multiple locations is not supported.",
           "type": "string"
         },
         "gcsConfigUri": {
@@ -6563,7 +6745,7 @@
           "description": "Deidentify configuration. Only one of `config` and `gcs_config_uri` can be specified."
         },
         "destinationStore": {
-          "description": "The name of the DICOM store to create and write the redacted data to. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`. * The destination dataset must exist. * The source dataset and destination dataset must both reside in the same location. De-identifying data across multiple locations is not supported. * The destination DICOM store must not exist. * The caller must have the necessary permissions to create the destination DICOM store.",
+          "description": "Required. The name of the DICOM store to create and write the redacted data to. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`. * The destination dataset must exist. * The source dataset and destination dataset must both reside in the same location. De-identifying data across multiple locations is not supported. * The destination DICOM store must not exist. * The caller must have the necessary permissions to create the destination DICOM store.",
           "type": "string"
         },
         "filterConfig": {
@@ -6586,7 +6768,7 @@
           "description": "Deidentify configuration. Only one of `config` and `gcs_config_uri` can be specified."
         },
         "destinationStore": {
-          "description": "The name of the FHIR store to create and write the redacted data to. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`. * The destination dataset must exist. * The source dataset and destination dataset must both reside in the same location. De-identifying data across multiple locations is not supported. * The destination FHIR store must exist. * The caller must have the healthcare.fhirResources.update permission to write to the destination FHIR store.",
+          "description": "Required. The name of the FHIR store to create and write the redacted data to. For example, `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`. * The destination dataset must exist. * The source dataset and destination dataset must both reside in the same location. De-identifying data across multiple locations is not supported. * The destination FHIR store must exist. * The caller must have the healthcare.fhirResources.update permission to write to the destination FHIR store.",
           "type": "string"
         },
         "gcsConfigUri": {
@@ -6700,7 +6882,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Resource name of the DICOM store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
+          "description": "Identifier. Resource name of the DICOM store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/dicomStores/{dicom_store_id}`.",
           "type": "string"
         },
         "notificationConfig": {
@@ -6910,7 +7092,7 @@
           "type": "object"
         },
         "goldenStore": {
-          "description": "The Annotation store to use as ground truth, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
+          "description": "Required. The Annotation store to use as ground truth, in the format of `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/annotationStores/{annotation_store_id}`.",
           "type": "string"
         },
         "infoTypeConfig": {
@@ -6990,6 +7172,128 @@
             "$ref": "Result"
           },
           "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ExplainDataAccessConsentInfo": {
+      "description": "The enforcing consent's metadata.",
+      "id": "ExplainDataAccessConsentInfo",
+      "properties": {
+        "cascadeOrigins": {
+          "description": "The compartment base resources that matched a cascading policy. Each resource has the following format: `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}/fhir/{resource_type}/{resource_id}`",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "consentResource": {
+          "description": "The resource name of this consent resource. Format: `projects/{projectId}/datasets/{datasetId}/fhirStores/{fhirStoreId}/fhir/{resourceType}/{id}`.",
+          "type": "string"
+        },
+        "enforcementTime": {
+          "description": "Last enforcement timestamp of this consent resource.",
+          "format": "google-datetime",
+          "type": "string"
+        },
+        "matchingAccessorScopes": {
+          "description": "A list of all the matching accessor scopes of this consent policy that enforced ExplainDataAccessConsentScope.accessor_scope.",
+          "items": {
+            "$ref": "ConsentAccessorScope"
+          },
+          "type": "array"
+        },
+        "patientConsentOwner": {
+          "description": "The patient owning the consent (only applicable for patient consents), in the format: `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}/fhir/Patient/{patient_id}`",
+          "type": "string"
+        },
+        "type": {
+          "description": "The policy type of consent resource (e.g. PATIENT, ADMIN).",
+          "enum": [
+            "CONSENT_POLICY_TYPE_UNSPECIFIED",
+            "CONSENT_POLICY_TYPE_PATIENT",
+            "CONSENT_POLICY_TYPE_ADMIN"
+          ],
+          "enumDescriptions": [
+            "Unspecified policy type.",
+            "Consent represent a patient consent.",
+            "Consent represent an admin consent."
+          ],
+          "type": "string"
+        },
+        "variants": {
+          "description": "The consent's variant combinations. A single consent may have multiple variants.",
+          "items": {
+            "enum": [
+              "VARIANT_UNSPECIFIED",
+              "VARIANT_STANDARD",
+              "VARIANT_CASCADE"
+            ],
+            "enumDescriptions": [
+              "Consent variant unspecified.",
+              "Consent is a standard patient or admin consent.",
+              "Consent is a cascading consent."
+            ],
+            "type": "string"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ExplainDataAccessConsentScope": {
+      "description": "A single consent scope that provides info on who has access to the requested resource scope for a particular purpose and environment, enforced by which consent.",
+      "id": "ExplainDataAccessConsentScope",
+      "properties": {
+        "accessorScope": {
+          "$ref": "ConsentAccessorScope",
+          "description": "The accessor scope that describes who can access, for what purpose, and in which environment."
+        },
+        "decision": {
+          "description": "Whether the current consent scope is permitted or denied access on the requested resource.",
+          "enum": [
+            "CONSENT_DECISION_TYPE_UNSPECIFIED",
+            "CONSENT_DECISION_TYPE_PERMIT",
+            "CONSENT_DECISION_TYPE_DENY"
+          ],
+          "enumDescriptions": [
+            "Unspecified consent decision type.",
+            "Consent permitted access.",
+            "Consent denied access."
+          ],
+          "type": "string"
+        },
+        "enforcingConsents": {
+          "description": "Metadata of the consent resources that enforce the consent scope's access.",
+          "items": {
+            "$ref": "ExplainDataAccessConsentInfo"
+          },
+          "type": "array"
+        },
+        "exceptions": {
+          "description": "Other consent scopes that created exceptions within this scope.",
+          "items": {
+            "$ref": "ExplainDataAccessConsentScope"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "ExplainDataAccessResponse": {
+      "description": "List of consent scopes that are applicable to the explained access on a given resource.",
+      "id": "ExplainDataAccessResponse",
+      "properties": {
+        "consentScopes": {
+          "description": "List of applicable consent scopes. Sorted in order of actor such that scopes belonging to the same actor will be adjacent to each other in the list.",
+          "items": {
+            "$ref": "ExplainDataAccessConsentScope"
+          },
+          "type": "array"
+        },
+        "warning": {
+          "description": "Warnings associated with this response. It inform user with exceeded scope limit errors.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -7264,6 +7568,10 @@
           "description": "Immutable. Whether to disable resource versioning for this FHIR store. This field can not be changed after the creation of FHIR store. If set to false, which is the default behavior, all write operations cause historical versions to be recorded automatically. The historical versions can be fetched through the history APIs, but cannot be updated. If set to true, no historical versions are kept. The server sends errors for attempts to read the historical versions.",
           "type": "boolean"
         },
+        "enableHistoryModifications": {
+          "description": "Optional. Whether to allow ExecuteBundle to accept history bundles, and directly insert and overwrite historical resource versions into the FHIR store. If set to false, using history bundles fails with an error.",
+          "type": "boolean"
+        },
         "enableUpdateCreate": {
           "description": "Whether this FHIR store has the [updateCreate capability](https://www.hl7.org/fhir/capabilitystatement-definitions.html#CapabilityStatement.rest.resource.updateCreate). This determines if the client can use an Update operation to create a new resource with a client-specified ID. If false, all IDs are server-assigned through the Create operation and attempts to update a non-existent resource return errors. It is strongly advised not to include or encode any sensitive data such as patient identifiers in client-specified resource IDs. Those IDs are part of the FHIR resource path recorded in Cloud audit logs and Pub/Sub notifications. Those IDs can also be contained in reference fields within other resources.",
           "type": "boolean"
@@ -7276,7 +7584,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Output only. Resource name of the FHIR store, of the form `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
+          "description": "Output only. Identifier. Resource name of the FHIR store, of the form `projects/{project_id}/datasets/{dataset_id}/fhirStores/{fhir_store_id}`.",
           "type": "string"
         },
         "notificationConfig": {
@@ -7307,7 +7615,7 @@
           "description": "Configuration for how to validate incoming FHIR resources against configured profiles."
         },
         "version": {
-          "description": "Immutable. The FHIR specification version that this FHIR store supports natively. This field is immutable after store creation. Requests are rejected if they contain FHIR resources of a different version. Version is required for every FHIR store.",
+          "description": "Required. Immutable. The FHIR specification version that this FHIR store supports natively. This field is immutable after store creation. Requests are rejected if they contain FHIR resources of a different version. Version is required for every FHIR store.",
           "enum": [
             "VERSION_UNSPECIFIED",
             "DSTU2",
@@ -7905,7 +8213,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Resource name of the HL7v2 store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.",
+          "description": "Identifier. Resource name of the HL7v2 store, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7v2_store_id}`.",
           "type": "string"
         },
         "notificationConfig": {
@@ -8211,7 +8519,7 @@
       "properties": {
         "message": {
           "$ref": "Message",
-          "description": "HL7v2 message to ingest."
+          "description": "Required. HL7v2 message to ingest."
         }
       },
       "type": "object"
@@ -8586,7 +8894,7 @@
           "type": "string"
         },
         "data": {
-          "description": "Raw message bytes.",
+          "description": "Required. Raw message bytes.",
           "format": "byte",
           "type": "string"
         },
@@ -8602,7 +8910,8 @@
           "type": "string"
         },
         "name": {
-          "description": "Resource name of the Message, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by the server.",
+          "description": "Output only. Resource name of the Message, of the form `projects/{project_id}/locations/{location_id}/datasets/{dataset_id}/hl7V2Stores/{hl7_v2_store_id}/messages/{message_id}`. Assigned by the server.",
+          "readOnly": true,
           "type": "string"
         },
         "parsedData": {
@@ -9123,7 +9432,7 @@
       "type": "object"
     },
     "RollbackFhirResourcesResponse": {
-      "description": "Final response of rollback FIHR resources request.",
+      "description": "Final response of rollback FHIR resources request.",
       "id": "RollbackFhirResourcesResponse",
       "properties": {
         "fhirStore": {
@@ -9322,7 +9631,7 @@
       "id": "SearchResourcesRequest",
       "properties": {
         "resourceType": {
-          "description": "The FHIR resource type to search, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
+          "description": "Required. The FHIR resource type to search, such as Patient or Observation. For a complete list, see the FHIR Resource Index ([DSTU2](https://hl7.org/implement/standards/fhir/DSTU2/resourcelist.html), [STU3](https://hl7.org/implement/standards/fhir/STU3/resourcelist.html), [R4](https://hl7.org/implement/standards/fhir/R4/resourcelist.html)).",
           "type": "string"
         }
       },

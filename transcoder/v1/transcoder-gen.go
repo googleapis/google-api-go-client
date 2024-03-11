@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "transcoder:v1"
 const apiName = "transcoder"
 const apiVersion = "v1"
 const basePath = "https://transcoder.googleapis.com/"
+const basePathTemplate = "https://transcoder.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://transcoder.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -1131,13 +1135,26 @@ type H264CodecSettings struct {
 	EntropyCoder string `json:"entropyCoder,omitempty"`
 
 	// FrameRate: Required. The target video frame rate in frames per second
-	// (FPS). Must be less than or equal to 120. Will default to the input
-	// frame rate if larger than the input frame rate. The API will generate
-	// an output FPS that is divisible by the input FPS, and smaller or
-	// equal to the target FPS. See Calculating frame rate
-	// (https://cloud.google.com/transcoder/docs/concepts/frame-rate) for
-	// more information.
+	// (FPS). Must be less than or equal to 120.
 	FrameRate float64 `json:"frameRate,omitempty"`
+
+	// FrameRateConversionStrategy: Optional. Frame rate conversion strategy
+	// for desired frame rate. The default is `DOWNSAMPLE`.
+	//
+	// Possible values:
+	//   "FRAME_RATE_CONVERSION_STRATEGY_UNSPECIFIED" - Unspecified frame
+	// rate conversion strategy.
+	//   "DOWNSAMPLE" - Selectively retain frames to reduce the output frame
+	// rate. Every _n_ th frame is kept, where `n = ceil(input frame rate /
+	// target frame rate)`. When _n_ = 1 (that is, the target frame rate is
+	// greater than the input frame rate), the output frame rate matches the
+	// input frame rate. When _n_ > 1, frames are dropped and the output
+	// frame rate is equal to `(input frame rate / n)`. For more
+	// information, see [Calculate frame
+	// rate](https://cloud.google.com/transcoder/docs/concepts/frame-rate).
+	//   "DROP_DUPLICATE" - Drop or duplicate frames to match the specified
+	// frame rate.
+	FrameRateConversionStrategy string `json:"frameRateConversionStrategy,omitempty"`
 
 	// GopDuration: Select the GOP size based on the specified duration. The
 	// default is `3s`. Note that `gopDuration` must be less than or equal
@@ -1158,6 +1175,9 @@ type H264CodecSettings struct {
 	// The API detects any rotation metadata and swaps the requested height
 	// and width for the output.
 	HeightPixels int64 `json:"heightPixels,omitempty"`
+
+	// Hlg: Optional. HLG color format setting for H264.
+	Hlg *H264ColorFormatHLG `json:"hlg,omitempty"`
 
 	// PixelFormat: Pixel format to use. The default is `yuv420p`. Supported
 	// pixel formats: - `yuv420p` pixel format - `yuv422p` pixel format -
@@ -1186,6 +1206,9 @@ type H264CodecSettings struct {
 	// rate control modes: - `vbr` - variable bitrate - `crf` - constant
 	// rate factor
 	RateControlMode string `json:"rateControlMode,omitempty"`
+
+	// Sdr: Optional. SDR color format setting for H264.
+	Sdr *H264ColorFormatSDR `json:"sdr,omitempty"`
 
 	// Tune: Enforces the specified codec tune. The available options are
 	// FFmpeg-compatible (https://trac.ffmpeg.org/wiki/Encode/H.264#Tune).
@@ -1252,6 +1275,16 @@ func (s *H264CodecSettings) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// H264ColorFormatHLG: Convert the input video to a Hybrid Log Gamma
+// (HLG) video.
+type H264ColorFormatHLG struct {
+}
+
+// H264ColorFormatSDR: Convert the input video to a Standard Dynamic
+// Range (SDR) video.
+type H264ColorFormatSDR struct {
+}
+
 // H265CodecSettings: H265 codec settings.
 type H265CodecSettings struct {
 	// AllowOpenGop: Specifies whether an open Group of Pictures (GOP)
@@ -1288,13 +1321,26 @@ type H265CodecSettings struct {
 	EnableTwoPass bool `json:"enableTwoPass,omitempty"`
 
 	// FrameRate: Required. The target video frame rate in frames per second
-	// (FPS). Must be less than or equal to 120. Will default to the input
-	// frame rate if larger than the input frame rate. The API will generate
-	// an output FPS that is divisible by the input FPS, and smaller or
-	// equal to the target FPS. See Calculating frame rate
-	// (https://cloud.google.com/transcoder/docs/concepts/frame-rate) for
-	// more information.
+	// (FPS). Must be less than or equal to 120.
 	FrameRate float64 `json:"frameRate,omitempty"`
+
+	// FrameRateConversionStrategy: Optional. Frame rate conversion strategy
+	// for desired frame rate. The default is `DOWNSAMPLE`.
+	//
+	// Possible values:
+	//   "FRAME_RATE_CONVERSION_STRATEGY_UNSPECIFIED" - Unspecified frame
+	// rate conversion strategy.
+	//   "DOWNSAMPLE" - Selectively retain frames to reduce the output frame
+	// rate. Every _n_ th frame is kept, where `n = ceil(input frame rate /
+	// target frame rate)`. When _n_ = 1 (that is, the target frame rate is
+	// greater than the input frame rate), the output frame rate matches the
+	// input frame rate. When _n_ > 1, frames are dropped and the output
+	// frame rate is equal to `(input frame rate / n)`. For more
+	// information, see [Calculate frame
+	// rate](https://cloud.google.com/transcoder/docs/concepts/frame-rate).
+	//   "DROP_DUPLICATE" - Drop or duplicate frames to match the specified
+	// frame rate.
+	FrameRateConversionStrategy string `json:"frameRateConversionStrategy,omitempty"`
 
 	// GopDuration: Select the GOP size based on the specified duration. The
 	// default is `3s`. Note that `gopDuration` must be less than or equal
@@ -1306,6 +1352,9 @@ type H265CodecSettings struct {
 	// count. Must be greater than zero.
 	GopFrameCount int64 `json:"gopFrameCount,omitempty"`
 
+	// Hdr10: Optional. HDR10 color format setting for H265.
+	Hdr10 *H265ColorFormatHDR10 `json:"hdr10,omitempty"`
+
 	// HeightPixels: The height of the video in pixels. Must be an even
 	// integer. When not specified, the height is adjusted to match the
 	// specified width and input aspect ratio. If both are omitted, the
@@ -1315,6 +1364,9 @@ type H265CodecSettings struct {
 	// The API detects any rotation metadata and swaps the requested height
 	// and width for the output.
 	HeightPixels int64 `json:"heightPixels,omitempty"`
+
+	// Hlg: Optional. HLG color format setting for H265.
+	Hlg *H265ColorFormatHLG `json:"hlg,omitempty"`
 
 	// PixelFormat: Pixel format to use. The default is `yuv420p`. Supported
 	// pixel formats: - `yuv420p` pixel format - `yuv422p` pixel format -
@@ -1347,6 +1399,9 @@ type H265CodecSettings struct {
 	// rate control modes: - `vbr` - variable bitrate - `crf` - constant
 	// rate factor
 	RateControlMode string `json:"rateControlMode,omitempty"`
+
+	// Sdr: Optional. SDR color format setting for H265.
+	Sdr *H265ColorFormatSDR `json:"sdr,omitempty"`
 
 	// Tune: Enforces the specified codec tune. The available options are
 	// FFmpeg-compatible (https://trac.ffmpeg.org/wiki/Encode/H.265). Note
@@ -1411,6 +1466,21 @@ func (s *H265CodecSettings) UnmarshalJSON(data []byte) error {
 	s.AqStrength = float64(s1.AqStrength)
 	s.FrameRate = float64(s1.FrameRate)
 	return nil
+}
+
+// H265ColorFormatHDR10: Convert the input video to a High Dynamic Range
+// 10 (HDR10) video.
+type H265ColorFormatHDR10 struct {
+}
+
+// H265ColorFormatHLG: Convert the input video to a Hybrid Log Gamma
+// (HLG) video.
+type H265ColorFormatHLG struct {
+}
+
+// H265ColorFormatSDR: Convert the input video to a Standard Dynamic
+// Range (SDR) video.
+type H265ColorFormatSDR struct {
 }
 
 // Image: Overlaid image.
@@ -2516,13 +2586,26 @@ type Vp9CodecSettings struct {
 	CrfLevel int64 `json:"crfLevel,omitempty"`
 
 	// FrameRate: Required. The target video frame rate in frames per second
-	// (FPS). Must be less than or equal to 120. Will default to the input
-	// frame rate if larger than the input frame rate. The API will generate
-	// an output FPS that is divisible by the input FPS, and smaller or
-	// equal to the target FPS. See Calculating frame rate
-	// (https://cloud.google.com/transcoder/docs/concepts/frame-rate) for
-	// more information.
+	// (FPS). Must be less than or equal to 120.
 	FrameRate float64 `json:"frameRate,omitempty"`
+
+	// FrameRateConversionStrategy: Optional. Frame rate conversion strategy
+	// for desired frame rate. The default is `DOWNSAMPLE`.
+	//
+	// Possible values:
+	//   "FRAME_RATE_CONVERSION_STRATEGY_UNSPECIFIED" - Unspecified frame
+	// rate conversion strategy.
+	//   "DOWNSAMPLE" - Selectively retain frames to reduce the output frame
+	// rate. Every _n_ th frame is kept, where `n = ceil(input frame rate /
+	// target frame rate)`. When _n_ = 1 (that is, the target frame rate is
+	// greater than the input frame rate), the output frame rate matches the
+	// input frame rate. When _n_ > 1, frames are dropped and the output
+	// frame rate is equal to `(input frame rate / n)`. For more
+	// information, see [Calculate frame
+	// rate](https://cloud.google.com/transcoder/docs/concepts/frame-rate).
+	//   "DROP_DUPLICATE" - Drop or duplicate frames to match the specified
+	// frame rate.
+	FrameRateConversionStrategy string `json:"frameRateConversionStrategy,omitempty"`
 
 	// GopDuration: Select the GOP size based on the specified duration. The
 	// default is `3s`. Note that `gopDuration` must be less than or equal
@@ -2544,6 +2627,9 @@ type Vp9CodecSettings struct {
 	// and width for the output.
 	HeightPixels int64 `json:"heightPixels,omitempty"`
 
+	// Hlg: Optional. HLG color format setting for VP9.
+	Hlg *Vp9ColorFormatHLG `json:"hlg,omitempty"`
+
 	// PixelFormat: Pixel format to use. The default is `yuv420p`. Supported
 	// pixel formats: - `yuv420p` pixel format - `yuv422p` pixel format -
 	// `yuv444p` pixel format - `yuv420p10` 10-bit HDR pixel format -
@@ -2563,6 +2649,9 @@ type Vp9CodecSettings struct {
 	// RateControlMode: Specify the mode. The default is `vbr`. Supported
 	// rate control modes: - `vbr` - variable bitrate
 	RateControlMode string `json:"rateControlMode,omitempty"`
+
+	// Sdr: Optional. SDR color format setting for VP9.
+	Sdr *Vp9ColorFormatSDR `json:"sdr,omitempty"`
 
 	// WidthPixels: The width of the video in pixels. Must be an even
 	// integer. When not specified, the width is adjusted to match the
@@ -2609,6 +2698,16 @@ func (s *Vp9CodecSettings) UnmarshalJSON(data []byte) error {
 	}
 	s.FrameRate = float64(s1.FrameRate)
 	return nil
+}
+
+// Vp9ColorFormatHLG: Convert the input video to a Hybrid Log Gamma
+// (HLG) video.
+type Vp9ColorFormatHLG struct {
+}
+
+// Vp9ColorFormatSDR: Convert the input video to a Standard Dynamic
+// Range (SDR) video.
+type Vp9ColorFormatSDR struct {
 }
 
 // Widevine: Widevine configuration.

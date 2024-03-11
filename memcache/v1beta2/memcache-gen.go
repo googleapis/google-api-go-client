@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "memcache:v1beta2"
 const apiName = "memcache"
 const apiVersion = "v1beta2"
 const basePath = "https://memcache.googleapis.com/"
+const basePathTemplate = "https://memcache.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://memcache.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -622,7 +626,7 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	// been attached to the instance. The key must be of the type name of
 	// the oneof policy name defined in MaintenancePolicy, and the
 	// referenced policy must define the same policy type. For details,
-	// please refer to go/cloud-saas-mw-ug. Should not be set if
+	// please refer to go/mr-user-guide. Should not be set if
 	// maintenance_settings.maintenance_policies is set.
 	MaintenancePolicyNames map[string]string `json:"maintenancePolicyNames,omitempty"`
 
@@ -791,7 +795,7 @@ type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings struct {
 	// attached to the instance. The key must be of the type name of the
 	// oneof policy name defined in MaintenancePolicy, and the embedded
 	// policy must define the same policy type. For details, please refer to
-	// go/cloud-saas-mw-ug. Should not be set if maintenance_policy_names is
+	// go/mr-user-guide. Should not be set if maintenance_policy_names is
 	// set. If only the name is needed, then only populate
 	// MaintenancePolicy.name.
 	MaintenancePolicies map[string]MaintenancePolicy `json:"maintenancePolicies,omitempty"`

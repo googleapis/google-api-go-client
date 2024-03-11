@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "testing:v1"
 const apiName = "testing"
 const apiVersion = "v1"
 const basePath = "https://testing.googleapis.com/"
+const basePathTemplate = "https://testing.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://testing.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -117,7 +119,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*APIService, 
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -837,7 +841,7 @@ func (s *Apk) MarshalJSON() ([]byte, error) {
 }
 
 // ApkDetail: Android application details based on application manifest
-// and apk archive contents.
+// and archive contents.
 type ApkDetail struct {
 	ApkManifest *ApkManifest `json:"apkManifest,omitempty"`
 
@@ -1569,9 +1573,9 @@ func (s *FileReference) MarshalJSON() ([]byte, error) {
 }
 
 // GetApkDetailsResponse: Response containing the details of the
-// specified Android application APK.
+// specified Android application.
 type GetApkDetailsResponse struct {
-	// ApkDetail: Details of the Android APK.
+	// ApkDetail: Details of the Android App.
 	ApkDetail *ApkDetail `json:"apkDetail,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2274,6 +2278,40 @@ func (s *ManualSharding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MatrixErrorDetail: Describes a single error or issue with a matrix.
+type MatrixErrorDetail struct {
+	// Message: Output only. A human-readable message about how the error in
+	// the TestMatrix. Expands on the `reason` field with additional details
+	// and possible options to fix the issue.
+	Message string `json:"message,omitempty"`
+
+	// Reason: Output only. The reason for the error. This is a constant
+	// value in UPPER_SNAKE_CASE that identifies the cause of the error.
+	Reason string `json:"reason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MatrixErrorDetail) MarshalJSON() ([]byte, error) {
+	type NoMethod MatrixErrorDetail
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Metadata: A tag within a manifest.
 // https://developer.android.com/guide/topics/manifest/meta-data-element.html
 type Metadata struct {
@@ -2477,6 +2515,11 @@ type PerAndroidVersionInfo struct {
 	// DirectAccessVersionInfo: Output only. Identifies supported clients
 	// for DirectAccess for this Android version.
 	DirectAccessVersionInfo *DirectAccessVersionInfo `json:"directAccessVersionInfo,omitempty"`
+
+	// InteractiveDeviceAvailabilityEstimate: Output only. The estimated
+	// wait time for a single interactive device session using Direct
+	// Access.
+	InteractiveDeviceAvailabilityEstimate string `json:"interactiveDeviceAvailabilityEstimate,omitempty"`
 
 	// VersionId: An Android version.
 	VersionId string `json:"versionId,omitempty"`
@@ -3257,6 +3300,12 @@ type TestMatrix struct {
 	// on.
 	EnvironmentMatrix *EnvironmentMatrix `json:"environmentMatrix,omitempty"`
 
+	// ExtendedInvalidMatrixDetails: Output only. Details about why a matrix
+	// was deemed invalid. If multiple checks can be safely performed, they
+	// will be reported but no assumptions should be made about the length
+	// of this list.
+	ExtendedInvalidMatrixDetails []*MatrixErrorDetail `json:"extendedInvalidMatrixDetails,omitempty"`
+
 	// FailFast: If true, only a single attempt at most will be made to run
 	// each execution/shard in the matrix. Flaky test attempts are not
 	// affected. Normally, 2 or more attempts are made if a potential
@@ -3918,6 +3967,15 @@ func (r *ApplicationDetailServiceService) GetApkDetails(filereference *FileRefer
 	return c
 }
 
+// BundleLocationGcsPath sets the optional parameter
+// "bundleLocation.gcsPath": A path to a file in Google Cloud Storage.
+// Example: gs://build-app-1414623860166/app%40debug-unaligned.apk These
+// paths are expected to be url encoded (percent encoding)
+func (c *ApplicationDetailServiceGetApkDetailsCall) BundleLocationGcsPath(bundleLocationGcsPath string) *ApplicationDetailServiceGetApkDetailsCall {
+	c.urlParams_.Set("bundleLocation.gcsPath", bundleLocationGcsPath)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -4011,7 +4069,13 @@ func (c *ApplicationDetailServiceGetApkDetailsCall) Do(opts ...googleapi.CallOpt
 	//   "httpMethod": "POST",
 	//   "id": "testing.applicationDetailService.getApkDetails",
 	//   "parameterOrder": [],
-	//   "parameters": {},
+	//   "parameters": {
+	//     "bundleLocation.gcsPath": {
+	//       "description": "A path to a file in Google Cloud Storage. Example: gs://build-app-1414623860166/app%40debug-unaligned.apk These paths are expected to be url encoded (percent encoding)",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
 	//   "path": "v1/applicationDetailService/getApkDetails",
 	//   "request": {
 	//     "$ref": "FileReference"

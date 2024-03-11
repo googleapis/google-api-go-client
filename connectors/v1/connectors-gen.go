@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "connectors:v1"
 const apiName = "connectors"
 const apiVersion = "v1"
 const basePath = "https://connectors.googleapis.com/"
+const basePathTemplate = "https://connectors.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://connectors.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -255,6 +259,7 @@ type ProjectsLocationsEndpointAttachmentsService struct {
 
 func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalService {
 	rs := &ProjectsLocationsGlobalService{s: s}
+	rs.CustomConnectors = NewProjectsLocationsGlobalCustomConnectorsService(s)
 	rs.ManagedZones = NewProjectsLocationsGlobalManagedZonesService(s)
 	return rs
 }
@@ -262,7 +267,30 @@ func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalServi
 type ProjectsLocationsGlobalService struct {
 	s *Service
 
+	CustomConnectors *ProjectsLocationsGlobalCustomConnectorsService
+
 	ManagedZones *ProjectsLocationsGlobalManagedZonesService
+}
+
+func NewProjectsLocationsGlobalCustomConnectorsService(s *Service) *ProjectsLocationsGlobalCustomConnectorsService {
+	rs := &ProjectsLocationsGlobalCustomConnectorsService{s: s}
+	rs.CustomConnectorVersions = NewProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsService(s)
+	return rs
+}
+
+type ProjectsLocationsGlobalCustomConnectorsService struct {
+	s *Service
+
+	CustomConnectorVersions *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsService
+}
+
+func NewProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsService(s *Service) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsService {
+	rs := &ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsService struct {
+	s *Service
 }
 
 func NewProjectsLocationsGlobalManagedZonesService(s *Service) *ProjectsLocationsGlobalManagedZonesService {
@@ -444,6 +472,7 @@ type AuthConfig struct {
 	// Authentication
 	//   "SSH_PUBLIC_KEY" - SSH Public Key Authentication
 	//   "OAUTH2_AUTH_CODE_FLOW" - Oauth 2.0 Authorization Code Flow
+	//   "GOOGLE_AUTHENTICATION" - Google authentication
 	AuthType string `json:"authType,omitempty"`
 
 	// Oauth2AuthCodeFlow: Oauth2AuthCodeFlow.
@@ -502,6 +531,7 @@ type AuthConfigTemplate struct {
 	// Authentication
 	//   "SSH_PUBLIC_KEY" - SSH Public Key Authentication
 	//   "OAUTH2_AUTH_CODE_FLOW" - Oauth 2.0 Authorization Code Flow
+	//   "GOOGLE_AUTHENTICATION" - Google authentication
 	AuthType string `json:"authType,omitempty"`
 
 	// ConfigVariableTemplates: Config variables to describe an `AuthConfig`
@@ -612,11 +642,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -628,11 +681,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -723,12 +785,31 @@ type ConfigVariableTemplate struct {
 	// EnumOptions: Enum options. To be populated if `ValueType` is `ENUM`
 	EnumOptions []*EnumOption `json:"enumOptions,omitempty"`
 
+	// EnumSource: Optional. enum source denotes the source of api to fill
+	// the enum options
+	//
+	// Possible values:
+	//   "ENUM_SOURCE_UNSPECIFIED" - Api type unspecified.
+	//   "EVENT_TYPES_API" - list event types.
+	EnumSource string `json:"enumSource,omitempty"`
+
 	// IsAdvanced: Indicates if current template is part of advanced
 	// settings
 	IsAdvanced bool `json:"isAdvanced,omitempty"`
 
 	// Key: Key of the config variable.
 	Key string `json:"key,omitempty"`
+
+	// LocationType: Optional. Location Tyep denotes where this value should
+	// be sent in BYOC connections.
+	//
+	// Possible values:
+	//   "LOCATION_TYPE_UNSPECIFIED" - Location type unspecified.
+	//   "HEADER" - Request header.
+	//   "PAYLOAD" - Request Payload.
+	//   "QUERY_PARAM" - Request query param.
+	//   "PATH_PARAM" - Request path param.
+	LocationType string `json:"locationType,omitempty"`
 
 	// Required: Flag represents that this `ConfigVariable` must be provided
 	// for a connection.
@@ -954,6 +1035,9 @@ type ConnectionSchemaMetadata struct {
 
 	// Entities: Output only. List of entity names.
 	Entities []string `json:"entities,omitempty"`
+
+	// ErrorMessage: Error message for users.
+	ErrorMessage string `json:"errorMessage,omitempty"`
 
 	// Name: Output only. Resource name. Format:
 	// projects/{project}/locations/{location}/connections/{connection}/conne
@@ -1270,6 +1354,16 @@ type ConnectorVersion struct {
 	// features supported by the Connector.
 	SupportedRuntimeFeatures *SupportedRuntimeFeatures `json:"supportedRuntimeFeatures,omitempty"`
 
+	// UnsupportedConnectionTypes: Output only. Unsupported connection
+	// types.
+	//
+	// Possible values:
+	//   "CONNECTION_TYPE_UNSPECIFIED" - Connection type is unspecified.
+	//   "CONNECTION_WITH_EVENTING" - Connection with eventing.
+	//   "ONLY_CONNECTION" - Only connection.
+	//   "ONLY_EVENTING" - Only eventing.
+	UnsupportedConnectionTypes []string `json:"unsupportedConnectionTypes,omitempty"`
+
 	// UpdateTime: Output only. Updated time.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -1308,6 +1402,15 @@ type ConnectorVersionInfraConfig struct {
 	// ConnectionRatelimitWindowSeconds: Output only. The window used for
 	// ratelimiting runtime requests to connections.
 	ConnectionRatelimitWindowSeconds int64 `json:"connectionRatelimitWindowSeconds,omitempty,string"`
+
+	// DeploymentModel: Optional. Indicates whether connector is deployed on
+	// GKE/CloudRun
+	//
+	// Possible values:
+	//   "DEPLOYMENT_MODEL_UNSPECIFIED" - Deployment model is not specified.
+	//   "GKE_MST" - Default model gke mst.
+	//   "CLOUD_RUN_MST" - Cloud run mst.
+	DeploymentModel string `json:"deploymentModel,omitempty"`
 
 	// HpaConfig: Output only. HPA autoscaling config.
 	HpaConfig *HPAConfig `json:"hpaConfig,omitempty"`
@@ -1380,6 +1483,313 @@ type ConnectorsLogConfig struct {
 
 func (s *ConnectorsLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorsLogConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomConnector: CustomConnector represents the custom connector
+// defined by the customer as part of byoc.
+type CustomConnector struct {
+	// ActiveConnectorVersions: Optional. Active connector versions.
+	ActiveConnectorVersions []string `json:"activeConnectorVersions,omitempty"`
+
+	// CreateTime: Output only. Created time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// CustomConnectorType: Required. Type of the custom connector.
+	//
+	// Possible values:
+	//   "CUSTOM_CONNECTOR_TYPE_UNSPECIFIED" - Connector type is not
+	// specified.
+	//   "OPEN_API" - OpenAPI connector.
+	//   "PROTO" - Proto connector.
+	CustomConnectorType string `json:"customConnectorType,omitempty"`
+
+	// Description: Optional. Description of the resource.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Optional. Display name.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Labels: Optional. Resource labels to represent user-provided
+	// metadata. Refer to cloud documentation on labels for more details.
+	// https://cloud.google.com/compute/docs/labeling-resources
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Logo: Optional. Logo of the resource.
+	Logo string `json:"logo,omitempty"`
+
+	// Name: Identifier. Resource name of the CustomConnector. Format:
+	// projects/{project}/locations/{location}/customConnectors/{connector}
+	Name string `json:"name,omitempty"`
+
+	// UpdateTime: Output only. Updated time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ActiveConnectorVersions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActiveConnectorVersions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomConnector) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomConnector
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CustomConnectorVersion: CustomConnectorVersion indicates a specific
+// version of a connector.
+type CustomConnectorVersion struct {
+	// AuthConfig: Optional. Authentication config for accessing connector
+	// facade/ proxy. This is used only when
+	// enable_backend_destination_config is true.
+	AuthConfig *AuthConfig `json:"authConfig,omitempty"`
+
+	// BackendVariableTemplates: Optional. Backend variables config
+	// templates. This translates to additional variable templates in
+	// connection.
+	BackendVariableTemplates []*ConfigVariableTemplate `json:"backendVariableTemplates,omitempty"`
+
+	// CreateTime: Output only. Created time.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DestinationConfigs: Optional. Destination config(s) for accessing
+	// connector facade/ proxy. This is used only when
+	// enable_backend_destination_config is true.
+	DestinationConfigs []*DestinationConfig `json:"destinationConfigs,omitempty"`
+
+	// EnableBackendDestinationConfig: Optional. When enabled, the connector
+	// will be a facade/ proxy, and connects to the destination provided
+	// during connection creation.
+	EnableBackendDestinationConfig bool `json:"enableBackendDestinationConfig,omitempty"`
+
+	// Labels: Optional. Resource labels to represent user-provided
+	// metadata. Refer to cloud documentation on labels for more details.
+	// https://cloud.google.com/compute/docs/labeling-resources
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Output only. Identifier. Resource name of the Version. Format:
+	// projects/{project}/locations/{location}/customConnectors/{custom_conne
+	// ctor}/customConnectorVersions/{custom_connector_version}
+	Name string `json:"name,omitempty"`
+
+	// ServiceAccount: Optional. Service account used by runtime plane to
+	// access auth config secrets.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
+	// SpecLocation: Optional. Location of the custom connector spec. The
+	// location can be either a public url like
+	// `https://public-url.com/spec` Or a Google Cloud Storage location like
+	// `gs:///`
+	SpecLocation string `json:"specLocation,omitempty"`
+
+	// State: Output only. State of the custom connector version.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - State Unspecified.
+	//   "ACTIVE" - Active state. By default we set the state to Active.
+	//   "DEPRECATED" - Deprecated state.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Output only. Updated time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CustomConnectorVersion) MarshalJSON() ([]byte, error) {
+	type NoMethod CustomConnectorVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DailyCycle: Time window specified for daily operations.
+type DailyCycle struct {
+	// Duration: Output only. Duration of the time window, set by service
+	// producer.
+	Duration string `json:"duration,omitempty"`
+
+	// StartTime: Time within the day to start the operations.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Duration") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Duration") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DailyCycle) MarshalJSON() ([]byte, error) {
+	type NoMethod DailyCycle
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Date: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
+type Date struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
+	Day int64 `json:"day,omitempty"`
+
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
+	// without a month and day.
+	Month int64 `json:"month,omitempty"`
+
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Date) MarshalJSON() ([]byte, error) {
+	type NoMethod Date
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeadLetterConfig: Dead Letter configuration details provided by the
+// user.
+type DeadLetterConfig struct {
+	// ProjectId: Optional. Project which has the topic given.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// Topic: Optional. Topic to push events which couldn't be processed.
+	Topic string `json:"topic,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProjectId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProjectId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeadLetterConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DeadLetterConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DenyMaintenancePeriod: DenyMaintenancePeriod definition. Maintenance
+// is forbidden within the deny period. The start_date must be less than
+// the end_date.
+type DenyMaintenancePeriod struct {
+	// EndDate: Deny period end date. This can be: * A full date, with
+	// non-zero year, month and day values. * A month and day value, with a
+	// zero year. Allows recurring deny periods each year. Date matching
+	// this period will have to be before the end.
+	EndDate *Date `json:"endDate,omitempty"`
+
+	// StartDate: Deny period start date. This can be: * A full date, with
+	// non-zero year, month and day values. * A month and day value, with a
+	// zero year. Allows recurring deny periods each year. Date matching
+	// this period will have to be the same or after the start.
+	StartDate *Date `json:"startDate,omitempty"`
+
+	// Time: Time in UTC when the Blackout period starts on start_date and
+	// ends on end_date. This can be: * Full time. * All zeros for 00:00:00
+	// UTC
+	Time *TimeOfDay `json:"time,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EndDate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndDate") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DenyMaintenancePeriod) MarshalJSON() ([]byte, error) {
+	type NoMethod DenyMaintenancePeriod
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1565,9 +1975,9 @@ type EncryptionConfig struct {
 	// EncryptionType: Optional. Encryption type for the region.
 	//
 	// Possible values:
-	//   "ENCRYPTION_TYPE_UNSPECIFIED" - Egress mode unspecified.
-	//   "GMEK" - Network egress through auto assigned IPs.
-	//   "CMEK" - Network egress through static IPs.
+	//   "ENCRYPTION_TYPE_UNSPECIFIED" - Encryption type unspecified.
+	//   "GMEK" - Google managed encryption keys
+	//   "CMEK" - Customer managed encryption keys.
 	EncryptionType string `json:"encryptionType,omitempty"`
 
 	// KmsKeyName: Optional. KMS crypto key. This field accepts identifiers
@@ -1792,6 +2202,10 @@ type EventSubscription struct {
 	// EventSubscription.
 	SubscriberLink string `json:"subscriberLink,omitempty"`
 
+	// TriggerConfigVariables: Optional. Configuration for configuring the
+	// trigger
+	TriggerConfigVariables []*ConfigVariable `json:"triggerConfigVariables,omitempty"`
+
 	// UpdateTime: Output only. Updated time.
 	UpdateTime string `json:"updateTime,omitempty"`
 
@@ -1971,8 +2385,9 @@ type EventingConfig struct {
 	// AuthConfig: Auth details for the webhook adapter.
 	AuthConfig *AuthConfig `json:"authConfig,omitempty"`
 
-	// EncryptionKey: Encryption key (can be either Google managed or CMEK).
-	EncryptionKey *ConfigVariable `json:"encryptionKey,omitempty"`
+	// DeadLetterConfig: Optional. Dead letter configuration for eventing of
+	// a connection.
+	DeadLetterConfig *DeadLetterConfig `json:"deadLetterConfig,omitempty"`
 
 	// EnrichmentEnabled: Enrichment Enabled.
 	EnrichmentEnabled bool `json:"enrichmentEnabled,omitempty"`
@@ -1982,8 +2397,15 @@ type EventingConfig struct {
 	// enabled.
 	EventsListenerIngressEndpoint string `json:"eventsListenerIngressEndpoint,omitempty"`
 
+	// ListenerAuthConfig: Optional. Auth details for the event listener.
+	ListenerAuthConfig *AuthConfig `json:"listenerAuthConfig,omitempty"`
+
 	// PrivateConnectivityEnabled: Optional. Private Connectivity Enabled.
 	PrivateConnectivityEnabled bool `json:"privateConnectivityEnabled,omitempty"`
+
+	// ProxyDestinationConfig: Optional. Proxy for Eventing
+	// auto-registration.
+	ProxyDestinationConfig *DestinationConfig `json:"proxyDestinationConfig,omitempty"`
 
 	// RegistrationDestinationConfig: Registration endpoint for auto
 	// registration.
@@ -2049,9 +2471,20 @@ type EventingConfigTemplate struct {
 	// IsEventingSupported: Is Eventing Supported.
 	IsEventingSupported bool `json:"isEventingSupported,omitempty"`
 
+	// ListenerAuthConfigTemplates: ListenerAuthConfigTemplates represents
+	// the auth values for the event listener.
+	ListenerAuthConfigTemplates []*AuthConfigTemplate `json:"listenerAuthConfigTemplates,omitempty"`
+
+	// ProxyDestinationConfig: Proxy destination config template.
+	ProxyDestinationConfig *DestinationConfigTemplate `json:"proxyDestinationConfig,omitempty"`
+
 	// RegistrationDestinationConfig: Registration host destination config
 	// template.
 	RegistrationDestinationConfig *DestinationConfigTemplate `json:"registrationDestinationConfig,omitempty"`
+
+	// TriggerConfigVariables: Trigger Config fields that needs to be
+	// rendered
+	TriggerConfigVariables []*ConfigVariableTemplate `json:"triggerConfigVariables,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdditionalVariables")
 	// to unconditionally include in API requests. By default, fields with
@@ -2659,6 +3092,155 @@ func (s *InputParameter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Instance: Instance represents the interface for SLM services to
+// actuate the state of control plane resources. Example Instance in
+// JSON, where consumer-project-number=123456,
+// producer-project-id=cloud-sql: ```json Instance: { "name":
+// "projects/123456/locations/us-east1/instances/prod-instance",
+// "create_time": { "seconds": 1526406431, }, "labels": { "env": "prod",
+// "foo": "bar" }, "state": READY, "software_versions": {
+// "software_update": "cloud-sql-09-28-2018", },
+// "maintenance_policy_names": { "UpdatePolicy":
+// "projects/123456/locations/us-east1/maintenancePolicies/prod-update-po
+// licy", } "tenant_project_id": "cloud-sql-test-tenant",
+// "producer_metadata": { "cloud-sql-tier": "basic",
+// "cloud-sql-instance-size": "1G", }, "provisioned_resources": [ {
+// "resource-type": "compute-instance", "resource-url":
+// "https://www.googleapis.com/compute/v1/projects/cloud-sql/zones/us-eas
+// t1-b/instances/vm-1", } ], "maintenance_schedules": { "csa_rollout":
+// { "start_time": { "seconds": 1526406431, }, "end_time": { "seconds":
+// 1535406431, }, }, "ncsa_rollout": { "start_time": { "seconds":
+// 1526406431, }, "end_time": { "seconds": 1535406431, }, } },
+// "consumer_defined_name": "my-sql-instance1", } ``` LINT.IfChange
+type Instance struct {
+	// ConsumerDefinedName: consumer_defined_name is the name of the
+	// instance set by the service consumers. Generally this is different
+	// from the `name` field which reperesents the system-assigned id of the
+	// instance which the service consumers do not recognize. This is a
+	// required field for tenants onboarding to Maintenance Window
+	// notifications (go/slm-rollout-maintenance-policies#prerequisites).
+	ConsumerDefinedName string `json:"consumerDefinedName,omitempty"`
+
+	// CreateTime: Output only. Timestamp when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// InstanceType: Optional. The instance_type of this instance of format:
+	// projects/{project_number}/locations/{location_id}/instanceTypes/{insta
+	// nce_type_id}. Instance Type represents a high-level tier or SKU of
+	// the service that this instance belong to. When enabled(eg:
+	// Maintenance Rollout), Rollout uses 'instance_type' along with
+	// 'software_versions' to determine whether instance needs an update or
+	// not.
+	InstanceType string `json:"instanceType,omitempty"`
+
+	// Labels: Optional. Resource labels to represent user provided
+	// metadata. Each label is a key-value pair, where both the key and the
+	// value are arbitrary strings provided by the user.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// MaintenancePolicyNames: Optional. The MaintenancePolicies that have
+	// been attached to the instance. The key must be of the type name of
+	// the oneof policy name defined in MaintenancePolicy, and the
+	// referenced policy must define the same policy type. For details,
+	// please refer to go/mr-user-guide. Should not be set if
+	// maintenance_settings.maintenance_policies is set.
+	MaintenancePolicyNames map[string]string `json:"maintenancePolicyNames,omitempty"`
+
+	// MaintenanceSchedules: The MaintenanceSchedule contains the scheduling
+	// information of published maintenance schedule with same key as
+	// software_versions.
+	MaintenanceSchedules map[string]MaintenanceSchedule `json:"maintenanceSchedules,omitempty"`
+
+	// MaintenanceSettings: Optional. The MaintenanceSettings associated
+	// with instance.
+	MaintenanceSettings *MaintenanceSettings `json:"maintenanceSettings,omitempty"`
+
+	// Name: Unique name of the resource. It uses the form:
+	// `projects/{project_number}/locations/{location_id}/instances/{instance
+	// _id}` Note: This name is passed, stored and logged across the rollout
+	// system. So use of consumer project_id or any other consumer PII in
+	// the name is strongly discouraged for wipeout (go/wipeout) compliance.
+	// See go/elysium/project_ids#storage-guidance for more details.
+	Name string `json:"name,omitempty"`
+
+	// NotificationParameters: Optional. notification_parameter are
+	// information that service producers may like to include that is not
+	// relevant to Rollout. This parameter will only be passed to Gamma and
+	// Cloud Logging for notification/logging purpose.
+	NotificationParameters map[string]NotificationParameter `json:"notificationParameters,omitempty"`
+
+	// ProducerMetadata: Output only. Custom string attributes used
+	// primarily to expose producer-specific information in monitoring
+	// dashboards. See go/get-instance-metadata.
+	ProducerMetadata map[string]string `json:"producerMetadata,omitempty"`
+
+	// ProvisionedResources: Output only. The list of data plane resources
+	// provisioned for this instance, e.g. compute VMs. See
+	// go/get-instance-metadata.
+	ProvisionedResources []*ProvisionedResource `json:"provisionedResources,omitempty"`
+
+	// SlmInstanceTemplate: Link to the SLM instance template. Only
+	// populated when updating SLM instances via SSA's Actuation service
+	// adaptor. Service producers with custom control plane (e.g. Cloud SQL)
+	// doesn't need to populate this field. Instead they should use
+	// software_versions.
+	SlmInstanceTemplate string `json:"slmInstanceTemplate,omitempty"`
+
+	// SloMetadata: Output only. SLO metadata for instance classification in
+	// the Standardized dataplane SLO platform. See
+	// go/cloud-ssa-standard-slo for feature description.
+	SloMetadata *SloMetadata `json:"sloMetadata,omitempty"`
+
+	// SoftwareVersions: Software versions that are used to deploy this
+	// instance. This can be mutated by rollout services.
+	SoftwareVersions map[string]string `json:"softwareVersions,omitempty"`
+
+	// State: Output only. Current lifecycle state of the resource (e.g. if
+	// it's being created or ready to use).
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "CREATING" - Instance is being created.
+	//   "READY" - Instance has been created and is ready to use.
+	//   "UPDATING" - Instance is being updated.
+	//   "REPAIRING" - Instance is unheathy and under repair.
+	//   "DELETING" - Instance is being deleted.
+	//   "ERROR" - Instance encountered an error and is in indeterministic
+	// state.
+	State string `json:"state,omitempty"`
+
+	// TenantProjectId: Output only. ID of the associated GCP tenant
+	// project. See go/get-instance-metadata.
+	TenantProjectId string `json:"tenantProjectId,omitempty"`
+
+	// UpdateTime: Output only. Timestamp when the resource was last
+	// modified.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConsumerDefinedName")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConsumerDefinedName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Instance) MarshalJSON() ([]byte, error) {
+	type NoMethod Instance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // JMS: JMS message denotes the source of the event
 type JMS struct {
 	// Name: Optional. Name of the JMS source. i.e. queueName or topicName
@@ -2840,6 +3422,41 @@ func (s *JwtClaims) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListActionsResponse: Response message for ListActions API
+type ListActionsResponse struct {
+	// Actions: list of actions
+	Actions []*RuntimeActionSchema `json:"actions,omitempty"`
+
+	// NextPageToken: token for next page
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Actions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Actions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListActionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListActionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListConnectionsResponse: Response message for
 // ConnectorsService.ListConnections
 type ListConnectionsResponse struct {
@@ -2958,6 +3575,87 @@ func (s *ListConnectorsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListCustomConnectorVersionsResponse: Response message for
+// Connectors.ListCustomConnectorVersions.
+type ListCustomConnectorVersionsResponse struct {
+	// CustomConnectorVersions: A list of connector versions.
+	CustomConnectorVersions []*CustomConnectorVersion `json:"customConnectorVersions,omitempty"`
+
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CustomConnectorVersions") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomConnectorVersions")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCustomConnectorVersionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCustomConnectorVersionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListCustomConnectorsResponse: Response message for
+// Connectors.ListCustomConnectors.
+type ListCustomConnectorsResponse struct {
+	// CustomConnectors: A list of customConnectors.
+	CustomConnectors []*CustomConnector `json:"customConnectors,omitempty"`
+
+	// NextPageToken: Next page token.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomConnectors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomConnectors") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListCustomConnectorsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListCustomConnectorsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListEndpointAttachmentsResponse: Response message for
 // ConnectorsService.ListEndpointAttachments
 type ListEndpointAttachmentsResponse struct {
@@ -2994,6 +3692,41 @@ type ListEndpointAttachmentsResponse struct {
 
 func (s *ListEndpointAttachmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEndpointAttachmentsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListEntityTypesResponse: Response message for ListEntityTypes API
+type ListEntityTypesResponse struct {
+	// EntityTypes: list of entity types
+	EntityTypes []*RuntimeEntitySchema `json:"entityTypes,omitempty"`
+
+	// NextPageToken: token for next page
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityTypes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListEntityTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListEntityTypesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3294,6 +4027,41 @@ func (s *ListRuntimeEntitySchemasResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListenEventRequest: Expected request for ListenEvent API.
+type ListenEventRequest struct {
+	// Payload: Optional. Request payload.
+	Payload googleapi.RawMessage `json:"payload,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Payload") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Payload") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListenEventRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ListenEventRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListenEventResponse: Expected response for ListenEvent API.
+type ListenEventResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
 // Location: A resource that represents a Google Cloud location.
 type Location struct {
 	// DisplayName: The friendly name for this location, typically a nearby
@@ -3417,6 +4185,196 @@ func (s *LogicalExpression) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MaintenancePolicy: LINT.IfChange Defines policies to service
+// maintenance events.
+type MaintenancePolicy struct {
+	// CreateTime: Output only. The time when the resource was created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Optional. Description of what this policy is for.
+	// Create/Update methods return INVALID_ARGUMENT if the length is
+	// greater than 512.
+	Description string `json:"description,omitempty"`
+
+	// Labels: Optional. Resource labels to represent user provided
+	// metadata. Each label is a key-value pair, where both the key and the
+	// value are arbitrary strings provided by the user.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Required. MaintenancePolicy name using the form:
+	// `projects/{project_id}/locations/{location_id}/maintenancePolicies/{ma
+	// intenance_policy_id}` where {project_id} refers to a GCP consumer
+	// project ID, {location_id} refers to a GCP region/zone,
+	// {maintenance_policy_id} must be 1-63 characters long and match the
+	// regular expression `[a-z0-9]([-a-z0-9]*[a-z0-9])?`.
+	Name string `json:"name,omitempty"`
+
+	// State: Optional. The state of the policy.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Unspecified state.
+	//   "READY" - Resource is ready to be used.
+	//   "DELETING" - Resource is being deleted. It can no longer be
+	// attached to instances.
+	State string `json:"state,omitempty"`
+
+	// UpdatePolicy: Maintenance policy applicable to instance update.
+	UpdatePolicy *UpdatePolicy `json:"updatePolicy,omitempty"`
+
+	// UpdateTime: Output only. The time when the resource was updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenancePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenancePolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MaintenanceSchedule: Maintenance schedule which is exposed to
+// customer and potentially end user, indicating published upcoming
+// future maintenance schedule
+type MaintenanceSchedule struct {
+	// CanReschedule: This field is deprecated, and will be always set to
+	// true since reschedule can happen multiple times now. This field
+	// should not be removed until all service producers remove this for
+	// their customers.
+	CanReschedule bool `json:"canReschedule,omitempty"`
+
+	// EndTime: The scheduled end time for the maintenance.
+	EndTime string `json:"endTime,omitempty"`
+
+	// RolloutManagementPolicy: The rollout management policy this
+	// maintenance schedule is associated with. When doing reschedule update
+	// request, the reschedule should be against this given policy.
+	RolloutManagementPolicy string `json:"rolloutManagementPolicy,omitempty"`
+
+	// ScheduleDeadlineTime: schedule_deadline_time is the time deadline any
+	// schedule start time cannot go beyond, including reschedule. It's
+	// normally the initial schedule start time plus maintenance window
+	// length (1 day or 1 week). Maintenance cannot be scheduled to start
+	// beyond this deadline.
+	ScheduleDeadlineTime string `json:"scheduleDeadlineTime,omitempty"`
+
+	// StartTime: The scheduled start time for the maintenance.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CanReschedule") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CanReschedule") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenanceSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenanceSchedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MaintenanceSettings: Maintenance settings associated with instance.
+// Allows service producers and end users to assign settings that
+// controls maintenance on this instance.
+type MaintenanceSettings struct {
+	// Exclude: Optional. Exclude instance from maintenance. When true,
+	// rollout service will not attempt maintenance on the instance. Rollout
+	// service will include the instance in reported rollout progress as not
+	// attempted.
+	Exclude bool `json:"exclude,omitempty"`
+
+	// IsRollback: Optional. If the update call is triggered from rollback,
+	// set the value as true.
+	IsRollback bool `json:"isRollback,omitempty"`
+
+	// MaintenancePolicies: Optional. The MaintenancePolicies that have been
+	// attached to the instance. The key must be of the type name of the
+	// oneof policy name defined in MaintenancePolicy, and the embedded
+	// policy must define the same policy type. For details, please refer to
+	// go/mr-user-guide. Should not be set if maintenance_policy_names is
+	// set. If only the name is needed, then only populate
+	// MaintenancePolicy.name.
+	MaintenancePolicies map[string]MaintenancePolicy `json:"maintenancePolicies,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Exclude") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Exclude") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenanceSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenanceSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MaintenanceWindow: MaintenanceWindow definition.
+type MaintenanceWindow struct {
+	// DailyCycle: Daily cycle.
+	DailyCycle *DailyCycle `json:"dailyCycle,omitempty"`
+
+	// WeeklyCycle: Weekly cycle.
+	WeeklyCycle *WeeklyCycle `json:"weeklyCycle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DailyCycle") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DailyCycle") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenanceWindow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ManagedZone: represents the Connector's Managed Zone resource
 type ManagedZone struct {
 	// CreateTime: Output only. Created time.
@@ -3536,6 +4494,76 @@ type NodeConfig struct {
 
 func (s *NodeConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NodeConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NodeSloMetadata: Node information for custom per-node SLO
+// implementations. SSA does not support per-node SLO, but producers can
+// populate per-node information in SloMetadata for custom
+// precomputations. SSA Eligibility Exporter will emit per-node metric
+// based on this information.
+type NodeSloMetadata struct {
+	// Location: The location of the node, if different from instance
+	// location.
+	Location string `json:"location,omitempty"`
+
+	// NodeId: The id of the node. This should be equal to
+	// SaasInstanceNode.node_id.
+	NodeId string `json:"nodeId,omitempty"`
+
+	// PerSliEligibility: If present, this will override eligibility for the
+	// node coming from instance or exclusions for specified SLIs.
+	PerSliEligibility *PerSliSloEligibility `json:"perSliEligibility,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Location") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Location") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NodeSloMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod NodeSloMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// NotificationParameter: Contains notification related data.
+type NotificationParameter struct {
+	// Values: Optional. Array of string values. e.g. instance's replica
+	// information.
+	Values []string `json:"values,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Values") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Values") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *NotificationParameter) MarshalJSON() ([]byte, error) {
+	type NoMethod NotificationParameter
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3779,6 +4807,47 @@ func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PerSliSloEligibility: PerSliSloEligibility is a mapping from an SLI
+// name to eligibility.
+type PerSliSloEligibility struct {
+	// Eligibilities: An entry in the eligibilities map specifies an
+	// eligibility for a particular SLI for the given instance. The SLI key
+	// in the name must be a valid SLI name specified in the Eligibility
+	// Exporter binary flags otherwise an error will be emitted by
+	// Eligibility Exporter and the oncaller will be alerted. If an SLI has
+	// been defined in the binary flags but the eligibilities map does not
+	// contain it, the corresponding SLI time series will not be emitted by
+	// the Eligibility Exporter. This ensures a smooth rollout and
+	// compatibility between the data produced by different versions of the
+	// Eligibility Exporters. If eligibilities map contains a key for an SLI
+	// which has not been declared in the binary flags, there will be an
+	// error message emitted in the Eligibility Exporter log and the metric
+	// for the SLI in question will not be emitted.
+	Eligibilities map[string]SloEligibility `json:"eligibilities,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Eligibilities") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Eligibilities") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PerSliSloEligibility) MarshalJSON() ([]byte, error) {
+	type NoMethod PerSliSloEligibility
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Policy: An Identity and Access Management (IAM) policy, which
 // specifies access controls for Google Cloud resources. A `Policy` is a
 // collection of `bindings`. A `binding` binds one or more `members`, or
@@ -3961,6 +5030,44 @@ func (s *Provider) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ProvisionedResource: Describes provisioned dataplane resources.
+type ProvisionedResource struct {
+	// ResourceType: Type of the resource. This can be either a GCP resource
+	// or a custom one (e.g. another cloud provider's VM). For GCP compute
+	// resources use singular form of the names listed in GCP compute API
+	// documentation
+	// (https://cloud.google.com/compute/docs/reference/rest/v1/), prefixed
+	// with 'compute-', for example: 'compute-instance', 'compute-disk',
+	// 'compute-autoscaler'.
+	ResourceType string `json:"resourceType,omitempty"`
+
+	// ResourceUrl: URL identifying the resource, e.g.
+	// "https://www.googleapis.com/compute/v1/projects/...)".
+	ResourceUrl string `json:"resourceUrl,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ResourceType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ResourceType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProvisionedResource) MarshalJSON() ([]byte, error) {
+	type NoMethod ProvisionedResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RefreshConnectionSchemaMetadataRequest: Request message for
 // ConnectorsService.RefreshConnectionSchemaMetadata.
 type RefreshConnectionSchemaMetadataRequest struct {
@@ -3978,6 +5085,10 @@ type RegionalSettings struct {
 
 	// NetworkConfig: Optional. Regional network config.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
+
+	// Provisioned: Output only. Specifies whether the region is
+	// provisioned.
+	Provisioned bool `json:"provisioned,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -4431,6 +5542,51 @@ func (s *RuntimeEntitySchema) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Schedule: Configure the schedule.
+type Schedule struct {
+	// Day: Allows to define schedule that runs specified day of the week.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	Day string `json:"day,omitempty"`
+
+	// Duration: Output only. Duration of the time window, set by service
+	// producer.
+	Duration string `json:"duration,omitempty"`
+
+	// StartTime: Time within the window to start the operations.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Schedule) MarshalJSON() ([]byte, error) {
+	type NoMethod Schedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Secret: Secret provides a reference to entries in Secret Manager.
 type Secret struct {
 	// SecretVersion: The resource name of the secret version in the format,
@@ -4536,6 +5692,84 @@ type Settings struct {
 
 func (s *Settings) MarshalJSON() ([]byte, error) {
 	type NoMethod Settings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SloEligibility: SloEligibility is a tuple containing eligibility
+// value: true if an instance is eligible for SLO calculation or false
+// if it should be excluded from all SLO-related calculations along with
+// a user-defined reason.
+type SloEligibility struct {
+	// Eligible: Whether an instance is eligible or ineligible.
+	Eligible bool `json:"eligible,omitempty"`
+
+	// Reason: User-defined reason for the current value of instance
+	// eligibility. Usually, this can be directly mapped to the internal
+	// state. An empty reason is allowed.
+	Reason string `json:"reason,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Eligible") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Eligible") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SloEligibility) MarshalJSON() ([]byte, error) {
+	type NoMethod SloEligibility
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SloMetadata: SloMetadata contains resources required for proper SLO
+// classification of the instance.
+type SloMetadata struct {
+	// Nodes: Optional. List of nodes. Some producers need to use per-node
+	// metadata to calculate SLO. This field allows such producers to
+	// publish per-node SLO meta data, which will be consumed by SSA
+	// Eligibility Exporter and published in the form of per node metric to
+	// Monarch.
+	Nodes []*NodeSloMetadata `json:"nodes,omitempty"`
+
+	// PerSliEligibility: Optional. Multiple per-instance SLI eligibilities
+	// which apply for individual SLIs.
+	PerSliEligibility *PerSliSloEligibility `json:"perSliEligibility,omitempty"`
+
+	// Tier: Name of the SLO tier the Instance belongs to. This name will be
+	// expected to match the tiers specified in the service SLO
+	// configuration. Field is mandatory and must not be empty.
+	Tier string `json:"tier,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Nodes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Nodes") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SloMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod SloMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4893,6 +6127,107 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TimeOfDay: Represents a time of day. The date and time zone are
+// either not significant or are specified elsewhere. An API may choose
+// to allow leap seconds. Related types are google.type.Date and
+// `google.protobuf.Timestamp`.
+type TimeOfDay struct {
+	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API
+	// may choose to allow the value "24:00:00" for scenarios like business
+	// closing time.
+	Hours int64 `json:"hours,omitempty"`
+
+	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	Minutes int64 `json:"minutes,omitempty"`
+
+	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to
+	// 999,999,999.
+	Nanos int64 `json:"nanos,omitempty"`
+
+	// Seconds: Seconds of minutes of the time. Must normally be from 0 to
+	// 59. An API may allow the value 60 if it allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Hours") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Hours") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeOfDay
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdatePolicy: Maintenance policy applicable to instance updates.
+type UpdatePolicy struct {
+	// Channel: Optional. Relative scheduling channel applied to resource.
+	//
+	// Possible values:
+	//   "UPDATE_CHANNEL_UNSPECIFIED" - Unspecified channel.
+	//   "EARLIER" - Early channel within a customer project.
+	//   "LATER" - Later channel within a customer project.
+	//   "WEEK1" - ! ! The follow channels can ONLY be used if you adopt the
+	// new MW system! ! ! NOTE: all WEEK channels are assumed to be under a
+	// weekly window. ! There is currently no dedicated channel definitions
+	// for Daily windows. ! If you use Daily window, the system will assume
+	// a 1d (24Hours) advanced ! notification period b/w EARLY and LATER. !
+	// We may consider support more flexible daily channel specifications in
+	// ! the future. WEEK1 == EARLIER with minimum 7d advanced notification.
+	// {7d, 14d} The system will treat them equally and will use WEEK1
+	// whenever it can. New customers are encouraged to use this channel
+	// annotation.
+	//   "WEEK2" - WEEK2 == LATER with minimum 14d advanced notification
+	// {14d, 21d}.
+	//   "WEEK5" - WEEK5 == 40d support. minimum 35d advanced notification
+	// {35d, 42d}.
+	Channel string `json:"channel,omitempty"`
+
+	// DenyMaintenancePeriods: Deny Maintenance Period that is applied to
+	// resource to indicate when maintenance is forbidden. The protocol
+	// supports zero-to-many such periods, but the current SLM Rollout
+	// implementation only supports zero-to-one.
+	DenyMaintenancePeriods []*DenyMaintenancePeriod `json:"denyMaintenancePeriods,omitempty"`
+
+	// Window: Optional. Maintenance window that is applied to resources
+	// covered by this policy.
+	Window *MaintenanceWindow `json:"window,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Channel") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Channel") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdatePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdatePolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UserPassword: Parameters to support Username and Password
 // Authentication.
 type UserPassword struct {
@@ -4921,6 +6256,35 @@ type UserPassword struct {
 
 func (s *UserPassword) MarshalJSON() ([]byte, error) {
 	type NoMethod UserPassword
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// WeeklyCycle: Time window specified for weekly operations.
+type WeeklyCycle struct {
+	// Schedule: User can specify multiple windows in a week. Minimum of 1
+	// window.
+	Schedule []*Schedule `json:"schedule,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Schedule") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Schedule") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *WeeklyCycle) MarshalJSON() ([]byte, error) {
+	type NoMethod WeeklyCycle
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6762,6 +8126,148 @@ func (c *ProjectsLocationsConnectionsListCall) Pages(ctx context.Context, f func
 	}
 }
 
+// method id "connectors.projects.locations.connections.listenEvent":
+
+type ProjectsLocationsConnectionsListenEventCall struct {
+	s                  *Service
+	resourcePath       string
+	listeneventrequest *ListenEventRequest
+	urlParams_         gensupport.URLParams
+	ctx_               context.Context
+	header_            http.Header
+}
+
+// ListenEvent: ListenEvent listens to the event.
+//
+// - resourcePath: Resource path for request.
+func (r *ProjectsLocationsConnectionsService) ListenEvent(resourcePath string, listeneventrequest *ListenEventRequest) *ProjectsLocationsConnectionsListenEventCall {
+	c := &ProjectsLocationsConnectionsListenEventCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resourcePath = resourcePath
+	c.listeneventrequest = listeneventrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsListenEventCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsListenEventCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsListenEventCall) Context(ctx context.Context) *ProjectsLocationsConnectionsListenEventCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsListenEventCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsListenEventCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.listeneventrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resourcePath}:listenEvent")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resourcePath": c.resourcePath,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.listenEvent" call.
+// Exactly one of *ListenEventResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListenEventResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsListenEventCall) Do(opts ...googleapi.CallOption) (*ListenEventResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListenEventResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "ListenEvent listens to the event.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}:listenEvent",
+	//   "httpMethod": "POST",
+	//   "id": "connectors.projects.locations.connections.listenEvent",
+	//   "parameterOrder": [
+	//     "resourcePath"
+	//   ],
+	//   "parameters": {
+	//     "resourcePath": {
+	//       "description": "Required. Resource path for request.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+resourcePath}:listenEvent",
+	//   "request": {
+	//     "$ref": "ListenEventRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "ListenEventResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "connectors.projects.locations.connections.patch":
 
 type ProjectsLocationsConnectionsPatchCall struct {
@@ -7362,6 +8868,786 @@ func (c *ProjectsLocationsConnectionsTestIamPermissionsCall) Do(opts ...googleap
 	//   ]
 	// }
 
+}
+
+// method id "connectors.projects.locations.connections.connectionSchemaMetadata.getAction":
+
+type ProjectsLocationsConnectionsConnectionSchemaMetadataGetActionCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetAction: Get action.
+//
+//   - name: Resource name format:
+//     projects/{project}/locations/{location}/connections/{connection}/con
+//     nectionSchemaMetadata.
+func (r *ProjectsLocationsConnectionsConnectionSchemaMetadataService) GetAction(name string) *ProjectsLocationsConnectionsConnectionSchemaMetadataGetActionCall {
+	c := &ProjectsLocationsConnectionsConnectionSchemaMetadataGetActionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// ActionId sets the optional parameter "actionId": Required. Id of the
+// action.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataGetActionCall) ActionId(actionId string) *ProjectsLocationsConnectionsConnectionSchemaMetadataGetActionCall {
+	c.urlParams_.Set("actionId", actionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataGetActionCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsConnectionSchemaMetadataGetActionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataGetActionCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsConnectionSchemaMetadataGetActionCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataGetActionCall) Context(ctx context.Context) *ProjectsLocationsConnectionsConnectionSchemaMetadataGetActionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataGetActionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataGetActionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:getAction")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.connectionSchemaMetadata.getAction" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataGetActionCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get action.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}/connectionSchemaMetadata:getAction",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.connections.connectionSchemaMetadata.getAction",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "actionId": {
+	//       "description": "Required. Id of the action.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. Resource name format: projects/{project}/locations/{location}/connections/{connection}/connectionSchemaMetadata",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+/connectionSchemaMetadata$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:getAction",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.connections.connectionSchemaMetadata.getEntityType":
+
+type ProjectsLocationsConnectionsConnectionSchemaMetadataGetEntityTypeCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetEntityType: Get entity type.
+//
+//   - name: Resource name format:
+//     projects/{project}/locations/{location}/connections/{connection}/con
+//     nectionSchemaMetadata.
+func (r *ProjectsLocationsConnectionsConnectionSchemaMetadataService) GetEntityType(name string) *ProjectsLocationsConnectionsConnectionSchemaMetadataGetEntityTypeCall {
+	c := &ProjectsLocationsConnectionsConnectionSchemaMetadataGetEntityTypeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// EntityId sets the optional parameter "entityId": Required. Id of the
+// entity type.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataGetEntityTypeCall) EntityId(entityId string) *ProjectsLocationsConnectionsConnectionSchemaMetadataGetEntityTypeCall {
+	c.urlParams_.Set("entityId", entityId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataGetEntityTypeCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsConnectionSchemaMetadataGetEntityTypeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataGetEntityTypeCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsConnectionSchemaMetadataGetEntityTypeCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataGetEntityTypeCall) Context(ctx context.Context) *ProjectsLocationsConnectionsConnectionSchemaMetadataGetEntityTypeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataGetEntityTypeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataGetEntityTypeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:getEntityType")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.connectionSchemaMetadata.getEntityType" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataGetEntityTypeCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get entity type.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}/connectionSchemaMetadata:getEntityType",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.connections.connectionSchemaMetadata.getEntityType",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "entityId": {
+	//       "description": "Required. Id of the entity type.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. Resource name format: projects/{project}/locations/{location}/connections/{connection}/connectionSchemaMetadata",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+/connectionSchemaMetadata$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:getEntityType",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.connections.connectionSchemaMetadata.listActions":
+
+type ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListActions: List actions.
+//
+//   - name: Resource name format.
+//     projects/{project}/locations/{location}/connections/{connection}/con
+//     nectionSchemaMetadata.
+func (r *ProjectsLocationsConnectionsConnectionSchemaMetadataService) ListActions(name string) *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall {
+	c := &ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": Required. Filter
+// Wildcards are not supported in the filter currently.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall) Filter(filter string) *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size. If
+// unspecified, at most 50 actions will be returned.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall) PageSize(pageSize int64) *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall) PageToken(pageToken string) *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies which fields are
+// returned in response. Defaults to BASIC view.
+//
+// Possible values:
+//
+//	"VIEW_UNSPECIFIED"
+//	"BASIC"
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall) View(view string) *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall) Context(ctx context.Context) *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:listActions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.connectionSchemaMetadata.listActions" call.
+// Exactly one of *ListActionsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListActionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall) Do(opts ...googleapi.CallOption) (*ListActionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListActionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List actions.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}/connectionSchemaMetadata:listActions",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.connections.connectionSchemaMetadata.listActions",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Required. Filter Wildcards are not supported in the filter currently.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. Resource name format. projects/{project}/locations/{location}/connections/{connection}/connectionSchemaMetadata",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+/connectionSchemaMetadata$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Page size. If unspecified, at most 50 actions will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies which fields are returned in response. Defaults to BASIC view.",
+	//       "enum": [
+	//         "VIEW_UNSPECIFIED",
+	//         "BASIC"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:listActions",
+	//   "response": {
+	//     "$ref": "ListActionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListActionsCall) Pages(ctx context.Context, f func(*ListActionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "connectors.projects.locations.connections.connectionSchemaMetadata.listEntityTypes":
+
+type ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListEntityTypes: List entity types.
+//
+//   - name: Resource name format:
+//     projects/{project}/locations/{location}/connections/{connection}/con
+//     nectionSchemaMetadata.
+func (r *ProjectsLocationsConnectionsConnectionSchemaMetadataService) ListEntityTypes(name string) *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall {
+	c := &ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Filter sets the optional parameter "filter": Required. Filter
+// Wildcards are not supported in the filter currently.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall) Filter(filter string) *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size. If
+// unspecified, at most 50 entity types will be returned.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall) PageSize(pageSize int64) *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall) PageToken(pageToken string) *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": Specifies which fields are
+// returned in response. Defaults to BASIC view.
+//
+// Possible values:
+//
+//	"VIEW_UNSPECIFIED"
+//	"BASIC"
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall) View(view string) *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall) Context(ctx context.Context) *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:listEntityTypes")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.connections.connectionSchemaMetadata.listEntityTypes" call.
+// Exactly one of *ListEntityTypesResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListEntityTypesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall) Do(opts ...googleapi.CallOption) (*ListEntityTypesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListEntityTypesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List entity types.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}/connectionSchemaMetadata:listEntityTypes",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.connections.connectionSchemaMetadata.listEntityTypes",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Required. Filter Wildcards are not supported in the filter currently.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. Resource name format: projects/{project}/locations/{location}/connections/{connection}/connectionSchemaMetadata",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+/connectionSchemaMetadata$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Page size. If unspecified, at most 50 entity types will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Specifies which fields are returned in response. Defaults to BASIC view.",
+	//       "enum": [
+	//         "VIEW_UNSPECIFIED",
+	//         "BASIC"
+	//       ],
+	//       "enumDescriptions": [
+	//         "",
+	//         ""
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:listEntityTypes",
+	//   "response": {
+	//     "$ref": "ListEntityTypesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConnectionsConnectionSchemaMetadataListEntityTypesCall) Pages(ctx context.Context, f func(*ListEntityTypesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "connectors.projects.locations.connections.connectionSchemaMetadata.refresh":
@@ -9977,6 +12263,1616 @@ func (c *ProjectsLocationsGlobalUpdateSettingsCall) Do(opts ...googleapi.CallOpt
 	//   "path": "v1/{+name}",
 	//   "request": {
 	//     "$ref": "Settings"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.global.customConnectors.create":
+
+type ProjectsLocationsGlobalCustomConnectorsCreateCall struct {
+	s               *Service
+	parent          string
+	customconnector *CustomConnector
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Create: Creates a new CustomConnector in a given project and
+// location.
+//
+//   - parent: Parent resource of the CreateCustomConnector, of the form:
+//     `projects/{project}/locations/*`.
+func (r *ProjectsLocationsGlobalCustomConnectorsService) Create(parent string, customconnector *CustomConnector) *ProjectsLocationsGlobalCustomConnectorsCreateCall {
+	c := &ProjectsLocationsGlobalCustomConnectorsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.customconnector = customconnector
+	return c
+}
+
+// CustomConnectorId sets the optional parameter "customConnectorId":
+// Required. Identifier to assign to the CreateCustomConnector. Must be
+// unique within scope of the parent resource.
+func (c *ProjectsLocationsGlobalCustomConnectorsCreateCall) CustomConnectorId(customConnectorId string) *ProjectsLocationsGlobalCustomConnectorsCreateCall {
+	c.urlParams_.Set("customConnectorId", customConnectorId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalCustomConnectorsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalCustomConnectorsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalCustomConnectorsCreateCall) Context(ctx context.Context) *ProjectsLocationsGlobalCustomConnectorsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalCustomConnectorsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalCustomConnectorsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customconnector)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customConnectors")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.customConnectors.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalCustomConnectorsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new CustomConnector in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/customConnectors",
+	//   "httpMethod": "POST",
+	//   "id": "connectors.projects.locations.global.customConnectors.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "customConnectorId": {
+	//       "description": "Required. Identifier to assign to the CreateCustomConnector. Must be unique within scope of the parent resource.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource of the CreateCustomConnector, of the form: `projects/{project}/locations/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customConnectors",
+	//   "request": {
+	//     "$ref": "CustomConnector"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.global.customConnectors.delete":
+
+type ProjectsLocationsGlobalCustomConnectorsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single CustomConnector.
+//
+//   - name: Resource name of the form:
+//     `projects/{project}/locations/{location}/customConnectors/{connector
+//     }`.
+func (r *ProjectsLocationsGlobalCustomConnectorsService) Delete(name string) *ProjectsLocationsGlobalCustomConnectorsDeleteCall {
+	c := &ProjectsLocationsGlobalCustomConnectorsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Force sets the optional parameter "force": If set to true, any
+// customConnectorVersion which is a child resource will also be
+// deleted. https://aip.dev/135#cascading-delete
+func (c *ProjectsLocationsGlobalCustomConnectorsDeleteCall) Force(force bool) *ProjectsLocationsGlobalCustomConnectorsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalCustomConnectorsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalCustomConnectorsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalCustomConnectorsDeleteCall) Context(ctx context.Context) *ProjectsLocationsGlobalCustomConnectorsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalCustomConnectorsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalCustomConnectorsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.customConnectors.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalCustomConnectorsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single CustomConnector.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/customConnectors/{customConnectorsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "connectors.projects.locations.global.customConnectors.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "force": {
+	//       "description": "Optional. If set to true, any customConnectorVersion which is a child resource will also be deleted. https://aip.dev/135#cascading-delete",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/{project}/locations/{location}/customConnectors/{connector}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/customConnectors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.global.customConnectors.get":
+
+type ProjectsLocationsGlobalCustomConnectorsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single CustomConnector.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/*/customConnectors/*`.
+func (r *ProjectsLocationsGlobalCustomConnectorsService) Get(name string) *ProjectsLocationsGlobalCustomConnectorsGetCall {
+	c := &ProjectsLocationsGlobalCustomConnectorsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalCustomConnectorsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalCustomConnectorsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalCustomConnectorsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalCustomConnectorsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalCustomConnectorsGetCall) Context(ctx context.Context) *ProjectsLocationsGlobalCustomConnectorsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalCustomConnectorsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalCustomConnectorsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.customConnectors.get" call.
+// Exactly one of *CustomConnector or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *CustomConnector.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalCustomConnectorsGetCall) Do(opts ...googleapi.CallOption) (*CustomConnector, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CustomConnector{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single CustomConnector.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/customConnectors/{customConnectorsId}",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.global.customConnectors.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/*/locations/*/customConnectors/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/customConnectors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "CustomConnector"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.global.customConnectors.list":
+
+type ProjectsLocationsGlobalCustomConnectorsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List CustomConnectorVersions in a given project
+//
+//   - parent: Parent resource of the custom connectors, of the form:
+//     `projects/*/locations/*` Only global location is supported for
+//     CustomConnector resource.
+func (r *ProjectsLocationsGlobalCustomConnectorsService) List(parent string) *ProjectsLocationsGlobalCustomConnectorsListCall {
+	c := &ProjectsLocationsGlobalCustomConnectorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter string.
+func (c *ProjectsLocationsGlobalCustomConnectorsListCall) Filter(filter string) *ProjectsLocationsGlobalCustomConnectorsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size.
+func (c *ProjectsLocationsGlobalCustomConnectorsListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalCustomConnectorsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token.
+func (c *ProjectsLocationsGlobalCustomConnectorsListCall) PageToken(pageToken string) *ProjectsLocationsGlobalCustomConnectorsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalCustomConnectorsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalCustomConnectorsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalCustomConnectorsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalCustomConnectorsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalCustomConnectorsListCall) Context(ctx context.Context) *ProjectsLocationsGlobalCustomConnectorsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalCustomConnectorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalCustomConnectorsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customConnectors")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.customConnectors.list" call.
+// Exactly one of *ListCustomConnectorsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListCustomConnectorsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalCustomConnectorsListCall) Do(opts ...googleapi.CallOption) (*ListCustomConnectorsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListCustomConnectorsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List CustomConnectorVersions in a given project",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/customConnectors",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.global.customConnectors.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Filter string.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource of the custom connectors, of the form: `projects/*/locations/*` Only global location is supported for CustomConnector resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customConnectors",
+	//   "response": {
+	//     "$ref": "ListCustomConnectorsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlobalCustomConnectorsListCall) Pages(ctx context.Context, f func(*ListCustomConnectorsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "connectors.projects.locations.global.customConnectors.patch":
+
+type ProjectsLocationsGlobalCustomConnectorsPatchCall struct {
+	s               *Service
+	name            string
+	customconnector *CustomConnector
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Patch: Updates the parameters of a CustomConnector.
+//
+//   - name: Identifier. Resource name of the CustomConnector. Format:
+//     projects/{project}/locations/{location}/customConnectors/{connector}.
+func (r *ProjectsLocationsGlobalCustomConnectorsService) Patch(name string, customconnector *CustomConnector) *ProjectsLocationsGlobalCustomConnectorsPatchCall {
+	c := &ProjectsLocationsGlobalCustomConnectorsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.customconnector = customconnector
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the Connector
+// resource by the update. The fields specified in the update_mask are
+// relative to the resource, not the full request. A field will be
+// overwritten if it is in the mask. Set the mask as "*" for full
+// replacement, which means all fields will be overwritten.
+func (c *ProjectsLocationsGlobalCustomConnectorsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalCustomConnectorsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalCustomConnectorsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalCustomConnectorsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalCustomConnectorsPatchCall) Context(ctx context.Context) *ProjectsLocationsGlobalCustomConnectorsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalCustomConnectorsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalCustomConnectorsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customconnector)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.customConnectors.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalCustomConnectorsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the parameters of a CustomConnector.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/customConnectors/{customConnectorsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "connectors.projects.locations.global.customConnectors.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Identifier. Resource name of the CustomConnector. Format: projects/{project}/locations/{location}/customConnectors/{connector}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/customConnectors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the Connector resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. Set the mask as \"*\" for full replacement, which means all fields will be overwritten.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "CustomConnector"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.global.customConnectors.customConnectorVersions.create":
+
+type ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsCreateCall struct {
+	s                      *Service
+	parent                 string
+	customconnectorversion *CustomConnectorVersion
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Create: Creates a new CustomConnectorVersion in a given project and
+// location.
+//
+//   - parent: Parent resource of the CreateCustomConnector, of the form:
+//     `projects/{project}/locations/{location}/customConnectors/{custom_co
+//     nnector}`.
+func (r *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsService) Create(parent string, customconnectorversion *CustomConnectorVersion) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsCreateCall {
+	c := &ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.customconnectorversion = customconnectorversion
+	return c
+}
+
+// CustomConnectorVersionId sets the optional parameter
+// "customConnectorVersionId": Required. Identifier to assign to the
+// CreateCustomConnectorVersion. Must be unique within scope of the
+// parent resource.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsCreateCall) CustomConnectorVersionId(customConnectorVersionId string) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsCreateCall {
+	c.urlParams_.Set("customConnectorVersionId", customConnectorVersionId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsCreateCall) Context(ctx context.Context) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customconnectorversion)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customConnectorVersions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.customConnectors.customConnectorVersions.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new CustomConnectorVersion in a given project and location.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/customConnectors/{customConnectorsId}/customConnectorVersions",
+	//   "httpMethod": "POST",
+	//   "id": "connectors.projects.locations.global.customConnectors.customConnectorVersions.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "customConnectorVersionId": {
+	//       "description": "Required. Identifier to assign to the CreateCustomConnectorVersion. Must be unique within scope of the parent resource.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource of the CreateCustomConnector, of the form: `projects/{project}/locations/{location}/customConnectors/{custom_connector}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/customConnectors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customConnectorVersions",
+	//   "request": {
+	//     "$ref": "CustomConnectorVersion"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.global.customConnectors.customConnectorVersions.delete":
+
+type ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single CustomConnectorVersion.
+//
+//   - name: Resource name of the form:
+//     `projects/{project}/locations/{location}/customConnectors/{custom_co
+//     nnector}/customConnectorVersions/{custom_connector_version}`.
+func (r *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsService) Delete(name string) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsDeleteCall {
+	c := &ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.customConnectors.customConnectorVersions.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single CustomConnectorVersion.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/customConnectors/{customConnectorsId}/customConnectorVersions/{customConnectorVersionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "connectors.projects.locations.global.customConnectors.customConnectorVersions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/{project}/locations/{location}/customConnectors/{custom_connector}/customConnectorVersions/{custom_connector_version}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/customConnectors/[^/]+/customConnectorVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.global.customConnectors.customConnectorVersions.get":
+
+type ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single CustomConnectorVersion.
+//
+//   - name: Resource name of the form:
+//     `projects/*/locations/{location}/customConnectors/*/customConnectorV
+//     ersions/*`.
+func (r *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsService) Get(name string) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsGetCall {
+	c := &ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsGetCall) Context(ctx context.Context) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.customConnectors.customConnectorVersions.get" call.
+// Exactly one of *CustomConnectorVersion or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *CustomConnectorVersion.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsGetCall) Do(opts ...googleapi.CallOption) (*CustomConnectorVersion, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CustomConnectorVersion{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single CustomConnectorVersion.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/customConnectors/{customConnectorsId}/customConnectorVersions/{customConnectorVersionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.global.customConnectors.customConnectorVersions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the form: `projects/*/locations/{location}/customConnectors/*/customConnectorVersions/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/customConnectors/[^/]+/customConnectorVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "CustomConnectorVersion"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "connectors.projects.locations.global.customConnectors.customConnectorVersions.list":
+
+type ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List CustomConnectorVersions in a given project
+//
+//   - parent: Parent resource of the connectors, of the form:
+//     `projects/*/locations/{location}/customConnectors/*/customConnectorV
+//     ersions/*`.
+func (r *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsService) List(parent string) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall {
+	c := &ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Page size.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall) PageSize(pageSize int64) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall) PageToken(pageToken string) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall) Context(ctx context.Context) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/customConnectorVersions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.customConnectors.customConnectorVersions.list" call.
+// Exactly one of *ListCustomConnectorVersionsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListCustomConnectorVersionsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall) Do(opts ...googleapi.CallOption) (*ListCustomConnectorVersionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListCustomConnectorVersionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List CustomConnectorVersions in a given project",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/customConnectors/{customConnectorsId}/customConnectorVersions",
+	//   "httpMethod": "GET",
+	//   "id": "connectors.projects.locations.global.customConnectors.customConnectorVersions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource of the connectors, of the form: `projects/*/locations/{location}/customConnectors/*/customConnectorVersions/*`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/customConnectors/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/customConnectorVersions",
+	//   "response": {
+	//     "$ref": "ListCustomConnectorVersionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsListCall) Pages(ctx context.Context, f func(*ListCustomConnectorVersionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "connectors.projects.locations.global.customConnectors.customConnectorVersions.patch":
+
+type ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsPatchCall struct {
+	s                      *Service
+	name                   string
+	customconnectorversion *CustomConnectorVersion
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// Patch: Updates the parameters of a CustomConnectorVersion.
+//
+//   - name: Output only. Identifier. Resource name of the Version.
+//     Format:
+//     projects/{project}/locations/{location}/customConnectors/{custom_con
+//     nector}/customConnectorVersions/{custom_connector_version}.
+func (r *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsService) Patch(name string, customconnectorversion *CustomConnectorVersion) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsPatchCall {
+	c := &ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.customconnectorversion = customconnectorversion
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Field
+// mask is used to specify the fields to be overwritten in the Connector
+// resource by the update. The fields specified in the update_mask are
+// relative to the resource, not the full request. A field will be
+// overwritten if it is in the mask. Set the mask as "*" for full
+// replacement, which means all fields will be overwritten.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsPatchCall) Context(ctx context.Context) *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customconnectorversion)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "connectors.projects.locations.global.customConnectors.customConnectorVersions.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalCustomConnectorsCustomConnectorVersionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates the parameters of a CustomConnectorVersion.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/customConnectors/{customConnectorsId}/customConnectorVersions/{customConnectorVersionsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "connectors.projects.locations.global.customConnectors.customConnectorVersions.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Identifier. Resource name of the Version. Format: projects/{project}/locations/{location}/customConnectors/{custom_connector}/customConnectorVersions/{custom_connector_version}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/customConnectors/[^/]+/customConnectorVersions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Field mask is used to specify the fields to be overwritten in the Connector resource by the update. The fields specified in the update_mask are relative to the resource, not the full request. A field will be overwritten if it is in the mask. Set the mask as \"*\" for full replacement, which means all fields will be overwritten.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "CustomConnectorVersion"
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"

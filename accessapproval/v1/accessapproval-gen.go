@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "accessapproval:v1"
 const apiName = "accessapproval"
 const apiVersion = "v1"
 const basePath = "https://accessapproval.googleapis.com/"
+const basePathTemplate = "https://accessapproval.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://accessapproval.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -432,6 +436,11 @@ type AccessReason struct {
 	//   "GOOGLE_RESPONSE_TO_PRODUCTION_ALERT" - The principal accessed
 	// customer data in order to diagnose or resolve a suspected issue in
 	// services or a known outage.
+	//   "CLOUD_INITIATED_ACCESS" - Similar to 'GOOGLE_INITIATED_SERVICE' or
+	// 'GOOGLE_INITIATED_REVIEW', but with universe agnostic naming. The
+	// principal accessed customer data in order to diagnose or resolve a
+	// suspected issue in services or a known outage, or for security,
+	// fraud, abuse, or compliance review purposes.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Detail") to
@@ -872,9 +881,10 @@ type SignatureInfo struct {
 	// which may be verified using this public key.
 	GooglePublicKeyPem string `json:"googlePublicKeyPem,omitempty"`
 
-	// SerializedApprovalRequest: The serialized ApprovalRequest message
-	// without the approve.signature_info field. This to allow the customer
-	// to verify signatures if they want to.
+	// SerializedApprovalRequest: The ApprovalRequest that is serialized
+	// without the SignatureInfo message field. This data is used with the
+	// hashing algorithm to generate the digital signature, and it can be
+	// used for signature verification.
 	SerializedApprovalRequest string `json:"serializedApprovalRequest,omitempty"`
 
 	// Signature: The digital signature.

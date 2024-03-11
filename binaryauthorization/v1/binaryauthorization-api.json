@@ -430,6 +430,42 @@
         },
         "platforms": {
           "resources": {
+            "gke": {
+              "resources": {
+                "policies": {
+                  "methods": {
+                    "evaluate": {
+                      "description": "Evaluates a Kubernetes object versus a GKE platform policy. Returns `NOT_FOUND` if the policy doesn't exist, `INVALID_ARGUMENT` if the policy or request is malformed and `PERMISSION_DENIED` if the client does not have sufficient permissions.",
+                      "flatPath": "v1/projects/{projectsId}/platforms/gke/policies/{policiesId}:evaluate",
+                      "httpMethod": "POST",
+                      "id": "binaryauthorization.projects.platforms.gke.policies.evaluate",
+                      "parameterOrder": [
+                        "name"
+                      ],
+                      "parameters": {
+                        "name": {
+                          "description": "Required. The name of the platform policy to evaluate in the format `projects/*/platforms/*/policies/*`.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/platforms/gke/policies/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1/{+name}:evaluate",
+                      "request": {
+                        "$ref": "EvaluateGkePolicyRequest"
+                      },
+                      "response": {
+                        "$ref": "EvaluateGkePolicyResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    }
+                  }
+                }
+              }
+            },
             "policies": {
               "methods": {
                 "create": {
@@ -706,7 +742,7 @@
       }
     }
   },
-  "revision": "20230929",
+  "revision": "20240220",
   "rootUrl": "https://binaryauthorization.googleapis.com/",
   "schemas": {
     "AdmissionRule": {
@@ -764,6 +800,17 @@
       },
       "type": "object"
     },
+    "AllowlistResult": {
+      "description": "Result of evaluating an image name allowlist.",
+      "id": "AllowlistResult",
+      "properties": {
+        "matchedPattern": {
+          "description": "The allowlist pattern that the image matched.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "AttestationAuthenticator": {
       "description": "An attestation authenticator that will be used to verify attestations. Typically this is just a set of public keys. Conceptually, an authenticator can be treated as always returning either \"authenticated\" or \"not authenticated\" when presented with a signed attestation (almost always assumed to be a [DSSE](https://github.com/secure-systems-lab/dsse) attestation). The details of how an authenticator makes this decision are specific to the type of 'authenticator' that this message wraps.",
       "id": "AttestationAuthenticator",
@@ -810,7 +857,7 @@
       "id": "AttestationSource",
       "properties": {
         "containerAnalysisAttestationProjects": {
-          "description": "The IDs of the GCP projects storing the SLSA attestations as Container Analysis Occurrences.",
+          "description": "The IDs of the Google Cloud projects that store the SLSA attestations as Container Analysis Occurrences, in the format `projects/[PROJECT_ID]`. Maximum number of `container_analysis_attestation_projects` allowed in each `AttestationSource` is 10.",
           "items": {
             "type": "string"
           },
@@ -880,14 +927,14 @@
           "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."
         },
         "members": {
-          "description": "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a Google service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An identifier for a [Kubernetes service account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding.",
+          "description": "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a Google service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An identifier for a [Kubernetes service account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. * `principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`: A single identity in a workforce identity pool. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/group/{group_id}`: All workforce identities in a group. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/attribute.{attribute_name}/{attribute_value}`: All workforce identities with a specific attribute value. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/*`: All identities in a workforce identity pool. * `principal://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}`: A single identity in a workload identity pool. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload identity pool group. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}`: All identities in a workload identity pool with a certain attribute. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/*`: All identities in a workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`: Deleted single identity in a workforce identity pool. For example, `deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-pool-id/subject/my-subject-attribute-value`.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "role": {
-          "description": "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
+          "description": "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview of the IAM roles and permissions, see the [IAM documentation](https://cloud.google.com/iam/docs/roles-overview). For a list of the available pre-defined roles, see [here](https://cloud.google.com/iam/docs/understanding-roles).",
           "type": "string"
         }
       },
@@ -913,6 +960,10 @@
           "$ref": "ImageFreshnessCheck",
           "description": "Optional. Require that an image is no older than a configured expiration time. Image age is determined by its upload time."
         },
+        "sigstoreSignatureCheck": {
+          "$ref": "SigstoreSignatureCheck",
+          "description": "Optional. Require that an image was signed by Cosign with a trusted key. This check requires that both the image and signature are stored in Artifact Registry."
+        },
         "simpleSigningAttestationCheck": {
           "$ref": "SimpleSigningAttestationCheck",
           "description": "Optional. Require a SimpleSigning-type attestation for every image in the deployment."
@@ -928,6 +979,52 @@
         "vulnerabilityCheck": {
           "$ref": "VulnerabilityCheck",
           "description": "Optional. Require that an image does not contain vulnerabilities that violate the configured rules, such as based on severity levels."
+        }
+      },
+      "type": "object"
+    },
+    "CheckResult": {
+      "description": "Result of evaluating one check.",
+      "id": "CheckResult",
+      "properties": {
+        "allowlistResult": {
+          "$ref": "AllowlistResult",
+          "description": "If the image was exempted by an allow_pattern in the check, contains the pattern that the image name matched."
+        },
+        "displayName": {
+          "description": "The name of the check.",
+          "type": "string"
+        },
+        "evaluationResult": {
+          "$ref": "EvaluationResult",
+          "description": "If a check was evaluated, contains the result of the check."
+        },
+        "explanation": {
+          "description": "Explanation of this check result.",
+          "type": "string"
+        },
+        "index": {
+          "description": "The index of the check.",
+          "format": "int64",
+          "type": "string"
+        },
+        "type": {
+          "description": "The type of the check.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "CheckResults": {
+      "description": "Result of evaluating one or more checks.",
+      "id": "CheckResults",
+      "properties": {
+        "results": {
+          "description": "Per-check details.",
+          "items": {
+            "$ref": "CheckResult"
+          },
+          "type": "array"
         }
       },
       "type": "object"
@@ -958,10 +1055,110 @@
       },
       "type": "object"
     },
+    "CheckSetResult": {
+      "description": "Result of evaluating one check set.",
+      "id": "CheckSetResult",
+      "properties": {
+        "allowlistResult": {
+          "$ref": "AllowlistResult",
+          "description": "If the image was exempted by an allow_pattern in the check set, contains the pattern that the image name matched."
+        },
+        "checkResults": {
+          "$ref": "CheckResults",
+          "description": "If checks were evaluated, contains the results of evaluating each check."
+        },
+        "displayName": {
+          "description": "The name of the check set.",
+          "type": "string"
+        },
+        "explanation": {
+          "description": "Explanation of this check set result. Only populated if no checks were evaluated.",
+          "type": "string"
+        },
+        "index": {
+          "description": "The index of the check set.",
+          "format": "int64",
+          "type": "string"
+        },
+        "scope": {
+          "$ref": "Scope",
+          "description": "The scope of the check set."
+        }
+      },
+      "type": "object"
+    },
     "Empty": {
       "description": "A generic empty message that you can re-use to avoid defining duplicated empty messages in your APIs. A typical example is to use it as the request or the response type of an API method. For instance: service Foo { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }",
       "id": "Empty",
       "properties": {},
+      "type": "object"
+    },
+    "EvaluateGkePolicyRequest": {
+      "description": "Request message for PlatformPolicyEvaluationService.EvaluateGkePolicy.",
+      "id": "EvaluateGkePolicyRequest",
+      "properties": {
+        "resource": {
+          "additionalProperties": {
+            "description": "Properties of the object.",
+            "type": "any"
+          },
+          "description": "Required. JSON or YAML blob representing a Kubernetes resource.",
+          "type": "object"
+        }
+      },
+      "type": "object"
+    },
+    "EvaluateGkePolicyResponse": {
+      "description": "Response message for PlatformPolicyEvaluationService.EvaluateGkePolicy.",
+      "id": "EvaluateGkePolicyResponse",
+      "properties": {
+        "results": {
+          "description": "Evaluation result for each Pod contained in the request.",
+          "items": {
+            "$ref": "PodResult"
+          },
+          "type": "array"
+        },
+        "verdict": {
+          "description": "The result of evaluating all Pods in the request.",
+          "enum": [
+            "VERDICT_UNSPECIFIED",
+            "CONFORMANT",
+            "NON_CONFORMANT",
+            "ERROR"
+          ],
+          "enumDescriptions": [
+            "Not specified. This should never be used.",
+            "All Pods in the request conform to the policy.",
+            "At least one Pod does not conform to the policy.",
+            "Encountered at least one error evaluating a Pod and all other Pods conform to the policy. Non-conformance has precedence over errors."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "EvaluationResult": {
+      "description": "Result of evaluating one check.",
+      "id": "EvaluationResult",
+      "properties": {
+        "verdict": {
+          "description": "The result of evaluating this check.",
+          "enum": [
+            "CHECK_VERDICT_UNSPECIFIED",
+            "CONFORMANT",
+            "NON_CONFORMANT",
+            "ERROR"
+          ],
+          "enumDescriptions": [
+            "Not specified. This should never be used.",
+            "The check was successfully evaluated and the image satisfied the check.",
+            "The check was successfully evaluated and the image did not satisfy the check.",
+            "The check was not successfully evaluated."
+          ],
+          "type": "string"
+        }
+      },
       "type": "object"
     },
     "Expr": {
@@ -1051,6 +1248,45 @@
           "description": "Required. The max number of days that is allowed since the image was uploaded. Must be greater than zero.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "ImageResult": {
+      "description": "Result of evaluating one image.",
+      "id": "ImageResult",
+      "properties": {
+        "allowlistResult": {
+          "$ref": "AllowlistResult",
+          "description": "If the image was exempted by a top-level allow_pattern, contains the allowlist pattern that the image name matched."
+        },
+        "checkSetResult": {
+          "$ref": "CheckSetResult",
+          "description": "If a check set was evaluated, contains the result of the check set. Empty if there were no check sets."
+        },
+        "explanation": {
+          "description": "Explanation of this image result. Only populated if no check sets were evaluated.",
+          "type": "string"
+        },
+        "imageUri": {
+          "description": "Image URI from the request.",
+          "type": "string"
+        },
+        "verdict": {
+          "description": "The result of evaluating this image.",
+          "enum": [
+            "IMAGE_VERDICT_UNSPECIFIED",
+            "CONFORMANT",
+            "NON_CONFORMANT",
+            "ERROR"
+          ],
+          "enumDescriptions": [
+            "Not specified. This should never be used.",
+            "Image conforms to the policy.",
+            "Image does not conform to the policy.",
+            "Error evaluating the image. Non-conformance has precedence over errors."
+          ],
+          "type": "string"
         }
       },
       "type": "object"
@@ -1202,6 +1438,48 @@
       },
       "type": "object"
     },
+    "PodResult": {
+      "description": "Result of evaluating the whole GKE policy for one Pod.",
+      "id": "PodResult",
+      "properties": {
+        "imageResults": {
+          "description": "Per-image details.",
+          "items": {
+            "$ref": "ImageResult"
+          },
+          "type": "array"
+        },
+        "kubernetesNamespace": {
+          "description": "The Kubernetes namespace of the Pod.",
+          "type": "string"
+        },
+        "kubernetesServiceAccount": {
+          "description": "The Kubernetes service account of the Pod.",
+          "type": "string"
+        },
+        "podName": {
+          "description": "The name of the Pod.",
+          "type": "string"
+        },
+        "verdict": {
+          "description": "The result of evaluating this Pod.",
+          "enum": [
+            "POD_VERDICT_UNSPECIFIED",
+            "CONFORMANT",
+            "NON_CONFORMANT",
+            "ERROR"
+          ],
+          "enumDescriptions": [
+            "Not specified. This should never be used.",
+            "All images conform to the policy.",
+            "At least one image does not conform to the policy.",
+            "Encountered at least one error evaluating an image and all other images with non-error verdicts conform to the policy. Non-conformance has precedence over errors."
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "Policy": {
       "description": "A policy for container image binary authorization.",
       "id": "Policy",
@@ -1323,6 +1601,60 @@
       },
       "type": "object"
     },
+    "SigstoreAuthority": {
+      "description": "A Sigstore authority, used to verify signatures that are created by Sigstore. An authority is analogous to an attestation authenticator, verifying that a signature is valid or invalid.",
+      "id": "SigstoreAuthority",
+      "properties": {
+        "displayName": {
+          "description": "Optional. A user-provided name for this `SigstoreAuthority`. This field has no effect on the policy evaluation behavior except to improve readability of messages in evaluation results.",
+          "type": "string"
+        },
+        "publicKeySet": {
+          "$ref": "SigstorePublicKeySet",
+          "description": "Required. A simple set of public keys. A signature is considered valid if any keys in the set validate the signature."
+        }
+      },
+      "type": "object"
+    },
+    "SigstorePublicKey": {
+      "description": "A Sigstore public key. `SigstorePublicKey` is the public key material used to authenticate Sigstore signatures.",
+      "id": "SigstorePublicKey",
+      "properties": {
+        "publicKeyPem": {
+          "description": "The public key material in PEM format.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "SigstorePublicKeySet": {
+      "description": "A bundle of Sigstore public keys, used to verify Sigstore signatures. A signature is authenticated by a `SigstorePublicKeySet` if any of the keys verify it.",
+      "id": "SigstorePublicKeySet",
+      "properties": {
+        "publicKeys": {
+          "description": "Required. `public_keys` must have at least one entry.",
+          "items": {
+            "$ref": "SigstorePublicKey"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
+    "SigstoreSignatureCheck": {
+      "description": "A Sigstore signature check, which verifies the Sigstore signature associated with an image.",
+      "id": "SigstoreSignatureCheck",
+      "properties": {
+        "sigstoreAuthorities": {
+          "description": "Required. The authorities required by this check to verify the signature. A signature only needs to be verified by one authority to pass the check.",
+          "items": {
+            "$ref": "SigstoreAuthority"
+          },
+          "type": "array"
+        }
+      },
+      "type": "object"
+    },
     "SimpleSigningAttestationCheck": {
       "description": "Require a signed [DSSE](https://github.com/secure-systems-lab/dsse) attestation with type SimpleSigning.",
       "id": "SimpleSigningAttestationCheck",
@@ -1335,7 +1667,7 @@
           "type": "array"
         },
         "containerAnalysisAttestationProjects": {
-          "description": "Optional. The projects where attestations are stored as Container Analysis Occurrences. Only one attestation needs to successfully verify an image for this check to pass, so a single verified attestation found in any of `container_analysis_attestation_projects` is sufficient for the check to pass. When fetching Occurrences from Container Analysis, only 'AttestationOccurrence' kinds are considered. In the future, additional Occurrence kinds may be added to the query.",
+          "description": "Optional. The projects where attestations are stored as Container Analysis Occurrences, in the format `projects/[PROJECT_ID]`. Only one attestation needs to successfully verify an image for this check to pass, so a single verified attestation found in any of `container_analysis_attestation_projects` is sufficient for the check to pass. When fetching Occurrences from Container Analysis, only `AttestationOccurrence` kinds are considered. In the future, additional Occurrence kinds may be added to the query. Maximum number of `container_analysis_attestation_projects` allowed in each `SimpleSigningAttestationCheck` is 10.",
           "items": {
             "type": "string"
           },
@@ -1520,7 +1852,7 @@
           "type": "array"
         },
         "containerAnalysisVulnerabilityProjects": {
-          "description": "Optional. The projects where vulnerabilities are stored as Container Analysis Occurrences. Each project is expressed in the resource format of `projects/[PROJECT_ID]`, e.g., `projects/my-gcp-project`. An attempt will be made for each project to fetch vulnerabilities, and all valid vulnerabilities will be used to check against the vulnerability policy. If no valid scan is found in all projects configured here, an error will be returned for the check.",
+          "description": "Optional. The projects where vulnerabilities are stored as Container Analysis Occurrences. Each project is expressed in the resource format of `projects/[PROJECT_ID]`, e.g., `projects/my-gcp-project`. An attempt will be made for each project to fetch vulnerabilities, and all valid vulnerabilities will be used to check against the vulnerability policy. If no valid scan is found in all projects configured here, an error will be returned for the check. Maximum number of `container_analysis_vulnerability_projects` allowed in each `VulnerabilityCheck` is 10.",
           "items": {
             "type": "string"
           },

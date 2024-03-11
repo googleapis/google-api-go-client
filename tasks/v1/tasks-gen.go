@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "tasks:v1"
 const apiName = "tasks"
 const apiVersion = "v1"
 const basePath = "https://tasks.googleapis.com/"
+const basePathTemplate = "https://tasks.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://tasks.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -115,7 +117,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -1865,8 +1869,7 @@ func (c *TasksListCall) DueMin(dueMin string) *TasksListCall {
 }
 
 // MaxResults sets the optional parameter "maxResults": Maximum number
-// of task lists returned on one page.  The default is 20 (max allowed:
-// 100).
+// of tasks returned on one page.  The default is 20 (max allowed: 100).
 func (c *TasksListCall) MaxResults(maxResults int64) *TasksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
@@ -2041,7 +2044,7 @@ func (c *TasksListCall) Do(opts ...googleapi.CallOption) (*Tasks, error) {
 	//       "type": "string"
 	//     },
 	//     "maxResults": {
-	//       "description": "Maximum number of task lists returned on one page. Optional. The default is 20 (max allowed: 100).",
+	//       "description": "Maximum number of tasks returned on one page. Optional. The default is 20 (max allowed: 100).",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

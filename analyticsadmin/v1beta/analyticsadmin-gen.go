@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "analyticsadmin:v1beta"
 const apiName = "analyticsadmin"
 const apiVersion = "v1beta"
 const basePath = "https://analyticsadmin.googleapis.com/"
+const basePathTemplate = "https://analyticsadmin.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://analyticsadmin.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -115,7 +117,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -1390,7 +1394,7 @@ type GoogleAnalyticsAdminV1betaConversionEventDefaultConversionValue struct {
 	// CurrencyCode: When a conversion event for this event_name has no set
 	// currency, this currency will be applied as the default. Must be in
 	// ISO 4217 currency code format. See
-	// https://en.wikipedia.org/wiki/ISO_4217 for more.
+	// https://en.wikipedia.org/wiki/ISO_4217 for more information.
 	CurrencyCode string `json:"currencyCode,omitempty"`
 
 	// Value: This value will be used to populate the value for all
@@ -2925,7 +2929,8 @@ type GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest struct {
 	PageToken string `json:"pageToken,omitempty"`
 
 	// Property: Optional. Resource name for a child property. If set, only
-	// return changes made to this property or its child resources.
+	// return changes made to this property or its child resources. Format:
+	// properties/{propertyId} Example: "properties/100"
 	Property string `json:"property,omitempty"`
 
 	// ResourceType: Optional. If set, only return changes if they are for a
@@ -4154,14 +4159,16 @@ type AccountsRunAccessReportCall struct {
 // RunAccessReport: Returns a customized report of data access records.
 // The report provides records of each time a user reads Google
 // Analytics reporting data. Access records are retained for up to 2
-// years. Data Access Reports can be requested for a property. The
-// property must be in Google Analytics 360. This method is only
-// available to Administrators. These data access records include GA4 UI
-// Reporting, GA4 UI Explorations, GA4 Data API, and other products like
-// Firebase & Admob that can retrieve data from Google Analytics through
-// a linkage. These records don't include property configuration changes
-// like adding a stream or changing a property's time zone. For
-// configuration change history, see searchChangeHistoryEvents
+// years. Data Access Reports can be requested for a property. Reports
+// may be requested for any property, but dimensions that aren't related
+// to quota can only be requested on Google Analytics 360 properties.
+// This method is only available to Administrators. These data access
+// records include GA4 UI Reporting, GA4 UI Explorations, GA4 Data API,
+// and other products like Firebase & Admob that can retrieve data from
+// Google Analytics through a linkage. These records don't include
+// property configuration changes like adding a stream or changing a
+// property's time zone. For configuration change history, see
+// searchChangeHistoryEvents
 // (https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).
 //
 //   - entity: The Data Access Report supports requesting at the property
@@ -4271,7 +4278,7 @@ func (c *AccountsRunAccessReportCall) Do(opts ...googleapi.CallOption) (*GoogleA
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a customized report of data access records. The report provides records of each time a user reads Google Analytics reporting data. Access records are retained for up to 2 years. Data Access Reports can be requested for a property. The property must be in Google Analytics 360. This method is only available to Administrators. These data access records include GA4 UI Reporting, GA4 UI Explorations, GA4 Data API, and other products like Firebase \u0026 Admob that can retrieve data from Google Analytics through a linkage. These records don't include property configuration changes like adding a stream or changing a property's time zone. For configuration change history, see [searchChangeHistoryEvents](https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).",
+	//   "description": "Returns a customized report of data access records. The report provides records of each time a user reads Google Analytics reporting data. Access records are retained for up to 2 years. Data Access Reports can be requested for a property. Reports may be requested for any property, but dimensions that aren't related to quota can only be requested on Google Analytics 360 properties. This method is only available to Administrators. These data access records include GA4 UI Reporting, GA4 UI Explorations, GA4 Data API, and other products like Firebase \u0026 Admob that can retrieve data from Google Analytics through a linkage. These records don't include property configuration changes like adding a stream or changing a property's time zone. For configuration change history, see [searchChangeHistoryEvents](https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).",
 	//   "flatPath": "v1beta/accounts/{accountsId}:runAccessReport",
 	//   "httpMethod": "POST",
 	//   "id": "analyticsadmin.accounts.runAccessReport",
@@ -4317,7 +4324,7 @@ type AccountsSearchChangeHistoryEventsCall struct {
 // or its children given the specified set of filters.
 //
 //   - account: The account resource for which to return change history
-//     resources.
+//     resources. Format: accounts/{account} Example: "accounts/100".
 func (r *AccountsService) SearchChangeHistoryEvents(account string, googleanalyticsadminv1betasearchchangehistoryeventsrequest *GoogleAnalyticsAdminV1betaSearchChangeHistoryEventsRequest) *AccountsSearchChangeHistoryEventsCall {
 	c := &AccountsSearchChangeHistoryEventsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.account = account
@@ -4428,7 +4435,7 @@ func (c *AccountsSearchChangeHistoryEventsCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "account": {
-	//       "description": "Required. The account resource for which to return change history resources.",
+	//       "description": "Required. The account resource for which to return change history resources. Format: accounts/{account} Example: \"accounts/100\"",
 	//       "location": "path",
 	//       "pattern": "^accounts/[^/]+$",
 	//       "required": true,
@@ -5591,14 +5598,16 @@ type PropertiesRunAccessReportCall struct {
 // RunAccessReport: Returns a customized report of data access records.
 // The report provides records of each time a user reads Google
 // Analytics reporting data. Access records are retained for up to 2
-// years. Data Access Reports can be requested for a property. The
-// property must be in Google Analytics 360. This method is only
-// available to Administrators. These data access records include GA4 UI
-// Reporting, GA4 UI Explorations, GA4 Data API, and other products like
-// Firebase & Admob that can retrieve data from Google Analytics through
-// a linkage. These records don't include property configuration changes
-// like adding a stream or changing a property's time zone. For
-// configuration change history, see searchChangeHistoryEvents
+// years. Data Access Reports can be requested for a property. Reports
+// may be requested for any property, but dimensions that aren't related
+// to quota can only be requested on Google Analytics 360 properties.
+// This method is only available to Administrators. These data access
+// records include GA4 UI Reporting, GA4 UI Explorations, GA4 Data API,
+// and other products like Firebase & Admob that can retrieve data from
+// Google Analytics through a linkage. These records don't include
+// property configuration changes like adding a stream or changing a
+// property's time zone. For configuration change history, see
+// searchChangeHistoryEvents
 // (https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).
 //
 //   - entity: The Data Access Report supports requesting at the property
@@ -5708,7 +5717,7 @@ func (c *PropertiesRunAccessReportCall) Do(opts ...googleapi.CallOption) (*Googl
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a customized report of data access records. The report provides records of each time a user reads Google Analytics reporting data. Access records are retained for up to 2 years. Data Access Reports can be requested for a property. The property must be in Google Analytics 360. This method is only available to Administrators. These data access records include GA4 UI Reporting, GA4 UI Explorations, GA4 Data API, and other products like Firebase \u0026 Admob that can retrieve data from Google Analytics through a linkage. These records don't include property configuration changes like adding a stream or changing a property's time zone. For configuration change history, see [searchChangeHistoryEvents](https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).",
+	//   "description": "Returns a customized report of data access records. The report provides records of each time a user reads Google Analytics reporting data. Access records are retained for up to 2 years. Data Access Reports can be requested for a property. Reports may be requested for any property, but dimensions that aren't related to quota can only be requested on Google Analytics 360 properties. This method is only available to Administrators. These data access records include GA4 UI Reporting, GA4 UI Explorations, GA4 Data API, and other products like Firebase \u0026 Admob that can retrieve data from Google Analytics through a linkage. These records don't include property configuration changes like adding a stream or changing a property's time zone. For configuration change history, see [searchChangeHistoryEvents](https://developers.google.com/analytics/devguides/config/admin/v1/rest/v1alpha/accounts/searchChangeHistoryEvents).",
 	//   "flatPath": "v1beta/properties/{propertiesId}:runAccessReport",
 	//   "httpMethod": "POST",
 	//   "id": "analyticsadmin.properties.runAccessReport",

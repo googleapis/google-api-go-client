@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "playintegrity:v1"
 const apiName = "playintegrity"
 const apiVersion = "v1"
 const basePath = "https://playintegrity.googleapis.com/"
+const basePathTemplate = "https://playintegrity.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://playintegrity.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -106,7 +108,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -453,9 +457,11 @@ type DeviceIntegrity struct {
 	//   "MEETS_VIRTUAL_INTEGRITY" - App is running on an Android emulator
 	// with Google Play services which meets core Android compatibility
 	// requirements.
-	//   "MEETS_WEAK_INTEGRITY" - App is running on a device that passes
-	// only weak integrity checks (is a physical device).
 	DeviceRecognitionVerdict []string `json:"deviceRecognitionVerdict,omitempty"`
+
+	// RecentDeviceActivity: Details about the device activity of the device
+	// the app is running on.
+	RecentDeviceActivity *RecentDeviceActivity `json:"recentDeviceActivity,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "DeviceRecognitionVerdict") to unconditionally include in API
@@ -524,6 +530,51 @@ type EnvironmentDetails struct {
 
 func (s *EnvironmentDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod EnvironmentDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RecentDeviceActivity: Recent device activity can help developers
+// identify devices that have exhibited hyperactive attestation
+// activity, which could be a sign of an attack or token farming.
+type RecentDeviceActivity struct {
+	// DeviceActivityLevel: Required. Indicates the activity level of the
+	// device.
+	//
+	// Possible values:
+	//   "DEVICE_ACTIVITY_LEVEL_UNSPECIFIED" - Device activity level has not
+	// been set.
+	//   "UNEVALUATED" - Device activity level has not been evaluated.
+	//   "LEVEL_1" - Indicates the amount of used tokens. See the
+	// documentation for details.
+	//   "LEVEL_2" - Indicates the amount of used tokens. See the
+	// documentation for details.
+	//   "LEVEL_3" - Indicates the amount of used tokens. See the
+	// documentation for details.
+	//   "LEVEL_4" - Indicates the amount of used tokens. See the
+	// documentation for details.
+	DeviceActivityLevel string `json:"deviceActivityLevel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceActivityLevel")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceActivityLevel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RecentDeviceActivity) MarshalJSON() ([]byte, error) {
+	type NoMethod RecentDeviceActivity
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

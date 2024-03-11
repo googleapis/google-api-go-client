@@ -21,6 +21,33 @@
   "description": "Schedule queries or transfer external data from SaaS applications to Google BigQuery on a regular basis.",
   "discoveryVersion": "v1",
   "documentationLink": "https://cloud.google.com/bigquery-transfer/",
+  "endpoints": [
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://bigquerydatatransfer.me-central2.rep.googleapis.com/",
+      "location": "me-central2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://bigquerydatatransfer.europe-west3.rep.googleapis.com/",
+      "location": "europe-west3"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://bigquerydatatransfer.europe-west9.rep.googleapis.com/",
+      "location": "europe-west9"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://bigquerydatatransfer.us-east4.rep.googleapis.com/",
+      "location": "us-east4"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://bigquerydatatransfer.us-west1.rep.googleapis.com/",
+      "location": "us-west1"
+    }
+  ],
   "fullyEncodeReservedExpansion": true,
   "icons": {
     "x16": "http://www.google.com/images/icons/product/search-16.gif",
@@ -342,6 +369,35 @@
                 "https://www.googleapis.com/auth/bigquery",
                 "https://www.googleapis.com/auth/cloud-platform",
                 "https://www.googleapis.com/auth/cloud-platform.read-only"
+              ]
+            },
+            "unenrollDataSources": {
+              "description": "Unenroll data sources in a user project. This allows users to remove transfer configurations for these data sources. They will no longer appear in the ListDataSources RPC and will also no longer appear in the [BigQuery UI](https://console.cloud.google.com/bigquery). Data transfers configurations of unenrolled data sources will not be scheduled.",
+              "flatPath": "v1/projects/{projectsId}/locations/{locationsId}:unenrollDataSources",
+              "httpMethod": "POST",
+              "id": "bigquerydatatransfer.projects.locations.unenrollDataSources",
+              "parameterOrder": [
+                "name"
+              ],
+              "parameters": {
+                "name": {
+                  "description": "The name of the project resource in the form: `projects/{project_id}`",
+                  "location": "path",
+                  "pattern": "^projects/[^/]+/locations/[^/]+$",
+                  "required": true,
+                  "type": "string"
+                }
+              },
+              "path": "v1/{+name}:unenrollDataSources",
+              "request": {
+                "$ref": "UnenrollDataSourcesRequest"
+              },
+              "response": {
+                "$ref": "Empty"
+              },
+              "scopes": [
+                "https://www.googleapis.com/auth/bigquery",
+                "https://www.googleapis.com/auth/cloud-platform"
               ]
             }
           },
@@ -1342,7 +1398,7 @@
       }
     }
   },
-  "revision": "20230827",
+  "revision": "20240306",
   "rootUrl": "https://bigquerydatatransfer.googleapis.com/",
   "schemas": {
     "CheckValidCredsRequest": {
@@ -1766,12 +1822,12 @@
           "type": "boolean"
         },
         "endTime": {
-          "description": "Defines time to stop scheduling transfer runs. A transfer run cannot be scheduled at or after the end time. The end time can be changed at any moment. The time when a data transfer can be trigerred manually is not limited by this option.",
+          "description": "Defines time to stop scheduling transfer runs. A transfer run cannot be scheduled at or after the end time. The end time can be changed at any moment. The time when a data transfer can be triggered manually is not limited by this option.",
           "format": "google-datetime",
           "type": "string"
         },
         "startTime": {
-          "description": "Specifies time to start scheduling transfer runs. The first run will be scheduled at or after the start time according to a recurrence pattern defined in the schedule string. The start time can be changed at any moment. The time when a data transfer can be trigerred manually is not limited by this option.",
+          "description": "Specifies time to start scheduling transfer runs. The first run will be scheduled at or after the start time according to a recurrence pattern defined in the schedule string. The start time can be changed at any moment. The time when a data transfer can be triggered manually is not limited by this option.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -1906,7 +1962,7 @@
           "type": "string"
         },
         "disabled": {
-          "description": "Is this config disabled. When set to true, no runs are scheduled for a given transfer.",
+          "description": "Is this config disabled. When set to true, no runs will be scheduled for this transfer config.",
           "type": "boolean"
         },
         "displayName": {
@@ -1932,7 +1988,7 @@
           "type": "string"
         },
         "notificationPubsubTopic": {
-          "description": "Pub/Sub topic where notifications will be sent after transfer runs associated with this transfer config finish. The format for specifying a pubsub topic is: `projects/{project}/topics/{topic}`",
+          "description": "Pub/Sub topic where notifications will be sent after transfer runs associated with this transfer config finish. The format for specifying a pubsub topic is: `projects/{project_id}/topics/{topic_id}`",
           "type": "string"
         },
         "ownerInfo": {
@@ -2057,7 +2113,7 @@
           "type": "string"
         },
         "notificationPubsubTopic": {
-          "description": "Output only. Pub/Sub topic where a notification will be sent after this transfer run finishes. The format for specifying a pubsub topic is: `projects/{project}/topics/{topic}`",
+          "description": "Output only. Pub/Sub topic where a notification will be sent after this transfer run finishes. The format for specifying a pubsub topic is: `projects/{project_id}/topics/{topic_id}`",
           "readOnly": true,
           "type": "string"
         },
@@ -2121,6 +2177,20 @@
           "description": "Deprecated. Unique ID of the user on whose behalf transfer is done.",
           "format": "int64",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "UnenrollDataSourcesRequest": {
+      "description": "A request to unenroll a set of data sources so they are no longer visible in the BigQuery UI's `Transfer` tab.",
+      "id": "UnenrollDataSourcesRequest",
+      "properties": {
+        "dataSourceIds": {
+          "description": "Data sources that are unenrolled. It is required to provide at least one data source id.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
         }
       },
       "type": "object"

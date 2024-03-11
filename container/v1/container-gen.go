@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "container:v1"
 const apiName = "container"
 const apiVersion = "v1"
 const basePath = "https://container.googleapis.com/"
+const basePathTemplate = "https://container.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://container.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -504,6 +508,9 @@ type AddonsConfig struct {
 	// track whether network policy is enabled for the nodes.
 	NetworkPolicyConfig *NetworkPolicyConfig `json:"networkPolicyConfig,omitempty"`
 
+	// StatefulHaConfig: Optional. Configuration for the StatefulHA add-on.
+	StatefulHaConfig *StatefulHAConfig `json:"statefulHaConfig,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CloudRunConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -534,6 +541,9 @@ func (s *AddonsConfig) MarshalJSON() ([]byte, error) {
 type AdvancedDatapathObservabilityConfig struct {
 	// EnableMetrics: Expose flow metrics on nodes
 	EnableMetrics bool `json:"enableMetrics,omitempty"`
+
+	// EnableRelay: Enable Relay component
+	EnableRelay bool `json:"enableRelay,omitempty"`
 
 	// RelayMode: Method used to make Relay available
 	//
@@ -1795,6 +1805,18 @@ type ClusterUpdate struct {
 	// DesiredImageType: The desired image type for the node pool. NOTE: Set
 	// the "desired_node_pool" field as well.
 	DesiredImageType string `json:"desiredImageType,omitempty"`
+
+	// DesiredInTransitEncryptionConfig: Specify the details of in-transit
+	// encryption.
+	//
+	// Possible values:
+	//   "IN_TRANSIT_ENCRYPTION_CONFIG_UNSPECIFIED" - Unspecified, will be
+	// inferred as default - IN_TRANSIT_ENCRYPTION_UNSPECIFIED.
+	//   "IN_TRANSIT_ENCRYPTION_DISABLED" - In-transit encryption is
+	// disabled.
+	//   "IN_TRANSIT_ENCRYPTION_INTER_NODE_TRANSPARENT" - Data in-transit is
+	// encrypted using inter-node transparent encryption.
+	DesiredInTransitEncryptionConfig string `json:"desiredInTransitEncryptionConfig,omitempty"`
 
 	// DesiredIntraNodeVisibilityConfig: The desired config of Intra-node
 	// visibility.
@@ -4368,6 +4390,18 @@ type NetworkConfig struct {
 	// Gateway API on this cluster.
 	GatewayApiConfig *GatewayAPIConfig `json:"gatewayApiConfig,omitempty"`
 
+	// InTransitEncryptionConfig: Specify the details of in-transit
+	// encryption.
+	//
+	// Possible values:
+	//   "IN_TRANSIT_ENCRYPTION_CONFIG_UNSPECIFIED" - Unspecified, will be
+	// inferred as default - IN_TRANSIT_ENCRYPTION_UNSPECIFIED.
+	//   "IN_TRANSIT_ENCRYPTION_DISABLED" - In-transit encryption is
+	// disabled.
+	//   "IN_TRANSIT_ENCRYPTION_INTER_NODE_TRANSPARENT" - Data in-transit is
+	// encrypted using inter-node transparent encryption.
+	InTransitEncryptionConfig string `json:"inTransitEncryptionConfig,omitempty"`
+
 	// Network: Output only. The relative name of the Google Compute Engine
 	// network(https://cloud.google.com/compute/docs/networks-and-firewalls#n
 	// etworks) to which the cluster is connected. Example:
@@ -4633,6 +4667,9 @@ type NodeConfig struct {
 	// 'pd-standard'
 	DiskType string `json:"diskType,omitempty"`
 
+	// EnableConfidentialStorage: Optional. Reserved for future use.
+	EnableConfidentialStorage bool `json:"enableConfidentialStorage,omitempty"`
+
 	// EphemeralStorageLocalSsdConfig: Parameters for the node ephemeral
 	// storage using Local SSDs. If unspecified, ephemeral storage is backed
 	// by the boot disk.
@@ -4754,6 +4791,10 @@ type NodeConfig struct {
 
 	// SandboxConfig: Sandbox configuration for this node.
 	SandboxConfig *SandboxConfig `json:"sandboxConfig,omitempty"`
+
+	// SecondaryBootDisks: List of secondary boot disks attached to the
+	// nodes.
+	SecondaryBootDisks []*SecondaryBootDisk `json:"secondaryBootDisks,omitempty"`
 
 	// ServiceAccount: The Google Cloud Platform Service Account to be used
 	// by the node VMs. Specify the email address of the Service Account;
@@ -5148,6 +5189,10 @@ type NodePool struct {
 	// PodIpv4CidrSize: [Output only] The pod CIDR block size per node in
 	// this node pool.
 	PodIpv4CidrSize int64 `json:"podIpv4CidrSize,omitempty"`
+
+	// QueuedProvisioning: Specifies the configuration of queued
+	// provisioning.
+	QueuedProvisioning *QueuedProvisioning `json:"queuedProvisioning,omitempty"`
 
 	// SelfLink: [Output only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -5964,6 +6009,37 @@ func (s *PubSub) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueuedProvisioning: QueuedProvisioning defines the queued
+// provisioning used by the node pool.
+type QueuedProvisioning struct {
+	// Enabled: Denotes that this nodepool is QRM specific, meaning nodes
+	// can be only obtained through queuing via the Cluster Autoscaler
+	// ProvisioningRequest API.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueuedProvisioning) MarshalJSON() ([]byte, error) {
+	type NoMethod QueuedProvisioning
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RangeInfo: RangeInfo contains the range name and the range
 // utilization by this cluster.
 type RangeInfo struct {
@@ -6433,6 +6509,43 @@ func (s *SandboxConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SecondaryBootDisk: SecondaryBootDisk represents a persistent disk
+// attached to a node with special configurations based on its mode.
+type SecondaryBootDisk struct {
+	// DiskImage: Fully-qualified resource ID for an existing disk image.
+	DiskImage string `json:"diskImage,omitempty"`
+
+	// Mode: Disk mode (container image cache, etc.)
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - MODE_UNSPECIFIED is when mode is not set.
+	//   "CONTAINER_IMAGE_CACHE" - CONTAINER_IMAGE_CACHE is for using the
+	// secondary boot disk as a container image cache.
+	Mode string `json:"mode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DiskImage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiskImage") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecondaryBootDisk) MarshalJSON() ([]byte, error) {
+	type NoMethod SecondaryBootDisk
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SecurityBulletinEvent: SecurityBulletinEvent is a notification sent
 // to customers when a security bulletin has been posted that they are
 // vulnerable to.
@@ -6526,6 +6639,8 @@ type SecurityPostureConfig struct {
 	// cluster.
 	//   "VULNERABILITY_BASIC" - Applies basic vulnerability scanning on the
 	// cluster.
+	//   "VULNERABILITY_ENTERPRISE" - Applies the Security Posture's
+	// vulnerability on cluster Enterprise level features.
 	VulnerabilityMode string `json:"vulnerabilityMode,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Mode") to
@@ -7486,6 +7601,34 @@ func (s *StartIPRotationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StatefulHAConfig: Configuration for the Stateful HA add-on.
+type StatefulHAConfig struct {
+	// Enabled: Whether the Stateful HA add-on is enabled for this cluster.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StatefulHAConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod StatefulHAConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -7938,6 +8081,10 @@ type UpdateNodePoolRequest struct {
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects).
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
+
+	// QueuedProvisioning: Specifies the configuration of queued
+	// provisioning.
+	QueuedProvisioning *QueuedProvisioning `json:"queuedProvisioning,omitempty"`
 
 	// ResourceLabels: The resource labels for the node pool to use to
 	// annotate any related Google Compute Engine resources.
@@ -9708,8 +9855,7 @@ type ProjectsLocationsClustersGetJwksCall struct {
 }
 
 // GetJwks: Gets the public component of the cluster signing keys in
-// JSON Web Key format. This API is not yet intended for general use,
-// and is not available for all clusters.
+// JSON Web Key format.
 //
 //   - parent: The cluster (project, location, cluster name) to get keys
 //     for. Specified in the format `projects/*/locations/*/clusters/*`.
@@ -9818,7 +9964,7 @@ func (c *ProjectsLocationsClustersGetJwksCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the public component of the cluster signing keys in JSON Web Key format. This API is not yet intended for general use, and is not available for all clusters.",
+	//   "description": "Gets the public component of the cluster signing keys in JSON Web Key format.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/jwks",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.locations.clusters.getJwks",
@@ -13377,8 +13523,7 @@ type ProjectsLocationsClustersWellKnownGetOpenidConfigurationCall struct {
 // GetOpenidConfiguration: Gets the OIDC discovery document for the
 // cluster. See the OpenID Connect Discovery 1.0 specification
 // (https://openid.net/specs/openid-connect-discovery-1_0.html) for
-// details. This API is not yet intended for general use, and is not
-// available for all clusters.
+// details.
 //
 //   - parent: The cluster (project, location, cluster name) to get the
 //     discovery document for. Specified in the format
@@ -13488,7 +13633,7 @@ func (c *ProjectsLocationsClustersWellKnownGetOpenidConfigurationCall) Do(opts .
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the OIDC discovery document for the cluster. See the [OpenID Connect Discovery 1.0 specification](https://openid.net/specs/openid-connect-discovery-1_0.html) for details. This API is not yet intended for general use, and is not available for all clusters.",
+	//   "description": "Gets the OIDC discovery document for the cluster. See the [OpenID Connect Discovery 1.0 specification](https://openid.net/specs/openid-connect-discovery-1_0.html) for details.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/.well-known/openid-configuration",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.locations.clusters.well-known.getOpenid-configuration",

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "admin:reports_v1"
 const apiName = "admin"
 const apiVersion = "reports_v1"
 const basePath = "https://admin.googleapis.com/"
+const basePathTemplate = "https://admin.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://admin.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -115,7 +117,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -364,11 +368,9 @@ type ActivityEvents struct {
 	// types of events. For `eventName` request parameters in general: - If
 	// no `eventName` is given, the report returns all possible instances of
 	// an `eventName`. - When you request an `eventName`, the API's response
-	// returns all activities which contain that `eventName`. It is possible
-	// that the returned activities will have other `eventName` properties
-	// in addition to the one requested. For more information about
-	// `eventName` properties, see the list of event names for various
-	// applications above in `applicationName`.
+	// returns all activities which contain that `eventName`. For more
+	// information about `eventName` properties, see the list of event names
+	// for various applications above in `applicationName`.
 	Name string `json:"name,omitempty"`
 
 	// Parameters: Parameter value pairs for various applications. For more
@@ -1241,7 +1243,8 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//         "context_aware_access",
 	//         "chrome",
 	//         "data_studio",
-	//         "keep"
+	//         "keep",
+	//         "vault"
 	//       ],
 	//       "enumDescriptions": [
 	//         "The Google Workspace Access Transparency activity reports return information about different types of Access Transparency activity events.",
@@ -1264,10 +1267,11 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 	//         "The Context-aware access activity reports return information about users' access denied events due to Context-aware access rules.",
 	//         "The Chrome activity reports return information about Chrome browser and Chrome OS events.",
 	//         "The Data Studio activity reports return information about various types of Data Studio activity events.",
-	//         "The Keep application's activity reports return information about various Google Keep activity events. The Keep activity report is only available for Google Workspace Business and Enterprise customers."
+	//         "The Keep application's activity reports return information about various Google Keep activity events. The Keep activity report is only available for Google Workspace Business and Enterprise customers.",
+	//         "The Vault activity reports return information about various types of Vault activity events."
 	//       ],
 	//       "location": "path",
-	//       "pattern": "(access_transparency)|(admin)|(calendar)|(chat)|(chrome)|(context_aware_access)|(data_studio)|(drive)|(gcp)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(keep)|(login)|(meet)|(mobile)|(rules)|(saml)|(token)|(user_accounts)",
+	//       "pattern": "(access_transparency)|(admin)|(calendar)|(chat)|(chrome)|(context_aware_access)|(data_studio)|(drive)|(gcp)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(keep)|(login)|(meet)|(mobile)|(rules)|(saml)|(token)|(user_accounts)|(vault)",
 	//       "required": true,
 	//       "type": "string"
 	//     },
@@ -1511,7 +1515,8 @@ func (c *ActivitiesWatchCall) MaxResults(maxResults int64) *ActivitiesWatchCall 
 	return c
 }
 
-// OrgUnitID sets the optional parameter "orgUnitID": ID of the
+// OrgUnitID sets the optional parameter "orgUnitID": `Deprecated`. This
+// field is deprecated and is no longer supported. ID of the
 // organizational unit to report on. Activity records will be shown only
 // for users who belong to the specified organizational unit. Data
 // before Dec 17, 2018 doesn't appear in the filtered results.
@@ -1740,7 +1745,8 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 	//     },
 	//     "orgUnitID": {
 	//       "default": "",
-	//       "description": "ID of the organizational unit to report on. Activity records will be shown only for users who belong to the specified organizational unit. Data before Dec 17, 2018 doesn't appear in the filtered results.",
+	//       "deprecated": true,
+	//       "description": "`Deprecated`. This field is deprecated and is no longer supported. ID of the organizational unit to report on. Activity records will be shown only for users who belong to the specified organizational unit. Data before Dec 17, 2018 doesn't appear in the filtered results.",
 	//       "location": "query",
 	//       "pattern": "(id:[a-z0-9]+)",
 	//       "type": "string"

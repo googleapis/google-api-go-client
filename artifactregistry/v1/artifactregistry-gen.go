@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "artifactregistry:v1"
 const apiName = "artifactregistry"
 const apiVersion = "v1"
 const basePath = "https://artifactregistry.googleapis.com/"
+const basePathTemplate = "https://artifactregistry.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://artifactregistry.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -117,7 +119,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -142,6 +146,7 @@ func New(client *http.Client) (*Service, error) {
 		return nil, errors.New("client is nil")
 	}
 	s := &Service{client: client, BasePath: basePath}
+	s.Media = NewMediaService(s)
 	s.Projects = NewProjectsService(s)
 	return s, nil
 }
@@ -151,6 +156,8 @@ type Service struct {
 	BasePath  string // API endpoint base URL
 	UserAgent string // optional additional User-Agent fragment
 
+	Media *MediaService
+
 	Projects *ProjectsService
 }
 
@@ -159,6 +166,15 @@ func (s *Service) userAgent() string {
 		return googleapi.UserAgent
 	}
 	return googleapi.UserAgent + " " + s.UserAgent
+}
+
+func NewMediaService(s *Service) *MediaService {
+	rs := &MediaService{s: s}
+	return rs
+}
+
+type MediaService struct {
+	s *Service
 }
 
 func NewProjectsService(s *Service) *ProjectsService {
@@ -417,11 +433,14 @@ func (s *AptArtifact) MarshalJSON() ([]byte, error) {
 
 // AptRepository: Configuration for an Apt remote repository.
 type AptRepository struct {
+	// CustomRepository: Customer-specified remote repository.
+	CustomRepository *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryCustomRepository `json:"customRepository,omitempty"`
+
 	// PublicRepository: One of the publicly available Apt repositories
 	// supported by Artifact Registry.
 	PublicRepository *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPublicRepository `json:"publicRepository,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PublicRepository") to
+	// ForceSendFields is a list of field names (e.g. "CustomRepository") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -429,7 +448,7 @@ type AptRepository struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PublicRepository") to
+	// NullFields is a list of field names (e.g. "CustomRepository") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -541,11 +560,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -557,11 +599,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -657,9 +708,6 @@ type CleanupPolicyCondition struct {
 	//   "UNTAGGED" - Applies to untagged versions only.
 	//   "ANY" - Applies to all versions.
 	TagState string `json:"tagState,omitempty"`
-
-	// VersionAge: DEPRECATED: Use older_than.
-	VersionAge string `json:"versionAge,omitempty"`
 
 	// VersionNamePrefixes: Match versions by version name prefix. Applied
 	// on any prefix match.
@@ -798,6 +846,9 @@ func (s *DockerImage) MarshalJSON() ([]byte, error) {
 
 // DockerRepository: Configuration for a Docker remote repository.
 type DockerRepository struct {
+	// CustomRepository: Customer-specified remote repository.
+	CustomRepository *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepositoryCustomRepository `json:"customRepository,omitempty"`
+
 	// PublicRepository: One of the publicly available Docker repositories
 	// supported by Artifact Registry.
 	//
@@ -806,7 +857,7 @@ type DockerRepository struct {
 	//   "DOCKER_HUB" - Docker Hub.
 	PublicRepository string `json:"publicRepository,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PublicRepository") to
+	// ForceSendFields is a list of field names (e.g. "CustomRepository") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -814,7 +865,7 @@ type DockerRepository struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PublicRepository") to
+	// NullFields is a list of field names (e.g. "CustomRepository") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -860,6 +911,13 @@ func (s *DockerRepositoryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DockerRepositoryConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DownloadFileResponse: The response to download a file.
+type DownloadFileResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -1062,6 +1120,37 @@ func (s *GoogleDevtoolsArtifactregistryV1File) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryCus
+// tomRepository: Customer-specified publicly available remote
+// repository.
+type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryCustomRepository struct {
+	// Uri: An http/https uri reference to the upstream remote repository,
+	// for ex: "https://my.apt.registry/".
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryCustomRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPub
 // licRepository: Publicly available Apt repositories constructed from a
 // common repository base and a custom repository path.
@@ -1099,6 +1188,161 @@ type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPublicRe
 
 func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPublicRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigAptRepositoryPublicRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepository
+// CustomRepository: Customer-specified publicly available remote
+// repository.
+type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepositoryCustomRepository struct {
+	// Uri: An http/https uri reference to the custom remote repository, for
+	// ex: "https://registry-1.docker.io".
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigDockerRepositoryCustomRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryC
+// ustomRepository: Customer-specified publicly available remote
+// repository.
+type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryCustomRepository struct {
+	// Uri: An http/https uri reference to the upstream remote repository,
+	// for ex: "https://my.maven.registry/".
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryCustomRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCus
+// tomRepository: Customer-specified publicly available remote
+// repository.
+type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCustomRepository struct {
+	// Uri: An http/https uri reference to the upstream remote repository,
+	// for ex: "https://my.npm.registry/".
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCustomRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepository
+// CustomRepository: Customer-specified publicly available remote
+// repository.
+type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepositoryCustomRepository struct {
+	// Uri: An http/https uri reference to the upstream remote repository,
+	// for ex: "https://my.python.registry/".
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepositoryCustomRepository
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryCus
+// tomRepository: Customer-specified publicly available remote
+// repository.
+type GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryCustomRepository struct {
+	// Uri: An http/https uri reference to the upstream remote repository,
+	// for ex: "https://my.yum.registry/".
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Uri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Uri") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryCustomRepository) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryCustomRepository
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2088,6 +2332,9 @@ func (s *MavenArtifact) MarshalJSON() ([]byte, error) {
 
 // MavenRepository: Configuration for a Maven remote repository.
 type MavenRepository struct {
+	// CustomRepository: Customer-specified remote repository.
+	CustomRepository *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigMavenRepositoryCustomRepository `json:"customRepository,omitempty"`
+
 	// PublicRepository: One of the publicly available Maven repositories
 	// supported by Artifact Registry.
 	//
@@ -2096,7 +2343,7 @@ type MavenRepository struct {
 	//   "MAVEN_CENTRAL" - Maven Central.
 	PublicRepository string `json:"publicRepository,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PublicRepository") to
+	// ForceSendFields is a list of field names (e.g. "CustomRepository") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2104,7 +2351,7 @@ type MavenRepository struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PublicRepository") to
+	// NullFields is a list of field names (e.g. "CustomRepository") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2219,6 +2466,9 @@ func (s *NpmPackage) MarshalJSON() ([]byte, error) {
 
 // NpmRepository: Configuration for a Npm remote repository.
 type NpmRepository struct {
+	// CustomRepository: Customer-specified remote repository.
+	CustomRepository *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigNpmRepositoryCustomRepository `json:"customRepository,omitempty"`
+
 	// PublicRepository: One of the publicly available Npm repositories
 	// supported by Artifact Registry.
 	//
@@ -2227,7 +2477,7 @@ type NpmRepository struct {
 	//   "NPMJS" - npmjs.
 	PublicRepository string `json:"publicRepository,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PublicRepository") to
+	// ForceSendFields is a list of field names (e.g. "CustomRepository") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2235,7 +2485,7 @@ type NpmRepository struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PublicRepository") to
+	// NullFields is a list of field names (e.g. "CustomRepository") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2320,6 +2570,9 @@ type OperationMetadata struct {
 
 // Package: Packages are named collections of versions.
 type Package struct {
+	// Annotations: Optional. Client specified annotations.
+	Annotations map[string]string `json:"annotations,omitempty"`
+
 	// CreateTime: The time when the package was created.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -2339,7 +2592,7 @@ type Package struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "Annotations") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2347,10 +2600,10 @@ type Package struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Annotations") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2481,6 +2734,8 @@ type ProjectSettings struct {
 	//   "REDIRECTION_FROM_GCR_IO_ENABLED" - Redirection is enabled.
 	//   "REDIRECTION_FROM_GCR_IO_FINALIZED" - Redirection is enabled, and
 	// has been finalized so cannot be reverted.
+	//   "REDIRECTION_FROM_GCR_IO_ENABLED_AND_COPYING" - Redirection is
+	// enabled and missing images are copied from GCR
 	LegacyRedirectionState string `json:"legacyRedirectionState,omitempty"`
 
 	// Name: The name of the project's settings. Always of the form:
@@ -2574,6 +2829,9 @@ func (s *PythonPackage) MarshalJSON() ([]byte, error) {
 
 // PythonRepository: Configuration for a Python remote repository.
 type PythonRepository struct {
+	// CustomRepository: Customer-specified remote repository.
+	CustomRepository *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigPythonRepositoryCustomRepository `json:"customRepository,omitempty"`
+
 	// PublicRepository: One of the publicly available Python repositories
 	// supported by Artifact Registry.
 	//
@@ -2582,7 +2840,7 @@ type PythonRepository struct {
 	//   "PYPI" - PyPI.
 	PublicRepository string `json:"publicRepository,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PublicRepository") to
+	// ForceSendFields is a list of field names (e.g. "CustomRepository") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2590,7 +2848,7 @@ type PythonRepository struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PublicRepository") to
+	// NullFields is a list of field names (e.g. "CustomRepository") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2613,6 +2871,11 @@ type RemoteRepositoryConfig struct {
 
 	// Description: The description of the remote source.
 	Description string `json:"description,omitempty"`
+
+	// DisableUpstreamValidation: Input only. A create/update remote repo
+	// option to avoid making a HEAD/GET request to validate a remote repo
+	// and any supplied upstream credentials.
+	DisableUpstreamValidation bool `json:"disableUpstreamValidation,omitempty"`
 
 	// DockerRepository: Specific settings for a Docker remote repository.
 	DockerRepository *DockerRepository `json:"dockerRepository,omitempty"`
@@ -2675,6 +2938,12 @@ type Repository struct {
 
 	// Description: The user-provided description of the repository.
 	Description string `json:"description,omitempty"`
+
+	// DisallowUnspecifiedMode: Optional. If this is true, aunspecified repo
+	// type will be treated as error. Is used for new repo types that don't
+	// have any specific fields. Right now is used by AOSS team when
+	// creating repos for customers.
+	DisallowUnspecifiedMode bool `json:"disallowUnspecifiedMode,omitempty"`
 
 	// DockerConfig: Docker repository config contains repository level
 	// configuration for the repositories of docker type.
@@ -3574,11 +3843,14 @@ func (s *YumArtifact) MarshalJSON() ([]byte, error) {
 
 // YumRepository: Configuration for a Yum remote repository.
 type YumRepository struct {
+	// CustomRepository: Customer-specified remote repository.
+	CustomRepository *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryCustomRepository `json:"customRepository,omitempty"`
+
 	// PublicRepository: One of the publicly available Yum repositories
 	// supported by Artifact Registry.
 	PublicRepository *GoogleDevtoolsArtifactregistryV1RemoteRepositoryConfigYumRepositoryPublicRepository `json:"publicRepository,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "PublicRepository") to
+	// ForceSendFields is a list of field names (e.g. "CustomRepository") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3586,7 +3858,7 @@ type YumRepository struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "PublicRepository") to
+	// NullFields is a list of field names (e.g. "CustomRepository") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -3600,6 +3872,171 @@ func (s *YumRepository) MarshalJSON() ([]byte, error) {
 	type NoMethod YumRepository
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "artifactregistry.media.download":
+
+type MediaDownloadCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Download: Download a file.
+//
+// - name: The name of the file to download.
+func (r *MediaService) Download(name string) *MediaDownloadCall {
+	c := &MediaDownloadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MediaDownloadCall) Fields(s ...googleapi.Field) *MediaDownloadCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *MediaDownloadCall) IfNoneMatch(entityTag string) *MediaDownloadCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do and Download
+// methods. Any pending HTTP request will be aborted if the provided
+// context is canceled.
+func (c *MediaDownloadCall) Context(ctx context.Context) *MediaDownloadCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MediaDownloadCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MediaDownloadCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:download")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Download fetches the API endpoint's "media" value, instead of the normal
+// API response value. If the returned error is nil, the Response is guaranteed to
+// have a 2xx status code. Callers must close the Response.Body as usual.
+func (c *MediaDownloadCall) Download(opts ...googleapi.CallOption) (*http.Response, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("media")
+	if err != nil {
+		return nil, err
+	}
+	if err := googleapi.CheckResponse(res); err != nil {
+		res.Body.Close()
+		return nil, gensupport.WrapError(err)
+	}
+	return res, nil
+}
+
+// Do executes the "artifactregistry.media.download" call.
+// Exactly one of *DownloadFileResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *DownloadFileResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *MediaDownloadCall) Do(opts ...googleapi.CallOption) (*DownloadFileResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DownloadFileResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Download a file.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/files/{filesId}:download",
+	//   "httpMethod": "GET",
+	//   "id": "artifactregistry.media.download",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the file to download.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/files/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:download",
+	//   "response": {
+	//     "$ref": "DownloadFileResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ],
+	//   "supportsMediaDownload": true,
+	//   "useMediaDownloadService": true
+	// }
+
 }
 
 // method id "artifactregistry.projects.getProjectSettings":
@@ -9048,6 +9485,164 @@ func (c *ProjectsLocationsRepositoriesPackagesListCall) Pages(ctx context.Contex
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "artifactregistry.projects.locations.repositories.packages.patch":
+
+type ProjectsLocationsRepositoriesPackagesPatchCall struct {
+	s          *Service
+	name       string
+	package_   *Package
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a package.
+//
+//   - name: The name of the package, for example:
+//     `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1`
+//     . If the package ID part contains slashes, the slashes are escaped.
+func (r *ProjectsLocationsRepositoriesPackagesService) Patch(name string, package_ *Package) *ProjectsLocationsRepositoriesPackagesPatchCall {
+	c := &ProjectsLocationsRepositoriesPackagesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.package_ = package_
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The update mask
+// applies to the resource. For the `FieldMask` definition, see
+// https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask
+func (c *ProjectsLocationsRepositoriesPackagesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsRepositoriesPackagesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRepositoriesPackagesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsRepositoriesPackagesPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRepositoriesPackagesPatchCall) Context(ctx context.Context) *ProjectsLocationsRepositoriesPackagesPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRepositoriesPackagesPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRepositoriesPackagesPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.package_)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "artifactregistry.projects.locations.repositories.packages.patch" call.
+// Exactly one of *Package or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Package.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsRepositoriesPackagesPatchCall) Do(opts ...googleapi.CallOption) (*Package, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Package{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a package.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/repositories/{repositoriesId}/packages/{packagesId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "artifactregistry.projects.locations.repositories.packages.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "The name of the package, for example: `projects/p1/locations/us-central1/repositories/repo1/packages/pkg1`. If the package ID part contains slashes, the slashes are escaped.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/packages/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "The update mask applies to the resource. For the `FieldMask` definition, see https://developers.google.com/protocol-buffers/docs/reference/google.protobuf#fieldmask",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "Package"
+	//   },
+	//   "response": {
+	//     "$ref": "Package"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "artifactregistry.projects.locations.repositories.packages.tags.create":

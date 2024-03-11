@@ -49,26 +49,11 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "accesscontextmanager:v1beta",
-      "name": "accesscontextmanager",
-      "version": "v1beta",
-      "title": "Access Context Manager API",
-      "description": "An API for setting attribute based access control to requests to Google Cloud services.",
-      "discoveryRestUrl": "https://accesscontextmanager.googleapis.com/$discovery/rest?version=v1beta",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://cloud.google.com/access-context-manager/docs/reference/rest/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "accesscontextmanager:v1",
       "name": "accesscontextmanager",
       "version": "v1",
       "title": "Access Context Manager API",
-      "description": "An API for setting attribute based access control to requests to Google Cloud services.",
+      "description": "An API for setting attribute based access control to requests to Google Cloud services. *Warning:* Do not mix *v1alpha* and *v1* API usage in the same access policy. The v1alpha API supports new Access Context Manager features, which may have different attributes or behaviors that are not supported by v1. The practice of mixed API usage within a policy may result in the inability to update that policy, including any access levels or service perimeters belonging to it. It is not recommended to use both v1 and v1alpha for modifying policies with critical service perimeters. Modifications using v1alpha should be limited to policies with non-production/non-critical service perimeters.",
       "discoveryRestUrl": "https://accesscontextmanager.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -618,6 +603,36 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "apphub:v1alpha",
+      "name": "apphub",
+      "version": "v1alpha",
+      "title": "App Hub API",
+      "description": "",
+      "discoveryRestUrl": "https://apphub.googleapis.com/$discovery/rest?version=v1alpha",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/app-hub/docs/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "apphub:v1",
+      "name": "apphub",
+      "version": "v1",
+      "title": "App Hub API",
+      "description": "",
+      "discoveryRestUrl": "https://apphub.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/app-hub/docs/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "area120tables:v1alpha1",
       "name": "area120tables",
       "version": "v1alpha1",
@@ -757,7 +772,7 @@
       "name": "batch",
       "version": "v1",
       "title": "Batch API",
-      "description": "An API to manage the running of batch jobs on Google Cloud Platform.",
+      "description": "An API to manage the running of batch resources on Google Cloud Platform.",
       "discoveryRestUrl": "https://batch.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -838,7 +853,37 @@
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/bigquery/",
+      "documentationLink": "https://cloud.google.com/bigquery/docs/connections-api-intro",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "bigqueryconnection:v1",
+      "name": "bigqueryconnection",
+      "version": "v1",
+      "title": "BigQuery Connection API",
+      "description": "Allows users to manage BigQuery connections to external data sources.",
+      "discoveryRestUrl": "https://bigqueryconnection.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/bigquery/docs/connections-api-intro",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "bigquerydatapolicy:v1",
+      "name": "bigquerydatapolicy",
+      "version": "v1",
+      "title": "BigQuery Data Policy API",
+      "description": "Allows users to manage BigQuery data policies.",
+      "discoveryRestUrl": "https://bigquerydatapolicy.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/bigquery/docs/column-data-masking",
       "preferred": true
     },
     {
@@ -1057,7 +1102,7 @@
       "name": "chat",
       "version": "v1",
       "title": "Google Chat API",
-      "description": "Enables apps to fetch information and perform actions in Google Chat. Authentication is a prerequisite for using the Google Chat REST API.",
+      "description": "The Google Chat API lets you build Chat apps to integrate your services with Google Chat and manage Chat resources such as spaces, members, and messages.",
       "discoveryRestUrl": "https://chat.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -2151,6 +2196,36 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "dataportability:v1beta",
+      "name": "dataportability",
+      "version": "v1beta",
+      "title": "Data Portability API",
+      "description": "The Data Portability API lets you build applications that request authorization from a user to move a copy of data from Google services into your application. This enables data portability and facilitates switching services.",
+      "discoveryRestUrl": "https://dataportability.googleapis.com/$discovery/rest?version=v1beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/data-portability",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "dataportability:v1",
+      "name": "dataportability",
+      "version": "v1",
+      "title": "Data Portability API",
+      "description": "The Data Portability API lets you build applications that request authorization from a user to move a copy of data from Google services into your application. This enables data portability and facilitates switching services.",
+      "discoveryRestUrl": "https://dataportability.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/data-portability",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "dataproc:v1",
       "name": "dataproc",
       "version": "v1",
@@ -2436,21 +2511,6 @@
     },
     {
       "kind": "discovery#directoryItem",
-      "id": "displayvideo:v1",
-      "name": "displayvideo",
-      "version": "v1",
-      "title": "Display & Video 360 API",
-      "description": "Display & Video 360 API allows users to automate complex Display & Video 360 workflows, such as creating insertion orders and setting targeting options for individual line items.",
-      "discoveryRestUrl": "https://displayvideo.googleapis.com/$discovery/rest?version=v1",
-      "icons": {
-        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
-        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
-      },
-      "documentationLink": "https://developers.google.com/display-video/",
-      "preferred": false
-    },
-    {
-      "kind": "discovery#directoryItem",
       "id": "displayvideo:v2",
       "name": "displayvideo",
       "version": "v2",
@@ -2484,14 +2544,14 @@
       "id": "dlp:v2",
       "name": "dlp",
       "version": "v2",
-      "title": "Cloud Data Loss Prevention (DLP)",
-      "description": "Provides methods for detection, risk analysis, and de-identification of privacy-sensitive fragments in text, images, and Google Cloud Platform storage repositories.",
+      "title": "Sensitive Data Protection (DLP)",
+      "description": "Discover and protect your sensitive data. A fully managed service designed to help you discover, classify, and protect your valuable data assets with ease.",
       "discoveryRestUrl": "https://dlp.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
-      "documentationLink": "https://cloud.google.com/dlp/docs/",
+      "documentationLink": "https://cloud.google.com/sensitive-data-protection/docs/",
       "preferred": true
     },
     {
@@ -2915,6 +2975,21 @@
       },
       "documentationLink": "https://firebase.google.com/docs/app-check",
       "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "firebaseappdistribution:v1alpha",
+      "name": "firebaseappdistribution",
+      "version": "v1alpha",
+      "title": "Firebase App Distribution API",
+      "description": "",
+      "discoveryRestUrl": "https://firebaseappdistribution.googleapis.com/$discovery/rest?version=v1alpha",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://firebase.google.com/products/app-distribution",
+      "preferred": false
     },
     {
       "kind": "discovery#directoryItem",
@@ -3417,7 +3492,7 @@
       "name": "iam",
       "version": "v2beta",
       "title": "Identity and Access Management (IAM) API",
-      "description": "Manages identity and access control for Google Cloud Platform resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls.",
+      "description": "Manages identity and access control for Google Cloud resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls. Enabling this API also enables the IAM Service Account Credentials API (iamcredentials.googleapis.com). However, disabling this API doesn't disable the IAM Service Account Credentials API.",
       "discoveryRestUrl": "https://iam.googleapis.com/$discovery/rest?version=v2beta",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3432,7 +3507,7 @@
       "name": "iam",
       "version": "v1",
       "title": "Identity and Access Management (IAM) API",
-      "description": "Manages identity and access control for Google Cloud Platform resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls.",
+      "description": "Manages identity and access control for Google Cloud resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls. Enabling this API also enables the IAM Service Account Credentials API (iamcredentials.googleapis.com). However, disabling this API doesn't disable the IAM Service Account Credentials API.",
       "discoveryRestUrl": "https://iam.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3447,7 +3522,7 @@
       "name": "iam",
       "version": "v2",
       "title": "Identity and Access Management (IAM) API",
-      "description": "Manages identity and access control for Google Cloud Platform resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls.",
+      "description": "Manages identity and access control for Google Cloud resources, including the creation of service accounts, which you can use to authenticate to Google and make API calls. Enabling this API also enables the IAM Service Account Credentials API (iamcredentials.googleapis.com). However, disabling this API doesn't disable the IAM Service Account Credentials API.",
       "discoveryRestUrl": "https://iam.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3462,7 +3537,7 @@
       "name": "iamcredentials",
       "version": "v1",
       "title": "IAM Service Account Credentials API",
-      "description": "Creates short-lived credentials for impersonating IAM service accounts. To enable this API, you must enable the IAM API (iam.googleapis.com).",
+      "description": "Creates short-lived credentials for impersonating IAM service accounts. Disabling this API also disables the IAM API (iam.googleapis.com). However, enabling this API doesn't enable the IAM API.",
       "discoveryRestUrl": "https://iamcredentials.googleapis.com/$discovery/rest?version=v1",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -3874,6 +3949,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://developers.google.com/manufacturers/",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "marketingplatformadmin:v1alpha",
+      "name": "marketingplatformadmin",
+      "version": "v1alpha",
+      "title": "Google Marketing Platform Admin API",
+      "description": "marketingplatformadmin.googleapis.com API.",
+      "discoveryRestUrl": "https://marketingplatformadmin.googleapis.com/$discovery/rest?version=v1alpha",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/analytics/devguides/config/gmp/v1",
       "preferred": true
     },
     {
@@ -5022,8 +5112,8 @@
       "id": "retail:v2alpha",
       "name": "retail",
       "version": "v2alpha",
-      "title": "Retail API",
-      "description": "Cloud Retail service enables customers to build end-to-end personalized recommendation systems without requiring a high level of expertise in machine learning, recommendation system, or Google Cloud.",
+      "title": "Vertex AI Search for Retail API",
+      "description": "Vertex AI Search for Retail API is made up of Retail Search, Browse and Recommendations. These discovery AI solutions help you implement personalized search, browse and recommendations, based on machine learning models, across your websites and mobile applications.",
       "discoveryRestUrl": "https://retail.googleapis.com/$discovery/rest?version=v2alpha",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -5037,8 +5127,8 @@
       "id": "retail:v2beta",
       "name": "retail",
       "version": "v2beta",
-      "title": "Retail API",
-      "description": "Cloud Retail service enables customers to build end-to-end personalized recommendation systems without requiring a high level of expertise in machine learning, recommendation system, or Google Cloud.",
+      "title": "Vertex AI Search for Retail API",
+      "description": "Vertex AI Search for Retail API is made up of Retail Search, Browse and Recommendations. These discovery AI solutions help you implement personalized search, browse and recommendations, based on machine learning models, across your websites and mobile applications.",
       "discoveryRestUrl": "https://retail.googleapis.com/$discovery/rest?version=v2beta",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -5052,8 +5142,8 @@
       "id": "retail:v2",
       "name": "retail",
       "version": "v2",
-      "title": "Retail API",
-      "description": "Cloud Retail service enables customers to build end-to-end personalized recommendation systems without requiring a high level of expertise in machine learning, recommendation system, or Google Cloud.",
+      "title": "Vertex AI Search for Retail API",
+      "description": "Vertex AI Search for Retail API is made up of Retail Search, Browse and Recommendations. These discovery AI solutions help you implement personalized search, browse and recommendations, based on machine learning models, across your websites and mobile applications.",
       "discoveryRestUrl": "https://retail.googleapis.com/$discovery/rest?version=v2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
@@ -5220,6 +5310,21 @@
       "title": "Secret Manager API",
       "description": "Stores sensitive data such as API keys, passwords, and certificates. Provides convenience while improving security.",
       "discoveryRestUrl": "https://secretmanager.googleapis.com/$discovery/rest?version=v1beta1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/secret-manager/",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "secretmanager:v1beta2",
+      "name": "secretmanager",
+      "version": "v1beta2",
+      "title": "Secret Manager API",
+      "description": "Stores sensitive data such as API keys, passwords, and certificates. Provides convenience while improving security.",
+      "discoveryRestUrl": "https://secretmanager.googleapis.com/$discovery/rest?version=v1beta2",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
@@ -6204,6 +6309,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "walletobjects:v1",
+      "name": "walletobjects",
+      "version": "v1",
+      "title": "Google Wallet API",
+      "description": "API for issuers to save and manage Google Wallet Objects.",
+      "discoveryRestUrl": "https://walletobjects.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/pay/passes",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "webfonts:v1",
       "name": "webfonts",
       "version": "v1",
@@ -6350,6 +6470,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/workload-manager/docs",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "workspaceevents:v1",
+      "name": "workspaceevents",
+      "version": "v1",
+      "title": "Google Workspace Events API",
+      "description": "The Google Workspace Events API lets you subscribe to events and manage change notifications across Google Workspace applications.",
+      "discoveryRestUrl": "https://workspaceevents.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/workspace/events",
       "preferred": true
     },
     {

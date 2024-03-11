@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "androidpublisher:v3"
 const apiName = "androidpublisher"
 const apiVersion = "v3"
 const basePath = "https://androidpublisher.googleapis.com/"
+const basePathTemplate = "https://androidpublisher.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://androidpublisher.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -106,7 +108,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -132,6 +136,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.Applications = NewApplicationsService(s)
+	s.Apprecovery = NewApprecoveryService(s)
 	s.Edits = NewEditsService(s)
 	s.Externaltransactions = NewExternaltransactionsService(s)
 	s.Generatedapks = NewGeneratedapksService(s)
@@ -153,6 +158,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	Applications *ApplicationsService
+
+	Apprecovery *ApprecoveryService
 
 	Edits *EditsService
 
@@ -204,6 +211,15 @@ func NewApplicationsDeviceTierConfigsService(s *Service) *ApplicationsDeviceTier
 }
 
 type ApplicationsDeviceTierConfigsService struct {
+	s *Service
+}
+
+func NewApprecoveryService(s *Service) *ApprecoveryService {
+	rs := &ApprecoveryService{s: s}
+	return rs
+}
+
+type ApprecoveryService struct {
 	s *Service
 }
 
@@ -632,11 +648,211 @@ func (s *AcquisitionTargetingRule) MarshalJSON() ([]byte, error) {
 
 // ActivateBasePlanRequest: Request message for ActivateBasePlan.
 type ActivateBasePlanRequest struct {
+	// BasePlanId: Required. The unique base plan ID of the base plan to
+	// activate.
+	BasePlanId string `json:"basePlanId,omitempty"`
+
+	// LatencyTolerance: Optional. The latency tolerance for the propagation
+	// of this product update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update
+	// will propagate to clients within several minutes on average and up to
+	// a few hours in rare cases. Throughput is limited to 7,200 updates per
+	// app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update
+	// will propagate to clients within 24 hours. Supports high throughput
+	// of up to 720,000 updates per app per hour using batch modification
+	// methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+
+	// PackageName: Required. The parent app (package name) of the base plan
+	// to activate.
+	PackageName string `json:"packageName,omitempty"`
+
+	// ProductId: Required. The parent subscription (ID) of the base plan to
+	// activate.
+	ProductId string `json:"productId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BasePlanId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BasePlanId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ActivateBasePlanRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivateBasePlanRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ActivateSubscriptionOfferRequest: Request message for
 // ActivateSubscriptionOffer.
 type ActivateSubscriptionOfferRequest struct {
+	// BasePlanId: Required. The parent base plan (ID) of the offer to
+	// activate.
+	BasePlanId string `json:"basePlanId,omitempty"`
+
+	// LatencyTolerance: Optional. The latency tolerance for the propagation
+	// of this product update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update
+	// will propagate to clients within several minutes on average and up to
+	// a few hours in rare cases. Throughput is limited to 7,200 updates per
+	// app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update
+	// will propagate to clients within 24 hours. Supports high throughput
+	// of up to 720,000 updates per app per hour using batch modification
+	// methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+
+	// OfferId: Required. The unique offer ID of the offer to activate.
+	OfferId string `json:"offerId,omitempty"`
+
+	// PackageName: Required. The parent app (package name) of the offer to
+	// activate.
+	PackageName string `json:"packageName,omitempty"`
+
+	// ProductId: Required. The parent subscription (ID) of the offer to
+	// activate.
+	ProductId string `json:"productId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BasePlanId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BasePlanId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ActivateSubscriptionOfferRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ActivateSubscriptionOfferRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AddTargetingRequest: Request message for AddTargeting.
+type AddTargetingRequest struct {
+	// TargetingUpdate: Specifies targeting updates such as regions, android
+	// sdk versions etc.
+	TargetingUpdate *TargetingUpdate `json:"targetingUpdate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetingUpdate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetingUpdate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AddTargetingRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod AddTargetingRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AddTargetingResponse: Response message for AddTargeting.
+type AddTargetingResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// AllUsers: Object representation to describe all set of users.
+type AllUsers struct {
+	// IsAllUsersRequested: Required. Set to true if all set of users are
+	// needed.
+	IsAllUsersRequested bool `json:"isAllUsersRequested,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IsAllUsersRequested")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IsAllUsersRequested") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AllUsers) MarshalJSON() ([]byte, error) {
+	type NoMethod AllUsers
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AndroidSdks: Android api level targeting data for app recovery action
+// targeting.
+type AndroidSdks struct {
+	// SdkLevels: Android api levels of devices targeted by recovery action.
+	// See
+	// https://developer.android.com/guide/topics/manifest/uses-sdk-element#ApiLevels
+	// for different api levels in android.
+	SdkLevels googleapi.Int64s `json:"sdkLevels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SdkLevels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SdkLevels") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AndroidSdks) MarshalJSON() ([]byte, error) {
+	type NoMethod AndroidSdks
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Apk: Information about an APK. The resource for ApksService.
@@ -1012,7 +1228,144 @@ func (s *AppEdit) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ArchiveSubscriptionRequest: Request message for ArchiveSubscription.
+// AppRecoveryAction: Information about an app recovery action.
+type AppRecoveryAction struct {
+	// AppRecoveryId: ID corresponding to the app recovery action.
+	AppRecoveryId int64 `json:"appRecoveryId,omitempty,string"`
+
+	// CancelTime: Timestamp of when the app recovery action is canceled by
+	// the developer. Only set if the recovery action has been canceled.
+	CancelTime string `json:"cancelTime,omitempty"`
+
+	// CreateTime: Timestamp of when the app recovery action is created by
+	// the developer. It is always set after creation of the recovery
+	// action.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DeployTime: Timestamp of when the app recovery action is deployed to
+	// the users. Only set if the recovery action has been deployed.
+	DeployTime string `json:"deployTime,omitempty"`
+
+	// LastUpdateTime: Timestamp of when the developer last updated recovery
+	// action. In case the action is cancelled, it corresponds to
+	// cancellation time. It is always set after creation of the recovery
+	// action.
+	LastUpdateTime string `json:"lastUpdateTime,omitempty"`
+
+	// RemoteInAppUpdateData: Data about the remote in-app update action
+	// such as such as recovered user base, recoverable user base etc. Set
+	// only if the recovery action type is Remote In-App Update.
+	RemoteInAppUpdateData *RemoteInAppUpdateData `json:"remoteInAppUpdateData,omitempty"`
+
+	// Status: The status of the recovery action.
+	//
+	// Possible values:
+	//   "RECOVERY_STATUS_UNSPECIFIED" - RecoveryStatus is unspecified.
+	//   "RECOVERY_STATUS_ACTIVE" - The app recovery action has not been
+	// canceled since it has been created.
+	//   "RECOVERY_STATUS_CANCELED" - The recovery action has been canceled.
+	// The action cannot be resumed.
+	//   "RECOVERY_STATUS_DRAFT" - The recovery action is in the draft state
+	// and has not yet been deployed to users.
+	//   "RECOVERY_STATUS_GENERATION_IN_PROGRESS" - The recovery action is
+	// generating recovery apks.
+	//   "RECOVERY_STATUS_GENERATION_FAILED" - The app recovery action
+	// generation has failed.
+	Status string `json:"status,omitempty"`
+
+	// Targeting: Specifies targeting criteria for the recovery action such
+	// as regions, android sdk versions, app versions etc.
+	Targeting *Targeting `json:"targeting,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AppRecoveryId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppRecoveryId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppRecoveryAction) MarshalJSON() ([]byte, error) {
+	type NoMethod AppRecoveryAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppVersionList: Data format for a list of app versions.
+type AppVersionList struct {
+	// VersionCodes: List of app version codes.
+	VersionCodes googleapi.Int64s `json:"versionCodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "VersionCodes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VersionCodes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppVersionList) MarshalJSON() ([]byte, error) {
+	type NoMethod AppVersionList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AppVersionRange: Data format for a continuous range of app versions.
+type AppVersionRange struct {
+	// VersionCodeEnd: Highest app version in the range, inclusive.
+	VersionCodeEnd int64 `json:"versionCodeEnd,omitempty,string"`
+
+	// VersionCodeStart: Lowest app version in the range, inclusive.
+	VersionCodeStart int64 `json:"versionCodeStart,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "VersionCodeEnd") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "VersionCodeEnd") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AppVersionRange) MarshalJSON() ([]byte, error) {
+	type NoMethod AppVersionRange
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ArchiveSubscriptionRequest: Deprecated: subscription archiving is not
+// supported.
 type ArchiveSubscriptionRequest struct {
 }
 
@@ -1094,6 +1447,12 @@ func (s *AssetSliceSet) MarshalJSON() ([]byte, error) {
 // AutoRenewingBasePlanType: Represents a base plan that automatically
 // renews at the end of its subscription period.
 type AutoRenewingBasePlanType struct {
+	// AccountHoldDuration: Optional. Account hold period of the
+	// subscription, specified in ISO 8601 format. Acceptable values must be
+	// in DAYS and in the range P0D (zero days) to P30D (30 days). If not
+	// specified, the default value is P30D (30 days).
+	AccountHoldDuration string `json:"accountHoldDuration,omitempty"`
+
 	// BillingPeriodDuration: Required. Subscription period, specified in
 	// ISO 8601 format. For a list of acceptable billing periods, refer to
 	// the help center.
@@ -1146,16 +1505,15 @@ type AutoRenewingBasePlanType struct {
 	//   "RESUBSCRIBE_STATE_INACTIVE" - Resubscribe is inactive.
 	ResubscribeState string `json:"resubscribeState,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "BillingPeriodDuration") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AccountHoldDuration")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "BillingPeriodDuration") to
+	// NullFields is a list of field names (e.g. "AccountHoldDuration") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1277,6 +1635,422 @@ func (s *BasePlan) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BatchGetSubscriptionOffersRequest: Request message for
+// BatchGetSubscriptionOffers endpoint.
+type BatchGetSubscriptionOffersRequest struct {
+	// Requests: Required. A list of update requests of up to 100 elements.
+	// All requests must update different subscriptions.
+	Requests []*GetSubscriptionOfferRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchGetSubscriptionOffersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchGetSubscriptionOffersRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchGetSubscriptionOffersResponse: Response message for
+// BatchGetSubscriptionOffers endpoint.
+type BatchGetSubscriptionOffersResponse struct {
+	SubscriptionOffers []*SubscriptionOffer `json:"subscriptionOffers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "SubscriptionOffers")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SubscriptionOffers") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchGetSubscriptionOffersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchGetSubscriptionOffersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchGetSubscriptionsResponse: Response message for
+// BatchGetSubscriptions endpoint.
+type BatchGetSubscriptionsResponse struct {
+	// Subscriptions: The list of requested subscriptions, in the same order
+	// as the request.
+	Subscriptions []*Subscription `json:"subscriptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Subscriptions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Subscriptions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchGetSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchGetSubscriptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchMigrateBasePlanPricesRequest: Request message for
+// BatchMigrateBasePlanPrices.
+type BatchMigrateBasePlanPricesRequest struct {
+	// Requests: Required. Up to 100 price migration requests. All requests
+	// must update different base plans.
+	Requests []*MigrateBasePlanPricesRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchMigrateBasePlanPricesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchMigrateBasePlanPricesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchMigrateBasePlanPricesResponse: Response message for
+// BatchMigrateBasePlanPrices.
+type BatchMigrateBasePlanPricesResponse struct {
+	// Responses: Contains one response per requested price migration, in
+	// the same order as the request.
+	Responses []*MigrateBasePlanPricesResponse `json:"responses,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Responses") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Responses") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchMigrateBasePlanPricesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchMigrateBasePlanPricesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateBasePlanStatesRequest: Request message for
+// BatchUpdateBasePlanStates.
+type BatchUpdateBasePlanStatesRequest struct {
+	// Requests: Required. The update request list of up to 100 elements.
+	// All requests must update different base plans.
+	Requests []*UpdateBasePlanStateRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUpdateBasePlanStatesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateBasePlanStatesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateBasePlanStatesResponse: Response message for
+// BatchUpdateBasePlanStates.
+type BatchUpdateBasePlanStatesResponse struct {
+	// Subscriptions: The list of updated subscriptions. This list will
+	// match the requests one to one, in the same order.
+	Subscriptions []*Subscription `json:"subscriptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Subscriptions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Subscriptions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUpdateBasePlanStatesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateBasePlanStatesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateSubscriptionOfferStatesRequest: Request message for
+// BatchUpdateSubscriptionOfferStates.
+type BatchUpdateSubscriptionOfferStatesRequest struct {
+	// Requests: Required. The update request list of up to 100 elements.
+	// All requests must update different offers.
+	Requests []*UpdateSubscriptionOfferStateRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUpdateSubscriptionOfferStatesRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateSubscriptionOfferStatesRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateSubscriptionOfferStatesResponse: Response message for
+// BatchUpdateSubscriptionOfferStates.
+type BatchUpdateSubscriptionOfferStatesResponse struct {
+	// SubscriptionOffers: The updated subscription offers list.
+	SubscriptionOffers []*SubscriptionOffer `json:"subscriptionOffers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "SubscriptionOffers")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SubscriptionOffers") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUpdateSubscriptionOfferStatesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateSubscriptionOfferStatesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateSubscriptionOffersRequest: Request message for
+// BatchUpdateSubscriptionOffers.
+type BatchUpdateSubscriptionOffersRequest struct {
+	// Requests: Required. A list of update requests of up to 100 elements.
+	// All requests must update different subscription offers.
+	Requests []*UpdateSubscriptionOfferRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUpdateSubscriptionOffersRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateSubscriptionOffersRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateSubscriptionOffersResponse: Response message for
+// BatchUpdateSubscriptionOffers.
+type BatchUpdateSubscriptionOffersResponse struct {
+	// SubscriptionOffers: The updated subscription offers list.
+	SubscriptionOffers []*SubscriptionOffer `json:"subscriptionOffers,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "SubscriptionOffers")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SubscriptionOffers") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUpdateSubscriptionOffersResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateSubscriptionOffersResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateSubscriptionsRequest: Request message for
+// BatchUpdateSubscription.
+type BatchUpdateSubscriptionsRequest struct {
+	// Requests: Required. A list of update requests of up to 100 elements.
+	// All requests must update different subscriptions.
+	Requests []*UpdateSubscriptionRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUpdateSubscriptionsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateSubscriptionsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BatchUpdateSubscriptionsResponse: Response message for
+// BatchUpdateSubscription.
+type BatchUpdateSubscriptionsResponse struct {
+	// Subscriptions: The updated subscriptions list.
+	Subscriptions []*Subscription `json:"subscriptions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Subscriptions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Subscriptions") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BatchUpdateSubscriptionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod BatchUpdateSubscriptionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Bundle: Information about an app bundle. The resource for
 // BundlesService.
 type Bundle struct {
@@ -1353,6 +2127,17 @@ func (s *BundlesListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BundlesListResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CancelAppRecoveryRequest: Request message for CancelAppRecovery.
+type CancelAppRecoveryRequest struct {
+}
+
+// CancelAppRecoveryResponse: Response message for CancelAppRecovery.
+type CancelAppRecoveryResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // CancelSurveyResult: Result of the cancel survey when the subscription
@@ -1645,13 +2430,150 @@ func (s *CountryTargeting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CreateDraftAppRecoveryRequest: Request message for
+// CreateDraftAppRecovery.
+type CreateDraftAppRecoveryRequest struct {
+	// RemoteInAppUpdate: Action type is remote in-app update. As a
+	// consequence of this action, a downloadable recovery module is also
+	// created for testing purposes.
+	RemoteInAppUpdate *RemoteInAppUpdate `json:"remoteInAppUpdate,omitempty"`
+
+	// Targeting: Specifies targeting criteria for the recovery action such
+	// as regions, android sdk versions, app versions etc.
+	Targeting *Targeting `json:"targeting,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RemoteInAppUpdate")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RemoteInAppUpdate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateDraftAppRecoveryRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateDraftAppRecoveryRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DeactivateBasePlanRequest: Request message for DeactivateBasePlan.
 type DeactivateBasePlanRequest struct {
+	// BasePlanId: Required. The unique base plan ID of the base plan to
+	// deactivate.
+	BasePlanId string `json:"basePlanId,omitempty"`
+
+	// LatencyTolerance: Optional. The latency tolerance for the propagation
+	// of this product update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update
+	// will propagate to clients within several minutes on average and up to
+	// a few hours in rare cases. Throughput is limited to 7,200 updates per
+	// app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update
+	// will propagate to clients within 24 hours. Supports high throughput
+	// of up to 720,000 updates per app per hour using batch modification
+	// methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+
+	// PackageName: Required. The parent app (package name) of the base plan
+	// to deactivate.
+	PackageName string `json:"packageName,omitempty"`
+
+	// ProductId: Required. The parent subscription (ID) of the base plan to
+	// deactivate.
+	ProductId string `json:"productId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BasePlanId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BasePlanId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeactivateBasePlanRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeactivateBasePlanRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // DeactivateSubscriptionOfferRequest: Request message for
 // DeactivateSubscriptionOffer.
 type DeactivateSubscriptionOfferRequest struct {
+	// BasePlanId: Required. The parent base plan (ID) of the offer to
+	// deactivate.
+	BasePlanId string `json:"basePlanId,omitempty"`
+
+	// LatencyTolerance: Optional. The latency tolerance for the propagation
+	// of this product update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update
+	// will propagate to clients within several minutes on average and up to
+	// a few hours in rare cases. Throughput is limited to 7,200 updates per
+	// app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update
+	// will propagate to clients within 24 hours. Supports high throughput
+	// of up to 720,000 updates per app per hour using batch modification
+	// methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+
+	// OfferId: Required. The unique offer ID of the offer to deactivate.
+	OfferId string `json:"offerId,omitempty"`
+
+	// PackageName: Required. The parent app (package name) of the offer to
+	// deactivate.
+	PackageName string `json:"packageName,omitempty"`
+
+	// ProductId: Required. The parent subscription (ID) of the offer to
+	// deactivate.
+	ProductId string `json:"productId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BasePlanId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BasePlanId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DeactivateSubscriptionOfferRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod DeactivateSubscriptionOfferRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // DeferredItemReplacement: Information related to deferred item
@@ -1748,6 +2670,17 @@ func (s *DeobfuscationFilesUploadResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DeobfuscationFilesUploadResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DeployAppRecoveryRequest: Request message for DeployAppRecovery.
+type DeployAppRecoveryRequest struct {
+}
+
+// DeployAppRecoveryResponse: Response message for DeployAppRecovery.
+type DeployAppRecoveryResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // DeveloperComment: Developer entry from conversation between user and
@@ -2460,24 +3393,38 @@ func (s *ExternalTransaction) MarshalJSON() ([]byte, error) {
 // ExternalTransactionAddress: User's address for the external
 // transaction.
 type ExternalTransactionAddress struct {
+	// AdministrativeArea: Optional. Top-level administrative subdivision of
+	// the country/region. Only required for transactions in India. Valid
+	// values are "ANDAMAN AND NICOBAR ISLANDS", "ANDHRA PRADESH",
+	// "ARUNACHAL PRADESH", "ASSAM", "BIHAR", "CHANDIGARH", "CHHATTISGARH",
+	// "DADRA AND NAGAR HAVELI", "DADRA AND NAGAR HAVELI AND DAMAN AND DIU",
+	// "DAMAN AND DIU", "DELHI", "GOA", "GUJARAT", "HARYANA", "HIMACHAL
+	// PRADESH", "JAMMU AND KASHMIR", "JHARKHAND", "KARNATAKA", "KERALA",
+	// "LADAKH", "LAKSHADWEEP", "MADHYA PRADESH", "MAHARASHTRA", "MANIPUR",
+	// "MEGHALAYA", "MIZORAM", "NAGALAND", "ODISHA", "PUDUCHERRY", "PUNJAB",
+	// "RAJASTHAN", "SIKKIM", "TAMIL NADU", "TELANGANA", "TRIPURA", "UTTAR
+	// PRADESH", "UTTARAKHAND", and "WEST BENGAL".
+	AdministrativeArea string `json:"administrativeArea,omitempty"`
+
 	// RegionCode: Required. Two letter region code based on ISO-3166-1
 	// Alpha-2 (UN region codes).
 	RegionCode string `json:"regionCode,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "RegionCode") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AdministrativeArea")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RegionCode") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdministrativeArea") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2624,6 +3571,13 @@ type GeneratedApksPerSigningKey struct {
 	// certificate_sha256_hash.
 	GeneratedAssetPackSlices []*GeneratedAssetPackSlice `json:"generatedAssetPackSlices,omitempty"`
 
+	// GeneratedRecoveryModules: Generated recovery apks for recovery
+	// actions signed with a key corresponding to certificate_sha256_hash.
+	// This includes all generated recovery APKs, also those in draft or
+	// cancelled state. This field is not set if no recovery actions were
+	// created for this signing key.
+	GeneratedRecoveryModules []*GeneratedRecoveryApk `json:"generatedRecoveryModules,omitempty"`
+
 	// GeneratedSplitApks: List of generated split APKs, signed with a key
 	// corresponding to certificate_sha256_hash.
 	GeneratedSplitApks []*GeneratedSplitApk `json:"generatedSplitApks,omitempty"`
@@ -2700,6 +3654,58 @@ type GeneratedAssetPackSlice struct {
 
 func (s *GeneratedAssetPackSlice) MarshalJSON() ([]byte, error) {
 	type NoMethod GeneratedAssetPackSlice
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GeneratedRecoveryApk: Download metadata for an app recovery module.
+type GeneratedRecoveryApk struct {
+	// DownloadId: Download ID, which uniquely identifies the APK to
+	// download. Should be supplied to `generatedapks.download` method.
+	DownloadId string `json:"downloadId,omitempty"`
+
+	// ModuleName: Name of the module which recovery apk belongs to.
+	ModuleName string `json:"moduleName,omitempty"`
+
+	// RecoveryId: ID of the recovery action.
+	RecoveryId int64 `json:"recoveryId,omitempty,string"`
+
+	// RecoveryStatus: The status of the recovery action corresponding to
+	// the recovery apk.
+	//
+	// Possible values:
+	//   "RECOVERY_STATUS_UNSPECIFIED" - RecoveryStatus is unspecified.
+	//   "RECOVERY_STATUS_ACTIVE" - The app recovery action has not been
+	// canceled since it has been created.
+	//   "RECOVERY_STATUS_CANCELED" - The recovery action has been canceled.
+	// The action cannot be resumed.
+	//   "RECOVERY_STATUS_DRAFT" - The recovery action is in the draft state
+	// and has not yet been deployed to users.
+	//   "RECOVERY_STATUS_GENERATION_IN_PROGRESS" - The recovery action is
+	// generating recovery apks.
+	//   "RECOVERY_STATUS_GENERATION_FAILED" - The app recovery action
+	// generation has failed.
+	RecoveryStatus string `json:"recoveryStatus,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DownloadId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DownloadId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeneratedRecoveryApk) MarshalJSON() ([]byte, error) {
+	type NoMethod GeneratedRecoveryApk
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2799,6 +3805,46 @@ type GeneratedUniversalApk struct {
 
 func (s *GeneratedUniversalApk) MarshalJSON() ([]byte, error) {
 	type NoMethod GeneratedUniversalApk
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GetSubscriptionOfferRequest: Request message for
+// GetSubscriptionOffer.
+type GetSubscriptionOfferRequest struct {
+	// BasePlanId: Required. The parent base plan (ID) of the offer to get.
+	BasePlanId string `json:"basePlanId,omitempty"`
+
+	// OfferId: Required. The unique offer ID of the offer to get.
+	OfferId string `json:"offerId,omitempty"`
+
+	// PackageName: Required. The parent app (package name) of the offer to
+	// get.
+	PackageName string `json:"packageName,omitempty"`
+
+	// ProductId: Required. The parent subscription (ID) of the offer to
+	// get.
+	ProductId string `json:"productId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BasePlanId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BasePlanId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GetSubscriptionOfferRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GetSubscriptionOfferRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3132,6 +4178,183 @@ func (s *InAppProductListing) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InappproductsBatchDeleteRequest: Request to delete multiple in-app
+// products.
+type InappproductsBatchDeleteRequest struct {
+	// Requests: Individual delete requests. At least one request is
+	// required. Can contain up to 100 requests. All requests must
+	// correspond to different in-app products.
+	Requests []*InappproductsDeleteRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InappproductsBatchDeleteRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InappproductsBatchDeleteRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InappproductsBatchGetResponse: Response message for
+// BatchGetSubscriptions endpoint.
+type InappproductsBatchGetResponse struct {
+	// Inappproduct: The list of requested in-app products, in the same
+	// order as the request.
+	Inappproduct []*InAppProduct `json:"inappproduct,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Inappproduct") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Inappproduct") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InappproductsBatchGetResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod InappproductsBatchGetResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InappproductsBatchUpdateRequest: Request to update or insert one or
+// more in-app products.
+type InappproductsBatchUpdateRequest struct {
+	// Requests: Required. Individual update requests. At least one request
+	// is required. Can contain up to 100 requests. All requests must
+	// correspond to different in-app products.
+	Requests []*InappproductsUpdateRequest `json:"requests,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Requests") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Requests") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InappproductsBatchUpdateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InappproductsBatchUpdateRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InappproductsBatchUpdateResponse: Response for a batch in-app product
+// update.
+type InappproductsBatchUpdateResponse struct {
+	// Inappproducts: The updated or inserted in-app products.
+	Inappproducts []*InAppProduct `json:"inappproducts,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Inappproducts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Inappproducts") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InappproductsBatchUpdateResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod InappproductsBatchUpdateResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InappproductsDeleteRequest: Request to delete an in-app product.
+type InappproductsDeleteRequest struct {
+	// LatencyTolerance: Optional. The latency tolerance for the propagation
+	// of this product update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update
+	// will propagate to clients within several minutes on average and up to
+	// a few hours in rare cases. Throughput is limited to 7,200 updates per
+	// app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update
+	// will propagate to clients within 24 hours. Supports high throughput
+	// of up to 720,000 updates per app per hour using batch modification
+	// methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+
+	// PackageName: Package name of the app.
+	PackageName string `json:"packageName,omitempty"`
+
+	// Sku: Unique identifier for the in-app product.
+	Sku string `json:"sku,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LatencyTolerance") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LatencyTolerance") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InappproductsDeleteRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InappproductsDeleteRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // InappproductsListResponse: Response listing all in-app products.
 type InappproductsListResponse struct {
 	// Inappproduct: All in-app products.
@@ -3171,6 +4394,67 @@ type InappproductsListResponse struct {
 
 func (s *InappproductsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod InappproductsListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InappproductsUpdateRequest: Request to update an in-app product.
+type InappproductsUpdateRequest struct {
+	// AllowMissing: If set to true, and the in-app product with the given
+	// package_name and sku doesn't exist, the in-app product will be
+	// created.
+	AllowMissing bool `json:"allowMissing,omitempty"`
+
+	// AutoConvertMissingPrices: If true the prices for all regions targeted
+	// by the parent app that don't have a price specified for this in-app
+	// product will be auto converted to the target currency based on the
+	// default price. Defaults to false.
+	AutoConvertMissingPrices bool `json:"autoConvertMissingPrices,omitempty"`
+
+	// Inappproduct: The new in-app product.
+	Inappproduct *InAppProduct `json:"inappproduct,omitempty"`
+
+	// LatencyTolerance: Optional. The latency tolerance for the propagation
+	// of this product update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update
+	// will propagate to clients within several minutes on average and up to
+	// a few hours in rare cases. Throughput is limited to 7,200 updates per
+	// app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update
+	// will propagate to clients within 24 hours. Supports high throughput
+	// of up to 720,000 updates per app per hour using batch modification
+	// methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+
+	// PackageName: Package name of the app.
+	PackageName string `json:"packageName,omitempty"`
+
+	// Sku: Unique identifier for the in-app product.
+	Sku string `json:"sku,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowMissing") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowMissing") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InappproductsUpdateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod InappproductsUpdateRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3299,6 +4583,41 @@ type LanguageTargeting struct {
 
 func (s *LanguageTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod LanguageTargeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListAppRecoveriesResponse: Response message for ListAppRecoveries. --
+// api-linter: core::0158::response-next-page-token-field=disabled
+type ListAppRecoveriesResponse struct {
+	// RecoveryActions: List of recovery actions associated with the
+	// requested package name.
+	RecoveryActions []*AppRecoveryAction `json:"recoveryActions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "RecoveryActions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RecoveryActions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAppRecoveriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAppRecoveriesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3622,6 +4941,34 @@ func (s *ManagedProductTaxAndComplianceSettings) MarshalJSON() ([]byte, error) {
 // MigrateBasePlanPricesRequest: Request message for
 // MigrateBasePlanPrices.
 type MigrateBasePlanPricesRequest struct {
+	// BasePlanId: Required. The unique base plan ID of the base plan to
+	// update prices on.
+	BasePlanId string `json:"basePlanId,omitempty"`
+
+	// LatencyTolerance: Optional. The latency tolerance for the propagation
+	// of this product update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update
+	// will propagate to clients within several minutes on average and up to
+	// a few hours in rare cases. Throughput is limited to 7,200 updates per
+	// app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update
+	// will propagate to clients within 24 hours. Supports high throughput
+	// of up to 720,000 updates per app per hour using batch modification
+	// methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+
+	// PackageName: Required. Package name of the parent app. Must be equal
+	// to the package_name field on the Subscription resource.
+	PackageName string `json:"packageName,omitempty"`
+
+	// ProductId: Required. The ID of the subscription to update. Must be
+	// equal to the product_id field on the Subscription resource.
+	ProductId string `json:"productId,omitempty"`
+
 	// RegionalPriceMigrations: Required. The regional prices to update.
 	RegionalPriceMigrations []*RegionalPriceMigrationConfig `json:"regionalPriceMigrations,omitempty"`
 
@@ -3629,22 +4976,20 @@ type MigrateBasePlanPricesRequest struct {
 	// used for the regional_price_migrations.
 	RegionsVersion *RegionsVersion `json:"regionsVersion,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "RegionalPriceMigrations") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BasePlanId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "RegionalPriceMigrations")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BasePlanId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4488,6 +5833,19 @@ type RecurringExternalTransaction struct {
 	// transactions.
 	InitialExternalTransactionId string `json:"initialExternalTransactionId,omitempty"`
 
+	// MigratedTransactionProgram: Input only. Provided during the call to
+	// Create. Must only be used when migrating a subscription from manual
+	// monthly reporting to automated reporting.
+	//
+	// Possible values:
+	//   "EXTERNAL_TRANSACTION_PROGRAM_UNSPECIFIED" - Unspecified
+	// transaction program. Not used.
+	//   "USER_CHOICE_BILLING" - User choice billing, where a user may
+	// choose between Google Play Billing developer-managed billing.
+	//   "ALTERNATIVE_BILLING_ONLY" - Alternative billing only, where users
+	// may only use developer-manager billing.
+	MigratedTransactionProgram string `json:"migratedTransactionProgram,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "ExternalSubscription") to unconditionally include in API requests.
 	// By default, fields with empty or default values are omitted from API
@@ -4760,7 +6118,7 @@ func (s *RegionalSubscriptionOfferPhaseConfig) UnmarshalJSON(data []byte) error 
 type RegionalTaxRateInfo struct {
 	// EligibleForStreamingServiceTaxRate: You must tell us if your app
 	// contains streaming products to correctly charge US state and local
-	// sales tax. Field only supported in United States.
+	// sales tax. Field only supported in the United States.
 	EligibleForStreamingServiceTaxRate bool `json:"eligibleForStreamingServiceTaxRate,omitempty"`
 
 	// StreamingTaxType: To collect communications or amusement taxes in the
@@ -4829,6 +6187,38 @@ func (s *RegionalTaxRateInfo) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Regions: Region targeting data for app recovery action targeting.
+type Regions struct {
+	// RegionCode: Regions targeted by the recovery action. Region codes are
+	// ISO 3166 Alpha-2 country codes. For example, US stands for United
+	// States of America. See
+	// https://www.iso.org/iso-3166-country-codes.html for the complete list
+	// of country codes.
+	RegionCode []string `json:"regionCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RegionCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RegionCode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Regions) MarshalJSON() ([]byte, error) {
+	type NoMethod Regions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RegionsVersion: The version of the available regions being used for
 // the specified resource.
 type RegionsVersion struct {
@@ -4863,6 +6253,109 @@ type RegionsVersion struct {
 
 func (s *RegionsVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod RegionsVersion
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RemoteInAppUpdate: Object representation for Remote in-app update
+// action type.
+type RemoteInAppUpdate struct {
+	// IsRemoteInAppUpdateRequested: Required. Set to true if Remote In-App
+	// Update action type is needed.
+	IsRemoteInAppUpdateRequested bool `json:"isRemoteInAppUpdateRequested,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "IsRemoteInAppUpdateRequested") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "IsRemoteInAppUpdateRequested") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoteInAppUpdate) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteInAppUpdate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RemoteInAppUpdateData: Data related to Remote In-App Update action
+// such as recovered user count, affected user count etc.
+type RemoteInAppUpdateData struct {
+	// RemoteAppUpdateDataPerBundle: Data related to the recovery action at
+	// bundle level.
+	RemoteAppUpdateDataPerBundle []*RemoteInAppUpdateDataPerBundle `json:"remoteAppUpdateDataPerBundle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "RemoteAppUpdateDataPerBundle") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "RemoteAppUpdateDataPerBundle") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoteInAppUpdateData) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteInAppUpdateData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RemoteInAppUpdateDataPerBundle: Data related to the recovery action
+// at bundle level.
+type RemoteInAppUpdateDataPerBundle struct {
+	// RecoveredDeviceCount: Total number of devices which have been
+	// rescued.
+	RecoveredDeviceCount int64 `json:"recoveredDeviceCount,omitempty,string"`
+
+	// TotalDeviceCount: Total number of devices affected by this recovery
+	// action associated with bundle of the app.
+	TotalDeviceCount int64 `json:"totalDeviceCount,omitempty,string"`
+
+	// VersionCode: Version Code corresponding to the target bundle.
+	VersionCode int64 `json:"versionCode,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "RecoveredDeviceCount") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RecoveredDeviceCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RemoteInAppUpdateDataPerBundle) MarshalJSON() ([]byte, error) {
+	type NoMethod RemoteInAppUpdateDataPerBundle
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5041,6 +6534,122 @@ func (s *ReviewsReplyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ReviewsReplyResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RevocationContext: Revocation context of the
+// purchases.subscriptionsv2.revoke API.
+type RevocationContext struct {
+	// ProratedRefund: Optional. Used when users should be refunded a
+	// prorated amount they paid for their subscription based on the amount
+	// of time remaining in a subscription.
+	ProratedRefund *RevocationContextProratedRefund `json:"proratedRefund,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ProratedRefund") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ProratedRefund") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RevocationContext) MarshalJSON() ([]byte, error) {
+	type NoMethod RevocationContext
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RevocationContextProratedRefund: Used to determine if the refund type
+// in the RevocationContext is a prorated refund.
+type RevocationContextProratedRefund struct {
+}
+
+// RevokeSubscriptionPurchaseRequest: Request for the
+// purchases.subscriptionsv2.revoke API.
+type RevokeSubscriptionPurchaseRequest struct {
+	// RevocationContext: Required. Additional details around the
+	// subscription revocation.
+	RevocationContext *RevocationContext `json:"revocationContext,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RevocationContext")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RevocationContext") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RevokeSubscriptionPurchaseRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod RevokeSubscriptionPurchaseRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RevokeSubscriptionPurchaseResponse: Response for the
+// purchases.subscriptionsv2.revoke API.
+type RevokeSubscriptionPurchaseResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+}
+
+// SafetyLabelsUpdateRequest: Request to update Safety Labels of an app.
+type SafetyLabelsUpdateRequest struct {
+	// SafetyLabels: Required. Contents of the CSV file containing Data
+	// Safety responses. For the format of this file, see the Help Center
+	// documentation at
+	// https://support.google.com/googleplay/android-developer/answer/10787469?#zippy=%2Cunderstand-the-csv-format
+	// To download an up to date template, follow the steps at
+	// https://support.google.com/googleplay/android-developer/answer/10787469?#zippy=%2Cexport-to-a-csv-file
+	SafetyLabels string `json:"safetyLabels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SafetyLabels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SafetyLabels") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SafetyLabelsUpdateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SafetyLabelsUpdateRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SafetyLabelsUpdateResponse: Response for SafetyLabelsUpdate rpc.
+type SafetyLabelsUpdateResponse struct {
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
 }
 
 // ScreenDensity: Represents a screen density.
@@ -5325,10 +6934,8 @@ func (s *SubscribeWithGoogleInfo) MarshalJSON() ([]byte, error) {
 
 // Subscription: A single subscription for an app.
 type Subscription struct {
-	// Archived: Output only. Whether this subscription is archived.
-	// Archived subscriptions are not available to any subscriber any
-	// longer, cannot be updated, and are not returned in list requests
-	// unless the show archived flag is passed in.
+	// Archived: Output only. Deprecated: subscription archiving is not
+	// supported.
 	Archived bool `json:"archived,omitempty"`
 
 	// BasePlans: The set of base plans for this subscription. Represents
@@ -6378,6 +7985,47 @@ func (s *SystemFeature) MarshalJSON() ([]byte, error) {
 type SystemInitiatedCancellation struct {
 }
 
+// Targeting: Targeting details for a recovery action such as regions,
+// android sdk levels, app versions etc.
+type Targeting struct {
+	// AllUsers: All users are targeted.
+	AllUsers *AllUsers `json:"allUsers,omitempty"`
+
+	// AndroidSdks: Targeting is based on android api levels of devices.
+	AndroidSdks *AndroidSdks `json:"androidSdks,omitempty"`
+
+	// Regions: Targeting is based on the user account region.
+	Regions *Regions `json:"regions,omitempty"`
+
+	// VersionList: Target version codes as a list.
+	VersionList *AppVersionList `json:"versionList,omitempty"`
+
+	// VersionRange: Target version codes as a range.
+	VersionRange *AppVersionRange `json:"versionRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllUsers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllUsers") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Targeting) MarshalJSON() ([]byte, error) {
+	type NoMethod Targeting
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TargetingInfo: Targeting information about the generated apks.
 type TargetingInfo struct {
 	// AssetSliceSet: List of created asset slices.
@@ -6442,6 +8090,42 @@ type TargetingRuleScope struct {
 
 func (s *TargetingRuleScope) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetingRuleScope
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TargetingUpdate: Update type for targeting. Note it is always a
+// subset Targeting.
+type TargetingUpdate struct {
+	// AllUsers: All users are targeted.
+	AllUsers *AllUsers `json:"allUsers,omitempty"`
+
+	// AndroidSdks: Additional android sdk levels are targeted by the
+	// recovery action.
+	AndroidSdks *AndroidSdks `json:"androidSdks,omitempty"`
+
+	// Regions: Additional regions are targeted by the recovery action.
+	Regions *Regions `json:"regions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllUsers") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllUsers") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TargetingUpdate) MarshalJSON() ([]byte, error) {
+	type NoMethod TargetingUpdate
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6915,6 +8599,195 @@ type TracksListResponse struct {
 
 func (s *TracksListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TracksListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateBasePlanStateRequest: Request message to update the state of a
+// subscription base plan.
+type UpdateBasePlanStateRequest struct {
+	// ActivateBasePlanRequest: Activates a base plan. Once activated, base
+	// plans will be available to new subscribers.
+	ActivateBasePlanRequest *ActivateBasePlanRequest `json:"activateBasePlanRequest,omitempty"`
+
+	// DeactivateBasePlanRequest: Deactivates a base plan. Once deactivated,
+	// the base plan will become unavailable to new subscribers, but
+	// existing subscribers will maintain their subscription
+	DeactivateBasePlanRequest *DeactivateBasePlanRequest `json:"deactivateBasePlanRequest,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ActivateBasePlanRequest") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActivateBasePlanRequest")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateBasePlanStateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateBasePlanStateRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateSubscriptionOfferRequest: Request message for
+// UpdateSubscriptionOffer.
+type UpdateSubscriptionOfferRequest struct {
+	// AllowMissing: Optional. If set to true, and the subscription offer
+	// with the given package_name, product_id, base_plan_id and offer_id
+	// doesn't exist, an offer will be created. If a new offer is created,
+	// update_mask is ignored.
+	AllowMissing bool `json:"allowMissing,omitempty"`
+
+	// LatencyTolerance: Optional. The latency tolerance for the propagation
+	// of this product update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update
+	// will propagate to clients within several minutes on average and up to
+	// a few hours in rare cases. Throughput is limited to 7,200 updates per
+	// app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update
+	// will propagate to clients within 24 hours. Supports high throughput
+	// of up to 720,000 updates per app per hour using batch modification
+	// methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+
+	// RegionsVersion: Required. The version of the available regions being
+	// used for the subscription_offer.
+	RegionsVersion *RegionsVersion `json:"regionsVersion,omitempty"`
+
+	// SubscriptionOffer: Required. The subscription offer to update.
+	SubscriptionOffer *SubscriptionOffer `json:"subscriptionOffer,omitempty"`
+
+	// UpdateMask: Required. The list of fields to be updated.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowMissing") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowMissing") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateSubscriptionOfferRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateSubscriptionOfferRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateSubscriptionOfferStateRequest: Request message to update the
+// state of a subscription offer.
+type UpdateSubscriptionOfferStateRequest struct {
+	// ActivateSubscriptionOfferRequest: Activates an offer. Once activated,
+	// the offer will be available to new subscribers.
+	ActivateSubscriptionOfferRequest *ActivateSubscriptionOfferRequest `json:"activateSubscriptionOfferRequest,omitempty"`
+
+	// DeactivateSubscriptionOfferRequest: Deactivates an offer. Once
+	// deactivated, the offer will become unavailable to new subscribers,
+	// but existing subscribers will maintain their subscription
+	DeactivateSubscriptionOfferRequest *DeactivateSubscriptionOfferRequest `json:"deactivateSubscriptionOfferRequest,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ActivateSubscriptionOfferRequest") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "ActivateSubscriptionOfferRequest") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateSubscriptionOfferStateRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateSubscriptionOfferStateRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateSubscriptionRequest: Request message for UpdateSubscription.
+type UpdateSubscriptionRequest struct {
+	// AllowMissing: Optional. If set to true, and the subscription with the
+	// given package_name and product_id doesn't exist, the subscription
+	// will be created. If a new subscription is created, update_mask is
+	// ignored.
+	AllowMissing bool `json:"allowMissing,omitempty"`
+
+	// LatencyTolerance: Optional. The latency tolerance for the propagation
+	// of this product update. Defaults to latency-sensitive.
+	//
+	// Possible values:
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+	// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update
+	// will propagate to clients within several minutes on average and up to
+	// a few hours in rare cases. Throughput is limited to 7,200 updates per
+	// app per hour.
+	//   "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update
+	// will propagate to clients within 24 hours. Supports high throughput
+	// of up to 720,000 updates per app per hour using batch modification
+	// methods.
+	LatencyTolerance string `json:"latencyTolerance,omitempty"`
+
+	// RegionsVersion: Required. The version of the available regions being
+	// used for the subscription.
+	RegionsVersion *RegionsVersion `json:"regionsVersion,omitempty"`
+
+	// Subscription: Required. The subscription to update.
+	Subscription *Subscription `json:"subscription,omitempty"`
+
+	// UpdateMask: Required. The list of fields to be updated.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowMissing") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowMissing") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateSubscriptionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateSubscriptionRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7453,6 +9326,147 @@ func (s *VoidedPurchasesListResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "androidpublisher.applications.dataSafety":
+
+type ApplicationsDataSafetyCall struct {
+	s                         *Service
+	packageName               string
+	safetylabelsupdaterequest *SafetyLabelsUpdateRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// DataSafety: Writes the Safety Labels declaration of an app.
+//
+// - packageName: Package name of the app.
+func (r *ApplicationsService) DataSafety(packageName string, safetylabelsupdaterequest *SafetyLabelsUpdateRequest) *ApplicationsDataSafetyCall {
+	c := &ApplicationsDataSafetyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.safetylabelsupdaterequest = safetylabelsupdaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApplicationsDataSafetyCall) Fields(s ...googleapi.Field) *ApplicationsDataSafetyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApplicationsDataSafetyCall) Context(ctx context.Context) *ApplicationsDataSafetyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApplicationsDataSafetyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApplicationsDataSafetyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.safetylabelsupdaterequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/dataSafety")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.applications.dataSafety" call.
+// Exactly one of *SafetyLabelsUpdateResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *SafetyLabelsUpdateResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ApplicationsDataSafetyCall) Do(opts ...googleapi.CallOption) (*SafetyLabelsUpdateResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SafetyLabelsUpdateResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Writes the Safety Labels declaration of an app.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/dataSafety",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.applications.dataSafety",
+	//   "parameterOrder": [
+	//     "packageName"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Required. Package name of the app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/dataSafety",
+	//   "request": {
+	//     "$ref": "SafetyLabelsUpdateRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "SafetyLabelsUpdateResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
 // method id "androidpublisher.applications.deviceTierConfigs.create":
 
 type ApplicationsDeviceTierConfigsCreateCall struct {
@@ -7959,6 +9973,763 @@ func (c *ApplicationsDeviceTierConfigsListCall) Pages(ctx context.Context, f fun
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "androidpublisher.apprecovery.addTargeting":
+
+type ApprecoveryAddTargetingCall struct {
+	s                   *Service
+	packageName         string
+	appRecoveryId       int64
+	addtargetingrequest *AddTargetingRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// AddTargeting: Incrementally update targeting for a recovery action.
+// Note that only the criteria selected during the creation of recovery
+// action can be expanded.
+//
+//   - appRecoveryId: ID corresponding to the app recovery action.
+//   - packageName: Package name of the app for which recovery action is
+//     to be updated.
+func (r *ApprecoveryService) AddTargeting(packageName string, appRecoveryId int64, addtargetingrequest *AddTargetingRequest) *ApprecoveryAddTargetingCall {
+	c := &ApprecoveryAddTargetingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.appRecoveryId = appRecoveryId
+	c.addtargetingrequest = addtargetingrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApprecoveryAddTargetingCall) Fields(s ...googleapi.Field) *ApprecoveryAddTargetingCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApprecoveryAddTargetingCall) Context(ctx context.Context) *ApprecoveryAddTargetingCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApprecoveryAddTargetingCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApprecoveryAddTargetingCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.addtargetingrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:addTargeting")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":   c.packageName,
+		"appRecoveryId": strconv.FormatInt(c.appRecoveryId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.apprecovery.addTargeting" call.
+// Exactly one of *AddTargetingResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AddTargetingResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ApprecoveryAddTargetingCall) Do(opts ...googleapi.CallOption) (*AddTargetingResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AddTargetingResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Incrementally update targeting for a recovery action. Note that only the criteria selected during the creation of recovery action can be expanded.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:addTargeting",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.apprecovery.addTargeting",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "appRecoveryId"
+	//   ],
+	//   "parameters": {
+	//     "appRecoveryId": {
+	//       "description": "Required. ID corresponding to the app recovery action.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Required. Package name of the app for which recovery action is to be updated.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:addTargeting",
+	//   "request": {
+	//     "$ref": "AddTargetingRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "AddTargetingResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.apprecovery.appRecoveries":
+
+type ApprecoveryAppRecoveriesCall struct {
+	s           *Service
+	packageName string
+	urlParams_  gensupport.URLParams
+	ctx_        context.Context
+	header_     http.Header
+}
+
+// AppRecoveries: List all app recovery action resources associated with
+// a particular package name and app version.
+//
+//   - packageName: Package name of the app for which list of recovery
+//     actions is requested.
+func (r *ApprecoveryService) AppRecoveries(packageName string) *ApprecoveryAppRecoveriesCall {
+	c := &ApprecoveryAppRecoveriesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	return c
+}
+
+// VersionCode sets the optional parameter "versionCode": Required.
+// Version code targeted by the list of recovery actions.
+func (c *ApprecoveryAppRecoveriesCall) VersionCode(versionCode int64) *ApprecoveryAppRecoveriesCall {
+	c.urlParams_.Set("versionCode", fmt.Sprint(versionCode))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApprecoveryAppRecoveriesCall) Fields(s ...googleapi.Field) *ApprecoveryAppRecoveriesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApprecoveryAppRecoveriesCall) Context(ctx context.Context) *ApprecoveryAppRecoveriesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApprecoveryAppRecoveriesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApprecoveryAppRecoveriesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/appRecoveries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.apprecovery.appRecoveries" call.
+// Exactly one of *ListAppRecoveriesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAppRecoveriesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ApprecoveryAppRecoveriesCall) Do(opts ...googleapi.CallOption) (*ListAppRecoveriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAppRecoveriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all app recovery action resources associated with a particular package name and app version.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/appRecoveries",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.apprecovery.appRecoveries",
+	//   "parameterOrder": [
+	//     "packageName"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Required. Package name of the app for which list of recovery actions is requested.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "versionCode": {
+	//       "description": "Required. Version code targeted by the list of recovery actions.",
+	//       "format": "int64",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/appRecoveries",
+	//   "response": {
+	//     "$ref": "ListAppRecoveriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.apprecovery.cancel":
+
+type ApprecoveryCancelCall struct {
+	s                        *Service
+	packageName              string
+	appRecoveryId            int64
+	cancelapprecoveryrequest *CancelAppRecoveryRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Cancel: Cancel an already executing app recovery action. Note that
+// this action changes status of the recovery action to CANCELED.
+//
+//   - appRecoveryId: ID corresponding to the app recovery action.
+//   - packageName: Package name of the app for which recovery action
+//     cancellation is requested.
+func (r *ApprecoveryService) Cancel(packageName string, appRecoveryId int64, cancelapprecoveryrequest *CancelAppRecoveryRequest) *ApprecoveryCancelCall {
+	c := &ApprecoveryCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.appRecoveryId = appRecoveryId
+	c.cancelapprecoveryrequest = cancelapprecoveryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApprecoveryCancelCall) Fields(s ...googleapi.Field) *ApprecoveryCancelCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApprecoveryCancelCall) Context(ctx context.Context) *ApprecoveryCancelCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApprecoveryCancelCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApprecoveryCancelCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cancelapprecoveryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:cancel")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":   c.packageName,
+		"appRecoveryId": strconv.FormatInt(c.appRecoveryId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.apprecovery.cancel" call.
+// Exactly one of *CancelAppRecoveryResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *CancelAppRecoveryResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ApprecoveryCancelCall) Do(opts ...googleapi.CallOption) (*CancelAppRecoveryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &CancelAppRecoveryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Cancel an already executing app recovery action. Note that this action changes status of the recovery action to CANCELED.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:cancel",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.apprecovery.cancel",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "appRecoveryId"
+	//   ],
+	//   "parameters": {
+	//     "appRecoveryId": {
+	//       "description": "Required. ID corresponding to the app recovery action.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Required. Package name of the app for which recovery action cancellation is requested.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:cancel",
+	//   "request": {
+	//     "$ref": "CancelAppRecoveryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "CancelAppRecoveryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.apprecovery.create":
+
+type ApprecoveryCreateCall struct {
+	s                             *Service
+	packageName                   string
+	createdraftapprecoveryrequest *CreateDraftAppRecoveryRequest
+	urlParams_                    gensupport.URLParams
+	ctx_                          context.Context
+	header_                       http.Header
+}
+
+// Create: Create an app recovery action with recovery status as DRAFT.
+// Note that this action does not execute the recovery action.
+//
+//   - packageName: Package name of the app on which recovery action is
+//     performed.
+func (r *ApprecoveryService) Create(packageName string, createdraftapprecoveryrequest *CreateDraftAppRecoveryRequest) *ApprecoveryCreateCall {
+	c := &ApprecoveryCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.createdraftapprecoveryrequest = createdraftapprecoveryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApprecoveryCreateCall) Fields(s ...googleapi.Field) *ApprecoveryCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApprecoveryCreateCall) Context(ctx context.Context) *ApprecoveryCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApprecoveryCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApprecoveryCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createdraftapprecoveryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/appRecoveries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.apprecovery.create" call.
+// Exactly one of *AppRecoveryAction or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *AppRecoveryAction.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ApprecoveryCreateCall) Do(opts ...googleapi.CallOption) (*AppRecoveryAction, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AppRecoveryAction{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create an app recovery action with recovery status as DRAFT. Note that this action does not execute the recovery action.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/appRecoveries",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.apprecovery.create",
+	//   "parameterOrder": [
+	//     "packageName"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Required. Package name of the app on which recovery action is performed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/appRecoveries",
+	//   "request": {
+	//     "$ref": "CreateDraftAppRecoveryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "AppRecoveryAction"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.apprecovery.deploy":
+
+type ApprecoveryDeployCall struct {
+	s                        *Service
+	packageName              string
+	appRecoveryId            int64
+	deployapprecoveryrequest *DeployAppRecoveryRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Deploy: Deploy an already created app recovery action with recovery
+// status DRAFT. Note that this action activates the recovery action for
+// all targeted users and changes its status to ACTIVE.
+//
+//   - appRecoveryId: ID corresponding to the app recovery action to
+//     deploy.
+//   - packageName: Package name of the app for which recovery action is
+//     deployed.
+func (r *ApprecoveryService) Deploy(packageName string, appRecoveryId int64, deployapprecoveryrequest *DeployAppRecoveryRequest) *ApprecoveryDeployCall {
+	c := &ApprecoveryDeployCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.appRecoveryId = appRecoveryId
+	c.deployapprecoveryrequest = deployapprecoveryrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ApprecoveryDeployCall) Fields(s ...googleapi.Field) *ApprecoveryDeployCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ApprecoveryDeployCall) Context(ctx context.Context) *ApprecoveryDeployCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ApprecoveryDeployCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ApprecoveryDeployCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.deployapprecoveryrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:deploy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName":   c.packageName,
+		"appRecoveryId": strconv.FormatInt(c.appRecoveryId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.apprecovery.deploy" call.
+// Exactly one of *DeployAppRecoveryResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *DeployAppRecoveryResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ApprecoveryDeployCall) Do(opts ...googleapi.CallOption) (*DeployAppRecoveryResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DeployAppRecoveryResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deploy an already created app recovery action with recovery status DRAFT. Note that this action activates the recovery action for all targeted users and changes its status to ACTIVE.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:deploy",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.apprecovery.deploy",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "appRecoveryId"
+	//   ],
+	//   "parameters": {
+	//     "appRecoveryId": {
+	//       "description": "Required. ID corresponding to the app recovery action to deploy.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Required. Package name of the app for which recovery action is deployed.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/appRecoveries/{appRecoveryId}:deploy",
+	//   "request": {
+	//     "$ref": "DeployAppRecoveryRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "DeployAppRecoveryResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
 }
 
 // method id "androidpublisher.edits.commit":
@@ -15556,6 +18327,434 @@ func (c *GrantsPatchCall) Do(opts ...googleapi.CallOption) (*Grant, error) {
 
 }
 
+// method id "androidpublisher.inappproducts.batchDelete":
+
+type InappproductsBatchDeleteCall struct {
+	s                               *Service
+	packageName                     string
+	inappproductsbatchdeleterequest *InappproductsBatchDeleteRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// BatchDelete: Deletes in-app products (managed products or
+// subscriptions). Set the latencyTolerance field on nested requests to
+// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to achieve maximum
+// update throughput. This method should not be used to delete
+// subscriptions. See this article
+// (https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html)
+// for more information.
+//
+// - packageName: Package name of the app.
+func (r *InappproductsService) BatchDelete(packageName string, inappproductsbatchdeleterequest *InappproductsBatchDeleteRequest) *InappproductsBatchDeleteCall {
+	c := &InappproductsBatchDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.inappproductsbatchdeleterequest = inappproductsbatchdeleterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InappproductsBatchDeleteCall) Fields(s ...googleapi.Field) *InappproductsBatchDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InappproductsBatchDeleteCall) Context(ctx context.Context) *InappproductsBatchDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InappproductsBatchDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InappproductsBatchDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.inappproductsbatchdeleterequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/inappproducts:batchDelete")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.inappproducts.batchDelete" call.
+func (c *InappproductsBatchDeleteCall) Do(opts ...googleapi.CallOption) error {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if err != nil {
+		return err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return gensupport.WrapError(err)
+	}
+	return nil
+	// {
+	//   "description": "Deletes in-app products (managed products or subscriptions). Set the latencyTolerance field on nested requests to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to achieve maximum update throughput. This method should not be used to delete subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts:batchDelete",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.inappproducts.batchDelete",
+	//   "parameterOrder": [
+	//     "packageName"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Package name of the app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/inappproducts:batchDelete",
+	//   "request": {
+	//     "$ref": "InappproductsBatchDeleteRequest"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.inappproducts.batchGet":
+
+type InappproductsBatchGetCall struct {
+	s            *Service
+	packageName  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BatchGet: Reads multiple in-app products, which can be managed
+// products or subscriptions. This method should not be used to retrieve
+// subscriptions. See this article
+// (https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html)
+// for more information.
+//
+// - packageName: Package name of the app.
+func (r *InappproductsService) BatchGet(packageName string) *InappproductsBatchGetCall {
+	c := &InappproductsBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	return c
+}
+
+// Sku sets the optional parameter "sku": Unique identifier for the
+// in-app products.
+func (c *InappproductsBatchGetCall) Sku(sku ...string) *InappproductsBatchGetCall {
+	c.urlParams_.SetMulti("sku", append([]string{}, sku...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InappproductsBatchGetCall) Fields(s ...googleapi.Field) *InappproductsBatchGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *InappproductsBatchGetCall) IfNoneMatch(entityTag string) *InappproductsBatchGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InappproductsBatchGetCall) Context(ctx context.Context) *InappproductsBatchGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InappproductsBatchGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InappproductsBatchGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/inappproducts:batchGet")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.inappproducts.batchGet" call.
+// Exactly one of *InappproductsBatchGetResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *InappproductsBatchGetResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *InappproductsBatchGetCall) Do(opts ...googleapi.CallOption) (*InappproductsBatchGetResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &InappproductsBatchGetResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reads multiple in-app products, which can be managed products or subscriptions. This method should not be used to retrieve subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts:batchGet",
+	//   "httpMethod": "GET",
+	//   "id": "androidpublisher.inappproducts.batchGet",
+	//   "parameterOrder": [
+	//     "packageName"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Package name of the app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "sku": {
+	//       "description": "Unique identifier for the in-app products.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/inappproducts:batchGet",
+	//   "response": {
+	//     "$ref": "InappproductsBatchGetResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.inappproducts.batchUpdate":
+
+type InappproductsBatchUpdateCall struct {
+	s                               *Service
+	packageName                     string
+	inappproductsbatchupdaterequest *InappproductsBatchUpdateRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// BatchUpdate: Updates or inserts one or more in-app products (managed
+// products or subscriptions). Set the latencyTolerance field on nested
+// requests to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to
+// achieve maximum update throughput. This method should no longer be
+// used to update subscriptions. See this article
+// (https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html)
+// for more information.
+//
+// - packageName: Package name of the app.
+func (r *InappproductsService) BatchUpdate(packageName string, inappproductsbatchupdaterequest *InappproductsBatchUpdateRequest) *InappproductsBatchUpdateCall {
+	c := &InappproductsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.inappproductsbatchupdaterequest = inappproductsbatchupdaterequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *InappproductsBatchUpdateCall) Fields(s ...googleapi.Field) *InappproductsBatchUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *InappproductsBatchUpdateCall) Context(ctx context.Context) *InappproductsBatchUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *InappproductsBatchUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *InappproductsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.inappproductsbatchupdaterequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/inappproducts:batchUpdate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.inappproducts.batchUpdate" call.
+// Exactly one of *InappproductsBatchUpdateResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *InappproductsBatchUpdateResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *InappproductsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*InappproductsBatchUpdateResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &InappproductsBatchUpdateResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates or inserts one or more in-app products (managed products or subscriptions). Set the latencyTolerance field on nested requests to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to achieve maximum update throughput. This method should no longer be used to update subscriptions. See [this article](https://android-developers.googleblog.com/2023/06/changes-to-google-play-developer-api-june-2023.html) for more information.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/inappproducts:batchUpdate",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.inappproducts.batchUpdate",
+	//   "parameterOrder": [
+	//     "packageName"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Package name of the app.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/inappproducts:batchUpdate",
+	//   "request": {
+	//     "$ref": "InappproductsBatchUpdateRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "InappproductsBatchUpdateResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
 // method id "androidpublisher.inappproducts.delete":
 
 type InappproductsDeleteCall struct {
@@ -15579,6 +18778,32 @@ func (r *InappproductsService) Delete(packageName string, skuid string) *Inapppr
 	c := &InappproductsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.packageName = packageName
 	c.skuid = skuid
+	return c
+}
+
+// LatencyTolerance sets the optional parameter "latencyTolerance": The
+// latency tolerance for the propagation of this product update.
+// Defaults to latency-sensitive.
+//
+// Possible values:
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+//
+// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update
+//
+// will propagate to clients within several minutes on average and up to
+// a few hours in rare cases. Throughput is limited to 7,200 updates per
+// app per hour.
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update
+//
+// will propagate to clients within 24 hours. Supports high throughput
+// of up to 720,000 updates per app per hour using batch modification
+// methods.
+func (c *InappproductsDeleteCall) LatencyTolerance(latencyTolerance string) *InappproductsDeleteCall {
+	c.urlParams_.Set("latencyTolerance", latencyTolerance)
 	return c
 }
 
@@ -15653,6 +18878,21 @@ func (c *InappproductsDeleteCall) Do(opts ...googleapi.CallOption) error {
 	//     "sku"
 	//   ],
 	//   "parameters": {
+	//     "latencyTolerance": {
+	//       "description": "Optional. The latency tolerance for the propagation of this product update. Defaults to latency-sensitive.",
+	//       "enum": [
+	//         "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED",
+	//         "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE",
+	//         "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Defaults to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.",
+	//         "The update will propagate to clients within several minutes on average and up to a few hours in rare cases. Throughput is limited to 7,200 updates per app per hour.",
+	//         "The update will propagate to clients within 24 hours. Supports high throughput of up to 720,000 updates per app per hour using batch modification methods."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "packageName": {
 	//       "description": "Package name of the app.",
 	//       "location": "path",
@@ -16225,6 +19465,32 @@ func (c *InappproductsPatchCall) AutoConvertMissingPrices(autoConvertMissingPric
 	return c
 }
 
+// LatencyTolerance sets the optional parameter "latencyTolerance": The
+// latency tolerance for the propagation of this product update.
+// Defaults to latency-sensitive.
+//
+// Possible values:
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+//
+// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update
+//
+// will propagate to clients within several minutes on average and up to
+// a few hours in rare cases. Throughput is limited to 7,200 updates per
+// app per hour.
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update
+//
+// will propagate to clients within 24 hours. Supports high throughput
+// of up to 720,000 updates per app per hour using batch modification
+// methods.
+func (c *InappproductsPatchCall) LatencyTolerance(latencyTolerance string) *InappproductsPatchCall {
+	c.urlParams_.Set("latencyTolerance", latencyTolerance)
+	return c
+}
+
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -16331,6 +19597,21 @@ func (c *InappproductsPatchCall) Do(opts ...googleapi.CallOption) (*InAppProduct
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
+	//     "latencyTolerance": {
+	//       "description": "Optional. The latency tolerance for the propagation of this product update. Defaults to latency-sensitive.",
+	//       "enum": [
+	//         "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED",
+	//         "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE",
+	//         "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Defaults to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.",
+	//         "The update will propagate to clients within several minutes on average and up to a few hours in rare cases. Throughput is limited to 7,200 updates per app per hour.",
+	//         "The update will propagate to clients within 24 hours. Supports high throughput of up to 720,000 updates per app per hour using batch modification methods."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "packageName": {
 	//       "description": "Package name of the app.",
 	//       "location": "path",
@@ -16401,6 +19682,32 @@ func (c *InappproductsUpdateCall) AllowMissing(allowMissing bool) *Inappproducts
 // the default price. Defaults to false.
 func (c *InappproductsUpdateCall) AutoConvertMissingPrices(autoConvertMissingPrices bool) *InappproductsUpdateCall {
 	c.urlParams_.Set("autoConvertMissingPrices", fmt.Sprint(autoConvertMissingPrices))
+	return c
+}
+
+// LatencyTolerance sets the optional parameter "latencyTolerance": The
+// latency tolerance for the propagation of this product update.
+// Defaults to latency-sensitive.
+//
+// Possible values:
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+//
+// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update
+//
+// will propagate to clients within several minutes on average and up to
+// a few hours in rare cases. Throughput is limited to 7,200 updates per
+// app per hour.
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update
+//
+// will propagate to clients within 24 hours. Supports high throughput
+// of up to 720,000 updates per app per hour using batch modification
+// methods.
+func (c *InappproductsUpdateCall) LatencyTolerance(latencyTolerance string) *InappproductsUpdateCall {
+	c.urlParams_.Set("latencyTolerance", latencyTolerance)
 	return c
 }
 
@@ -16514,6 +19821,21 @@ func (c *InappproductsUpdateCall) Do(opts ...googleapi.CallOption) (*InAppProduc
 	//       "description": "If true the prices for all regions targeted by the parent app that don't have a price specified for this in-app product will be auto converted to the target currency based on the default price. Defaults to false.",
 	//       "location": "query",
 	//       "type": "boolean"
+	//     },
+	//     "latencyTolerance": {
+	//       "description": "Optional. The latency tolerance for the propagation of this product update. Defaults to latency-sensitive.",
+	//       "enum": [
+	//         "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED",
+	//         "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE",
+	//         "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Defaults to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.",
+	//         "The update will propagate to clients within several minutes on average and up to a few hours in rare cases. Throughput is limited to 7,200 updates per app per hour.",
+	//         "The update will propagate to clients within 24 hours. Supports high throughput of up to 720,000 updates per app per hour using batch modification methods."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
 	//     },
 	//     "packageName": {
 	//       "description": "Package name of the app.",
@@ -17140,10 +20462,7 @@ type MonetizationSubscriptionsArchiveCall struct {
 	header_                    http.Header
 }
 
-// Archive: Archives a subscription. Can only be done if at least one
-// base plan was active in the past, and no base plan is available for
-// new or existing subscribers currently. This action is irreversible,
-// and the subscription ID will remain reserved.
+// Archive: Deprecated: subscription archiving is not supported.
 //
 //   - packageName: The parent app (package name) of the app of the
 //     subscription to delete.
@@ -17248,7 +20567,8 @@ func (c *MonetizationSubscriptionsArchiveCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Archives a subscription. Can only be done if at least one base plan was active in the past, and no base plan is available for new or existing subscribers currently. This action is irreversible, and the subscription ID will remain reserved.",
+	//   "deprecated": true,
+	//   "description": "Deprecated: subscription archiving is not supported.",
 	//   "flatPath": "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}:archive",
 	//   "httpMethod": "POST",
 	//   "id": "androidpublisher.monetization.subscriptions.archive",
@@ -17276,6 +20596,313 @@ func (c *MonetizationSubscriptionsArchiveCall) Do(opts ...googleapi.CallOption) 
 	//   },
 	//   "response": {
 	//     "$ref": "Subscription"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.monetization.subscriptions.batchGet":
+
+type MonetizationSubscriptionsBatchGetCall struct {
+	s            *Service
+	packageName  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// BatchGet: Reads one or more subscriptions.
+//
+//   - packageName: The parent app (package name) for which the
+//     subscriptions should be retrieved. Must be equal to the
+//     package_name field on all the requests.
+func (r *MonetizationSubscriptionsService) BatchGet(packageName string) *MonetizationSubscriptionsBatchGetCall {
+	c := &MonetizationSubscriptionsBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	return c
+}
+
+// ProductIds sets the optional parameter "productIds": Required. A list
+// of up to 100 subscription product IDs to retrieve. All the IDs must
+// be different.
+func (c *MonetizationSubscriptionsBatchGetCall) ProductIds(productIds ...string) *MonetizationSubscriptionsBatchGetCall {
+	c.urlParams_.SetMulti("productIds", append([]string{}, productIds...))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MonetizationSubscriptionsBatchGetCall) Fields(s ...googleapi.Field) *MonetizationSubscriptionsBatchGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *MonetizationSubscriptionsBatchGetCall) IfNoneMatch(entityTag string) *MonetizationSubscriptionsBatchGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *MonetizationSubscriptionsBatchGetCall) Context(ctx context.Context) *MonetizationSubscriptionsBatchGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MonetizationSubscriptionsBatchGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationSubscriptionsBatchGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/subscriptions:batchGet")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.subscriptions.batchGet" call.
+// Exactly one of *BatchGetSubscriptionsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *BatchGetSubscriptionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *MonetizationSubscriptionsBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetSubscriptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchGetSubscriptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reads one or more subscriptions.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/subscriptions:batchGet",
+	//   "httpMethod": "GET",
+	//   "id": "androidpublisher.monetization.subscriptions.batchGet",
+	//   "parameterOrder": [
+	//     "packageName"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Required. The parent app (package name) for which the subscriptions should be retrieved. Must be equal to the package_name field on all the requests.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productIds": {
+	//       "description": "Required. A list of up to 100 subscription product IDs to retrieve. All the IDs must be different.",
+	//       "location": "query",
+	//       "repeated": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/subscriptions:batchGet",
+	//   "response": {
+	//     "$ref": "BatchGetSubscriptionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.monetization.subscriptions.batchUpdate":
+
+type MonetizationSubscriptionsBatchUpdateCall struct {
+	s                               *Service
+	packageName                     string
+	batchupdatesubscriptionsrequest *BatchUpdateSubscriptionsRequest
+	urlParams_                      gensupport.URLParams
+	ctx_                            context.Context
+	header_                         http.Header
+}
+
+// BatchUpdate: Updates a batch of subscriptions. Set the
+// latencyTolerance field on nested requests to
+// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to achieve maximum
+// update throughput.
+//
+//   - packageName: The parent app (package name) for which the
+//     subscriptions should be updated. Must be equal to the package_name
+//     field on all the Subscription resources.
+func (r *MonetizationSubscriptionsService) BatchUpdate(packageName string, batchupdatesubscriptionsrequest *BatchUpdateSubscriptionsRequest) *MonetizationSubscriptionsBatchUpdateCall {
+	c := &MonetizationSubscriptionsBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.batchupdatesubscriptionsrequest = batchupdatesubscriptionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MonetizationSubscriptionsBatchUpdateCall) Fields(s ...googleapi.Field) *MonetizationSubscriptionsBatchUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *MonetizationSubscriptionsBatchUpdateCall) Context(ctx context.Context) *MonetizationSubscriptionsBatchUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MonetizationSubscriptionsBatchUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationSubscriptionsBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchupdatesubscriptionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/subscriptions:batchUpdate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.subscriptions.batchUpdate" call.
+// Exactly one of *BatchUpdateSubscriptionsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *BatchUpdateSubscriptionsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *MonetizationSubscriptionsBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchUpdateSubscriptionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchUpdateSubscriptionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a batch of subscriptions. Set the latencyTolerance field on nested requests to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to achieve maximum update throughput.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/subscriptions:batchUpdate",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.monetization.subscriptions.batchUpdate",
+	//   "parameterOrder": [
+	//     "packageName"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Required. The parent app (package name) for which the subscriptions should be updated. Must be equal to the package_name field on all the Subscription resources.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/subscriptions:batchUpdate",
+	//   "request": {
+	//     "$ref": "BatchUpdateSubscriptionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchUpdateSubscriptionsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidpublisher"
@@ -17776,9 +21403,8 @@ func (c *MonetizationSubscriptionsListCall) PageToken(pageToken string) *Monetiz
 	return c
 }
 
-// ShowArchived sets the optional parameter "showArchived": Whether
-// archived subscriptions should be included in the response. Defaults
-// to false.
+// ShowArchived sets the optional parameter "showArchived": Deprecated:
+// subscription archiving is not supported.
 func (c *MonetizationSubscriptionsListCall) ShowArchived(showArchived bool) *MonetizationSubscriptionsListCall {
 	c.urlParams_.Set("showArchived", fmt.Sprint(showArchived))
 	return c
@@ -17909,7 +21535,8 @@ func (c *MonetizationSubscriptionsListCall) Do(opts ...googleapi.CallOption) (*L
 	//       "type": "string"
 	//     },
 	//     "showArchived": {
-	//       "description": "Whether archived subscriptions should be included in the response. Defaults to false.",
+	//       "deprecated": true,
+	//       "description": "Deprecated: subscription archiving is not supported.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     }
@@ -17971,6 +21598,41 @@ func (r *MonetizationSubscriptionsService) Patch(packageName string, productId s
 	c.packageName = packageName
 	c.productId = productId
 	c.subscription = subscription
+	return c
+}
+
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, and the subscription with the given package_name and product_id
+// doesn't exist, the subscription will be created. If a new
+// subscription is created, update_mask is ignored.
+func (c *MonetizationSubscriptionsPatchCall) AllowMissing(allowMissing bool) *MonetizationSubscriptionsPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// LatencyTolerance sets the optional parameter "latencyTolerance": The
+// latency tolerance for the propagation of this product update.
+// Defaults to latency-sensitive.
+//
+// Possible values:
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+//
+// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update
+//
+// will propagate to clients within several minutes on average and up to
+// a few hours in rare cases. Throughput is limited to 7,200 updates per
+// app per hour.
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update
+//
+// will propagate to clients within 24 hours. Supports high throughput
+// of up to 720,000 updates per app per hour using batch modification
+// methods.
+func (c *MonetizationSubscriptionsPatchCall) LatencyTolerance(latencyTolerance string) *MonetizationSubscriptionsPatchCall {
+	c.urlParams_.Set("latencyTolerance", latencyTolerance)
 	return c
 }
 
@@ -18098,6 +21760,26 @@ func (c *MonetizationSubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*
 	//     "productId"
 	//   ],
 	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "Optional. If set to true, and the subscription with the given package_name and product_id doesn't exist, the subscription will be created. If a new subscription is created, update_mask is ignored.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "latencyTolerance": {
+	//       "description": "Optional. The latency tolerance for the propagation of this product update. Defaults to latency-sensitive.",
+	//       "enum": [
+	//         "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED",
+	//         "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE",
+	//         "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Defaults to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.",
+	//         "The update will propagate to clients within several minutes on average and up to a few hours in rare cases. Throughput is limited to 7,200 updates per app per hour.",
+	//         "The update will propagate to clients within 24 hours. Supports high throughput of up to 720,000 updates per app per hour using batch modification methods."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "packageName": {
 	//       "description": "Immutable. Package name of the parent app.",
 	//       "location": "path",
@@ -18294,6 +21976,327 @@ func (c *MonetizationSubscriptionsBasePlansActivateCall) Do(opts ...googleapi.Ca
 	//   },
 	//   "response": {
 	//     "$ref": "Subscription"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.monetization.subscriptions.basePlans.batchMigratePrices":
+
+type MonetizationSubscriptionsBasePlansBatchMigratePricesCall struct {
+	s                                 *Service
+	packageName                       string
+	productId                         string
+	batchmigratebaseplanpricesrequest *BatchMigrateBasePlanPricesRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// BatchMigratePrices: Batch variant of the MigrateBasePlanPrices
+// endpoint. Set the latencyTolerance field on nested requests to
+// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to achieve maximum
+// update throughput.
+//
+//   - packageName: The parent app (package name) for which the
+//     subscriptions should be created or updated. Must be equal to the
+//     package_name field on all the Subscription resources.
+//   - productId: The product ID of the parent subscription, if all
+//     updated offers belong to the same subscription. If this batch
+//     update spans multiple subscriptions, set this field to "-". Must be
+//     set.
+func (r *MonetizationSubscriptionsBasePlansService) BatchMigratePrices(packageName string, productId string, batchmigratebaseplanpricesrequest *BatchMigrateBasePlanPricesRequest) *MonetizationSubscriptionsBasePlansBatchMigratePricesCall {
+	c := &MonetizationSubscriptionsBasePlansBatchMigratePricesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.batchmigratebaseplanpricesrequest = batchmigratebaseplanpricesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MonetizationSubscriptionsBasePlansBatchMigratePricesCall) Fields(s ...googleapi.Field) *MonetizationSubscriptionsBasePlansBatchMigratePricesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *MonetizationSubscriptionsBasePlansBatchMigratePricesCall) Context(ctx context.Context) *MonetizationSubscriptionsBasePlansBatchMigratePricesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MonetizationSubscriptionsBasePlansBatchMigratePricesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationSubscriptionsBasePlansBatchMigratePricesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchmigratebaseplanpricesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans:batchMigratePrices")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"productId":   c.productId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.subscriptions.basePlans.batchMigratePrices" call.
+// Exactly one of *BatchMigrateBasePlanPricesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *BatchMigrateBasePlanPricesResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *MonetizationSubscriptionsBasePlansBatchMigratePricesCall) Do(opts ...googleapi.CallOption) (*BatchMigrateBasePlanPricesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchMigrateBasePlanPricesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Batch variant of the MigrateBasePlanPrices endpoint. Set the latencyTolerance field on nested requests to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to achieve maximum update throughput.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans:batchMigratePrices",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.monetization.subscriptions.basePlans.batchMigratePrices",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "productId"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Required. The parent app (package name) for which the subscriptions should be created or updated. Must be equal to the package_name field on all the Subscription resources.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productId": {
+	//       "description": "Required. The product ID of the parent subscription, if all updated offers belong to the same subscription. If this batch update spans multiple subscriptions, set this field to \"-\". Must be set.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans:batchMigratePrices",
+	//   "request": {
+	//     "$ref": "BatchMigrateBasePlanPricesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchMigrateBasePlanPricesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.monetization.subscriptions.basePlans.batchUpdateStates":
+
+type MonetizationSubscriptionsBasePlansBatchUpdateStatesCall struct {
+	s                                *Service
+	packageName                      string
+	productId                        string
+	batchupdatebaseplanstatesrequest *BatchUpdateBasePlanStatesRequest
+	urlParams_                       gensupport.URLParams
+	ctx_                             context.Context
+	header_                          http.Header
+}
+
+// BatchUpdateStates: Activates or deactivates base plans across one or
+// multiple subscriptions. Set the latencyTolerance field on nested
+// requests to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to
+// achieve maximum update throughput.
+//
+//   - packageName: The parent app (package name) of the updated base
+//     plans.
+//   - productId: The product ID of the parent subscription, if all
+//     updated base plans belong to the same subscription. If this batch
+//     update spans multiple subscriptions, set this field to "-". Must be
+//     set.
+func (r *MonetizationSubscriptionsBasePlansService) BatchUpdateStates(packageName string, productId string, batchupdatebaseplanstatesrequest *BatchUpdateBasePlanStatesRequest) *MonetizationSubscriptionsBasePlansBatchUpdateStatesCall {
+	c := &MonetizationSubscriptionsBasePlansBatchUpdateStatesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.batchupdatebaseplanstatesrequest = batchupdatebaseplanstatesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MonetizationSubscriptionsBasePlansBatchUpdateStatesCall) Fields(s ...googleapi.Field) *MonetizationSubscriptionsBasePlansBatchUpdateStatesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *MonetizationSubscriptionsBasePlansBatchUpdateStatesCall) Context(ctx context.Context) *MonetizationSubscriptionsBasePlansBatchUpdateStatesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MonetizationSubscriptionsBasePlansBatchUpdateStatesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationSubscriptionsBasePlansBatchUpdateStatesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchupdatebaseplanstatesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans:batchUpdateStates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"productId":   c.productId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.subscriptions.basePlans.batchUpdateStates" call.
+// Exactly one of *BatchUpdateBasePlanStatesResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *BatchUpdateBasePlanStatesResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *MonetizationSubscriptionsBasePlansBatchUpdateStatesCall) Do(opts ...googleapi.CallOption) (*BatchUpdateBasePlanStatesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchUpdateBasePlanStatesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Activates or deactivates base plans across one or multiple subscriptions. Set the latencyTolerance field on nested requests to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to achieve maximum update throughput.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans:batchUpdateStates",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.monetization.subscriptions.basePlans.batchUpdateStates",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "productId"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Required. The parent app (package name) of the updated base plans.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productId": {
+	//       "description": "Required. The product ID of the parent subscription, if all updated base plans belong to the same subscription. If this batch update spans multiple subscriptions, set this field to \"-\". Must be set.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans:batchUpdateStates",
+	//   "request": {
+	//     "$ref": "BatchUpdateBasePlanStatesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchUpdateBasePlanStatesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidpublisher"
@@ -18935,6 +22938,523 @@ func (c *MonetizationSubscriptionsBasePlansOffersActivateCall) Do(opts ...google
 	//   },
 	//   "response": {
 	//     "$ref": "SubscriptionOffer"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.monetization.subscriptions.basePlans.offers.batchGet":
+
+type MonetizationSubscriptionsBasePlansOffersBatchGetCall struct {
+	s                                 *Service
+	packageName                       string
+	productId                         string
+	basePlanId                        string
+	batchgetsubscriptionoffersrequest *BatchGetSubscriptionOffersRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// BatchGet: Reads one or more subscription offers.
+//
+//   - basePlanId: The parent base plan (ID) for which the offers should
+//     be read. May be specified as '-' to read offers from multiple base
+//     plans.
+//   - packageName: The parent app (package name) for which the
+//     subscriptions should be created or updated. Must be equal to the
+//     package_name field on all the requests.
+//   - productId: The product ID of the parent subscription, if all
+//     updated offers belong to the same subscription. If this request
+//     spans multiple subscriptions, set this field to "-". Must be set.
+func (r *MonetizationSubscriptionsBasePlansOffersService) BatchGet(packageName string, productId string, basePlanId string, batchgetsubscriptionoffersrequest *BatchGetSubscriptionOffersRequest) *MonetizationSubscriptionsBasePlansOffersBatchGetCall {
+	c := &MonetizationSubscriptionsBasePlansOffersBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.basePlanId = basePlanId
+	c.batchgetsubscriptionoffersrequest = batchgetsubscriptionoffersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MonetizationSubscriptionsBasePlansOffersBatchGetCall) Fields(s ...googleapi.Field) *MonetizationSubscriptionsBasePlansOffersBatchGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *MonetizationSubscriptionsBasePlansOffersBatchGetCall) Context(ctx context.Context) *MonetizationSubscriptionsBasePlansOffersBatchGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MonetizationSubscriptionsBasePlansOffersBatchGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationSubscriptionsBasePlansOffersBatchGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchgetsubscriptionoffersrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers:batchGet")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"productId":   c.productId,
+		"basePlanId":  c.basePlanId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.subscriptions.basePlans.offers.batchGet" call.
+// Exactly one of *BatchGetSubscriptionOffersResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *BatchGetSubscriptionOffersResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *MonetizationSubscriptionsBasePlansOffersBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetSubscriptionOffersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchGetSubscriptionOffersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Reads one or more subscription offers.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers:batchGet",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.monetization.subscriptions.basePlans.offers.batchGet",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "productId",
+	//     "basePlanId"
+	//   ],
+	//   "parameters": {
+	//     "basePlanId": {
+	//       "description": "Required. The parent base plan (ID) for which the offers should be read. May be specified as '-' to read offers from multiple base plans.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Required. The parent app (package name) for which the subscriptions should be created or updated. Must be equal to the package_name field on all the requests.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productId": {
+	//       "description": "Required. The product ID of the parent subscription, if all updated offers belong to the same subscription. If this request spans multiple subscriptions, set this field to \"-\". Must be set.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers:batchGet",
+	//   "request": {
+	//     "$ref": "BatchGetSubscriptionOffersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchGetSubscriptionOffersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.monetization.subscriptions.basePlans.offers.batchUpdate":
+
+type MonetizationSubscriptionsBasePlansOffersBatchUpdateCall struct {
+	s                                    *Service
+	packageName                          string
+	productId                            string
+	basePlanId                           string
+	batchupdatesubscriptionoffersrequest *BatchUpdateSubscriptionOffersRequest
+	urlParams_                           gensupport.URLParams
+	ctx_                                 context.Context
+	header_                              http.Header
+}
+
+// BatchUpdate: Updates a batch of subscription offers. Set the
+// latencyTolerance field on nested requests to
+// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to achieve maximum
+// update throughput.
+//
+//   - basePlanId: The parent base plan (ID) for which the offers should
+//     be updated. May be specified as '-' to update offers from multiple
+//     base plans.
+//   - packageName: The parent app (package name) of the updated
+//     subscription offers. Must be equal to the package_name field on all
+//     the updated SubscriptionOffer resources.
+//   - productId: The product ID of the parent subscription, if all
+//     updated offers belong to the same subscription. If this request
+//     spans multiple subscriptions, set this field to "-". Must be set.
+func (r *MonetizationSubscriptionsBasePlansOffersService) BatchUpdate(packageName string, productId string, basePlanId string, batchupdatesubscriptionoffersrequest *BatchUpdateSubscriptionOffersRequest) *MonetizationSubscriptionsBasePlansOffersBatchUpdateCall {
+	c := &MonetizationSubscriptionsBasePlansOffersBatchUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.basePlanId = basePlanId
+	c.batchupdatesubscriptionoffersrequest = batchupdatesubscriptionoffersrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MonetizationSubscriptionsBasePlansOffersBatchUpdateCall) Fields(s ...googleapi.Field) *MonetizationSubscriptionsBasePlansOffersBatchUpdateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *MonetizationSubscriptionsBasePlansOffersBatchUpdateCall) Context(ctx context.Context) *MonetizationSubscriptionsBasePlansOffersBatchUpdateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MonetizationSubscriptionsBasePlansOffersBatchUpdateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationSubscriptionsBasePlansOffersBatchUpdateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchupdatesubscriptionoffersrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers:batchUpdate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"productId":   c.productId,
+		"basePlanId":  c.basePlanId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.subscriptions.basePlans.offers.batchUpdate" call.
+// Exactly one of *BatchUpdateSubscriptionOffersResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *BatchUpdateSubscriptionOffersResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *MonetizationSubscriptionsBasePlansOffersBatchUpdateCall) Do(opts ...googleapi.CallOption) (*BatchUpdateSubscriptionOffersResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchUpdateSubscriptionOffersResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a batch of subscription offers. Set the latencyTolerance field on nested requests to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to achieve maximum update throughput.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers:batchUpdate",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.monetization.subscriptions.basePlans.offers.batchUpdate",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "productId",
+	//     "basePlanId"
+	//   ],
+	//   "parameters": {
+	//     "basePlanId": {
+	//       "description": "Required. The parent base plan (ID) for which the offers should be updated. May be specified as '-' to update offers from multiple base plans.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Required. The parent app (package name) of the updated subscription offers. Must be equal to the package_name field on all the updated SubscriptionOffer resources.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productId": {
+	//       "description": "Required. The product ID of the parent subscription, if all updated offers belong to the same subscription. If this request spans multiple subscriptions, set this field to \"-\". Must be set.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers:batchUpdate",
+	//   "request": {
+	//     "$ref": "BatchUpdateSubscriptionOffersRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchUpdateSubscriptionOffersResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.monetization.subscriptions.basePlans.offers.batchUpdateStates":
+
+type MonetizationSubscriptionsBasePlansOffersBatchUpdateStatesCall struct {
+	s                                         *Service
+	packageName                               string
+	productId                                 string
+	basePlanId                                string
+	batchupdatesubscriptionofferstatesrequest *BatchUpdateSubscriptionOfferStatesRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// BatchUpdateStates: Updates a batch of subscription offer states. Set
+// the latencyTolerance field on nested requests to
+// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to achieve maximum
+// update throughput.
+//
+//   - basePlanId: The parent base plan (ID) for which the offers should
+//     be updated. May be specified as '-' to update offers from multiple
+//     base plans.
+//   - packageName: The parent app (package name) of the updated
+//     subscription offers. Must be equal to the package_name field on all
+//     the updated SubscriptionOffer resources.
+//   - productId: The product ID of the parent subscription, if all
+//     updated offers belong to the same subscription. If this request
+//     spans multiple subscriptions, set this field to "-". Must be set.
+func (r *MonetizationSubscriptionsBasePlansOffersService) BatchUpdateStates(packageName string, productId string, basePlanId string, batchupdatesubscriptionofferstatesrequest *BatchUpdateSubscriptionOfferStatesRequest) *MonetizationSubscriptionsBasePlansOffersBatchUpdateStatesCall {
+	c := &MonetizationSubscriptionsBasePlansOffersBatchUpdateStatesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.productId = productId
+	c.basePlanId = basePlanId
+	c.batchupdatesubscriptionofferstatesrequest = batchupdatesubscriptionofferstatesrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MonetizationSubscriptionsBasePlansOffersBatchUpdateStatesCall) Fields(s ...googleapi.Field) *MonetizationSubscriptionsBasePlansOffersBatchUpdateStatesCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *MonetizationSubscriptionsBasePlansOffersBatchUpdateStatesCall) Context(ctx context.Context) *MonetizationSubscriptionsBasePlansOffersBatchUpdateStatesCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MonetizationSubscriptionsBasePlansOffersBatchUpdateStatesCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MonetizationSubscriptionsBasePlansOffersBatchUpdateStatesCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchupdatesubscriptionofferstatesrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers:batchUpdateStates")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"productId":   c.productId,
+		"basePlanId":  c.basePlanId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.monetization.subscriptions.basePlans.offers.batchUpdateStates" call.
+// Exactly one of *BatchUpdateSubscriptionOfferStatesResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *BatchUpdateSubscriptionOfferStatesResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *MonetizationSubscriptionsBasePlansOffersBatchUpdateStatesCall) Do(opts ...googleapi.CallOption) (*BatchUpdateSubscriptionOfferStatesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &BatchUpdateSubscriptionOfferStatesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a batch of subscription offer states. Set the latencyTolerance field on nested requests to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT to achieve maximum update throughput.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers:batchUpdateStates",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.monetization.subscriptions.basePlans.offers.batchUpdateStates",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "productId",
+	//     "basePlanId"
+	//   ],
+	//   "parameters": {
+	//     "basePlanId": {
+	//       "description": "Required. The parent base plan (ID) for which the offers should be updated. May be specified as '-' to update offers from multiple base plans.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "packageName": {
+	//       "description": "Required. The parent app (package name) of the updated subscription offers. Must be equal to the package_name field on all the updated SubscriptionOffer resources.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "productId": {
+	//       "description": "Required. The product ID of the parent subscription, if all updated offers belong to the same subscription. If this request spans multiple subscriptions, set this field to \"-\". Must be set.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/subscriptions/{productId}/basePlans/{basePlanId}/offers:batchUpdateStates",
+	//   "request": {
+	//     "$ref": "BatchUpdateSubscriptionOfferStatesRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "BatchUpdateSubscriptionOfferStatesResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidpublisher"
@@ -19898,6 +24418,41 @@ func (r *MonetizationSubscriptionsBasePlansOffersService) Patch(packageName stri
 	return c
 }
 
+// AllowMissing sets the optional parameter "allowMissing": If set to
+// true, and the subscription offer with the given package_name,
+// product_id, base_plan_id and offer_id doesn't exist, an offer will be
+// created. If a new offer is created, update_mask is ignored.
+func (c *MonetizationSubscriptionsBasePlansOffersPatchCall) AllowMissing(allowMissing bool) *MonetizationSubscriptionsBasePlansOffersPatchCall {
+	c.urlParams_.Set("allowMissing", fmt.Sprint(allowMissing))
+	return c
+}
+
+// LatencyTolerance sets the optional parameter "latencyTolerance": The
+// latency tolerance for the propagation of this product update.
+// Defaults to latency-sensitive.
+//
+// Possible values:
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED" - Defaults to
+//
+// PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE" - The update
+//
+// will propagate to clients within several minutes on average and up to
+// a few hours in rare cases. Throughput is limited to 7,200 updates per
+// app per hour.
+//
+//	"PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT" - The update
+//
+// will propagate to clients within 24 hours. Supports high throughput
+// of up to 720,000 updates per app per hour using batch modification
+// methods.
+func (c *MonetizationSubscriptionsBasePlansOffersPatchCall) LatencyTolerance(latencyTolerance string) *MonetizationSubscriptionsBasePlansOffersPatchCall {
+	c.urlParams_.Set("latencyTolerance", latencyTolerance)
+	return c
+}
+
 // RegionsVersionVersion sets the optional parameter
 // "regionsVersion.version": Required. A string representing the version
 // of available regions being used for the specified resource. Regional
@@ -20026,10 +24581,30 @@ func (c *MonetizationSubscriptionsBasePlansOffersPatchCall) Do(opts ...googleapi
 	//     "offerId"
 	//   ],
 	//   "parameters": {
+	//     "allowMissing": {
+	//       "description": "Optional. If set to true, and the subscription offer with the given package_name, product_id, base_plan_id and offer_id doesn't exist, an offer will be created. If a new offer is created, update_mask is ignored.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "basePlanId": {
 	//       "description": "Required. Immutable. The ID of the base plan to which this offer is an extension.",
 	//       "location": "path",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "latencyTolerance": {
+	//       "description": "Optional. The latency tolerance for the propagation of this product update. Defaults to latency-sensitive.",
+	//       "enum": [
+	//         "PRODUCT_UPDATE_LATENCY_TOLERANCE_UNSPECIFIED",
+	//         "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE",
+	//         "PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_TOLERANT"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Defaults to PRODUCT_UPDATE_LATENCY_TOLERANCE_LATENCY_SENSITIVE.",
+	//         "The update will propagate to clients within several minutes on average and up to a few hours in rare cases. Throughput is limited to 7,200 updates per app per hour.",
+	//         "The update will propagate to clients within 24 hours. Supports high throughput of up to 720,000 updates per app per hour using batch modification methods."
+	//       ],
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "offerId": {
@@ -21661,6 +26236,161 @@ func (c *PurchasesSubscriptionsv2GetCall) Do(opts ...googleapi.CallOption) (*Sub
 	//   "path": "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}",
 	//   "response": {
 	//     "$ref": "SubscriptionPurchaseV2"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/androidpublisher"
+	//   ]
+	// }
+
+}
+
+// method id "androidpublisher.purchases.subscriptionsv2.revoke":
+
+type PurchasesSubscriptionsv2RevokeCall struct {
+	s                                 *Service
+	packageName                       string
+	token                             string
+	revokesubscriptionpurchaserequest *RevokeSubscriptionPurchaseRequest
+	urlParams_                        gensupport.URLParams
+	ctx_                              context.Context
+	header_                           http.Header
+}
+
+// Revoke: Revoke a subscription purchase for the user.
+//
+//   - packageName: The package of the application for which this
+//     subscription was purchased (for example, 'com.some.thing').
+//   - token: The token provided to the user's device when the
+//     subscription was purchased.
+func (r *PurchasesSubscriptionsv2Service) Revoke(packageName string, token string, revokesubscriptionpurchaserequest *RevokeSubscriptionPurchaseRequest) *PurchasesSubscriptionsv2RevokeCall {
+	c := &PurchasesSubscriptionsv2RevokeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.packageName = packageName
+	c.token = token
+	c.revokesubscriptionpurchaserequest = revokesubscriptionpurchaserequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PurchasesSubscriptionsv2RevokeCall) Fields(s ...googleapi.Field) *PurchasesSubscriptionsv2RevokeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PurchasesSubscriptionsv2RevokeCall) Context(ctx context.Context) *PurchasesSubscriptionsv2RevokeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PurchasesSubscriptionsv2RevokeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PurchasesSubscriptionsv2RevokeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.revokesubscriptionpurchaserequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:revoke")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"packageName": c.packageName,
+		"token":       c.token,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "androidpublisher.purchases.subscriptionsv2.revoke" call.
+// Exactly one of *RevokeSubscriptionPurchaseResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *RevokeSubscriptionPurchaseResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PurchasesSubscriptionsv2RevokeCall) Do(opts ...googleapi.CallOption) (*RevokeSubscriptionPurchaseResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &RevokeSubscriptionPurchaseResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Revoke a subscription purchase for the user.",
+	//   "flatPath": "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:revoke",
+	//   "httpMethod": "POST",
+	//   "id": "androidpublisher.purchases.subscriptionsv2.revoke",
+	//   "parameterOrder": [
+	//     "packageName",
+	//     "token"
+	//   ],
+	//   "parameters": {
+	//     "packageName": {
+	//       "description": "Required. The package of the application for which this subscription was purchased (for example, 'com.some.thing').",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "token": {
+	//       "description": "Required. The token provided to the user's device when the subscription was purchased.",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "androidpublisher/v3/applications/{packageName}/purchases/subscriptionsv2/tokens/{token}:revoke",
+	//   "request": {
+	//     "$ref": "RevokeSubscriptionPurchaseRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "RevokeSubscriptionPurchaseResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/androidpublisher"

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "datastream:v1"
 const apiName = "datastream"
 const apiVersion = "v1"
 const basePath = "https://datastream.googleapis.com/"
+const basePathTemplate = "https://datastream.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://datastream.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -261,6 +265,10 @@ type BackfillAllStrategy struct {
 	// PostgresqlExcludedObjects: PostgreSQL data source objects to avoid
 	// backfilling.
 	PostgresqlExcludedObjects *PostgresqlRdbms `json:"postgresqlExcludedObjects,omitempty"`
+
+	// SqlServerExcludedObjects: SQLServer data source objects to avoid
+	// backfilling
+	SqlServerExcludedObjects *SqlServerRdbms `json:"sqlServerExcludedObjects,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "MysqlExcludedObjects") to unconditionally include in API requests.
@@ -474,6 +482,9 @@ type ConnectionProfile struct {
 
 	// PrivateConnectivity: Private connectivity.
 	PrivateConnectivity *PrivateConnectivity `json:"privateConnectivity,omitempty"`
+
+	// SqlServerProfile: SQLServer Connection Profile configuration.
+	SqlServerProfile *SqlServerProfile `json:"sqlServerProfile,omitempty"`
 
 	// StaticServiceIpConnectivity: Static Service IP connectivity.
 	StaticServiceIpConnectivity *StaticServiceIpConnectivity `json:"staticServiceIpConnectivity,omitempty"`
@@ -1952,6 +1963,34 @@ func (s *OracleSchema) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OracleScnPosition: Oracle SCN position
+type OracleScnPosition struct {
+	// Scn: Required. SCN number from where Logs will be read
+	Scn int64 `json:"scn,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Scn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Scn") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OracleScnPosition) MarshalJSON() ([]byte, error) {
+	type NoMethod OracleScnPosition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // OracleSourceConfig: Oracle data source configuration
 type OracleSourceConfig struct {
 	// DropLargeObjects: Drop large object values.
@@ -1973,8 +2012,7 @@ type OracleSourceConfig struct {
 	// default value is used.
 	MaxConcurrentCdcTasks int64 `json:"maxConcurrentCdcTasks,omitempty"`
 
-	// StreamLargeObjects: Stream large object values. NOTE: This feature is
-	// currently experimental.
+	// StreamLargeObjects: Stream large object values.
 	StreamLargeObjects *StreamLargeObjects `json:"streamLargeObjects,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DropLargeObjects") to
@@ -2550,6 +2588,9 @@ type SourceConfig struct {
 	// `projects/{project}/locations/{location}/connectionProfiles/{name}`
 	SourceConnectionProfile string `json:"sourceConnectionProfile,omitempty"`
 
+	// SqlServerSourceConfig: SQLServer data source configuration.
+	SqlServerSourceConfig *SqlServerSourceConfig `json:"sqlServerSourceConfig,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "MysqlSourceConfig")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2618,6 +2659,9 @@ type SourceObjectIdentifier struct {
 	// PostgresqlIdentifier: PostgreSQL data source object identifier.
 	PostgresqlIdentifier *PostgresqlObjectIdentifier `json:"postgresqlIdentifier,omitempty"`
 
+	// SqlServerIdentifier: SQLServer data source object identifier.
+	SqlServerIdentifier *SqlServerObjectIdentifier `json:"sqlServerIdentifier,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "MysqlIdentifier") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2649,6 +2693,9 @@ type SpecificStartPosition struct {
 	// from.
 	MysqlLogPosition *MysqlLogPosition `json:"mysqlLogPosition,omitempty"`
 
+	// OracleScnPosition: Oracle SCN to start replicating from.
+	OracleScnPosition *OracleScnPosition `json:"oracleScnPosition,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "MysqlLogPosition") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2669,6 +2716,255 @@ type SpecificStartPosition struct {
 
 func (s *SpecificStartPosition) MarshalJSON() ([]byte, error) {
 	type NoMethod SpecificStartPosition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerColumn: SQLServer Column.
+type SqlServerColumn struct {
+	// Column: Column name.
+	Column string `json:"column,omitempty"`
+
+	// DataType: The SQLServer data type.
+	DataType string `json:"dataType,omitempty"`
+
+	// Length: Column length.
+	Length int64 `json:"length,omitempty"`
+
+	// Nullable: Whether or not the column can accept a null value.
+	Nullable bool `json:"nullable,omitempty"`
+
+	// OrdinalPosition: The ordinal position of the column in the table.
+	OrdinalPosition int64 `json:"ordinalPosition,omitempty"`
+
+	// Precision: Column precision.
+	Precision int64 `json:"precision,omitempty"`
+
+	// PrimaryKey: Whether or not the column represents a primary key.
+	PrimaryKey bool `json:"primaryKey,omitempty"`
+
+	// Scale: Column scale.
+	Scale int64 `json:"scale,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Column") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Column") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerColumn) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerColumn
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerObjectIdentifier: SQLServer data source object identifier.
+type SqlServerObjectIdentifier struct {
+	// Schema: Required. The schema name.
+	Schema string `json:"schema,omitempty"`
+
+	// Table: Required. The table name.
+	Table string `json:"table,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Schema") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Schema") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerObjectIdentifier) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerObjectIdentifier
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerProfile: SQLServer database profile
+type SqlServerProfile struct {
+	// Database: Required. Database for the SQLServer connection.
+	Database string `json:"database,omitempty"`
+
+	// Hostname: Required. Hostname for the SQLServer connection.
+	Hostname string `json:"hostname,omitempty"`
+
+	// Password: Required. Password for the SQLServer connection.
+	Password string `json:"password,omitempty"`
+
+	// Port: Port for the SQLServer connection, default value is 1433.
+	Port int64 `json:"port,omitempty"`
+
+	// Username: Required. Username for the SQLServer connection.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Database") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerProfile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerRdbms: SQLServer database structure.
+type SqlServerRdbms struct {
+	// Schemas: SQLServer schemas in the database server.
+	Schemas []*SqlServerSchema `json:"schemas,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Schemas") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Schemas") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerRdbms) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerRdbms
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerSchema: SQLServer schema.
+type SqlServerSchema struct {
+	// Schema: Schema name.
+	Schema string `json:"schema,omitempty"`
+
+	// Tables: Tables in the schema.
+	Tables []*SqlServerTable `json:"tables,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Schema") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Schema") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerSourceConfig: SQLServer data source configuration
+type SqlServerSourceConfig struct {
+	// ExcludeObjects: SQLServer objects to exclude from the stream.
+	ExcludeObjects *SqlServerRdbms `json:"excludeObjects,omitempty"`
+
+	// IncludeObjects: SQLServer objects to include in the stream.
+	IncludeObjects *SqlServerRdbms `json:"includeObjects,omitempty"`
+
+	// MaxConcurrentBackfillTasks: Max concurrent backfill tasks.
+	MaxConcurrentBackfillTasks int64 `json:"maxConcurrentBackfillTasks,omitempty"`
+
+	// MaxConcurrentCdcTasks: Max concurrent CDC tasks.
+	MaxConcurrentCdcTasks int64 `json:"maxConcurrentCdcTasks,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExcludeObjects") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExcludeObjects") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerSourceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerSourceConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerTable: SQLServer table.
+type SqlServerTable struct {
+	// Columns: SQLServer columns in the schema. When unspecified as part of
+	// include/exclude objects, includes/excludes everything.
+	Columns []*SqlServerColumn `json:"columns,omitempty"`
+
+	// Table: Table name.
+	Table string `json:"table,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Columns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Columns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerTable) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerTable
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2964,6 +3260,7 @@ type Validation struct {
 	//   "NOT_EXECUTED" - Validation did not execute.
 	//   "FAILED" - Validation failed.
 	//   "PASSED" - Validation passed.
+	//   "WARNING" - Validation executed with warnings.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to

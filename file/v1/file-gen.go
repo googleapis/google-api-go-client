@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "file:v1"
 const apiName = "file"
 const apiVersion = "v1"
 const basePath = "https://file.googleapis.com/"
+const basePathTemplate = "https://file.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://file.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -248,6 +252,9 @@ type Backup struct {
 	// `projects/{project_number}/locations/{location_id}/backups/{backup_id}
 	// `.
 	Name string `json:"name,omitempty"`
+
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
@@ -478,7 +485,10 @@ type FileShareConfig struct {
 	// 1 GB as 1024^3 bytes.
 	CapacityGb int64 `json:"capacityGb,omitempty,string"`
 
-	// Name: The name of the file share (must be 16 characters or less).
+	// Name: Required. The name of the file share. Must use 1-16 characters
+	// for the basic service tier and 1-63 characters for all other service
+	// tiers. Must use lowercase letters, numbers, or underscores
+	// `[a-z0-9_]`. Must start with a letter. Immutable.
 	Name string `json:"name,omitempty"`
 
 	// NfsExportOptions: Nfs Export Options. There is a limit of 10 export
@@ -564,7 +574,7 @@ type GoogleCloudSaasacceleratorManagementProvidersV1Instance struct {
 	// been attached to the instance. The key must be of the type name of
 	// the oneof policy name defined in MaintenancePolicy, and the
 	// referenced policy must define the same policy type. For details,
-	// please refer to go/cloud-saas-mw-ug. Should not be set if
+	// please refer to go/mr-user-guide. Should not be set if
 	// maintenance_settings.maintenance_policies is set.
 	MaintenancePolicyNames map[string]string `json:"maintenancePolicyNames,omitempty"`
 
@@ -733,7 +743,7 @@ type GoogleCloudSaasacceleratorManagementProvidersV1MaintenanceSettings struct {
 	// attached to the instance. The key must be of the type name of the
 	// oneof policy name defined in MaintenancePolicy, and the embedded
 	// policy must define the same policy type. For details, please refer to
-	// go/cloud-saas-mw-ug. Should not be set if maintenance_policy_names is
+	// go/mr-user-guide. Should not be set if maintenance_policy_names is
 	// set. If only the name is needed, then only populate
 	// MaintenancePolicy.name.
 	MaintenancePolicies map[string]MaintenancePolicy `json:"maintenancePolicies,omitempty"`
@@ -1022,6 +1032,9 @@ type Instance struct {
 	// Networks: VPC networks to which the instance is connected. For this
 	// version, only a single network is supported.
 	Networks []*NetworkConfig `json:"networks,omitempty"`
+
+	// SatisfiesPzi: Output only. Reserved for future use.
+	SatisfiesPzi bool `json:"satisfiesPzi,omitempty"`
 
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
@@ -1758,8 +1771,8 @@ type RevertInstanceRequest struct {
 	// TargetSnapshotId: Required. The snapshot resource ID, in the format
 	// 'my-snapshot', where the specified ID is the {snapshot_id} of the
 	// fully qualified name like
-	// projects/{project_id}/locations/{location_id}/instances/{instance_id}/
-	// snapshots/{snapshot_id}
+	// `projects/{project_id}/locations/{location_id}/instances/{instance_id}
+	// /snapshots/{snapshot_id}`
 	TargetSnapshotId string `json:"targetSnapshotId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "TargetSnapshotId") to
@@ -4247,9 +4260,9 @@ type ProjectsLocationsInstancesRevertCall struct {
 // Revert: Revert an existing instance's file system to a specified
 // snapshot.
 //
-//   - name:
-//     projects/{project_id}/locations/{location_id}/instances/{instance_id
-//     }. The resource name of the instance, in the format.
+//   - name: The resource name of the instance, in the format
+//     `projects/{project_id}/locations/{location_id}/instances/{instance_i
+//     d}`.
 func (r *ProjectsLocationsInstancesService) Revert(name string, revertinstancerequest *RevertInstanceRequest) *ProjectsLocationsInstancesRevertCall {
 	c := &ProjectsLocationsInstancesRevertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4357,7 +4370,7 @@ func (c *ProjectsLocationsInstancesRevertCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. projects/{project_id}/locations/{location_id}/instances/{instance_id}. The resource name of the instance, in the format",
+	//       "description": "Required. The resource name of the instance, in the format `projects/{project_id}/locations/{location_id}/instances/{instance_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/instances/[^/]+$",
 	//       "required": true,

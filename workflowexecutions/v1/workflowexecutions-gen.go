@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "workflowexecutions:v1"
 const apiName = "workflowexecutions"
 const apiVersion = "v1"
 const basePath = "https://workflowexecutions.googleapis.com/"
+const basePathTemplate = "https://workflowexecutions.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://workflowexecutions.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -351,6 +355,15 @@ type Execution struct {
 	// steps within workflows.
 	//   "LOG_NONE" - Explicitly log nothing.
 	CallLogLevel string `json:"callLogLevel,omitempty"`
+
+	// CreateTime: Output only. Marks the creation of the execution.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisableConcurrencyQuotaOverflowBuffering: Optional. If set to true,
+	// the execution will not be backlogged when the concurrency quota is
+	// exhausted. The backlog execution starts when the concurrency quota
+	// becomes available.
+	DisableConcurrencyQuotaOverflowBuffering bool `json:"disableConcurrencyQuotaOverflowBuffering,omitempty"`
 
 	// Duration: Output only. Measures the duration of the execution.
 	Duration string `json:"duration,omitempty"`
@@ -691,11 +704,11 @@ type PubsubMessage struct {
 	// message must contain at least one attribute.
 	Data string `json:"data,omitempty"`
 
-	// MessageId: Optional. ID of this message, assigned by the server when
-	// the message is published. Guaranteed to be unique within the topic.
-	// This value may be read by a subscriber that receives a
-	// `PubsubMessage` via a `Pull` call or a push delivery. It must not be
-	// populated by the publisher in a `Publish` call.
+	// MessageId: ID of this message, assigned by the server when the
+	// message is published. Guaranteed to be unique within the topic. This
+	// value may be read by a subscriber that receives a `PubsubMessage` via
+	// a `Pull` call or a push delivery. It must not be populated by the
+	// publisher in a `Publish` call.
 	MessageId string `json:"messageId,omitempty"`
 
 	// OrderingKey: Optional. If non-empty, identifies related messages for
@@ -708,9 +721,9 @@ type PubsubMessage struct {
 	// messages (https://cloud.google.com/pubsub/docs/ordering).
 	OrderingKey string `json:"orderingKey,omitempty"`
 
-	// PublishTime: Optional. The time at which the message was published,
-	// populated by the server when it receives the `Publish` call. It must
-	// not be populated by the publisher in a `Publish` call.
+	// PublishTime: The time at which the message was published, populated
+	// by the server when it receives the `Publish` call. It must not be
+	// populated by the publisher in a `Publish` call.
 	PublishTime string `json:"publishTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
@@ -1410,7 +1423,7 @@ type ProjectsLocationsWorkflowsExecutionsCreateCall struct {
 }
 
 // Create: Creates a new execution using the latest revision of the
-// given workflow.
+// given workflow. For more information, see Execute a workflow.
 //
 //   - parent: Name of the workflow for which an execution should be
 //     created. Format:
@@ -1514,7 +1527,7 @@ func (c *ProjectsLocationsWorkflowsExecutionsCreateCall) Do(opts ...googleapi.Ca
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new execution using the latest revision of the given workflow.",
+	//   "description": "Creates a new execution using the latest revision of the given workflow. For more information, see Execute a workflow.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/workflows/{workflowsId}/executions",
 	//   "httpMethod": "POST",
 	//   "id": "workflowexecutions.projects.locations.workflows.executions.create",
@@ -1902,11 +1915,11 @@ func (r *ProjectsLocationsWorkflowsExecutionsService) List(parent string) *Proje
 
 // Filter sets the optional parameter "filter": Filters applied to the
 // `[Executions.ListExecutions]` results. The following fields are
-// supported for filtering: `executionId`, `state`, `startTime`,
-// `endTime`, `duration`, `workflowRevisionId`, `stepName`, and `label`.
-// For details, see AIP-160. For example, if you are using the Google
-// APIs Explorer: `state="SUCCEEDED" or `startTime>"2023-08-01" AND
-// state="FAILED"
+// supported for filtering: `executionId`, `state`, `createTime`,
+// `startTime`, `endTime`, `duration`, `workflowRevisionId`, `stepName`,
+// and `label`. For details, see AIP-160. For example, if you are using
+// the Google APIs Explorer: `state="SUCCEEDED" or
+// `startTime>"2023-08-01" AND state="FAILED"
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) Filter(filter string) *ProjectsLocationsWorkflowsExecutionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -1915,9 +1928,10 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Filter(filter string) *Pr
 // OrderBy sets the optional parameter "orderBy": Comma-separated list
 // of fields that specify the ordering applied to the
 // `[Executions.ListExecutions]` results. By default the ordering is
-// based on descending `startTime`. The following fields are supported
-// for ordering: `executionId`, `state`, `startTime`, `endTime`,
-// `duration`, and `workflowRevisionId`. For details, see AIP-132.
+// based on descending `createTime`. The following fields are supported
+// for ordering: `executionId`, `state`, `createTime`, `startTime`,
+// `endTime`, `duration`, and `workflowRevisionId`. For details, see
+// AIP-132.
 func (c *ProjectsLocationsWorkflowsExecutionsListCall) OrderBy(orderBy string) *ProjectsLocationsWorkflowsExecutionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
@@ -2071,12 +2085,12 @@ func (c *ProjectsLocationsWorkflowsExecutionsListCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Filters applied to the `[Executions.ListExecutions]` results. The following fields are supported for filtering: `executionId`, `state`, `startTime`, `endTime`, `duration`, `workflowRevisionId`, `stepName`, and `label`. For details, see AIP-160. For example, if you are using the Google APIs Explorer: `state=\"SUCCEEDED\"` or `startTime\u003e\"2023-08-01\" AND state=\"FAILED\"`",
+	//       "description": "Optional. Filters applied to the `[Executions.ListExecutions]` results. The following fields are supported for filtering: `executionId`, `state`, `createTime`, `startTime`, `endTime`, `duration`, `workflowRevisionId`, `stepName`, and `label`. For details, see AIP-160. For example, if you are using the Google APIs Explorer: `state=\"SUCCEEDED\"` or `startTime\u003e\"2023-08-01\" AND state=\"FAILED\"`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "orderBy": {
-	//       "description": "Optional. Comma-separated list of fields that specify the ordering applied to the `[Executions.ListExecutions]` results. By default the ordering is based on descending `startTime`. The following fields are supported for ordering: `executionId`, `state`, `startTime`, `endTime`, `duration`, and `workflowRevisionId`. For details, see AIP-132.",
+	//       "description": "Optional. Comma-separated list of fields that specify the ordering applied to the `[Executions.ListExecutions]` results. By default the ordering is based on descending `createTime`. The following fields are supported for ordering: `executionId`, `state`, `createTime`, `startTime`, `endTime`, `duration`, and `workflowRevisionId`. For details, see AIP-132.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

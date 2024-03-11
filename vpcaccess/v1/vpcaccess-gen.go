@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "vpcaccess:v1"
 const apiName = "vpcaccess"
 const apiVersion = "v1"
 const basePath = "https://vpcaccess.googleapis.com/"
+const basePathTemplate = "https://vpcaccess.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://vpcaccess.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -213,18 +217,26 @@ type Connector struct {
 	// underlying the connector.
 	MaxInstances int64 `json:"maxInstances,omitempty"`
 
-	// MaxThroughput: Maximum throughput of the connector in Mbps. Default
-	// is 300, max is 1000. If both max-throughput and max-instances are
-	// provided, max-instances takes precedence over max-throughput.
+	// MaxThroughput: Maximum throughput of the connector in Mbps. Refers to
+	// the expected throughput when using an `e2-micro` machine type. Value
+	// must be a multiple of 100 from 300 through 1000. Must be higher than
+	// the value specified by --min-throughput. If both max-throughput and
+	// max-instances are provided, max-instances takes precedence over
+	// max-throughput. The use of `max-throughput` is discouraged in favor
+	// of `max-instances`.
 	MaxThroughput int64 `json:"maxThroughput,omitempty"`
 
 	// MinInstances: Minimum value of instances in autoscaling group
 	// underlying the connector.
 	MinInstances int64 `json:"minInstances,omitempty"`
 
-	// MinThroughput: Minimum throughput of the connector in Mbps. Default
-	// and min is 200. If both min-throughput and min-instances are
-	// provided, min-instances takes precedence over min-throughput.
+	// MinThroughput: Minimum throughput of the connector in Mbps. Refers to
+	// the expected throughput when using an `e2-micro` machine type. Value
+	// must be a multiple of 100 from 200 through 900. Must be lower than
+	// the value specified by --max-throughput. If both min-throughput and
+	// min-instances are provided, min-instances takes precedence over
+	// min-throughput. The use of `min-throughput` is discouraged in favor
+	// of `min-instances`.
 	MinThroughput int64 `json:"minThroughput,omitempty"`
 
 	// Name: The resource name in the format

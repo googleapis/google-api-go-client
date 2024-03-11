@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -97,7 +97,9 @@ const apiId = "logging:v2"
 const apiName = "logging"
 const apiVersion = "v2"
 const basePath = "https://logging.googleapis.com/"
+const basePathTemplate = "https://logging.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://logging.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -131,7 +133,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -239,6 +243,8 @@ func NewBillingAccountsLocationsService(s *Service) *BillingAccountsLocationsSer
 	rs := &BillingAccountsLocationsService{s: s}
 	rs.Buckets = NewBillingAccountsLocationsBucketsService(s)
 	rs.Operations = NewBillingAccountsLocationsOperationsService(s)
+	rs.RecentQueries = NewBillingAccountsLocationsRecentQueriesService(s)
+	rs.SavedQueries = NewBillingAccountsLocationsSavedQueriesService(s)
 	return rs
 }
 
@@ -248,6 +254,10 @@ type BillingAccountsLocationsService struct {
 	Buckets *BillingAccountsLocationsBucketsService
 
 	Operations *BillingAccountsLocationsOperationsService
+
+	RecentQueries *BillingAccountsLocationsRecentQueriesService
+
+	SavedQueries *BillingAccountsLocationsSavedQueriesService
 }
 
 func NewBillingAccountsLocationsBucketsService(s *Service) *BillingAccountsLocationsBucketsService {
@@ -301,6 +311,24 @@ func NewBillingAccountsLocationsOperationsService(s *Service) *BillingAccountsLo
 }
 
 type BillingAccountsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewBillingAccountsLocationsRecentQueriesService(s *Service) *BillingAccountsLocationsRecentQueriesService {
+	rs := &BillingAccountsLocationsRecentQueriesService{s: s}
+	return rs
+}
+
+type BillingAccountsLocationsRecentQueriesService struct {
+	s *Service
+}
+
+func NewBillingAccountsLocationsSavedQueriesService(s *Service) *BillingAccountsLocationsSavedQueriesService {
+	rs := &BillingAccountsLocationsSavedQueriesService{s: s}
+	return rs
+}
+
+type BillingAccountsLocationsSavedQueriesService struct {
 	s *Service
 }
 
@@ -374,6 +402,8 @@ func NewFoldersLocationsService(s *Service) *FoldersLocationsService {
 	rs := &FoldersLocationsService{s: s}
 	rs.Buckets = NewFoldersLocationsBucketsService(s)
 	rs.Operations = NewFoldersLocationsOperationsService(s)
+	rs.RecentQueries = NewFoldersLocationsRecentQueriesService(s)
+	rs.SavedQueries = NewFoldersLocationsSavedQueriesService(s)
 	return rs
 }
 
@@ -383,6 +413,10 @@ type FoldersLocationsService struct {
 	Buckets *FoldersLocationsBucketsService
 
 	Operations *FoldersLocationsOperationsService
+
+	RecentQueries *FoldersLocationsRecentQueriesService
+
+	SavedQueries *FoldersLocationsSavedQueriesService
 }
 
 func NewFoldersLocationsBucketsService(s *Service) *FoldersLocationsBucketsService {
@@ -436,6 +470,24 @@ func NewFoldersLocationsOperationsService(s *Service) *FoldersLocationsOperation
 }
 
 type FoldersLocationsOperationsService struct {
+	s *Service
+}
+
+func NewFoldersLocationsRecentQueriesService(s *Service) *FoldersLocationsRecentQueriesService {
+	rs := &FoldersLocationsRecentQueriesService{s: s}
+	return rs
+}
+
+type FoldersLocationsRecentQueriesService struct {
+	s *Service
+}
+
+func NewFoldersLocationsSavedQueriesService(s *Service) *FoldersLocationsSavedQueriesService {
+	rs := &FoldersLocationsSavedQueriesService{s: s}
+	return rs
+}
+
+type FoldersLocationsSavedQueriesService struct {
 	s *Service
 }
 
@@ -566,6 +618,8 @@ func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService
 	rs := &OrganizationsLocationsService{s: s}
 	rs.Buckets = NewOrganizationsLocationsBucketsService(s)
 	rs.Operations = NewOrganizationsLocationsOperationsService(s)
+	rs.RecentQueries = NewOrganizationsLocationsRecentQueriesService(s)
+	rs.SavedQueries = NewOrganizationsLocationsSavedQueriesService(s)
 	return rs
 }
 
@@ -575,6 +629,10 @@ type OrganizationsLocationsService struct {
 	Buckets *OrganizationsLocationsBucketsService
 
 	Operations *OrganizationsLocationsOperationsService
+
+	RecentQueries *OrganizationsLocationsRecentQueriesService
+
+	SavedQueries *OrganizationsLocationsSavedQueriesService
 }
 
 func NewOrganizationsLocationsBucketsService(s *Service) *OrganizationsLocationsBucketsService {
@@ -628,6 +686,24 @@ func NewOrganizationsLocationsOperationsService(s *Service) *OrganizationsLocati
 }
 
 type OrganizationsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewOrganizationsLocationsRecentQueriesService(s *Service) *OrganizationsLocationsRecentQueriesService {
+	rs := &OrganizationsLocationsRecentQueriesService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsRecentQueriesService struct {
+	s *Service
+}
+
+func NewOrganizationsLocationsSavedQueriesService(s *Service) *OrganizationsLocationsSavedQueriesService {
+	rs := &OrganizationsLocationsSavedQueriesService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsSavedQueriesService struct {
 	s *Service
 }
 
@@ -686,6 +762,8 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Buckets = NewProjectsLocationsBucketsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
+	rs.RecentQueries = NewProjectsLocationsRecentQueriesService(s)
+	rs.SavedQueries = NewProjectsLocationsSavedQueriesService(s)
 	return rs
 }
 
@@ -695,6 +773,10 @@ type ProjectsLocationsService struct {
 	Buckets *ProjectsLocationsBucketsService
 
 	Operations *ProjectsLocationsOperationsService
+
+	RecentQueries *ProjectsLocationsRecentQueriesService
+
+	SavedQueries *ProjectsLocationsSavedQueriesService
 }
 
 func NewProjectsLocationsBucketsService(s *Service) *ProjectsLocationsBucketsService {
@@ -748,6 +830,24 @@ func NewProjectsLocationsOperationsService(s *Service) *ProjectsLocationsOperati
 }
 
 type ProjectsLocationsOperationsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsRecentQueriesService(s *Service) *ProjectsLocationsRecentQueriesService {
+	rs := &ProjectsLocationsRecentQueriesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsRecentQueriesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsSavedQueriesService(s *Service) *ProjectsLocationsSavedQueriesService {
+	rs := &ProjectsLocationsSavedQueriesService{s: s}
+	return rs
+}
+
+type ProjectsLocationsSavedQueriesService struct {
 	s *Service
 }
 
@@ -888,7 +988,7 @@ type BucketMetadata struct {
 	// StartTime: The create time of an operation.
 	StartTime string `json:"startTime,omitempty"`
 
-	// State: State of an operation.
+	// State: Output only. State of an operation.
 	//
 	// Possible values:
 	//   "OPERATION_STATE_UNSPECIFIED" - Should not be used.
@@ -901,6 +1001,7 @@ type BucketMetadata struct {
 	//   "OPERATION_STATE_FAILED" - The operation failed.
 	//   "OPERATION_STATE_CANCELLED" - The operation was cancelled by the
 	// user.
+	//   "OPERATION_STATE_PENDING" - The operation is waiting for quota.
 	State string `json:"state,omitempty"`
 
 	// UpdateBucketRequest: LongRunningUpdateBucket RPC request.
@@ -993,8 +1094,8 @@ type CancelOperationRequest struct {
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 type CmekSettings struct {
-	// KmsKeyName: The resource name for the configured Cloud KMS key.KMS
-	// key name format:
+	// KmsKeyName: Optional. The resource name for the configured Cloud KMS
+	// key.KMS key name format:
 	// "projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/cryptoK
 	// eys/[KEY]" For
 	// example:"projects/my-project/locations/us-central1/keyRings/my-ring/cr
@@ -1013,8 +1114,8 @@ type CmekSettings struct {
 	// for more information.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
-	// KmsKeyVersionName: The CryptoKeyVersion resource name for the
-	// configured Cloud KMS key.KMS key name format:
+	// KmsKeyVersionName: Output only. The CryptoKeyVersion resource name
+	// for the configured Cloud KMS key.KMS key name format:
 	// "projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/cryptoK
 	// eys/[KEY]/cryptoKeyVersions/[VERSION]" For
 	// example:"projects/my-project/locations/us-central1/keyRings/my-ring/cr
@@ -1073,19 +1174,28 @@ type CopyLogEntriesMetadata struct {
 	// cancellation of the operation.
 	CancellationRequested bool `json:"cancellationRequested,omitempty"`
 
+	// Destination: Destination to which to copy log entries.For example, a
+	// Cloud Storage bucket:"storage.googleapis.com/my-cloud-storage-bucket"
+	Destination string `json:"destination,omitempty"`
+
 	// EndTime: The end time of an operation.
 	EndTime string `json:"endTime,omitempty"`
 
 	// Progress: Estimated progress of the operation (0 - 100%).
 	Progress int64 `json:"progress,omitempty"`
 
-	// Request: CopyLogEntries RPC request.
+	// Request: CopyLogEntries RPC request. This field is deprecated and not
+	// used.
 	Request *CopyLogEntriesRequest `json:"request,omitempty"`
+
+	// Source: Source from which to copy log entries.For example, a log
+	// bucket:"projects/my-project/locations/global/buckets/my-source-bucket"
+	Source string `json:"source,omitempty"`
 
 	// StartTime: The create time of an operation.
 	StartTime string `json:"startTime,omitempty"`
 
-	// State: State of an operation.
+	// State: Output only. State of an operation.
 	//
 	// Possible values:
 	//   "OPERATION_STATE_UNSPECIFIED" - Should not be used.
@@ -1098,7 +1208,11 @@ type CopyLogEntriesMetadata struct {
 	//   "OPERATION_STATE_FAILED" - The operation failed.
 	//   "OPERATION_STATE_CANCELLED" - The operation was cancelled by the
 	// user.
+	//   "OPERATION_STATE_PENDING" - The operation is waiting for quota.
 	State string `json:"state,omitempty"`
+
+	// Verb: Name of the verb executed by the operation.For example,"copy"
+	Verb string `json:"verb,omitempty"`
 
 	// WriterIdentity: The IAM identity of a service account that must be
 	// granted access to the destination.If the service account is not
@@ -1209,7 +1323,8 @@ type CreateBucketRequest struct {
 
 	// BucketId: Required. A client-assigned identifier such as "my-bucket".
 	// Identifiers are limited to 100 characters and can include only
-	// letters, digits, underscores, hyphens, and periods.
+	// letters, digits, underscores, hyphens, and periods. Bucket
+	// identifiers must start with an alphanumeric character.
 	BucketId string `json:"bucketId,omitempty"`
 
 	// Parent: Required. The resource in which to create the log bucket:
@@ -1279,6 +1394,61 @@ type CreateLinkRequest struct {
 
 func (s *CreateLinkRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateLinkRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DefaultSinkConfig: Describes the custom _Default sink configuration
+// that is used to override the built-in _Default sink configuration in
+// newly created resource containers, such as projects or folders.
+type DefaultSinkConfig struct {
+	// Exclusions: Optional. Specifies the set of exclusions to be added to
+	// the _Default sink in newly created resource containers.
+	Exclusions []*LogExclusion `json:"exclusions,omitempty"`
+
+	// Filter: Optional. An advanced logs filter
+	// (https://cloud.google.com/logging/docs/view/advanced-queries). The
+	// only exported log entries are those that are in the resource owning
+	// the sink and that match the filter.For
+	// example:logName="projects/[PROJECT_ID]/logs/[LOG_ID]" AND
+	// severity>=ERRORTo match all logs, don't add exclusions and use the
+	// following line as the value of filter:logName:*Cannot be empty or
+	// unset when the value of mode is OVERWRITE.
+	Filter string `json:"filter,omitempty"`
+
+	// Mode: Required. Determines the behavior to apply to the built-in
+	// _Default sink inclusion filter.Exclusions are always appended, as
+	// built-in _Default sinks have no exclusions.
+	//
+	// Possible values:
+	//   "FILTER_WRITE_MODE_UNSPECIFIED" - The filter's write mode is
+	// unspecified. This mode must not be used.
+	//   "APPEND" - The contents of filter will be appended to the built-in
+	// _Default sink filter. Using the append mode with an empty filter will
+	// keep the sink inclusion filter unchanged.
+	//   "OVERWRITE" - The contents of filter will overwrite the built-in
+	// _Default sink filter.
+	Mode string `json:"mode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Exclusions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Exclusions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DefaultSinkConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod DefaultSinkConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1672,16 +1842,17 @@ func (s *Linear) UnmarshalJSON(data []byte) error {
 
 // Link: Describes a link connected to an analytics enabled bucket.
 type Link struct {
-	// BigqueryDataset: The information of a BigQuery Dataset. When a link
-	// is created, a BigQuery dataset is created along with it, in the same
-	// project as the LogBucket it's linked to. This dataset will also have
-	// BigQuery Views corresponding to the LogViews in the bucket.
+	// BigqueryDataset: Optional. The information of a BigQuery Dataset.
+	// When a link is created, a BigQuery dataset is created along with it,
+	// in the same project as the LogBucket it's linked to. This dataset
+	// will also have BigQuery Views corresponding to the LogViews in the
+	// bucket.
 	BigqueryDataset *BigQueryDataset `json:"bigqueryDataset,omitempty"`
 
 	// CreateTime: Output only. The creation timestamp of the link.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: Describes this link.The maximum length of the
+	// Description: Optional. Describes this link.The maximum length of the
 	// description is 8000 characters.
 	Description string `json:"description,omitempty"`
 
@@ -1701,9 +1872,9 @@ type Link struct {
 	//   "FAILED" - The resource is in an INTERNAL error state.
 	LifecycleState string `json:"lifecycleState,omitempty"`
 
-	// Name: The resource name of the link. The name can have up to 100
-	// characters. A valid link id (at the end of the link name) must only
-	// have alphanumeric characters and underscores within it.
+	// Name: Output only. The resource name of the link. The name can have
+	// up to 100 characters. A valid link id (at the end of the link name)
+	// must only have alphanumeric characters and underscores within it.
 	// "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/lin
 	// ks/[LINK_ID]"
 	// "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/buckets/[BUCK
@@ -1758,7 +1929,7 @@ type LinkMetadata struct {
 	// StartTime: The start time of an operation.
 	StartTime string `json:"startTime,omitempty"`
 
-	// State: State of an operation.
+	// State: Output only. State of an operation.
 	//
 	// Possible values:
 	//   "OPERATION_STATE_UNSPECIFIED" - Should not be used.
@@ -1771,6 +1942,7 @@ type LinkMetadata struct {
 	//   "OPERATION_STATE_FAILED" - The operation failed.
 	//   "OPERATION_STATE_CANCELLED" - The operation was cancelled by the
 	// user.
+	//   "OPERATION_STATE_PENDING" - The operation is waiting for quota.
 	State string `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateLinkRequest")
@@ -2227,6 +2399,106 @@ func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListRecentQueriesResponse: The response from ListRecentQueries.
+type ListRecentQueriesResponse struct {
+	// NextPageToken: If there might be more results than appear in this
+	// response, then nextPageToken is included. To get the next set of
+	// results, call the same method again using the value of nextPageToken
+	// as pageToken.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// RecentQueries: A list of recent queries.
+	RecentQueries []*RecentQuery `json:"recentQueries,omitempty"`
+
+	// Unreachable: The unreachable resources. Each resource can be either
+	// 1) a saved query if a specific query is unreachable or 2) a location
+	// if a specific location is unreachable.
+	// "projects/[PROJECT_ID]/locations/[LOCATION_ID]/recentQueries/[QUERY_ID
+	// ]" "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For
+	// example:"projects/my-project/locations/global/recentQueries/12345678"
+	// "projects/my-project/locations/global"If there are unreachable
+	// resources, the response will first return pages that contain recent
+	// queries, and then return pages that contain the unreachable
+	// resources.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListRecentQueriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListRecentQueriesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListSavedQueriesResponse: The response from ListSavedQueries.
+type ListSavedQueriesResponse struct {
+	// NextPageToken: If there might be more results than appear in this
+	// response, then nextPageToken is included. To get the next set of
+	// results, call the same method again using the value of nextPageToken
+	// as pageToken.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SavedQueries: A list of saved queries.
+	SavedQueries []*SavedQuery `json:"savedQueries,omitempty"`
+
+	// Unreachable: The unreachable resources. It can be either 1) a saved
+	// query if a specific query is unreachable or 2) a location if a
+	// specific location is unreachabe.
+	// "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]
+	// " "projects/[PROJECT_ID]/locations/[LOCATION_ID]" For example:
+	// "projects/my-project/locations/global/savedQueries/12345678"
+	// "projects/my-project/locations/global" If there are unreachable
+	// resources, the response will first return pages that contain saved
+	// queries, and then return pages that contain the unreachable
+	// resources.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSavedQueriesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSavedQueriesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListSinksResponse: Result returned from ListSinks.
 type ListSinksResponse struct {
 	// NextPageToken: If there might be more results than appear in this
@@ -2389,22 +2661,22 @@ type LogBucket struct {
 	// bucket.Once enabled, log analytics features cannot be disabled.
 	AnalyticsEnabled bool `json:"analyticsEnabled,omitempty"`
 
-	// CmekSettings: The CMEK settings of the log bucket. If present, new
-	// log entries written to this log bucket are encrypted using the CMEK
-	// key provided in this configuration. If a log bucket has CMEK
-	// settings, the CMEK settings cannot be disabled later by updating the
-	// log bucket. Changing the KMS key is allowed.
+	// CmekSettings: Optional. The CMEK settings of the log bucket. If
+	// present, new log entries written to this log bucket are encrypted
+	// using the CMEK key provided in this configuration. If a log bucket
+	// has CMEK settings, the CMEK settings cannot be disabled later by
+	// updating the log bucket. Changing the KMS key is allowed.
 	CmekSettings *CmekSettings `json:"cmekSettings,omitempty"`
 
 	// CreateTime: Output only. The creation timestamp of the bucket. This
 	// is not set for any of the default buckets.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: Describes this bucket.
+	// Description: Optional. Describes this bucket.
 	Description string `json:"description,omitempty"`
 
-	// IndexConfigs: A list of indexed fields and related configuration
-	// data.
+	// IndexConfigs: Optional. A list of indexed fields and related
+	// configuration data.
 	IndexConfigs []*IndexConfig `json:"indexConfigs,omitempty"`
 
 	// LifecycleState: Output only. The bucket lifecycle state.
@@ -2423,9 +2695,9 @@ type LogBucket struct {
 	//   "FAILED" - The resource is in an INTERNAL error state.
 	LifecycleState string `json:"lifecycleState,omitempty"`
 
-	// Locked: Whether the bucket is locked.The retention period on a locked
-	// bucket cannot be changed. Locked buckets may only be deleted if they
-	// are empty.
+	// Locked: Optional. Whether the bucket is locked.The retention period
+	// on a locked bucket cannot be changed. Locked buckets may only be
+	// deleted if they are empty.
 	Locked bool `json:"locked,omitempty"`
 
 	// Name: Output only. The resource name of the bucket.For
@@ -2437,18 +2709,18 @@ type LogBucket struct {
 	// changed.
 	Name string `json:"name,omitempty"`
 
-	// RestrictedFields: Log entry field paths that are denied access in
-	// this bucket.The following fields and their children are eligible:
-	// textPayload, jsonPayload, protoPayload, httpRequest, labels,
-	// sourceLocation.Restricting a repeated field will restrict all values.
-	// Adding a parent will block all child fields. (e.g. foo.bar will block
-	// foo.bar.baz)
+	// RestrictedFields: Optional. Log entry field paths that are denied
+	// access in this bucket.The following fields and their children are
+	// eligible: textPayload, jsonPayload, protoPayload, httpRequest,
+	// labels, sourceLocation.Restricting a repeated field will restrict all
+	// values. Adding a parent will block all child fields. (e.g. foo.bar
+	// will block foo.bar.baz)
 	RestrictedFields []string `json:"restrictedFields,omitempty"`
 
-	// RetentionDays: Logs will be retained by default for this amount of
-	// time, after which they will automatically be deleted. The minimum
-	// retention period is 1 day. If this value is set to zero at bucket
-	// creation time, the default time of 30 days will be used.
+	// RetentionDays: Optional. Logs will be retained by default for this
+	// amount of time, after which they will automatically be deleted. The
+	// minimum retention period is 1 day. If this value is set to zero at
+	// bucket creation time, the default time of 30 days will be used.
 	RetentionDays int64 `json:"retentionDays,omitempty"`
 
 	// UpdateTime: Output only. The last update timestamp of the bucket.
@@ -2768,10 +3040,11 @@ func (s *LogEntrySourceLocation) MarshalJSON() ([]byte, error) {
 // Error Reporting error groups.
 type LogErrorGroup struct {
 	// Id: The id is a unique identifier for a particular error group; it is
-	// the last part of the error group resource name: /projects//errors/.
-	// Example: COShysOX0r_51QE The id is derived from key parts of the
-	// error-log content and is treated as Service Data. For information
-	// about how Service Data is handled, see Google Cloud Privacy Notice
+	// the last part of the error group resource name:
+	// /project/[PROJECT_ID]/errors/[ERROR_GROUP_ID]. Example:
+	// COShysOX0r_51QE. The id is derived from key parts of the error-log
+	// content and is treated as Service Data. For information about how
+	// Service Data is handled, see Google Cloud Privacy Notice
 	// (https://cloud.google.com/terms/cloud-privacy-notice).
 	Id string `json:"id,omitempty"`
 
@@ -2827,7 +3100,7 @@ type LogExclusion struct {
 	// severity<ERROR sample(insertId, 0.99)
 	Filter string `json:"filter,omitempty"`
 
-	// Name: Required. A client-assigned identifier, such as
+	// Name: Output only. A client-assigned identifier, such as
 	// "load-balancer-exclusion". Identifiers are limited to 100 characters
 	// and can include only letters, digits, underscores, hyphens, and
 	// periods. First character has to be alphanumeric.
@@ -3057,9 +3330,9 @@ func (s *LogMetric) MarshalJSON() ([]byte, error) {
 }
 
 // LogSink: Describes a sink used to export log entries to one of the
-// following destinations in any project: a Cloud Storage bucket, a
-// BigQuery dataset, a Pub/Sub topic or a Cloud Logging log bucket. A
-// logs filter controls which log entries are exported. The sink must be
+// following destinations: a Cloud Logging log bucket, a Cloud Storage
+// bucket, a BigQuery dataset, a Pub/Sub topic, a Cloud project.A logs
+// filter controls which log entries are exported. The sink must be
 // created within a project, organization, billing account, or folder.
 type LogSink struct {
 	// BigqueryOptions: Optional. Options that affect sinks exporting data
@@ -3119,12 +3392,11 @@ type LogSink struct {
 	// "projects/test-project2/") AND resource.type=gce_instance
 	IncludeChildren bool `json:"includeChildren,omitempty"`
 
-	// Name: Required. The client-assigned sink identifier, unique within
-	// the project.For example: "my-syslog-errors-to-pubsub". Sink
+	// Name: Output only. The client-assigned sink identifier, unique within
+	// the project.For example: "my-syslog-errors-to-pubsub".Sink
 	// identifiers are limited to 100 characters and can include only the
 	// following characters: upper and lower-case alphanumeric characters,
-	// underscores, hyphens, and periods. First character has to be
-	// alphanumeric.
+	// underscores, hyphens, periods.First character has to be alphanumeric.
 	Name string `json:"name,omitempty"`
 
 	// OutputVersionFormat: Deprecated. This field is unused.
@@ -3230,18 +3502,21 @@ type LogView struct {
 	// CreateTime: Output only. The creation timestamp of the view.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Description: Describes this view.
+	// Description: Optional. Describes this view.
 	Description string `json:"description,omitempty"`
 
-	// Filter: Filter that restricts which log entries in a bucket are
-	// visible in this view.Filters are restricted to be a logical AND of
-	// ==/!= of any of the following: originating
-	// project/folder/organization/billing account. resource type log idFor
-	// example:SOURCE("projects/myproject") AND resource.type =
-	// "gce_instance" AND LOG_ID("stdout")
+	// Filter: Optional. Filter that restricts which log entries in a bucket
+	// are visible in this view.Filters must be logical conjunctions that
+	// use the AND operator, and they can use any of the following
+	// qualifiers: SOURCE(), which specifies a project, folder,
+	// organization, or billing account of origin. resource.type, which
+	// specifies the resource type. LOG_ID(), which identifies the log.They
+	// can also use the negations of these qualifiers with the NOT
+	// operator.For example:SOURCE("projects/myproject") AND resource.type =
+	// "gce_instance" AND NOT LOG_ID("stdout")
 	Filter string `json:"filter,omitempty"`
 
-	// Name: The resource name of the view.For
+	// Name: Output only. The resource name of the view.For
 	// example:projects/my-project/locations/global/buckets/my-bucket/views/m
 	// y-view
 	Name string `json:"name,omitempty"`
@@ -3272,6 +3547,52 @@ type LogView struct {
 
 func (s *LogView) MarshalJSON() ([]byte, error) {
 	type NoMethod LogView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// LoggingQuery: Describes a Cloud Logging query that can be run in Logs
+// Explorer UI or via the logging API.In addition to the query itself,
+// additional information may be stored to capture the display
+// configuration and other UI state used in association with analysis of
+// query results.
+type LoggingQuery struct {
+	// Filter: Required. An advanced query using the Logging Query Language
+	// (https://cloud.google.com/logging/docs/view/logging-query-language).
+	// The maximum length of the filter is 20000 characters.
+	Filter string `json:"filter,omitempty"`
+
+	// SummaryFieldEnd: Characters will be counted from the end of the
+	// string.
+	SummaryFieldEnd int64 `json:"summaryFieldEnd,omitempty"`
+
+	// SummaryFieldStart: Characters will be counted from the start of the
+	// string.
+	SummaryFieldStart int64 `json:"summaryFieldStart,omitempty"`
+
+	// SummaryFields: Optional. The set of summary fields to display for
+	// this saved query.
+	SummaryFields []*SummaryField `json:"summaryFields,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Filter") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Filter") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LoggingQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod LoggingQuery
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3660,7 +3981,7 @@ type MonitoredResourceDescriptor struct {
 
 	// Type: Required. The monitored resource type. For example, the type
 	// "cloudsql_database" represents databases in Google Cloud SQL. For a
-	// list of types, see Monitoring resource types
+	// list of types, see Monitored resource types
 	// (https://cloud.google.com/monitoring/api/resources) and Logging
 	// resource types
 	// (https://cloud.google.com/logging/docs/api/v2/resource-list).
@@ -3787,6 +4108,82 @@ type Operation struct {
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OpsAnalyticsQuery: Describes an analytics query that can be run in
+// the Log Analytics page of Google Cloud console.Preview: This is a
+// preview feature and may be subject to change before final release.
+type OpsAnalyticsQuery struct {
+	// SqlQueryText: Required. A logs analytics SQL query, which generally
+	// follows BigQuery format.This is the SQL query that appears in the Log
+	// Analytics UI's query editor.
+	SqlQueryText string `json:"sqlQueryText,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SqlQueryText") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SqlQueryText") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OpsAnalyticsQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod OpsAnalyticsQuery
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RecentQuery: Describes a recent query executed on the Logs Explorer
+// or Log Analytics page within the last ~ 30 days.
+type RecentQuery struct {
+	// LastRunTime: Output only. The timestamp when this query was last run.
+	LastRunTime string `json:"lastRunTime,omitempty"`
+
+	// LoggingQuery: Logging query that can be executed in Logs Explorer or
+	// via Logging API.
+	LoggingQuery *LoggingQuery `json:"loggingQuery,omitempty"`
+
+	// Name: Output only. Resource name of the recent query.In the format:
+	// "projects/[PROJECT_ID]/locations/[LOCATION_ID]/recentQueries/[QUERY_ID
+	// ]" For a list of supported locations, see Supported Regions
+	// (https://cloud.google.com/logging/docs/region-support)The QUERY_ID is
+	// a system generated alphanumeric ID.
+	Name string `json:"name,omitempty"`
+
+	// OpsAnalyticsQuery: Analytics query that can be executed in Log
+	// Analytics.
+	OpsAnalyticsQuery *OpsAnalyticsQuery `json:"opsAnalyticsQuery,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "LastRunTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LastRunTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RecentQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod RecentQuery
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3959,9 +4356,86 @@ func (s *RequestLog) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// SavedQuery: Describes a query that has been saved by a user.
+type SavedQuery struct {
+	// CreateTime: Output only. The timestamp when the saved query was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Optional. A human readable description of the saved
+	// query.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Required. The user specified title for the SavedQuery.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// LoggingQuery: Logging query that can be executed in Logs Explorer or
+	// via Logging API.
+	LoggingQuery *LoggingQuery `json:"loggingQuery,omitempty"`
+
+	// Name: Output only. Resource name of the saved query.In the format:
+	// "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]
+	// " For a list of supported locations, see Supported Regions
+	// (https://cloud.google.com/logging/docs/region-support#bucket-regions)After
+	// the saved query is created, the location cannot be changed.If the
+	// user doesn't provide a QUERY_ID, the system will generate an
+	// alphanumeric ID.
+	Name string `json:"name,omitempty"`
+
+	// OpsAnalyticsQuery: Analytics query that can be executed in Log
+	// Analytics.
+	OpsAnalyticsQuery *OpsAnalyticsQuery `json:"opsAnalyticsQuery,omitempty"`
+
+	// UpdateTime: Output only. The timestamp when the saved query was last
+	// updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Visibility: Required. The visibility status of this query, which
+	// determines its ownership.
+	//
+	// Possible values:
+	//   "VISIBILITY_UNSPECIFIED" - The saved query visibility is
+	// unspecified. A CreateSavedQuery request with an unspecified
+	// visibility will be rejected.
+	//   "PRIVATE" - The saved query is only visible to the user that
+	// created it.
+	//   "SHARED" - The saved query is visible to anyone in the project.
+	Visibility string `json:"visibility,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SavedQuery) MarshalJSON() ([]byte, error) {
+	type NoMethod SavedQuery
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Settings: Describes the settings associated with a project, folder,
-// organization, billing account, or flexible resource.
+// organization, or billing account.
 type Settings struct {
+	// DefaultSinkConfig: Optional. Overrides the built-in configuration for
+	// _Default sink.
+	DefaultSinkConfig *DefaultSinkConfig `json:"defaultSinkConfig,omitempty"`
+
 	// DisableDefaultSink: Optional. If set to true, the _Default sink in
 	// newly created projects and folders will created in a disabled state.
 	// This can be used to automatically disable log storage if there is
@@ -3974,53 +4448,50 @@ type Settings struct {
 	// "projects/[PROJECT_ID]/locations/[LOCATION]/keyRings/[KEYRING]/cryptoK
 	// eys/[KEY]" For
 	// example:"projects/my-project/locations/us-central1/keyRings/my-ring/cr
-	// yptoKeys/my-key"To enable CMEK for the Log Router, set this field to
-	// a valid kms_key_name for which the associated service account has the
+	// yptoKeys/my-key"To enable CMEK, set this field to a valid
+	// kms_key_name for which the associated service account has the
 	// required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for
 	// the key.The Cloud KMS key used by the Log Router can be updated by
-	// changing the kms_key_name to a new valid key name. Encryption
-	// operations that are in progress will be completed with the key that
-	// was in use when they started. Decryption operations will be completed
-	// using the key that was used at the time of encryption unless access
-	// to that key has been revoked.To disable CMEK for the Log Router, set
-	// this field to an empty string.See Enabling CMEK for Log Router
+	// changing the kms_key_name to a new valid key name.To disable CMEK for
+	// the Log Router, set this field to an empty string.See Enabling CMEK
+	// for Log Router
 	// (https://cloud.google.com/logging/docs/routing/managed-encryption)
 	// for more information.
 	KmsKeyName string `json:"kmsKeyName,omitempty"`
 
 	// KmsServiceAccountId: Output only. The service account that will be
 	// used by the Log Router to access your Cloud KMS key.Before enabling
-	// CMEK for Log Router, you must first assign the role
+	// CMEK, you must first assign the role
 	// roles/cloudkms.cryptoKeyEncrypterDecrypter to the service account
-	// that the Log Router will use to access your Cloud KMS key. Use
-	// GetSettings to obtain the service account ID.See Enabling CMEK for
-	// Log Router
+	// that will be used to access your Cloud KMS key. Use GetSettings to
+	// obtain the service account ID.See Enabling CMEK for Log Router
 	// (https://cloud.google.com/logging/docs/routing/managed-encryption)
 	// for more information.
 	KmsServiceAccountId string `json:"kmsServiceAccountId,omitempty"`
 
 	// LoggingServiceAccountId: Output only. The service account for the
-	// given container. Sinks use this service account as their
-	// writer_identity if no custom service account is provided.
+	// given resource container, such as project or folder. Log sinks use
+	// this service account as their writer_identity if no custom service
+	// account is provided in the request when calling the create sink
+	// method.
 	LoggingServiceAccountId string `json:"loggingServiceAccountId,omitempty"`
 
 	// Name: Output only. The resource name of the settings.
 	Name string `json:"name,omitempty"`
 
-	// StorageLocation: Optional. The storage location that Cloud Logging
-	// will use to create new resources when a location is needed but not
-	// explicitly provided. The use cases includes: The location of _Default
-	// and _Required log bucket for newly created projects and
-	// folders.Example value: europe-west1.Note: this setting does not
-	// affect the location of resources where a location is explicitly
-	// provided when created, such as custom log buckets.
+	// StorageLocation: Optional. The storage location for the _Default and
+	// _Required log buckets of newly created projects and folders, unless
+	// the storage location is explicitly provided.Example value:
+	// europe-west1.Note: this setting does not affect the location of
+	// resources where a location is explicitly provided when created, such
+	// as custom log buckets.
 	StorageLocation string `json:"storageLocation,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DisableDefaultSink")
+	// ForceSendFields is a list of field names (e.g. "DefaultSinkConfig")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4028,7 +4499,7 @@ type Settings struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisableDefaultSink") to
+	// NullFields is a list of field names (e.g. "DefaultSinkConfig") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -4158,6 +4629,38 @@ type Status struct {
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SummaryField: A field from the LogEntry that is added to the summary
+// line
+// (https://cloud.google.com/logging/docs/view/logs-explorer-interface#add-summary-fields)
+// for a query in the Logs Explorer.
+type SummaryField struct {
+	// Field: Optional. The field from the LogEntry to include in the
+	// summary line, for example resource.type or jsonPayload.name.
+	Field string `json:"field,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Field") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Field") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SummaryField) MarshalJSON() ([]byte, error) {
+	type NoMethod SummaryField
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4458,7 +4961,7 @@ type BillingAccountsGetCmekSettingsCall struct {
 
 // GetCmekSettings: Gets the Logging CMEK settings for the given
 // resource.Note: CMEK for the Log Router can be configured for Google
-// Cloud projects, folders, organizations and billing accounts. Once
+// Cloud projects, folders, organizations, and billing accounts. Once
 // configured for an organization, it applies to all projects and
 // folders in the Google Cloud organization.See Enabling CMEK for Log
 // Router
@@ -4472,7 +4975,7 @@ type BillingAccountsGetCmekSettingsCall struct {
 //     "folders/[FOLDER_ID]/cmekSettings" For
 //     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
 //     Router can be configured for Google Cloud projects, folders,
-//     organizations and billing accounts. Once configured for an
+//     organizations, and billing accounts. Once configured for an
 //     organization, it applies to all projects and folders in the Google
 //     Cloud organization.
 func (r *BillingAccountsService) GetCmekSettings(name string) *BillingAccountsGetCmekSettingsCall {
@@ -4580,7 +5083,7 @@ func (c *BillingAccountsGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/cmekSettings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.billingAccounts.getCmekSettings",
@@ -4589,7 +5092,7 @@ func (c *BillingAccountsGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -4621,14 +5124,10 @@ type BillingAccountsGetSettingsCall struct {
 	header_      http.Header
 }
 
-// GetSettings: Gets the Log Router settings for the given
-// resource.Note: Settings for the Log Router can be get for Google
-// Cloud projects, folders, organizations and billing accounts.
-// Currently it can only be configured for organizations. Once
-// configured for an organization, it applies to all projects and
-// folders in the Google Cloud organization.See Enabling CMEK for Log
-// Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// GetSettings: Gets the settings for the given resource.Note: Settings
+// can be retrieved for Google Cloud projects, folders, organizations,
+// and billing accounts.See View default resource settings for Logging
+// (https://cloud.google.com/logging/docs/default-settings#view-org-settings)
 // for more information.
 //
 //   - name: The resource for which to retrieve settings.
@@ -4636,11 +5135,9 @@ type BillingAccountsGetSettingsCall struct {
 //     "organizations/[ORGANIZATION_ID]/settings"
 //     "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
 //     "folders/[FOLDER_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can be get for Google Cloud projects, folders, organizations
-//     and billing accounts. Currently it can only be configured for
-//     organizations. Once configured for an organization, it applies to
-//     all projects and folders in the Google Cloud organization.
+//     example:"organizations/12345/settings"Note: Settings can be
+//     retrieved for Google Cloud projects, folders, organizations, and
+//     billing accounts.
 func (r *BillingAccountsService) GetSettings(name string) *BillingAccountsGetSettingsCall {
 	c := &BillingAccountsGetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4746,7 +5243,7 @@ func (c *BillingAccountsGetSettingsCall) Do(opts ...googleapi.CallOption) (*Sett
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Log Router settings for the given resource.Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the settings for the given resource.Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.See View default resource settings for Logging (https://cloud.google.com/logging/docs/default-settings#view-org-settings) for more information.",
 	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/settings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.billingAccounts.getSettings",
@@ -4755,7 +5252,7 @@ func (c *BillingAccountsGetSettingsCall) Do(opts ...googleapi.CallOption) (*Sett
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+$",
 	//       "required": true,
@@ -5975,7 +6472,8 @@ func (r *BillingAccountsLocationsBucketsService) Create(parent string, logbucket
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *BillingAccountsLocationsBucketsCreateCall) BucketId(bucketId string) *BillingAccountsLocationsBucketsCreateCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -6081,7 +6579,7 @@ func (c *BillingAccountsLocationsBucketsCreateCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -6136,7 +6634,8 @@ func (r *BillingAccountsLocationsBucketsService) CreateAsync(parent string, logb
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *BillingAccountsLocationsBucketsCreateAsyncCall) BucketId(bucketId string) *BillingAccountsLocationsBucketsCreateAsyncCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -6242,7 +6741,7 @@ func (c *BillingAccountsLocationsBucketsCreateAsyncCall) Do(opts ...googleapi.Ca
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -8602,11 +9101,11 @@ type BillingAccountsLocationsBucketsViewsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a view on a log bucket. This method replaces the
-// following fields in the existing view with values from the new view:
-// filter. If an UNAVAILABLE error is returned, this indicates that
-// system is not in a state where it can update the view. If this
-// occurs, please try again in a few minutes.
+// Patch: Updates a view on a log bucket. This method replaces the value
+// of the filter field from the existing view with the corresponding
+// value from the new view. If an UNAVAILABLE error is returned, this
+// indicates that system is not in a state where it can update the view.
+// If this occurs, please try again in a few minutes.
 //
 //   - name: The full resource name of the view to update
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -8723,7 +9222,7 @@ func (c *BillingAccountsLocationsBucketsViewsPatchCall) Do(opts ...googleapi.Cal
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a view on a log bucket. This method replaces the following fields in the existing view with values from the new view: filter. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
+	//   "description": "Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
 	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.billingAccounts.locations.buckets.views.patch",
@@ -9482,6 +9981,732 @@ func (c *BillingAccountsLocationsOperationsListCall) Do(opts ...googleapi.CallOp
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *BillingAccountsLocationsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "logging.billingAccounts.locations.recentQueries.list":
+
+type BillingAccountsLocationsRecentQueriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the RecentQueries that were created by the user making
+// the request.
+//
+//   - parent: The resource to which the listed queries belong.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For
+//     example:projects/my-project/locations/us-central1Note: The location
+//     portion of the resource must be specified, but supplying the
+//     character - in place of LOCATION_ID will return all recent queries.
+func (r *BillingAccountsLocationsRecentQueriesService) List(parent string) *BillingAccountsLocationsRecentQueriesListCall {
+	c := &BillingAccountsLocationsRecentQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request. Non-positive values are
+// ignored. The presence of nextPageToken in the response indicates that
+// more results might be available.
+func (c *BillingAccountsLocationsRecentQueriesListCall) PageSize(pageSize int64) *BillingAccountsLocationsRecentQueriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present, then
+// retrieve the next batch of results from the preceding call to this
+// method. pageToken must be the value of nextPageToken from the
+// previous response. The values of other method parameters should be
+// identical to those in the previous call.
+func (c *BillingAccountsLocationsRecentQueriesListCall) PageToken(pageToken string) *BillingAccountsLocationsRecentQueriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsRecentQueriesListCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsRecentQueriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingAccountsLocationsRecentQueriesListCall) IfNoneMatch(entityTag string) *BillingAccountsLocationsRecentQueriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsRecentQueriesListCall) Context(ctx context.Context) *BillingAccountsLocationsRecentQueriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsRecentQueriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsRecentQueriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/recentQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.recentQueries.list" call.
+// Exactly one of *ListRecentQueriesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListRecentQueriesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BillingAccountsLocationsRecentQueriesListCall) Do(opts ...googleapi.CallOption) (*ListRecentQueriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRecentQueriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the RecentQueries that were created by the user making the request.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/recentQueries",
+	//   "httpMethod": "GET",
+	//   "id": "logging.billingAccounts.locations.recentQueries.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource to which the listed queries belong. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]\" For example:projects/my-project/locations/us-central1Note: The location portion of the resource must be specified, but supplying the character - in place of LOCATION_ID will return all recent queries.",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/recentQueries",
+	//   "response": {
+	//     "$ref": "ListRecentQueriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BillingAccountsLocationsRecentQueriesListCall) Pages(ctx context.Context, f func(*ListRecentQueriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "logging.billingAccounts.locations.savedQueries.create":
+
+type BillingAccountsLocationsSavedQueriesCreateCall struct {
+	s          *Service
+	parent     string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new SavedQuery for the user making the request.
+//
+//   - parent: The parent resource in which to create the saved query:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For example:
+//     "projects/my-project/locations/global"
+//     "organizations/123456789/locations/us-central1".
+func (r *BillingAccountsLocationsSavedQueriesService) Create(parent string, savedquery *SavedQuery) *BillingAccountsLocationsSavedQueriesCreateCall {
+	c := &BillingAccountsLocationsSavedQueriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.savedquery = savedquery
+	return c
+}
+
+// SavedQueryId sets the optional parameter "savedQueryId": The ID to
+// use for the saved query, which will become the final component of the
+// saved query's resource name.If the saved_query_id is not provided,
+// the system will generate an alphanumeric ID.The saved_query_id is
+// limited to 100 characters and can include only the following
+// characters: upper and lower-case alphanumeric characters,
+// underscores, hyphens, periods.First character has to be alphanumeric.
+func (c *BillingAccountsLocationsSavedQueriesCreateCall) SavedQueryId(savedQueryId string) *BillingAccountsLocationsSavedQueriesCreateCall {
+	c.urlParams_.Set("savedQueryId", savedQueryId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsSavedQueriesCreateCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsSavedQueriesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsSavedQueriesCreateCall) Context(ctx context.Context) *BillingAccountsLocationsSavedQueriesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsSavedQueriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsSavedQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/savedQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.savedQueries.create" call.
+// Exactly one of *SavedQuery or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *BillingAccountsLocationsSavedQueriesCreateCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new SavedQuery for the user making the request.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/savedQueries",
+	//   "httpMethod": "POST",
+	//   "id": "logging.billingAccounts.locations.savedQueries.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource in which to create the saved query: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]\" For example: \"projects/my-project/locations/global\" \"organizations/123456789/locations/us-central1\" ",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "savedQueryId": {
+	//       "description": "Optional. The ID to use for the saved query, which will become the final component of the saved query's resource name.If the saved_query_id is not provided, the system will generate an alphanumeric ID.The saved_query_id is limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/savedQueries",
+	//   "request": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "response": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.billingAccounts.locations.savedQueries.delete":
+
+type BillingAccountsLocationsSavedQueriesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an existing SavedQuery that was created by the user
+// making the request.
+//
+//   - name: The full resource name of the saved query to delete.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_I
+//     D]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQuerie
+//     s/[QUERY_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQ
+//     ueries/[QUERY_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]
+//     " For example:
+//     "projects/my-project/locations/global/savedQueries/my-saved-query".
+func (r *BillingAccountsLocationsSavedQueriesService) Delete(name string) *BillingAccountsLocationsSavedQueriesDeleteCall {
+	c := &BillingAccountsLocationsSavedQueriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsSavedQueriesDeleteCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsSavedQueriesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsSavedQueriesDeleteCall) Context(ctx context.Context) *BillingAccountsLocationsSavedQueriesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsSavedQueriesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsSavedQueriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.savedQueries.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *BillingAccountsLocationsSavedQueriesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an existing SavedQuery that was created by the user making the request.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/savedQueries/{savedQueriesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "logging.billingAccounts.locations.savedQueries.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the saved query to delete. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" For example: \"projects/my-project/locations/global/savedQueries/my-saved-query\" ",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+/savedQueries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.billingAccounts.locations.savedQueries.list":
+
+type BillingAccountsLocationsSavedQueriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the SavedQueries that were created by the user making the
+// request.
+//
+//   - parent: The resource to which the listed queries belong.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For example:
+//     "projects/my-project/locations/us-central1" Note: The locations
+//     portion of the resource must be specified. To get a list of all
+//     saved queries, a wildcard character - can be used for LOCATION_ID,
+//     for example: "projects/my-project/locations/-".
+func (r *BillingAccountsLocationsSavedQueriesService) List(parent string) *BillingAccountsLocationsSavedQueriesListCall {
+	c := &BillingAccountsLocationsSavedQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request.Non-positive values are
+// ignored. The presence of nextPageToken in the response indicates that
+// more results might be available.
+func (c *BillingAccountsLocationsSavedQueriesListCall) PageSize(pageSize int64) *BillingAccountsLocationsSavedQueriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present, then
+// retrieve the next batch of results from the preceding call to this
+// method. pageToken must be the value of nextPageToken from the
+// previous response. The values of other method parameters should be
+// identical to those in the previous call.
+func (c *BillingAccountsLocationsSavedQueriesListCall) PageToken(pageToken string) *BillingAccountsLocationsSavedQueriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsLocationsSavedQueriesListCall) Fields(s ...googleapi.Field) *BillingAccountsLocationsSavedQueriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingAccountsLocationsSavedQueriesListCall) IfNoneMatch(entityTag string) *BillingAccountsLocationsSavedQueriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsLocationsSavedQueriesListCall) Context(ctx context.Context) *BillingAccountsLocationsSavedQueriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsLocationsSavedQueriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsLocationsSavedQueriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/savedQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.billingAccounts.locations.savedQueries.list" call.
+// Exactly one of *ListSavedQueriesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListSavedQueriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BillingAccountsLocationsSavedQueriesListCall) Do(opts ...googleapi.CallOption) (*ListSavedQueriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSavedQueriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the SavedQueries that were created by the user making the request.",
+	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/locations/{locationsId}/savedQueries",
+	//   "httpMethod": "GET",
+	//   "id": "logging.billingAccounts.locations.savedQueries.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request.Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource to which the listed queries belong. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]\" For example: \"projects/my-project/locations/us-central1\" Note: The locations portion of the resource must be specified. To get a list of all saved queries, a wildcard character - can be used for LOCATION_ID, for example: \"projects/my-project/locations/-\" ",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/savedQueries",
+	//   "response": {
+	//     "$ref": "ListSavedQueriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BillingAccountsLocationsSavedQueriesListCall) Pages(ctx context.Context, f func(*ListSavedQueriesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -10565,10 +11790,10 @@ type BillingAccountsSinksPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Patch: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -10717,7 +11942,7 @@ func (c *BillingAccountsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSi
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/sinks/{sinksId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.billingAccounts.sinks.patch",
@@ -10775,10 +12000,10 @@ type BillingAccountsSinksUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Update: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -10927,7 +12152,7 @@ func (c *BillingAccountsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogS
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/billingAccounts/{billingAccountsId}/sinks/{sinksId}",
 	//   "httpMethod": "PUT",
 	//   "id": "logging.billingAccounts.sinks.update",
@@ -12338,7 +13563,7 @@ type FoldersGetCmekSettingsCall struct {
 
 // GetCmekSettings: Gets the Logging CMEK settings for the given
 // resource.Note: CMEK for the Log Router can be configured for Google
-// Cloud projects, folders, organizations and billing accounts. Once
+// Cloud projects, folders, organizations, and billing accounts. Once
 // configured for an organization, it applies to all projects and
 // folders in the Google Cloud organization.See Enabling CMEK for Log
 // Router
@@ -12352,7 +13577,7 @@ type FoldersGetCmekSettingsCall struct {
 //     "folders/[FOLDER_ID]/cmekSettings" For
 //     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
 //     Router can be configured for Google Cloud projects, folders,
-//     organizations and billing accounts. Once configured for an
+//     organizations, and billing accounts. Once configured for an
 //     organization, it applies to all projects and folders in the Google
 //     Cloud organization.
 func (r *FoldersService) GetCmekSettings(name string) *FoldersGetCmekSettingsCall {
@@ -12460,7 +13685,7 @@ func (c *FoldersGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSett
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/folders/{foldersId}/cmekSettings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.folders.getCmekSettings",
@@ -12469,7 +13694,7 @@ func (c *FoldersGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSett
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -12501,14 +13726,10 @@ type FoldersGetSettingsCall struct {
 	header_      http.Header
 }
 
-// GetSettings: Gets the Log Router settings for the given
-// resource.Note: Settings for the Log Router can be get for Google
-// Cloud projects, folders, organizations and billing accounts.
-// Currently it can only be configured for organizations. Once
-// configured for an organization, it applies to all projects and
-// folders in the Google Cloud organization.See Enabling CMEK for Log
-// Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// GetSettings: Gets the settings for the given resource.Note: Settings
+// can be retrieved for Google Cloud projects, folders, organizations,
+// and billing accounts.See View default resource settings for Logging
+// (https://cloud.google.com/logging/docs/default-settings#view-org-settings)
 // for more information.
 //
 //   - name: The resource for which to retrieve settings.
@@ -12516,11 +13737,9 @@ type FoldersGetSettingsCall struct {
 //     "organizations/[ORGANIZATION_ID]/settings"
 //     "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
 //     "folders/[FOLDER_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can be get for Google Cloud projects, folders, organizations
-//     and billing accounts. Currently it can only be configured for
-//     organizations. Once configured for an organization, it applies to
-//     all projects and folders in the Google Cloud organization.
+//     example:"organizations/12345/settings"Note: Settings can be
+//     retrieved for Google Cloud projects, folders, organizations, and
+//     billing accounts.
 func (r *FoldersService) GetSettings(name string) *FoldersGetSettingsCall {
 	c := &FoldersGetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12626,7 +13845,7 @@ func (c *FoldersGetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Log Router settings for the given resource.Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the settings for the given resource.Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.See View default resource settings for Logging (https://cloud.google.com/logging/docs/default-settings#view-org-settings) for more information.",
 	//   "flatPath": "v2/folders/{foldersId}/settings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.folders.getSettings",
@@ -12635,7 +13854,7 @@ func (c *FoldersGetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -12667,25 +13886,22 @@ type FoldersUpdateSettingsCall struct {
 	header_    http.Header
 }
 
-// UpdateSettings: Updates the Log Router settings for the given
-// resource.Note: Settings for the Log Router can currently only be
-// configured for Google Cloud organizations. Once configured, it
-// applies to all projects and folders in the Google Cloud
-// organization.UpdateSettings will fail if 1) kms_key_name is invalid,
-// or 2) the associated service account does not have the required
-// roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key,
-// or 3) access to the key is disabled. 4) location_id is not supported
-// by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for
-// Log Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
-// for more information.
+// UpdateSettings: Updates the settings for the given resource. This
+// method applies to all feature configurations for organization and
+// folders.UpdateSettings fails when any of the following are true: The
+// value of storage_location either isn't supported by Logging or
+// violates the location OrgPolicy. The default_sink_config field is
+// set, but it has an unspecified filter write mode. The value of
+// kms_key_name is invalid. The associated service account doesn't have
+// the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned
+// for the key. Access to the key is disabled.See Configure default
+// settings for organizations and folders
+// (https://cloud.google.com/logging/docs/default-settings) for more
+// information.
 //
 //   - name: The resource name for the settings to update.
 //     "organizations/[ORGANIZATION_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can currently only be configured for Google Cloud
-//     organizations. Once configured, it applies to all projects and
-//     folders in the Google Cloud organization.
+//     example:"organizations/12345/settings".
 func (r *FoldersService) UpdateSettings(name string, settings *Settings) *FoldersUpdateSettingsCall {
 	c := &FoldersUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -12794,7 +14010,7 @@ func (c *FoldersUpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings,
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the Log Router settings for the given resource.Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled. 4) location_id is not supported by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Updates the settings for the given resource. This method applies to all feature configurations for organization and folders.UpdateSettings fails when any of the following are true: The value of storage_location either isn't supported by Logging or violates the location OrgPolicy. The default_sink_config field is set, but it has an unspecified filter write mode. The value of kms_key_name is invalid. The associated service account doesn't have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key. Access to the key is disabled.See Configure default settings for organizations and folders (https://cloud.google.com/logging/docs/default-settings) for more information.",
 	//   "flatPath": "v2/folders/{foldersId}/settings",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.folders.updateSettings",
@@ -12803,7 +14019,7 @@ func (c *FoldersUpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name for the settings to update. \"organizations/[ORGANIZATION_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource name for the settings to update. \"organizations/[ORGANIZATION_ID]/settings\" For example:\"organizations/12345/settings\"",
 	//       "location": "path",
 	//       "pattern": "^folders/[^/]+$",
 	//       "required": true,
@@ -14030,7 +15246,8 @@ func (r *FoldersLocationsBucketsService) Create(parent string, logbucket *LogBuc
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *FoldersLocationsBucketsCreateCall) BucketId(bucketId string) *FoldersLocationsBucketsCreateCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -14136,7 +15353,7 @@ func (c *FoldersLocationsBucketsCreateCall) Do(opts ...googleapi.CallOption) (*L
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -14191,7 +15408,8 @@ func (r *FoldersLocationsBucketsService) CreateAsync(parent string, logbucket *L
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *FoldersLocationsBucketsCreateAsyncCall) BucketId(bucketId string) *FoldersLocationsBucketsCreateAsyncCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -14297,7 +15515,7 @@ func (c *FoldersLocationsBucketsCreateAsyncCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16657,11 +17875,11 @@ type FoldersLocationsBucketsViewsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a view on a log bucket. This method replaces the
-// following fields in the existing view with values from the new view:
-// filter. If an UNAVAILABLE error is returned, this indicates that
-// system is not in a state where it can update the view. If this
-// occurs, please try again in a few minutes.
+// Patch: Updates a view on a log bucket. This method replaces the value
+// of the filter field from the existing view with the corresponding
+// value from the new view. If an UNAVAILABLE error is returned, this
+// indicates that system is not in a state where it can update the view.
+// If this occurs, please try again in a few minutes.
 //
 //   - name: The full resource name of the view to update
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -16778,7 +17996,7 @@ func (c *FoldersLocationsBucketsViewsPatchCall) Do(opts ...googleapi.CallOption)
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a view on a log bucket. This method replaces the following fields in the existing view with values from the new view: filter. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
+	//   "description": "Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
 	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.folders.locations.buckets.views.patch",
@@ -17537,6 +18755,732 @@ func (c *FoldersLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (*
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *FoldersLocationsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "logging.folders.locations.recentQueries.list":
+
+type FoldersLocationsRecentQueriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the RecentQueries that were created by the user making
+// the request.
+//
+//   - parent: The resource to which the listed queries belong.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For
+//     example:projects/my-project/locations/us-central1Note: The location
+//     portion of the resource must be specified, but supplying the
+//     character - in place of LOCATION_ID will return all recent queries.
+func (r *FoldersLocationsRecentQueriesService) List(parent string) *FoldersLocationsRecentQueriesListCall {
+	c := &FoldersLocationsRecentQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request. Non-positive values are
+// ignored. The presence of nextPageToken in the response indicates that
+// more results might be available.
+func (c *FoldersLocationsRecentQueriesListCall) PageSize(pageSize int64) *FoldersLocationsRecentQueriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present, then
+// retrieve the next batch of results from the preceding call to this
+// method. pageToken must be the value of nextPageToken from the
+// previous response. The values of other method parameters should be
+// identical to those in the previous call.
+func (c *FoldersLocationsRecentQueriesListCall) PageToken(pageToken string) *FoldersLocationsRecentQueriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsRecentQueriesListCall) Fields(s ...googleapi.Field) *FoldersLocationsRecentQueriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersLocationsRecentQueriesListCall) IfNoneMatch(entityTag string) *FoldersLocationsRecentQueriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsRecentQueriesListCall) Context(ctx context.Context) *FoldersLocationsRecentQueriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsRecentQueriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsRecentQueriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/recentQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.recentQueries.list" call.
+// Exactly one of *ListRecentQueriesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListRecentQueriesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersLocationsRecentQueriesListCall) Do(opts ...googleapi.CallOption) (*ListRecentQueriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRecentQueriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the RecentQueries that were created by the user making the request.",
+	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/recentQueries",
+	//   "httpMethod": "GET",
+	//   "id": "logging.folders.locations.recentQueries.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource to which the listed queries belong. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]\" For example:projects/my-project/locations/us-central1Note: The location portion of the resource must be specified, but supplying the character - in place of LOCATION_ID will return all recent queries.",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/recentQueries",
+	//   "response": {
+	//     "$ref": "ListRecentQueriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersLocationsRecentQueriesListCall) Pages(ctx context.Context, f func(*ListRecentQueriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "logging.folders.locations.savedQueries.create":
+
+type FoldersLocationsSavedQueriesCreateCall struct {
+	s          *Service
+	parent     string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new SavedQuery for the user making the request.
+//
+//   - parent: The parent resource in which to create the saved query:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For example:
+//     "projects/my-project/locations/global"
+//     "organizations/123456789/locations/us-central1".
+func (r *FoldersLocationsSavedQueriesService) Create(parent string, savedquery *SavedQuery) *FoldersLocationsSavedQueriesCreateCall {
+	c := &FoldersLocationsSavedQueriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.savedquery = savedquery
+	return c
+}
+
+// SavedQueryId sets the optional parameter "savedQueryId": The ID to
+// use for the saved query, which will become the final component of the
+// saved query's resource name.If the saved_query_id is not provided,
+// the system will generate an alphanumeric ID.The saved_query_id is
+// limited to 100 characters and can include only the following
+// characters: upper and lower-case alphanumeric characters,
+// underscores, hyphens, periods.First character has to be alphanumeric.
+func (c *FoldersLocationsSavedQueriesCreateCall) SavedQueryId(savedQueryId string) *FoldersLocationsSavedQueriesCreateCall {
+	c.urlParams_.Set("savedQueryId", savedQueryId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsSavedQueriesCreateCall) Fields(s ...googleapi.Field) *FoldersLocationsSavedQueriesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsSavedQueriesCreateCall) Context(ctx context.Context) *FoldersLocationsSavedQueriesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsSavedQueriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsSavedQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/savedQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.savedQueries.create" call.
+// Exactly one of *SavedQuery or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *FoldersLocationsSavedQueriesCreateCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new SavedQuery for the user making the request.",
+	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/savedQueries",
+	//   "httpMethod": "POST",
+	//   "id": "logging.folders.locations.savedQueries.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource in which to create the saved query: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]\" For example: \"projects/my-project/locations/global\" \"organizations/123456789/locations/us-central1\" ",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "savedQueryId": {
+	//       "description": "Optional. The ID to use for the saved query, which will become the final component of the saved query's resource name.If the saved_query_id is not provided, the system will generate an alphanumeric ID.The saved_query_id is limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/savedQueries",
+	//   "request": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "response": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.folders.locations.savedQueries.delete":
+
+type FoldersLocationsSavedQueriesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an existing SavedQuery that was created by the user
+// making the request.
+//
+//   - name: The full resource name of the saved query to delete.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_I
+//     D]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQuerie
+//     s/[QUERY_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQ
+//     ueries/[QUERY_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]
+//     " For example:
+//     "projects/my-project/locations/global/savedQueries/my-saved-query".
+func (r *FoldersLocationsSavedQueriesService) Delete(name string) *FoldersLocationsSavedQueriesDeleteCall {
+	c := &FoldersLocationsSavedQueriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsSavedQueriesDeleteCall) Fields(s ...googleapi.Field) *FoldersLocationsSavedQueriesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsSavedQueriesDeleteCall) Context(ctx context.Context) *FoldersLocationsSavedQueriesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsSavedQueriesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsSavedQueriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.savedQueries.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *FoldersLocationsSavedQueriesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an existing SavedQuery that was created by the user making the request.",
+	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/savedQueries/{savedQueriesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "logging.folders.locations.savedQueries.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the saved query to delete. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" For example: \"projects/my-project/locations/global/savedQueries/my-saved-query\" ",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+/savedQueries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.folders.locations.savedQueries.list":
+
+type FoldersLocationsSavedQueriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the SavedQueries that were created by the user making the
+// request.
+//
+//   - parent: The resource to which the listed queries belong.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For example:
+//     "projects/my-project/locations/us-central1" Note: The locations
+//     portion of the resource must be specified. To get a list of all
+//     saved queries, a wildcard character - can be used for LOCATION_ID,
+//     for example: "projects/my-project/locations/-".
+func (r *FoldersLocationsSavedQueriesService) List(parent string) *FoldersLocationsSavedQueriesListCall {
+	c := &FoldersLocationsSavedQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request.Non-positive values are
+// ignored. The presence of nextPageToken in the response indicates that
+// more results might be available.
+func (c *FoldersLocationsSavedQueriesListCall) PageSize(pageSize int64) *FoldersLocationsSavedQueriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present, then
+// retrieve the next batch of results from the preceding call to this
+// method. pageToken must be the value of nextPageToken from the
+// previous response. The values of other method parameters should be
+// identical to those in the previous call.
+func (c *FoldersLocationsSavedQueriesListCall) PageToken(pageToken string) *FoldersLocationsSavedQueriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *FoldersLocationsSavedQueriesListCall) Fields(s ...googleapi.Field) *FoldersLocationsSavedQueriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *FoldersLocationsSavedQueriesListCall) IfNoneMatch(entityTag string) *FoldersLocationsSavedQueriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *FoldersLocationsSavedQueriesListCall) Context(ctx context.Context) *FoldersLocationsSavedQueriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *FoldersLocationsSavedQueriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *FoldersLocationsSavedQueriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/savedQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.folders.locations.savedQueries.list" call.
+// Exactly one of *ListSavedQueriesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListSavedQueriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *FoldersLocationsSavedQueriesListCall) Do(opts ...googleapi.CallOption) (*ListSavedQueriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSavedQueriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the SavedQueries that were created by the user making the request.",
+	//   "flatPath": "v2/folders/{foldersId}/locations/{locationsId}/savedQueries",
+	//   "httpMethod": "GET",
+	//   "id": "logging.folders.locations.savedQueries.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request.Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource to which the listed queries belong. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]\" For example: \"projects/my-project/locations/us-central1\" Note: The locations portion of the resource must be specified. To get a list of all saved queries, a wildcard character - can be used for LOCATION_ID, for example: \"projects/my-project/locations/-\" ",
+	//       "location": "path",
+	//       "pattern": "^folders/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/savedQueries",
+	//   "response": {
+	//     "$ref": "ListSavedQueriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *FoldersLocationsSavedQueriesListCall) Pages(ctx context.Context, f func(*ListSavedQueriesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -18620,10 +20564,10 @@ type FoldersSinksPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Patch: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -18772,7 +20716,7 @@ func (c *FoldersSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/folders/{foldersId}/sinks/{sinksId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.folders.sinks.patch",
@@ -18830,10 +20774,10 @@ type FoldersSinksUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Update: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -18982,7 +20926,7 @@ func (c *FoldersSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/folders/{foldersId}/sinks/{sinksId}",
 	//   "httpMethod": "PUT",
 	//   "id": "logging.folders.sinks.update",
@@ -19418,7 +21362,8 @@ func (r *LocationsBucketsService) Create(parent string, logbucket *LogBucket) *L
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *LocationsBucketsCreateCall) BucketId(bucketId string) *LocationsBucketsCreateCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -19524,7 +21469,7 @@ func (c *LocationsBucketsCreateCall) Do(opts ...googleapi.CallOption) (*LogBucke
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -19579,7 +21524,8 @@ func (r *LocationsBucketsService) CreateAsync(parent string, logbucket *LogBucke
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *LocationsBucketsCreateAsyncCall) BucketId(bucketId string) *LocationsBucketsCreateAsyncCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -19685,7 +21631,7 @@ func (c *LocationsBucketsCreateAsyncCall) Do(opts ...googleapi.CallOption) (*Ope
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -22045,11 +23991,11 @@ type LocationsBucketsViewsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a view on a log bucket. This method replaces the
-// following fields in the existing view with values from the new view:
-// filter. If an UNAVAILABLE error is returned, this indicates that
-// system is not in a state where it can update the view. If this
-// occurs, please try again in a few minutes.
+// Patch: Updates a view on a log bucket. This method replaces the value
+// of the filter field from the existing view with the corresponding
+// value from the new view. If an UNAVAILABLE error is returned, this
+// indicates that system is not in a state where it can update the view.
+// If this occurs, please try again in a few minutes.
 //
 //   - name: The full resource name of the view to update
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -22166,7 +24112,7 @@ func (c *LocationsBucketsViewsPatchCall) Do(opts ...googleapi.CallOption) (*LogV
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a view on a log bucket. This method replaces the following fields in the existing view with values from the new view: filter. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
+	//   "description": "Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.locations.buckets.views.patch",
@@ -23286,7 +25232,7 @@ type OrganizationsGetCmekSettingsCall struct {
 
 // GetCmekSettings: Gets the Logging CMEK settings for the given
 // resource.Note: CMEK for the Log Router can be configured for Google
-// Cloud projects, folders, organizations and billing accounts. Once
+// Cloud projects, folders, organizations, and billing accounts. Once
 // configured for an organization, it applies to all projects and
 // folders in the Google Cloud organization.See Enabling CMEK for Log
 // Router
@@ -23300,7 +25246,7 @@ type OrganizationsGetCmekSettingsCall struct {
 //     "folders/[FOLDER_ID]/cmekSettings" For
 //     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
 //     Router can be configured for Google Cloud projects, folders,
-//     organizations and billing accounts. Once configured for an
+//     organizations, and billing accounts. Once configured for an
 //     organization, it applies to all projects and folders in the Google
 //     Cloud organization.
 func (r *OrganizationsService) GetCmekSettings(name string) *OrganizationsGetCmekSettingsCall {
@@ -23408,7 +25354,7 @@ func (c *OrganizationsGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*Cm
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/organizations/{organizationsId}/cmekSettings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.organizations.getCmekSettings",
@@ -23417,7 +25363,7 @@ func (c *OrganizationsGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*Cm
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -23449,14 +25395,10 @@ type OrganizationsGetSettingsCall struct {
 	header_      http.Header
 }
 
-// GetSettings: Gets the Log Router settings for the given
-// resource.Note: Settings for the Log Router can be get for Google
-// Cloud projects, folders, organizations and billing accounts.
-// Currently it can only be configured for organizations. Once
-// configured for an organization, it applies to all projects and
-// folders in the Google Cloud organization.See Enabling CMEK for Log
-// Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// GetSettings: Gets the settings for the given resource.Note: Settings
+// can be retrieved for Google Cloud projects, folders, organizations,
+// and billing accounts.See View default resource settings for Logging
+// (https://cloud.google.com/logging/docs/default-settings#view-org-settings)
 // for more information.
 //
 //   - name: The resource for which to retrieve settings.
@@ -23464,11 +25406,9 @@ type OrganizationsGetSettingsCall struct {
 //     "organizations/[ORGANIZATION_ID]/settings"
 //     "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
 //     "folders/[FOLDER_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can be get for Google Cloud projects, folders, organizations
-//     and billing accounts. Currently it can only be configured for
-//     organizations. Once configured for an organization, it applies to
-//     all projects and folders in the Google Cloud organization.
+//     example:"organizations/12345/settings"Note: Settings can be
+//     retrieved for Google Cloud projects, folders, organizations, and
+//     billing accounts.
 func (r *OrganizationsService) GetSettings(name string) *OrganizationsGetSettingsCall {
 	c := &OrganizationsGetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23574,7 +25514,7 @@ func (c *OrganizationsGetSettingsCall) Do(opts ...googleapi.CallOption) (*Settin
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Log Router settings for the given resource.Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the settings for the given resource.Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.See View default resource settings for Logging (https://cloud.google.com/logging/docs/default-settings#view-org-settings) for more information.",
 	//   "flatPath": "v2/organizations/{organizationsId}/settings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.organizations.getSettings",
@@ -23583,7 +25523,7 @@ func (c *OrganizationsGetSettingsCall) Do(opts ...googleapi.CallOption) (*Settin
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -23619,11 +25559,11 @@ type OrganizationsUpdateCmekSettingsCall struct {
 // given resource.Note: CMEK for the Log Router can currently only be
 // configured for Google Cloud organizations. Once configured, it
 // applies to all projects and folders in the Google Cloud
-// organization.UpdateCmekSettings will fail if 1) kms_key_name is
-// invalid, or 2) the associated service account does not have the
-// required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for
-// the key, or 3) access to the key is disabled.See Enabling CMEK for
-// Log Router
+// organization.UpdateCmekSettings fails when any of the following are
+// true: The value of kms_key_name is invalid. The associated service
+// account doesn't have the required
+// roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key.
+// Access to the key is disabled.See Enabling CMEK for Log Router
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
@@ -23744,7 +25684,7 @@ func (c *OrganizationsUpdateCmekSettingsCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the Log Router CMEK settings for the given resource.Note: CMEK for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Updates the Log Router CMEK settings for the given resource.Note: CMEK for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateCmekSettings fails when any of the following are true: The value of kms_key_name is invalid. The associated service account doesn't have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key. Access to the key is disabled.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/organizations/{organizationsId}/cmekSettings",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.organizations.updateCmekSettings",
@@ -23792,25 +25732,22 @@ type OrganizationsUpdateSettingsCall struct {
 	header_    http.Header
 }
 
-// UpdateSettings: Updates the Log Router settings for the given
-// resource.Note: Settings for the Log Router can currently only be
-// configured for Google Cloud organizations. Once configured, it
-// applies to all projects and folders in the Google Cloud
-// organization.UpdateSettings will fail if 1) kms_key_name is invalid,
-// or 2) the associated service account does not have the required
-// roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key,
-// or 3) access to the key is disabled. 4) location_id is not supported
-// by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for
-// Log Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
-// for more information.
+// UpdateSettings: Updates the settings for the given resource. This
+// method applies to all feature configurations for organization and
+// folders.UpdateSettings fails when any of the following are true: The
+// value of storage_location either isn't supported by Logging or
+// violates the location OrgPolicy. The default_sink_config field is
+// set, but it has an unspecified filter write mode. The value of
+// kms_key_name is invalid. The associated service account doesn't have
+// the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned
+// for the key. Access to the key is disabled.See Configure default
+// settings for organizations and folders
+// (https://cloud.google.com/logging/docs/default-settings) for more
+// information.
 //
 //   - name: The resource name for the settings to update.
 //     "organizations/[ORGANIZATION_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can currently only be configured for Google Cloud
-//     organizations. Once configured, it applies to all projects and
-//     folders in the Google Cloud organization.
+//     example:"organizations/12345/settings".
 func (r *OrganizationsService) UpdateSettings(name string, settings *Settings) *OrganizationsUpdateSettingsCall {
 	c := &OrganizationsUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -23919,7 +25856,7 @@ func (c *OrganizationsUpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Set
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the Log Router settings for the given resource.Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled. 4) location_id is not supported by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Updates the settings for the given resource. This method applies to all feature configurations for organization and folders.UpdateSettings fails when any of the following are true: The value of storage_location either isn't supported by Logging or violates the location OrgPolicy. The default_sink_config field is set, but it has an unspecified filter write mode. The value of kms_key_name is invalid. The associated service account doesn't have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key. Access to the key is disabled.See Configure default settings for organizations and folders (https://cloud.google.com/logging/docs/default-settings) for more information.",
 	//   "flatPath": "v2/organizations/{organizationsId}/settings",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.organizations.updateSettings",
@@ -23928,7 +25865,7 @@ func (c *OrganizationsUpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Set
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name for the settings to update. \"organizations/[ORGANIZATION_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource name for the settings to update. \"organizations/[ORGANIZATION_ID]/settings\" For example:\"organizations/12345/settings\"",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+$",
 	//       "required": true,
@@ -25155,7 +27092,8 @@ func (r *OrganizationsLocationsBucketsService) Create(parent string, logbucket *
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *OrganizationsLocationsBucketsCreateCall) BucketId(bucketId string) *OrganizationsLocationsBucketsCreateCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -25261,7 +27199,7 @@ func (c *OrganizationsLocationsBucketsCreateCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -25316,7 +27254,8 @@ func (r *OrganizationsLocationsBucketsService) CreateAsync(parent string, logbuc
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *OrganizationsLocationsBucketsCreateAsyncCall) BucketId(bucketId string) *OrganizationsLocationsBucketsCreateAsyncCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -25422,7 +27361,7 @@ func (c *OrganizationsLocationsBucketsCreateAsyncCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -27782,11 +29721,11 @@ type OrganizationsLocationsBucketsViewsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a view on a log bucket. This method replaces the
-// following fields in the existing view with values from the new view:
-// filter. If an UNAVAILABLE error is returned, this indicates that
-// system is not in a state where it can update the view. If this
-// occurs, please try again in a few minutes.
+// Patch: Updates a view on a log bucket. This method replaces the value
+// of the filter field from the existing view with the corresponding
+// value from the new view. If an UNAVAILABLE error is returned, this
+// indicates that system is not in a state where it can update the view.
+// If this occurs, please try again in a few minutes.
 //
 //   - name: The full resource name of the view to update
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -27903,7 +29842,7 @@ func (c *OrganizationsLocationsBucketsViewsPatchCall) Do(opts ...googleapi.CallO
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a view on a log bucket. This method replaces the following fields in the existing view with values from the new view: filter. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
+	//   "description": "Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
 	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.organizations.locations.buckets.views.patch",
@@ -28662,6 +30601,732 @@ func (c *OrganizationsLocationsOperationsListCall) Do(opts ...googleapi.CallOpti
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsLocationsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "logging.organizations.locations.recentQueries.list":
+
+type OrganizationsLocationsRecentQueriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the RecentQueries that were created by the user making
+// the request.
+//
+//   - parent: The resource to which the listed queries belong.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For
+//     example:projects/my-project/locations/us-central1Note: The location
+//     portion of the resource must be specified, but supplying the
+//     character - in place of LOCATION_ID will return all recent queries.
+func (r *OrganizationsLocationsRecentQueriesService) List(parent string) *OrganizationsLocationsRecentQueriesListCall {
+	c := &OrganizationsLocationsRecentQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request. Non-positive values are
+// ignored. The presence of nextPageToken in the response indicates that
+// more results might be available.
+func (c *OrganizationsLocationsRecentQueriesListCall) PageSize(pageSize int64) *OrganizationsLocationsRecentQueriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present, then
+// retrieve the next batch of results from the preceding call to this
+// method. pageToken must be the value of nextPageToken from the
+// previous response. The values of other method parameters should be
+// identical to those in the previous call.
+func (c *OrganizationsLocationsRecentQueriesListCall) PageToken(pageToken string) *OrganizationsLocationsRecentQueriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsRecentQueriesListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsRecentQueriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsRecentQueriesListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsRecentQueriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsRecentQueriesListCall) Context(ctx context.Context) *OrganizationsLocationsRecentQueriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsRecentQueriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsRecentQueriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/recentQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.recentQueries.list" call.
+// Exactly one of *ListRecentQueriesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListRecentQueriesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsRecentQueriesListCall) Do(opts ...googleapi.CallOption) (*ListRecentQueriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRecentQueriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the RecentQueries that were created by the user making the request.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/recentQueries",
+	//   "httpMethod": "GET",
+	//   "id": "logging.organizations.locations.recentQueries.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource to which the listed queries belong. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]\" For example:projects/my-project/locations/us-central1Note: The location portion of the resource must be specified, but supplying the character - in place of LOCATION_ID will return all recent queries.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/recentQueries",
+	//   "response": {
+	//     "$ref": "ListRecentQueriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsRecentQueriesListCall) Pages(ctx context.Context, f func(*ListRecentQueriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "logging.organizations.locations.savedQueries.create":
+
+type OrganizationsLocationsSavedQueriesCreateCall struct {
+	s          *Service
+	parent     string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new SavedQuery for the user making the request.
+//
+//   - parent: The parent resource in which to create the saved query:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For example:
+//     "projects/my-project/locations/global"
+//     "organizations/123456789/locations/us-central1".
+func (r *OrganizationsLocationsSavedQueriesService) Create(parent string, savedquery *SavedQuery) *OrganizationsLocationsSavedQueriesCreateCall {
+	c := &OrganizationsLocationsSavedQueriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.savedquery = savedquery
+	return c
+}
+
+// SavedQueryId sets the optional parameter "savedQueryId": The ID to
+// use for the saved query, which will become the final component of the
+// saved query's resource name.If the saved_query_id is not provided,
+// the system will generate an alphanumeric ID.The saved_query_id is
+// limited to 100 characters and can include only the following
+// characters: upper and lower-case alphanumeric characters,
+// underscores, hyphens, periods.First character has to be alphanumeric.
+func (c *OrganizationsLocationsSavedQueriesCreateCall) SavedQueryId(savedQueryId string) *OrganizationsLocationsSavedQueriesCreateCall {
+	c.urlParams_.Set("savedQueryId", savedQueryId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsSavedQueriesCreateCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSavedQueriesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsSavedQueriesCreateCall) Context(ctx context.Context) *OrganizationsLocationsSavedQueriesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsSavedQueriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSavedQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/savedQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.savedQueries.create" call.
+// Exactly one of *SavedQuery or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSavedQueriesCreateCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new SavedQuery for the user making the request.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/savedQueries",
+	//   "httpMethod": "POST",
+	//   "id": "logging.organizations.locations.savedQueries.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource in which to create the saved query: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]\" For example: \"projects/my-project/locations/global\" \"organizations/123456789/locations/us-central1\" ",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "savedQueryId": {
+	//       "description": "Optional. The ID to use for the saved query, which will become the final component of the saved query's resource name.If the saved_query_id is not provided, the system will generate an alphanumeric ID.The saved_query_id is limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/savedQueries",
+	//   "request": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "response": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.organizations.locations.savedQueries.delete":
+
+type OrganizationsLocationsSavedQueriesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an existing SavedQuery that was created by the user
+// making the request.
+//
+//   - name: The full resource name of the saved query to delete.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_I
+//     D]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQuerie
+//     s/[QUERY_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQ
+//     ueries/[QUERY_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]
+//     " For example:
+//     "projects/my-project/locations/global/savedQueries/my-saved-query".
+func (r *OrganizationsLocationsSavedQueriesService) Delete(name string) *OrganizationsLocationsSavedQueriesDeleteCall {
+	c := &OrganizationsLocationsSavedQueriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsSavedQueriesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSavedQueriesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsSavedQueriesDeleteCall) Context(ctx context.Context) *OrganizationsLocationsSavedQueriesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsSavedQueriesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSavedQueriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.savedQueries.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *OrganizationsLocationsSavedQueriesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an existing SavedQuery that was created by the user making the request.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/savedQueries/{savedQueriesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "logging.organizations.locations.savedQueries.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the saved query to delete. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" For example: \"projects/my-project/locations/global/savedQueries/my-saved-query\" ",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/savedQueries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.organizations.locations.savedQueries.list":
+
+type OrganizationsLocationsSavedQueriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the SavedQueries that were created by the user making the
+// request.
+//
+//   - parent: The resource to which the listed queries belong.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For example:
+//     "projects/my-project/locations/us-central1" Note: The locations
+//     portion of the resource must be specified. To get a list of all
+//     saved queries, a wildcard character - can be used for LOCATION_ID,
+//     for example: "projects/my-project/locations/-".
+func (r *OrganizationsLocationsSavedQueriesService) List(parent string) *OrganizationsLocationsSavedQueriesListCall {
+	c := &OrganizationsLocationsSavedQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request.Non-positive values are
+// ignored. The presence of nextPageToken in the response indicates that
+// more results might be available.
+func (c *OrganizationsLocationsSavedQueriesListCall) PageSize(pageSize int64) *OrganizationsLocationsSavedQueriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present, then
+// retrieve the next batch of results from the preceding call to this
+// method. pageToken must be the value of nextPageToken from the
+// previous response. The values of other method parameters should be
+// identical to those in the previous call.
+func (c *OrganizationsLocationsSavedQueriesListCall) PageToken(pageToken string) *OrganizationsLocationsSavedQueriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsSavedQueriesListCall) Fields(s ...googleapi.Field) *OrganizationsLocationsSavedQueriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsSavedQueriesListCall) IfNoneMatch(entityTag string) *OrganizationsLocationsSavedQueriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsSavedQueriesListCall) Context(ctx context.Context) *OrganizationsLocationsSavedQueriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsSavedQueriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsSavedQueriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/savedQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.organizations.locations.savedQueries.list" call.
+// Exactly one of *ListSavedQueriesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListSavedQueriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsSavedQueriesListCall) Do(opts ...googleapi.CallOption) (*ListSavedQueriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSavedQueriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the SavedQueries that were created by the user making the request.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/savedQueries",
+	//   "httpMethod": "GET",
+	//   "id": "logging.organizations.locations.savedQueries.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request.Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource to which the listed queries belong. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]\" For example: \"projects/my-project/locations/us-central1\" Note: The locations portion of the resource must be specified. To get a list of all saved queries, a wildcard character - can be used for LOCATION_ID, for example: \"projects/my-project/locations/-\" ",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/savedQueries",
+	//   "response": {
+	//     "$ref": "ListSavedQueriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsSavedQueriesListCall) Pages(ctx context.Context, f func(*ListSavedQueriesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -29745,10 +32410,10 @@ type OrganizationsSinksPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Patch: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -29897,7 +32562,7 @@ func (c *OrganizationsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/organizations/{organizationsId}/sinks/{sinksId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.organizations.sinks.patch",
@@ -29955,10 +32620,10 @@ type OrganizationsSinksUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Update: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -30107,7 +32772,7 @@ func (c *OrganizationsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSin
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/organizations/{organizationsId}/sinks/{sinksId}",
 	//   "httpMethod": "PUT",
 	//   "id": "logging.organizations.sinks.update",
@@ -30167,7 +32832,7 @@ type ProjectsGetCmekSettingsCall struct {
 
 // GetCmekSettings: Gets the Logging CMEK settings for the given
 // resource.Note: CMEK for the Log Router can be configured for Google
-// Cloud projects, folders, organizations and billing accounts. Once
+// Cloud projects, folders, organizations, and billing accounts. Once
 // configured for an organization, it applies to all projects and
 // folders in the Google Cloud organization.See Enabling CMEK for Log
 // Router
@@ -30181,7 +32846,7 @@ type ProjectsGetCmekSettingsCall struct {
 //     "folders/[FOLDER_ID]/cmekSettings" For
 //     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
 //     Router can be configured for Google Cloud projects, folders,
-//     organizations and billing accounts. Once configured for an
+//     organizations, and billing accounts. Once configured for an
 //     organization, it applies to all projects and folders in the Google
 //     Cloud organization.
 func (r *ProjectsService) GetCmekSettings(name string) *ProjectsGetCmekSettingsCall {
@@ -30289,7 +32954,7 @@ func (c *ProjectsGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSet
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/projects/{projectsId}/cmekSettings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.getCmekSettings",
@@ -30298,7 +32963,7 @@ func (c *ProjectsGetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSet
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -30330,14 +32995,10 @@ type ProjectsGetSettingsCall struct {
 	header_      http.Header
 }
 
-// GetSettings: Gets the Log Router settings for the given
-// resource.Note: Settings for the Log Router can be get for Google
-// Cloud projects, folders, organizations and billing accounts.
-// Currently it can only be configured for organizations. Once
-// configured for an organization, it applies to all projects and
-// folders in the Google Cloud organization.See Enabling CMEK for Log
-// Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// GetSettings: Gets the settings for the given resource.Note: Settings
+// can be retrieved for Google Cloud projects, folders, organizations,
+// and billing accounts.See View default resource settings for Logging
+// (https://cloud.google.com/logging/docs/default-settings#view-org-settings)
 // for more information.
 //
 //   - name: The resource for which to retrieve settings.
@@ -30345,11 +33006,9 @@ type ProjectsGetSettingsCall struct {
 //     "organizations/[ORGANIZATION_ID]/settings"
 //     "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
 //     "folders/[FOLDER_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can be get for Google Cloud projects, folders, organizations
-//     and billing accounts. Currently it can only be configured for
-//     organizations. Once configured for an organization, it applies to
-//     all projects and folders in the Google Cloud organization.
+//     example:"organizations/12345/settings"Note: Settings can be
+//     retrieved for Google Cloud projects, folders, organizations, and
+//     billing accounts.
 func (r *ProjectsService) GetSettings(name string) *ProjectsGetSettingsCall {
 	c := &ProjectsGetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -30455,7 +33114,7 @@ func (c *ProjectsGetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, e
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Log Router settings for the given resource.Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the settings for the given resource.Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.See View default resource settings for Logging (https://cloud.google.com/logging/docs/default-settings#view-org-settings) for more information.",
 	//   "flatPath": "v2/projects/{projectsId}/settings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.projects.getSettings",
@@ -30464,7 +33123,7 @@ func (c *ProjectsGetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, e
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -31684,7 +34343,8 @@ func (r *ProjectsLocationsBucketsService) Create(parent string, logbucket *LogBu
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *ProjectsLocationsBucketsCreateCall) BucketId(bucketId string) *ProjectsLocationsBucketsCreateCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -31790,7 +34450,7 @@ func (c *ProjectsLocationsBucketsCreateCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -31845,7 +34505,8 @@ func (r *ProjectsLocationsBucketsService) CreateAsync(parent string, logbucket *
 // BucketId sets the optional parameter "bucketId": Required. A
 // client-assigned identifier such as "my-bucket". Identifiers are
 // limited to 100 characters and can include only letters, digits,
-// underscores, hyphens, and periods.
+// underscores, hyphens, and periods. Bucket identifiers must start with
+// an alphanumeric character.
 func (c *ProjectsLocationsBucketsCreateAsyncCall) BucketId(bucketId string) *ProjectsLocationsBucketsCreateAsyncCall {
 	c.urlParams_.Set("bucketId", bucketId)
 	return c
@@ -31951,7 +34612,7 @@ func (c *ProjectsLocationsBucketsCreateAsyncCall) Do(opts ...googleapi.CallOptio
 	//   ],
 	//   "parameters": {
 	//     "bucketId": {
-	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods.",
+	//       "description": "Required. A client-assigned identifier such as \"my-bucket\". Identifiers are limited to 100 characters and can include only letters, digits, underscores, hyphens, and periods. Bucket identifiers must start with an alphanumeric character.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -34311,11 +36972,11 @@ type ProjectsLocationsBucketsViewsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a view on a log bucket. This method replaces the
-// following fields in the existing view with values from the new view:
-// filter. If an UNAVAILABLE error is returned, this indicates that
-// system is not in a state where it can update the view. If this
-// occurs, please try again in a few minutes.
+// Patch: Updates a view on a log bucket. This method replaces the value
+// of the filter field from the existing view with the corresponding
+// value from the new view. If an UNAVAILABLE error is returned, this
+// indicates that system is not in a state where it can update the view.
+// If this occurs, please try again in a few minutes.
 //
 //   - name: The full resource name of the view to update
 //     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/buckets/[BUCKET_ID]/v
@@ -34432,7 +37093,7 @@ func (c *ProjectsLocationsBucketsViewsPatchCall) Do(opts ...googleapi.CallOption
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a view on a log bucket. This method replaces the following fields in the existing view with values from the new view: filter. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
+	//   "description": "Updates a view on a log bucket. This method replaces the value of the filter field from the existing view with the corresponding value from the new view. If an UNAVAILABLE error is returned, this indicates that system is not in a state where it can update the view. If this occurs, please try again in a few minutes.",
 	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/buckets/{bucketsId}/views/{viewsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.projects.locations.buckets.views.patch",
@@ -35191,6 +37852,732 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "logging.projects.locations.recentQueries.list":
+
+type ProjectsLocationsRecentQueriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the RecentQueries that were created by the user making
+// the request.
+//
+//   - parent: The resource to which the listed queries belong.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For
+//     example:projects/my-project/locations/us-central1Note: The location
+//     portion of the resource must be specified, but supplying the
+//     character - in place of LOCATION_ID will return all recent queries.
+func (r *ProjectsLocationsRecentQueriesService) List(parent string) *ProjectsLocationsRecentQueriesListCall {
+	c := &ProjectsLocationsRecentQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request. Non-positive values are
+// ignored. The presence of nextPageToken in the response indicates that
+// more results might be available.
+func (c *ProjectsLocationsRecentQueriesListCall) PageSize(pageSize int64) *ProjectsLocationsRecentQueriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present, then
+// retrieve the next batch of results from the preceding call to this
+// method. pageToken must be the value of nextPageToken from the
+// previous response. The values of other method parameters should be
+// identical to those in the previous call.
+func (c *ProjectsLocationsRecentQueriesListCall) PageToken(pageToken string) *ProjectsLocationsRecentQueriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsRecentQueriesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsRecentQueriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsRecentQueriesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsRecentQueriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsRecentQueriesListCall) Context(ctx context.Context) *ProjectsLocationsRecentQueriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsRecentQueriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsRecentQueriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/recentQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.recentQueries.list" call.
+// Exactly one of *ListRecentQueriesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListRecentQueriesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsRecentQueriesListCall) Do(opts ...googleapi.CallOption) (*ListRecentQueriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListRecentQueriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the RecentQueries that were created by the user making the request.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/recentQueries",
+	//   "httpMethod": "GET",
+	//   "id": "logging.projects.locations.recentQueries.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request. Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource to which the listed queries belong. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]\" For example:projects/my-project/locations/us-central1Note: The location portion of the resource must be specified, but supplying the character - in place of LOCATION_ID will return all recent queries.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/recentQueries",
+	//   "response": {
+	//     "$ref": "ListRecentQueriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsRecentQueriesListCall) Pages(ctx context.Context, f func(*ListRecentQueriesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "logging.projects.locations.savedQueries.create":
+
+type ProjectsLocationsSavedQueriesCreateCall struct {
+	s          *Service
+	parent     string
+	savedquery *SavedQuery
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates a new SavedQuery for the user making the request.
+//
+//   - parent: The parent resource in which to create the saved query:
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For example:
+//     "projects/my-project/locations/global"
+//     "organizations/123456789/locations/us-central1".
+func (r *ProjectsLocationsSavedQueriesService) Create(parent string, savedquery *SavedQuery) *ProjectsLocationsSavedQueriesCreateCall {
+	c := &ProjectsLocationsSavedQueriesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.savedquery = savedquery
+	return c
+}
+
+// SavedQueryId sets the optional parameter "savedQueryId": The ID to
+// use for the saved query, which will become the final component of the
+// saved query's resource name.If the saved_query_id is not provided,
+// the system will generate an alphanumeric ID.The saved_query_id is
+// limited to 100 characters and can include only the following
+// characters: upper and lower-case alphanumeric characters,
+// underscores, hyphens, periods.First character has to be alphanumeric.
+func (c *ProjectsLocationsSavedQueriesCreateCall) SavedQueryId(savedQueryId string) *ProjectsLocationsSavedQueriesCreateCall {
+	c.urlParams_.Set("savedQueryId", savedQueryId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSavedQueriesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsSavedQueriesCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSavedQueriesCreateCall) Context(ctx context.Context) *ProjectsLocationsSavedQueriesCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSavedQueriesCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSavedQueriesCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.savedquery)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/savedQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.savedQueries.create" call.
+// Exactly one of *SavedQuery or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SavedQuery.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsSavedQueriesCreateCall) Do(opts ...googleapi.CallOption) (*SavedQuery, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SavedQuery{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new SavedQuery for the user making the request.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/savedQueries",
+	//   "httpMethod": "POST",
+	//   "id": "logging.projects.locations.savedQueries.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The parent resource in which to create the saved query: \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]\" For example: \"projects/my-project/locations/global\" \"organizations/123456789/locations/us-central1\" ",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "savedQueryId": {
+	//       "description": "Optional. The ID to use for the saved query, which will become the final component of the saved query's resource name.If the saved_query_id is not provided, the system will generate an alphanumeric ID.The saved_query_id is limited to 100 characters and can include only the following characters: upper and lower-case alphanumeric characters, underscores, hyphens, periods.First character has to be alphanumeric.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/savedQueries",
+	//   "request": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "response": {
+	//     "$ref": "SavedQuery"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.projects.locations.savedQueries.delete":
+
+type ProjectsLocationsSavedQueriesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an existing SavedQuery that was created by the user
+// making the request.
+//
+//   - name: The full resource name of the saved query to delete.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_I
+//     D]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQuerie
+//     s/[QUERY_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQ
+//     ueries/[QUERY_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]
+//     " For example:
+//     "projects/my-project/locations/global/savedQueries/my-saved-query".
+func (r *ProjectsLocationsSavedQueriesService) Delete(name string) *ProjectsLocationsSavedQueriesDeleteCall {
+	c := &ProjectsLocationsSavedQueriesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSavedQueriesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsSavedQueriesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSavedQueriesDeleteCall) Context(ctx context.Context) *ProjectsLocationsSavedQueriesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSavedQueriesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSavedQueriesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.savedQueries.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsLocationsSavedQueriesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an existing SavedQuery that was created by the user making the request.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/savedQueries/{savedQueriesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "logging.projects.locations.savedQueries.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The full resource name of the saved query to delete. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]/savedQueries/[QUERY_ID]\" For example: \"projects/my-project/locations/global/savedQueries/my-saved-query\" ",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/savedQueries/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/logging.admin"
+	//   ]
+	// }
+
+}
+
+// method id "logging.projects.locations.savedQueries.list":
+
+type ProjectsLocationsSavedQueriesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the SavedQueries that were created by the user making the
+// request.
+//
+//   - parent: The resource to which the listed queries belong.
+//     "projects/[PROJECT_ID]/locations/[LOCATION_ID]"
+//     "organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]"
+//     "billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]"
+//     "folders/[FOLDER_ID]/locations/[LOCATION_ID]" For example:
+//     "projects/my-project/locations/us-central1" Note: The locations
+//     portion of the resource must be specified. To get a list of all
+//     saved queries, a wildcard character - can be used for LOCATION_ID,
+//     for example: "projects/my-project/locations/-".
+func (r *ProjectsLocationsSavedQueriesService) List(parent string) *ProjectsLocationsSavedQueriesListCall {
+	c := &ProjectsLocationsSavedQueriesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of results to return from this request.Non-positive values are
+// ignored. The presence of nextPageToken in the response indicates that
+// more results might be available.
+func (c *ProjectsLocationsSavedQueriesListCall) PageSize(pageSize int64) *ProjectsLocationsSavedQueriesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If present, then
+// retrieve the next batch of results from the preceding call to this
+// method. pageToken must be the value of nextPageToken from the
+// previous response. The values of other method parameters should be
+// identical to those in the previous call.
+func (c *ProjectsLocationsSavedQueriesListCall) PageToken(pageToken string) *ProjectsLocationsSavedQueriesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsSavedQueriesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsSavedQueriesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsSavedQueriesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsSavedQueriesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsSavedQueriesListCall) Context(ctx context.Context) *ProjectsLocationsSavedQueriesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsSavedQueriesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsSavedQueriesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/savedQueries")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "logging.projects.locations.savedQueries.list" call.
+// Exactly one of *ListSavedQueriesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListSavedQueriesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsSavedQueriesListCall) Do(opts ...googleapi.CallOption) (*ListSavedQueriesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSavedQueriesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the SavedQueries that were created by the user making the request.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/savedQueries",
+	//   "httpMethod": "GET",
+	//   "id": "logging.projects.locations.savedQueries.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of results to return from this request.Non-positive values are ignored. The presence of nextPageToken in the response indicates that more results might be available.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If present, then retrieve the next batch of results from the preceding call to this method. pageToken must be the value of nextPageToken from the previous response. The values of other method parameters should be identical to those in the previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource to which the listed queries belong. \"projects/[PROJECT_ID]/locations/[LOCATION_ID]\" \"organizations/[ORGANIZATION_ID]/locations/[LOCATION_ID]\" \"billingAccounts/[BILLING_ACCOUNT_ID]/locations/[LOCATION_ID]\" \"folders/[FOLDER_ID]/locations/[LOCATION_ID]\" For example: \"projects/my-project/locations/us-central1\" Note: The locations portion of the resource must be specified. To get a list of all saved queries, a wildcard character - can be used for LOCATION_ID, for example: \"projects/my-project/locations/-\" ",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/savedQueries",
+	//   "response": {
+	//     "$ref": "ListSavedQueriesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only",
+	//     "https://www.googleapis.com/auth/logging.admin",
+	//     "https://www.googleapis.com/auth/logging.read"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsSavedQueriesListCall) Pages(ctx context.Context, f func(*ListSavedQueriesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -37054,10 +40441,10 @@ type ProjectsSinksPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Patch: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -37206,7 +40593,7 @@ func (c *ProjectsSinksPatchCall) Do(opts ...googleapi.CallOption) (*LogSink, err
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/projects/{projectsId}/sinks/{sinksId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.projects.sinks.patch",
@@ -37264,10 +40651,10 @@ type ProjectsSinksUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Update: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -37416,7 +40803,7 @@ func (c *ProjectsSinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, er
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/projects/{projectsId}/sinks/{sinksId}",
 	//   "httpMethod": "PUT",
 	//   "id": "logging.projects.sinks.update",
@@ -38158,10 +41545,10 @@ type SinksUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates a sink. This method replaces the following fields in
-// the existing sink with values from the new sink: destination, and
-// filter.The updated sink might also have a new writer_identity; see
-// the unique_writer_identity field.
+// Update: Updates a sink. This method replaces the values of the
+// destination and filter fields of the existing sink with the
+// corresponding values from the new sink.The updated sink might also
+// have a new writer_identity; see the unique_writer_identity field.
 //
 //   - sinkName: The full resource name of the sink to update, including
 //     the parent resource and the sink identifier:
@@ -38310,7 +41697,7 @@ func (c *SinksUpdateCall) Do(opts ...googleapi.CallOption) (*LogSink, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a sink. This method replaces the following fields in the existing sink with values from the new sink: destination, and filter.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
+	//   "description": "Updates a sink. This method replaces the values of the destination and filter fields of the existing sink with the corresponding values from the new sink.The updated sink might also have a new writer_identity; see the unique_writer_identity field.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/sinks/{sinksId}",
 	//   "httpMethod": "PUT",
 	//   "id": "logging.sinks.update",
@@ -38370,7 +41757,7 @@ type V2GetCmekSettingsCall struct {
 
 // GetCmekSettings: Gets the Logging CMEK settings for the given
 // resource.Note: CMEK for the Log Router can be configured for Google
-// Cloud projects, folders, organizations and billing accounts. Once
+// Cloud projects, folders, organizations, and billing accounts. Once
 // configured for an organization, it applies to all projects and
 // folders in the Google Cloud organization.See Enabling CMEK for Log
 // Router
@@ -38384,7 +41771,7 @@ type V2GetCmekSettingsCall struct {
 //     "folders/[FOLDER_ID]/cmekSettings" For
 //     example:"organizations/12345/cmekSettings"Note: CMEK for the Log
 //     Router can be configured for Google Cloud projects, folders,
-//     organizations and billing accounts. Once configured for an
+//     organizations, and billing accounts. Once configured for an
 //     organization, it applies to all projects and folders in the Google
 //     Cloud organization.
 func (r *V2Service) GetCmekSettings(name string) *V2GetCmekSettingsCall {
@@ -38492,7 +41879,7 @@ func (c *V2GetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSettings,
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the Logging CMEK settings for the given resource.Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/cmekSettings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.getCmekSettings",
@@ -38501,7 +41888,7 @@ func (c *V2GetCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSettings,
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve CMEK settings. \"projects/[PROJECT_ID]/cmekSettings\" \"organizations/[ORGANIZATION_ID]/cmekSettings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/cmekSettings\" \"folders/[FOLDER_ID]/cmekSettings\" For example:\"organizations/12345/cmekSettings\"Note: CMEK for the Log Router can be configured for Google Cloud projects, folders, organizations, and billing accounts. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -38533,14 +41920,10 @@ type V2GetSettingsCall struct {
 	header_      http.Header
 }
 
-// GetSettings: Gets the Log Router settings for the given
-// resource.Note: Settings for the Log Router can be get for Google
-// Cloud projects, folders, organizations and billing accounts.
-// Currently it can only be configured for organizations. Once
-// configured for an organization, it applies to all projects and
-// folders in the Google Cloud organization.See Enabling CMEK for Log
-// Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
+// GetSettings: Gets the settings for the given resource.Note: Settings
+// can be retrieved for Google Cloud projects, folders, organizations,
+// and billing accounts.See View default resource settings for Logging
+// (https://cloud.google.com/logging/docs/default-settings#view-org-settings)
 // for more information.
 //
 //   - name: The resource for which to retrieve settings.
@@ -38548,11 +41931,9 @@ type V2GetSettingsCall struct {
 //     "organizations/[ORGANIZATION_ID]/settings"
 //     "billingAccounts/[BILLING_ACCOUNT_ID]/settings"
 //     "folders/[FOLDER_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can be get for Google Cloud projects, folders, organizations
-//     and billing accounts. Currently it can only be configured for
-//     organizations. Once configured for an organization, it applies to
-//     all projects and folders in the Google Cloud organization.
+//     example:"organizations/12345/settings"Note: Settings can be
+//     retrieved for Google Cloud projects, folders, organizations, and
+//     billing accounts.
 func (r *V2Service) GetSettings(name string) *V2GetSettingsCall {
 	c := &V2GetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -38658,7 +42039,7 @@ func (c *V2GetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, error) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the Log Router settings for the given resource.Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Gets the settings for the given resource.Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.See View default resource settings for Logging (https://cloud.google.com/logging/docs/default-settings#view-org-settings) for more information.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/settings",
 	//   "httpMethod": "GET",
 	//   "id": "logging.getSettings",
@@ -38667,7 +42048,7 @@ func (c *V2GetSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, error) 
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can be get for Google Cloud projects, folders, organizations and billing accounts. Currently it can only be configured for organizations. Once configured for an organization, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource for which to retrieve settings. \"projects/[PROJECT_ID]/settings\" \"organizations/[ORGANIZATION_ID]/settings\" \"billingAccounts/[BILLING_ACCOUNT_ID]/settings\" \"folders/[FOLDER_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings can be retrieved for Google Cloud projects, folders, organizations, and billing accounts.",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
@@ -38703,11 +42084,11 @@ type V2UpdateCmekSettingsCall struct {
 // given resource.Note: CMEK for the Log Router can currently only be
 // configured for Google Cloud organizations. Once configured, it
 // applies to all projects and folders in the Google Cloud
-// organization.UpdateCmekSettings will fail if 1) kms_key_name is
-// invalid, or 2) the associated service account does not have the
-// required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for
-// the key, or 3) access to the key is disabled.See Enabling CMEK for
-// Log Router
+// organization.UpdateCmekSettings fails when any of the following are
+// true: The value of kms_key_name is invalid. The associated service
+// account doesn't have the required
+// roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key.
+// Access to the key is disabled.See Enabling CMEK for Log Router
 // (https://cloud.google.com/logging/docs/routing/managed-encryption)
 // for more information.
 //
@@ -38828,7 +42209,7 @@ func (c *V2UpdateCmekSettingsCall) Do(opts ...googleapi.CallOption) (*CmekSettin
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the Log Router CMEK settings for the given resource.Note: CMEK for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateCmekSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Updates the Log Router CMEK settings for the given resource.Note: CMEK for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateCmekSettings fails when any of the following are true: The value of kms_key_name is invalid. The associated service account doesn't have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key. Access to the key is disabled.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/cmekSettings",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.updateCmekSettings",
@@ -38876,25 +42257,22 @@ type V2UpdateSettingsCall struct {
 	header_    http.Header
 }
 
-// UpdateSettings: Updates the Log Router settings for the given
-// resource.Note: Settings for the Log Router can currently only be
-// configured for Google Cloud organizations. Once configured, it
-// applies to all projects and folders in the Google Cloud
-// organization.UpdateSettings will fail if 1) kms_key_name is invalid,
-// or 2) the associated service account does not have the required
-// roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key,
-// or 3) access to the key is disabled. 4) location_id is not supported
-// by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for
-// Log Router
-// (https://cloud.google.com/logging/docs/routing/managed-encryption)
-// for more information.
+// UpdateSettings: Updates the settings for the given resource. This
+// method applies to all feature configurations for organization and
+// folders.UpdateSettings fails when any of the following are true: The
+// value of storage_location either isn't supported by Logging or
+// violates the location OrgPolicy. The default_sink_config field is
+// set, but it has an unspecified filter write mode. The value of
+// kms_key_name is invalid. The associated service account doesn't have
+// the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned
+// for the key. Access to the key is disabled.See Configure default
+// settings for organizations and folders
+// (https://cloud.google.com/logging/docs/default-settings) for more
+// information.
 //
 //   - name: The resource name for the settings to update.
 //     "organizations/[ORGANIZATION_ID]/settings" For
-//     example:"organizations/12345/settings"Note: Settings for the Log
-//     Router can currently only be configured for Google Cloud
-//     organizations. Once configured, it applies to all projects and
-//     folders in the Google Cloud organization.
+//     example:"organizations/12345/settings".
 func (r *V2Service) UpdateSettings(name string, settings *Settings) *V2UpdateSettingsCall {
 	c := &V2UpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -39003,7 +42381,7 @@ func (c *V2UpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, erro
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the Log Router settings for the given resource.Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.UpdateSettings will fail if 1) kms_key_name is invalid, or 2) the associated service account does not have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key, or 3) access to the key is disabled. 4) location_id is not supported by Logging. 5) location_id violate OrgPolicy.See Enabling CMEK for Log Router (https://cloud.google.com/logging/docs/routing/managed-encryption) for more information.",
+	//   "description": "Updates the settings for the given resource. This method applies to all feature configurations for organization and folders.UpdateSettings fails when any of the following are true: The value of storage_location either isn't supported by Logging or violates the location OrgPolicy. The default_sink_config field is set, but it has an unspecified filter write mode. The value of kms_key_name is invalid. The associated service account doesn't have the required roles/cloudkms.cryptoKeyEncrypterDecrypter role assigned for the key. Access to the key is disabled.See Configure default settings for organizations and folders (https://cloud.google.com/logging/docs/default-settings) for more information.",
 	//   "flatPath": "v2/{v2Id}/{v2Id1}/settings",
 	//   "httpMethod": "PATCH",
 	//   "id": "logging.updateSettings",
@@ -39012,7 +42390,7 @@ func (c *V2UpdateSettingsCall) Do(opts ...googleapi.CallOption) (*Settings, erro
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name for the settings to update. \"organizations/[ORGANIZATION_ID]/settings\" For example:\"organizations/12345/settings\"Note: Settings for the Log Router can currently only be configured for Google Cloud organizations. Once configured, it applies to all projects and folders in the Google Cloud organization.",
+	//       "description": "Required. The resource name for the settings to update. \"organizations/[ORGANIZATION_ID]/settings\" For example:\"organizations/12345/settings\"",
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,

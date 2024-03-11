@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "iam:v2beta"
 const apiName = "iam"
 const apiVersion = "v2beta"
 const basePath = "https://iam.googleapis.com/"
+const basePathTemplate = "https://iam.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://iam.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -421,28 +425,56 @@ type GoogleIamV2betaDenyRule struct {
 
 	// DeniedPrincipals: The identities that are prevented from using one or
 	// more permissions on Google Cloud resources. This field can contain
-	// the following values: * `principalSet://goog/public:all`: A special
-	// identifier that represents any principal that is on the internet,
-	// even if they do not have a Google Account or are not logged in. *
-	// `principal://goog/subject/{email_id}`: A specific Google Account.
-	// Includes Gmail, Cloud Identity, and Google Workspace user accounts.
-	// For example, `principal://goog/subject/alice@example.com`. *
+	// the following values: * `principal://goog/subject/{email_id}`: A
+	// specific Google Account. Includes Gmail, Cloud Identity, and Google
+	// Workspace user accounts. For example,
+	// `principal://goog/subject/alice@example.com`. *
+	// `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_ac
+	// count_id}`: A Google Cloud service account. For example,
+	// `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-
+	// account@iam.gserviceaccount.com`. *
+	// `principalSet://goog/group/{group_id}`: A Google group. For example,
+	// `principalSet://goog/group/admins@example.com`. *
+	// `principalSet://goog/public:all`: A special identifier that
+	// represents any principal that is on the internet, even if they do not
+	// have a Google Account or are not logged in. *
+	// `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of
+	// the principals associated with the specified Google Workspace or
+	// Cloud Identity customer ID. For example,
+	// `principalSet://goog/cloudIdentityCustomerId/C01Abc35`. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. *
 	// `deleted:principal://goog/subject/{email_id}?uid={uid}`: A specific
 	// Google Account that was deleted recently. For example,
 	// `deleted:principal://goog/subject/alice@example.com?uid=1234567890`.
 	// If the Google Account is recovered, this identifier reverts to the
 	// standard identifier for a Google Account. *
-	// `principalSet://goog/group/{group_id}`: A Google group. For example,
-	// `principalSet://goog/group/admins@example.com`. *
 	// `deleted:principalSet://goog/group/{group_id}?uid={uid}`: A Google
 	// group that was deleted recently. For example,
 	// `deleted:principalSet://goog/group/admins@example.com?uid=1234567890`.
 	//  If the Google group is restored, this identifier reverts to the
 	// standard identifier for a Google group. *
-	// `principal://iam.googleapis.com/projects/-/serviceAccounts/{service_ac
-	// count_id}`: A Google Cloud service account. For example,
-	// `principal://iam.googleapis.com/projects/-/serviceAccounts/my-service-
-	// account@iam.gserviceaccount.com`. *
 	// `deleted:principal://iam.googleapis.com/projects/-/serviceAccounts/{se
 	// rvice_account_id}?uid={uid}`: A Google Cloud service account that was
 	// deleted recently. For example,
@@ -450,10 +482,11 @@ type GoogleIamV2betaDenyRule struct {
 	// service-account@iam.gserviceaccount.com?uid=1234567890`. If the
 	// service account is undeleted, this identifier reverts to the standard
 	// identifier for a service account. *
-	// `principalSet://goog/cloudIdentityCustomerId/{customer_id}`: All of
-	// the principals associated with the specified Google Workspace or
-	// Cloud Identity customer ID. For example,
-	// `principalSet://goog/cloudIdentityCustomerId/C01Abc35`.
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	DeniedPrincipals []string `json:"deniedPrincipals,omitempty"`
 
 	// ExceptionPermissions: Specifies the permissions that this rule

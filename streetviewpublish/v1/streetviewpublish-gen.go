@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "streetviewpublish:v1"
 const apiName = "streetviewpublish"
 const apiVersion = "v1"
 const basePath = "https://streetviewpublish.googleapis.com/"
+const basePathTemplate = "https://streetviewpublish.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://streetviewpublish.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -106,7 +108,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -1154,6 +1158,8 @@ type PhotoSequence struct {
 	//   "NOT_OUTDOORS" - Some frames were indoors, which is unsupported.
 	//   "INSUFFICIENT_VIDEO_FRAMES" - Not enough video frames.
 	//   "INSUFFICIENT_MOVEMENT" - Not enough moving data.
+	//   "MAST_DOWN" - Mast is down.
+	//   "CAMERA_COVERED" - Camera is covered.
 	FailureReason string `json:"failureReason,omitempty"`
 
 	// Filename: Output only. The filename of the upload. Does not include

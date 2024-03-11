@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -97,7 +97,9 @@ const apiId = "dialogflow:v2"
 const apiName = "dialogflow"
 const apiVersion = "v2"
 const basePath = "https://dialogflow.googleapis.com/"
+const basePathTemplate = "https://dialogflow.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://dialogflow.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -118,7 +120,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -904,6 +908,11 @@ type GoogleCloudDialogflowCxV3AdvancedSettings struct {
 	// logging. Exposed at the following levels: - Agent level.
 	LoggingSettings *GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings `json:"loggingSettings,omitempty"`
 
+	// SpeechSettings: Settings for speech to text detection. Exposed at the
+	// following levels: - Agent level - Flow level - Page level - Parameter
+	// level
+	SpeechSettings *GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings `json:"speechSettings,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AudioExportGcsDestination") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -1005,6 +1014,51 @@ func (s *GoogleCloudDialogflowCxV3AdvancedSettingsLoggingSettings) MarshalJSON()
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings: Define
+// behaviors of speech to text detection.
+type GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings struct {
+	// EndpointerSensitivity: Sensitivity of the speech model that detects
+	// the end of speech. Scale from 0 to 100.
+	EndpointerSensitivity int64 `json:"endpointerSensitivity,omitempty"`
+
+	// Models: Mapping from language to Speech-to-Text model. The mapped
+	// Speech-to-Text model will be selected for requests from its
+	// corresponding language. For more information, see Speech models
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).
+	Models map[string]string `json:"models,omitempty"`
+
+	// NoSpeechTimeout: Timeout before detecting no speech.
+	NoSpeechTimeout string `json:"noSpeechTimeout,omitempty"`
+
+	// UseTimeoutBasedEndpointing: Use timeout based endpointing,
+	// interpreting endpointer sensitivy as seconds of timeout value.
+	UseTimeoutBasedEndpointing bool `json:"useTimeoutBasedEndpointing,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EndpointerSensitivity") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndpointerSensitivity") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3AdvancedSettingsSpeechSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3AudioInput: Represents the natural speech
 // audio to be processed.
 type GoogleCloudDialogflowCxV3AudioInput struct {
@@ -1040,6 +1094,56 @@ type GoogleCloudDialogflowCxV3AudioInput struct {
 
 func (s *GoogleCloudDialogflowCxV3AudioInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3AudioInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3BargeInConfig: Configuration of the barge-in
+// behavior. Barge-in instructs the API to return a detected utterance
+// at a proper time while the client is playing back the response audio
+// from a previous request. When the client sees the utterance, it
+// should stop the playback and immediately get ready for receiving the
+// responses for the current request. The barge-in handling requires the
+// client to start streaming audio input as soon as it starts playing
+// back the audio from the previous response. The playback is modeled
+// into two phases: * No barge-in phase: which goes first and during
+// which speech detection should not be carried out. * Barge-in phase:
+// which follows the no barge-in phase and during which the API starts
+// speech detection and may inform the client that an utterance has been
+// detected. Note that no-speech event is not expected in this phase.
+// The client provides this configuration in terms of the durations of
+// those two phases. The durations are measured in terms of the audio
+// length from the the start of the input audio. No-speech event is a
+// response with END_OF_UTTERANCE without any transcript following up.
+type GoogleCloudDialogflowCxV3BargeInConfig struct {
+	// NoBargeInDuration: Duration that is not eligible for barge-in at the
+	// beginning of the input audio.
+	NoBargeInDuration string `json:"noBargeInDuration,omitempty"`
+
+	// TotalDuration: Total duration for the playback at the beginning of
+	// the input audio.
+	TotalDuration string `json:"totalDuration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NoBargeInDuration")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NoBargeInDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3BargeInConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3BargeInConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1825,6 +1929,48 @@ func (s *GoogleCloudDialogflowCxV3ExportAgentResponse) MarshalJSON() ([]byte, er
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3ExportEntityTypesMetadata: Metadata returned
+// for the EntityTypes.ExportEntityTypes long running operation.
+type GoogleCloudDialogflowCxV3ExportEntityTypesMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3ExportEntityTypesResponse: The response
+// message for EntityTypes.ExportEntityTypes.
+type GoogleCloudDialogflowCxV3ExportEntityTypesResponse struct {
+	// EntityTypesContent: Uncompressed byte content for entity types. This
+	// field is populated only if `entity_types_content_inline` is set to
+	// true in ExportEntityTypesRequest.
+	EntityTypesContent *GoogleCloudDialogflowCxV3InlineDestination `json:"entityTypesContent,omitempty"`
+
+	// EntityTypesUri: The URI to a file containing the exported entity
+	// types. This field is populated only if `entity_types_uri` is
+	// specified in ExportEntityTypesRequest.
+	EntityTypesUri string `json:"entityTypesUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityTypesContent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityTypesContent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ExportEntityTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ExportEntityTypesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3ExportFlowResponse: The response message for
 // Flows.ExportFlow.
 type GoogleCloudDialogflowCxV3ExportFlowResponse struct {
@@ -2434,6 +2580,82 @@ func (s *GoogleCloudDialogflowCxV3ImportDocumentsResponse) MarshalJSON() ([]byte
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3ImportEntityTypesMetadata: Metadata returned
+// for the EntityTypes.ImportEntityTypes long running operation.
+type GoogleCloudDialogflowCxV3ImportEntityTypesMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3ImportEntityTypesResponse: The response
+// message for EntityTypes.ImportEntityTypes.
+type GoogleCloudDialogflowCxV3ImportEntityTypesResponse struct {
+	// ConflictingResources: Info which resources have conflicts when
+	// REPORT_CONFLICT merge_option is set in ImportEntityTypesRequest.
+	ConflictingResources *GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources `json:"conflictingResources,omitempty"`
+
+	// EntityTypes: The unique identifier of the imported entity types.
+	// Format: `projects//locations//agents//entity_types/`.
+	EntityTypes []string `json:"entityTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConflictingResources") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConflictingResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ImportEntityTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ImportEntityTypesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources
+// : Conflicting resources detected during the import process. Only
+// filled when REPORT_CONFLICT is set in the request and there are
+// conflicts in the display names.
+type GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources struct {
+	// EntityDisplayNames: Display names of conflicting entities.
+	EntityDisplayNames []string `json:"entityDisplayNames,omitempty"`
+
+	// EntityTypeDisplayNames: Display names of conflicting entity types.
+	EntityTypeDisplayNames []string `json:"entityTypeDisplayNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityDisplayNames")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityDisplayNames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3ImportEntityTypesResponseConflictingResources
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3ImportFlowResponse: The response message for
 // Flows.ImportFlow.
 type GoogleCloudDialogflowCxV3ImportFlowResponse struct {
@@ -2672,6 +2894,10 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	// must be 16000.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 
+	// BargeInConfig: Configuration of barge-in behavior during the
+	// streaming of input audio.
+	BargeInConfig *GoogleCloudDialogflowCxV3BargeInConfig `json:"bargeInConfig,omitempty"`
+
 	// EnableWordInfo: Optional. If `true`, Dialogflow returns
 	// SpeechWordInfo in StreamingRecognitionResult with information about
 	// the recognized speech words, e.g. start and end time offsets. If
@@ -2680,19 +2906,8 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	EnableWordInfo bool `json:"enableWordInfo,omitempty"`
 
 	// Model: Optional. Which Speech model to select for the given request.
-	// Select the model best suited to your domain to get best results. If a
-	// model is not explicitly specified, then we auto-select a model based
-	// on the parameters in the InputAudioConfig. If enhanced speech model
-	// is enabled for the agent and an enhanced version of the specified
-	// model for the language does not exist, then the speech is recognized
-	// using the standard version of the specified model. Refer to Cloud
-	// Speech API documentation
-	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
-	// for more details. If you specify a model, the following models
-	// typically have the best performance: - phone_call (best for Agent
-	// Assist and telephony) - latest_short (best for Dialogflow
-	// non-telephony) - command_and_search (best for very short utterances
-	// and commands)
+	// For more information, see Speech models
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).
 	Model string `json:"model,omitempty"`
 
 	// ModelVariant: Optional. Which variant of the Speech model to use.
@@ -2701,9 +2916,7 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	//   "SPEECH_MODEL_VARIANT_UNSPECIFIED" - No model variant specified. In
 	// this case Dialogflow defaults to USE_BEST_AVAILABLE.
 	//   "USE_BEST_AVAILABLE" - Use the best available variant of the Speech
-	// model that the caller is eligible for. Please see the [Dialogflow
-	// docs](https://cloud.google.com/dialogflow/docs/data-logging) for how
-	// to make your project eligible for enhanced models.
+	// model that the caller is eligible for.
 	//   "USE_STANDARD" - Use standard model variant even if an enhanced
 	// model is available. See the [Cloud Speech
 	// documentation](https://cloud.google.com/speech-to-text/docs/enhanced-m
@@ -2712,12 +2925,15 @@ type GoogleCloudDialogflowCxV3InputAudioConfig struct {
 	// variant does not exist for the given model and request language,
 	// Dialogflow falls back to the standard variant. The [Cloud Speech
 	// documentation](https://cloud.google.com/speech-to-text/docs/enhanced-m
-	// odels) describes which models have enhanced variants. * If the API
-	// caller isn't eligible for enhanced models, Dialogflow returns an
-	// error. Please see the [Dialogflow
-	// docs](https://cloud.google.com/dialogflow/docs/data-logging) for how
-	// to make your project eligible.
+	// odels) describes which models have enhanced variants.
 	ModelVariant string `json:"modelVariant,omitempty"`
+
+	// OptOutConformerModelMigration: If `true`, the request will opt out
+	// for STT conformer model migration. This field will be deprecated once
+	// force migration takes place in June 2024. Please refer to Dialogflow
+	// CX Speech model migration
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/speech-model-migration).
+	OptOutConformerModelMigration bool `json:"optOutConformerModelMigration,omitempty"`
 
 	// PhraseHints: Optional. A list of strings containing words and phrases
 	// that the speech recognizer should recognize with higher likelihood.
@@ -3074,6 +3290,10 @@ type GoogleCloudDialogflowCxV3Page struct {
 	// the higher level.
 	AdvancedSettings *GoogleCloudDialogflowCxV3AdvancedSettings `json:"advancedSettings,omitempty"`
 
+	// Description: The description of the page. The maximum length is 500
+	// characters.
+	Description string `json:"description,omitempty"`
+
 	// DisplayName: Required. The human-readable name of the page, unique
 	// within the flow.
 	DisplayName string `json:"displayName,omitempty"`
@@ -3288,7 +3508,8 @@ func (s *GoogleCloudDialogflowCxV3PageInfoFormInfoParameterInfo) MarshalJSON() (
 // can contain one of: 1. A conversational query in the form of text. 2.
 // An intent query that specifies which intent to trigger. 3. Natural
 // language speech audio to be processed. 4. An event to be triggered.
-// 5. DTMF digits to invoke an intent and fill in parameter value.
+// 5. DTMF digits to invoke an intent and fill in parameter value. 6.
+// The results of a tool executed by the client.
 type GoogleCloudDialogflowCxV3QueryInput struct {
 	// Audio: The natural language speech audio to be processed.
 	Audio *GoogleCloudDialogflowCxV3AudioInput `json:"audio,omitempty"`
@@ -4177,7 +4398,7 @@ func (s *GoogleCloudDialogflowCxV3TestRunDifference) MarshalJSON() ([]byte, erro
 // text to be processed.
 type GoogleCloudDialogflowCxV3TextInput struct {
 	// Text: Required. The UTF-8 encoded natural language text to be
-	// processed. Text length must not exceed 256 characters.
+	// processed.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Text") to
@@ -4944,6 +5165,11 @@ type GoogleCloudDialogflowCxV3beta1AdvancedSettings struct {
 	// logging. Exposed at the following levels: - Agent level.
 	LoggingSettings *GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings `json:"loggingSettings,omitempty"`
 
+	// SpeechSettings: Settings for speech to text detection. Exposed at the
+	// following levels: - Agent level - Flow level - Page level - Parameter
+	// level
+	SpeechSettings *GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings `json:"speechSettings,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "AudioExportGcsDestination") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -5045,6 +5271,51 @@ func (s *GoogleCloudDialogflowCxV3beta1AdvancedSettingsLoggingSettings) MarshalJ
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings: Define
+// behaviors of speech to text detection.
+type GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings struct {
+	// EndpointerSensitivity: Sensitivity of the speech model that detects
+	// the end of speech. Scale from 0 to 100.
+	EndpointerSensitivity int64 `json:"endpointerSensitivity,omitempty"`
+
+	// Models: Mapping from language to Speech-to-Text model. The mapped
+	// Speech-to-Text model will be selected for requests from its
+	// corresponding language. For more information, see Speech models
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).
+	Models map[string]string `json:"models,omitempty"`
+
+	// NoSpeechTimeout: Timeout before detecting no speech.
+	NoSpeechTimeout string `json:"noSpeechTimeout,omitempty"`
+
+	// UseTimeoutBasedEndpointing: Use timeout based endpointing,
+	// interpreting endpointer sensitivy as seconds of timeout value.
+	UseTimeoutBasedEndpointing bool `json:"useTimeoutBasedEndpointing,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EndpointerSensitivity") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EndpointerSensitivity") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1AdvancedSettingsSpeechSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1AudioInput: Represents the natural
 // speech audio to be processed.
 type GoogleCloudDialogflowCxV3beta1AudioInput struct {
@@ -5080,6 +5351,57 @@ type GoogleCloudDialogflowCxV3beta1AudioInput struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1AudioInput) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1AudioInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1BargeInConfig: Configuration of the
+// barge-in behavior. Barge-in instructs the API to return a detected
+// utterance at a proper time while the client is playing back the
+// response audio from a previous request. When the client sees the
+// utterance, it should stop the playback and immediately get ready for
+// receiving the responses for the current request. The barge-in
+// handling requires the client to start streaming audio input as soon
+// as it starts playing back the audio from the previous response. The
+// playback is modeled into two phases: * No barge-in phase: which goes
+// first and during which speech detection should not be carried out. *
+// Barge-in phase: which follows the no barge-in phase and during which
+// the API starts speech detection and may inform the client that an
+// utterance has been detected. Note that no-speech event is not
+// expected in this phase. The client provides this configuration in
+// terms of the durations of those two phases. The durations are
+// measured in terms of the audio length from the the start of the input
+// audio. No-speech event is a response with END_OF_UTTERANCE without
+// any transcript following up.
+type GoogleCloudDialogflowCxV3beta1BargeInConfig struct {
+	// NoBargeInDuration: Duration that is not eligible for barge-in at the
+	// beginning of the input audio.
+	NoBargeInDuration string `json:"noBargeInDuration,omitempty"`
+
+	// TotalDuration: Total duration for the playback at the beginning of
+	// the input audio.
+	TotalDuration string `json:"totalDuration,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NoBargeInDuration")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NoBargeInDuration") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1BargeInConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1BargeInConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5866,6 +6188,49 @@ func (s *GoogleCloudDialogflowCxV3beta1ExportAgentResponse) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1ExportEntityTypesMetadata: Metadata
+// returned for the EntityTypes.ExportEntityTypes long running
+// operation.
+type GoogleCloudDialogflowCxV3beta1ExportEntityTypesMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3beta1ExportEntityTypesResponse: The response
+// message for EntityTypes.ExportEntityTypes.
+type GoogleCloudDialogflowCxV3beta1ExportEntityTypesResponse struct {
+	// EntityTypesContent: Uncompressed byte content for entity types. This
+	// field is populated only if `entity_types_content_inline` is set to
+	// true in ExportEntityTypesRequest.
+	EntityTypesContent *GoogleCloudDialogflowCxV3beta1InlineDestination `json:"entityTypesContent,omitempty"`
+
+	// EntityTypesUri: The URI to a file containing the exported entity
+	// types. This field is populated only if `entity_types_uri` is
+	// specified in ExportEntityTypesRequest.
+	EntityTypesUri string `json:"entityTypesUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityTypesContent")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityTypesContent") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ExportEntityTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ExportEntityTypesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1ExportFlowResponse: The response
 // message for Flows.ExportFlow.
 type GoogleCloudDialogflowCxV3beta1ExportFlowResponse struct {
@@ -6477,6 +6842,83 @@ func (s *GoogleCloudDialogflowCxV3beta1ImportDocumentsResponse) MarshalJSON() ([
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDialogflowCxV3beta1ImportEntityTypesMetadata: Metadata
+// returned for the EntityTypes.ImportEntityTypes long running
+// operation.
+type GoogleCloudDialogflowCxV3beta1ImportEntityTypesMetadata struct {
+}
+
+// GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponse: The response
+// message for EntityTypes.ImportEntityTypes.
+type GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponse struct {
+	// ConflictingResources: Info which resources have conflicts when
+	// REPORT_CONFLICT merge_option is set in ImportEntityTypesRequest.
+	ConflictingResources *GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources `json:"conflictingResources,omitempty"`
+
+	// EntityTypes: The unique identifier of the imported entity types.
+	// Format: `projects//locations//agents//entity_types/`.
+	EntityTypes []string `json:"entityTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "ConflictingResources") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConflictingResources") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingReso
+// urces: Conflicting resources detected during the import process. Only
+// filled when REPORT_CONFLICT is set in the request and there are
+// conflicts in the display names.
+type GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources struct {
+	// EntityDisplayNames: Display names of conflicting entities.
+	EntityDisplayNames []string `json:"entityDisplayNames,omitempty"`
+
+	// EntityTypeDisplayNames: Display names of conflicting entity types.
+	EntityTypeDisplayNames []string `json:"entityTypeDisplayNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "EntityDisplayNames")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EntityDisplayNames") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1ImportEntityTypesResponseConflictingResources
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDialogflowCxV3beta1ImportFlowResponse: The response
 // message for Flows.ImportFlow.
 type GoogleCloudDialogflowCxV3beta1ImportFlowResponse struct {
@@ -6715,6 +7157,10 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	// must be 16000.
 	AudioEncoding string `json:"audioEncoding,omitempty"`
 
+	// BargeInConfig: Configuration of barge-in behavior during the
+	// streaming of input audio.
+	BargeInConfig *GoogleCloudDialogflowCxV3beta1BargeInConfig `json:"bargeInConfig,omitempty"`
+
 	// EnableWordInfo: Optional. If `true`, Dialogflow returns
 	// SpeechWordInfo in StreamingRecognitionResult with information about
 	// the recognized speech words, e.g. start and end time offsets. If
@@ -6723,19 +7169,8 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	EnableWordInfo bool `json:"enableWordInfo,omitempty"`
 
 	// Model: Optional. Which Speech model to select for the given request.
-	// Select the model best suited to your domain to get best results. If a
-	// model is not explicitly specified, then we auto-select a model based
-	// on the parameters in the InputAudioConfig. If enhanced speech model
-	// is enabled for the agent and an enhanced version of the specified
-	// model for the language does not exist, then the speech is recognized
-	// using the standard version of the specified model. Refer to Cloud
-	// Speech API documentation
-	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
-	// for more details. If you specify a model, the following models
-	// typically have the best performance: - phone_call (best for Agent
-	// Assist and telephony) - latest_short (best for Dialogflow
-	// non-telephony) - command_and_search (best for very short utterances
-	// and commands)
+	// For more information, see Speech models
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/speech-models).
 	Model string `json:"model,omitempty"`
 
 	// ModelVariant: Optional. Which variant of the Speech model to use.
@@ -6744,9 +7179,7 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	//   "SPEECH_MODEL_VARIANT_UNSPECIFIED" - No model variant specified. In
 	// this case Dialogflow defaults to USE_BEST_AVAILABLE.
 	//   "USE_BEST_AVAILABLE" - Use the best available variant of the Speech
-	// model that the caller is eligible for. Please see the [Dialogflow
-	// docs](https://cloud.google.com/dialogflow/docs/data-logging) for how
-	// to make your project eligible for enhanced models.
+	// model that the caller is eligible for.
 	//   "USE_STANDARD" - Use standard model variant even if an enhanced
 	// model is available. See the [Cloud Speech
 	// documentation](https://cloud.google.com/speech-to-text/docs/enhanced-m
@@ -6755,12 +7188,15 @@ type GoogleCloudDialogflowCxV3beta1InputAudioConfig struct {
 	// variant does not exist for the given model and request language,
 	// Dialogflow falls back to the standard variant. The [Cloud Speech
 	// documentation](https://cloud.google.com/speech-to-text/docs/enhanced-m
-	// odels) describes which models have enhanced variants. * If the API
-	// caller isn't eligible for enhanced models, Dialogflow returns an
-	// error. Please see the [Dialogflow
-	// docs](https://cloud.google.com/dialogflow/docs/data-logging) for how
-	// to make your project eligible.
+	// odels) describes which models have enhanced variants.
 	ModelVariant string `json:"modelVariant,omitempty"`
+
+	// OptOutConformerModelMigration: If `true`, the request will opt out
+	// for STT conformer model migration. This field will be deprecated once
+	// force migration takes place in June 2024. Please refer to Dialogflow
+	// CX Speech model migration
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/speech-model-migration).
+	OptOutConformerModelMigration bool `json:"optOutConformerModelMigration,omitempty"`
 
 	// PhraseHints: Optional. A list of strings containing words and phrases
 	// that the speech recognizer should recognize with higher likelihood.
@@ -7118,6 +7554,10 @@ type GoogleCloudDialogflowCxV3beta1Page struct {
 	// the higher level.
 	AdvancedSettings *GoogleCloudDialogflowCxV3beta1AdvancedSettings `json:"advancedSettings,omitempty"`
 
+	// Description: The description of the page. The maximum length is 500
+	// characters.
+	Description string `json:"description,omitempty"`
+
 	// DisplayName: Required. The human-readable name of the page, unique
 	// within the flow.
 	DisplayName string `json:"displayName,omitempty"`
@@ -7332,7 +7772,8 @@ func (s *GoogleCloudDialogflowCxV3beta1PageInfoFormInfoParameterInfo) MarshalJSO
 // It can contain one of: 1. A conversational query in the form of text.
 // 2. An intent query that specifies which intent to trigger. 3. Natural
 // language speech audio to be processed. 4. An event to be triggered.
-// 5. DTMF digits to invoke an intent and fill in parameter value.
+// 5. DTMF digits to invoke an intent and fill in parameter value. 6.
+// The results of a tool executed by the client.
 type GoogleCloudDialogflowCxV3beta1QueryInput struct {
 	// Audio: The natural language speech audio to be processed.
 	Audio *GoogleCloudDialogflowCxV3beta1AudioInput `json:"audio,omitempty"`
@@ -8213,7 +8654,7 @@ func (s *GoogleCloudDialogflowCxV3beta1TestRunDifference) MarshalJSON() ([]byte,
 // language text to be processed.
 type GoogleCloudDialogflowCxV3beta1TextInput struct {
 	// Text: Required. The UTF-8 encoded natural language text to be
-	// processed. Text length must not exceed 256 characters.
+	// processed.
 	Text string `json:"text,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Text") to
@@ -9210,6 +9651,9 @@ type GoogleCloudDialogflowV2AgentAssistantFeedbackSummarizationFeedback struct {
 	// SummaryText: Text of actual submitted summary.
 	SummaryText string `json:"summaryText,omitempty"`
 
+	// TextSections: Optional. Actual text sections of submitted summary.
+	TextSections map[string]string `json:"textSections,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "StartTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -9722,8 +10166,8 @@ type GoogleCloudDialogflowV2AutomatedAgentConfig struct {
 	// used.
 	Agent string `json:"agent,omitempty"`
 
-	// SessionTtl: Optional. Sets Dialogflow CX session life time. By
-	// default, a Dialogflow CX session remains active and its data is
+	// SessionTtl: Optional. Configure lifetime of the Dialogflow session.
+	// By default, a Dialogflow CX session remains active and its data is
 	// stored for 30 minutes after the last request is sent for the session.
 	// This value should be no longer than 1 day.
 	SessionTtl string `json:"sessionTtl,omitempty"`
@@ -11396,47 +11840,6 @@ func (s *GoogleCloudDialogflowV2DtmfParameters) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2EncryptionSpec: A customer-managed encryption
-// key specification that can be applied to all created resources (e.g.
-// Conversation).
-type GoogleCloudDialogflowV2EncryptionSpec struct {
-	// KmsKey: Required. The name of customer-managed encryption key that is
-	// used to secure a resource and its sub-resources. If empty, the
-	// resource is secured by the default Google encryption key. Only the
-	// key in the same location as this resource is allowed to be used for
-	// encryption. Format:
-	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys
-	// /{key}`
-	KmsKey string `json:"kmsKey,omitempty"`
-
-	// Name: Immutable. The resource name of the encryption key
-	// specification resource. Format:
-	// projects/{project}/locations/{location}/encryptionSpec
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "KmsKey") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "KmsKey") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2EncryptionSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2EncryptionSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDialogflowV2EntityType: Each intent parameter has a type,
 // called the entity type, which dictates exactly how data from an
 // end-user expression is extracted. Dialogflow provides predefined
@@ -12711,6 +13114,11 @@ type GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionFeatureConfig str
 	// stored at answer records. Supported features: KNOWLEDGE_SEARCH.
 	DisableAgentQueryLogging bool `json:"disableAgentQueryLogging,omitempty"`
 
+	// EnableConversationAugmentedQuery: Optional. Enable including
+	// conversation context during query answer generation. Supported
+	// features: KNOWLEDGE_SEARCH.
+	EnableConversationAugmentedQuery bool `json:"enableConversationAugmentedQuery,omitempty"`
+
 	// EnableEventBasedSuggestion: Automatically iterates all participants
 	// and tries to compile suggestions. Supported features:
 	// ARTICLE_SUGGESTION, FAQ, DIALOGFLOW_ASSIST, KNOWLEDGE_ASSIST.
@@ -12790,6 +13198,10 @@ type GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionQueryConfig struc
 	// MaxResults: Maximum number of results to return. Currently, if unset,
 	// defaults to 10. And the max number is 20.
 	MaxResults int64 `json:"maxResults,omitempty"`
+
+	// Sections: Optional. The customized sections chosen to return when
+	// requesting a summary of a conversation.
+	Sections *GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionQueryConfigSections `json:"sections,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ConfidenceThreshold")
 	// to unconditionally include in API requests. By default, fields with
@@ -13000,6 +13412,61 @@ type GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionQueryConfigKnowle
 
 func (s *GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionQueryConfigKnowledgeBaseQuerySource) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionQueryConfigKnowledgeBaseQuerySource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionQueryConfigS
+// ections: Custom sections to return when requesting a summary of a
+// conversation. This is only supported when `baseline_model_version` ==
+// '2.0'. Supported features: CONVERSATION_SUMMARIZATION,
+// CONVERSATION_SUMMARIZATION_VOICE.
+type GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionQueryConfigSections struct {
+	// SectionTypes: The selected sections chosen to return when requesting
+	// a summary of a conversation. A duplicate selected section will be
+	// treated as a single selected section. If section types are not
+	// provided, the default will be {SITUATION, ACTION, RESULT}.
+	//
+	// Possible values:
+	//   "SECTION_TYPE_UNSPECIFIED" - Undefined section type, does not
+	// return anything.
+	//   "SITUATION" - What the customer needs help with or has question
+	// about. Section name: "situation".
+	//   "ACTION" - What the agent does to help the customer. Section name:
+	// "action".
+	//   "RESOLUTION" - Result of the customer service. A single word
+	// describing the result of the conversation. Section name:
+	// "resolution".
+	//   "REASON_FOR_CANCELLATION" - Reason for cancellation if the customer
+	// requests for a cancellation. "N/A" otherwise. Section name:
+	// "reason_for_cancellation".
+	//   "CUSTOMER_SATISFACTION" - "Unsatisfied" or "Satisfied" depending on
+	// the customer's feelings at the end of the conversation. Section name:
+	// "customer_satisfaction".
+	//   "ENTITIES" - Key entities extracted from the conversation, such as
+	// ticket number, order number, dollar amount, etc. Section names are
+	// prefixed by "entities/".
+	SectionTypes []string `json:"sectionTypes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SectionTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SectionTypes") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionQueryConfigSections) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowV2HumanAgentAssistantConfigSuggestionQueryConfigSections
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13453,69 +13920,6 @@ func (s *GoogleCloudDialogflowV2ImportDocumentsResponse) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2InitializeEncryptionSpecMetadata: Metadata for
-// initializing a location-level encryption specification.
-type GoogleCloudDialogflowV2InitializeEncryptionSpecMetadata struct {
-	// Request: Output only. The original request for initialization.
-	Request *GoogleCloudDialogflowV2InitializeEncryptionSpecRequest `json:"request,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Request") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Request") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2InitializeEncryptionSpecMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2InitializeEncryptionSpecMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV2InitializeEncryptionSpecRequest: The request
-// to initialize a location-level encryption specification.
-type GoogleCloudDialogflowV2InitializeEncryptionSpecRequest struct {
-	// EncryptionSpec: Required. The encryption spec used for CMEK
-	// encryption. It is required that the kms key is in the same region as
-	// the endpoint. The same key will be used for all provisioned
-	// resources, if encryption is available. If the kms_key_name is left
-	// empty, no encryption will be enforced.
-	EncryptionSpec *GoogleCloudDialogflowV2EncryptionSpec `json:"encryptionSpec,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EncryptionSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EncryptionSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2InitializeEncryptionSpecRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2InitializeEncryptionSpecRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDialogflowV2InputAudioConfig: Instructs the speech
 // recognizer how to process the audio content.
 type GoogleCloudDialogflowV2InputAudioConfig struct {
@@ -13582,20 +13986,9 @@ type GoogleCloudDialogflowV2InputAudioConfig struct {
 	// language.
 	LanguageCode string `json:"languageCode,omitempty"`
 
-	// Model: Which Speech model to select for the given request. Select the
-	// model best suited to your domain to get best results. If a model is
-	// not explicitly specified, then we auto-select a model based on the
-	// parameters in the InputAudioConfig. If enhanced speech model is
-	// enabled for the agent and an enhanced version of the specified model
-	// for the language does not exist, then the speech is recognized using
-	// the standard version of the specified model. Refer to Cloud Speech
-	// API documentation
-	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
-	// for more details. If you specify a model, the following models
-	// typically have the best performance: - phone_call (best for Agent
-	// Assist and telephony) - latest_short (best for Dialogflow
-	// non-telephony) - command_and_search (best for very short utterances
-	// and commands)
+	// Model: Optional. Which Speech model to select for the given request.
+	// For more information, see Speech models
+	// (https://cloud.google.com/dialogflow/es/docs/speech-models).
 	Model string `json:"model,omitempty"`
 
 	// ModelVariant: Which variant of the Speech model to use.
@@ -13621,6 +14014,13 @@ type GoogleCloudDialogflowV2InputAudioConfig struct {
 	// docs](https://cloud.google.com/dialogflow/docs/data-logging) for how
 	// to make your project eligible.
 	ModelVariant string `json:"modelVariant,omitempty"`
+
+	// OptOutConformerModelMigration: If `true`, the request will opt out
+	// for STT conformer model migration. This field will be deprecated once
+	// force migration takes place in June 2024. Please refer to Dialogflow
+	// ES Speech model migration
+	// (https://cloud.google.com/dialogflow/es/docs/speech-model-migration).
+	OptOutConformerModelMigration bool `json:"optOutConformerModelMigration,omitempty"`
 
 	// PhraseHints: A list of strings containing words and phrases that the
 	// speech recognizer should recognize with higher likelihood. See the
@@ -16737,8 +17137,9 @@ type GoogleCloudDialogflowV2SearchKnowledgeAnswer struct {
 	//
 	// Possible values:
 	//   "ANSWER_TYPE_UNSPECIFIED" - The answer has a unspecified type.
-	//   "FAQ" - The answer is from FAQ doucments.
+	//   "FAQ" - The answer is from FAQ documents.
 	//   "GENERATIVE" - The answer is from generative model.
+	//   "INTENT" - The answer is from intent matching.
 	AnswerType string `json:"answerType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Answer") to
@@ -16863,6 +17264,9 @@ type GoogleCloudDialogflowV2SearchKnowledgeResponse struct {
 	// Answers: Most relevant snippets extracted from articles in the given
 	// knowledge base, ordered by confidence.
 	Answers []*GoogleCloudDialogflowV2SearchKnowledgeAnswer `json:"answers,omitempty"`
+
+	// RewrittenQuery: The rewritten query used to search knowledge.
+	RewrittenQuery string `json:"rewrittenQuery,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -17445,10 +17849,20 @@ func (s *GoogleCloudDialogflowV2SpeechContext) UnmarshalJSON(data []byte) error 
 type GoogleCloudDialogflowV2SpeechToTextConfig struct {
 	// Model: Which Speech model to select. Select the model best suited to
 	// your domain to get best results. If a model is not explicitly
-	// specified, then a default model is used. Refer to Cloud Speech API
-	// documentation
+	// specified, then Dialogflow auto-selects a model based on other
+	// parameters in the SpeechToTextConfig and Agent settings. If enhanced
+	// speech model is enabled for the agent and an enhanced version of the
+	// specified model for the language does not exist, then the speech is
+	// recognized using the standard version of the specified model. Refer
+	// to Cloud Speech API documentation
 	// (https://cloud.google.com/speech-to-text/docs/basics#select-model)
-	// for more details.
+	// for more details. If you specify a model, the following models
+	// typically have the best performance: - phone_call (best for Agent
+	// Assist and telephony) - latest_short (best for Dialogflow
+	// non-telephony) - command_and_search Leave this field unspecified to
+	// use Agent Speech settings
+	// (https://cloud.google.com/dialogflow/cx/docs/concept/agent#settings-speech)
+	// for model selection.
 	Model string `json:"model,omitempty"`
 
 	// SpeechModelVariant: The speech model used in speech to text.
@@ -18951,47 +19365,6 @@ func (s *GoogleCloudDialogflowV2beta1DialogflowAssistAnswer) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDialogflowV2beta1EncryptionSpec: A customer-managed
-// encryption key specification that can be applied to all created
-// resources (e.g. Conversation).
-type GoogleCloudDialogflowV2beta1EncryptionSpec struct {
-	// KmsKey: Required. The name of customer-managed encryption key that is
-	// used to secure a resource and its sub-resources. If empty, the
-	// resource is secured by the default Google encryption key. Only the
-	// key in the same location as this resource is allowed to be used for
-	// encryption. Format:
-	// `projects/{project}/locations/{location}/keyRings/{keyRing}/cryptoKeys
-	// /{key}`
-	KmsKey string `json:"kmsKey,omitempty"`
-
-	// Name: Immutable. The resource name of the encryption key
-	// specification resource. Format:
-	// projects/{project}/locations/{location}/encryptionSpec
-	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "KmsKey") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "KmsKey") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2beta1EncryptionSpec) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2beta1EncryptionSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudDialogflowV2beta1EntityType: Each intent parameter has a
 // type, called the entity type, which dictates exactly how data from an
 // end-user expression is extracted. Dialogflow provides predefined
@@ -19392,69 +19765,6 @@ type GoogleCloudDialogflowV2beta1ImportDocumentsResponse struct {
 
 func (s *GoogleCloudDialogflowV2beta1ImportDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowV2beta1ImportDocumentsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV2beta1InitializeEncryptionSpecMetadata:
-// Metadata for initializing a location-level encryption specification.
-type GoogleCloudDialogflowV2beta1InitializeEncryptionSpecMetadata struct {
-	// Request: Output only. The original request for initialization.
-	Request *GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest `json:"request,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Request") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Request") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2beta1InitializeEncryptionSpecMetadata) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2beta1InitializeEncryptionSpecMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest: The
-// request to initialize a location-level encryption specification.
-type GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest struct {
-	// EncryptionSpec: Required. The encryption spec used for CMEK
-	// encryption. It is required that the kms key is in the same region as
-	// the endpoint. The same key will be used for all provisioned
-	// resources, if encryption is available. If the kms_key_name is left
-	// empty, no encryption will be enforced.
-	EncryptionSpec *GoogleCloudDialogflowV2beta1EncryptionSpec `json:"encryptionSpec,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EncryptionSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EncryptionSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDialogflowV2beta1InitializeEncryptionSpecRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

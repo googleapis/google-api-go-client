@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "datafusion:v1beta1"
 const apiName = "datafusion"
 const apiVersion = "v1beta1"
 const basePath = "https://datafusion.googleapis.com/"
+const basePathTemplate = "https://datafusion.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://datafusion.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -415,11 +419,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -431,7 +458,12 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
@@ -493,6 +525,57 @@ type CryptoKeyConfig struct {
 
 func (s *CryptoKeyConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CryptoKeyConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataResidencyAugmentedView: Next tag: 7
+type DataResidencyAugmentedView struct {
+	// CrGopoGuris: Cloud resource to Google owned production object mapping
+	// in the form of GURIs. The GURIs should be available in DG KB
+	// storage/cns tables. This is the preferred way of providing cloud
+	// resource mappings. For further details please read
+	// go/cloud-resource-monitoring_sig
+	CrGopoGuris []string `json:"crGopoGuris,omitempty"`
+
+	// CrGopoPrefixes: Cloud resource to Google owned production object
+	// mapping in the form of prefixes. These should be available in DG KB
+	// storage/cns tables. The entity type, which is the part of the string
+	// before the first colon in the GURI, must be completely specified in
+	// prefix. For details about GURI please read go/guri. For further
+	// details about the field please read go/cloud-resource-monitoring_sig.
+	CrGopoPrefixes []string `json:"crGopoPrefixes,omitempty"`
+
+	// ServiceData: Service-specific data. Only required for pre-determined
+	// services. Generally used to bind a Cloud Resource to some a TI
+	// container that uniquely specifies a customer. See milestone 2 of DRZ
+	// KR8 SIG for more information.
+	ServiceData *ServiceData `json:"serviceData,omitempty"`
+
+	// TpIds: The list of project_id's of the tenant projects in the
+	// 'google.com' org which serve the Cloud Resource. See go/drz-mst-sig
+	// for more details.
+	TpIds []string `json:"tpIds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CrGopoGuris") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CrGopoGuris") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataResidencyAugmentedView) MarshalJSON() ([]byte, error) {
+	type NoMethod DataResidencyAugmentedView
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -702,6 +785,10 @@ type Instance struct {
 	// CryptoKeyConfig: The crypto key configuration. This field is used by
 	// the Customer-Managed Encryption Keys (CMEK) feature.
 	CryptoKeyConfig *CryptoKeyConfig `json:"cryptoKeyConfig,omitempty"`
+
+	// DataplexDataLineageIntegrationEnabled: Optional. Option to enable the
+	// Dataplex Lineage Integration feature.
+	DataplexDataLineageIntegrationEnabled bool `json:"dataplexDataLineageIntegrationEnabled,omitempty"`
 
 	// DataprocServiceAccount: User-managed service account to set on
 	// Dataproc when Cloud Data Fusion creates Dataproc to run data
@@ -1209,7 +1296,7 @@ type NetworkConfig struct {
 	// is required only when using connection type VPC peering. In case of
 	// shared VPC where the network resides in another host project the
 	// network should specified in the form of
-	// projects/{project-id}/global/networks/{network}. This is only
+	// projects/{host-project-id}/global/networks/{network}. This is only
 	// required for connectivity type VPC_PEERING.
 	Network string `json:"network,omitempty"`
 
@@ -1357,6 +1444,54 @@ type OperationMetadata struct {
 
 func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PersistentDiskData: Persistent Disk service-specific Data. Contains
+// information that may not be appropriate for the generic DRZ Augmented
+// View. This currently includes LSV Colossus Roots and GCS Buckets.
+type PersistentDiskData struct {
+	// CfsRoots: Path to Colossus root for an LSV. NOTE: Unlike
+	// `cr_ti_guris` and `cr_ti_prefixes`, the field `cfs_roots` below does
+	// not need to be a GUri or GUri prefix. It can simply be any valid CFS
+	// or CFS2 Path. The DRZ KR8 SIG has more details overall, but generally
+	// the `cfs_roots` provided here should be scoped to an individual
+	// Persistent Disk. An example for a PD Disk with a disk ID
+	// 3277719120423414466, follows: * `cr_ti_guris` could be
+	// ‘/cfs2/pj/pd-cloud-prod’ as this is a valid GUri present in the
+	// DG KB and contains enough information to perform location monitoring
+	// and scope ownership of the Production Object. * `cfs_roots` would be:
+	// ‘/cfs2/pj/pd-cloud-staging/lsv000001234@/
+	// lsv/projects~773365403387~zones~2700~disks~3277719120423414466
+	// ~bank-blue-careful-3526-lsv00054DB1B7254BA3/’ as this allows us to
+	// enumerate the files on CFS2 that belong to an individual Disk.
+	CfsRoots []string `json:"cfsRoots,omitempty"`
+
+	// GcsBucketNames: The GCS Buckets that back this snapshot or image.
+	// This is required as `cr_ti_prefixes` and `cr_ti_guris` only accept TI
+	// resources. This should be the globally unique bucket name.
+	GcsBucketNames []string `json:"gcsBucketNames,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CfsRoots") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CfsRoots") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PersistentDiskData) MarshalJSON() ([]byte, error) {
+	type NoMethod PersistentDiskData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1537,6 +1672,37 @@ type RemoveIamPolicyResponse struct {
 // RestartInstanceRequest: Request message for restarting a Data Fusion
 // instance.
 type RestartInstanceRequest struct {
+}
+
+// ServiceData: This message defines service-specific data that certain
+// service teams must provide as part of the Data Residency Augmented
+// View for a resource. Next ID: 2
+type ServiceData struct {
+	// Pd: Auxiliary data for the persistent disk pipeline provided to
+	// provide the LSV Colossus Roots and GCS Buckets.
+	Pd *PersistentDiskData `json:"pd,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Pd") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Pd") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceData) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
@@ -2276,7 +2442,10 @@ func (r *ProjectsLocationsInstancesService) Create(parent string, instance *Inst
 }
 
 // InstanceId sets the optional parameter "instanceId": Required. The
-// name of the instance to create.
+// name of the instance to create. Instance name can only contain
+// lowercase alphanumeric characters and hyphens. It must start with a
+// letter and must not end with a hyphen. It can have a maximum of 30
+// characters.
 func (c *ProjectsLocationsInstancesCreateCall) InstanceId(instanceId string) *ProjectsLocationsInstancesCreateCall {
 	c.urlParams_.Set("instanceId", instanceId)
 	return c
@@ -2382,7 +2551,7 @@ func (c *ProjectsLocationsInstancesCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "instanceId": {
-	//       "description": "Required. The name of the instance to create.",
+	//       "description": "Required. The name of the instance to create. Instance name can only contain lowercase alphanumeric characters and hyphens. It must start with a letter and must not end with a hyphen. It can have a maximum of 30 characters.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "osconfig:v1"
 const apiName = "osconfig"
 const apiVersion = "v1"
 const basePath = "https://osconfig.googleapis.com/"
+const basePathTemplate = "https://osconfig.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://osconfig.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -4340,11 +4344,11 @@ type WeekDayOfMonth struct {
 	// DayOffset: Optional. Represents the number of days before or after
 	// the given week day of month that the patch deployment is scheduled
 	// for. For example if `week_ordinal` and `day_of_week` values point to
-	// the second day of the month and this `day_offset` value is set to
-	// `3`, the patch deployment takes place three days after the second
-	// Tuesday of the month. If this value is negative, for example -5, the
-	// patches are deployed five days before before the second Tuesday of
-	// the month. Allowed values are in range [-30, 30].
+	// the second Tuesday of the month and the `day_offset` value is set to
+	// `3`, patch deployment takes place three days after the second Tuesday
+	// of the month. If this value is negative, for example -5, patches are
+	// deployed five days before the second Tuesday of the month. Allowed
+	// values are in range [-30, 30].
 	DayOffset int64 `json:"dayOffset,omitempty"`
 
 	// WeekOrdinal: Required. Week number in a month. 1-4 indicates the 1st

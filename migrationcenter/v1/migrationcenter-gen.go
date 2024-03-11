@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "migrationcenter:v1"
 const apiName = "migrationcenter"
 const apiVersion = "v1"
 const basePath = "https://migrationcenter.googleapis.com/"
+const basePathTemplate = "https://migrationcenter.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://migrationcenter.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -1162,6 +1166,18 @@ type ComputeEnginePreferences struct {
 	// MachinePreferences: Preferences concerning the machine types to
 	// consider on Compute Engine.
 	MachinePreferences *MachinePreferences `json:"machinePreferences,omitempty"`
+
+	// PersistentDiskType: Persistent disk type to use. If unspecified
+	// (default), all types are considered, based on available usage data.
+	//
+	// Possible values:
+	//   "PERSISTENT_DISK_TYPE_UNSPECIFIED" - Unspecified (default value).
+	// Selecting this value allows the system to use any disk type according
+	// to reported usage. This a good value to start with.
+	//   "PERSISTENT_DISK_TYPE_STANDARD" - Standard HDD Persistent Disk.
+	//   "PERSISTENT_DISK_TYPE_BALANCED" - Balanced Persistent Disk.
+	//   "PERSISTENT_DISK_TYPE_SSD" - SSD Persistent Disk.
+	PersistentDiskType string `json:"persistentDiskType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LicenseType") to
 	// unconditionally include in API requests. By default, fields with
@@ -2263,6 +2279,9 @@ type GuestInstalledApplication struct {
 
 	// InstallTime: The time when the application was installed.
 	InstallTime string `json:"installTime,omitempty"`
+
+	// Licenses: License strings associated with the installed application.
+	Licenses []string `json:"licenses,omitempty"`
 
 	// Path: Source path.
 	Path string `json:"path,omitempty"`
@@ -4595,7 +4614,7 @@ type ReportSummaryAssetAggregateStats struct {
 	// families.
 	OperatingSystem *ReportSummaryChartData `json:"operatingSystem,omitempty"`
 
-	// StorageBytesHistogram: Histogram showing a distribution of memory
+	// StorageBytesHistogram: Histogram showing a distribution of storage
 	// sizes.
 	StorageBytesHistogram *ReportSummaryHistogramChartData `json:"storageBytesHistogram,omitempty"`
 

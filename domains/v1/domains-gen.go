@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "domains:v1"
 const apiName = "domains"
 const apiVersion = "v1"
 const basePath = "https://domains.googleapis.com/"
+const basePathTemplate = "https://domains.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://domains.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -358,11 +362,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -374,11 +401,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -596,7 +632,7 @@ type ContactSettings struct {
 	//   "PRIVATE_CONTACT_DATA" - Deprecated: For more information, see
 	// [Cloud Domains feature
 	// deprecation](https://cloud.google.com/domains/docs/deprecations/featur
-	// e-deprecations) None of the data from `ContactSettings` is publicly
+	// e-deprecations). None of the data from `ContactSettings` is publicly
 	// available. Instead, proxy contact data is published for your domain.
 	// Email sent to the proxy email address is forwarded to the
 	// registrant's email address. Cloud Domains provides this privacy proxy
@@ -691,7 +727,7 @@ type DnsSettings struct {
 
 	// GoogleDomainsDns: Deprecated: For more information, see Cloud Domains
 	// feature deprecation
-	// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+	// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations).
 	// The free DNS zone provided by Google Domains
 	// (https://domains.google/).
 	GoogleDomainsDns *GoogleDomainsDns `json:"googleDomainsDns,omitempty"`
@@ -847,7 +883,7 @@ func (s *DsRecord) MarshalJSON() ([]byte, error) {
 
 // ExportRegistrationRequest: Deprecated: For more information, see
 // Cloud Domains feature deprecation
-// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations).
 // Request for the `ExportRegistration` method.
 type ExportRegistrationRequest struct {
 }
@@ -957,7 +993,7 @@ func (s *GlueRecord) MarshalJSON() ([]byte, error) {
 
 // GoogleDomainsDns: Deprecated: For more information, see Cloud Domains
 // feature deprecation
-// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations).
 // Configuration for using the free DNS zone provided by Google Domains
 // as a `Registration`'s `dns_provider`. You cannot configure the DNS
 // zone itself using the API. To configure the DNS zone, go to Google
@@ -1013,7 +1049,7 @@ func (s *GoogleDomainsDns) MarshalJSON() ([]byte, error) {
 
 // ImportDomainRequest: Deprecated: For more information, see Cloud
 // Domains feature deprecation
-// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations).
 // Request for the `ImportDomain` method.
 type ImportDomainRequest struct {
 	// DomainName: Required. The domain name. Unicode domain names must be
@@ -1214,16 +1250,17 @@ type ManagementSettings struct {
 	// PreferredRenewalMethod: Optional. The desired renewal method for this
 	// `Registration`. The actual `renewal_method` is automatically updated
 	// to reflect this choice. If unset or equal to
-	// `RENEWAL_METHOD_UNSPECIFIED`, it will be treated as if it were set to
-	// `AUTOMATIC_RENEWAL`. Can't be set to `RENEWAL_DISABLED` during
-	// resource creation and can only be updated when the `Registration`
-	// resource has state `ACTIVE` or `SUSPENDED`. When
-	// `preferred_renewal_method` is set to `AUTOMATIC_RENEWAL` the actual
-	// `renewal_method` can be set to `RENEWAL_DISABLED` in case of e.g.
-	// problems with the Billing Account or reported domain abuse. In such
-	// cases check the `issues` field on the `Registration`. After the
-	// problem is resolved the `renewal_method` will be automatically
-	// updated to `preferred_renewal_method` in a few hours.
+	// `RENEWAL_METHOD_UNSPECIFIED`, the actual `renewalMethod` is treated
+	// as if it were set to `AUTOMATIC_RENEWAL`. You cannot use
+	// `RENEWAL_DISABLED` during resource creation, and you can update the
+	// renewal status only when the `Registration` resource has state
+	// `ACTIVE` or `SUSPENDED`. When `preferred_renewal_method` is set to
+	// `AUTOMATIC_RENEWAL`, the actual `renewal_method` can be set to
+	// `RENEWAL_DISABLED` in case of problems with the billing account or
+	// reported domain abuse. In such cases, check the `issues` field on the
+	// `Registration`. After the problem is resolved, the `renewal_method`
+	// is automatically updated to `preferred_renewal_method` in a few
+	// hours.
 	//
 	// Possible values:
 	//   "RENEWAL_METHOD_UNSPECIFIED" - The renewal method is undefined.
@@ -1232,7 +1269,7 @@ type ManagementSettings struct {
 	//   "MANUAL_RENEWAL" - Deprecated: For more information, see [Cloud
 	// Domains feature
 	// deprecation](https://cloud.google.com/domains/docs/deprecations/featur
-	// e-deprecations) This option was never used. Use RENEWAL_DISABLED
+	// e-deprecations). This option was never used. Use `RENEWAL_DISABLED`
 	// instead.
 	//   "RENEWAL_DISABLED" - The domain won't be renewed and will expire at
 	// its expiration time.
@@ -1240,11 +1277,11 @@ type ManagementSettings struct {
 
 	// RenewalMethod: Output only. The actual renewal method for this
 	// `Registration`. When `preferred_renewal_method` is set to
-	// `AUTOMATIC_RENEWAL` the actual `renewal_method` can be equal to
-	// `RENEWAL_DISABLED` in case of e.g. problems with the Billing Account
-	// or reported domain abuse. In such cases check the `issues` field on
-	// the `Registration`. After the problem is resolved the
-	// `renewal_method` will be automatically updated to
+	// `AUTOMATIC_RENEWAL`, the actual `renewal_method` can be equal to
+	// `RENEWAL_DISABLED`—for example, when there are problems with the
+	// billing account or reported domain abuse. In such cases, check the
+	// `issues` field on the `Registration`. After the problem is resolved,
+	// the `renewal_method` is automatically updated to
 	// `preferred_renewal_method` in a few hours.
 	//
 	// Possible values:
@@ -1254,7 +1291,7 @@ type ManagementSettings struct {
 	//   "MANUAL_RENEWAL" - Deprecated: For more information, see [Cloud
 	// Domains feature
 	// deprecation](https://cloud.google.com/domains/docs/deprecations/featur
-	// e-deprecations) This option was never used. Use RENEWAL_DISABLED
+	// e-deprecations). This option was never used. Use `RENEWAL_DISABLED`
 	// instead.
 	//   "RENEWAL_DISABLED" - The domain won't be renewed and will expire at
 	// its expiration time.
@@ -1783,7 +1820,7 @@ type RegisterParameters struct {
 	//   "PRIVATE_CONTACT_DATA" - Deprecated: For more information, see
 	// [Cloud Domains feature
 	// deprecation](https://cloud.google.com/domains/docs/deprecations/featur
-	// e-deprecations) None of the data from `ContactSettings` is publicly
+	// e-deprecations). None of the data from `ContactSettings` is publicly
 	// available. Instead, proxy contact data is published for your domain.
 	// Email sent to the proxy email address is forwarded to the
 	// registrant's email address. Cloud Domains provides this privacy proxy
@@ -1887,9 +1924,9 @@ type Registration struct {
 	// domain is suspended. To resend the verification email, call
 	// ConfigureContactSettings and provide the current
 	// `registrant_contact.email`.
-	//   "PROBLEM_WITH_BILLING" - Billing account is not in good standing.
-	// The domain will not automatically renew at its expiration time unless
-	// you resolve problems with your billing account.
+	//   "PROBLEM_WITH_BILLING" - The billing account is not in good
+	// standing. The domain is not automatically renewed at its expiration
+	// time unless you resolve problems with your billing account.
 	Issues []string `json:"issues,omitempty"`
 
 	// Labels: Set of labels associated with the `Registration`.
@@ -1945,7 +1982,7 @@ type Registration struct {
 	// to Cloud Domains.
 	//   "ACTIVE" - The domain is registered and operational. The domain
 	// renews automatically as long as it remains in this state and the
-	// RenewalMethod is set to AUTOMATIC_RENEWAL.
+	// `RenewalMethod` is set to `AUTOMATIC_RENEWAL`.
 	//   "SUSPENDED" - The domain is suspended and inoperative. For more
 	// details, see the `issues` field.
 	//   "EXPORTED" - The domain is no longer managed with Cloud Domains. It
@@ -1970,7 +2007,7 @@ type Registration struct {
 	//   "PRIVATE_CONTACT_DATA" - Deprecated: For more information, see
 	// [Cloud Domains feature
 	// deprecation](https://cloud.google.com/domains/docs/deprecations/featur
-	// e-deprecations) None of the data from `ContactSettings` is publicly
+	// e-deprecations). None of the data from `ContactSettings` is publicly
 	// available. Instead, proxy contact data is published for your domain.
 	// Email sent to the proxy email address is forwarded to the
 	// registrant's email address. Cloud Domains provides this privacy proxy
@@ -1985,7 +2022,7 @@ type Registration struct {
 
 	// TransferFailureReason: Output only. Deprecated: For more information,
 	// see Cloud Domains feature deprecation
-	// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+	// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations).
 	// The reason the domain transfer failed. Only set for domains in
 	// TRANSFER_FAILED state.
 	//
@@ -2050,7 +2087,7 @@ type ResetAuthorizationCodeRequest struct {
 
 // RetrieveImportableDomainsResponse: Deprecated: For more information,
 // see Cloud Domains feature deprecation
-// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations).
 // Response for the `RetrieveImportableDomains` method.
 type RetrieveImportableDomainsResponse struct {
 	// Domains: A list of domains that the calling user manages in Google
@@ -2126,7 +2163,7 @@ func (s *RetrieveRegisterParametersResponse) MarshalJSON() ([]byte, error) {
 
 // RetrieveTransferParametersResponse: Deprecated: For more information,
 // see Cloud Domains feature deprecation
-// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations).
 // Response for the `RetrieveTransferParameters` method.
 type RetrieveTransferParametersResponse struct {
 	// TransferParameters: Parameters to use when calling the
@@ -2343,7 +2380,7 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 
 // TransferDomainRequest: Deprecated: For more information, see Cloud
 // Domains feature deprecation
-// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations).
 // Request for the `TransferDomain` method.
 type TransferDomainRequest struct {
 	// AuthorizationCode: The domain's transfer authorization code. You can
@@ -2404,7 +2441,7 @@ func (s *TransferDomainRequest) MarshalJSON() ([]byte, error) {
 
 // TransferParameters: Deprecated: For more information, see Cloud
 // Domains feature deprecation
-// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations)
+// (https://cloud.google.com/domains/docs/deprecations/feature-deprecations).
 // Parameters required to transfer a domain from another registrar.
 type TransferParameters struct {
 	// CurrentRegistrar: The registrar that currently manages the domain.
@@ -2434,7 +2471,7 @@ type TransferParameters struct {
 	//   "PRIVATE_CONTACT_DATA" - Deprecated: For more information, see
 	// [Cloud Domains feature
 	// deprecation](https://cloud.google.com/domains/docs/deprecations/featur
-	// e-deprecations) None of the data from `ContactSettings` is publicly
+	// e-deprecations). None of the data from `ContactSettings` is publicly
 	// available. Instead, proxy contact data is published for your domain.
 	// Email sent to the proxy email address is forwarded to the
 	// registrant's email address. Cloud Domains provides this privacy proxy

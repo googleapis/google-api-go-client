@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "tpu:v2alpha1"
 const apiName = "tpu"
 const apiVersion = "v2alpha1"
 const basePath = "https://tpu.googleapis.com/"
+const basePathTemplate = "https://tpu.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://tpu.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -256,6 +260,7 @@ type AcceleratorConfig struct {
 	//   "V2" - TPU v2.
 	//   "V3" - TPU v3.
 	//   "V4" - TPU v4.
+	//   "V5P" - TPU v5.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Topology") to
@@ -1157,6 +1162,10 @@ type NetworkConfig struct {
 	// "default" will be used.
 	Network string `json:"network,omitempty"`
 
+	// QueueCount: Optional. Specifies networking queue count for TPU VM
+	// instance's network interface.
+	QueueCount int64 `json:"queueCount,omitempty"`
+
 	// Subnetwork: The name of the subnetwork for the TPU node. It must be a
 	// preexisting Google Compute Engine subnetwork. If none is provided,
 	// "default" will be used.
@@ -1661,7 +1670,8 @@ type QueuedResourceState struct {
 	State string `json:"state,omitempty"`
 
 	// StateInitiator: Output only. The initiator of the QueuedResources's
-	// current state.
+	// current state. Used to indicate whether the SUSPENDING/SUSPENDED
+	// state was initiated by the user or the service.
 	//
 	// Possible values:
 	//   "STATE_INITIATOR_UNSPECIFIED" - The state initiator is unspecified.
@@ -1825,6 +1835,9 @@ type SchedulingConfig struct {
 
 	// Reserved: Whether the node is created under a reservation.
 	Reserved bool `json:"reserved,omitempty"`
+
+	// Spot: Optional. Defines whether the node is Spot VM.
+	Spot bool `json:"spot,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Preemptible") to
 	// unconditionally include in API requests. By default, fields with

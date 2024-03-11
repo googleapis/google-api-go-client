@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "container:v1beta1"
 const apiName = "container"
 const apiVersion = "v1beta1"
 const basePath = "https://container.googleapis.com/"
+const basePathTemplate = "https://container.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://container.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -517,6 +521,9 @@ type AddonsConfig struct {
 	// track whether network policy is enabled for the nodes.
 	NetworkPolicyConfig *NetworkPolicyConfig `json:"networkPolicyConfig,omitempty"`
 
+	// StatefulHaConfig: Optional. Configuration for the StatefulHA add-on.
+	StatefulHaConfig *StatefulHAConfig `json:"statefulHaConfig,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "CloudRunConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -547,6 +554,9 @@ func (s *AddonsConfig) MarshalJSON() ([]byte, error) {
 type AdvancedDatapathObservabilityConfig struct {
 	// EnableMetrics: Expose flow metrics on nodes
 	EnableMetrics bool `json:"enableMetrics,omitempty"`
+
+	// EnableRelay: Enable Relay component
+	EnableRelay bool `json:"enableRelay,omitempty"`
 
 	// RelayMode: Method used to make Relay available
 	//
@@ -688,13 +698,17 @@ func (s *AutoUpgradeOptions) MarshalJSON() ([]byte, error) {
 // Autopilot: Autopilot is the configuration for Autopilot settings on
 // the cluster.
 type Autopilot struct {
+	// ConversionStatus: Output only. ConversionStatus shows conversion
+	// status.
+	ConversionStatus *AutopilotConversionStatus `json:"conversionStatus,omitempty"`
+
 	// Enabled: Enable Autopilot
 	Enabled bool `json:"enabled,omitempty"`
 
 	// WorkloadPolicyConfig: Workload policy configuration for Autopilot.
 	WorkloadPolicyConfig *WorkloadPolicyConfig `json:"workloadPolicyConfig,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// ForceSendFields is a list of field names (e.g. "ConversionStatus") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -702,12 +716,13 @@ type Autopilot struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Enabled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ConversionStatus") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -769,6 +784,41 @@ type AutopilotCompatibilityIssue struct {
 
 func (s *AutopilotCompatibilityIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod AutopilotCompatibilityIssue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AutopilotConversionStatus: AutopilotConversionStatus represents
+// conversion status.
+type AutopilotConversionStatus struct {
+	// State: Output only. The current state of the conversion.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - STATE_UNSPECIFIED indicates the state is
+	// unspecified.
+	//   "DONE" - DONE indicates the conversion has been completed. Old node
+	// pools will continue being deleted in the background.
+	State string `json:"state,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "State") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "State") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutopilotConversionStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod AutopilotConversionStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -867,6 +917,12 @@ func (s *AutoprovisioningNodePoolDefaults) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoprovisioningNodePoolDefaults
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AutoscaledRolloutPolicy: Autoscaled rollout policy uses cluster
+// autoscaler during blue-green upgrades to scale both the green and
+// blue pools.
+type AutoscaledRolloutPolicy struct {
 }
 
 // AvailableVersion: Deprecated.
@@ -982,11 +1038,12 @@ type BinaryAuthorization struct {
 	//   "PROJECT_SINGLETON_POLICY_ENFORCE" - Enforce Kubernetes admission
 	// requests with BinaryAuthorization using the project's singleton
 	// policy. This is equivalent to setting the enabled boolean to true.
-	//   "POLICY_BINDINGS" - Use Binary Authorization with the policies
-	// specified in policy_bindings.
+	//   "POLICY_BINDINGS" - Use Binary Authorization Continuous Validation
+	// with the policies specified in policy_bindings.
 	//   "POLICY_BINDINGS_AND_PROJECT_SINGLETON_POLICY_ENFORCE" - Use Binary
-	// Authorization with the policies specified in policy_bindings, and
-	// also with the project's singleton policy in enforcement mode.
+	// Authorization Continuous Validation with the policies specified in
+	// policy_bindings and enforce Kubernetes admission requests with Binary
+	// Authorization using the project's singleton policy.
 	EvaluationMode string `json:"evaluationMode,omitempty"`
 
 	// PolicyBindings: Optional. Binauthz policies that apply to this
@@ -1081,6 +1138,10 @@ func (s *BlueGreenInfo) MarshalJSON() ([]byte, error) {
 
 // BlueGreenSettings: Settings for blue-green upgrade.
 type BlueGreenSettings struct {
+	// AutoscaledRolloutPolicy: Autoscaled policy for cluster autoscaler
+	// enabled blue-green upgrade.
+	AutoscaledRolloutPolicy *AutoscaledRolloutPolicy `json:"autoscaledRolloutPolicy,omitempty"`
+
 	// NodePoolSoakDuration: Time needed after draining entire blue pool.
 	// After this period, blue pool will be cleaned up.
 	NodePoolSoakDuration string `json:"nodePoolSoakDuration,omitempty"`
@@ -1089,18 +1150,18 @@ type BlueGreenSettings struct {
 	StandardRolloutPolicy *StandardRolloutPolicy `json:"standardRolloutPolicy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "NodePoolSoakDuration") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// "AutoscaledRolloutPolicy") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NodePoolSoakDuration") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "AutoscaledRolloutPolicy")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.
@@ -5143,10 +5204,7 @@ type NodeConfig struct {
 	// 'pd-standard'
 	DiskType string `json:"diskType,omitempty"`
 
-	// EnableConfidentialStorage: Optional. Enable confidential storage on
-	// Hyperdisk. boot_disk_kms_key is required when
-	// enable_confidential_storage is true. This is only available for
-	// private preview.
+	// EnableConfidentialStorage: Optional. Reserved for future use.
 	EnableConfidentialStorage bool `json:"enableConfidentialStorage,omitempty"`
 
 	// EphemeralStorageConfig: Parameters for the ephemeral storage
@@ -5280,6 +5338,10 @@ type NodeConfig struct {
 
 	// SandboxConfig: Sandbox configuration for this node.
 	SandboxConfig *SandboxConfig `json:"sandboxConfig,omitempty"`
+
+	// SecondaryBootDisks: List of secondary boot disks attached to the
+	// nodes.
+	SecondaryBootDisks []*SecondaryBootDisk `json:"secondaryBootDisks,omitempty"`
 
 	// ServiceAccount: The Google Cloud Platform Service Account to be used
 	// by the node VMs. Specify the email address of the Service Account;
@@ -5609,23 +5671,7 @@ func (s *NodeNetworkConfig) UnmarshalJSON(data []byte) error {
 // a common configuration and specification, under the control of the
 // cluster master. They may have a set of Kubernetes labels applied to
 // them, which may be used to reference them during pod scheduling. They
-// may also be resized up or down, to accommodate the workload. These
-// upgrade settings control the level of parallelism and the level of
-// disruption caused by an upgrade. maxUnavailable controls the number
-// of nodes that can be simultaneously unavailable. maxSurge controls
-// the number of additional nodes that can be added to the node pool
-// temporarily for the time of the upgrade to increase the number of
-// available nodes. (maxUnavailable + maxSurge) determines the level of
-// parallelism (how many nodes are being upgraded at the same time).
-// Note: upgrades inevitably introduce some disruption since workloads
-// need to be moved from old nodes to new, upgraded ones. Even if
-// maxUnavailable=0, this holds true. (Disruption stays within the
-// limits of PodDisruptionBudget, if it is configured.) Consider a
-// hypothetical node pool with 5 nodes having maxSurge=2,
-// maxUnavailable=1. This means the upgrade process upgrades 3 nodes
-// simultaneously. It creates 2 additional (upgraded) nodes, then it
-// brings down 3 old (not yet upgraded) nodes at the same time. This
-// ensures that there are always at least 4 nodes available.
+// may also be resized up or down, to accommodate the workload.
 type NodePool struct {
 	// Autoscaling: Autoscaler configuration for this NodePool. Autoscaler
 	// is enabled only if a valid configuration is present.
@@ -5688,6 +5734,10 @@ type NodePool struct {
 	// PodIpv4CidrSize: [Output only] The pod CIDR block size per node in
 	// this node pool.
 	PodIpv4CidrSize int64 `json:"podIpv4CidrSize,omitempty"`
+
+	// QueuedProvisioning: Specifies the configuration of queued
+	// provisioning.
+	QueuedProvisioning *QueuedProvisioning `json:"queuedProvisioning,omitempty"`
 
 	// SelfLink: [Output only] Server-defined URL for the resource.
 	SelfLink string `json:"selfLink,omitempty"`
@@ -6652,6 +6702,37 @@ func (s *PubSub) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// QueuedProvisioning: QueuedProvisioning defines the queued
+// provisioning used by the node pool.
+type QueuedProvisioning struct {
+	// Enabled: Denotes that this nodepool is QRM specific, meaning nodes
+	// can be only obtained through queuing via the Cluster Autoscaler
+	// ProvisioningRequest API.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *QueuedProvisioning) MarshalJSON() ([]byte, error) {
+	type NoMethod QueuedProvisioning
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RangeInfo: RangeInfo contains the range name and the range
 // utilization by this cluster.
 type RangeInfo struct {
@@ -7126,6 +7207,43 @@ type SandboxConfig struct {
 
 func (s *SandboxConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SandboxConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SecondaryBootDisk: SecondaryBootDisk represents a persistent disk
+// attached to a node with special configurations based on its mode.
+type SecondaryBootDisk struct {
+	// DiskImage: Fully-qualified resource ID for an existing disk image.
+	DiskImage string `json:"diskImage,omitempty"`
+
+	// Mode: Disk mode (container image cache, etc.)
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - MODE_UNSPECIFIED is when mode is not set.
+	//   "CONTAINER_IMAGE_CACHE" - CONTAINER_IMAGE_CACHE is for using the
+	// secondary boot disk as a container image cache.
+	Mode string `json:"mode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DiskImage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiskImage") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecondaryBootDisk) MarshalJSON() ([]byte, error) {
+	type NoMethod SecondaryBootDisk
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8192,6 +8310,34 @@ func (s *StartIPRotationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StatefulHAConfig: Configuration for the Stateful HA add-on.
+type StatefulHAConfig struct {
+	// Enabled: Whether the Stateful HA add-on is enabled for this cluster.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StatefulHAConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod StatefulHAConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -8678,6 +8824,10 @@ type UpdateNodePoolRequest struct {
 	// This field has been deprecated and replaced by the name field.
 	ProjectId string `json:"projectId,omitempty"`
 
+	// QueuedProvisioning: Specifies the configuration of queued
+	// provisioning.
+	QueuedProvisioning *QueuedProvisioning `json:"queuedProvisioning,omitempty"`
+
 	// ResourceLabels: The resource labels for the node pool to use to
 	// annotate any related Google Compute Engine resources.
 	ResourceLabels *ResourceLabels `json:"resourceLabels,omitempty"`
@@ -8843,12 +8993,28 @@ func (s *UpgradeEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// UpgradeSettings: These upgrade settings configure the upgrade
-// strategy for the node pool. Use strategy to switch between the
-// strategies applied to the node pool. If the strategy is SURGE, use
-// max_surge and max_unavailable to control the level of parallelism and
-// the level of disruption caused by upgrade. 1. maxSurge controls the
-// number of additional nodes that can be added to the node pool
+// UpgradeSettings: These upgrade settings control the level of
+// parallelism and the level of disruption caused by an upgrade.
+// maxUnavailable controls the number of nodes that can be
+// simultaneously unavailable. maxSurge controls the number of
+// additional nodes that can be added to the node pool temporarily for
+// the time of the upgrade to increase the number of available nodes.
+// (maxUnavailable + maxSurge) determines the level of parallelism (how
+// many nodes are being upgraded at the same time). Note: upgrades
+// inevitably introduce some disruption since workloads need to be moved
+// from old nodes to new, upgraded ones. Even if maxUnavailable=0, this
+// holds true. (Disruption stays within the limits of
+// PodDisruptionBudget, if it is configured.) Consider a hypothetical
+// node pool with 5 nodes having maxSurge=2, maxUnavailable=1. This
+// means the upgrade process upgrades 3 nodes simultaneously. It creates
+// 2 additional (upgraded) nodes, then it brings down 3 old (not yet
+// upgraded) nodes at the same time. This ensures that there are always
+// at least 4 nodes available. These upgrade settings configure the
+// upgrade strategy for the node pool. Use strategy to switch between
+// the strategies applied to the node pool. If the strategy is SURGE,
+// use max_surge and max_unavailable to control the level of parallelism
+// and the level of disruption caused by upgrade. 1. maxSurge controls
+// the number of additional nodes that can be added to the node pool
 // temporarily for the time of the upgrade to increase the number of
 // available nodes. 2. maxUnavailable controls the number of nodes that
 // can be simultaneously unavailable. 3. (maxUnavailable + maxSurge)
@@ -10784,8 +10950,7 @@ type ProjectsLocationsClustersGetJwksCall struct {
 }
 
 // GetJwks: Gets the public component of the cluster signing keys in
-// JSON Web Key format. This API is not yet intended for general use,
-// and is not available for all clusters.
+// JSON Web Key format.
 //
 //   - parent: The cluster (project, location, cluster name) to get keys
 //     for. Specified in the format `projects/*/locations/*/clusters/*`.
@@ -10894,7 +11059,7 @@ func (c *ProjectsLocationsClustersGetJwksCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the public component of the cluster signing keys in JSON Web Key format. This API is not yet intended for general use, and is not available for all clusters.",
+	//   "description": "Gets the public component of the cluster signing keys in JSON Web Key format.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/jwks",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.locations.clusters.getJwks",
@@ -14457,8 +14622,7 @@ type ProjectsLocationsClustersWellKnownGetOpenidConfigurationCall struct {
 // GetOpenidConfiguration: Gets the OIDC discovery document for the
 // cluster. See the OpenID Connect Discovery 1.0 specification
 // (https://openid.net/specs/openid-connect-discovery-1_0.html) for
-// details. This API is not yet intended for general use, and is not
-// available for all clusters.
+// details.
 //
 //   - parent: The cluster (project, location, cluster name) to get the
 //     discovery document for. Specified in the format
@@ -14568,7 +14732,7 @@ func (c *ProjectsLocationsClustersWellKnownGetOpenidConfigurationCall) Do(opts .
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the OIDC discovery document for the cluster. See the [OpenID Connect Discovery 1.0 specification](https://openid.net/specs/openid-connect-discovery-1_0.html) for details. This API is not yet intended for general use, and is not available for all clusters.",
+	//   "description": "Gets the OIDC discovery document for the cluster. See the [OpenID Connect Discovery 1.0 specification](https://openid.net/specs/openid-connect-discovery-1_0.html) for details.",
 	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}/.well-known/openid-configuration",
 	//   "httpMethod": "GET",
 	//   "id": "container.projects.locations.clusters.well-known.getOpenid-configuration",

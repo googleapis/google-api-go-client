@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "binaryauthorization:v1"
 const apiName = "binaryauthorization"
 const apiVersion = "v1"
 const basePath = "https://binaryauthorization.googleapis.com/"
+const basePathTemplate = "https://binaryauthorization.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://binaryauthorization.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -183,6 +187,7 @@ type ProjectsAttestorsService struct {
 
 func NewProjectsPlatformsService(s *Service) *ProjectsPlatformsService {
 	rs := &ProjectsPlatformsService{s: s}
+	rs.Gke = NewProjectsPlatformsGkeService(s)
 	rs.Policies = NewProjectsPlatformsPoliciesService(s)
 	return rs
 }
@@ -190,7 +195,30 @@ func NewProjectsPlatformsService(s *Service) *ProjectsPlatformsService {
 type ProjectsPlatformsService struct {
 	s *Service
 
+	Gke *ProjectsPlatformsGkeService
+
 	Policies *ProjectsPlatformsPoliciesService
+}
+
+func NewProjectsPlatformsGkeService(s *Service) *ProjectsPlatformsGkeService {
+	rs := &ProjectsPlatformsGkeService{s: s}
+	rs.Policies = NewProjectsPlatformsGkePoliciesService(s)
+	return rs
+}
+
+type ProjectsPlatformsGkeService struct {
+	s *Service
+
+	Policies *ProjectsPlatformsGkePoliciesService
+}
+
+func NewProjectsPlatformsGkePoliciesService(s *Service) *ProjectsPlatformsGkePoliciesService {
+	rs := &ProjectsPlatformsGkePoliciesService{s: s}
+	return rs
+}
+
+type ProjectsPlatformsGkePoliciesService struct {
+	s *Service
 }
 
 func NewProjectsPlatformsPoliciesService(s *Service) *ProjectsPlatformsPoliciesService {
@@ -317,6 +345,35 @@ func (s *AdmissionWhitelistPattern) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AllowlistResult: Result of evaluating an image name allowlist.
+type AllowlistResult struct {
+	// MatchedPattern: The allowlist pattern that the image matched.
+	MatchedPattern string `json:"matchedPattern,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MatchedPattern") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MatchedPattern") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AllowlistResult) MarshalJSON() ([]byte, error) {
+	type NoMethod AllowlistResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AttestationAuthenticator: An attestation authenticator that will be
 // used to verify attestations. Typically this is just a set of public
 // keys. Conceptually, an authenticator can be treated as always
@@ -418,8 +475,11 @@ func (s *AttestationOccurrence) MarshalJSON() ([]byte, error) {
 // AttestationSource: Specifies the locations for fetching the
 // provenance attestations.
 type AttestationSource struct {
-	// ContainerAnalysisAttestationProjects: The IDs of the GCP projects
-	// storing the SLSA attestations as Container Analysis Occurrences.
+	// ContainerAnalysisAttestationProjects: The IDs of the Google Cloud
+	// projects that store the SLSA attestations as Container Analysis
+	// Occurrences, in the format `projects/[PROJECT_ID]`. Maximum number of
+	// `container_analysis_attestation_projects` allowed in each
+	// `AttestationSource` is 10.
 	ContainerAnalysisAttestationProjects []string `json:"containerAnalysisAttestationProjects,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -585,11 +645,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -601,11 +684,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -655,6 +747,11 @@ type Check struct {
 	// time.
 	ImageFreshnessCheck *ImageFreshnessCheck `json:"imageFreshnessCheck,omitempty"`
 
+	// SigstoreSignatureCheck: Optional. Require that an image was signed by
+	// Cosign with a trusted key. This check requires that both the image
+	// and signature are stored in Artifact Registry.
+	SigstoreSignatureCheck *SigstoreSignatureCheck `json:"sigstoreSignatureCheck,omitempty"`
+
 	// SimpleSigningAttestationCheck: Optional. Require a SimpleSigning-type
 	// attestation for every image in the deployment.
 	SimpleSigningAttestationCheck *SimpleSigningAttestationCheck `json:"simpleSigningAttestationCheck,omitempty"`
@@ -693,6 +790,80 @@ type Check struct {
 
 func (s *Check) MarshalJSON() ([]byte, error) {
 	type NoMethod Check
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CheckResult: Result of evaluating one check.
+type CheckResult struct {
+	// AllowlistResult: If the image was exempted by an allow_pattern in the
+	// check, contains the pattern that the image name matched.
+	AllowlistResult *AllowlistResult `json:"allowlistResult,omitempty"`
+
+	// DisplayName: The name of the check.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// EvaluationResult: If a check was evaluated, contains the result of
+	// the check.
+	EvaluationResult *EvaluationResult `json:"evaluationResult,omitempty"`
+
+	// Explanation: Explanation of this check result.
+	Explanation string `json:"explanation,omitempty"`
+
+	// Index: The index of the check.
+	Index int64 `json:"index,omitempty,string"`
+
+	// Type: The type of the check.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowlistResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowlistResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CheckResult) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CheckResults: Result of evaluating one or more checks.
+type CheckResults struct {
+	// Results: Per-check details.
+	Results []*CheckResult `json:"results,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Results") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Results") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CheckResults) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckResults
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -749,6 +920,53 @@ func (s *CheckSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CheckSetResult: Result of evaluating one check set.
+type CheckSetResult struct {
+	// AllowlistResult: If the image was exempted by an allow_pattern in the
+	// check set, contains the pattern that the image name matched.
+	AllowlistResult *AllowlistResult `json:"allowlistResult,omitempty"`
+
+	// CheckResults: If checks were evaluated, contains the results of
+	// evaluating each check.
+	CheckResults *CheckResults `json:"checkResults,omitempty"`
+
+	// DisplayName: The name of the check set.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Explanation: Explanation of this check set result. Only populated if
+	// no checks were evaluated.
+	Explanation string `json:"explanation,omitempty"`
+
+	// Index: The index of the check set.
+	Index int64 `json:"index,omitempty,string"`
+
+	// Scope: The scope of the check set.
+	Scope *Scope `json:"scope,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowlistResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowlistResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CheckSetResult) MarshalJSON() ([]byte, error) {
+	type NoMethod CheckSetResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -758,6 +976,117 @@ type Empty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// EvaluateGkePolicyRequest: Request message for
+// PlatformPolicyEvaluationService.EvaluateGkePolicy.
+type EvaluateGkePolicyRequest struct {
+	// Resource: Required. JSON or YAML blob representing a Kubernetes
+	// resource.
+	Resource googleapi.RawMessage `json:"resource,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Resource") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Resource") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EvaluateGkePolicyRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluateGkePolicyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EvaluateGkePolicyResponse: Response message for
+// PlatformPolicyEvaluationService.EvaluateGkePolicy.
+type EvaluateGkePolicyResponse struct {
+	// Results: Evaluation result for each Pod contained in the request.
+	Results []*PodResult `json:"results,omitempty"`
+
+	// Verdict: The result of evaluating all Pods in the request.
+	//
+	// Possible values:
+	//   "VERDICT_UNSPECIFIED" - Not specified. This should never be used.
+	//   "CONFORMANT" - All Pods in the request conform to the policy.
+	//   "NON_CONFORMANT" - At least one Pod does not conform to the policy.
+	//   "ERROR" - Encountered at least one error evaluating a Pod and all
+	// other Pods conform to the policy. Non-conformance has precedence over
+	// errors.
+	Verdict string `json:"verdict,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Results") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Results") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EvaluateGkePolicyResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluateGkePolicyResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// EvaluationResult: Result of evaluating one check.
+type EvaluationResult struct {
+	// Verdict: The result of evaluating this check.
+	//
+	// Possible values:
+	//   "CHECK_VERDICT_UNSPECIFIED" - Not specified. This should never be
+	// used.
+	//   "CONFORMANT" - The check was successfully evaluated and the image
+	// satisfied the check.
+	//   "NON_CONFORMANT" - The check was successfully evaluated and the
+	// image did not satisfy the check.
+	//   "ERROR" - The check was not successfully evaluated.
+	Verdict string `json:"verdict,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Verdict") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Verdict") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *EvaluationResult) MarshalJSON() ([]byte, error) {
+	type NoMethod EvaluationResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Expr: Represents a textual expression in the Common Expression
@@ -1040,6 +1369,59 @@ func (s *ImageFreshnessCheck) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ImageResult: Result of evaluating one image.
+type ImageResult struct {
+	// AllowlistResult: If the image was exempted by a top-level
+	// allow_pattern, contains the allowlist pattern that the image name
+	// matched.
+	AllowlistResult *AllowlistResult `json:"allowlistResult,omitempty"`
+
+	// CheckSetResult: If a check set was evaluated, contains the result of
+	// the check set. Empty if there were no check sets.
+	CheckSetResult *CheckSetResult `json:"checkSetResult,omitempty"`
+
+	// Explanation: Explanation of this image result. Only populated if no
+	// check sets were evaluated.
+	Explanation string `json:"explanation,omitempty"`
+
+	// ImageUri: Image URI from the request.
+	ImageUri string `json:"imageUri,omitempty"`
+
+	// Verdict: The result of evaluating this image.
+	//
+	// Possible values:
+	//   "IMAGE_VERDICT_UNSPECIFIED" - Not specified. This should never be
+	// used.
+	//   "CONFORMANT" - Image conforms to the policy.
+	//   "NON_CONFORMANT" - Image does not conform to the policy.
+	//   "ERROR" - Error evaluating the image. Non-conformance has
+	// precedence over errors.
+	Verdict string `json:"verdict,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AllowlistResult") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowlistResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImageResult) MarshalJSON() ([]byte, error) {
+	type NoMethod ImageResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Jwt struct {
 	// CompactJwt: The compact encoding of a JWS, which is always three
 	// base64 encoded strings joined by periods. For details, see:
@@ -1315,6 +1697,56 @@ func (s *PlatformPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PodResult: Result of evaluating the whole GKE policy for one Pod.
+type PodResult struct {
+	// ImageResults: Per-image details.
+	ImageResults []*ImageResult `json:"imageResults,omitempty"`
+
+	// KubernetesNamespace: The Kubernetes namespace of the Pod.
+	KubernetesNamespace string `json:"kubernetesNamespace,omitempty"`
+
+	// KubernetesServiceAccount: The Kubernetes service account of the Pod.
+	KubernetesServiceAccount string `json:"kubernetesServiceAccount,omitempty"`
+
+	// PodName: The name of the Pod.
+	PodName string `json:"podName,omitempty"`
+
+	// Verdict: The result of evaluating this Pod.
+	//
+	// Possible values:
+	//   "POD_VERDICT_UNSPECIFIED" - Not specified. This should never be
+	// used.
+	//   "CONFORMANT" - All images conform to the policy.
+	//   "NON_CONFORMANT" - At least one image does not conform to the
+	// policy.
+	//   "ERROR" - Encountered at least one error evaluating an image and
+	// all other images with non-error verdicts conform to the policy.
+	// Non-conformance has precedence over errors.
+	Verdict string `json:"verdict,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ImageResults") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImageResults") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PodResult) MarshalJSON() ([]byte, error) {
+	type NoMethod PodResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Policy: A policy for container image binary authorization.
 type Policy struct {
 	// AdmissionWhitelistPatterns: Optional. Admission policy allowlisting.
@@ -1544,6 +1976,135 @@ func (s *Signature) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SigstoreAuthority: A Sigstore authority, used to verify signatures
+// that are created by Sigstore. An authority is analogous to an
+// attestation authenticator, verifying that a signature is valid or
+// invalid.
+type SigstoreAuthority struct {
+	// DisplayName: Optional. A user-provided name for this
+	// `SigstoreAuthority`. This field has no effect on the policy
+	// evaluation behavior except to improve readability of messages in
+	// evaluation results.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// PublicKeySet: Required. A simple set of public keys. A signature is
+	// considered valid if any keys in the set validate the signature.
+	PublicKeySet *SigstorePublicKeySet `json:"publicKeySet,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SigstoreAuthority) MarshalJSON() ([]byte, error) {
+	type NoMethod SigstoreAuthority
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SigstorePublicKey: A Sigstore public key. `SigstorePublicKey` is the
+// public key material used to authenticate Sigstore signatures.
+type SigstorePublicKey struct {
+	// PublicKeyPem: The public key material in PEM format.
+	PublicKeyPem string `json:"publicKeyPem,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublicKeyPem") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublicKeyPem") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SigstorePublicKey) MarshalJSON() ([]byte, error) {
+	type NoMethod SigstorePublicKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SigstorePublicKeySet: A bundle of Sigstore public keys, used to
+// verify Sigstore signatures. A signature is authenticated by a
+// `SigstorePublicKeySet` if any of the keys verify it.
+type SigstorePublicKeySet struct {
+	// PublicKeys: Required. `public_keys` must have at least one entry.
+	PublicKeys []*SigstorePublicKey `json:"publicKeys,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PublicKeys") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PublicKeys") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SigstorePublicKeySet) MarshalJSON() ([]byte, error) {
+	type NoMethod SigstorePublicKeySet
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SigstoreSignatureCheck: A Sigstore signature check, which verifies
+// the Sigstore signature associated with an image.
+type SigstoreSignatureCheck struct {
+	// SigstoreAuthorities: Required. The authorities required by this check
+	// to verify the signature. A signature only needs to be verified by one
+	// authority to pass the check.
+	SigstoreAuthorities []*SigstoreAuthority `json:"sigstoreAuthorities,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SigstoreAuthorities")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SigstoreAuthorities") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SigstoreSignatureCheck) MarshalJSON() ([]byte, error) {
+	type NoMethod SigstoreSignatureCheck
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SimpleSigningAttestationCheck: Require a signed DSSE
 // (https://github.com/secure-systems-lab/dsse) attestation with type
 // SimpleSigning.
@@ -1558,13 +2119,16 @@ type SimpleSigningAttestationCheck struct {
 	AttestationAuthenticators []*AttestationAuthenticator `json:"attestationAuthenticators,omitempty"`
 
 	// ContainerAnalysisAttestationProjects: Optional. The projects where
-	// attestations are stored as Container Analysis Occurrences. Only one
-	// attestation needs to successfully verify an image for this check to
-	// pass, so a single verified attestation found in any of
+	// attestations are stored as Container Analysis Occurrences, in the
+	// format `projects/[PROJECT_ID]`. Only one attestation needs to
+	// successfully verify an image for this check to pass, so a single
+	// verified attestation found in any of
 	// `container_analysis_attestation_projects` is sufficient for the check
 	// to pass. When fetching Occurrences from Container Analysis, only
-	// 'AttestationOccurrence' kinds are considered. In the future,
-	// additional Occurrence kinds may be added to the query.
+	// `AttestationOccurrence` kinds are considered. In the future,
+	// additional Occurrence kinds may be added to the query. Maximum number
+	// of `container_analysis_attestation_projects` allowed in each
+	// `SimpleSigningAttestationCheck` is 10.
 	ContainerAnalysisAttestationProjects []string `json:"containerAnalysisAttestationProjects,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1980,7 +2544,9 @@ type VulnerabilityCheck struct {
 	// will be made for each project to fetch vulnerabilities, and all valid
 	// vulnerabilities will be used to check against the vulnerability
 	// policy. If no valid scan is found in all projects configured here, an
-	// error will be returned for the check.
+	// error will be returned for the check. Maximum number of
+	// `container_analysis_vulnerability_projects` allowed in each
+	// `VulnerabilityCheck` is 10.
 	ContainerAnalysisVulnerabilityProjects []string `json:"containerAnalysisVulnerabilityProjects,omitempty"`
 
 	// MaximumFixableSeverity: Required. The threshold for severity for
@@ -3726,6 +4292,152 @@ func (c *ProjectsAttestorsValidateAttestationOccurrenceCall) Do(opts ...googleap
 	//   },
 	//   "response": {
 	//     "$ref": "ValidateAttestationOccurrenceResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "binaryauthorization.projects.platforms.gke.policies.evaluate":
+
+type ProjectsPlatformsGkePoliciesEvaluateCall struct {
+	s                        *Service
+	name                     string
+	evaluategkepolicyrequest *EvaluateGkePolicyRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// Evaluate: Evaluates a Kubernetes object versus a GKE platform policy.
+// Returns `NOT_FOUND` if the policy doesn't exist, `INVALID_ARGUMENT`
+// if the policy or request is malformed and `PERMISSION_DENIED` if the
+// client does not have sufficient permissions.
+//
+//   - name: The name of the platform policy to evaluate in the format
+//     `projects/*/platforms/*/policies/*`.
+func (r *ProjectsPlatformsGkePoliciesService) Evaluate(name string, evaluategkepolicyrequest *EvaluateGkePolicyRequest) *ProjectsPlatformsGkePoliciesEvaluateCall {
+	c := &ProjectsPlatformsGkePoliciesEvaluateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.evaluategkepolicyrequest = evaluategkepolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsPlatformsGkePoliciesEvaluateCall) Fields(s ...googleapi.Field) *ProjectsPlatformsGkePoliciesEvaluateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsPlatformsGkePoliciesEvaluateCall) Context(ctx context.Context) *ProjectsPlatformsGkePoliciesEvaluateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsPlatformsGkePoliciesEvaluateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsPlatformsGkePoliciesEvaluateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.evaluategkepolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:evaluate")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "binaryauthorization.projects.platforms.gke.policies.evaluate" call.
+// Exactly one of *EvaluateGkePolicyResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *EvaluateGkePolicyResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsPlatformsGkePoliciesEvaluateCall) Do(opts ...googleapi.CallOption) (*EvaluateGkePolicyResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &EvaluateGkePolicyResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Evaluates a Kubernetes object versus a GKE platform policy. Returns `NOT_FOUND` if the policy doesn't exist, `INVALID_ARGUMENT` if the policy or request is malformed and `PERMISSION_DENIED` if the client does not have sufficient permissions.",
+	//   "flatPath": "v1/projects/{projectsId}/platforms/gke/policies/{policiesId}:evaluate",
+	//   "httpMethod": "POST",
+	//   "id": "binaryauthorization.projects.platforms.gke.policies.evaluate",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the platform policy to evaluate in the format `projects/*/platforms/*/policies/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/platforms/gke/policies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:evaluate",
+	//   "request": {
+	//     "$ref": "EvaluateGkePolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "EvaluateGkePolicyResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

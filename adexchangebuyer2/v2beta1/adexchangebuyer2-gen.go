@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "adexchangebuyer2:v2beta1"
 const apiName = "adexchangebuyer2"
 const apiVersion = "v2beta1"
 const basePath = "https://adexchangebuyer.googleapis.com/"
+const basePathTemplate = "https://adexchangebuyer.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://adexchangebuyer.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -106,7 +108,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -133,6 +137,7 @@ func New(client *http.Client) (*Service, error) {
 	s := &Service{client: client, BasePath: basePath}
 	s.Accounts = NewAccountsService(s)
 	s.Bidders = NewBiddersService(s)
+	s.Buyers = NewBuyersService(s)
 	return s, nil
 }
 
@@ -144,6 +149,8 @@ type Service struct {
 	Accounts *AccountsService
 
 	Bidders *BiddersService
+
+	Buyers *BuyersService
 }
 
 func (s *Service) userAgent() string {
@@ -552,6 +559,147 @@ func NewBiddersFilterSetsNonBillableWinningBidsService(s *Service) *BiddersFilte
 }
 
 type BiddersFilterSetsNonBillableWinningBidsService struct {
+	s *Service
+}
+
+func NewBuyersService(s *Service) *BuyersService {
+	rs := &BuyersService{s: s}
+	rs.FilterSets = NewBuyersFilterSetsService(s)
+	return rs
+}
+
+type BuyersService struct {
+	s *Service
+
+	FilterSets *BuyersFilterSetsService
+}
+
+func NewBuyersFilterSetsService(s *Service) *BuyersFilterSetsService {
+	rs := &BuyersFilterSetsService{s: s}
+	rs.BidMetrics = NewBuyersFilterSetsBidMetricsService(s)
+	rs.BidResponseErrors = NewBuyersFilterSetsBidResponseErrorsService(s)
+	rs.BidResponsesWithoutBids = NewBuyersFilterSetsBidResponsesWithoutBidsService(s)
+	rs.FilteredBidRequests = NewBuyersFilterSetsFilteredBidRequestsService(s)
+	rs.FilteredBids = NewBuyersFilterSetsFilteredBidsService(s)
+	rs.ImpressionMetrics = NewBuyersFilterSetsImpressionMetricsService(s)
+	rs.LosingBids = NewBuyersFilterSetsLosingBidsService(s)
+	rs.NonBillableWinningBids = NewBuyersFilterSetsNonBillableWinningBidsService(s)
+	return rs
+}
+
+type BuyersFilterSetsService struct {
+	s *Service
+
+	BidMetrics *BuyersFilterSetsBidMetricsService
+
+	BidResponseErrors *BuyersFilterSetsBidResponseErrorsService
+
+	BidResponsesWithoutBids *BuyersFilterSetsBidResponsesWithoutBidsService
+
+	FilteredBidRequests *BuyersFilterSetsFilteredBidRequestsService
+
+	FilteredBids *BuyersFilterSetsFilteredBidsService
+
+	ImpressionMetrics *BuyersFilterSetsImpressionMetricsService
+
+	LosingBids *BuyersFilterSetsLosingBidsService
+
+	NonBillableWinningBids *BuyersFilterSetsNonBillableWinningBidsService
+}
+
+func NewBuyersFilterSetsBidMetricsService(s *Service) *BuyersFilterSetsBidMetricsService {
+	rs := &BuyersFilterSetsBidMetricsService{s: s}
+	return rs
+}
+
+type BuyersFilterSetsBidMetricsService struct {
+	s *Service
+}
+
+func NewBuyersFilterSetsBidResponseErrorsService(s *Service) *BuyersFilterSetsBidResponseErrorsService {
+	rs := &BuyersFilterSetsBidResponseErrorsService{s: s}
+	return rs
+}
+
+type BuyersFilterSetsBidResponseErrorsService struct {
+	s *Service
+}
+
+func NewBuyersFilterSetsBidResponsesWithoutBidsService(s *Service) *BuyersFilterSetsBidResponsesWithoutBidsService {
+	rs := &BuyersFilterSetsBidResponsesWithoutBidsService{s: s}
+	return rs
+}
+
+type BuyersFilterSetsBidResponsesWithoutBidsService struct {
+	s *Service
+}
+
+func NewBuyersFilterSetsFilteredBidRequestsService(s *Service) *BuyersFilterSetsFilteredBidRequestsService {
+	rs := &BuyersFilterSetsFilteredBidRequestsService{s: s}
+	return rs
+}
+
+type BuyersFilterSetsFilteredBidRequestsService struct {
+	s *Service
+}
+
+func NewBuyersFilterSetsFilteredBidsService(s *Service) *BuyersFilterSetsFilteredBidsService {
+	rs := &BuyersFilterSetsFilteredBidsService{s: s}
+	rs.Creatives = NewBuyersFilterSetsFilteredBidsCreativesService(s)
+	rs.Details = NewBuyersFilterSetsFilteredBidsDetailsService(s)
+	return rs
+}
+
+type BuyersFilterSetsFilteredBidsService struct {
+	s *Service
+
+	Creatives *BuyersFilterSetsFilteredBidsCreativesService
+
+	Details *BuyersFilterSetsFilteredBidsDetailsService
+}
+
+func NewBuyersFilterSetsFilteredBidsCreativesService(s *Service) *BuyersFilterSetsFilteredBidsCreativesService {
+	rs := &BuyersFilterSetsFilteredBidsCreativesService{s: s}
+	return rs
+}
+
+type BuyersFilterSetsFilteredBidsCreativesService struct {
+	s *Service
+}
+
+func NewBuyersFilterSetsFilteredBidsDetailsService(s *Service) *BuyersFilterSetsFilteredBidsDetailsService {
+	rs := &BuyersFilterSetsFilteredBidsDetailsService{s: s}
+	return rs
+}
+
+type BuyersFilterSetsFilteredBidsDetailsService struct {
+	s *Service
+}
+
+func NewBuyersFilterSetsImpressionMetricsService(s *Service) *BuyersFilterSetsImpressionMetricsService {
+	rs := &BuyersFilterSetsImpressionMetricsService{s: s}
+	return rs
+}
+
+type BuyersFilterSetsImpressionMetricsService struct {
+	s *Service
+}
+
+func NewBuyersFilterSetsLosingBidsService(s *Service) *BuyersFilterSetsLosingBidsService {
+	rs := &BuyersFilterSetsLosingBidsService{s: s}
+	return rs
+}
+
+type BuyersFilterSetsLosingBidsService struct {
+	s *Service
+}
+
+func NewBuyersFilterSetsNonBillableWinningBidsService(s *Service) *BuyersFilterSetsNonBillableWinningBidsService {
+	rs := &BuyersFilterSetsNonBillableWinningBidsService{s: s}
+	return rs
+}
+
+type BuyersFilterSetsNonBillableWinningBidsService struct {
 	s *Service
 }
 
@@ -17445,6 +17593,2724 @@ func (c *BiddersFilterSetsNonBillableWinningBidsListCall) Do(opts ...googleapi.C
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *BiddersFilterSetsNonBillableWinningBidsListCall) Pages(ctx context.Context, f func(*ListNonBillableWinningBidsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "adexchangebuyer2.buyers.filterSets.create":
+
+type BuyersFilterSetsCreateCall struct {
+	s          *Service
+	ownerName  string
+	filterset  *FilterSet
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Create: Creates the specified filter set for the account with the
+// given account ID.
+//
+//   - ownerName: Name of the owner (bidder or account) of the filter set
+//     to be created. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123` - For an account-level filter set for the
+//     buyer account representing bidder 123: `bidders/123/accounts/123` -
+//     For an account-level filter set for the child seat buyer account
+//     456 whose bidder is 123: `bidders/123/accounts/456`.
+func (r *BuyersFilterSetsService) Create(ownerName string, filterset *FilterSet) *BuyersFilterSetsCreateCall {
+	c := &BuyersFilterSetsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.ownerName = ownerName
+	c.filterset = filterset
+	return c
+}
+
+// IsTransient sets the optional parameter "isTransient": Whether the
+// filter set is transient, or should be persisted indefinitely. By
+// default, filter sets are not transient. If transient, it will be
+// available for at least 1 hour after creation.
+func (c *BuyersFilterSetsCreateCall) IsTransient(isTransient bool) *BuyersFilterSetsCreateCall {
+	c.urlParams_.Set("isTransient", fmt.Sprint(isTransient))
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersFilterSetsCreateCall) Fields(s ...googleapi.Field) *BuyersFilterSetsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersFilterSetsCreateCall) Context(ctx context.Context) *BuyersFilterSetsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersFilterSetsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersFilterSetsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.filterset)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+ownerName}/filterSets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"ownerName": c.ownerName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.buyers.filterSets.create" call.
+// Exactly one of *FilterSet or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *FilterSet.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *BuyersFilterSetsCreateCall) Do(opts ...googleapi.CallOption) (*FilterSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FilterSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates the specified filter set for the account with the given account ID.",
+	//   "flatPath": "v2beta1/buyers/{buyersId}/filterSets",
+	//   "httpMethod": "POST",
+	//   "id": "adexchangebuyer2.buyers.filterSets.create",
+	//   "parameterOrder": [
+	//     "ownerName"
+	//   ],
+	//   "parameters": {
+	//     "isTransient": {
+	//       "description": "Whether the filter set is transient, or should be persisted indefinitely. By default, filter sets are not transient. If transient, it will be available for at least 1 hour after creation.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "ownerName": {
+	//       "description": "Name of the owner (bidder or account) of the filter set to be created. For example: - For a bidder-level filter set for bidder 123: `bidders/123` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456`",
+	//       "location": "path",
+	//       "pattern": "^buyers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+ownerName}/filterSets",
+	//   "request": {
+	//     "$ref": "FilterSet"
+	//   },
+	//   "response": {
+	//     "$ref": "FilterSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer2.buyers.filterSets.delete":
+
+type BuyersFilterSetsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes the requested filter set from the account with the
+// given account ID.
+//
+//   - name: Full name of the resource to delete. For example: - For a
+//     bidder-level filter set for bidder 123:
+//     `bidders/123/filterSets/abc` - For an account-level filter set for
+//     the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
+func (r *BuyersFilterSetsService) Delete(name string) *BuyersFilterSetsDeleteCall {
+	c := &BuyersFilterSetsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersFilterSetsDeleteCall) Fields(s ...googleapi.Field) *BuyersFilterSetsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersFilterSetsDeleteCall) Context(ctx context.Context) *BuyersFilterSetsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersFilterSetsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersFilterSetsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.buyers.filterSets.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *BuyersFilterSetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes the requested filter set from the account with the given account ID.",
+	//   "flatPath": "v2beta1/buyers/{buyersId}/filterSets/{filterSetsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "adexchangebuyer2.buyers.filterSets.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Full name of the resource to delete. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "location": "path",
+	//       "pattern": "^buyers/[^/]+/filterSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer2.buyers.filterSets.get":
+
+type BuyersFilterSetsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieves the requested filter set for the account with the
+// given account ID.
+//
+//   - name: Full name of the resource being requested. For example: - For
+//     a bidder-level filter set for bidder 123:
+//     `bidders/123/filterSets/abc` - For an account-level filter set for
+//     the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
+func (r *BuyersFilterSetsService) Get(name string) *BuyersFilterSetsGetCall {
+	c := &BuyersFilterSetsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersFilterSetsGetCall) Fields(s ...googleapi.Field) *BuyersFilterSetsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BuyersFilterSetsGetCall) IfNoneMatch(entityTag string) *BuyersFilterSetsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersFilterSetsGetCall) Context(ctx context.Context) *BuyersFilterSetsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersFilterSetsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersFilterSetsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.buyers.filterSets.get" call.
+// Exactly one of *FilterSet or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *FilterSet.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *BuyersFilterSetsGetCall) Do(opts ...googleapi.CallOption) (*FilterSet, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &FilterSet{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieves the requested filter set for the account with the given account ID.",
+	//   "flatPath": "v2beta1/buyers/{buyersId}/filterSets/{filterSetsId}",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer2.buyers.filterSets.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Full name of the resource being requested. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "location": "path",
+	//       "pattern": "^buyers/[^/]+/filterSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+name}",
+	//   "response": {
+	//     "$ref": "FilterSet"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// method id "adexchangebuyer2.buyers.filterSets.list":
+
+type BuyersFilterSetsListCall struct {
+	s            *Service
+	ownerName    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all filter sets for the account with the given account
+// ID.
+//
+//   - ownerName: Name of the owner (bidder or account) of the filter sets
+//     to be listed. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123` - For an account-level filter set for the
+//     buyer account representing bidder 123: `bidders/123/accounts/123` -
+//     For an account-level filter set for the child seat buyer account
+//     456 whose bidder is 123: `bidders/123/accounts/456`.
+func (r *BuyersFilterSetsService) List(ownerName string) *BuyersFilterSetsListCall {
+	c := &BuyersFilterSetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.ownerName = ownerName
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
+func (c *BuyersFilterSetsListCall) PageSize(pageSize int64) *BuyersFilterSetsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of ListFilterSetsResponse.nextPageToken returned
+// from the previous call to the accounts.filterSets.list method.
+func (c *BuyersFilterSetsListCall) PageToken(pageToken string) *BuyersFilterSetsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersFilterSetsListCall) Fields(s ...googleapi.Field) *BuyersFilterSetsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BuyersFilterSetsListCall) IfNoneMatch(entityTag string) *BuyersFilterSetsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersFilterSetsListCall) Context(ctx context.Context) *BuyersFilterSetsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersFilterSetsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersFilterSetsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+ownerName}/filterSets")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"ownerName": c.ownerName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.buyers.filterSets.list" call.
+// Exactly one of *ListFilterSetsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListFilterSetsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BuyersFilterSetsListCall) Do(opts ...googleapi.CallOption) (*ListFilterSetsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListFilterSetsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all filter sets for the account with the given account ID.",
+	//   "flatPath": "v2beta1/buyers/{buyersId}/filterSets",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer2.buyers.filterSets.list",
+	//   "parameterOrder": [
+	//     "ownerName"
+	//   ],
+	//   "parameters": {
+	//     "ownerName": {
+	//       "description": "Name of the owner (bidder or account) of the filter sets to be listed. For example: - For a bidder-level filter set for bidder 123: `bidders/123` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456`",
+	//       "location": "path",
+	//       "pattern": "^buyers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListFilterSetsResponse.nextPageToken returned from the previous call to the accounts.filterSets.list method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+ownerName}/filterSets",
+	//   "response": {
+	//     "$ref": "ListFilterSetsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BuyersFilterSetsListCall) Pages(ctx context.Context, f func(*ListFilterSetsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "adexchangebuyer2.buyers.filterSets.bidMetrics.list":
+
+type BuyersFilterSetsBidMetricsListCall struct {
+	s             *Service
+	filterSetName string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// List: Lists all metrics that are measured in terms of number of bids.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
+func (r *BuyersFilterSetsBidMetricsService) List(filterSetName string) *BuyersFilterSetsBidMetricsListCall {
+	c := &BuyersFilterSetsBidMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.filterSetName = filterSetName
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
+func (c *BuyersFilterSetsBidMetricsListCall) PageSize(pageSize int64) *BuyersFilterSetsBidMetricsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of ListBidMetricsResponse.nextPageToken returned
+// from the previous call to the bidMetrics.list method.
+func (c *BuyersFilterSetsBidMetricsListCall) PageToken(pageToken string) *BuyersFilterSetsBidMetricsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersFilterSetsBidMetricsListCall) Fields(s ...googleapi.Field) *BuyersFilterSetsBidMetricsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BuyersFilterSetsBidMetricsListCall) IfNoneMatch(entityTag string) *BuyersFilterSetsBidMetricsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersFilterSetsBidMetricsListCall) Context(ctx context.Context) *BuyersFilterSetsBidMetricsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersFilterSetsBidMetricsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersFilterSetsBidMetricsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+filterSetName}/bidMetrics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"filterSetName": c.filterSetName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.buyers.filterSets.bidMetrics.list" call.
+// Exactly one of *ListBidMetricsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListBidMetricsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BuyersFilterSetsBidMetricsListCall) Do(opts ...googleapi.CallOption) (*ListBidMetricsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBidMetricsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all metrics that are measured in terms of number of bids.",
+	//   "flatPath": "v2beta1/buyers/{buyersId}/filterSets/{filterSetsId}/bidMetrics",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer2.buyers.filterSets.bidMetrics.list",
+	//   "parameterOrder": [
+	//     "filterSetName"
+	//   ],
+	//   "parameters": {
+	//     "filterSetName": {
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "location": "path",
+	//       "pattern": "^buyers/[^/]+/filterSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListBidMetricsResponse.nextPageToken returned from the previous call to the bidMetrics.list method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+filterSetName}/bidMetrics",
+	//   "response": {
+	//     "$ref": "ListBidMetricsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BuyersFilterSetsBidMetricsListCall) Pages(ctx context.Context, f func(*ListBidMetricsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "adexchangebuyer2.buyers.filterSets.bidResponseErrors.list":
+
+type BuyersFilterSetsBidResponseErrorsListCall struct {
+	s             *Service
+	filterSetName string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// List: List all errors that occurred in bid responses, with the number
+// of bid responses affected for each reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
+func (r *BuyersFilterSetsBidResponseErrorsService) List(filterSetName string) *BuyersFilterSetsBidResponseErrorsListCall {
+	c := &BuyersFilterSetsBidResponseErrorsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.filterSetName = filterSetName
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
+func (c *BuyersFilterSetsBidResponseErrorsListCall) PageSize(pageSize int64) *BuyersFilterSetsBidResponseErrorsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of ListBidResponseErrorsResponse.nextPageToken
+// returned from the previous call to the bidResponseErrors.list method.
+func (c *BuyersFilterSetsBidResponseErrorsListCall) PageToken(pageToken string) *BuyersFilterSetsBidResponseErrorsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersFilterSetsBidResponseErrorsListCall) Fields(s ...googleapi.Field) *BuyersFilterSetsBidResponseErrorsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BuyersFilterSetsBidResponseErrorsListCall) IfNoneMatch(entityTag string) *BuyersFilterSetsBidResponseErrorsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersFilterSetsBidResponseErrorsListCall) Context(ctx context.Context) *BuyersFilterSetsBidResponseErrorsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersFilterSetsBidResponseErrorsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersFilterSetsBidResponseErrorsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+filterSetName}/bidResponseErrors")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"filterSetName": c.filterSetName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.buyers.filterSets.bidResponseErrors.list" call.
+// Exactly one of *ListBidResponseErrorsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListBidResponseErrorsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BuyersFilterSetsBidResponseErrorsListCall) Do(opts ...googleapi.CallOption) (*ListBidResponseErrorsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBidResponseErrorsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all errors that occurred in bid responses, with the number of bid responses affected for each reason.",
+	//   "flatPath": "v2beta1/buyers/{buyersId}/filterSets/{filterSetsId}/bidResponseErrors",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer2.buyers.filterSets.bidResponseErrors.list",
+	//   "parameterOrder": [
+	//     "filterSetName"
+	//   ],
+	//   "parameters": {
+	//     "filterSetName": {
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "location": "path",
+	//       "pattern": "^buyers/[^/]+/filterSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListBidResponseErrorsResponse.nextPageToken returned from the previous call to the bidResponseErrors.list method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+filterSetName}/bidResponseErrors",
+	//   "response": {
+	//     "$ref": "ListBidResponseErrorsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BuyersFilterSetsBidResponseErrorsListCall) Pages(ctx context.Context, f func(*ListBidResponseErrorsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "adexchangebuyer2.buyers.filterSets.bidResponsesWithoutBids.list":
+
+type BuyersFilterSetsBidResponsesWithoutBidsListCall struct {
+	s             *Service
+	filterSetName string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// List: List all reasons for which bid responses were considered to
+// have no applicable bids, with the number of bid responses affected
+// for each reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
+func (r *BuyersFilterSetsBidResponsesWithoutBidsService) List(filterSetName string) *BuyersFilterSetsBidResponsesWithoutBidsListCall {
+	c := &BuyersFilterSetsBidResponsesWithoutBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.filterSetName = filterSetName
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
+func (c *BuyersFilterSetsBidResponsesWithoutBidsListCall) PageSize(pageSize int64) *BuyersFilterSetsBidResponsesWithoutBidsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of
+// ListBidResponsesWithoutBidsResponse.nextPageToken returned from the
+// previous call to the bidResponsesWithoutBids.list method.
+func (c *BuyersFilterSetsBidResponsesWithoutBidsListCall) PageToken(pageToken string) *BuyersFilterSetsBidResponsesWithoutBidsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersFilterSetsBidResponsesWithoutBidsListCall) Fields(s ...googleapi.Field) *BuyersFilterSetsBidResponsesWithoutBidsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BuyersFilterSetsBidResponsesWithoutBidsListCall) IfNoneMatch(entityTag string) *BuyersFilterSetsBidResponsesWithoutBidsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersFilterSetsBidResponsesWithoutBidsListCall) Context(ctx context.Context) *BuyersFilterSetsBidResponsesWithoutBidsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersFilterSetsBidResponsesWithoutBidsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersFilterSetsBidResponsesWithoutBidsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+filterSetName}/bidResponsesWithoutBids")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"filterSetName": c.filterSetName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.buyers.filterSets.bidResponsesWithoutBids.list" call.
+// Exactly one of *ListBidResponsesWithoutBidsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListBidResponsesWithoutBidsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *BuyersFilterSetsBidResponsesWithoutBidsListCall) Do(opts ...googleapi.CallOption) (*ListBidResponsesWithoutBidsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBidResponsesWithoutBidsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all reasons for which bid responses were considered to have no applicable bids, with the number of bid responses affected for each reason.",
+	//   "flatPath": "v2beta1/buyers/{buyersId}/filterSets/{filterSetsId}/bidResponsesWithoutBids",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer2.buyers.filterSets.bidResponsesWithoutBids.list",
+	//   "parameterOrder": [
+	//     "filterSetName"
+	//   ],
+	//   "parameters": {
+	//     "filterSetName": {
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "location": "path",
+	//       "pattern": "^buyers/[^/]+/filterSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListBidResponsesWithoutBidsResponse.nextPageToken returned from the previous call to the bidResponsesWithoutBids.list method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+filterSetName}/bidResponsesWithoutBids",
+	//   "response": {
+	//     "$ref": "ListBidResponsesWithoutBidsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BuyersFilterSetsBidResponsesWithoutBidsListCall) Pages(ctx context.Context, f func(*ListBidResponsesWithoutBidsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "adexchangebuyer2.buyers.filterSets.filteredBidRequests.list":
+
+type BuyersFilterSetsFilteredBidRequestsListCall struct {
+	s             *Service
+	filterSetName string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// List: List all reasons that caused a bid request not to be sent for
+// an impression, with the number of bid requests not sent for each
+// reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
+func (r *BuyersFilterSetsFilteredBidRequestsService) List(filterSetName string) *BuyersFilterSetsFilteredBidRequestsListCall {
+	c := &BuyersFilterSetsFilteredBidRequestsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.filterSetName = filterSetName
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
+func (c *BuyersFilterSetsFilteredBidRequestsListCall) PageSize(pageSize int64) *BuyersFilterSetsFilteredBidRequestsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of ListFilteredBidRequestsResponse.nextPageToken
+// returned from the previous call to the filteredBidRequests.list
+// method.
+func (c *BuyersFilterSetsFilteredBidRequestsListCall) PageToken(pageToken string) *BuyersFilterSetsFilteredBidRequestsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersFilterSetsFilteredBidRequestsListCall) Fields(s ...googleapi.Field) *BuyersFilterSetsFilteredBidRequestsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BuyersFilterSetsFilteredBidRequestsListCall) IfNoneMatch(entityTag string) *BuyersFilterSetsFilteredBidRequestsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersFilterSetsFilteredBidRequestsListCall) Context(ctx context.Context) *BuyersFilterSetsFilteredBidRequestsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersFilterSetsFilteredBidRequestsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersFilterSetsFilteredBidRequestsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+filterSetName}/filteredBidRequests")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"filterSetName": c.filterSetName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.buyers.filterSets.filteredBidRequests.list" call.
+// Exactly one of *ListFilteredBidRequestsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListFilteredBidRequestsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BuyersFilterSetsFilteredBidRequestsListCall) Do(opts ...googleapi.CallOption) (*ListFilteredBidRequestsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListFilteredBidRequestsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all reasons that caused a bid request not to be sent for an impression, with the number of bid requests not sent for each reason.",
+	//   "flatPath": "v2beta1/buyers/{buyersId}/filterSets/{filterSetsId}/filteredBidRequests",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer2.buyers.filterSets.filteredBidRequests.list",
+	//   "parameterOrder": [
+	//     "filterSetName"
+	//   ],
+	//   "parameters": {
+	//     "filterSetName": {
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "location": "path",
+	//       "pattern": "^buyers/[^/]+/filterSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListFilteredBidRequestsResponse.nextPageToken returned from the previous call to the filteredBidRequests.list method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+filterSetName}/filteredBidRequests",
+	//   "response": {
+	//     "$ref": "ListFilteredBidRequestsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BuyersFilterSetsFilteredBidRequestsListCall) Pages(ctx context.Context, f func(*ListFilteredBidRequestsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "adexchangebuyer2.buyers.filterSets.filteredBids.list":
+
+type BuyersFilterSetsFilteredBidsListCall struct {
+	s             *Service
+	filterSetName string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// List: List all reasons for which bids were filtered, with the number
+// of bids filtered for each reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
+func (r *BuyersFilterSetsFilteredBidsService) List(filterSetName string) *BuyersFilterSetsFilteredBidsListCall {
+	c := &BuyersFilterSetsFilteredBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.filterSetName = filterSetName
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
+func (c *BuyersFilterSetsFilteredBidsListCall) PageSize(pageSize int64) *BuyersFilterSetsFilteredBidsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of ListFilteredBidsResponse.nextPageToken returned
+// from the previous call to the filteredBids.list method.
+func (c *BuyersFilterSetsFilteredBidsListCall) PageToken(pageToken string) *BuyersFilterSetsFilteredBidsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersFilterSetsFilteredBidsListCall) Fields(s ...googleapi.Field) *BuyersFilterSetsFilteredBidsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BuyersFilterSetsFilteredBidsListCall) IfNoneMatch(entityTag string) *BuyersFilterSetsFilteredBidsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersFilterSetsFilteredBidsListCall) Context(ctx context.Context) *BuyersFilterSetsFilteredBidsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersFilterSetsFilteredBidsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersFilterSetsFilteredBidsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+filterSetName}/filteredBids")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"filterSetName": c.filterSetName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.buyers.filterSets.filteredBids.list" call.
+// Exactly one of *ListFilteredBidsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListFilteredBidsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BuyersFilterSetsFilteredBidsListCall) Do(opts ...googleapi.CallOption) (*ListFilteredBidsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListFilteredBidsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all reasons for which bids were filtered, with the number of bids filtered for each reason.",
+	//   "flatPath": "v2beta1/buyers/{buyersId}/filterSets/{filterSetsId}/filteredBids",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer2.buyers.filterSets.filteredBids.list",
+	//   "parameterOrder": [
+	//     "filterSetName"
+	//   ],
+	//   "parameters": {
+	//     "filterSetName": {
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "location": "path",
+	//       "pattern": "^buyers/[^/]+/filterSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListFilteredBidsResponse.nextPageToken returned from the previous call to the filteredBids.list method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+filterSetName}/filteredBids",
+	//   "response": {
+	//     "$ref": "ListFilteredBidsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BuyersFilterSetsFilteredBidsListCall) Pages(ctx context.Context, f func(*ListFilteredBidsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "adexchangebuyer2.buyers.filterSets.filteredBids.creatives.list":
+
+type BuyersFilterSetsFilteredBidsCreativesListCall struct {
+	s                *Service
+	filterSetName    string
+	creativeStatusId int64
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// List: List all creatives associated with a specific reason for which
+// bids were filtered, with the number of bids filtered for each
+// creative.
+//
+//   - creativeStatusId: The ID of the creative status for which to
+//     retrieve a breakdown by creative. See creative-status-codes
+//     (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
+func (r *BuyersFilterSetsFilteredBidsCreativesService) List(filterSetName string, creativeStatusId int64) *BuyersFilterSetsFilteredBidsCreativesListCall {
+	c := &BuyersFilterSetsFilteredBidsCreativesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.filterSetName = filterSetName
+	c.creativeStatusId = creativeStatusId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
+func (c *BuyersFilterSetsFilteredBidsCreativesListCall) PageSize(pageSize int64) *BuyersFilterSetsFilteredBidsCreativesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of
+// ListCreativeStatusBreakdownByCreativeResponse.nextPageToken returned
+// from the previous call to the filteredBids.creatives.list method.
+func (c *BuyersFilterSetsFilteredBidsCreativesListCall) PageToken(pageToken string) *BuyersFilterSetsFilteredBidsCreativesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersFilterSetsFilteredBidsCreativesListCall) Fields(s ...googleapi.Field) *BuyersFilterSetsFilteredBidsCreativesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BuyersFilterSetsFilteredBidsCreativesListCall) IfNoneMatch(entityTag string) *BuyersFilterSetsFilteredBidsCreativesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersFilterSetsFilteredBidsCreativesListCall) Context(ctx context.Context) *BuyersFilterSetsFilteredBidsCreativesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersFilterSetsFilteredBidsCreativesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersFilterSetsFilteredBidsCreativesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+filterSetName}/filteredBids/{creativeStatusId}/creatives")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"filterSetName":    c.filterSetName,
+		"creativeStatusId": strconv.FormatInt(c.creativeStatusId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.buyers.filterSets.filteredBids.creatives.list" call.
+// Exactly one of *ListCreativeStatusBreakdownByCreativeResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListCreativeStatusBreakdownByCreativeResponse.ServerResponse.Header
+// or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *BuyersFilterSetsFilteredBidsCreativesListCall) Do(opts ...googleapi.CallOption) (*ListCreativeStatusBreakdownByCreativeResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListCreativeStatusBreakdownByCreativeResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all creatives associated with a specific reason for which bids were filtered, with the number of bids filtered for each creative.",
+	//   "flatPath": "v2beta1/buyers/{buyersId}/filterSets/{filterSetsId}/filteredBids/{creativeStatusId}/creatives",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer2.buyers.filterSets.filteredBids.creatives.list",
+	//   "parameterOrder": [
+	//     "filterSetName",
+	//     "creativeStatusId"
+	//   ],
+	//   "parameters": {
+	//     "creativeStatusId": {
+	//       "description": "The ID of the creative status for which to retrieve a breakdown by creative. See [creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "filterSetName": {
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "location": "path",
+	//       "pattern": "^buyers/[^/]+/filterSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListCreativeStatusBreakdownByCreativeResponse.nextPageToken returned from the previous call to the filteredBids.creatives.list method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+filterSetName}/filteredBids/{creativeStatusId}/creatives",
+	//   "response": {
+	//     "$ref": "ListCreativeStatusBreakdownByCreativeResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BuyersFilterSetsFilteredBidsCreativesListCall) Pages(ctx context.Context, f func(*ListCreativeStatusBreakdownByCreativeResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "adexchangebuyer2.buyers.filterSets.filteredBids.details.list":
+
+type BuyersFilterSetsFilteredBidsDetailsListCall struct {
+	s                *Service
+	filterSetName    string
+	creativeStatusId int64
+	urlParams_       gensupport.URLParams
+	ifNoneMatch_     string
+	ctx_             context.Context
+	header_          http.Header
+}
+
+// List: List all details associated with a specific reason for which
+// bids were filtered, with the number of bids filtered for each detail.
+//
+//   - creativeStatusId: The ID of the creative status for which to
+//     retrieve a breakdown by detail. See creative-status-codes
+//     (https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes).
+//     Details are only available for statuses 10, 14, 15, 17, 18, 19, 86,
+//     and 87.
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
+func (r *BuyersFilterSetsFilteredBidsDetailsService) List(filterSetName string, creativeStatusId int64) *BuyersFilterSetsFilteredBidsDetailsListCall {
+	c := &BuyersFilterSetsFilteredBidsDetailsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.filterSetName = filterSetName
+	c.creativeStatusId = creativeStatusId
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
+func (c *BuyersFilterSetsFilteredBidsDetailsListCall) PageSize(pageSize int64) *BuyersFilterSetsFilteredBidsDetailsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of
+// ListCreativeStatusBreakdownByDetailResponse.nextPageToken returned
+// from the previous call to the filteredBids.details.list method.
+func (c *BuyersFilterSetsFilteredBidsDetailsListCall) PageToken(pageToken string) *BuyersFilterSetsFilteredBidsDetailsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersFilterSetsFilteredBidsDetailsListCall) Fields(s ...googleapi.Field) *BuyersFilterSetsFilteredBidsDetailsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BuyersFilterSetsFilteredBidsDetailsListCall) IfNoneMatch(entityTag string) *BuyersFilterSetsFilteredBidsDetailsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersFilterSetsFilteredBidsDetailsListCall) Context(ctx context.Context) *BuyersFilterSetsFilteredBidsDetailsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersFilterSetsFilteredBidsDetailsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersFilterSetsFilteredBidsDetailsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+filterSetName}/filteredBids/{creativeStatusId}/details")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"filterSetName":    c.filterSetName,
+		"creativeStatusId": strconv.FormatInt(c.creativeStatusId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.buyers.filterSets.filteredBids.details.list" call.
+// Exactly one of *ListCreativeStatusBreakdownByDetailResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *ListCreativeStatusBreakdownByDetailResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *BuyersFilterSetsFilteredBidsDetailsListCall) Do(opts ...googleapi.CallOption) (*ListCreativeStatusBreakdownByDetailResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListCreativeStatusBreakdownByDetailResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all details associated with a specific reason for which bids were filtered, with the number of bids filtered for each detail.",
+	//   "flatPath": "v2beta1/buyers/{buyersId}/filterSets/{filterSetsId}/filteredBids/{creativeStatusId}/details",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer2.buyers.filterSets.filteredBids.details.list",
+	//   "parameterOrder": [
+	//     "filterSetName",
+	//     "creativeStatusId"
+	//   ],
+	//   "parameters": {
+	//     "creativeStatusId": {
+	//       "description": "The ID of the creative status for which to retrieve a breakdown by detail. See [creative-status-codes](https://developers.google.com/authorized-buyers/rtb/downloads/creative-status-codes). Details are only available for statuses 10, 14, 15, 17, 18, 19, 86, and 87.",
+	//       "format": "int32",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "integer"
+	//     },
+	//     "filterSetName": {
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "location": "path",
+	//       "pattern": "^buyers/[^/]+/filterSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListCreativeStatusBreakdownByDetailResponse.nextPageToken returned from the previous call to the filteredBids.details.list method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+filterSetName}/filteredBids/{creativeStatusId}/details",
+	//   "response": {
+	//     "$ref": "ListCreativeStatusBreakdownByDetailResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BuyersFilterSetsFilteredBidsDetailsListCall) Pages(ctx context.Context, f func(*ListCreativeStatusBreakdownByDetailResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "adexchangebuyer2.buyers.filterSets.impressionMetrics.list":
+
+type BuyersFilterSetsImpressionMetricsListCall struct {
+	s             *Service
+	filterSetName string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// List: Lists all metrics that are measured in terms of number of
+// impressions.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
+func (r *BuyersFilterSetsImpressionMetricsService) List(filterSetName string) *BuyersFilterSetsImpressionMetricsListCall {
+	c := &BuyersFilterSetsImpressionMetricsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.filterSetName = filterSetName
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
+func (c *BuyersFilterSetsImpressionMetricsListCall) PageSize(pageSize int64) *BuyersFilterSetsImpressionMetricsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of ListImpressionMetricsResponse.nextPageToken
+// returned from the previous call to the impressionMetrics.list method.
+func (c *BuyersFilterSetsImpressionMetricsListCall) PageToken(pageToken string) *BuyersFilterSetsImpressionMetricsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersFilterSetsImpressionMetricsListCall) Fields(s ...googleapi.Field) *BuyersFilterSetsImpressionMetricsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BuyersFilterSetsImpressionMetricsListCall) IfNoneMatch(entityTag string) *BuyersFilterSetsImpressionMetricsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersFilterSetsImpressionMetricsListCall) Context(ctx context.Context) *BuyersFilterSetsImpressionMetricsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersFilterSetsImpressionMetricsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersFilterSetsImpressionMetricsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+filterSetName}/impressionMetrics")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"filterSetName": c.filterSetName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.buyers.filterSets.impressionMetrics.list" call.
+// Exactly one of *ListImpressionMetricsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListImpressionMetricsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BuyersFilterSetsImpressionMetricsListCall) Do(opts ...googleapi.CallOption) (*ListImpressionMetricsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListImpressionMetricsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all metrics that are measured in terms of number of impressions.",
+	//   "flatPath": "v2beta1/buyers/{buyersId}/filterSets/{filterSetsId}/impressionMetrics",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer2.buyers.filterSets.impressionMetrics.list",
+	//   "parameterOrder": [
+	//     "filterSetName"
+	//   ],
+	//   "parameters": {
+	//     "filterSetName": {
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "location": "path",
+	//       "pattern": "^buyers/[^/]+/filterSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListImpressionMetricsResponse.nextPageToken returned from the previous call to the impressionMetrics.list method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+filterSetName}/impressionMetrics",
+	//   "response": {
+	//     "$ref": "ListImpressionMetricsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BuyersFilterSetsImpressionMetricsListCall) Pages(ctx context.Context, f func(*ListImpressionMetricsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "adexchangebuyer2.buyers.filterSets.losingBids.list":
+
+type BuyersFilterSetsLosingBidsListCall struct {
+	s             *Service
+	filterSetName string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// List: List all reasons for which bids lost in the auction, with the
+// number of bids that lost for each reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
+func (r *BuyersFilterSetsLosingBidsService) List(filterSetName string) *BuyersFilterSetsLosingBidsListCall {
+	c := &BuyersFilterSetsLosingBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.filterSetName = filterSetName
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
+func (c *BuyersFilterSetsLosingBidsListCall) PageSize(pageSize int64) *BuyersFilterSetsLosingBidsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of ListLosingBidsResponse.nextPageToken returned
+// from the previous call to the losingBids.list method.
+func (c *BuyersFilterSetsLosingBidsListCall) PageToken(pageToken string) *BuyersFilterSetsLosingBidsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersFilterSetsLosingBidsListCall) Fields(s ...googleapi.Field) *BuyersFilterSetsLosingBidsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BuyersFilterSetsLosingBidsListCall) IfNoneMatch(entityTag string) *BuyersFilterSetsLosingBidsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersFilterSetsLosingBidsListCall) Context(ctx context.Context) *BuyersFilterSetsLosingBidsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersFilterSetsLosingBidsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersFilterSetsLosingBidsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+filterSetName}/losingBids")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"filterSetName": c.filterSetName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.buyers.filterSets.losingBids.list" call.
+// Exactly one of *ListLosingBidsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListLosingBidsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BuyersFilterSetsLosingBidsListCall) Do(opts ...googleapi.CallOption) (*ListLosingBidsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListLosingBidsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all reasons for which bids lost in the auction, with the number of bids that lost for each reason.",
+	//   "flatPath": "v2beta1/buyers/{buyersId}/filterSets/{filterSetsId}/losingBids",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer2.buyers.filterSets.losingBids.list",
+	//   "parameterOrder": [
+	//     "filterSetName"
+	//   ],
+	//   "parameters": {
+	//     "filterSetName": {
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "location": "path",
+	//       "pattern": "^buyers/[^/]+/filterSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListLosingBidsResponse.nextPageToken returned from the previous call to the losingBids.list method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+filterSetName}/losingBids",
+	//   "response": {
+	//     "$ref": "ListLosingBidsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BuyersFilterSetsLosingBidsListCall) Pages(ctx context.Context, f func(*ListLosingBidsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "adexchangebuyer2.buyers.filterSets.nonBillableWinningBids.list":
+
+type BuyersFilterSetsNonBillableWinningBidsListCall struct {
+	s             *Service
+	filterSetName string
+	urlParams_    gensupport.URLParams
+	ifNoneMatch_  string
+	ctx_          context.Context
+	header_       http.Header
+}
+
+// List: List all reasons for which winning bids were not billable, with
+// the number of bids not billed for each reason.
+//
+//   - filterSetName: Name of the filter set that should be applied to the
+//     requested metrics. For example: - For a bidder-level filter set for
+//     bidder 123: `bidders/123/filterSets/abc` - For an account-level
+//     filter set for the buyer account representing bidder 123:
+//     `bidders/123/accounts/123/filterSets/abc` - For an account-level
+//     filter set for the child seat buyer account 456 whose bidder is
+//     123: `bidders/123/accounts/456/filterSets/abc`.
+func (r *BuyersFilterSetsNonBillableWinningBidsService) List(filterSetName string) *BuyersFilterSetsNonBillableWinningBidsListCall {
+	c := &BuyersFilterSetsNonBillableWinningBidsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.filterSetName = filterSetName
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server may return fewer results than requested. If unspecified,
+// the server will pick an appropriate default.
+func (c *BuyersFilterSetsNonBillableWinningBidsListCall) PageSize(pageSize int64) *BuyersFilterSetsNonBillableWinningBidsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A token
+// identifying a page of results the server should return. Typically,
+// this is the value of ListNonBillableWinningBidsResponse.nextPageToken
+// returned from the previous call to the nonBillableWinningBids.list
+// method.
+func (c *BuyersFilterSetsNonBillableWinningBidsListCall) PageToken(pageToken string) *BuyersFilterSetsNonBillableWinningBidsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BuyersFilterSetsNonBillableWinningBidsListCall) Fields(s ...googleapi.Field) *BuyersFilterSetsNonBillableWinningBidsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BuyersFilterSetsNonBillableWinningBidsListCall) IfNoneMatch(entityTag string) *BuyersFilterSetsNonBillableWinningBidsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BuyersFilterSetsNonBillableWinningBidsListCall) Context(ctx context.Context) *BuyersFilterSetsNonBillableWinningBidsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BuyersFilterSetsNonBillableWinningBidsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BuyersFilterSetsNonBillableWinningBidsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta1/{+filterSetName}/nonBillableWinningBids")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"filterSetName": c.filterSetName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adexchangebuyer2.buyers.filterSets.nonBillableWinningBids.list" call.
+// Exactly one of *ListNonBillableWinningBidsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListNonBillableWinningBidsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *BuyersFilterSetsNonBillableWinningBidsListCall) Do(opts ...googleapi.CallOption) (*ListNonBillableWinningBidsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListNonBillableWinningBidsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List all reasons for which winning bids were not billable, with the number of bids not billed for each reason.",
+	//   "flatPath": "v2beta1/buyers/{buyersId}/filterSets/{filterSetsId}/nonBillableWinningBids",
+	//   "httpMethod": "GET",
+	//   "id": "adexchangebuyer2.buyers.filterSets.nonBillableWinningBids.list",
+	//   "parameterOrder": [
+	//     "filterSetName"
+	//   ],
+	//   "parameters": {
+	//     "filterSetName": {
+	//       "description": "Name of the filter set that should be applied to the requested metrics. For example: - For a bidder-level filter set for bidder 123: `bidders/123/filterSets/abc` - For an account-level filter set for the buyer account representing bidder 123: `bidders/123/accounts/123/filterSets/abc` - For an account-level filter set for the child seat buyer account 456 whose bidder is 123: `bidders/123/accounts/456/filterSets/abc`",
+	//       "location": "path",
+	//       "pattern": "^buyers/[^/]+/filterSets/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The server may return fewer results than requested. If unspecified, the server will pick an appropriate default.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A token identifying a page of results the server should return. Typically, this is the value of ListNonBillableWinningBidsResponse.nextPageToken returned from the previous call to the nonBillableWinningBids.list method.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2beta1/{+filterSetName}/nonBillableWinningBids",
+	//   "response": {
+	//     "$ref": "ListNonBillableWinningBidsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adexchange.buyer"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BuyersFilterSetsNonBillableWinningBidsListCall) Pages(ctx context.Context, f func(*ListNonBillableWinningBidsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

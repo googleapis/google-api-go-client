@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,7 +90,9 @@ const apiId = "workstations:v1beta"
 const apiName = "workstations"
 const apiVersion = "v1beta"
 const basePath = "https://workstations.googleapis.com/"
+const basePathTemplate = "https://workstations.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://workstations.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -107,7 +109,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -381,11 +385,34 @@ type Binding struct {
 	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
 	// domain (primary) that represents all the users of that domain. For
 	// example, `google.com` or `example.com`. *
-	// `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
-	// unique identifier) representing a user that has been recently
-	// deleted. For example, `alice@example.com?uid=123456789012345678901`.
-	// If the user is recovered, this value reverts to `user:{emailid}` and
-	// the recovered user retains the role in the binding. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}`: A single identity in a
+	// workforce identity pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
+	// identities with a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
+	// ol_id}/*`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
+	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
+	// `: A single identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
+	// identity pool group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
+	// tribute_value}`: All identities in a workload identity pool with a
+	// certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
+	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
+	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
+	// email address (plus unique identifier) representing a user that has
+	// been recently deleted. For example,
+	// `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered
+	// user retains the role in the binding. *
 	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
 	// (plus unique identifier) representing a service account that has been
 	// recently deleted. For example,
@@ -397,11 +424,20 @@ type Binding struct {
 	// that has been recently deleted. For example,
 	// `admins@example.com?uid=123456789012345678901`. If the group is
 	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding.
+	// group retains the role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
+	// identity in a workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
+	// s/my-pool-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
 
 	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`.
+	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
+	// overview of the IAM roles and permissions, see the IAM documentation
+	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
+	// available pre-defined roles, see here
+	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Condition") to
@@ -423,6 +459,51 @@ type Binding struct {
 
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// BoostConfig: A configuration that workstations can boost to.
+type BoostConfig struct {
+	// Accelerators: Optional. A list of the type and count of accelerator
+	// cards attached to the boost instance. Defaults to `none`.
+	Accelerators []*Accelerator `json:"accelerators,omitempty"`
+
+	// Id: Optional. Required. The id to be used for the boost config.
+	Id string `json:"id,omitempty"`
+
+	// MachineType: Optional. The type of machine that boosted VM instances
+	// will use—for example, `e2-standard-4`. For more information about
+	// machine types that Cloud Workstations supports, see the list of
+	// available machine types
+	// (https://cloud.google.com/workstations/docs/available-machine-types).
+	// Defaults to `e2-standard-4`.
+	MachineType string `json:"machineType,omitempty"`
+
+	// PoolSize: Optional. The number of boost VMs that the system should
+	// keep idle so that workstations can be boosted quickly. Defaults to
+	// `0`.
+	PoolSize int64 `json:"poolSize,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Accelerators") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Accelerators") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BoostConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod BoostConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -698,6 +779,11 @@ type GceInstance struct {
 	// cards attached to the instance.
 	Accelerators []*Accelerator `json:"accelerators,omitempty"`
 
+	// BoostConfigs: Optional. A list of the boost configurations that
+	// workstations created using this workstation configuration are allowed
+	// to use.
+	BoostConfigs []*BoostConfig `json:"boostConfigs,omitempty"`
+
 	// BootDiskSizeGb: Optional. The size of the boot disk for the VM in
 	// gigabytes (GB). The minimum boot disk size is `30` GB. Defaults to
 	// `50` GB.
@@ -717,8 +803,11 @@ type GceInstance struct {
 	// addresses).
 	DisablePublicIpAddresses bool `json:"disablePublicIpAddresses,omitempty"`
 
+	// DisableSsh: Optional. Whether to disable SSH access to the VM.
+	DisableSsh bool `json:"disableSsh,omitempty"`
+
 	// EnableNestedVirtualization: Optional. Whether to enable nested
-	// virtualization on Cloud Workstations VMs created under this
+	// virtualization on Cloud Workstations VMs created using this
 	// workstation configuration. Nested virtualization lets you run virtual
 	// machine (VM) instances inside your workstation. Before enabling
 	// nested virtualization, consider the following important
@@ -869,7 +958,7 @@ func (s *GcePersistentDisk) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GceRegionalPersistentDisk: A PersistentDirectory backed by a Compute
+// GceRegionalPersistentDisk: A Persistent Directory backed by a Compute
 // Engine regional persistent disk. The persistent_directories field is
 // repeated, but it may contain only one entry. It creates a persistent
 // disk (https://cloud.google.com/compute/docs/disks/persistent-disks)
@@ -1700,6 +1789,10 @@ func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 
 // StartWorkstationRequest: Request message for StartWorkstation.
 type StartWorkstationRequest struct {
+	// BoostConfig: Optional. If set, the workstation starts using the boost
+	// configuration with the specified ID.
+	BoostConfig string `json:"boostConfig,omitempty"`
+
 	// Etag: Optional. If set, the request will be rejected if the latest
 	// version of the workstation on the server does not have this ETag.
 	Etag string `json:"etag,omitempty"`
@@ -1708,7 +1801,7 @@ type StartWorkstationRequest struct {
 	// review, but do not actually apply it.
 	ValidateOnly bool `json:"validateOnly,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// ForceSendFields is a list of field names (e.g. "BoostConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1716,10 +1809,10 @@ type StartWorkstationRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "BoostConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1904,6 +1997,12 @@ type Workstation struct {
 	// different port, clients may prefix the host with the destination port
 	// in the format `{port}-{host}`.
 	Host string `json:"host,omitempty"`
+
+	// KmsKey: Output only. The name of the Google Cloud KMS encryption key
+	// used to encrypt this workstation. The KMS key can only be configured
+	// in the WorkstationConfig. The expected format is
+	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`.
+	KmsKey string `json:"kmsKey,omitempty"`
 
 	// Labels: Optional. Labels
 	// (https://cloud.google.com/workstations/docs/label-resources) that are
@@ -2107,6 +2206,14 @@ type WorkstationConfig struct {
 	// DeleteTime: Output only. Time when this workstation configuration was
 	// soft-deleted.
 	DeleteTime string `json:"deleteTime,omitempty"`
+
+	// DisableTcpConnections: Optional. Disables support for plain TCP
+	// connections in the workstation. By default the service supports TCP
+	// connections through a websocket relay. Setting this option to true
+	// disables that relay, which prevents the usage of services that
+	// require plain TCP connections, such as SSH. When enabled, all
+	// communication must occur over HTTPS or WSS.
+	DisableTcpConnections bool `json:"disableTcpConnections,omitempty"`
 
 	// DisplayName: Optional. Human-readable name for this workstation
 	// configuration.

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "firebaserules:v1"
 const apiName = "firebaserules"
 const apiVersion = "v1"
 const basePath = "https://firebaserules.googleapis.com/"
+const basePathTemplate = "https://firebaserules.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://firebaserules.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -120,7 +122,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -675,6 +679,12 @@ func (s *Result) MarshalJSON() ([]byte, error) {
 // Ruleset: `Ruleset` is an immutable copy of `Source` with a globally
 // unique identifier and a creation time.
 type Ruleset struct {
+	// AttachmentPoint: Immutable. Intended resource to which this Ruleset
+	// should be released. May be left blank to signify the resource
+	// associated with the default release. Expected format:
+	// firestore.googleapis.com/projects//databases/
+	AttachmentPoint string `json:"attachmentPoint,omitempty"`
+
 	// CreateTime: Output only. Time the `Ruleset` was created.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -693,7 +703,7 @@ type Ruleset struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// ForceSendFields is a list of field names (e.g. "AttachmentPoint") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -701,12 +711,13 @@ type Ruleset struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AttachmentPoint") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

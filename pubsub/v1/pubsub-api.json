@@ -23,6 +23,16 @@
       "description": "Regional Endpoint",
       "endpointUrl": "https://pubsub.me-central2.rep.googleapis.com/",
       "location": "me-central2"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://pubsub.europe-west3.rep.googleapis.com/",
+      "location": "europe-west3"
+    },
+    {
+      "description": "Regional Endpoint",
+      "endpointUrl": "https://pubsub.europe-west9.rep.googleapis.com/",
+      "location": "europe-west9"
     }
   ],
   "icons": {
@@ -716,7 +726,7 @@
               ]
             },
             "patch": {
-              "description": "Updates an existing snapshot. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
+              "description": "Updates an existing snapshot by updating the fields specified in the update mask. Snapshots are used in [Seek](https://cloud.google.com/pubsub/docs/replay-overview) operations, which allow you to manage message acknowledgments in bulk. That is, you can set the acknowledgment state of messages in an existing subscription to the state captured by a snapshot.",
               "flatPath": "v1/projects/{projectsId}/snapshots/{snapshotsId}",
               "httpMethod": "PATCH",
               "id": "pubsub.projects.snapshots.patch",
@@ -1070,7 +1080,7 @@
               ]
             },
             "patch": {
-              "description": "Updates an existing subscription. Note that certain properties of a subscription, such as its topic, are not modifiable.",
+              "description": "Updates an existing subscription by updating the fields specified in the update mask. Note that certain properties of a subscription, such as its topic, are not modifiable.",
               "flatPath": "v1/projects/{projectsId}/subscriptions/{subscriptionsId}",
               "httpMethod": "PATCH",
               "id": "pubsub.projects.subscriptions.patch",
@@ -1369,7 +1379,7 @@
               ]
             },
             "patch": {
-              "description": "Updates an existing topic. Note that certain properties of a topic are not modifiable.",
+              "description": "Updates an existing topic by updating the fields specified in the update mask. Note that certain properties of a topic are not modifiable.",
               "flatPath": "v1/projects/{projectsId}/topics/{topicsId}",
               "httpMethod": "PATCH",
               "id": "pubsub.projects.topics.patch",
@@ -1573,7 +1583,7 @@
       }
     }
   },
-  "revision": "20231104",
+  "revision": "20240220",
   "rootUrl": "https://pubsub.googleapis.com/",
   "schemas": {
     "AcknowledgeRequest": {
@@ -1601,6 +1611,50 @@
       },
       "type": "object"
     },
+    "AwsKinesis": {
+      "description": "Ingestion settings for Amazon Kinesis Data Streams.",
+      "id": "AwsKinesis",
+      "properties": {
+        "awsRoleArn": {
+          "description": "Required. AWS role ARN to be used for Federated Identity authentication with Kinesis. Check the Pub/Sub docs for how to set up this role and the required permissions that need to be attached to it.",
+          "type": "string"
+        },
+        "consumerArn": {
+          "description": "Required. The Kinesis consumer ARN to used for ingestion in Enhanced Fan-Out mode. The consumer must be already created and ready to be used.",
+          "type": "string"
+        },
+        "gcpServiceAccount": {
+          "description": "Required. The GCP service account to be used for Federated Identity authentication with Kinesis (via a `AssumeRoleWithWebIdentity` call for the provided role). The `aws_role_arn` must be set up with `accounts.google.com:sub` equals to this service account number.",
+          "type": "string"
+        },
+        "state": {
+          "description": "Output only. An output-only field that indicates the state of the Kinesis ingestion source.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "ACTIVE",
+            "KINESIS_PERMISSION_DENIED",
+            "PUBLISH_PERMISSION_DENIED",
+            "STREAM_NOT_FOUND",
+            "CONSUMER_NOT_FOUND"
+          ],
+          "enumDescriptions": [
+            "Default value. This value is unused.",
+            "Ingestion is active.",
+            "Permission denied encountered while consuming data from Kinesis. This can happen if: - The provided `aws_role_arn` does not exist or does not have the appropriate permissions attached. - The provided `aws_role_arn` is not set up properly for Identity Federation using `gcp_service_account`. - The Pub/Sub SA is not granted the `iam.serviceAccounts.getOpenIdToken` permission on `gcp_service_account`.",
+            "Permission denied encountered while publishing to the topic. This can happen if the Pub/Sub SA has not been granted the [appropriate publish permissions](https://cloud.google.com/pubsub/docs/access-control#pubsub.publisher)",
+            "The Kinesis stream does not exist.",
+            "The Kinesis consumer does not exist."
+          ],
+          "readOnly": true,
+          "type": "string"
+        },
+        "streamArn": {
+          "description": "Required. The Kinesis stream ARN to ingest data from.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "BigQueryConfig": {
       "description": "Configuration for a BigQuery subscription.",
       "id": "BigQueryConfig",
@@ -1608,6 +1662,10 @@
         "dropUnknownFields": {
           "description": "Optional. When true and use_topic_schema is true, any fields that are a part of the topic schema that are not part of the BigQuery table schema are dropped when writing to BigQuery. Otherwise, the schemas must be kept in sync and any messages with extra fields are not written and remain in the subscription's backlog.",
           "type": "boolean"
+        },
+        "serviceAccountEmail": {
+          "description": "Optional. The service account to use to write to BigQuery. The subscription creator or updater that specifies this field must have `iam.serviceAccounts.actAs` permission on the service account. If not specified, the Pub/Sub [service agent](https://cloud.google.com/iam/docs/service-agents), service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.",
+          "type": "string"
         },
         "state": {
           "description": "Output only. An output-only field that indicates whether or not the subscription can receive messages.",
@@ -1634,8 +1692,12 @@
           "description": "Optional. The name of the table to which to write data, of the form {projectId}.{datasetId}.{tableId}",
           "type": "string"
         },
+        "useTableSchema": {
+          "description": "Optional. When true, use the BigQuery table's schema as the columns to write to in BigQuery. `use_table_schema` and `use_topic_schema` cannot be enabled at the same time.",
+          "type": "boolean"
+        },
         "useTopicSchema": {
-          "description": "Optional. When true, use the topic's schema as the columns to write to in BigQuery, if it exists.",
+          "description": "Optional. When true, use the topic's schema as the columns to write to in BigQuery, if it exists. `use_topic_schema` and `use_table_schema` cannot be enabled at the same time.",
           "type": "boolean"
         },
         "writeMetadata": {
@@ -1654,14 +1716,14 @@
           "description": "The condition that is associated with this binding. If the condition evaluates to `true`, then this binding applies to the current request. If the condition evaluates to `false`, then this binding does not apply to the current request. However, a different role binding might grant the same role to one or more of the principals in this binding. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies)."
         },
         "members": {
-          "description": "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a Google service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An identifier for a [Kubernetes service account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding.",
+          "description": "Specifies the principals requesting access for a Google Cloud resource. `members` can have the following values: * `allUsers`: A special identifier that represents anyone who is on the internet; with or without a Google account. * `allAuthenticatedUsers`: A special identifier that represents anyone who is authenticated with a Google account or a service account. Does not include identities that come from external identity providers (IdPs) through identity federation. * `user:{emailid}`: An email address that represents a specific Google account. For example, `alice@example.com` . * `serviceAccount:{emailid}`: An email address that represents a Google service account. For example, `my-other-app@appspot.gserviceaccount.com`. * `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An identifier for a [Kubernetes service account](https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts). For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. * `group:{emailid}`: An email address that represents a Google group. For example, `admins@example.com`. * `domain:{domain}`: The G Suite domain (primary) that represents all the users of that domain. For example, `google.com` or `example.com`. * `principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`: A single identity in a workforce identity pool. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/group/{group_id}`: All workforce identities in a group. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/attribute.{attribute_name}/{attribute_value}`: All workforce identities with a specific attribute value. * `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/*`: All identities in a workforce identity pool. * `principal://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}`: A single identity in a workload identity pool. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload identity pool group. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}`: All identities in a workload identity pool with a certain attribute. * `principalSet://iam.googleapis.com/projects/{project_number}/locations/global/workloadIdentityPools/{pool_id}/*`: All identities in a workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a user that has been recently deleted. For example, `alice@example.com?uid=123456789012345678901`. If the user is recovered, this value reverts to `user:{emailid}` and the recovered user retains the role in the binding. * `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a service account that has been recently deleted. For example, `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the service account is undeleted, this value reverts to `serviceAccount:{emailid}` and the undeleted service account retains the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email address (plus unique identifier) representing a Google group that has been recently deleted. For example, `admins@example.com?uid=123456789012345678901`. If the group is recovered, this value reverts to `group:{emailid}` and the recovered group retains the role in the binding. * `deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subject/{subject_attribute_value}`: Deleted single identity in a workforce identity pool. For example, `deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-pool-id/subject/my-subject-attribute-value`.",
           "items": {
             "type": "string"
           },
           "type": "array"
         },
         "role": {
-          "description": "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`.",
+          "description": "Role that is assigned to the list of `members`, or principals. For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview of the IAM roles and permissions, see the [IAM documentation](https://cloud.google.com/iam/docs/roles-overview). For a list of the available pre-defined roles, see [here](https://cloud.google.com/iam/docs/understanding-roles).",
           "type": "string"
         }
       },
@@ -1695,6 +1757,10 @@
         "maxDuration": {
           "description": "Optional. The maximum duration that can elapse before a new Cloud Storage file is created. Min 1 minute, max 10 minutes, default 5 minutes. May not exceed the subscription's acknowledgement deadline.",
           "format": "google-duration",
+          "type": "string"
+        },
+        "serviceAccountEmail": {
+          "description": "Optional. The service account to use to write to Cloud Storage. The subscription creator or updater that specifies this field must have `iam.serviceAccounts.actAs` permission on the service account. If not specified, the Pub/Sub [service agent](https://cloud.google.com/iam/docs/service-agents), service-{project_number}@gcp-sa-pubsub.iam.gserviceaccount.com, is used.",
           "type": "string"
         },
         "state": {
@@ -1811,6 +1877,17 @@
         "title": {
           "description": "Optional. Title for the expression, i.e. a short string describing its purpose. This can be used e.g. in UIs which allow to enter the expression.",
           "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "IngestionDataSourceSettings": {
+      "description": "Settings for an ingestion data source on a topic.",
+      "id": "IngestionDataSourceSettings",
+      "properties": {
+        "awsKinesis": {
+          "$ref": "AwsKinesis",
+          "description": "Optional. Amazon Kinesis Data Streams."
         }
       },
       "type": "object"
@@ -1964,7 +2041,7 @@
       "id": "ModifyAckDeadlineRequest",
       "properties": {
         "ackDeadlineSeconds": {
-          "description": "Required. The new ack deadline with respect to the time this request was sent to the Pub/Sub system. For example, if the value is 10, the new ack deadline will expire 10 seconds after the `ModifyAckDeadline` call was made. Specifying zero might immediately make the message available for delivery to another subscriber client. This typically results in an increase in the rate of message redeliveries (that is, duplicates). The minimum deadline you can specify is 0 seconds. The maximum deadline you can specify is 600 seconds (10 minutes).",
+          "description": "Required. The new ack deadline with respect to the time this request was sent to the Pub/Sub system. For example, if the value is 10, the new ack deadline will expire 10 seconds after the `ModifyAckDeadline` call was made. Specifying zero might immediately make the message available for delivery to another subscriber client. This typically results in an increase in the rate of message redeliveries (that is, duplicates). The minimum deadline you can specify is 0 seconds. The maximum deadline you can specify in a single request is 600 seconds (10 minutes).",
           "format": "int32",
           "type": "integer"
         },
@@ -2084,7 +2161,7 @@
           "type": "string"
         },
         "messageId": {
-          "description": "Optional. ID of this message, assigned by the server when the message is published. Guaranteed to be unique within the topic. This value may be read by a subscriber that receives a `PubsubMessage` via a `Pull` call or a push delivery. It must not be populated by the publisher in a `Publish` call.",
+          "description": "ID of this message, assigned by the server when the message is published. Guaranteed to be unique within the topic. This value may be read by a subscriber that receives a `PubsubMessage` via a `Pull` call or a push delivery. It must not be populated by the publisher in a `Publish` call.",
           "type": "string"
         },
         "orderingKey": {
@@ -2092,7 +2169,7 @@
           "type": "string"
         },
         "publishTime": {
-          "description": "Optional. The time at which the message was published, populated by the server when it receives the `Publish` call. It must not be populated by the publisher in a `Publish` call.",
+          "description": "The time at which the message was published, populated by the server when it receives the `Publish` call. It must not be populated by the publisher in a `Publish` call.",
           "format": "google-datetime",
           "type": "string"
         }
@@ -2482,6 +2559,10 @@
       "description": "A topic resource.",
       "id": "Topic",
       "properties": {
+        "ingestionDataSourceSettings": {
+          "$ref": "IngestionDataSourceSettings",
+          "description": "Optional. Settings for ingestion from a data source into this topic."
+        },
         "kmsKeyName": {
           "description": "Optional. The resource name of the Cloud KMS CryptoKey to be used to protect access to messages published on this topic. The expected format is `projects/*/locations/*/keyRings/*/cryptoKeys/*`.",
           "type": "string"
@@ -2513,6 +2594,21 @@
         "schemaSettings": {
           "$ref": "SchemaSettings",
           "description": "Optional. Settings for validating messages published against a schema."
+        },
+        "state": {
+          "description": "Output only. An output-only field indicating the state of the topic.",
+          "enum": [
+            "STATE_UNSPECIFIED",
+            "ACTIVE",
+            "INGESTION_RESOURCE_ERROR"
+          ],
+          "enumDescriptions": [
+            "Default value. This value is unused.",
+            "The topic does not have any persistent errors.",
+            "Ingestion from the data source has encountered a permanent error. See the more detailed error state in the corresponding ingestion source configuration."
+          ],
+          "readOnly": true,
+          "type": "string"
         }
       },
       "type": "object"

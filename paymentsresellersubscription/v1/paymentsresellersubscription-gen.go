@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -90,12 +90,27 @@ const apiId = "paymentsresellersubscription:v1"
 const apiName = "paymentsresellersubscription"
 const apiVersion = "v1"
 const basePath = "https://paymentsresellersubscription.googleapis.com/"
+const basePathTemplate = "https://paymentsresellersubscription.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://paymentsresellersubscription.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
+
+// OAuth2 scopes used by this API.
+const (
+	// Associate you with your personal info on Google
+	OpenIDScope = "openid"
+)
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
+	scopesOption := internaloption.WithDefaultScopes(
+		"openid",
+	)
+	// NOTE: prepend, so we don't override user-specified scopes.
+	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -219,6 +234,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Amount) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest:
+// Request to cancel a subscription.
 type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	// CancelImmediately: Optional. If true, Google will cancel the
 	// subscription immediately, and may or may not (based on the contract)
@@ -235,15 +252,19 @@ type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	//   "CANCELLATION_REASON_REMORSE" - Buyer's remorse.
 	//   "CANCELLATION_REASON_ACCIDENTAL_PURCHASE" - Accidential purchase.
 	//   "CANCELLATION_REASON_PAST_DUE" - Payment is past due.
-	//   "CANCELLATION_REASON_ACCOUNT_CLOSED" - User account closed.
+	//   "CANCELLATION_REASON_ACCOUNT_CLOSED" - Used for notification only,
+	// do not use in Cancel API. User account closed.
 	//   "CANCELLATION_REASON_UPGRADE_DOWNGRADE" - Used for notification
 	// only, do not use in Cancel API. Cancellation due to upgrade or
 	// downgrade.
 	//   "CANCELLATION_REASON_USER_DELINQUENCY" - Cancellation due to user
 	// delinquency
-	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Cancellation due to an
-	// unrecoverable system error.
-	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Cancellation by a system.
+	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Used for notification only, do
+	// not use in Cancel API. Cancellation due to an unrecoverable system
+	// error.
+	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Used for notification only,
+	// do not use in Cancel API. The subscription is cancelled by Google
+	// automatically since it is no longer valid.
 	//   "CANCELLATION_REASON_OTHER" - Other reason.
 	CancellationReason string `json:"cancellationReason,omitempty"`
 
@@ -271,6 +292,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest) Mar
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse:
+// Response that contains the cancelled subscription resource.
 type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse struct {
 	// Subscription: The cancelled subscription resource.
 	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
@@ -411,6 +434,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLine
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse:
+// Response that contains the entitled subscription resource.
 type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse struct {
 	// Subscription: The subscription that has user linked to it.
 	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
@@ -456,8 +481,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest struct {
 	// is recommended. The idempotency key for the request. The ID
 	// generation logic is controlled by the partner. request_id should be
 	// the same as on retries of the same request. A different request_id
-	// must be used for a extension of a different cycle. A random UUID is
-	// recommended.
+	// must be used for a extension of a different cycle.
 	RequestId string `json:"requestId,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Extension") to
@@ -483,6 +507,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest) Mar
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse:
+// Response that contains the timestamps after the extension.
 type GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse struct {
 	// CycleEndTime: The time at which the subscription is expected to be
 	// extended, in ISO 8061 format. UTC timezone. Example,
@@ -533,8 +559,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse) Ma
 // GoogleCloudPaymentsResellerSubscriptionV1Extension: Describes the
 // details of an extension request.
 type GoogleCloudPaymentsResellerSubscriptionV1Extension struct {
-	// Duration: Specifies the period of access the subscription should
-	// grant.
+	// Duration: Required. Specifies the period of access the subscription
+	// should grant.
 	Duration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"duration,omitempty"`
 
 	// PartnerUserToken: Required. Identifier of the end-user in partner’s
@@ -564,15 +590,17 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Extension) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest
+// : Request to find eligible promotions for the current user.
 type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest struct {
 	// Filter: Optional. Specifies the filters for the promotion results.
 	// The syntax is defined in https://google.aip.dev/160 with the
-	// following caveats: - Only the following features are supported: -
+	// following caveats: 1. Only the following features are supported: -
 	// Logical operator `AND` - Comparison operator `=` (no wildcards `*`) -
-	// Traversal operator `.` - Has operator `:` (no wildcards `*`) - Only
+	// Traversal operator `.` - Has operator `:` (no wildcards `*`) 2. Only
 	// the following fields are supported: - `applicableProducts` -
 	// `regionCodes` - `youtubePayload.partnerEligibilityId` -
-	// `youtubePayload.postalCode` - Unless explicitly mentioned above,
+	// `youtubePayload.postalCode` 3. Unless explicitly mentioned above,
 	// other features are not supported. Example:
 	// `applicableProducts:partners/partner1/products/product1 AND
 	// regionCodes:US AND youtubePayload.postalCode=94043 AND
@@ -747,6 +775,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse:
+// Response that contains the products.
 type GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve
 	// the next page. If this field is empty, there are no subsequent pages.
@@ -782,6 +812,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse) MarshalJ
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse:
+// Response that contains the promotions.
 type GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse struct {
 	// NextPageToken: A token, which can be sent as `page_token` to retrieve
 	// the next page. If this field is empty, there are no subsequent pages.
@@ -862,7 +894,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
 	// charged indefinitely.
 	FiniteBillingCycleDetails *GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails `json:"finiteBillingCycleDetails,omitempty"`
 
-	// Name: Output only. Response only. Resource name of the product. It
+	// Name: Identifier. Response only. Resource name of the product. It
 	// will have the format of "partners/{partner_id}/products/{product_id}"
 	Name string `json:"name,omitempty"`
 
@@ -1036,7 +1068,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 	// PROMOTION_TYPE_INTRODUCTORY_PRICING.
 	IntroductoryPricingDetails *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails `json:"introductoryPricingDetails,omitempty"`
 
-	// Name: Output only. Response only. Resource name of the subscription
+	// Name: Identifier. Response only. Resource name of the subscription
 	// promotion. It will have the format of
 	// "partners/{partner_id}/promotion/{promotion_id}"
 	Name string `json:"name,omitempty"`
@@ -1090,7 +1122,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Promotion) MarshalJSON() ([]by
 // GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingD
 // etails: The details of a introductory pricing promotion.
 type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails struct {
-	// IntroductoryPricingSpecs: Specifies the introductory pricing periods.
+	// IntroductoryPricingSpecs: Output only. Specifies the introductory
+	// pricing periods.
 	IntroductoryPricingSpecs []*GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec `json:"introductoryPricingSpecs,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1197,8 +1230,17 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod) MarshalJSON() (
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Subscription: A Subscription
-// resource managed by 3P Partners.
+// GoogleCloudPaymentsResellerSubscriptionV1Subscription: A subscription
+// serves as a central billing entity between an external partner and
+// Google. The underlying Google services rely on the subscription state
+// to grant or revoke the user's service entitlement. It's important to
+// note that the subscription state may not always perfectly align with
+// the user's service entitlement. For example, some Google services may
+// continue providing access to the user until the current billing cycle
+// ends, even if the subscription has been immediately canceled.
+// However, other services may not do the same. To fully understand the
+// specific details, please consult the relevant contract or product
+// policy.
 type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// CancellationDetails: Output only. Describes the details of a
 	// cancelled subscription. Only applicable to subscription of state
@@ -1226,7 +1268,7 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// LineItems: Required. The line items of the subscription.
 	LineItems []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem `json:"lineItems,omitempty"`
 
-	// Name: Optional. Resource name of the subscription. It will have the
+	// Name: Identifier. Resource name of the subscription. It will have the
 	// format of "partners/{partner_id}/subscriptions/{subscription_id}".
 	// This is available for authorizeAddon, but otherwise is response only.
 	Name string `json:"name,omitempty"`
@@ -1349,7 +1391,7 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1Subscription) MarshalJSON() ([
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetai
 // ls: Describes the details of a cancelled or cancelling subscription.
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails struct {
-	// Reason: The reason of the cancellation.
+	// Reason: Output only. The reason of the cancellation.
 	//
 	// Possible values:
 	//   "CANCELLATION_REASON_UNSPECIFIED" - Reason is unspecified.
@@ -1357,15 +1399,19 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails st
 	//   "CANCELLATION_REASON_REMORSE" - Buyer's remorse.
 	//   "CANCELLATION_REASON_ACCIDENTAL_PURCHASE" - Accidential purchase.
 	//   "CANCELLATION_REASON_PAST_DUE" - Payment is past due.
-	//   "CANCELLATION_REASON_ACCOUNT_CLOSED" - User account closed.
+	//   "CANCELLATION_REASON_ACCOUNT_CLOSED" - Used for notification only,
+	// do not use in Cancel API. User account closed.
 	//   "CANCELLATION_REASON_UPGRADE_DOWNGRADE" - Used for notification
 	// only, do not use in Cancel API. Cancellation due to upgrade or
 	// downgrade.
 	//   "CANCELLATION_REASON_USER_DELINQUENCY" - Cancellation due to user
 	// delinquency
-	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Cancellation due to an
-	// unrecoverable system error.
-	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Cancellation by a system.
+	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Used for notification only, do
+	// not use in Cancel API. Cancellation due to an unrecoverable system
+	// error.
+	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Used for notification only,
+	// do not use in Cancel API. The subscription is cancelled by Google
+	// automatically since it is no longer valid.
 	//   "CANCELLATION_REASON_OTHER" - Other reason.
 	Reason string `json:"reason,omitempty"`
 
@@ -1538,7 +1584,8 @@ func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDeta
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRe
 // currenceDetails: Details for a ONE_TIME recurrence line item.
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails struct {
-	// ServicePeriod: The service period of the ONE_TIME line item.
+	// ServicePeriod: Output only. The service period of the ONE_TIME line
+	// item.
 	ServicePeriod *GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod `json:"servicePeriod,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ServicePeriod") to
@@ -1709,6 +1756,21 @@ type GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload struct {
 	// applicable for the line item.
 	PartnerEligibilityIds []string `json:"partnerEligibilityIds,omitempty"`
 
+	// PartnerPlanType: Optional. Specifies the plan type offered to the end
+	// user by the partner.
+	//
+	// Possible values:
+	//   "PARTNER_PLAN_TYPE_UNSPECIFIED" - Unspecified. Should not use,
+	// reserved as an invalid value.
+	//   "PARTNER_PLAN_TYPE_STANDALONE" - This item is offered as a
+	// standalone product to the user.
+	//   "PARTNER_PLAN_TYPE_HARD_BUNDLE" - This item is bundled with another
+	// partner offering, the item is provisioned at purchase time.
+	//   "PARTNER_PLAN_TYPE_SOFT_BUNDLE" - This item is bundled with another
+	// partner offering, the item is provisioned after puchase, when the
+	// user opts in this Google service.
+	PartnerPlanType string `json:"partnerPlanType,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AccessEndTime") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1811,8 +1873,8 @@ func (s *ProductBundleDetails) MarshalJSON() ([]byte, error) {
 // SubscriptionLineItemBundleDetails: The bundle details for a line item
 // corresponding to a hard bundle.
 type SubscriptionLineItemBundleDetails struct {
-	// BundleElementDetails: The details for each element in the hard
-	// bundle.
+	// BundleElementDetails: Output only. The details for each element in
+	// the hard bundle.
 	BundleElementDetails []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails `json:"bundleElementDetails,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -1864,12 +1926,12 @@ func (r *PartnersProductsService) List(parent string) *PartnersProductsListCall 
 
 // Filter sets the optional parameter "filter": Specifies the filters
 // for the product results. The syntax is defined in
-// https://google.aip.dev/160 with the following caveats: - Only the
+// https://google.aip.dev/160 with the following caveats: 1. Only the
 // following features are supported: - Logical operator `AND` -
 // Comparison operator `=` (no wildcards `*`) - Traversal operator `.` -
-// Has operator `:` (no wildcards `*`) - Only the following fields are
+// Has operator `:` (no wildcards `*`) 2. Only the following fields are
 // supported: - `regionCodes` - `youtubePayload.partnerEligibilityId` -
-// `youtubePayload.postalCode` - Unless explicitly mentioned above,
+// `youtubePayload.postalCode` 3. Unless explicitly mentioned above,
 // other features are not supported. Example: `regionCodes:US AND
 // youtubePayload.postalCode=94043 AND
 // youtubePayload.partnerEligibilityId=eligibility-id`
@@ -2008,7 +2070,7 @@ func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Specifies the filters for the product results. The syntax is defined in https://google.aip.dev/160 with the following caveats: - Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) - Only the following fields are supported: - `regionCodes` - `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` - Unless explicitly mentioned above, other features are not supported. Example: `regionCodes:US AND youtubePayload.postalCode=94043 AND youtubePayload.partnerEligibilityId=eligibility-id`",
+	//       "description": "Optional. Specifies the filters for the product results. The syntax is defined in https://google.aip.dev/160 with the following caveats: 1. Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) 2. Only the following fields are supported: - `regionCodes` - `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` 3. Unless explicitly mentioned above, other features are not supported. Example: `regionCodes:US AND youtubePayload.postalCode=94043 AND youtubePayload.partnerEligibilityId=eligibility-id`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2034,7 +2096,10 @@ func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//   "path": "v1/{+parent}/products",
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -2072,8 +2137,8 @@ type PartnersPromotionsFindEligibleCall struct {
 }
 
 // FindEligible: To find eligible promotions for the current user. The
-// API requires user authorization via OAuth. The user is inferred from
-// the authenticated OAuth credential.
+// API requires user authorization via OAuth. The bare minimum oauth
+// scope `openid` is sufficient, which will skip the consent screen.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.
@@ -2178,7 +2243,7 @@ func (c *PartnersPromotionsFindEligibleCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "To find eligible promotions for the current user. The API requires user authorization via OAuth. The user is inferred from the authenticated OAuth credential.",
+	//   "description": "To find eligible promotions for the current user. The API requires user authorization via OAuth. The bare minimum oauth scope `openid` is sufficient, which will skip the consent screen.",
 	//   "flatPath": "v1/partners/{partnersId}/promotions:findEligible",
 	//   "httpMethod": "POST",
 	//   "id": "paymentsresellersubscription.partners.promotions.findEligible",
@@ -2200,7 +2265,10 @@ func (c *PartnersPromotionsFindEligibleCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -2253,14 +2321,15 @@ func (r *PartnersPromotionsService) List(parent string) *PartnersPromotionsListC
 
 // Filter sets the optional parameter "filter": Specifies the filters
 // for the promotion results. The syntax is defined in
-// https://google.aip.dev/160 with the following caveats: - Only the
+// https://google.aip.dev/160 with the following caveats: 1. Only the
 // following features are supported: - Logical operator `AND` -
 // Comparison operator `=` (no wildcards `*`) - Traversal operator `.` -
-// Has operator `:` (no wildcards `*`) - Only the following fields are
+// Has operator `:` (no wildcards `*`) 2. Only the following fields are
 // supported: - `applicableProducts` - `regionCodes` -
-// `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` -
-// Unless explicitly mentioned above, other features are not supported.
-// Example: `applicableProducts:partners/partner1/products/product1 AND
+// `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode`
+// 3. Unless explicitly mentioned above, other features are not
+// supported. Example:
+// `applicableProducts:partners/partner1/products/product1 AND
 // regionCodes:US AND youtubePayload.postalCode=94043 AND
 // youtubePayload.partnerEligibilityId=eligibility-id`
 func (c *PartnersPromotionsListCall) Filter(filter string) *PartnersPromotionsListCall {
@@ -2398,7 +2467,7 @@ func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Specifies the filters for the promotion results. The syntax is defined in https://google.aip.dev/160 with the following caveats: - Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) - Only the following fields are supported: - `applicableProducts` - `regionCodes` - `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` - Unless explicitly mentioned above, other features are not supported. Example: `applicableProducts:partners/partner1/products/product1 AND regionCodes:US AND youtubePayload.postalCode=94043 AND youtubePayload.partnerEligibilityId=eligibility-id`",
+	//       "description": "Optional. Specifies the filters for the promotion results. The syntax is defined in https://google.aip.dev/160 with the following caveats: 1. Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) 2. Only the following fields are supported: - `applicableProducts` - `regionCodes` - `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` 3. Unless explicitly mentioned above, other features are not supported. Example: `applicableProducts:partners/partner1/products/product1 AND regionCodes:US AND youtubePayload.postalCode=94043 AND youtubePayload.partnerEligibilityId=eligibility-id`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2424,7 +2493,10 @@ func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 	//   "path": "v1/{+parent}/promotions",
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -2592,7 +2664,10 @@ func (c *PartnersSubscriptionsCancelCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -2752,7 +2827,10 @@ func (c *PartnersSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1Subscription"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -2899,7 +2977,10 @@ func (c *PartnersSubscriptionsEntitleCall) Do(opts ...googleapi.CallOption) (*Go
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -3047,7 +3128,10 @@ func (c *PartnersSubscriptionsExtendCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -3195,7 +3279,10 @@ func (c *PartnersSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Google
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1Subscription"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -3357,7 +3444,10 @@ func (c *PartnersSubscriptionsProvisionCall) Do(opts ...googleapi.CallOption) (*
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1Subscription"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }
@@ -3505,7 +3595,10 @@ func (c *PartnersSubscriptionsUndoCancelCall) Do(opts ...googleapi.CallOption) (
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse"
-	//   }
+	//   },
+	//   "scopes": [
+	//     "openid"
+	//   ]
 	// }
 
 }

@@ -1,4 +1,4 @@
-// Copyright 2023 Google LLC.
+// Copyright 2024 Google LLC.
 // Use of this source code is governed by a BSD-style
 // license that can be found in the LICENSE file.
 
@@ -95,7 +95,9 @@ const apiId = "cloudbilling:v1beta"
 const apiName = "cloudbilling"
 const apiVersion = "v1beta"
 const basePath = "https://cloudbilling.googleapis.com/"
+const basePathTemplate = "https://cloudbilling.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudbilling.mtls.googleapis.com/"
+const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
@@ -120,7 +122,9 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 	// NOTE: prepend, so we don't override user-specified scopes.
 	opts = append([]option.ClientOption{scopesOption}, opts...)
 	opts = append(opts, internaloption.WithDefaultEndpoint(basePath))
+	opts = append(opts, internaloption.WithDefaultEndpointTemplate(basePathTemplate))
 	opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))
+	opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))
 	client, endpoint, err := htransport.NewClient(ctx, opts...)
 	if err != nil {
 		return nil, err
@@ -146,6 +150,7 @@ func New(client *http.Client) (*Service, error) {
 	}
 	s := &Service{client: client, BasePath: basePath}
 	s.BillingAccounts = NewBillingAccountsService(s)
+	s.Projects = NewProjectsService(s)
 	s.SkuGroups = NewSkuGroupsService(s)
 	s.Skus = NewSkusService(s)
 	s.V1beta = NewV1betaService(s)
@@ -158,6 +163,8 @@ type Service struct {
 	UserAgent string // optional additional User-Agent fragment
 
 	BillingAccounts *BillingAccountsService
+
+	Projects *ProjectsService
 
 	SkuGroups *SkuGroupsService
 
@@ -175,6 +182,7 @@ func (s *Service) userAgent() string {
 
 func NewBillingAccountsService(s *Service) *BillingAccountsService {
 	rs := &BillingAccountsService{s: s}
+	rs.Anomalies = NewBillingAccountsAnomaliesService(s)
 	rs.Services = NewBillingAccountsServicesService(s)
 	rs.SkuGroups = NewBillingAccountsSkuGroupsService(s)
 	rs.Skus = NewBillingAccountsSkusService(s)
@@ -184,11 +192,22 @@ func NewBillingAccountsService(s *Service) *BillingAccountsService {
 type BillingAccountsService struct {
 	s *Service
 
+	Anomalies *BillingAccountsAnomaliesService
+
 	Services *BillingAccountsServicesService
 
 	SkuGroups *BillingAccountsSkuGroupsService
 
 	Skus *BillingAccountsSkusService
+}
+
+func NewBillingAccountsAnomaliesService(s *Service) *BillingAccountsAnomaliesService {
+	rs := &BillingAccountsAnomaliesService{s: s}
+	return rs
+}
+
+type BillingAccountsAnomaliesService struct {
+	s *Service
 }
 
 func NewBillingAccountsServicesService(s *Service) *BillingAccountsServicesService {
@@ -224,6 +243,7 @@ type BillingAccountsSkuGroupsSkusService struct {
 func NewBillingAccountsSkusService(s *Service) *BillingAccountsSkusService {
 	rs := &BillingAccountsSkusService{s: s}
 	rs.Price = NewBillingAccountsSkusPriceService(s)
+	rs.Prices = NewBillingAccountsSkusPricesService(s)
 	return rs
 }
 
@@ -231,6 +251,8 @@ type BillingAccountsSkusService struct {
 	s *Service
 
 	Price *BillingAccountsSkusPriceService
+
+	Prices *BillingAccountsSkusPricesService
 }
 
 func NewBillingAccountsSkusPriceService(s *Service) *BillingAccountsSkusPriceService {
@@ -239,6 +261,36 @@ func NewBillingAccountsSkusPriceService(s *Service) *BillingAccountsSkusPriceSer
 }
 
 type BillingAccountsSkusPriceService struct {
+	s *Service
+}
+
+func NewBillingAccountsSkusPricesService(s *Service) *BillingAccountsSkusPricesService {
+	rs := &BillingAccountsSkusPricesService{s: s}
+	return rs
+}
+
+type BillingAccountsSkusPricesService struct {
+	s *Service
+}
+
+func NewProjectsService(s *Service) *ProjectsService {
+	rs := &ProjectsService{s: s}
+	rs.Anomalies = NewProjectsAnomaliesService(s)
+	return rs
+}
+
+type ProjectsService struct {
+	s *Service
+
+	Anomalies *ProjectsAnomaliesService
+}
+
+func NewProjectsAnomaliesService(s *Service) *ProjectsAnomaliesService {
+	rs := &ProjectsAnomaliesService{s: s}
+	return rs
+}
+
+type ProjectsAnomaliesService struct {
 	s *Service
 }
 
@@ -266,6 +318,7 @@ type SkuGroupsSkusService struct {
 func NewSkusService(s *Service) *SkusService {
 	rs := &SkusService{s: s}
 	rs.Price = NewSkusPriceService(s)
+	rs.Prices = NewSkusPricesService(s)
 	return rs
 }
 
@@ -273,6 +326,8 @@ type SkusService struct {
 	s *Service
 
 	Price *SkusPriceService
+
+	Prices *SkusPricesService
 }
 
 func NewSkusPriceService(s *Service) *SkusPriceService {
@@ -281,6 +336,15 @@ func NewSkusPriceService(s *Service) *SkusPriceService {
 }
 
 type SkusPriceService struct {
+	s *Service
+}
+
+func NewSkusPricesService(s *Service) *SkusPricesService {
+	rs := &SkusPricesService{s: s}
+	return rs
+}
+
+type SkusPricesService struct {
 	s *Service
 }
 
@@ -343,9 +407,9 @@ func (s *CacheFillRegions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CloudCdnEgressWorkload: Specifies usage for Cloud CDN egress.
+// CloudCdnEgressWorkload: Specifies usage for Cloud CDN Data Transfer.
 type CloudCdnEgressWorkload struct {
-	// CacheEgressDestination: The destination for the cache egress charges.
+	// CacheEgressDestination: The destination for the cache data transfer.
 	//
 	// Possible values:
 	//   "CACHE_EGRESS_DESTINATION_UNSPECIFIED" - Unspecified.
@@ -362,8 +426,10 @@ type CloudCdnEgressWorkload struct {
 	// destinations (including Africa and Antarctica)
 	CacheEgressDestination string `json:"cacheEgressDestination,omitempty"`
 
-	// CacheEgressRate: Cache egress usage. The rate of data cache egressed
-	// in the destination. For example : units such as "GiBy/s" or "TBy/mo".
+	// CacheEgressRate: Cache data transfer usage. The rate of data cache
+	// transferred to the destination. Use units such as GiBy/s or TiBy/mo,
+	// based on The Unified Code for Units of Measure
+	// (https://ucum.org/ucum.html) standard.
 	CacheEgressRate *Usage `json:"cacheEgressRate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -441,19 +507,21 @@ func (s *CloudCdnWorkload) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// CloudInterconnectEgressWorkload: The interconnect egress only
-// includes the Interconnect Egress. Please use the standard egress
-// traffic interface to specify your standard egress usage.
+// CloudInterconnectEgressWorkload: Includes the estimate for
+// Interconnect Data Transfer only. To specify usage for data transfer
+// between VMs and internet end-points, use the Standard Tier Internet
+// Data Transfer interface.
 type CloudInterconnectEgressWorkload struct {
-	// EgressRate: Data egress usage. This usage applies when you move or
-	// copy data from one Google Cloud service to another service. Expected
-	// units such as "GiBy/s, By/s, etc."
+	// EgressRate: Outbound data transfer usage. This usage applies when you
+	// move or copy data from one Google Cloud service to another service.
+	// The units are GiBy/s, By/s, and so on, based on The Unified Code for
+	// Units of Measure (https://ucum.org/ucum.html) standard.
 	EgressRate *Usage `json:"egressRate,omitempty"`
 
 	// InterconnectConnectionLocation: Locations in the Interconnect
 	// connection location table
 	// (https://cloud.google.com/vpc/network-pricing#interconnect-pricing).
-	// This is the interconnect egress charges.
+	// These are the Interconnect Data Transfer charges.
 	//
 	// Possible values:
 	//   "INTERCONNECT_CONNECTION_LOCATION_UNSPECIFIED" - Unspecified.
@@ -540,10 +608,11 @@ func (s *CloudInterconnectWorkload) MarshalJSON() ([]byte, error) {
 }
 
 // CloudStorageEgressWorkload: Specification of a network type. Network
-// egress within Google Cloud applies when you move or copy data from
-// one Cloud Storage bucket to another or when another Google Cloud
+// data transfer within Google Cloud applies when you move or copy data
+// from one Cloud Storage bucket to another or when another Google Cloud
 // service accesses data in your Cloud Storage bucket.This includes the
-// network egress within Google Cloud and the general network usage.
+// network data transfer within Google Cloud and the general network
+// usage.
 type CloudStorageEgressWorkload struct {
 	// DestinationContinent: Where the data is sent to.
 	//
@@ -556,10 +625,12 @@ type CloudStorageEgressWorkload struct {
 	//   "DESTINATION_CONTINENT_SOUTH_AMERICA" - South America
 	DestinationContinent string `json:"destinationContinent,omitempty"`
 
-	// EgressRate: Egress usage rate. This usage applies when you move or
-	// copy data from one Cloud Storage bucket to another or when another
-	// Google Cloud service accesses data in your Cloud Storage bucket.
-	// Expected units such as "GiBy/s, By/s, ..."
+	// EgressRate: Data transfer usage rate. This usage applies when you
+	// move or copy data from one Cloud Storage bucket to another or when
+	// another Google Cloud service accesses data in your Cloud Storage
+	// bucket. The expected units are GiBy/s, By/s, and so on, based on The
+	// Unified Code for Units of Measure (https://ucum.org/ucum.html)
+	// standard.
 	EgressRate *Usage `json:"egressRate,omitempty"`
 
 	// SourceContinent: Where the data comes from.
@@ -602,11 +673,12 @@ func (s *CloudStorageEgressWorkload) MarshalJSON() ([]byte, error) {
 type CloudStorageWorkload struct {
 	// DataRetrieval: Data retrieval usage. A retrieval cost applies when
 	// data or metadata is read, copied, or rewritten . For example: units
-	// such as "GiBy/s" or "By/s".
+	// such as "GiB/s" or "B/s".
 	DataRetrieval *Usage `json:"dataRetrieval,omitempty"`
 
 	// DataStored: Data storage usage. The amount of data stored in buckets.
-	// For example: units such as "GiBy/s" or "TBy/mo".
+	// For example: units such as GiBy/s or TiBy/mo, based on The Unified
+	// Code for Units of Measure (https://ucum.org/ucum.html) standard.
 	DataStored *Usage `json:"dataStored,omitempty"`
 
 	// DualRegion: Specify dual regions.
@@ -1256,6 +1328,218 @@ func (s *EstimationTimePoint) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBillingAnomaliesV1betaAnomaly: Encapsulates an anomaly.
+type GoogleCloudBillingAnomaliesV1betaAnomaly struct {
+	// DetectionTime: Time that the anomaly was detected. Will be set to
+	// 00:00 google time of the detected date.
+	DetectionTime string `json:"detectionTime,omitempty"`
+
+	// Deviation: Deviation information of the anomaly.
+	Deviation *GoogleCloudBillingAnomaliesV1betaAnomalyDeviation `json:"deviation,omitempty"`
+
+	// Name: Identifier. Resource name for the anomaly.
+	Name string `json:"name,omitempty"`
+
+	// ResourceDisplayName: The display name of the resource that the
+	// anomaly occurred in/belongs to.
+	ResourceDisplayName string `json:"resourceDisplayName,omitempty"`
+
+	// RootCauses: A list of causes which contribute to the anomaly.
+	RootCauses []*GoogleCloudBillingAnomaliesV1betaCause `json:"rootCauses,omitempty"`
+
+	// Scope: Indicate the scope of the anomaly.
+	//
+	// Possible values:
+	//   "SCOPE_UNSPECIFIED" - Default unspecified value.
+	//   "SCOPE_BILLING_ACCOUNT" - Indicates the anomaly is for a billing
+	// account.
+	//   "SCOPE_PROJECT" - Indicates the anomaly is for a project.
+	Scope string `json:"scope,omitempty"`
+
+	// Severity: Severity of the anomaly. Unspecified if severity is not
+	// met/assigned.
+	//
+	// Possible values:
+	//   "ANOMALY_SEVERITY_UNSPECIFIED" - Default unspecified value.
+	//   "ANOMALY_SEVERITY_LOW" - Indicates the anomaly's severity is low.
+	//   "ANOMALY_SEVERITY_MEDIUM" - Indicates the anomaly's severity is
+	// medium.
+	//   "ANOMALY_SEVERITY_HIGH" - Indicates the anomaly's severity is high.
+	Severity string `json:"severity,omitempty"`
+
+	// UpdateTime: Output only. The most recent anomaly's last updated time.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DetectionTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DetectionTime") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBillingAnomaliesV1betaAnomaly) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBillingAnomaliesV1betaAnomaly
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBillingAnomaliesV1betaAnomalyDeviation: Encapsulates the
+// deviation information.
+type GoogleCloudBillingAnomaliesV1betaAnomalyDeviation struct {
+	// ActualSpend: The actual spend for the anomaly.
+	ActualSpend *Money `json:"actualSpend,omitempty"`
+
+	// DeviationAmount: The difference between the actual spend and expected
+	// spend's upper bound. Calculation formula: deviation_amount =
+	// actual_spend - expected_spend.
+	DeviationAmount *Money `json:"deviationAmount,omitempty"`
+
+	// DeviationPercentage: The percentage of devition amount from expected
+	// spend's upper bound. Calculation formula: deviation_percentage =
+	// divation_amount / expected_spend * 100.
+	DeviationPercentage float64 `json:"deviationPercentage,omitempty"`
+
+	// ExpectedSpend: The expected spend for the anomaly.
+	ExpectedSpend *Money `json:"expectedSpend,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActualSpend") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActualSpend") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBillingAnomaliesV1betaAnomalyDeviation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBillingAnomaliesV1betaAnomalyDeviation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudBillingAnomaliesV1betaAnomalyDeviation) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudBillingAnomaliesV1betaAnomalyDeviation
+	var s1 struct {
+		DeviationPercentage gensupport.JSONFloat64 `json:"deviationPercentage"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DeviationPercentage = float64(s1.DeviationPercentage)
+	return nil
+}
+
+// GoogleCloudBillingAnomaliesV1betaCause: Encapsulates the information
+// of the reason which caused the anomaly.
+type GoogleCloudBillingAnomaliesV1betaCause struct {
+	// CauseType: The cause type.
+	//
+	// Possible values:
+	//   "CAUSE_TYPE_UNSPECIFIED" - Default unspecified value.
+	//   "CAUSE_TYPE_PROJECT" - Caused by a project.
+	//   "CAUSE_TYPE_SERVICE" - Caused by a service.
+	//   "CAUSE_TYPE_SKU" - Caused by a SKU.
+	CauseType string `json:"causeType,omitempty"`
+
+	// Deviation: The deviation information for the cause.
+	Deviation *GoogleCloudBillingAnomaliesV1betaAnomalyDeviation `json:"deviation,omitempty"`
+
+	// DisplayName: The display name of the cause.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Resource: The resource name of the cause. project:
+	// projects/{project}. service: services/{service}. sku:
+	// services/{service}/skus/{sku}.
+	Resource string `json:"resource,omitempty"`
+
+	// SubCauses: The sub causes.
+	SubCauses []*GoogleCloudBillingAnomaliesV1betaCause `json:"subCauses,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CauseType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CauseType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBillingAnomaliesV1betaCause) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBillingAnomaliesV1betaCause
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse: Response
+// message for ListAnomalies.
+type GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse struct {
+	// Anomalies: The returned anomalies.
+	Anomalies []*GoogleCloudBillingAnomaliesV1betaAnomaly `json:"anomalies,omitempty"`
+
+	// NextPageToken: Token that can be sent as `page_token` in the
+	// subsequent request to retrieve the next page. If this field is empty,
+	// there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Anomalies") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Anomalies") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudBillingBillingaccountpricesV1betaAggregationInfo:
 // Encapsulates the aggregation information such as aggregation level
 // and interval for a billing account price.
@@ -1304,7 +1588,7 @@ func (s *GoogleCloudBillingBillingaccountpricesV1betaAggregationInfo) MarshalJSO
 }
 
 // GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice:
-// Encapsulates the latest price for the given billing account SKU.
+// Encapsulates the latest price for a billing account SKU.
 type GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice struct {
 	// CurrencyCode: ISO-4217 currency code for the price.
 	CurrencyCode string `json:"currencyCode,omitempty"`
@@ -1320,8 +1604,8 @@ type GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice struct {
 	// tiers.
 	Rate *GoogleCloudBillingBillingaccountpricesV1betaRate `json:"rate,omitempty"`
 
-	// ValueType: Type of the price. It can have values: ["unspecified",
-	// "rate"].
+	// ValueType: Type of the price. The possible values are:
+	// ["unspecified", "rate"].
 	ValueType string `json:"valueType,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1439,6 +1723,46 @@ type GoogleCloudBillingBillingaccountpricesV1betaFloatingDiscount struct {
 
 func (s *GoogleCloudBillingBillingaccountpricesV1betaFloatingDiscount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudBillingBillingaccountpricesV1betaFloatingDiscount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesRe
+// sponse: Response message for ListBillingAccountPrices.
+type GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesResponse struct {
+	// BillingAccountPrices: The returned billing account prices.
+	BillingAccountPrices []*GoogleCloudBillingBillingaccountpricesV1betaBillingAccountPrice `json:"billingAccountPrices,omitempty"`
+
+	// NextPageToken: Token that can be sent as `page_token` in the
+	// subsequent request to retrieve the next page. If this field is empty,
+	// there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "BillingAccountPrices") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BillingAccountPrices") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2500,8 +2824,46 @@ func (s *GoogleCloudBillingPricesV1betaAggregationInfo) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudBillingPricesV1betaListPricesResponse: Response message
+// for ListPrices.
+type GoogleCloudBillingPricesV1betaListPricesResponse struct {
+	// NextPageToken: Token that can be sent as `page_token` in the
+	// subsequent request to retrieve the next page. If this field is empty,
+	// there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Prices: The returned publicly listed prices.
+	Prices []*GoogleCloudBillingPricesV1betaPrice `json:"prices,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudBillingPricesV1betaListPricesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudBillingPricesV1betaListPricesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudBillingPricesV1betaPrice: Encapsulates the latest price
-// for the given SKU.
+// for a SKU.
 type GoogleCloudBillingPricesV1betaPrice struct {
 	// CurrencyCode: ISO-4217 currency code for the price.
 	CurrencyCode string `json:"currencyCode,omitempty"`
@@ -3064,20 +3426,20 @@ func (s *GuestAccelerator) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// InterRegionEgress: Egress traffic between two regions.
+// InterRegionEgress: Data transfer between two regions.
 type InterRegionEgress struct {
 	// DestinationRegion: Which region
-	// (https://cloud.google.com/compute/docs/regions-zones) the egress data
-	// goes to.
+	// (https://cloud.google.com/compute/docs/regions-zones) the data is
+	// transferred to.
 	DestinationRegion string `json:"destinationRegion,omitempty"`
 
-	// EgressRate: VM to VM egress usage. Expected units such as "GiBy/s,
-	// By/s, etc."
+	// EgressRate: VM to VM data transfer usage. The expected units such are
+	// GiBy/s, By/s, and so on.
 	EgressRate *Usage `json:"egressRate,omitempty"`
 
 	// SourceRegion: Which region
-	// (https://cloud.google.com/compute/docs/regions-zones) the egress data
-	// comes from.
+	// (https://cloud.google.com/compute/docs/regions-zones) the data is
+	// transferred from.
 	SourceRegion string `json:"sourceRegion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DestinationRegion")
@@ -3104,12 +3466,12 @@ func (s *InterRegionEgress) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// IntraRegionEgress: Egress traffic within the same region. When source
-// region and destination region are in the same zone, using the
-// internal IP addresses, there isn't any egress charge.
+// IntraRegionEgress: Data transfer within the same region. When the
+// source region and destination region are in the same zone, using
+// internal IP addresses, there isn't any charge for data transfer.
 type IntraRegionEgress struct {
-	// EgressRate: VM to VM egress usage. Expected units such as "GiBy/s,
-	// By/s, etc."
+	// EgressRate: VM to VM data transfer usage. The expected are GiBy/s,
+	// By/s, and so on.
 	EgressRate *Usage `json:"egressRate,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EgressRate") to
@@ -3315,8 +3677,8 @@ func (s *PredefinedMachineType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// PremiumTierEgressWorkload: Specify Premium Tier Internet egress
-// networking.
+// PremiumTierEgressWorkload: Specify a Premium Tier Internet Data
+// Transfer networking workload.
 type PremiumTierEgressWorkload struct {
 	// DestinationContinent: Where the data is sent to.
 	//
@@ -3337,13 +3699,14 @@ type PremiumTierEgressWorkload struct {
 	//   "DESTINATION_CONTINENT_SOUTH_AMERICA" - South America.
 	DestinationContinent string `json:"destinationContinent,omitempty"`
 
-	// EgressRate: Premium Tier egress usage. Expected units such as
-	// "GiBy/s, By/s, etc."
+	// EgressRate: Premium Tier Data Transfer usage. The expected units are
+	// GiBy/s, By/s, and so on, based on The Unified Code for Units of
+	// Measure (https://ucum.org/ucum.html) standard.
 	EgressRate *Usage `json:"egressRate,omitempty"`
 
 	// SourceRegion: Which region
-	// (https://cloud.google.com/compute/docs/regions-zones) the egress data
-	// comes from.
+	// (https://cloud.google.com/compute/docs/regions-zones) the data comes
+	// from.
 	SourceRegion string `json:"sourceRegion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -3704,16 +4067,17 @@ func (s *SkuCostEstimate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// StandardTierEgressWorkload: Specify Standard Tier Internet egress
-// networking.
+// StandardTierEgressWorkload: Specify Standard Tier Internet Data
+// Transfer.
 type StandardTierEgressWorkload struct {
-	// EgressRate: Standard tier egress usage. Expected units such as
-	// "GiBy/s, By/s, etc."
+	// EgressRate: Standard Tier Data Transfer usage. The expected units are
+	// GiBy/s, By/s, and so on, based on the The Unified Code for Units of
+	// Measure (https://ucum.org/ucum.html) standard.
 	EgressRate *Usage `json:"egressRate,omitempty"`
 
 	// SourceRegion: Which region
-	// (https://cloud.google.com/compute/docs/regions-zones) the egress data
-	// comes from.
+	// (https://cloud.google.com/compute/docs/regions-zones) the data is
+	// transferred from.
 	SourceRegion string `json:"sourceRegion,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EgressRate") to
@@ -4005,7 +4369,7 @@ func (s *VmResourceBasedCud) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// VmToVmEgressWorkload: Specify VM to VM egress.
+// VmToVmEgressWorkload: Specify VM to VM data transfer.
 type VmToVmEgressWorkload struct {
 	InterRegionEgress *InterRegionEgress `json:"interRegionEgress,omitempty"`
 
@@ -4040,20 +4404,20 @@ func (s *VmToVmEgressWorkload) MarshalJSON() ([]byte, error) {
 // specific product configuration parameters of the product usage
 // amounts along each dimension in which the product is billed.
 type Workload struct {
-	// CloudCdnEgressWorkload: Usage on Google Cloud CDN Egress.
+	// CloudCdnEgressWorkload: Usage on Google Cloud CDN Data Transfer.
 	CloudCdnEgressWorkload *CloudCdnEgressWorkload `json:"cloudCdnEgressWorkload,omitempty"`
 
 	// CloudCdnWorkload: Usage on Google Cloud CDN.
 	CloudCdnWorkload *CloudCdnWorkload `json:"cloudCdnWorkload,omitempty"`
 
 	// CloudInterconnectEgressWorkload: Usage on Google Cloud Interconnect
-	// Egress.
+	// Data Transfer.
 	CloudInterconnectEgressWorkload *CloudInterconnectEgressWorkload `json:"cloudInterconnectEgressWorkload,omitempty"`
 
 	// CloudInterconnectWorkload: Usage on Google Cloud Interconnect.
 	CloudInterconnectWorkload *CloudInterconnectWorkload `json:"cloudInterconnectWorkload,omitempty"`
 
-	// CloudStorageEgressWorkload: Usage on a cloud storage egress.
+	// CloudStorageEgressWorkload: Usage on Cloud Storage Data Transfer.
 	CloudStorageEgressWorkload *CloudStorageEgressWorkload `json:"cloudStorageEgressWorkload,omitempty"`
 
 	// CloudStorageWorkload: Usage on Google Cloud Storage.
@@ -4067,13 +4431,15 @@ type Workload struct {
 	// 128 characters long.
 	Name string `json:"name,omitempty"`
 
-	// PremiumTierEgressWorkload: Usage on Premium Tier Internet Egress.
+	// PremiumTierEgressWorkload: Usage on Premium Tier Internet Data
+	// Transfer.
 	PremiumTierEgressWorkload *PremiumTierEgressWorkload `json:"premiumTierEgressWorkload,omitempty"`
 
-	// StandardTierEgressWorkload: Usage on Standard Tier Internet Egress.
+	// StandardTierEgressWorkload: Usage on Standard Tier Internet Data
+	// Transfer.
 	StandardTierEgressWorkload *StandardTierEgressWorkload `json:"standardTierEgressWorkload,omitempty"`
 
-	// VmToVmEgressWorkload: Usage on Vm to Vm Egress.
+	// VmToVmEgressWorkload: Usage on VM to VM Data Transfer.
 	VmToVmEgressWorkload *VmToVmEgressWorkload `json:"vmToVmEgressWorkload,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -4284,6 +4650,375 @@ func (c *BillingAccountsEstimateCostScenarioCall) Do(opts ...googleapi.CallOptio
 	//   ]
 	// }
 
+}
+
+// method id "cloudbilling.billingAccounts.anomalies.get":
+
+type BillingAccountsAnomaliesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an anomaly for a billing account or a project.
+//
+//   - name: Format for project: projects/{project}/anomalies/{anomalies}.
+//     Format for billing account:
+//     billingAccounts/{billing_account}/anomalies/{anomalies}.
+func (r *BillingAccountsAnomaliesService) Get(name string) *BillingAccountsAnomaliesGetCall {
+	c := &BillingAccountsAnomaliesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsAnomaliesGetCall) Fields(s ...googleapi.Field) *BillingAccountsAnomaliesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingAccountsAnomaliesGetCall) IfNoneMatch(entityTag string) *BillingAccountsAnomaliesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsAnomaliesGetCall) Context(ctx context.Context) *BillingAccountsAnomaliesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsAnomaliesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsAnomaliesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudbilling.billingAccounts.anomalies.get" call.
+// Exactly one of *GoogleCloudBillingAnomaliesV1betaAnomaly or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudBillingAnomaliesV1betaAnomaly.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *BillingAccountsAnomaliesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingAnomaliesV1betaAnomaly, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudBillingAnomaliesV1betaAnomaly{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an anomaly for a billing account or a project.",
+	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}/anomalies/{anomaliesId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudbilling.billingAccounts.anomalies.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Format for project: projects/{project}/anomalies/{anomalies}. Format for billing account: billingAccounts/{billing_account}/anomalies/{anomalies}.",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/anomalies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudBillingAnomaliesV1betaAnomaly"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudbilling.billingAccounts.anomalies.list":
+
+type BillingAccountsAnomaliesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists anomalies for a billing account or a project.
+//
+//   - parent: The project to list Anomaly for the project. Format for
+//     project: projects/{project}. Format for billing account:
+//     billingAccounts/{billing_account}.
+func (r *BillingAccountsAnomaliesService) List(parent string) *BillingAccountsAnomaliesListCall {
+	c := &BillingAccountsAnomaliesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Options for how to
+// filter the anomalies. Currently, only filter on `start_time` and
+// `end_time` is supported. Only =, AND operators are supported. If
+// start_time and/or end_time empty, we only retrieve the most recent 30
+// days' anomalies. Examples: - start_time = "20231201" AND end_time =
+// "20240120" .
+func (c *BillingAccountsAnomaliesListCall) Filter(filter string) *BillingAccountsAnomaliesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// anomalies to return. Results may return fewer than this value.
+// Default value is 50 and maximum value is 1000.
+func (c *BillingAccountsAnomaliesListCall) PageSize(pageSize int64) *BillingAccountsAnomaliesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token
+// received from a previous ListAnomalies call to retrieve the next page
+// of results. If this field is empty, the first page is returned.
+func (c *BillingAccountsAnomaliesListCall) PageToken(pageToken string) *BillingAccountsAnomaliesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsAnomaliesListCall) Fields(s ...googleapi.Field) *BillingAccountsAnomaliesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingAccountsAnomaliesListCall) IfNoneMatch(entityTag string) *BillingAccountsAnomaliesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsAnomaliesListCall) Context(ctx context.Context) *BillingAccountsAnomaliesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsAnomaliesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsAnomaliesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/anomalies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudbilling.billingAccounts.anomalies.list" call.
+// Exactly one of
+// *GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *BillingAccountsAnomaliesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists anomalies for a billing account or a project.",
+	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}/anomalies",
+	//   "httpMethod": "GET",
+	//   "id": "cloudbilling.billingAccounts.anomalies.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Options for how to filter the anomalies. Currently, only filter on `start_time` and `end_time` is supported. Only =, AND operators are supported. If start_time and/or end_time empty, we only retrieve the most recent 30 days' anomalies. Examples: - start_time = \"20231201\" AND end_time = \"20240120\" .",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of anomalies to return. Results may return fewer than this value. Default value is 50 and maximum value is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token received from a previous ListAnomalies call to retrieve the next page of results. If this field is empty, the first page is returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The project to list Anomaly for the project. Format for project: projects/{project}. Format for billing account: billingAccounts/{billing_account}.",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+parent}/anomalies",
+	//   "response": {
+	//     "$ref": "GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BillingAccountsAnomaliesListCall) Pages(ctx context.Context, f func(*GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "cloudbilling.billingAccounts.services.get":
@@ -5728,9 +6463,10 @@ type BillingAccountsSkusPriceGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest price for the given billing account SKU.
+// Get: Gets the latest price for SKUs available to your Cloud Billing
+// account.
 //
-//   - name: Name of the latest billing account price to retrieve. Format:
+//   - name: Name of the billing account price to retrieve. Format:
 //     billingAccounts/{billing_account}/skus/{sku}/price.
 func (r *BillingAccountsSkusPriceService) Get(name string) *BillingAccountsSkusPriceGetCall {
 	c := &BillingAccountsSkusPriceGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5739,8 +6475,8 @@ func (r *BillingAccountsSkusPriceService) Get(name string) *BillingAccountsSkusP
 }
 
 // CurrencyCode sets the optional parameter "currencyCode": ISO-4217
-// currency code for the price. If not specified, currency of billing
-// account will be used.
+// currency code for the price. If not specified, the currency of the
+// billing account is used.
 func (c *BillingAccountsSkusPriceGetCall) CurrencyCode(currencyCode string) *BillingAccountsSkusPriceGetCall {
 	c.urlParams_.Set("currencyCode", currencyCode)
 	return c
@@ -5848,7 +6584,7 @@ func (c *BillingAccountsSkusPriceGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	}
 	return ret, nil
 	// {
-	//   "description": "Gets the latest price for the given billing account SKU.",
+	//   "description": "Gets the latest price for SKUs available to your Cloud Billing account.",
 	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}/skus/{skusId}/price",
 	//   "httpMethod": "GET",
 	//   "id": "cloudbilling.billingAccounts.skus.price.get",
@@ -5857,12 +6593,12 @@ func (c *BillingAccountsSkusPriceGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ],
 	//   "parameters": {
 	//     "currencyCode": {
-	//       "description": "Optional. ISO-4217 currency code for the price. If not specified, currency of billing account will be used.",
+	//       "description": "Optional. ISO-4217 currency code for the price. If not specified, the currency of the billing account is used.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. Name of the latest billing account price to retrieve. Format: billingAccounts/{billing_account}/skus/{sku}/price",
+	//       "description": "Required. Name of the billing account price to retrieve. Format: billingAccounts/{billing_account}/skus/{sku}/price",
 	//       "location": "path",
 	//       "pattern": "^billingAccounts/[^/]+/skus/[^/]+/price$",
 	//       "required": true,
@@ -5880,6 +6616,592 @@ func (c *BillingAccountsSkusPriceGetCall) Do(opts ...googleapi.CallOption) (*Goo
 	//   ]
 	// }
 
+}
+
+// method id "cloudbilling.billingAccounts.skus.prices.list":
+
+type BillingAccountsSkusPricesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the latest prices for SKUs available to your Cloud
+// Billing account.
+//
+//   - parent: To list all Billing Account SKUs, use `-` as the SKU ID.
+//     Format: `billingAccounts/{billing_account}/skus/-` Note: Specifying
+//     an actual SKU resource id will return a collection of one Billing
+//     Account Price.
+func (r *BillingAccountsSkusPricesService) List(parent string) *BillingAccountsSkusPricesListCall {
+	c := &BillingAccountsSkusPricesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// CurrencyCode sets the optional parameter "currencyCode": ISO-4217
+// currency code for the price. If not specified, currency of billing
+// account will be used.
+func (c *BillingAccountsSkusPricesListCall) CurrencyCode(currencyCode string) *BillingAccountsSkusPricesListCall {
+	c.urlParams_.Set("currencyCode", currencyCode)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// billing account price to return. Results may return fewer than this
+// value. Default value is 50 and maximum value is 5000.
+func (c *BillingAccountsSkusPricesListCall) PageSize(pageSize int64) *BillingAccountsSkusPricesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token
+// received from a previous ListBillingAccountPrices call to retrieve
+// the next page of results. If this field is empty, the first page is
+// returned.
+func (c *BillingAccountsSkusPricesListCall) PageToken(pageToken string) *BillingAccountsSkusPricesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BillingAccountsSkusPricesListCall) Fields(s ...googleapi.Field) *BillingAccountsSkusPricesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BillingAccountsSkusPricesListCall) IfNoneMatch(entityTag string) *BillingAccountsSkusPricesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BillingAccountsSkusPricesListCall) Context(ctx context.Context) *BillingAccountsSkusPricesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BillingAccountsSkusPricesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BillingAccountsSkusPricesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/prices")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudbilling.billingAccounts.skus.prices.list" call.
+// Exactly one of
+// *GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesR
+// esponse or error will be non-nil. Any non-2xx status code is an
+// error. Response headers are in either
+// *GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesR
+// esponse.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *BillingAccountsSkusPricesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the latest prices for SKUs available to your Cloud Billing account.",
+	//   "flatPath": "v1beta/billingAccounts/{billingAccountsId}/skus/{skusId}/prices",
+	//   "httpMethod": "GET",
+	//   "id": "cloudbilling.billingAccounts.skus.prices.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "currencyCode": {
+	//       "description": "Optional. ISO-4217 currency code for the price. If not specified, currency of billing account will be used.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of billing account price to return. Results may return fewer than this value. Default value is 50 and maximum value is 5000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token received from a previous ListBillingAccountPrices call to retrieve the next page of results. If this field is empty, the first page is returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. To list all Billing Account SKUs, use `-` as the SKU ID. Format: `billingAccounts/{billing_account}/skus/-` Note: Specifying an actual SKU resource id will return a collection of one Billing Account Price.",
+	//       "location": "path",
+	//       "pattern": "^billingAccounts/[^/]+/skus/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+parent}/prices",
+	//   "response": {
+	//     "$ref": "GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BillingAccountsSkusPricesListCall) Pages(ctx context.Context, f func(*GoogleCloudBillingBillingaccountpricesV1betaListBillingAccountPricesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "cloudbilling.projects.anomalies.get":
+
+type ProjectsAnomaliesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets an anomaly for a billing account or a project.
+//
+//   - name: Format for project: projects/{project}/anomalies/{anomalies}.
+//     Format for billing account:
+//     billingAccounts/{billing_account}/anomalies/{anomalies}.
+func (r *ProjectsAnomaliesService) Get(name string) *ProjectsAnomaliesGetCall {
+	c := &ProjectsAnomaliesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsAnomaliesGetCall) Fields(s ...googleapi.Field) *ProjectsAnomaliesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsAnomaliesGetCall) IfNoneMatch(entityTag string) *ProjectsAnomaliesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsAnomaliesGetCall) Context(ctx context.Context) *ProjectsAnomaliesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsAnomaliesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAnomaliesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudbilling.projects.anomalies.get" call.
+// Exactly one of *GoogleCloudBillingAnomaliesV1betaAnomaly or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudBillingAnomaliesV1betaAnomaly.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsAnomaliesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingAnomaliesV1betaAnomaly, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudBillingAnomaliesV1betaAnomaly{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets an anomaly for a billing account or a project.",
+	//   "flatPath": "v1beta/projects/{projectsId}/anomalies/{anomaliesId}",
+	//   "httpMethod": "GET",
+	//   "id": "cloudbilling.projects.anomalies.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Format for project: projects/{project}/anomalies/{anomalies}. Format for billing account: billingAccounts/{billing_account}/anomalies/{anomalies}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/anomalies/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudBillingAnomaliesV1betaAnomaly"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "cloudbilling.projects.anomalies.list":
+
+type ProjectsAnomaliesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists anomalies for a billing account or a project.
+//
+//   - parent: The project to list Anomaly for the project. Format for
+//     project: projects/{project}. Format for billing account:
+//     billingAccounts/{billing_account}.
+func (r *ProjectsAnomaliesService) List(parent string) *ProjectsAnomaliesListCall {
+	c := &ProjectsAnomaliesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Options for how to
+// filter the anomalies. Currently, only filter on `start_time` and
+// `end_time` is supported. Only =, AND operators are supported. If
+// start_time and/or end_time empty, we only retrieve the most recent 30
+// days' anomalies. Examples: - start_time = "20231201" AND end_time =
+// "20240120" .
+func (c *ProjectsAnomaliesListCall) Filter(filter string) *ProjectsAnomaliesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// anomalies to return. Results may return fewer than this value.
+// Default value is 50 and maximum value is 1000.
+func (c *ProjectsAnomaliesListCall) PageSize(pageSize int64) *ProjectsAnomaliesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token
+// received from a previous ListAnomalies call to retrieve the next page
+// of results. If this field is empty, the first page is returned.
+func (c *ProjectsAnomaliesListCall) PageToken(pageToken string) *ProjectsAnomaliesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsAnomaliesListCall) Fields(s ...googleapi.Field) *ProjectsAnomaliesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsAnomaliesListCall) IfNoneMatch(entityTag string) *ProjectsAnomaliesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsAnomaliesListCall) Context(ctx context.Context) *ProjectsAnomaliesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsAnomaliesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsAnomaliesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/anomalies")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudbilling.projects.anomalies.list" call.
+// Exactly one of
+// *GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsAnomaliesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists anomalies for a billing account or a project.",
+	//   "flatPath": "v1beta/projects/{projectsId}/anomalies",
+	//   "httpMethod": "GET",
+	//   "id": "cloudbilling.projects.anomalies.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Options for how to filter the anomalies. Currently, only filter on `start_time` and `end_time` is supported. Only =, AND operators are supported. If start_time and/or end_time empty, we only retrieve the most recent 30 days' anomalies. Examples: - start_time = \"20231201\" AND end_time = \"20240120\" .",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of anomalies to return. Results may return fewer than this value. Default value is 50 and maximum value is 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token received from a previous ListAnomalies call to retrieve the next page of results. If this field is empty, the first page is returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The project to list Anomaly for the project. Format for project: projects/{project}. Format for billing account: billingAccounts/{billing_account}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+parent}/anomalies",
+	//   "response": {
+	//     "$ref": "GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsAnomaliesListCall) Pages(ctx context.Context, f func(*GoogleCloudBillingAnomaliesV1betaListAnomaliesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "cloudbilling.skuGroups.get":
@@ -6731,6 +8053,218 @@ func (c *SkusPriceGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBilling
 	//   ]
 	// }
 
+}
+
+// method id "cloudbilling.skus.prices.list":
+
+type SkusPricesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists the latest prices for all SKUs.
+//
+//   - parent: To list the prices for all SKUs, use `-` as the SKU ID.
+//     Format: `skus/-` Specifying a specific SKU ID returns a collection
+//     with one Price object for the SKU.
+func (r *SkusPricesService) List(parent string) *SkusPricesListCall {
+	c := &SkusPricesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// CurrencyCode sets the optional parameter "currencyCode": ISO-4217
+// currency code for the price. If not specified, USD will be used.
+func (c *SkusPricesListCall) CurrencyCode(currencyCode string) *SkusPricesListCall {
+	c.urlParams_.Set("currencyCode", currencyCode)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// prices to return. Results may return fewer than this value. Default
+// value is 50 and maximum value is 5000.
+func (c *SkusPricesListCall) PageSize(pageSize int64) *SkusPricesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token
+// received from a previous ListPrices call to retrieve the next page of
+// results. If this field is empty, the first page is returned.
+func (c *SkusPricesListCall) PageToken(pageToken string) *SkusPricesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SkusPricesListCall) Fields(s ...googleapi.Field) *SkusPricesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SkusPricesListCall) IfNoneMatch(entityTag string) *SkusPricesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SkusPricesListCall) Context(ctx context.Context) *SkusPricesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SkusPricesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SkusPricesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/prices")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "cloudbilling.skus.prices.list" call.
+// Exactly one of *GoogleCloudBillingPricesV1betaListPricesResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudBillingPricesV1betaListPricesResponse.ServerResponse.Heade
+// r or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *SkusPricesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudBillingPricesV1betaListPricesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudBillingPricesV1betaListPricesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists the latest prices for all SKUs.",
+	//   "flatPath": "v1beta/skus/{skusId}/prices",
+	//   "httpMethod": "GET",
+	//   "id": "cloudbilling.skus.prices.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "currencyCode": {
+	//       "description": "Optional. ISO-4217 currency code for the price. If not specified, USD will be used.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of prices to return. Results may return fewer than this value. Default value is 50 and maximum value is 5000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token received from a previous ListPrices call to retrieve the next page of results. If this field is empty, the first page is returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. To list the prices for all SKUs, use `-` as the SKU ID. Format: `skus/-` Specifying a specific SKU ID returns a collection with one Price object for the SKU.",
+	//       "location": "path",
+	//       "pattern": "^skus/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+parent}/prices",
+	//   "response": {
+	//     "$ref": "GoogleCloudBillingPricesV1betaListPricesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-billing",
+	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *SkusPricesListCall) Pages(ctx context.Context, f func(*GoogleCloudBillingPricesV1betaListPricesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "cloudbilling.estimateCostScenario":

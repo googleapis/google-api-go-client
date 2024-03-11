@@ -61,7 +61,9 @@ func NewClient(ctx context.Context, opts ...option.ClientOption) (*http.Client, 
 	return &http.Client{Transport: trans}, endpoint, nil
 }
 
+// newClientNewAuth is an adapter to call new auth library.
 func newClientNewAuth(ctx context.Context, settings *internal.DialSettings) (*http.Client, error) {
+	// honor options if set
 	var ts oauth2.TokenSource
 	if settings.InternalCredentials != nil {
 		ts = settings.InternalCredentials.TokenSource

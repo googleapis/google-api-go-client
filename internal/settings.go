@@ -21,7 +21,7 @@ import (
 )
 
 const (
-	newAuthLibEnVar         = "GOOGLE_API_GO_EXPERIMENTAL_USE_NEW_AUTH_LIB"
+	newAuthLibEnVar         = "GOOGLE_API_GO_EXPERIMENTAL_ENABLE_NEW_AUTH_LIB"
 	newAuthLibDisabledEnVar = "GOOGLE_API_GO_EXPERIMENTAL_DISABLE_NEW_AUTH_LIB"
 	universeDomainDefault = "googleapis.com"
 )

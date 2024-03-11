@@ -171,7 +171,9 @@ func DialPool(ctx context.Context, opts ...option.ClientOption) (ConnPool, error
 	return pool, nil
 }
 
+// dialPoolNewAuth is an adapter to call new auth library.
 func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *internal.DialSettings) (grpctransport.GRPCClientConnPool, error) {
+	// honor options if set
 	var ts oauth2.TokenSource
 	if ds.InternalCredentials != nil {
 		ts = ds.InternalCredentials.TokenSource
@@ -186,7 +188,7 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 	} else if ts != nil {
 		tp = oauth2adapt.TokenProviderFromTokenSource(ts)
 	}
-	
+
 	var aud string
 	if len(ds.Audiences) > 0 {
 		aud = ds.Audiences[0]

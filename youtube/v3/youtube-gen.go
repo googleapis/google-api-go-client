@@ -5801,6 +5801,9 @@ func (s *LiveChatMessageDeletedDetails) MarshalJSON() ([]byte, error) {
 }
 
 type LiveChatMessageListResponse struct {
+	// ActivePollItem: Set when there is an active poll.
+	ActivePollItem *LiveChatMessage `json:"activePollItem,omitempty"`
+
 	// Etag: Etag of this resource.
 	Etag string `json:"etag,omitempty"`
 
@@ -5835,7 +5838,7 @@ type LiveChatMessageListResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Etag") to
+	// ForceSendFields is a list of field names (e.g. "ActivePollItem") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -5843,12 +5846,13 @@ type LiveChatMessageListResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ActivePollItem") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

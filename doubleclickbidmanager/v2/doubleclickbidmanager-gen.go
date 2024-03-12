@@ -497,7 +497,9 @@ type Options struct {
 	IncludeOnlyTargetedUserLists bool `json:"includeOnlyTargetedUserLists,omitempty"`
 
 	// PathQueryOptions: Options that contain Path Filters and Custom
-	// Channel Groupings.
+	// Channel Groupings. This field is deprecated and will sunset on **May
+	// 1, 2024**. After sunset, requests using this field will return an
+	// error.
 	PathQueryOptions *PathQueryOptions `json:"pathQueryOptions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
@@ -555,8 +557,13 @@ type Parameters struct {
 	// report.
 	//   "REACH" - Reach report.
 	//   "UNIQUE_REACH_AUDIENCE" - Unique Reach Audience report.
-	//   "FULL_PATH" - Full Path report.
-	//   "PATH_ATTRIBUTION" - Path Attribution report.
+	//   "FULL_PATH" - Full Path report. This report type is deprecated and
+	// will sunset on **May 1, 2024**. After sunset, requests retrieving,
+	// creating, or running reports of this type will return an error.
+	//   "PATH_ATTRIBUTION" - Path Attribution report. This report type is
+	// deprecated and will sunset on **May 1, 2024**. After sunset, requests
+	// retrieving, creating, or running reports of this type will return an
+	// error.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Filters") to

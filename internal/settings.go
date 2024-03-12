@@ -23,7 +23,7 @@ import (
 const (
 	newAuthLibEnVar         = "GOOGLE_API_GO_EXPERIMENTAL_ENABLE_NEW_AUTH_LIB"
 	newAuthLibDisabledEnVar = "GOOGLE_API_GO_EXPERIMENTAL_DISABLE_NEW_AUTH_LIB"
-	universeDomainDefault = "googleapis.com"
+	universeDomainDefault   = "googleapis.com"
 )
 
 // DialSettings holds information needed to establish a connection with a

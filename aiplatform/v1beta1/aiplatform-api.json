@@ -3403,7 +3403,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "Optional. An expression for filtering the results of the request. For field names both snake_case and camelCase are supported. * `endpoint` supports = and !=. `endpoint` represents the Endpoint ID, i.e. the last segment of the Endpoint's resource name. * `display_name` supports = and, != * `labels` supports general map functions that is: * `labels.key=value` - key:value equality * `labels.key:* or labels:key - key existence * A key including a space must be quoted. `labels.\"a key\"`. Some examples: * `endpoint=1` * `displayName=\"myDisplayName\"` * `labels.myKey=\"myValue\"`",
+                      "description": "Optional. An expression for filtering the results of the request. For field names both snake_case and camelCase are supported. * `endpoint` supports = and !=. `endpoint` represents the Endpoint ID, i.e. the last segment of the Endpoint's resource name. * `display_name` supports = and, != * `labels` supports general map functions that is: * `labels.key=value` - key:value equality * `labels.key:* or labels:key - key existence * A key including a space must be quoted. `labels.\"a key\"`. * `base_model_name` only supports = Some examples: * `endpoint=1` * `displayName=\"myDisplayName\"` * `labels.myKey=\"myValue\"` * `baseModelName=\"text-bison\"`",
                       "location": "query",
                       "type": "string"
                     },
@@ -5303,6 +5303,37 @@
                     "https://www.googleapis.com/auth/cloud-platform"
                   ]
                 },
+                "getIamPolicy": {
+                  "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featureOnlineStores/{featureOnlineStoresId}:getIamPolicy",
+                  "httpMethod": "POST",
+                  "id": "aiplatform.projects.locations.featureOnlineStores.getIamPolicy",
+                  "parameterOrder": [
+                    "resource"
+                  ],
+                  "parameters": {
+                    "options.requestedPolicyVersion": {
+                      "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+                      "format": "int32",
+                      "location": "query",
+                      "type": "integer"
+                    },
+                    "resource": {
+                      "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/featureOnlineStores/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+resource}:getIamPolicy",
+                  "response": {
+                    "$ref": "GoogleIamV1Policy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
                 "list": {
                   "description": "Lists FeatureOnlineStores in a given project and location.",
                   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featureOnlineStores",
@@ -5378,6 +5409,65 @@
                   },
                   "response": {
                     "$ref": "GoogleLongrunningOperation"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "setIamPolicy": {
+                  "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featureOnlineStores/{featureOnlineStoresId}:setIamPolicy",
+                  "httpMethod": "POST",
+                  "id": "aiplatform.projects.locations.featureOnlineStores.setIamPolicy",
+                  "parameterOrder": [
+                    "resource"
+                  ],
+                  "parameters": {
+                    "resource": {
+                      "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/featureOnlineStores/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+resource}:setIamPolicy",
+                  "request": {
+                    "$ref": "GoogleIamV1SetIamPolicyRequest"
+                  },
+                  "response": {
+                    "$ref": "GoogleIamV1Policy"
+                  },
+                  "scopes": [
+                    "https://www.googleapis.com/auth/cloud-platform"
+                  ]
+                },
+                "testIamPermissions": {
+                  "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+                  "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featureOnlineStores/{featureOnlineStoresId}:testIamPermissions",
+                  "httpMethod": "POST",
+                  "id": "aiplatform.projects.locations.featureOnlineStores.testIamPermissions",
+                  "parameterOrder": [
+                    "resource"
+                  ],
+                  "parameters": {
+                    "permissions": {
+                      "description": "The set of permissions to check for the `resource`. Permissions with wildcards (such as `*` or `storage.*`) are not allowed. For more information see [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).",
+                      "location": "query",
+                      "repeated": true,
+                      "type": "string"
+                    },
+                    "resource": {
+                      "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                      "location": "path",
+                      "pattern": "^projects/[^/]+/locations/[^/]+/featureOnlineStores/[^/]+$",
+                      "required": true,
+                      "type": "string"
+                    }
+                  },
+                  "path": "v1beta1/{+resource}:testIamPermissions",
+                  "response": {
+                    "$ref": "GoogleIamV1TestIamPermissionsResponse"
                   },
                   "scopes": [
                     "https://www.googleapis.com/auth/cloud-platform"
@@ -5503,6 +5593,37 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
+                    "getIamPolicy": {
+                      "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featureOnlineStores/{featureOnlineStoresId}/featureViews/{featureViewsId}:getIamPolicy",
+                      "httpMethod": "POST",
+                      "id": "aiplatform.projects.locations.featureOnlineStores.featureViews.getIamPolicy",
+                      "parameterOrder": [
+                        "resource"
+                      ],
+                      "parameters": {
+                        "options.requestedPolicyVersion": {
+                          "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
+                          "format": "int32",
+                          "location": "query",
+                          "type": "integer"
+                        },
+                        "resource": {
+                          "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/featureOnlineStores/[^/]+/featureViews/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+resource}:getIamPolicy",
+                      "response": {
+                        "$ref": "GoogleIamV1Policy"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "list": {
                       "description": "Lists FeatureViews in a given FeatureOnlineStore.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featureOnlineStores/{featureOnlineStoresId}/featureViews",
@@ -5611,6 +5732,34 @@
                         "https://www.googleapis.com/auth/cloud-platform"
                       ]
                     },
+                    "setIamPolicy": {
+                      "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featureOnlineStores/{featureOnlineStoresId}/featureViews/{featureViewsId}:setIamPolicy",
+                      "httpMethod": "POST",
+                      "id": "aiplatform.projects.locations.featureOnlineStores.featureViews.setIamPolicy",
+                      "parameterOrder": [
+                        "resource"
+                      ],
+                      "parameters": {
+                        "resource": {
+                          "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/featureOnlineStores/[^/]+/featureViews/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+resource}:setIamPolicy",
+                      "request": {
+                        "$ref": "GoogleIamV1SetIamPolicyRequest"
+                      },
+                      "response": {
+                        "$ref": "GoogleIamV1Policy"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
                     "sync": {
                       "description": "Triggers on-demand sync for the FeatureView.",
                       "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featureOnlineStores/{featureOnlineStoresId}/featureViews/{featureViewsId}:sync",
@@ -5634,6 +5783,37 @@
                       },
                       "response": {
                         "$ref": "GoogleCloudAiplatformV1beta1SyncFeatureViewResponse"
+                      },
+                      "scopes": [
+                        "https://www.googleapis.com/auth/cloud-platform"
+                      ]
+                    },
+                    "testIamPermissions": {
+                      "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a `NOT_FOUND` error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
+                      "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/featureOnlineStores/{featureOnlineStoresId}/featureViews/{featureViewsId}:testIamPermissions",
+                      "httpMethod": "POST",
+                      "id": "aiplatform.projects.locations.featureOnlineStores.featureViews.testIamPermissions",
+                      "parameterOrder": [
+                        "resource"
+                      ],
+                      "parameters": {
+                        "permissions": {
+                          "description": "The set of permissions to check for the `resource`. Permissions with wildcards (such as `*` or `storage.*`) are not allowed. For more information see [IAM Overview](https://cloud.google.com/iam/docs/overview#permissions).",
+                          "location": "query",
+                          "repeated": true,
+                          "type": "string"
+                        },
+                        "resource": {
+                          "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+                          "location": "path",
+                          "pattern": "^projects/[^/]+/locations/[^/]+/featureOnlineStores/[^/]+/featureViews/[^/]+$",
+                          "required": true,
+                          "type": "string"
+                        }
+                      },
+                      "path": "v1beta1/{+resource}:testIamPermissions",
+                      "response": {
+                        "$ref": "GoogleIamV1TestIamPermissionsResponse"
                       },
                       "scopes": [
                         "https://www.googleapis.com/auth/cloud-platform"
@@ -11147,7 +11327,7 @@
                   ],
                   "parameters": {
                     "filter": {
-                      "description": "An expression for filtering the results of the request. For field names both snake_case and camelCase are supported. * `model` supports = and !=. `model` represents the Model ID, i.e. the last segment of the Model's resource name. * `display_name` supports = and != * `labels` supports general map functions that is: * `labels.key=value` - key:value equality * `labels.key:* or labels:key - key existence * A key including a space must be quoted. `labels.\"a key\"`. Some examples: * `model=1234` * `displayName=\"myDisplayName\"` * `labels.myKey=\"myValue\"`",
+                      "description": "An expression for filtering the results of the request. For field names both snake_case and camelCase are supported. * `model` supports = and !=. `model` represents the Model ID, i.e. the last segment of the Model's resource name. * `display_name` supports = and != * `labels` supports general map functions that is: * `labels.key=value` - key:value equality * `labels.key:* or labels:key - key existence * A key including a space must be quoted. `labels.\"a key\"`. * `base_model_name` only supports = Some examples: * `model=1234` * `displayName=\"myDisplayName\"` * `labels.myKey=\"myValue\"` * `baseModelName=\"text-bison\"`",
                       "location": "query",
                       "type": "string"
                     },
@@ -17775,7 +17955,7 @@
       }
     }
   },
-  "revision": "20240229",
+  "revision": "20240301",
   "rootUrl": "https://aiplatform.googleapis.com/",
   "schemas": {
     "CloudAiLargeModelsVisionEmbedVideoResponse": {
@@ -18394,6 +18574,10 @@
       "description": "A single part of a message.",
       "id": "CloudAiNlLlmProtoServicePart",
       "properties": {
+        "documentMetadata": {
+          "$ref": "CloudAiNlLlmProtoServicePartDocumentMetadata",
+          "description": "Document metadata. The metadata should only be used by the Cloud LLM when supporting document mime types. It will only be populated when this image input part is converted from a document input part."
+        },
         "fileData": {
           "$ref": "CloudAiNlLlmProtoServicePartFileData",
           "description": "URI-based data."
@@ -18437,6 +18621,22 @@
         "originalFileData": {
           "$ref": "CloudAiNlLlmProtoServicePartFileData",
           "description": "Original file data where the blob comes from."
+        }
+      },
+      "type": "object"
+    },
+    "CloudAiNlLlmProtoServicePartDocumentMetadata": {
+      "description": "Metadata describes the original input document content.",
+      "id": "CloudAiNlLlmProtoServicePartDocumentMetadata",
+      "properties": {
+        "originalDocumentBlob": {
+          "$ref": "CloudAiNlLlmProtoServicePartBlob",
+          "description": "The original document blob."
+        },
+        "pageNumber": {
+          "description": "The (1-indexed) page number of the image in the original document. The first page carries the original document content and mime type.",
+          "format": "int32",
+          "type": "integer"
         }
       },
       "type": "object"
@@ -18586,6 +18786,13 @@
           "description": "Whether the category is flagged as being present. Currently, this is set to true if score \u003e= 0.5.",
           "type": "boolean"
         },
+        "influentialTerms": {
+          "description": "The influential terms that could potentially block the response.",
+          "items": {
+            "$ref": "CloudAiNlLlmProtoServiceRaiSignalInfluentialTerm"
+          },
+          "type": "array"
+        },
         "raiCategory": {
           "description": "The RAI category.",
           "enum": [
@@ -18670,6 +18877,41 @@
           "description": "The score for the category, in the range [0.0, 1.0].",
           "format": "float",
           "type": "number"
+        }
+      },
+      "type": "object"
+    },
+    "CloudAiNlLlmProtoServiceRaiSignalInfluentialTerm": {
+      "description": "The influential term that could potentially block the response.",
+      "id": "CloudAiNlLlmProtoServiceRaiSignalInfluentialTerm",
+      "properties": {
+        "beginOffset": {
+          "description": "The beginning offset of the influential term.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "confidence": {
+          "description": "The confidence score of the influential term.",
+          "format": "float",
+          "type": "number"
+        },
+        "source": {
+          "description": "The source of the influential term, prompt or response.",
+          "enum": [
+            "SOURCE_UNSPECIFIED",
+            "PROMPT",
+            "RESPONSE"
+          ],
+          "enumDescriptions": [
+            "Unspecified source.",
+            "The influential term comes from the prompt.",
+            "The influential term comes from the response."
+          ],
+          "type": "string"
+        },
+        "term": {
+          "description": "The influential term.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -20028,7 +20270,10 @@
             "MAX_TOKENS",
             "SAFETY",
             "RECITATION",
-            "OTHER"
+            "OTHER",
+            "BLOCKLIST",
+            "PROHIBITED_CONTENT",
+            "SPII"
           ],
           "enumDescriptions": [
             "The finish reason is unspecified.",
@@ -20036,7 +20281,10 @@
             "The maximum number of tokens as specified in the request was reached.",
             "The token generation was stopped as the response was flagged for safety reasons. NOTE: When streaming the Candidate.content will be empty if content filters blocked the output.",
             "The token generation was stopped as the response was flagged for unauthorized citations.",
-            "All other reasons that stopped the token generation"
+            "All other reasons that stopped the token generation",
+            "The token generation was stopped as the response was flagged for the terms which are included from the terminology blocklist.",
+            "The token generation was stopped as the response was flagged for the prohibited contents.",
+            "The token generation was stopped as the response was flagged for Sensitive Personally Identifiable Information (SPII) contents."
           ],
           "readOnly": true,
           "type": "string"
@@ -23647,7 +23895,7 @@
           "type": "string"
         },
         "serviceAgentType": {
-          "description": "Optional. Service agent type used during data sync. By default, the Vertex AI Service Agent is used. When using an IAM Policy to isolate this FeatureView within a project (https://cloud.google.com/vertex-ai/docs/featurestore/latest/resource-policy) a separate service account should be provisioned by setting this field to `SERVICE_AGENT_TYPE_FEATURE_VIEW`. This will generate a separate service account to access the BigQuery source table.",
+          "description": "Optional. Service agent type used during data sync. By default, the Vertex AI Service Agent is used. When using an IAM Policy to isolate this FeatureView within a project, a separate service account should be provisioned by setting this field to `SERVICE_AGENT_TYPE_FEATURE_VIEW`. This will generate a separate service account to access the BigQuery source table.",
           "enum": [
             "SERVICE_AGENT_TYPE_UNSPECIFIED",
             "SERVICE_AGENT_TYPE_PROJECT",
@@ -24221,7 +24469,7 @@
       "type": "object"
     },
     "GoogleCloudAiplatformV1beta1FindNeighborsRequest": {
-      "description": "The request message for MatchService.FindNeighbors.",
+      "description": "LINT.IfChange The request message for MatchService.FindNeighbors.",
       "id": "GoogleCloudAiplatformV1beta1FindNeighborsRequest",
       "properties": {
         "deployedIndexId": {
@@ -24525,12 +24773,16 @@
           "enum": [
             "BLOCKED_REASON_UNSPECIFIED",
             "SAFETY",
-            "OTHER"
+            "OTHER",
+            "BLOCKLIST",
+            "PROHIBITED_CONTENT"
           ],
           "enumDescriptions": [
             "Unspecified blocked reason.",
             "Candidates blocked due to safety.",
-            "Candidates blocked due to other reason."
+            "Candidates blocked due to other reason.",
+            "Candidates blocked due to the terms which are included from the terminology blocklist.",
+            "Candidates blocked due to prohibited content."
           ],
           "readOnly": true,
           "type": "string"
@@ -29143,14 +29395,16 @@
             "PROVISIONING",
             "RUNNING",
             "STOPPING",
-            "ERROR"
+            "ERROR",
+            "UPDATING"
           ],
           "enumDescriptions": [
             "Not set.",
             "The PROVISIONING state indicates the persistent resources is being created.",
             "The RUNNING state indicates the persistent resource is healthy and fully usable.",
             "The STOPPING state indicates the persistent resource is being deleted.",
-            "The ERROR state indicates the persistent resource may be unusable. Details can be found in the `error` field."
+            "The ERROR state indicates the persistent resource may be unusable. Details can be found in the `error` field.",
+            "The UPDATING state indicates the persistent resource is being updated."
           ],
           "readOnly": true,
           "type": "string"
@@ -29900,7 +30154,6 @@
           "description": "Optional. Indicates the launch stage of the model.",
           "enum": [
             "LAUNCH_STAGE_UNSPECIFIED",
-            "DOGFOOD",
             "EXPERIMENTAL",
             "PRIVATE_PREVIEW",
             "PUBLIC_PREVIEW",
@@ -29908,7 +30161,6 @@
           ],
           "enumDescriptions": [
             "The model launch stage is unspecified.",
-            "Used to indicate the PublisherModel is at Google internal testing launch stage.",
             "Used to indicate the PublisherModel is at Experimental launch stage, available to a small set of customers.",
             "Used to indicate the PublisherModel is at Private Preview launch stage, only available to a small set of customers, although a larger set of customers than an Experimental launch. Previews are the first launch stage used to get feedback from customers.",
             "Used to indicate the PublisherModel is at Public Preview launch stage, available to all customers, although not supported for production workloads.",
@@ -41048,6 +41300,7 @@
             "C",
             "DART",
             "GRADLE",
+            "GROOVY",
             "JAVADOC",
             "JSON",
             "MAKEFILE",
@@ -41075,6 +41328,7 @@
             "C code.",
             "Dart code.",
             "Gradle code.",
+            "Groovy code.",
             "API documentation.",
             "JSON code.",
             "Makefile code.",

@@ -11328,7 +11328,8 @@ type GoogleCloudDocumentaiV1beta3ImportProcessorVersionRequest struct {
 
 	// ProcessorVersionSource: The source processor version to import from.
 	// The source processor version and destination processor need to be in
-	// the same environment and region.
+	// the same environment and region. Note that ProcessorVersions with
+	// `model_type` `MODEL_TYPE_LLM` are not supported.
 	ProcessorVersionSource string `json:"processorVersionSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

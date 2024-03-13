@@ -6384,6 +6384,10 @@ type GoogleCloudDocumentaiV1TrainProcessorVersionRequest struct {
 	// trained with.
 	DocumentSchema *GoogleCloudDocumentaiV1DocumentSchema `json:"documentSchema,omitempty"`
 
+	// FoundationModelTuningOptions: Options to control foundation model
+	// tuning of a processor.
+	FoundationModelTuningOptions *GoogleCloudDocumentaiV1TrainProcessorVersionRequestFoundationModelTuningOptions `json:"foundationModelTuningOptions,omitempty"`
+
 	// InputData: Optional. The input data used to train the
 	// ProcessorVersion.
 	InputData *GoogleCloudDocumentaiV1TrainProcessorVersionRequestInputData `json:"inputData,omitempty"`
@@ -6450,6 +6454,59 @@ func (s *GoogleCloudDocumentaiV1TrainProcessorVersionRequestCustomDocumentExtrac
 	type NoMethod GoogleCloudDocumentaiV1TrainProcessorVersionRequestCustomDocumentExtractionOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDocumentaiV1TrainProcessorVersionRequestFoundationModelTuni
+// ngOptions: Options to control foundation model tuning of the
+// processor.
+type GoogleCloudDocumentaiV1TrainProcessorVersionRequestFoundationModelTuningOptions struct {
+	// LearningRateMultiplier: Optional. The multiplier to apply to the
+	// recommended learning rate. Valid values are between 0.1 and 10. If
+	// not provided, recommended learning rate will be used.
+	LearningRateMultiplier float64 `json:"learningRateMultiplier,omitempty"`
+
+	// TrainSteps: Optional. The number of steps to run for model tuning.
+	// Valid values are between 1 and 400. If not provided, recommended
+	// steps will be used.
+	TrainSteps int64 `json:"trainSteps,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "LearningRateMultiplier") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "LearningRateMultiplier")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDocumentaiV1TrainProcessorVersionRequestFoundationModelTuningOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDocumentaiV1TrainProcessorVersionRequestFoundationModelTuningOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleCloudDocumentaiV1TrainProcessorVersionRequestFoundationModelTuningOptions) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleCloudDocumentaiV1TrainProcessorVersionRequestFoundationModelTuningOptions
+	var s1 struct {
+		LearningRateMultiplier gensupport.JSONFloat64 `json:"learningRateMultiplier"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.LearningRateMultiplier = float64(s1.LearningRateMultiplier)
+	return nil
 }
 
 // GoogleCloudDocumentaiV1TrainProcessorVersionRequestInputData: The

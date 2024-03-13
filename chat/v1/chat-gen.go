@@ -517,6 +517,9 @@ type Annotation struct {
 	// annotation corresponds to.
 	Length int64 `json:"length,omitempty"`
 
+	// RichLinkMetadata: The metadata for a rich link.
+	RichLinkMetadata *RichLinkMetadata `json:"richLinkMetadata,omitempty"`
+
 	// SlashCommand: The metadata for a slash command.
 	SlashCommand *SlashCommandMetadata `json:"slashCommand,omitempty"`
 
@@ -531,6 +534,7 @@ type Annotation struct {
 	// use.
 	//   "USER_MENTION" - A user is mentioned.
 	//   "SLASH_COMMAND" - A slash command is invoked.
+	//   "RICH_LINK" - A rich link annotation.
 	Type string `json:"type,omitempty"`
 
 	// UserMention: The metadata of user mention.
@@ -1531,6 +1535,39 @@ type DriveDataRef struct {
 
 func (s *DriveDataRef) MarshalJSON() ([]byte, error) {
 	type NoMethod DriveDataRef
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DriveLinkData: Data for Google Drive links.
+type DriveLinkData struct {
+	// DriveDataRef: A DriveDataRef
+	// (https://developers.google.com/chat/api/reference/rest/v1/spaces.messages.attachments#drivedataref)
+	// which references a Google Drive file.
+	DriveDataRef *DriveDataRef `json:"driveDataRef,omitempty"`
+
+	// MimeType: The mime type of the linked Google Drive resource.
+	MimeType string `json:"mimeType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DriveDataRef") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DriveDataRef") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DriveLinkData) MarshalJSON() ([]byte, error) {
+	type NoMethod DriveLinkData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4546,6 +4583,45 @@ type Reaction struct {
 
 func (s *Reaction) MarshalJSON() ([]byte, error) {
 	type NoMethod Reaction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RichLinkMetadata: A rich link to a resource.
+type RichLinkMetadata struct {
+	// DriveLinkData: Data for a drive link.
+	DriveLinkData *DriveLinkData `json:"driveLinkData,omitempty"`
+
+	// RichLinkType: The rich link type.
+	//
+	// Possible values:
+	//   "RICH_LINK_TYPE_UNSPECIFIED" - Default value for the enum. Don't
+	// use.
+	//   "DRIVE_FILE" - A Google Drive rich link type.
+	RichLinkType string `json:"richLinkType,omitempty"`
+
+	// Uri: The URI of this link.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DriveLinkData") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DriveLinkData") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RichLinkMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod RichLinkMetadata
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

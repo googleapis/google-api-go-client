@@ -1683,9 +1683,9 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// ModelSpec: Model specification.
 	ModelSpec *GoogleCloudDatacatalogV1ModelSpec `json:"modelSpec,omitempty"`
 
-	// Name: Output only. The resource name of an entry in URL format. Note:
-	// The entry itself and its child resources might not be stored in the
-	// location specified in its name.
+	// Name: Output only. Identifier. The resource name of an entry in URL
+	// format. Note: The entry itself and its child resources might not be
+	// stored in the location specified in its name.
 	Name string `json:"name,omitempty"`
 
 	// PersonalDetails: Output only. Additional information related to the
@@ -1820,9 +1820,9 @@ type GoogleCloudDatacatalogV1EntryGroup struct {
 	// "analytics data - jan 2011". Default value is an empty string.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: The resource name of the entry group in URL format. Note: The
-	// entry group itself and its child resources might not be stored in the
-	// location specified in its name.
+	// Name: Identifier. The resource name of the entry group in URL format.
+	// Note: The entry group itself and its child resources might not be
+	// stored in the location specified in its name.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -3892,9 +3892,9 @@ type GoogleCloudDatacatalogV1Tag struct {
 	// field IDs. A tag must have at least 1 field and at most 500 fields.
 	Fields map[string]GoogleCloudDatacatalogV1TagField `json:"fields,omitempty"`
 
-	// Name: The resource name of the tag in URL format where tag ID is a
-	// system-generated identifier. Note: The tag itself might not be stored
-	// in the location specified in its name.
+	// Name: Identifier. The resource name of the tag in URL format where
+	// tag ID is a system-generated identifier. Note: The tag itself might
+	// not be stored in the location specified in its name.
 	Name string `json:"name,omitempty"`
 
 	// Template: Required. The resource name of the tag template this tag
@@ -4068,9 +4068,9 @@ type GoogleCloudDatacatalogV1TagTemplate struct {
 	// ``tag:`` predicate.
 	IsPubliclyReadable bool `json:"isPubliclyReadable,omitempty"`
 
-	// Name: The resource name of the tag template in URL format. Note: The
-	// tag template itself and its child resources might not be stored in
-	// the location specified in its name.
+	// Name: Identifier. The resource name of the tag template in URL
+	// format. Note: The tag template itself and its child resources might
+	// not be stored in the location specified in its name.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4116,7 +4116,7 @@ type GoogleCloudDatacatalogV1TagTemplateField struct {
 	// IsRequired: If true, this field is required. Defaults to false.
 	IsRequired bool `json:"isRequired,omitempty"`
 
-	// Name: Output only. The resource name of the tag template field in URL
+	// Name: Identifier. The resource name of the tag template field in URL
 	// format. Example:
 	// `projects/{PROJECT_ID}/locations/{LOCATION}/tagTemplates/{TAG_TEMPLATE
 	// }/fields/{FIELD}` Note: The tag template field itself might not be
@@ -6185,9 +6185,9 @@ type ProjectsLocationsEntryGroupsPatchCall struct {
 // more information, see Data Catalog resource project
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 //
-//   - name: The resource name of the entry group in URL format. Note: The
-//     entry group itself and its child resources might not be stored in
-//     the location specified in its name.
+//   - name: Identifier. The resource name of the entry group in URL
+//     format. Note: The entry group itself and its child resources might
+//     not be stored in the location specified in its name.
 func (r *ProjectsLocationsEntryGroupsService) Patch(name string, googleclouddatacatalogv1entrygroup *GoogleCloudDatacatalogV1EntryGroup) *ProjectsLocationsEntryGroupsPatchCall {
 	c := &ProjectsLocationsEntryGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6306,7 +6306,7 @@ func (c *ProjectsLocationsEntryGroupsPatchCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the entry group in URL format. Note: The entry group itself and its child resources might not be stored in the location specified in its name.",
+	//       "description": "Identifier. The resource name of the entry group in URL format. Note: The entry group itself and its child resources might not be stored in the location specified in its name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
 	//       "required": true,
@@ -7910,9 +7910,9 @@ type ProjectsLocationsEntryGroupsEntriesPatchCall struct {
 // information, see Data Catalog resource project
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 //
-//   - name: Output only. The resource name of an entry in URL format.
-//     Note: The entry itself and its child resources might not be stored
-//     in the location specified in its name.
+//   - name: Output only. Identifier. The resource name of an entry in URL
+//     format. Note: The entry itself and its child resources might not be
+//     stored in the location specified in its name.
 func (r *ProjectsLocationsEntryGroupsEntriesService) Patch(name string, googleclouddatacatalogv1entry *GoogleCloudDatacatalogV1Entry) *ProjectsLocationsEntryGroupsEntriesPatchCall {
 	c := &ProjectsLocationsEntryGroupsEntriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8036,7 +8036,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The resource name of an entry in URL format. Note: The entry itself and its child resources might not be stored in the location specified in its name.",
+	//       "description": "Output only. Identifier. The resource name of an entry in URL format. Note: The entry itself and its child resources might not be stored in the location specified in its name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -9000,9 +9000,9 @@ type ProjectsLocationsEntryGroupsEntriesTagsPatchCall struct {
 
 // Patch: Updates an existing tag.
 //
-//   - name: The resource name of the tag in URL format where tag ID is a
-//     system-generated identifier. Note: The tag itself might not be
-//     stored in the location specified in its name.
+//   - name: Identifier. The resource name of the tag in URL format where
+//     tag ID is a system-generated identifier. Note: The tag itself might
+//     not be stored in the location specified in its name.
 func (r *ProjectsLocationsEntryGroupsEntriesTagsService) Patch(nameid string, googleclouddatacatalogv1tag *GoogleCloudDatacatalogV1Tag) *ProjectsLocationsEntryGroupsEntriesTagsPatchCall {
 	c := &ProjectsLocationsEntryGroupsEntriesTagsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -9121,7 +9121,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsPatchCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the tag in URL format where tag ID is a system-generated identifier. Note: The tag itself might not be stored in the location specified in its name.",
+	//       "description": "Identifier. The resource name of the tag in URL format where tag ID is a system-generated identifier. Note: The tag itself might not be stored in the location specified in its name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+/tags/[^/]+$",
 	//       "required": true,
@@ -9791,9 +9791,9 @@ type ProjectsLocationsEntryGroupsTagsPatchCall struct {
 
 // Patch: Updates an existing tag.
 //
-//   - name: The resource name of the tag in URL format where tag ID is a
-//     system-generated identifier. Note: The tag itself might not be
-//     stored in the location specified in its name.
+//   - name: Identifier. The resource name of the tag in URL format where
+//     tag ID is a system-generated identifier. Note: The tag itself might
+//     not be stored in the location specified in its name.
 func (r *ProjectsLocationsEntryGroupsTagsService) Patch(nameid string, googleclouddatacatalogv1tag *GoogleCloudDatacatalogV1Tag) *ProjectsLocationsEntryGroupsTagsPatchCall {
 	c := &ProjectsLocationsEntryGroupsTagsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.nameid = nameid
@@ -9912,7 +9912,7 @@ func (c *ProjectsLocationsEntryGroupsTagsPatchCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the tag in URL format where tag ID is a system-generated identifier. Note: The tag itself might not be stored in the location specified in its name.",
+	//       "description": "Identifier. The resource name of the tag in URL format where tag ID is a system-generated identifier. Note: The tag itself might not be stored in the location specified in its name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/tags/[^/]+$",
 	//       "required": true,
@@ -11198,9 +11198,9 @@ type ProjectsLocationsTagTemplatesPatchCall struct {
 // For more information, see Data Catalog resource project
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project).
 //
-//   - name: The resource name of the tag template in URL format. Note:
-//     The tag template itself and its child resources might not be stored
-//     in the location specified in its name.
+//   - name: Identifier. The resource name of the tag template in URL
+//     format. Note: The tag template itself and its child resources might
+//     not be stored in the location specified in its name.
 func (r *ProjectsLocationsTagTemplatesService) Patch(name string, googleclouddatacatalogv1tagtemplate *GoogleCloudDatacatalogV1TagTemplate) *ProjectsLocationsTagTemplatesPatchCall {
 	c := &ProjectsLocationsTagTemplatesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11321,7 +11321,7 @@ func (c *ProjectsLocationsTagTemplatesPatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the tag template in URL format. Note: The tag template itself and its child resources might not be stored in the location specified in its name.",
+	//       "description": "Identifier. The resource name of the tag template in URL format. Note: The tag template itself and its child resources might not be stored in the location specified in its name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
 	//       "required": true,

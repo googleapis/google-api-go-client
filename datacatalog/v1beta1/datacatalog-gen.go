@@ -1637,9 +1637,9 @@ type GoogleCloudDatacatalogV1Entry struct {
 	// ModelSpec: Model specification.
 	ModelSpec *GoogleCloudDatacatalogV1ModelSpec `json:"modelSpec,omitempty"`
 
-	// Name: Output only. The resource name of an entry in URL format. Note:
-	// The entry itself and its child resources might not be stored in the
-	// location specified in its name.
+	// Name: Output only. Identifier. The resource name of an entry in URL
+	// format. Note: The entry itself and its child resources might not be
+	// stored in the location specified in its name.
 	Name string `json:"name,omitempty"`
 
 	// PersonalDetails: Output only. Additional information related to the
@@ -2691,9 +2691,9 @@ type GoogleCloudDatacatalogV1Tag struct {
 	// field IDs. A tag must have at least 1 field and at most 500 fields.
 	Fields map[string]GoogleCloudDatacatalogV1TagField `json:"fields,omitempty"`
 
-	// Name: The resource name of the tag in URL format where tag ID is a
-	// system-generated identifier. Note: The tag itself might not be stored
-	// in the location specified in its name.
+	// Name: Identifier. The resource name of the tag in URL format where
+	// tag ID is a system-generated identifier. Note: The tag itself might
+	// not be stored in the location specified in its name.
 	Name string `json:"name,omitempty"`
 
 	// Template: Required. The resource name of the tag template this tag
@@ -3337,8 +3337,8 @@ type GoogleCloudDatacatalogV1beta1Entry struct {
 	// to an empty string.
 	LinkedResource string `json:"linkedResource,omitempty"`
 
-	// Name: Output only. The Data Catalog resource name of the entry in URL
-	// format. Example: *
+	// Name: Output only. Identifier. The Data Catalog resource name of the
+	// entry in URL format. Example: *
 	// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
 	// }/entries/{entry_id} Note that this Entry and its child resources may
 	// not actually be stored in the location in this name.
@@ -3439,7 +3439,8 @@ type GoogleCloudDatacatalogV1beta1EntryGroup struct {
 	// "analytics data - jan 2011". Default value is an empty string.
 	DisplayName string `json:"displayName,omitempty"`
 
-	// Name: The resource name of the entry group in URL format. Example: *
+	// Name: Identifier. The resource name of the entry group in URL format.
+	// Example: *
 	// projects/{project_id}/locations/{location}/entryGroups/{entry_group_id
 	// } Note that this EntryGroup and its child resources may not actually
 	// be stored in the location in this name.
@@ -4536,7 +4537,8 @@ type GoogleCloudDatacatalogV1beta1Tag struct {
 	// 500 fields.
 	Fields map[string]GoogleCloudDatacatalogV1beta1TagField `json:"fields,omitempty"`
 
-	// Name: The resource name of the tag in URL format. Example: *
+	// Name: Identifier. The resource name of the tag in URL format.
+	// Example: *
 	// projects/{project_id}/locations/{location}/entrygroups/{entry_group_id
 	// }/entries/{entry_id}/tags/{tag_id} where `tag_id` is a
 	// system-generated identifier. Note that this Tag may not actually be
@@ -4698,7 +4700,8 @@ type GoogleCloudDatacatalogV1beta1TagTemplate struct {
 	// long. Field IDs must start with a letter or underscore.
 	Fields map[string]GoogleCloudDatacatalogV1beta1TagTemplateField `json:"fields,omitempty"`
 
-	// Name: The resource name of the tag template in URL format. Example: *
+	// Name: Identifier. The resource name of the tag template in URL
+	// format. Example: *
 	// projects/{project_id}/locations/{location}/tagTemplates/{tag_template_
 	// id} Note that this TagTemplate and its child resources may not
 	// actually be stored in the location in this name.
@@ -4745,8 +4748,8 @@ type GoogleCloudDatacatalogV1beta1TagTemplateField struct {
 	// IsRequired: Whether this is a required field. Defaults to false.
 	IsRequired bool `json:"isRequired,omitempty"`
 
-	// Name: Output only. The resource name of the tag template field in URL
-	// format. Example: *
+	// Name: Output only. Identifier. The resource name of the tag template
+	// field in URL format. Example: *
 	// projects/{project_id}/locations/{location}/tagTemplates/{tag_template}
 	// /fields/{field} Note that this TagTemplateField may not actually be
 	// stored in the location in this name.
@@ -6452,8 +6455,8 @@ type ProjectsLocationsEntryGroupsPatchCall struct {
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
 // for more information).
 //
-//   - name: The resource name of the entry group in URL format. Example:
-//     *
+//   - name: Identifier. The resource name of the entry group in URL
+//     format. Example: *
 //     projects/{project_id}/locations/{location}/entryGroups/{entry_group_
 //     id} Note that this EntryGroup and its child resources may not
 //     actually be stored in the location in this name.
@@ -6575,7 +6578,7 @@ func (c *ProjectsLocationsEntryGroupsPatchCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the entry group in URL format. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id} Note that this EntryGroup and its child resources may not actually be stored in the location in this name.",
+	//       "description": "Identifier. The resource name of the entry group in URL format. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id} Note that this EntryGroup and its child resources may not actually be stored in the location in this name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+$",
 	//       "required": true,
@@ -7745,8 +7748,8 @@ type ProjectsLocationsEntryGroupsEntriesPatchCall struct {
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
 // for more information).
 //
-//   - name: Output only. The Data Catalog resource name of the entry in
-//     URL format. Example: *
+//   - name: Output only. Identifier. The Data Catalog resource name of
+//     the entry in URL format. Example: *
 //     projects/{project_id}/locations/{location}/entryGroups/{entry_group_
 //     id}/entries/{entry_id} Note that this Entry and its child resources
 //     may not actually be stored in the location in this name.
@@ -7874,7 +7877,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesPatchCall) Do(opts ...googleapi.Call
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The Data Catalog resource name of the entry in URL format. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id} Note that this Entry and its child resources may not actually be stored in the location in this name.",
+	//       "description": "Output only. Identifier. The Data Catalog resource name of the entry in URL format. Example: * projects/{project_id}/locations/{location}/entryGroups/{entry_group_id}/entries/{entry_id} Note that this Entry and its child resources may not actually be stored in the location in this name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+$",
 	//       "required": true,
@@ -8552,7 +8555,8 @@ type ProjectsLocationsEntryGroupsEntriesTagsPatchCall struct {
 
 // Patch: Updates an existing tag.
 //
-//   - name: The resource name of the tag in URL format. Example: *
+//   - name: Identifier. The resource name of the tag in URL format.
+//     Example: *
 //     projects/{project_id}/locations/{location}/entrygroups/{entry_group_
 //     id}/entries/{entry_id}/tags/{tag_id} where `tag_id` is a
 //     system-generated identifier. Note that this Tag may not actually be
@@ -8676,7 +8680,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesTagsPatchCall) Do(opts ...googleapi.
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the tag in URL format. Example: * projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id} where `tag_id` is a system-generated identifier. Note that this Tag may not actually be stored in the location in this name.",
+	//       "description": "Identifier. The resource name of the tag in URL format. Example: * projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id} where `tag_id` is a system-generated identifier. Note that this Tag may not actually be stored in the location in this name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/entries/[^/]+/tags/[^/]+$",
 	//       "required": true,
@@ -9202,7 +9206,8 @@ type ProjectsLocationsEntryGroupsTagsPatchCall struct {
 
 // Patch: Updates an existing tag.
 //
-//   - name: The resource name of the tag in URL format. Example: *
+//   - name: Identifier. The resource name of the tag in URL format.
+//     Example: *
 //     projects/{project_id}/locations/{location}/entrygroups/{entry_group_
 //     id}/entries/{entry_id}/tags/{tag_id} where `tag_id` is a
 //     system-generated identifier. Note that this Tag may not actually be
@@ -9326,7 +9331,7 @@ func (c *ProjectsLocationsEntryGroupsTagsPatchCall) Do(opts ...googleapi.CallOpt
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the tag in URL format. Example: * projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id} where `tag_id` is a system-generated identifier. Note that this Tag may not actually be stored in the location in this name.",
+	//       "description": "Identifier. The resource name of the tag in URL format. Example: * projects/{project_id}/locations/{location}/entrygroups/{entry_group_id}/entries/{entry_id}/tags/{tag_id} where `tag_id` is a system-generated identifier. Note that this Tag may not actually be stored in the location in this name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/entryGroups/[^/]+/tags/[^/]+$",
 	//       "required": true,
@@ -9992,8 +9997,8 @@ type ProjectsLocationsTagTemplatesPatchCall struct {
 // (https://cloud.google.com/data-catalog/docs/concepts/resource-project)
 // for more information).
 //
-//   - name: The resource name of the tag template in URL format. Example:
-//     *
+//   - name: Identifier. The resource name of the tag template in URL
+//     format. Example: *
 //     projects/{project_id}/locations/{location}/tagTemplates/{tag_templat
 //     e_id} Note that this TagTemplate and its child resources may not
 //     actually be stored in the location in this name.
@@ -10117,7 +10122,7 @@ func (c *ProjectsLocationsTagTemplatesPatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The resource name of the tag template in URL format. Example: * projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id} Note that this TagTemplate and its child resources may not actually be stored in the location in this name.",
+	//       "description": "Identifier. The resource name of the tag template in URL format. Example: * projects/{project_id}/locations/{location}/tagTemplates/{tag_template_id} Note that this TagTemplate and its child resources may not actually be stored in the location in this name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/tagTemplates/[^/]+$",
 	//       "required": true,

@@ -990,7 +990,7 @@
       }
     }
   },
-  "revision": "20240305",
+  "revision": "20240310",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "ActionParameter": {
@@ -1111,6 +1111,10 @@
           "format": "int32",
           "type": "integer"
         },
+        "richLinkMetadata": {
+          "$ref": "RichLinkMetadata",
+          "description": "The metadata for a rich link."
+        },
         "slashCommand": {
           "$ref": "SlashCommandMetadata",
           "description": "The metadata for a slash command."
@@ -1125,12 +1129,14 @@
           "enum": [
             "ANNOTATION_TYPE_UNSPECIFIED",
             "USER_MENTION",
-            "SLASH_COMMAND"
+            "SLASH_COMMAND",
+            "RICH_LINK"
           ],
           "enumDescriptions": [
             "Default value for the enum. Don't use.",
             "A user is mentioned.",
-            "A slash command is invoked."
+            "A slash command is invoked.",
+            "A rich link annotation."
           ],
           "type": "string"
         },
@@ -1668,6 +1674,21 @@
       "properties": {
         "driveFileId": {
           "description": "The ID for the drive file. Use with the Drive API.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "DriveLinkData": {
+      "description": "Data for Google Drive links.",
+      "id": "DriveLinkData",
+      "properties": {
+        "driveDataRef": {
+          "$ref": "DriveDataRef",
+          "description": "A [DriveDataRef](https://developers.google.com/chat/api/reference/rest/v1/spaces.messages.attachments#drivedataref) which references a Google Drive file."
+        },
+        "mimeType": {
+          "description": "The mime type of the linked Google Drive resource.",
           "type": "string"
         }
       },
@@ -3368,6 +3389,33 @@
           "$ref": "User",
           "description": "Output only. The user who created the reaction.",
           "readOnly": true
+        }
+      },
+      "type": "object"
+    },
+    "RichLinkMetadata": {
+      "description": "A rich link to a resource.",
+      "id": "RichLinkMetadata",
+      "properties": {
+        "driveLinkData": {
+          "$ref": "DriveLinkData",
+          "description": "Data for a drive link."
+        },
+        "richLinkType": {
+          "description": "The rich link type.",
+          "enum": [
+            "RICH_LINK_TYPE_UNSPECIFIED",
+            "DRIVE_FILE"
+          ],
+          "enumDescriptions": [
+            "Default value for the enum. Don't use.",
+            "A Google Drive rich link type."
+          ],
+          "type": "string"
+        },
+        "uri": {
+          "description": "The URI of this link.",
+          "type": "string"
         }
       },
       "type": "object"

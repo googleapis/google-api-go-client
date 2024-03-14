@@ -8254,17 +8254,22 @@ func (s *MerchantRejectionReason) MarshalJSON() ([]byte, error) {
 
 // MethodQuota: The quota information per method in the Content API.
 type MethodQuota struct {
-	// Method: The method name, for example `products.list`. Method name
-	// does not contain version because quota can be shared between
-	// different API versions of the same method.
+	// Method: Output only. The method name, for example `products.list`.
+	// Method name does not contain version because quota can be shared
+	// between different API versions of the same method.
 	Method string `json:"method,omitempty"`
 
-	// QuotaLimit: The current quota limit per day, meaning the maximum
-	// number of calls for the method.
+	// QuotaLimit: Output only. The maximum number of calls allowed per day
+	// for the method.
 	QuotaLimit int64 `json:"quotaLimit,omitempty,string"`
 
-	// QuotaUsage: The current quota usage, meaning the number of calls
-	// already made to the method.
+	// QuotaMinuteLimit: Output only. The maximum number of calls allowed
+	// per minute for the method.
+	QuotaMinuteLimit int64 `json:"quotaMinuteLimit,omitempty,string"`
+
+	// QuotaUsage: Output only. The current quota usage, meaning the number
+	// of calls already made to the method per day. Usage is reset every day
+	// at 12 PM midday UTC.
 	QuotaUsage int64 `json:"quotaUsage,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Method") to

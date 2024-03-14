@@ -400,7 +400,7 @@ type BatchCreateContactsRequest struct {
 	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
 	// SourceType.DOMAIN_CONTACT.
 	//   "READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-	// SourceType.DOMAIN_CONTACT.
+	// SourceType.OTHER_CONTACT.
 	Sources []string `json:"sources,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Contacts") to
@@ -555,7 +555,7 @@ type BatchUpdateContactsRequest struct {
 	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
 	// SourceType.DOMAIN_CONTACT.
 	//   "READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-	// SourceType.DOMAIN_CONTACT.
+	// SourceType.OTHER_CONTACT.
 	Sources []string `json:"sources,omitempty"`
 
 	// UpdateMask: Required. A field mask to restrict which fields on the
@@ -1056,7 +1056,7 @@ type CopyOtherContactToMyContactsGroupRequest struct {
 	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
 	// SourceType.DOMAIN_CONTACT.
 	//   "READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-	// SourceType.DOMAIN_CONTACT.
+	// SourceType.OTHER_CONTACT.
 	Sources []string `json:"sources,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CopyMask") to
@@ -3288,7 +3288,7 @@ type UpdateContactPhotoRequest struct {
 	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
 	// SourceType.DOMAIN_CONTACT.
 	//   "READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-	// SourceType.DOMAIN_CONTACT.
+	// SourceType.OTHER_CONTACT.
 	Sources []string `json:"sources,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "PersonFields") to
@@ -4807,7 +4807,7 @@ func (c *OtherContactsListCall) RequestSyncToken(requestSyncToken bool) *OtherCo
 //
 //	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
 //
-// SourceType.DOMAIN_CONTACT.
+// SourceType.OTHER_CONTACT.
 func (c *OtherContactsListCall) Sources(sources ...string) *OtherContactsListCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
@@ -4962,7 +4962,7 @@ func (c *OtherContactsListCall) Do(opts ...googleapi.CallOption) (*ListOtherCont
 	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
 	//         "Returns SourceType.CONTACT.",
 	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT."
+	//         "Returns SourceType.OTHER_CONTACT."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -5623,7 +5623,7 @@ func (c *PeopleCreateContactCall) PersonFields(personFields string) *PeopleCreat
 //
 //	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
 //
-// SourceType.DOMAIN_CONTACT.
+// SourceType.OTHER_CONTACT.
 func (c *PeopleCreateContactCall) Sources(sources ...string) *PeopleCreateContactCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
@@ -5743,7 +5743,7 @@ func (c *PeopleCreateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
 	//         "Returns SourceType.CONTACT.",
 	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT."
+	//         "Returns SourceType.OTHER_CONTACT."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -5952,7 +5952,7 @@ func (c *PeopleDeleteContactPhotoCall) PersonFields(personFields string) *People
 //
 //	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
 //
-// SourceType.DOMAIN_CONTACT.
+// SourceType.OTHER_CONTACT.
 func (c *PeopleDeleteContactPhotoCall) Sources(sources ...string) *PeopleDeleteContactPhotoCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
@@ -6079,7 +6079,7 @@ func (c *PeopleDeleteContactPhotoCall) Do(opts ...googleapi.CallOption) (*Delete
 	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
 	//         "Returns SourceType.CONTACT.",
 	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT."
+	//         "Returns SourceType.OTHER_CONTACT."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -6165,7 +6165,7 @@ func (c *PeopleGetCall) RequestMaskIncludeField(requestMaskIncludeField string) 
 //
 //	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
 //
-// SourceType.DOMAIN_CONTACT.
+// SourceType.OTHER_CONTACT.
 func (c *PeopleGetCall) Sources(sources ...string) *PeopleGetCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
@@ -6311,7 +6311,7 @@ func (c *PeopleGetCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
 	//         "Returns SourceType.CONTACT.",
 	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT."
+	//         "Returns SourceType.OTHER_CONTACT."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -6413,7 +6413,7 @@ func (c *PeopleGetBatchGetCall) ResourceNames(resourceNames ...string) *PeopleGe
 //
 //	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
 //
-// SourceType.DOMAIN_CONTACT.
+// SourceType.OTHER_CONTACT.
 func (c *PeopleGetBatchGetCall) Sources(sources ...string) *PeopleGetBatchGetCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
@@ -6553,7 +6553,7 @@ func (c *PeopleGetBatchGetCall) Do(opts ...googleapi.CallOption) (*GetPeopleResp
 	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
 	//         "Returns SourceType.CONTACT.",
 	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT."
+	//         "Returns SourceType.OTHER_CONTACT."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -6954,7 +6954,7 @@ func (c *PeopleSearchContactsCall) ReadMask(readMask string) *PeopleSearchContac
 //
 //	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
 //
-// SourceType.DOMAIN_CONTACT.
+// SourceType.OTHER_CONTACT.
 func (c *PeopleSearchContactsCall) Sources(sources ...string) *PeopleSearchContactsCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
@@ -7093,7 +7093,7 @@ func (c *PeopleSearchContactsCall) Do(opts ...googleapi.CallOption) (*SearchResp
 	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
 	//         "Returns SourceType.CONTACT.",
 	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT."
+	//         "Returns SourceType.OTHER_CONTACT."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -7459,7 +7459,7 @@ func (c *PeopleUpdateContactCall) PersonFields(personFields string) *PeopleUpdat
 //
 //	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
 //
-// SourceType.DOMAIN_CONTACT.
+// SourceType.OTHER_CONTACT.
 func (c *PeopleUpdateContactCall) Sources(sources ...string) *PeopleUpdateContactCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
@@ -7605,7 +7605,7 @@ func (c *PeopleUpdateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
 	//         "Returns SourceType.CONTACT.",
 	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT."
+	//         "Returns SourceType.OTHER_CONTACT."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,
@@ -7903,7 +7903,7 @@ func (c *PeopleConnectionsListCall) SortOrder(sortOrder string) *PeopleConnectio
 //
 //	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
 //
-// SourceType.DOMAIN_CONTACT.
+// SourceType.OTHER_CONTACT.
 func (c *PeopleConnectionsListCall) Sources(sources ...string) *PeopleConnectionsListCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
@@ -8093,7 +8093,7 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
 	//         "Returns SourceType.CONTACT.",
 	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT."
+	//         "Returns SourceType.OTHER_CONTACT."
 	//       ],
 	//       "location": "query",
 	//       "repeated": true,

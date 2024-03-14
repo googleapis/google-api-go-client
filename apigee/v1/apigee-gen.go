@@ -1844,13 +1844,18 @@ func (s *GoogleCloudApigeeV1ApiCategoryResponse) MarshalJSON() ([]byte, error) {
 // apps linked to one or more API products.
 type GoogleCloudApigeeV1ApiDoc struct {
 	// AnonAllowed: Optional. Boolean flag that manages user access to the
-	// catalog item. When true, the catalog item can be viewed anonymously;
-	// otherwise, only registered users may view it. Note: when the parent
-	// portal is enrolled in the audience management feature
+	// catalog item. When true, the catalog item has public visibility and
+	// can be viewed anonymously; otherwise, only registered users may view
+	// it. Note: when the parent portal is enrolled in the audience
+	// management feature
 	// (https://cloud.google.com/apigee/docs/api-platform/publish/portal/portal-audience#enrolling_in_the_beta_release_of_the_audience_management_feature),
-	// this flag is ignored; instead visibility must be further managed in
-	// the management UI (see Manage the visibility of an API in your portal
+	// and this flag is set to false, visibility is set to an indeterminate
+	// state and must be explicitly specified in the management UI (see
+	// Manage the visibility of an API in your portal
 	// (https://cloud.google.com/apigee/docs/api-platform/publish/portal/publish-apis#visibility)).
+	// Additionally, when enrolled in the audience management feature,
+	// updates to this flag will be ignored as visibility permissions must
+	// be updated in the management UI.
 	AnonAllowed bool `json:"anonAllowed,omitempty"`
 
 	// ApiProductName: Required. Immutable. The `name` field of the
@@ -1900,11 +1905,12 @@ type GoogleCloudApigeeV1ApiDoc struct {
 	// the portal or is in a draft state. When the parent portal is enrolled
 	// in the audience management feature
 	// (https://cloud.google.com/apigee/docs/api-platform/publish/portal/portal-audience#enrolling_in_the_beta_release_of_the_audience_management_feature),
-	// the visibility must be further managed in the management UI (see
+	// the visibility can be set to public on creation by setting the
+	// anonAllowed flag to true or further managed in the management UI (see
 	// Manage the visibility of an API in your portal
 	// (https://cloud.google.com/apigee/docs/api-platform/publish/portal/publish-apis#visibility))
 	// before it can be visible to any users. If not enrolled in the
-	// audience management feature, the visibility is further managed by the
+	// audience management feature, the visibility is managed by the
 	// `anonAllowed` flag.
 	Published bool `json:"published,omitempty"`
 

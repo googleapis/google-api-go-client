@@ -1568,6 +1568,49 @@ func (s *PosixFilesystem) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ReplicationSpec: Specifies the configuration for running a
+// replication job.
+type ReplicationSpec struct {
+	// GcsDataSink: Specifies cloud Storage data sink.
+	GcsDataSink *GcsData `json:"gcsDataSink,omitempty"`
+
+	// GcsDataSource: Specifies cloud Storage data source.
+	GcsDataSource *GcsData `json:"gcsDataSource,omitempty"`
+
+	// ObjectConditions: Specifies the object conditions to only include
+	// objects that satisfy these conditions in the set of data source
+	// objects. Object conditions based on objects' "last modification time"
+	// do not exclude objects in a data sink.
+	ObjectConditions *ObjectConditions `json:"objectConditions,omitempty"`
+
+	// TransferOptions: Specifies the actions to be performed on the object
+	// during replication. Delete options are not supported for replication
+	// and when specified, the request fails with an INVALID_ARGUMENT error.
+	TransferOptions *TransferOptions `json:"transferOptions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsDataSink") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsDataSink") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplicationSpec) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplicationSpec
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ResumeTransferOperationRequest: Request passed to
 // ResumeTransferOperation.
 type ResumeTransferOperationRequest struct {
@@ -2006,6 +2049,9 @@ type TransferJob struct {
 
 	// ProjectId: The ID of the Google Cloud project that owns the job.
 	ProjectId string `json:"projectId,omitempty"`
+
+	// ReplicationSpec: Replication specification.
+	ReplicationSpec *ReplicationSpec `json:"replicationSpec,omitempty"`
 
 	// Schedule: Specifies schedule for the transfer job. This is an
 	// optional field. When the field is not set, the job never executes a

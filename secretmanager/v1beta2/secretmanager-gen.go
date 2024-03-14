@@ -1288,6 +1288,14 @@ type Secret struct {
 	// CreateTime: Output only. The time at which the Secret was created.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// CustomerManagedEncryption: Optional. The customer-managed encryption
+	// configuration of the Regionalised Secrets. If no configuration is
+	// provided, Google-managed default encryption is used. Updates to the
+	// Secret encryption configuration only apply to SecretVersions added
+	// afterwards. They do not apply retroactively to existing
+	// SecretVersions.
+	CustomerManagedEncryption *CustomerManagedEncryption `json:"customerManagedEncryption,omitempty"`
+
 	// Etag: Optional. Etag of the currently stored Secret.
 	Etag string `json:"etag,omitempty"`
 
@@ -1336,6 +1344,13 @@ type Secret struct {
 	// Access by alias is only supported for GetSecretVersion and
 	// AccessSecretVersion.
 	VersionAliases map[string]string `json:"versionAliases,omitempty"`
+
+	// VersionDestroyTtl: Optional. Secret Version TTL after destruction
+	// request This is a part of the Delayed secret version destroy feature.
+	// For secret with TTL>0, version destruction doesn't happen immediately
+	// on calling destroy instead the version goes to a disabled state and
+	// destruction happens after the TTL expires.
+	VersionDestroyTtl string `json:"versionDestroyTtl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
@@ -1417,6 +1432,12 @@ type SecretVersion struct {
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// CustomerManagedEncryption: Output only. The customer-managed
+	// encryption status of the SecretVersion. Only populated if
+	// customer-managed encryption is used and Secret is a Regionalised
+	// Secret.
+	CustomerManagedEncryption *CustomerManagedEncryptionStatus `json:"customerManagedEncryption,omitempty"`
+
 	// DestroyTime: Output only. The time this SecretVersion was destroyed.
 	// Only present if state is DESTROYED.
 	DestroyTime string `json:"destroyTime,omitempty"`
@@ -1432,6 +1453,14 @@ type SecretVersion struct {
 
 	// ReplicationStatus: The replication status of the SecretVersion.
 	ReplicationStatus *ReplicationStatus `json:"replicationStatus,omitempty"`
+
+	// ScheduledDestroyTime: Optional. Output only. Scheduled destroy time
+	// for secret version. This is a part of the Delayed secret version
+	// destroy feature. For a Secret with a valid version destroy TTL, when
+	// a secert version is destroyed, version is moved to disabled state and
+	// it is scheduled for destruction Version is destroyed only after the
+	// scheduled_destroy_time.
+	ScheduledDestroyTime string `json:"scheduledDestroyTime,omitempty"`
 
 	// State: Output only. The current state of the SecretVersion.
 	//

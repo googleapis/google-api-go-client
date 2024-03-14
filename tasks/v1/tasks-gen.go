@@ -248,6 +248,10 @@ type Task struct {
 	// timestamp).
 	Updated string `json:"updated,omitempty"`
 
+	// WebViewLink: An absolute link to the task in the Google Tasks Web UI.
+	// This field is read-only.
+	WebViewLink string `json:"webViewLink,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

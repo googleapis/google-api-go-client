@@ -1739,6 +1739,39 @@ func (s *GoogleChromeManagementV1DeviceHardwareCountReport) MarshalJSON() ([]byt
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1DeviceRequestingExtensionDetails: Details of
+// a device requesting an extension, including the name of the device
+// and the justification of the request.
+type GoogleChromeManagementV1DeviceRequestingExtensionDetails struct {
+	// DeviceName: The name of a device that has requested the extension.
+	DeviceName string `json:"deviceName,omitempty"`
+
+	// Justification: Request justification as entered by the user.
+	Justification string `json:"justification,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1DeviceRequestingExtensionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1DeviceRequestingExtensionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1DiskInfo: Status of the single storage
 // device.
 type GoogleChromeManagementV1DiskInfo struct {
@@ -1942,6 +1975,89 @@ type GoogleChromeManagementV1EnumeratePrintJobsResponse struct {
 
 func (s *GoogleChromeManagementV1EnumeratePrintJobsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleChromeManagementV1EnumeratePrintJobsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1FetchDevicesRequestingExtensionResponse:
+// Response containing a list of devices that have requested the queried
+// extension.
+type GoogleChromeManagementV1FetchDevicesRequestingExtensionResponse struct {
+	// DeviceDetails: Details of devices that have requested the queried
+	// extension.
+	DeviceDetails []*GoogleChromeManagementV1DeviceRequestingExtensionDetails `json:"deviceDetails,omitempty"`
+
+	// NextPageToken: Optional. Token to specify the next page in the list.
+	// Token expires after 1 day.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalSize: Optional. Total number of devices in response.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DeviceDetails") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeviceDetails") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1FetchDevicesRequestingExtensionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1FetchDevicesRequestingExtensionResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1FetchUsersRequestingExtensionResponse:
+// Response containing a list of users that have requested the queried
+// extension.
+type GoogleChromeManagementV1FetchUsersRequestingExtensionResponse struct {
+	// NextPageToken: Token to specify the next page in the list.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// TotalSize: Total number of users in response.
+	TotalSize int64 `json:"totalSize,omitempty"`
+
+	// UserDetails: Details of users that have requested the queried
+	// extension.
+	UserDetails []*GoogleChromeManagementV1UserRequestingExtensionDetails `json:"userDetails,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1FetchUsersRequestingExtensionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1FetchUsersRequestingExtensionResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4263,6 +4379,39 @@ func (s *GoogleChromeManagementV1UserPrintReport) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1UserRequestingExtensionDetails: Details of a
+// user requesting an extension, including the email and the
+// justification.
+type GoogleChromeManagementV1UserRequestingExtensionDetails struct {
+	// Email: The e-mail address of a user that has requested the extension.
+	Email string `json:"email,omitempty"`
+
+	// Justification: Request justification as entered by the user.
+	Justification string `json:"justification,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Email") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Email") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1UserRequestingExtensionDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1UserRequestingExtensionDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleProtobufEmpty: A generic empty message that you can re-use to
 // avoid defining duplicated empty messages in your APIs. A typical
 // example is to use it as the request or the response type of an API
@@ -4570,6 +4719,454 @@ func (c *CustomersAppsCountChromeAppRequestsCall) Do(opts ...googleapi.CallOptio
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *CustomersAppsCountChromeAppRequestsCall) Pages(ctx context.Context, f func(*GoogleChromeManagementV1CountChromeAppRequestsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "chromemanagement.customers.apps.fetchDevicesRequestingExtension":
+
+type CustomersAppsFetchDevicesRequestingExtensionCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchDevicesRequestingExtension: Get a list of devices that have
+// requested to install an extension.
+//
+//   - customer: The customer ID or "my_customer" prefixed with
+//     "customers/".
+func (r *CustomersAppsService) FetchDevicesRequestingExtension(customer string) *CustomersAppsFetchDevicesRequestingExtensionCall {
+	c := &CustomersAppsFetchDevicesRequestingExtensionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// ExtensionId sets the optional parameter "extensionId": Required. The
+// extension for which we want to find requesting devices.
+func (c *CustomersAppsFetchDevicesRequestingExtensionCall) ExtensionId(extensionId string) *CustomersAppsFetchDevicesRequestingExtensionCall {
+	c.urlParams_.Set("extensionId", extensionId)
+	return c
+}
+
+// OrgUnitId sets the optional parameter "orgUnitId": The ID of the
+// organizational unit. Only consider devices that directly belong to
+// this org unit, i.e. sub-orgunits are not counted. If omitted, all
+// data will be returned.
+func (c *CustomersAppsFetchDevicesRequestingExtensionCall) OrgUnitId(orgUnitId string) *CustomersAppsFetchDevicesRequestingExtensionCall {
+	c.urlParams_.Set("orgUnitId", orgUnitId)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// results to return. Maximum and default are 50. Any page size larger
+// than 50 will be coerced to 50.
+func (c *CustomersAppsFetchDevicesRequestingExtensionCall) PageSize(pageSize int64) *CustomersAppsFetchDevicesRequestingExtensionCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to specify
+// the page of the request to be returned. Token expires after 1 day.
+func (c *CustomersAppsFetchDevicesRequestingExtensionCall) PageToken(pageToken string) *CustomersAppsFetchDevicesRequestingExtensionCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersAppsFetchDevicesRequestingExtensionCall) Fields(s ...googleapi.Field) *CustomersAppsFetchDevicesRequestingExtensionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersAppsFetchDevicesRequestingExtensionCall) IfNoneMatch(entityTag string) *CustomersAppsFetchDevicesRequestingExtensionCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersAppsFetchDevicesRequestingExtensionCall) Context(ctx context.Context) *CustomersAppsFetchDevicesRequestingExtensionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersAppsFetchDevicesRequestingExtensionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersAppsFetchDevicesRequestingExtensionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/apps:fetchDevicesRequestingExtension")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.apps.fetchDevicesRequestingExtension" call.
+// Exactly one of
+// *GoogleChromeManagementV1FetchDevicesRequestingExtensionResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleChromeManagementV1FetchDevicesRequestingExtensionResponse.Serve
+// rResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersAppsFetchDevicesRequestingExtensionCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1FetchDevicesRequestingExtensionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementV1FetchDevicesRequestingExtensionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a list of devices that have requested to install an extension.",
+	//   "flatPath": "v1/customers/{customersId}/apps:fetchDevicesRequestingExtension",
+	//   "httpMethod": "GET",
+	//   "id": "chromemanagement.customers.apps.fetchDevicesRequestingExtension",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. The customer ID or \"my_customer\" prefixed with \"customers/\".",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "extensionId": {
+	//       "description": "Required. The extension for which we want to find requesting devices.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orgUnitId": {
+	//       "description": "The ID of the organizational unit. Only consider devices that directly belong to this org unit, i.e. sub-orgunits are not counted. If omitted, all data will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of results to return. Maximum and default are 50. Any page size larger than 50 will be coerced to 50.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Token to specify the page of the request to be returned. Token expires after 1 day.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+customer}/apps:fetchDevicesRequestingExtension",
+	//   "response": {
+	//     "$ref": "GoogleChromeManagementV1FetchDevicesRequestingExtensionResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.appdetails.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersAppsFetchDevicesRequestingExtensionCall) Pages(ctx context.Context, f func(*GoogleChromeManagementV1FetchDevicesRequestingExtensionResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "chromemanagement.customers.apps.fetchUsersRequestingExtension":
+
+type CustomersAppsFetchUsersRequestingExtensionCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// FetchUsersRequestingExtension: Get a list of users that have
+// requested to install an extension.
+//
+//   - customer: The customer ID or "my_customer" prefixed with
+//     "customers/".
+func (r *CustomersAppsService) FetchUsersRequestingExtension(customer string) *CustomersAppsFetchUsersRequestingExtensionCall {
+	c := &CustomersAppsFetchUsersRequestingExtensionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// ExtensionId sets the optional parameter "extensionId": Required. The
+// extension for which we want to find the requesting users.
+func (c *CustomersAppsFetchUsersRequestingExtensionCall) ExtensionId(extensionId string) *CustomersAppsFetchUsersRequestingExtensionCall {
+	c.urlParams_.Set("extensionId", extensionId)
+	return c
+}
+
+// OrgUnitId sets the optional parameter "orgUnitId": The ID of the
+// organizational unit. Only consider devices that directly belong to
+// this org unit, i.e. sub-orgunits are not counted. If omitted, all
+// data will be returned.
+func (c *CustomersAppsFetchUsersRequestingExtensionCall) OrgUnitId(orgUnitId string) *CustomersAppsFetchUsersRequestingExtensionCall {
+	c.urlParams_.Set("orgUnitId", orgUnitId)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// results to return. Maximum and default are 50. Any page size larger
+// than 50 will be coerced to 50.
+func (c *CustomersAppsFetchUsersRequestingExtensionCall) PageSize(pageSize int64) *CustomersAppsFetchUsersRequestingExtensionCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token to specify
+// the page of the request to be returned. Token expires after 1 day.
+func (c *CustomersAppsFetchUsersRequestingExtensionCall) PageToken(pageToken string) *CustomersAppsFetchUsersRequestingExtensionCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersAppsFetchUsersRequestingExtensionCall) Fields(s ...googleapi.Field) *CustomersAppsFetchUsersRequestingExtensionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersAppsFetchUsersRequestingExtensionCall) IfNoneMatch(entityTag string) *CustomersAppsFetchUsersRequestingExtensionCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersAppsFetchUsersRequestingExtensionCall) Context(ctx context.Context) *CustomersAppsFetchUsersRequestingExtensionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersAppsFetchUsersRequestingExtensionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersAppsFetchUsersRequestingExtensionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/apps:fetchUsersRequestingExtension")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.apps.fetchUsersRequestingExtension" call.
+// Exactly one of
+// *GoogleChromeManagementV1FetchUsersRequestingExtensionResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleChromeManagementV1FetchUsersRequestingExtensionResponse.ServerR
+// esponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersAppsFetchUsersRequestingExtensionCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1FetchUsersRequestingExtensionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementV1FetchUsersRequestingExtensionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a list of users that have requested to install an extension.",
+	//   "flatPath": "v1/customers/{customersId}/apps:fetchUsersRequestingExtension",
+	//   "httpMethod": "GET",
+	//   "id": "chromemanagement.customers.apps.fetchUsersRequestingExtension",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Required. The customer ID or \"my_customer\" prefixed with \"customers/\".",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "extensionId": {
+	//       "description": "Required. The extension for which we want to find the requesting users.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orgUnitId": {
+	//       "description": "The ID of the organizational unit. Only consider devices that directly belong to this org unit, i.e. sub-orgunits are not counted. If omitted, all data will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of results to return. Maximum and default are 50. Any page size larger than 50 will be coerced to 50.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Token to specify the page of the request to be returned. Token expires after 1 day.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+customer}/apps:fetchUsersRequestingExtension",
+	//   "response": {
+	//     "$ref": "GoogleChromeManagementV1FetchUsersRequestingExtensionResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.appdetails.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *CustomersAppsFetchUsersRequestingExtensionCall) Pages(ctx context.Context, f func(*GoogleChromeManagementV1FetchUsersRequestingExtensionResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

@@ -6324,6 +6324,7 @@ func (c *PeopleGetCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/contacts",
+	//     "https://www.googleapis.com/auth/contacts.other.readonly",
 	//     "https://www.googleapis.com/auth/contacts.readonly",
 	//     "https://www.googleapis.com/auth/directory.readonly",
 	//     "https://www.googleapis.com/auth/user.addresses.read",
@@ -6566,6 +6567,7 @@ func (c *PeopleGetBatchGetCall) Do(opts ...googleapi.CallOption) (*GetPeopleResp
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/contacts",
+	//     "https://www.googleapis.com/auth/contacts.other.readonly",
 	//     "https://www.googleapis.com/auth/contacts.readonly",
 	//     "https://www.googleapis.com/auth/directory.readonly",
 	//     "https://www.googleapis.com/auth/user.addresses.read",

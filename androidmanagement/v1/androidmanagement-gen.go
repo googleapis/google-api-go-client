@@ -2472,9 +2472,7 @@ type DeviceConnectivityManagement struct {
 	//
 	// Possible values:
 	//   "USB_DATA_ACCESS_UNSPECIFIED" - Unspecified. Defaults to
-	// ALLOW_USB_DATA_TRANSFER, unless usbFileTransferDisabled is set to
-	// true. If usbFileTransferDisabled is set to true, this is equivalent
-	// to DISALLOW_USB_FILE_TRANSFER.
+	// DISALLOW_USB_FILE_TRANSFER.
 	//   "ALLOW_USB_DATA_TRANSFER" - All types of USB data transfers are
 	// allowed. usbFileTransferDisabled is ignored.
 	//   "DISALLOW_USB_FILE_TRANSFER" - Transferring files over USB is

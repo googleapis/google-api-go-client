@@ -1658,6 +1658,53 @@ func (s *GoogleFirestoreAdminV1BackupSchedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFirestoreAdminV1CmekConfig: The CMEK (Customer Managed
+// Encryption Key) configuration for a Firestore database. If not
+// present, the database is secured by the default Google encryption
+// key.
+type GoogleFirestoreAdminV1CmekConfig struct {
+	// ActiveKeyVersion: Output only. Currently in-use KMS key versions
+	// (https://cloud.google.com/kms/docs/resource-hierarchy#key_versions).
+	// During key rotation (https://cloud.google.com/kms/docs/key-rotation),
+	// there can be multiple in-use key versions. The expected format is
+	// `projects/{project_id}/locations/{kms_location}/keyRings/{key_ring}/cr
+	// yptoKeys/{crypto_key}/cryptoKeyVersions/{key_version}`.
+	ActiveKeyVersion []string `json:"activeKeyVersion,omitempty"`
+
+	// KmsKeyName: Required. Only keys in the same location as this database
+	// are allowed to be used for encryption. For Firestore's nam5
+	// multi-region, this corresponds to Cloud KMS multi-region us. For
+	// Firestore's eur3 multi-region, this corresponds to Cloud KMS
+	// multi-region europe. See https://cloud.google.com/kms/docs/locations.
+	// The expected format is
+	// `projects/{project_id}/locations/{kms_location}/keyRings/{key_ring}/cr
+	// yptoKeys/{crypto_key}`.
+	KmsKeyName string `json:"kmsKeyName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActiveKeyVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActiveKeyVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFirestoreAdminV1CmekConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFirestoreAdminV1CmekConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1CreateDatabaseMetadata: Metadata related to the
 // create database operation.
 type GoogleFirestoreAdminV1CreateDatabaseMetadata struct {
@@ -1683,6 +1730,10 @@ type GoogleFirestoreAdminV1Database struct {
 	// database to serve requests. This is the default setting for databases
 	// created with the Firestore API.
 	AppEngineIntegrationMode string `json:"appEngineIntegrationMode,omitempty"`
+
+	// CmekConfig: Optional. Presence indicates CMEK is enabled for this
+	// database.
+	CmekConfig *GoogleFirestoreAdminV1CmekConfig `json:"cmekConfig,omitempty"`
 
 	// ConcurrencyMode: The concurrency control mode to use for this
 	// database.
@@ -2603,8 +2654,7 @@ func (s *GoogleFirestoreAdminV1ListBackupSchedulesResponse) MarshalJSON() ([]byt
 // GoogleFirestoreAdminV1ListBackupsResponse: The response for
 // FirestoreAdmin.ListBackups.
 type GoogleFirestoreAdminV1ListBackupsResponse struct {
-	// Backups: List of all backups for the project. Ordered by `location
-	// ASC, create_time DESC, name ASC`.
+	// Backups: List of all backups for the project.
 	Backups []*GoogleFirestoreAdminV1Backup `json:"backups,omitempty"`
 
 	// Unreachable: List of locations that existing backups were not able to

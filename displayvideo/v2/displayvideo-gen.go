@@ -1528,6 +1528,8 @@ type AppAssignedTargetingOptionDetails struct {
 	//   "APP_PLATFORM_ANDROID_TV" - The app platform is Android TV.
 	//   "APP_PLATFORM_GENERIC_CTV" - The app platform is a CTV platform
 	// that is not explicitly listed elsewhere.
+	//   "APP_PLATFORM_LG_TV" - The app platform is LG TV.
+	//   "APP_PLATFORM_VIZIO_TV" - The app platform is VIZIO TV.
 	AppPlatform string `json:"appPlatform,omitempty"`
 
 	// DisplayName: Output only. The display name of the app.
@@ -18389,6 +18391,9 @@ type YoutubeAndPartnersBiddingStrategy struct {
 	// strategy that automatically optimizes conversions per dollar.
 	//   "YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_TARGET_CPM" - A bidding
 	// strategy that pays a configurable amount per impression.
+	//   "YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_RESERVE_CPM" - A
+	// bidding strategy for YouTube Instant Reserve line items that pays a
+	// fixed amount per impression.
 	//   "YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_MAXIMIZE_LIFT" - An
 	// automated bidding strategy that sets bids to achieve maximum lift.
 	//   "YOUTUBE_AND_PARTNERS_BIDDING_STRATEGY_TYPE_MAXIMIZE_CONVERSIONS" -
@@ -51193,19 +51198,20 @@ func (r *UsersService) List() *UsersListCall {
 // fields. Supported syntax: * Filter expressions are made up of one or
 // more restrictions. * Restrictions can be combined by the logical
 // operator `AND`. * A restriction has the form of `{field} {operator}
-// {value}`. * The `budget.budget_segments.date_range.end_date` field
-// must use the `LESS THAN (<)` operator. * The `displayName and `email`
-// field must use the `HAS (:)` operator. * All other fields must use
-// the `EQUALS (=)` operator. Supported fields: *
-// `assignedUserRole.advertiserId` * `assignedUserRole.entityType` *
-// This is synthetic field of `AssignedUserRole` used for filtering.
-// Identifies the type of entity to which the user role is assigned.
-// Valid values are `Partner` and `Advertiser`. *
-// `assignedUserRole.parentPartnerId` * This is a synthetic field of
-// `AssignedUserRole` used for filtering. Identifies the parent partner
-// of the entity to which the user role is assigned. *
-// `assignedUserRole.partnerId` * `assignedUserRole.userRole` *
-// `displayName` * `email` Examples: * The user with `displayName`
+// {value}`. * The `displayName` and `email` fields must use the `HAS
+// (:)` operator. * The `lastLoginTime` field must use either the `LESS
+// THAN OR EQUAL TO (<=)` or `GREATER THAN OR EQUAL TO (>=)` operator. *
+// All other fields must use the `EQUALS (=)` operator. Supported
+// fields: * `assignedUserRole.advertiserId` *
+// `assignedUserRole.entityType`: This is synthetic field of
+// `AssignedUserRole` used for filtering. Identifies the type of entity
+// to which the user role is assigned. Valid values are `Partner` and
+// `Advertiser`. * `assignedUserRole.parentPartnerId`: This is a
+// synthetic field of `AssignedUserRole` used for filtering. Identifies
+// the parent partner of the entity to which the user role is assigned.
+// * `assignedUserRole.partnerId` * `assignedUserRole.userRole` *
+// `displayName` * `email` * `lastLoginTime` (input in ISO 8601 format,
+// or `YYYY-MM-DDTHH:MM:SSZ`) Examples: * The user with `displayName`
 // containing "foo": `displayName:"foo" * The user with `email`
 // containing "bar": `email:"bar" * All users with standard user roles:
 // `assignedUserRole.userRole="STANDARD" * All users with user roles
@@ -51213,9 +51219,11 @@ func (r *UsersService) List() *UsersListCall {
 // user roles for advertiser 123: `assignedUserRole.advertiserId="123"
 // * All users with partner level user roles: `entityType="PARTNER" *
 // All users with user roles for partner 123 and advertisers under
-// partner 123: `parentPartnerId="123" The length of this field should
-// be no more than 500 characters. Reference our filter `LIST` requests
-// (/display-video/api/guides/how-tos/filters) guide for more
+// partner 123: `parentPartnerId="123" * All users that last logged in
+// on or after 2023-01-01T00:00:00Z (format of ISO 8601):
+// `lastLoginTime>="2023-01-01T00:00:00Z" The length of this field
+// should be no more than 500 characters. Reference our filter `LIST`
+// requests (/display-video/api/guides/how-tos/filters) guide for more
 // information.
 func (c *UsersListCall) Filter(filter string) *UsersListCall {
 	c.urlParams_.Set("filter", filter)
@@ -51352,7 +51360,7 @@ func (c *UsersListCall) Do(opts ...googleapi.CallOption) (*ListUsersResponse, er
 	//   "parameterOrder": [],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Allows filtering by user fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `AND`. * A restriction has the form of `{field} {operator} {value}`. * The `budget.budget_segments.date_range.end_date` field must use the `LESS THAN (\u003c)` operator. * The `displayName and `email` field must use the `HAS (:)` operator. * All other fields must use the `EQUALS (=)` operator. Supported fields: * `assignedUserRole.advertiserId` * `assignedUserRole.entityType` * This is synthetic field of `AssignedUserRole` used for filtering. Identifies the type of entity to which the user role is assigned. Valid values are `Partner` and `Advertiser`. * `assignedUserRole.parentPartnerId` * This is a synthetic field of `AssignedUserRole` used for filtering. Identifies the parent partner of the entity to which the user role is assigned. * `assignedUserRole.partnerId` * `assignedUserRole.userRole` * `displayName` * `email` Examples: * The user with `displayName` containing \"foo\": `displayName:\"foo\"` * The user with `email` containing \"bar\": `email:\"bar\"` * All users with standard user roles: `assignedUserRole.userRole=\"STANDARD\"` * All users with user roles for partner 123: `assignedUserRole.partnerId=\"123\"` * All users with user roles for advertiser 123: `assignedUserRole.advertiserId=\"123\"` * All users with partner level user roles: `entityType=\"PARTNER\"` * All users with user roles for partner 123 and advertisers under partner 123: `parentPartnerId=\"123\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
+	//       "description": "Allows filtering by user fields. Supported syntax: * Filter expressions are made up of one or more restrictions. * Restrictions can be combined by the logical operator `AND`. * A restriction has the form of `{field} {operator} {value}`. * The `displayName` and `email` fields must use the `HAS (:)` operator. * The `lastLoginTime` field must use either the `LESS THAN OR EQUAL TO (\u003c=)` or `GREATER THAN OR EQUAL TO (\u003e=)` operator. * All other fields must use the `EQUALS (=)` operator. Supported fields: * `assignedUserRole.advertiserId` * `assignedUserRole.entityType`: This is synthetic field of `AssignedUserRole` used for filtering. Identifies the type of entity to which the user role is assigned. Valid values are `Partner` and `Advertiser`. * `assignedUserRole.parentPartnerId`: This is a synthetic field of `AssignedUserRole` used for filtering. Identifies the parent partner of the entity to which the user role is assigned. * `assignedUserRole.partnerId` * `assignedUserRole.userRole` * `displayName` * `email` * `lastLoginTime` (input in ISO 8601 format, or `YYYY-MM-DDTHH:MM:SSZ`) Examples: * The user with `displayName` containing \"foo\": `displayName:\"foo\"` * The user with `email` containing \"bar\": `email:\"bar\"` * All users with standard user roles: `assignedUserRole.userRole=\"STANDARD\"` * All users with user roles for partner 123: `assignedUserRole.partnerId=\"123\"` * All users with user roles for advertiser 123: `assignedUserRole.advertiserId=\"123\"` * All users with partner level user roles: `entityType=\"PARTNER\"` * All users with user roles for partner 123 and advertisers under partner 123: `parentPartnerId=\"123\"` * All users that last logged in on or after 2023-01-01T00:00:00Z (format of ISO 8601): `lastLoginTime\u003e=\"2023-01-01T00:00:00Z\"` The length of this field should be no more than 500 characters. Reference our [filter `LIST` requests](/display-video/api/guides/how-tos/filters) guide for more information.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -1164,9 +1164,10 @@ func (s *ComputeEngineMigrationTarget) MarshalJSON() ([]byte, error) {
 // ComputeEnginePreferences: The user preferences relating to Compute
 // Engine target platform.
 type ComputeEnginePreferences struct {
-	// LicenseType: License type to consider when calculating costs for
-	// virtual machine insights and recommendations. If unspecified, costs
-	// are calculated based on the default licensing plan.
+	// LicenseType: Overridden by os_pricing_preferences if specified.
+	// License type to consider when calculating costs for virtual machine
+	// insights and recommendations. If unspecified, costs are calculated
+	// based on the default licensing plan.
 	//
 	// Possible values:
 	//   "LICENSE_TYPE_UNSPECIFIED" - Unspecified (default value).
@@ -5599,8 +5600,8 @@ type SoleTenancyPreferences struct {
 	// Possible values:
 	//   "COMMITMENT_PLAN_UNSPECIFIED" - Unspecified commitment plan.
 	//   "ON_DEMAND" - No commitment plan (on-demand usage).
-	//   "COMMITMENT_1_YEAR" - 1 year commitment.
-	//   "COMMITMENT_3_YEAR" - 3 years commitment.
+	//   "COMMITMENT_1_YEAR" - 1-year regular committed use discount.
+	//   "COMMITMENT_3_YEAR" - 3-year regular committed use discount.
 	CommitmentPlan string `json:"commitmentPlan,omitempty"`
 
 	// CpuOvercommitRatio: CPU overcommit ratio. Acceptable values are
@@ -6242,8 +6243,9 @@ type VirtualMachinePreferences struct {
 	// Possible values:
 	//   "COMMITMENT_PLAN_UNSPECIFIED" - Unspecified commitment plan.
 	//   "COMMITMENT_PLAN_NONE" - No commitment plan.
-	//   "COMMITMENT_PLAN_ONE_YEAR" - 1 year commitment.
-	//   "COMMITMENT_PLAN_THREE_YEARS" - 3 years commitment.
+	//   "COMMITMENT_PLAN_ONE_YEAR" - 1-year regular committed use discount.
+	//   "COMMITMENT_PLAN_THREE_YEARS" - 3-year regular committed use
+	// discount.
 	CommitmentPlan string `json:"commitmentPlan,omitempty"`
 
 	// ComputeEnginePreferences: Compute Engine preferences concern insights

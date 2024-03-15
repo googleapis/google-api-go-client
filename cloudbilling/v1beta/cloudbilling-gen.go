@@ -1463,6 +1463,7 @@ type GoogleCloudBillingAnomaliesV1betaCause struct {
 	//   "CAUSE_TYPE_PROJECT" - Caused by a project.
 	//   "CAUSE_TYPE_SERVICE" - Caused by a service.
 	//   "CAUSE_TYPE_SKU" - Caused by a SKU.
+	//   "CAUSE_TYPE_LOCATION" - Caused by a location.
 	CauseType string `json:"causeType,omitempty"`
 
 	// Deviation: The deviation information for the cause.
@@ -1473,7 +1474,7 @@ type GoogleCloudBillingAnomaliesV1betaCause struct {
 
 	// Resource: The resource name of the cause. project:
 	// projects/{project}. service: services/{service}. sku:
-	// services/{service}/skus/{sku}.
+	// services/{service}/skus/{sku}. location: locations/{location}.
 	Resource string `json:"resource,omitempty"`
 
 	// SubCauses: The sub causes.

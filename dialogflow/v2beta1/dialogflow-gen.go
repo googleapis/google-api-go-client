@@ -4620,6 +4620,12 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
 	//   "OPTIONS" - HTTP OPTIONS Method.
 	HttpMethod string `json:"httpMethod,omitempty"`
 
+	// OauthConfig: Optional. The OAuth configuration of the webhook. If
+	// specified, Dialogflow will initiate the OAuth client credential flow
+	// to exchange an access token from the 3rd party platform and put it in
+	// the auth header.
+	OauthConfig *GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig `json:"oauthConfig,omitempty"`
+
 	// ParameterMapping: Optional. Maps the values extracted from specific
 	// fields of the flexible webhook response into session parameters. -
 	// Key: session parameter name - Value: field path in the webhook
@@ -4636,6 +4642,27 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
 	// RequestHeaders: The HTTP request headers to send together with
 	// webhook requests.
 	RequestHeaders map[string]string `json:"requestHeaders,omitempty"`
+
+	// ServiceAgentAuth: Optional. Indicate the auth token type generated
+	// from the Diglogflow service agent
+	// (https://cloud.google.com/iam/docs/service-agents#dialogflow-service-agent).
+	// The generated token is sent in the Authorization header.
+	//
+	// Possible values:
+	//   "SERVICE_AGENT_AUTH_UNSPECIFIED" - Service agent auth type
+	// unspecified. Default to ID_TOKEN.
+	//   "NONE" - No token used.
+	//   "ID_TOKEN" - Use [ID
+	// token](https://cloud.google.com/docs/authentication/token-types#id)
+	// generated from service agent. This can be used to access Cloud
+	// Function and Cloud Run after you grant Invoker role to
+	// `service-@gcp-sa-dialogflow.iam.gserviceaccount.com`.
+	//   "ACCESS_TOKEN" - Use [access
+	// token](https://cloud.google.com/docs/authentication/token-types#access
+	// ) generated from service agent. This can be used to access other
+	// Google Cloud APIs after you grant required roles to
+	// `service-@gcp-sa-dialogflow.iam.gserviceaccount.com`.
+	ServiceAgentAuth string `json:"serviceAgentAuth,omitempty"`
 
 	// Uri: Required. The webhook URI for receiving POST requests. It must
 	// use https protocol.
@@ -4672,6 +4699,47 @@ type GoogleCloudDialogflowCxV3WebhookGenericWebService struct {
 
 func (s *GoogleCloudDialogflowCxV3WebhookGenericWebService) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3WebhookGenericWebService
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig:
+// Represents configuration of OAuth client credential flow for 3rd
+// party API authentication.
+type GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig struct {
+	// ClientId: Required. The client ID provided by the 3rd party platform.
+	ClientId string `json:"clientId,omitempty"`
+
+	// ClientSecret: Required. The client secret provided by the 3rd party
+	// platform.
+	ClientSecret string `json:"clientSecret,omitempty"`
+
+	// Scopes: Optional. The OAuth scopes to grant.
+	Scopes []string `json:"scopes,omitempty"`
+
+	// TokenEndpoint: Required. The token endpoint provided by the 3rd party
+	// platform to exchange an access token.
+	TokenEndpoint string `json:"tokenEndpoint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClientId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3WebhookGenericWebServiceOAuthConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8876,6 +8944,12 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebService struct {
 	//   "OPTIONS" - HTTP OPTIONS Method.
 	HttpMethod string `json:"httpMethod,omitempty"`
 
+	// OauthConfig: Optional. The OAuth configuration of the webhook. If
+	// specified, Dialogflow will initiate the OAuth client credential flow
+	// to exchange an access token from the 3rd party platform and put it in
+	// the auth header.
+	OauthConfig *GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig `json:"oauthConfig,omitempty"`
+
 	// ParameterMapping: Optional. Maps the values extracted from specific
 	// fields of the flexible webhook response into session parameters. -
 	// Key: session parameter name - Value: field path in the webhook
@@ -8892,6 +8966,27 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebService struct {
 	// RequestHeaders: The HTTP request headers to send together with
 	// webhook requests.
 	RequestHeaders map[string]string `json:"requestHeaders,omitempty"`
+
+	// ServiceAgentAuth: Optional. Indicate the auth token type generated
+	// from the Diglogflow service agent
+	// (https://cloud.google.com/iam/docs/service-agents#dialogflow-service-agent).
+	// The generated token is sent in the Authorization header.
+	//
+	// Possible values:
+	//   "SERVICE_AGENT_AUTH_UNSPECIFIED" - Service agent auth type
+	// unspecified. Default to ID_TOKEN.
+	//   "NONE" - No token used.
+	//   "ID_TOKEN" - Use [ID
+	// token](https://cloud.google.com/docs/authentication/token-types#id)
+	// generated from service agent. This can be used to access Cloud
+	// Function and Cloud Run after you grant Invoker role to
+	// `service-@gcp-sa-dialogflow.iam.gserviceaccount.com`.
+	//   "ACCESS_TOKEN" - Use [access
+	// token](https://cloud.google.com/docs/authentication/token-types#access
+	// ) generated from service agent. This can be used to access other
+	// Google Cloud APIs after you grant required roles to
+	// `service-@gcp-sa-dialogflow.iam.gserviceaccount.com`.
+	ServiceAgentAuth string `json:"serviceAgentAuth,omitempty"`
 
 	// Uri: Required. The webhook URI for receiving POST requests. It must
 	// use https protocol.
@@ -8928,6 +9023,47 @@ type GoogleCloudDialogflowCxV3beta1WebhookGenericWebService struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1WebhookGenericWebService) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookGenericWebService
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig:
+// Represents configuration of OAuth client credential flow for 3rd
+// party API authentication.
+type GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig struct {
+	// ClientId: Required. The client ID provided by the 3rd party platform.
+	ClientId string `json:"clientId,omitempty"`
+
+	// ClientSecret: Required. The client secret provided by the 3rd party
+	// platform.
+	ClientSecret string `json:"clientSecret,omitempty"`
+
+	// Scopes: Optional. The OAuth scopes to grant.
+	Scopes []string `json:"scopes,omitempty"`
+
+	// TokenEndpoint: Required. The token endpoint provided by the 3rd party
+	// platform to exchange an access token.
+	TokenEndpoint string `json:"tokenEndpoint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ClientId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ClientId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1WebhookGenericWebServiceOAuthConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -2414,6 +2414,7 @@ type GoogleCloudRunV2Service struct {
 	//   "INGRESS_TRAFFIC_INTERNAL_ONLY" - Only internal traffic is allowed.
 	//   "INGRESS_TRAFFIC_INTERNAL_LOAD_BALANCER" - Both internal and Google
 	// Cloud Load Balancer traffic is allowed.
+	//   "INGRESS_TRAFFIC_NONE" - No ingress traffic is allowed.
 	Ingress string `json:"ingress,omitempty"`
 
 	// Labels: Optional. Unstructured key value map that can be used to
@@ -9736,6 +9737,13 @@ func (c *ProjectsLocationsServicesPatchCall) AllowMissing(allowMissing bool) *Pr
 	return c
 }
 
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to be updated.
+func (c *ProjectsLocationsServicesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsServicesPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
 // ValidateOnly sets the optional parameter "validateOnly": Indicates
 // that the request should be validated and default values populated,
 // without persisting the request or updating any resources.
@@ -9853,6 +9861,12 @@ func (c *ProjectsLocationsServicesPatchCall) Do(opts ...googleapi.CallOption) (*
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
 	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. The list of fields to be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "validateOnly": {

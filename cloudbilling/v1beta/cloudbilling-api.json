@@ -910,7 +910,7 @@
       }
     }
   },
-  "revision": "20240301",
+  "revision": "20240311",
   "rootUrl": "https://cloudbilling.googleapis.com/",
   "schemas": {
     "CacheFillRegions": {
@@ -1572,13 +1572,15 @@
             "CAUSE_TYPE_UNSPECIFIED",
             "CAUSE_TYPE_PROJECT",
             "CAUSE_TYPE_SERVICE",
-            "CAUSE_TYPE_SKU"
+            "CAUSE_TYPE_SKU",
+            "CAUSE_TYPE_LOCATION"
           ],
           "enumDescriptions": [
             "Default unspecified value.",
             "Caused by a project.",
             "Caused by a service.",
-            "Caused by a SKU."
+            "Caused by a SKU.",
+            "Caused by a location."
           ],
           "type": "string"
         },
@@ -1591,7 +1593,7 @@
           "type": "string"
         },
         "resource": {
-          "description": "The resource name of the cause. project: projects/{project}. service: services/{service}. sku: services/{service}/skus/{sku}.",
+          "description": "The resource name of the cause. project: projects/{project}. service: services/{service}. sku: services/{service}/skus/{sku}. location: locations/{location}.",
           "type": "string"
         },
         "subCauses": {

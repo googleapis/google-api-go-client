@@ -1994,7 +1994,9 @@ type Environment struct {
 	// processing guarantees. Reduces cost and latency but might result in
 	// duplicate messages committed to storage. Designed to run simple
 	// mapping streaming ETL jobs at the lowest cost. For example, Change
-	// Data Capture (CDC) to BigQuery is a canonical use case.
+	// Data Capture (CDC) to BigQuery is a canonical use case. For more
+	// information, see Set the pipeline streaming mode
+	// (https://cloud.google.com/dataflow/docs/guides/streaming-modes).
 	//
 	// Possible values:
 	//   "STREAMING_MODE_UNSPECIFIED" - Run in the default mode.
@@ -2429,7 +2431,9 @@ type FlexTemplateRuntimeEnvironment struct {
 	// processing guarantees. Reduces cost and latency but might result in
 	// duplicate messages committed to storage. Designed to run simple
 	// mapping streaming ETL jobs at the lowest cost. For example, Change
-	// Data Capture (CDC) to BigQuery is a canonical use case.
+	// Data Capture (CDC) to BigQuery is a canonical use case. For more
+	// information, see Set the pipeline streaming mode
+	// (https://cloud.google.com/dataflow/docs/guides/streaming-modes).
 	//
 	// Possible values:
 	//   "STREAMING_MODE_UNSPECIFIED" - Run in the default mode.
@@ -5615,7 +5619,9 @@ type RuntimeEnvironment struct {
 	// processing guarantees. Reduces cost and latency but might result in
 	// duplicate messages committed to storage. Designed to run simple
 	// mapping streaming ETL jobs at the lowest cost. For example, Change
-	// Data Capture (CDC) to BigQuery is a canonical use case.
+	// Data Capture (CDC) to BigQuery is a canonical use case. For more
+	// information, see Set the pipeline streaming mode
+	// (https://cloud.google.com/dataflow/docs/guides/streaming-modes).
 	//
 	// Possible values:
 	//   "STREAMING_MODE_UNSPECIFIED" - Run in the default mode.
@@ -5734,7 +5740,9 @@ type RuntimeUpdatableParams struct {
 	// WorkerUtilizationHint: Target worker utilization, compared against
 	// the aggregate utilization of the worker pool by autoscaler, to
 	// determine upscaling and downscaling when absent other constraints
-	// such as backlog.
+	// such as backlog. For more information, see Update an existing
+	// pipeline
+	// (https://cloud.google.com/dataflow/docs/guides/updating-a-pipeline).
 	WorkerUtilizationHint float64 `json:"workerUtilizationHint,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxNumWorkers") to

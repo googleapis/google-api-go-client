@@ -2115,7 +2115,8 @@ type PipelineRun struct {
 	// Security: Optional. Security configuration.
 	Security *Security `json:"security,omitempty"`
 
-	// ServiceAccount: Service account used in the Pipeline.
+	// ServiceAccount: Service account used in the Pipeline. Deprecated;
+	// please use security.service_account instead.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// SkippedTasks: Output only. List of tasks that were skipped due to

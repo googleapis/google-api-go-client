@@ -1118,6 +1118,79 @@ func (s *GoogleChromeManagementV1CountChromeBrowsersNeedingAttentionResponse) Ma
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleChromeManagementV1CountChromeCrashEventsResponse: Response
+// contains a list of CrashEventCountByVersionPerDay which count the
+// chrome crash at the certain date.
+type GoogleChromeManagementV1CountChromeCrashEventsResponse struct {
+	// CrashEventCounts: Crash event counts grouped by date and browser
+	// version.
+	CrashEventCounts []*GoogleChromeManagementV1CountChromeCrashEventsResponseCrashEventCount `json:"crashEventCounts,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CrashEventCounts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CrashEventCounts") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1CountChromeCrashEventsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1CountChromeCrashEventsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleChromeManagementV1CountChromeCrashEventsResponseCrashEventCount:
+//
+//	The `count` of the Chrome crash events at the `date`.
+type GoogleChromeManagementV1CountChromeCrashEventsResponseCrashEventCount struct {
+	// BrowserVersion: Browser version this is counting.
+	BrowserVersion string `json:"browserVersion,omitempty"`
+
+	// Count: Total count of crash events.
+	Count int64 `json:"count,omitempty,string"`
+
+	// Date: Date of the crash event.
+	Date *GoogleTypeDate `json:"date,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BrowserVersion") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BrowserVersion") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleChromeManagementV1CountChromeCrashEventsResponseCrashEventCount) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleChromeManagementV1CountChromeCrashEventsResponseCrashEventCount
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleChromeManagementV1CountChromeDevicesReachingAutoExpirationDateRe
 // sponse: Response containing a list of devices expiring in each month
 // of a selected time frame. Counts are grouped by model and Auto Update
@@ -5793,6 +5866,195 @@ func (c *CustomersReportsCountChromeBrowsersNeedingAttentionCall) Do(opts ...goo
 	//   "path": "v1/{+customer}/reports:countChromeBrowsersNeedingAttention",
 	//   "response": {
 	//     "$ref": "GoogleChromeManagementV1CountChromeBrowsersNeedingAttentionResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chrome.management.reports.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "chromemanagement.customers.reports.countChromeCrashEvents":
+
+type CustomersReportsCountChromeCrashEventsCall struct {
+	s            *Service
+	customer     string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// CountChromeCrashEvents: Get a count of Chrome crash events.
+//
+// - customer: Customer ID.
+func (r *CustomersReportsService) CountChromeCrashEvents(customer string) *CustomersReportsCountChromeCrashEventsCall {
+	c := &CustomersReportsCountChromeCrashEventsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.customer = customer
+	return c
+}
+
+// Filter sets the optional parameter "filter": Query string to filter
+// results, AND-separated fields in EBNF syntax. Supported filter
+// fields: * major_browser_version * minor_browser_version *
+// browser_channel * device_platform * past_number_days Example:
+// `major_browser_version = 'M115' AND past_number_days = '28'`.
+func (c *CustomersReportsCountChromeCrashEventsCall) Filter(filter string) *CustomersReportsCountChromeCrashEventsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field used to order
+// results. Supported order by fields: * browser_version * count * date
+func (c *CustomersReportsCountChromeCrashEventsCall) OrderBy(orderBy string) *CustomersReportsCountChromeCrashEventsCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// OrgUnitId sets the optional parameter "orgUnitId": If specified, only
+// count the number of crash events of the devices in this
+// organizational unit.
+func (c *CustomersReportsCountChromeCrashEventsCall) OrgUnitId(orgUnitId string) *CustomersReportsCountChromeCrashEventsCall {
+	c.urlParams_.Set("orgUnitId", orgUnitId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *CustomersReportsCountChromeCrashEventsCall) Fields(s ...googleapi.Field) *CustomersReportsCountChromeCrashEventsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *CustomersReportsCountChromeCrashEventsCall) IfNoneMatch(entityTag string) *CustomersReportsCountChromeCrashEventsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *CustomersReportsCountChromeCrashEventsCall) Context(ctx context.Context) *CustomersReportsCountChromeCrashEventsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *CustomersReportsCountChromeCrashEventsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *CustomersReportsCountChromeCrashEventsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+customer}/reports:countChromeCrashEvents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"customer": c.customer,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chromemanagement.customers.reports.countChromeCrashEvents" call.
+// Exactly one of
+// *GoogleChromeManagementV1CountChromeCrashEventsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *GoogleChromeManagementV1CountChromeCrashEventsResponse.ServerResponse
+// .Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *CustomersReportsCountChromeCrashEventsCall) Do(opts ...googleapi.CallOption) (*GoogleChromeManagementV1CountChromeCrashEventsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleChromeManagementV1CountChromeCrashEventsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a count of Chrome crash events.",
+	//   "flatPath": "v1/customers/{customersId}/reports:countChromeCrashEvents",
+	//   "httpMethod": "GET",
+	//   "id": "chromemanagement.customers.reports.countChromeCrashEvents",
+	//   "parameterOrder": [
+	//     "customer"
+	//   ],
+	//   "parameters": {
+	//     "customer": {
+	//       "description": "Customer ID.",
+	//       "location": "path",
+	//       "pattern": "^customers/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "filter": {
+	//       "description": "Query string to filter results, AND-separated fields in EBNF syntax. Supported filter fields: * major_browser_version * minor_browser_version * browser_channel * device_platform * past_number_days Example: `major_browser_version = 'M115' AND past_number_days = '28'`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Field used to order results. Supported order by fields: * browser_version * count * date",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orgUnitId": {
+	//       "description": "If specified, only count the number of crash events of the devices in this organizational unit.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+customer}/reports:countChromeCrashEvents",
+	//   "response": {
+	//     "$ref": "GoogleChromeManagementV1CountChromeCrashEventsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/chrome.management.reports.readonly"

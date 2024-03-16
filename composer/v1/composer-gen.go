@@ -531,7 +531,8 @@ func (s *ComposerWorkloadStatus) MarshalJSON() ([]byte, error) {
 }
 
 // DagProcessorResource: Configuration for resources used by Airflow DAG
-// processors.
+// processors. This field is supported for Cloud Composer environments
+// in versions composer-3.*.*-airflow-*.*.* and newer.
 type DagProcessorResource struct {
 	// Count: Optional. The number of DAG processors. If not provided or set
 	// to 0, a single DAG processor instance will be created.
@@ -907,8 +908,9 @@ type EnvironmentConfig struct {
 	// be scheduled during the window. The maintenance window period must
 	// encompass at least 12 hours per week. This may be split into multiple
 	// chunks, each with a size of at least 4 hours. If this value is
-	// omitted, the default value for maintenance window will be applied.
-	// The default value is Saturday and Sunday 00-06 GMT.
+	// omitted, the default value for maintenance window is applied. By
+	// default, maintenance windows are from 00:00:00 to 04:00:00 (GMT) on
+	// Friday, Saturday, and Sunday every week.
 	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
 
 	// MasterAuthorizedNetworksConfig: Optional. The configuration options
@@ -2644,8 +2646,7 @@ func (s *StorageConfig) MarshalJSON() ([]byte, error) {
 // TaskLogsRetentionConfig: The configuration setting for Task Logs.
 type TaskLogsRetentionConfig struct {
 	// StorageMode: Optional. The mode of storage for Airflow workers task
-	// logs. For details, see
-	// go/composer-store-task-logs-in-cloud-logging-only-design-doc
+	// logs.
 	//
 	// Possible values:
 	//   "TASK_LOGS_STORAGE_MODE_UNSPECIFIED" - This configuration is not

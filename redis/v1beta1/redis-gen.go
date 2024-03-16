@@ -907,6 +907,17 @@ type DatabaseResourceHealthSignalData struct {
 	// restricted to authorized networks.
 	//   "SIGNAL_TYPE_VIOLATE_POLICY_RESTRICT_PUBLIC_IP" - Represents
 	// violate org policy restrict public ip.
+	//   "SIGNAL_TYPE_CLUSTER_QUOTA_LIMIT" - Cluster nearing quota limit
+	//   "SIGNAL_TYPE_NO_PASSWORD_POLICY" - No password policy set on
+	// resources
+	//   "SIGNAL_TYPE_CONNECTIONS_PERFORMANCE_IMPACT" - Performance impact
+	// of connections settings
+	//   "SIGNAL_TYPE_TMP_TABLES_PERFORMANCE_IMPACT" - Performance impact of
+	// temporary tables settings
+	//   "SIGNAL_TYPE_TRANS_LOGS_PERFORMANCE_IMPACT" - Performance impact of
+	// transaction logs settings
+	//   "SIGNAL_TYPE_HIGH_JOINS_WITHOUT_INDEXES" - Performance impact of
+	// high joins without indexes
 	SignalType string `json:"signalType,omitempty"`
 
 	// Possible values:
@@ -1099,6 +1110,9 @@ type DatabaseResourceMetadata struct {
 	// UpdationTime: The time at which the resource was updated and recorded
 	// at partner service.
 	UpdationTime string `json:"updationTime,omitempty"`
+
+	// UserLabelSet: User-provided labels associated with the resource
+	UserLabelSet *UserLabels `json:"userLabelSet,omitempty"`
 
 	// UserLabels: User-provided labels, represented as a dictionary where
 	// each label is a single key value pair.
@@ -1340,6 +1354,17 @@ type DatabaseResourceRecommendationSignalData struct {
 	// restricted to authorized networks.
 	//   "SIGNAL_TYPE_VIOLATE_POLICY_RESTRICT_PUBLIC_IP" - Represents
 	// violate org policy restrict public ip.
+	//   "SIGNAL_TYPE_CLUSTER_QUOTA_LIMIT" - Cluster nearing quota limit
+	//   "SIGNAL_TYPE_NO_PASSWORD_POLICY" - No password policy set on
+	// resources
+	//   "SIGNAL_TYPE_CONNECTIONS_PERFORMANCE_IMPACT" - Performance impact
+	// of connections settings
+	//   "SIGNAL_TYPE_TMP_TABLES_PERFORMANCE_IMPACT" - Performance impact of
+	// temporary tables settings
+	//   "SIGNAL_TYPE_TRANS_LOGS_PERFORMANCE_IMPACT" - Performance impact of
+	// transaction logs settings
+	//   "SIGNAL_TYPE_HIGH_JOINS_WITHOUT_INDEXES" - Performance impact of
+	// high joins without indexes
 	SignalType string `json:"signalType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata")
@@ -3158,6 +3183,36 @@ type UpgradeInstanceRequest struct {
 
 func (s *UpgradeInstanceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpgradeInstanceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UserLabels: Message type for storing user labels. User labels are
+// used to tag App Engine resources, allowing users to search for
+// resources matching a set of labels and to aggregate usage data by
+// labels.
+type UserLabels struct {
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UserLabels) MarshalJSON() ([]byte, error) {
+	type NoMethod UserLabels
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

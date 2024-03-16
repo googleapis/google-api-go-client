@@ -175,6 +175,7 @@ type ProjectsService struct {
 
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
+	rs.Global = NewProjectsLocationsGlobalService(s)
 	rs.Instances = NewProjectsLocationsInstancesService(s)
 	rs.OsPolicyAssignments = NewProjectsLocationsOsPolicyAssignmentsService(s)
 	return rs
@@ -183,9 +184,20 @@ func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 type ProjectsLocationsService struct {
 	s *Service
 
+	Global *ProjectsLocationsGlobalService
+
 	Instances *ProjectsLocationsInstancesService
 
 	OsPolicyAssignments *ProjectsLocationsOsPolicyAssignmentsService
+}
+
+func NewProjectsLocationsGlobalService(s *Service) *ProjectsLocationsGlobalService {
+	rs := &ProjectsLocationsGlobalService{s: s}
+	return rs
+}
+
+type ProjectsLocationsGlobalService struct {
+	s *Service
 }
 
 func NewProjectsLocationsInstancesService(s *Service) *ProjectsLocationsInstancesService {
@@ -3877,6 +3889,52 @@ func (s *PatchRollout) MarshalJSON() ([]byte, error) {
 type PausePatchDeploymentRequest struct {
 }
 
+// ProjectFeatureSettings: ProjectFeatureSettings represents the
+// features settings for the VM Manager. The project features settings
+// can be set for a project.
+type ProjectFeatureSettings struct {
+	// Name: Required. Immutable. Name of the config, e.g.
+	// projects/12345/locations/global/projectFeatureSettings
+	Name string `json:"name,omitempty"`
+
+	// PatchAndConfigFeatureSet: Currently set PatchAndConfigFeatureSet for
+	// name.
+	//
+	// Possible values:
+	//   "PATCH_AND_CONFIG_FEATURE_SET_UNSPECIFIED" - Not specified
+	// placeholder
+	//   "OSCONFIG_B" - Basic feature set. Enables only the basic set of
+	// features.
+	//   "OSCONFIG_C" - Classic set of functionality.
+	PatchAndConfigFeatureSet string `json:"patchAndConfigFeatureSet,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProjectFeatureSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod ProjectFeatureSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RecurringSchedule: Sets the time for recurring patch deployments.
 type RecurringSchedule struct {
 	// EndTime: Optional. The end time at which a recurring patch deployment
@@ -4581,6 +4639,312 @@ func (s *ZypperSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod ZypperSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "osconfig.projects.locations.global.getProjectFeatureSettings":
+
+type ProjectsLocationsGlobalGetProjectFeatureSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetProjectFeatureSettings: GetProjectFeatureSettings returns the
+// feature settings for a project
+//
+//   - name: Name of the billing config.
+//     "projects//locations/global/projectFeatureSettings".
+func (r *ProjectsLocationsGlobalService) GetProjectFeatureSettings(name string) *ProjectsLocationsGlobalGetProjectFeatureSettingsCall {
+	c := &ProjectsLocationsGlobalGetProjectFeatureSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalGetProjectFeatureSettingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalGetProjectFeatureSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGlobalGetProjectFeatureSettingsCall) IfNoneMatch(entityTag string) *ProjectsLocationsGlobalGetProjectFeatureSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalGetProjectFeatureSettingsCall) Context(ctx context.Context) *ProjectsLocationsGlobalGetProjectFeatureSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalGetProjectFeatureSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalGetProjectFeatureSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.locations.global.getProjectFeatureSettings" call.
+// Exactly one of *ProjectFeatureSettings or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ProjectFeatureSettings.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalGetProjectFeatureSettingsCall) Do(opts ...googleapi.CallOption) (*ProjectFeatureSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ProjectFeatureSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "GetProjectFeatureSettings returns the feature settings for a project",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/projectFeatureSettings",
+	//   "httpMethod": "GET",
+	//   "id": "osconfig.projects.locations.global.getProjectFeatureSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the billing config. \"projects//locations/global/projectFeatureSettings\"",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/projectFeatureSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "ProjectFeatureSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "osconfig.projects.locations.global.updateProjectFeatureSettings":
+
+type ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall struct {
+	s                      *Service
+	name                   string
+	projectfeaturesettings *ProjectFeatureSettings
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// UpdateProjectFeatureSettings: UpdateProjectFeatureSettings sets the
+// feature settings for a project.
+//
+//   - name: Immutable. Name of the config, e.g.
+//     projects/12345/locations/global/projectFeatureSettings.
+func (r *ProjectsLocationsGlobalService) UpdateProjectFeatureSettings(name string, projectfeaturesettings *ProjectFeatureSettings) *ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall {
+	c := &ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.projectfeaturesettings = projectfeaturesettings
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Field mask that
+// controls which fields of the ProjectFeatureSettings should be
+// updated.
+func (c *ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall) UpdateMask(updateMask string) *ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall) Context(ctx context.Context) *ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.projectfeaturesettings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "osconfig.projects.locations.global.updateProjectFeatureSettings" call.
+// Exactly one of *ProjectFeatureSettings or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ProjectFeatureSettings.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall) Do(opts ...googleapi.CallOption) (*ProjectFeatureSettings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ProjectFeatureSettings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "UpdateProjectFeatureSettings sets the feature settings for a project.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/global/projectFeatureSettings",
+	//   "httpMethod": "PATCH",
+	//   "id": "osconfig.projects.locations.global.updateProjectFeatureSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Immutable. Name of the config, e.g. projects/12345/locations/global/projectFeatureSettings",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/global/projectFeatureSettings$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. Field mask that controls which fields of the ProjectFeatureSettings should be updated.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "ProjectFeatureSettings"
+	//   },
+	//   "response": {
+	//     "$ref": "ProjectFeatureSettings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "osconfig.projects.locations.instances.inventories.get":

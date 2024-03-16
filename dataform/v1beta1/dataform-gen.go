@@ -2746,7 +2746,7 @@ type Repository struct {
 	// Labels: Optional. Repository user labels.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Output only. The repository's name.
+	// Name: Identifier. The repository's name.
 	Name string `json:"name,omitempty"`
 
 	// NpmrcEnvironmentVariablesSecretVersion: Optional. The name of the
@@ -3427,7 +3427,7 @@ func (s *WorkflowInvocationAction) MarshalJSON() ([]byte, error) {
 
 // Workspace: Represents a Dataform Git workspace.
 type Workspace struct {
-	// Name: Output only. The workspace's name.
+	// Name: Identifier. The workspace's name.
 	Name string `json:"name,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5891,7 +5891,7 @@ type ProjectsLocationsRepositoriesPatchCall struct {
 
 // Patch: Updates a single Repository.
 //
-// - name: Output only. The repository's name.
+// - name: Identifier. The repository's name.
 func (r *ProjectsLocationsRepositoriesService) Patch(name string, repository *Repository) *ProjectsLocationsRepositoriesPatchCall {
 	c := &ProjectsLocationsRepositoriesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6007,7 +6007,7 @@ func (c *ProjectsLocationsRepositoriesPatchCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The repository's name.",
+	//       "description": "Identifier. The repository's name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
 	//       "required": true,

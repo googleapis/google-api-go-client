@@ -714,6 +714,8 @@ type GoogleChecksReportV1alphaCheckCitation struct {
 	//   "CHINA_PIPL" - China Personal Information Protection Law.
 	//   "SOUTH_KOREA_PIPA" - South Korea Personal Information Protection
 	// Act.
+	//   "SOUTH_AFRICA_POPIA" - South Africa Protection of Personal
+	// Information Act.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to

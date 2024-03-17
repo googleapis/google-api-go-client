@@ -251,6 +251,7 @@ func NewProjectsInstancesService(s *Service) *ProjectsInstancesService {
 	rs.Backups = NewProjectsInstancesBackupsService(s)
 	rs.DatabaseOperations = NewProjectsInstancesDatabaseOperationsService(s)
 	rs.Databases = NewProjectsInstancesDatabasesService(s)
+	rs.InstancePartitionOperations = NewProjectsInstancesInstancePartitionOperationsService(s)
 	rs.InstancePartitions = NewProjectsInstancesInstancePartitionsService(s)
 	rs.Operations = NewProjectsInstancesOperationsService(s)
 	return rs
@@ -266,6 +267,8 @@ type ProjectsInstancesService struct {
 	DatabaseOperations *ProjectsInstancesDatabaseOperationsService
 
 	Databases *ProjectsInstancesDatabasesService
+
+	InstancePartitionOperations *ProjectsInstancesInstancePartitionOperationsService
 
 	InstancePartitions *ProjectsInstancesInstancePartitionsService
 
@@ -353,6 +356,15 @@ func NewProjectsInstancesDatabasesSessionsService(s *Service) *ProjectsInstances
 }
 
 type ProjectsInstancesDatabasesSessionsService struct {
+	s *Service
+}
+
+func NewProjectsInstancesInstancePartitionOperationsService(s *Service) *ProjectsInstancesInstancePartitionOperationsService {
+	rs := &ProjectsInstancesInstancePartitionOperationsService{s: s}
+	return rs
+}
+
+type ProjectsInstancesInstancePartitionOperationsService struct {
 	s *Service
 }
 
@@ -1625,6 +1637,85 @@ type CreateInstanceMetadata struct {
 
 func (s *CreateInstanceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateInstanceMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateInstancePartitionMetadata: Metadata type for the operation
+// returned by CreateInstancePartition.
+type CreateInstancePartitionMetadata struct {
+	// CancelTime: The time at which this operation was cancelled. If set,
+	// this operation is in the process of undoing itself (which is
+	// guaranteed to succeed) and cannot be cancelled again.
+	CancelTime string `json:"cancelTime,omitempty"`
+
+	// EndTime: The time at which this operation failed or was completed
+	// successfully.
+	EndTime string `json:"endTime,omitempty"`
+
+	// InstancePartition: The instance partition being created.
+	InstancePartition *InstancePartition `json:"instancePartition,omitempty"`
+
+	// StartTime: The time at which the CreateInstancePartition request was
+	// received.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CancelTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CancelTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateInstancePartitionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateInstancePartitionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateInstancePartitionRequest: The request for
+// CreateInstancePartition.
+type CreateInstancePartitionRequest struct {
+	// InstancePartition: Required. The instance partition to create. The
+	// instance_partition.name may be omitted, but if specified must be
+	// `/instancePartitions/`.
+	InstancePartition *InstancePartition `json:"instancePartition,omitempty"`
+
+	// InstancePartitionId: Required. The ID of the instance partition to
+	// create. Valid identifiers are of the form `a-z*[a-z0-9]` and must be
+	// between 2 and 64 characters in length.
+	InstancePartitionId string `json:"instancePartitionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InstancePartition")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InstancePartition") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateInstancePartitionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateInstancePartitionRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3098,6 +3189,111 @@ func (s *InstanceOperationProgress) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InstancePartition: An isolated set of Cloud Spanner resources that
+// databases can define placements on.
+type InstancePartition struct {
+	// Config: Required. The name of the instance partition's configuration.
+	// Values are of the form `projects//instanceConfigs/`. See also
+	// InstanceConfig and ListInstanceConfigs.
+	Config string `json:"config,omitempty"`
+
+	// CreateTime: Output only. The time at which the instance partition was
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// DisplayName: Required. The descriptive name for this instance
+	// partition as it appears in UIs. Must be unique per project and
+	// between 4 and 30 characters in length.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Etag: Used for optimistic concurrency control as a way to help
+	// prevent simultaneous updates of a instance partition from overwriting
+	// each other. It is strongly suggested that systems make use of the
+	// etag in the read-modify-write cycle to perform instance partition
+	// updates in order to avoid race conditions: An etag is returned in the
+	// response which contains instance partitions, and systems are expected
+	// to put that etag in the request to update instance partitions to
+	// ensure that their change will be applied to the same version of the
+	// instance partition. If no etag is provided in the call to update
+	// instance partition, then the existing instance partition is
+	// overwritten blindly.
+	Etag string `json:"etag,omitempty"`
+
+	// Name: Required. A unique identifier for the instance partition.
+	// Values are of the form
+	// `projects//instances//instancePartitions/a-z*[a-z0-9]`. The final
+	// segment of the name must be between 2 and 64 characters in length. An
+	// instance partition's name cannot be changed after the instance
+	// partition is created.
+	Name string `json:"name,omitempty"`
+
+	// NodeCount: The number of nodes allocated to this instance partition.
+	// Users can set the node_count field to specify the target number of
+	// nodes allocated to the instance partition. This may be zero in API
+	// responses for instance partitions that are not yet in state `READY`.
+	NodeCount int64 `json:"nodeCount,omitempty"`
+
+	// ProcessingUnits: The number of processing units allocated to this
+	// instance partition. Users can set the processing_units field to
+	// specify the target number of processing units allocated to the
+	// instance partition. This may be zero in API responses for instance
+	// partitions that are not yet in state `READY`.
+	ProcessingUnits int64 `json:"processingUnits,omitempty"`
+
+	// ReferencingBackups: Output only. The names of the backups that
+	// reference this instance partition. Referencing backups should share
+	// the parent instance. The existence of any referencing backup prevents
+	// the instance partition from being deleted.
+	ReferencingBackups []string `json:"referencingBackups,omitempty"`
+
+	// ReferencingDatabases: Output only. The names of the databases that
+	// reference this instance partition. Referencing databases should share
+	// the parent instance. The existence of any referencing database
+	// prevents the instance partition from being deleted.
+	ReferencingDatabases []string `json:"referencingDatabases,omitempty"`
+
+	// State: Output only. The current instance partition state.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Not specified.
+	//   "CREATING" - The instance partition is still being created.
+	// Resources may not be available yet, and operations such as creating
+	// placements using this instance partition may not work.
+	//   "READY" - The instance partition is fully created and ready to do
+	// work such as creating placements and using in databases.
+	State string `json:"state,omitempty"`
+
+	// UpdateTime: Output only. The time at which the instance partition was
+	// most recently updated.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Config") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Config") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstancePartition) MarshalJSON() ([]byte, error) {
+	type NoMethod InstancePartition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // KeyRange: KeyRange represents a range of rows in a table or index. A
 // range has a start key and an end key. These keys can be open or
 // closed, indicating if the range includes rows with that key. Keys are
@@ -3594,6 +3790,97 @@ type ListInstanceConfigsResponse struct {
 
 func (s *ListInstanceConfigsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListInstanceConfigsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListInstancePartitionOperationsResponse: The response for
+// ListInstancePartitionOperations.
+type ListInstancePartitionOperationsResponse struct {
+	// NextPageToken: `next_page_token` can be sent in a subsequent
+	// ListInstancePartitionOperations call to fetch more of the matching
+	// metadata.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Operations: The list of matching instance partition long-running
+	// operations. Each operation's name will be prefixed by the instance
+	// partition's name. The operation's metadata field type
+	// `metadata.type_url` describes the type of the metadata.
+	Operations []*Operation `json:"operations,omitempty"`
+
+	// UnreachableInstancePartitions: The list of unreachable instance
+	// partitions. It includes the names of instance partitions whose
+	// operation metadata could not be retrieved within
+	// instance_partition_deadline.
+	UnreachableInstancePartitions []string `json:"unreachableInstancePartitions,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListInstancePartitionOperationsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListInstancePartitionOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListInstancePartitionsResponse: The response for
+// ListInstancePartitions.
+type ListInstancePartitionsResponse struct {
+	// InstancePartitions: The list of requested instancePartitions.
+	InstancePartitions []*InstancePartition `json:"instancePartitions,omitempty"`
+
+	// NextPageToken: `next_page_token` can be sent in a subsequent
+	// ListInstancePartitions call to fetch more of the matching instance
+	// partitions.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: The list of unreachable instance partitions. It includes
+	// the names of instance partitions whose metadata could not be
+	// retrieved within instance_partition_deadline.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "InstancePartitions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InstancePartitions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListInstancePartitionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListInstancePartitionsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6754,6 +7041,85 @@ type UpdateInstanceMetadata struct {
 
 func (s *UpdateInstanceMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateInstanceMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateInstancePartitionMetadata: Metadata type for the operation
+// returned by UpdateInstancePartition.
+type UpdateInstancePartitionMetadata struct {
+	// CancelTime: The time at which this operation was cancelled. If set,
+	// this operation is in the process of undoing itself (which is
+	// guaranteed to succeed) and cannot be cancelled again.
+	CancelTime string `json:"cancelTime,omitempty"`
+
+	// EndTime: The time at which this operation failed or was completed
+	// successfully.
+	EndTime string `json:"endTime,omitempty"`
+
+	// InstancePartition: The desired end state of the update.
+	InstancePartition *InstancePartition `json:"instancePartition,omitempty"`
+
+	// StartTime: The time at which UpdateInstancePartition request was
+	// received.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CancelTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CancelTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateInstancePartitionMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateInstancePartitionMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateInstancePartitionRequest: The request for
+// UpdateInstancePartition.
+type UpdateInstancePartitionRequest struct {
+	// FieldMask: Required. A mask specifying which fields in
+	// InstancePartition should be updated. The field mask must always be
+	// specified; this prevents any future fields in InstancePartition from
+	// being erased accidentally by clients that do not know about them.
+	FieldMask string `json:"fieldMask,omitempty"`
+
+	// InstancePartition: Required. The instance partition to update, which
+	// must always include the instance partition name. Otherwise, only
+	// fields mentioned in field_mask need be included.
+	InstancePartition *InstancePartition `json:"instancePartition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FieldMask") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FieldMask") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateInstancePartitionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateInstancePartitionRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -18580,6 +18946,1120 @@ func (c *ProjectsInstancesDatabasesSessionsStreamingReadCall) Do(opts ...googlea
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform",
 	//     "https://www.googleapis.com/auth/spanner.data"
+	//   ]
+	// }
+
+}
+
+// method id "spanner.projects.instances.instancePartitionOperations.list":
+
+type ProjectsInstancesInstancePartitionOperationsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists instance partition long-running operations in the given
+// instance. An instance partition operation has a name of the form
+// `projects//instances//instancePartitions//operations/`. The
+// long-running operation metadata field type `metadata.type_url`
+// describes the type of the metadata. Operations returned include those
+// that have completed/failed/canceled within the last 7 days, and
+// pending operations. Operations returned are ordered by
+// `operation.metadata.value.start_time` in descending order starting
+// from the most recently started operation. Authorization requires
+// `spanner.instancePartitionOperations.list` permission on the resource
+// parent.
+//
+//   - parent: The parent instance of the instance partition operations.
+//     Values are of the form `projects//instances/`.
+func (r *ProjectsInstancesInstancePartitionOperationsService) List(parent string) *ProjectsInstancesInstancePartitionOperationsListCall {
+	c := &ProjectsInstancesInstancePartitionOperationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": An expression that
+// filters the list of returned operations. A filter expression consists
+// of a field name, a comparison operator, and a value for filtering.
+// The value must be a string, a number, or a boolean. The comparison
+// operator must be one of: `<`, `>`, `<=`, `>=`, `!=`, `=`, or `:`.
+// Colon `:` is the contains operator. Filter rules are not case
+// sensitive. The following fields in the Operation are eligible for
+// filtering: * `name` - The name of the long-running operation * `done`
+// - False if the operation is in progress, else true. *
+// `metadata.@type` - the type of metadata. For example, the type string
+// for CreateInstancePartitionMetadata is
+// `type.googleapis.com/google.spanner.admin.instance.v1.CreateInstancePa
+// rtitionMetadata`. * `metadata.` - any field in metadata.value.
+// `metadata.@type` must be specified first, if filtering on metadata
+// fields. * `error` - Error associated with the long-running operation.
+// * `response.@type` - the type of response. * `response.` - any field
+// in response.value. You can combine multiple expressions by enclosing
+// each expression in parentheses. By default, expressions are combined
+// with AND logic. However, you can specify AND, OR, and NOT logic
+// explicitly. Here are a few examples: * `done:true` - The operation is
+// complete. * `(metadata.@type=` \
+// `type.googleapis.com/google.spanner.admin.instance.v1.CreateInstancePa
+// rtitionMetadata) AND` \
+// `(metadata.instance_partition.name:custom-instance-partition) AND` \
+// `(metadata.start_time < \"2021-03-28T14:50:00Z\") AND` \ `(error:*)`
+// - Return operations where: * The operation's metadata type is
+// CreateInstancePartitionMetadata. * The instance partition name
+// contains "custom-instance-partition". * The operation started before
+// 2021-03-28T14:50:00Z. * The operation resulted in an error.
+func (c *ProjectsInstancesInstancePartitionOperationsListCall) Filter(filter string) *ProjectsInstancesInstancePartitionOperationsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// InstancePartitionDeadline sets the optional parameter
+// "instancePartitionDeadline": Deadline used while retrieving metadata
+// for instance partition operations. Instance partitions whose
+// operation metadata cannot be retrieved within this deadline will be
+// added to unreachable in ListInstancePartitionOperationsResponse.
+func (c *ProjectsInstancesInstancePartitionOperationsListCall) InstancePartitionDeadline(instancePartitionDeadline string) *ProjectsInstancesInstancePartitionOperationsListCall {
+	c.urlParams_.Set("instancePartitionDeadline", instancePartitionDeadline)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of operations
+// to be returned in the response. If 0 or less, defaults to the
+// server's maximum allowed page size.
+func (c *ProjectsInstancesInstancePartitionOperationsListCall) PageSize(pageSize int64) *ProjectsInstancesInstancePartitionOperationsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If non-empty,
+// `page_token` should contain a next_page_token from a previous
+// ListInstancePartitionOperationsResponse to the same `parent` and with
+// the same `filter`.
+func (c *ProjectsInstancesInstancePartitionOperationsListCall) PageToken(pageToken string) *ProjectsInstancesInstancePartitionOperationsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesInstancePartitionOperationsListCall) Fields(s ...googleapi.Field) *ProjectsInstancesInstancePartitionOperationsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstancesInstancePartitionOperationsListCall) IfNoneMatch(entityTag string) *ProjectsInstancesInstancePartitionOperationsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesInstancePartitionOperationsListCall) Context(ctx context.Context) *ProjectsInstancesInstancePartitionOperationsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesInstancePartitionOperationsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesInstancePartitionOperationsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/instancePartitionOperations")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.instancePartitionOperations.list" call.
+// Exactly one of *ListInstancePartitionOperationsResponse or error will
+// be non-nil. Any non-2xx status code is an error. Response headers are
+// in either
+// *ListInstancePartitionOperationsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsInstancesInstancePartitionOperationsListCall) Do(opts ...googleapi.CallOption) (*ListInstancePartitionOperationsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListInstancePartitionOperationsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists instance partition long-running operations in the given instance. An instance partition operation has a name of the form `projects//instances//instancePartitions//operations/`. The long-running operation metadata field type `metadata.type_url` describes the type of the metadata. Operations returned include those that have completed/failed/canceled within the last 7 days, and pending operations. Operations returned are ordered by `operation.metadata.value.start_time` in descending order starting from the most recently started operation. Authorization requires `spanner.instancePartitionOperations.list` permission on the resource parent.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/instancePartitionOperations",
+	//   "httpMethod": "GET",
+	//   "id": "spanner.projects.instances.instancePartitionOperations.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. An expression that filters the list of returned operations. A filter expression consists of a field name, a comparison operator, and a value for filtering. The value must be a string, a number, or a boolean. The comparison operator must be one of: `\u003c`, `\u003e`, `\u003c=`, `\u003e=`, `!=`, `=`, or `:`. Colon `:` is the contains operator. Filter rules are not case sensitive. The following fields in the Operation are eligible for filtering: * `name` - The name of the long-running operation * `done` - False if the operation is in progress, else true. * `metadata.@type` - the type of metadata. For example, the type string for CreateInstancePartitionMetadata is `type.googleapis.com/google.spanner.admin.instance.v1.CreateInstancePartitionMetadata`. * `metadata.` - any field in metadata.value. `metadata.@type` must be specified first, if filtering on metadata fields. * `error` - Error associated with the long-running operation. * `response.@type` - the type of response. * `response.` - any field in response.value. You can combine multiple expressions by enclosing each expression in parentheses. By default, expressions are combined with AND logic. However, you can specify AND, OR, and NOT logic explicitly. Here are a few examples: * `done:true` - The operation is complete. * `(metadata.@type=` \\ `type.googleapis.com/google.spanner.admin.instance.v1.CreateInstancePartitionMetadata) AND` \\ `(metadata.instance_partition.name:custom-instance-partition) AND` \\ `(metadata.start_time \u003c \\\"2021-03-28T14:50:00Z\\\") AND` \\ `(error:*)` - Return operations where: * The operation's metadata type is CreateInstancePartitionMetadata. * The instance partition name contains \"custom-instance-partition\". * The operation started before 2021-03-28T14:50:00Z. * The operation resulted in an error.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "instancePartitionDeadline": {
+	//       "description": "Optional. Deadline used while retrieving metadata for instance partition operations. Instance partitions whose operation metadata cannot be retrieved within this deadline will be added to unreachable in ListInstancePartitionOperationsResponse.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Number of operations to be returned in the response. If 0 or less, defaults to the server's maximum allowed page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. If non-empty, `page_token` should contain a next_page_token from a previous ListInstancePartitionOperationsResponse to the same `parent` and with the same `filter`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent instance of the instance partition operations. Values are of the form `projects//instances/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/instancePartitionOperations",
+	//   "response": {
+	//     "$ref": "ListInstancePartitionOperationsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsInstancesInstancePartitionOperationsListCall) Pages(ctx context.Context, f func(*ListInstancePartitionOperationsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "spanner.projects.instances.instancePartitions.create":
+
+type ProjectsInstancesInstancePartitionsCreateCall struct {
+	s                              *Service
+	parent                         string
+	createinstancepartitionrequest *CreateInstancePartitionRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Create: Creates an instance partition and begins preparing it to be
+// used. The returned long-running operation can be used to track the
+// progress of preparing the new instance partition. The instance
+// partition name is assigned by the caller. If the named instance
+// partition already exists, `CreateInstancePartition` returns
+// `ALREADY_EXISTS`. Immediately upon completion of this request: * The
+// instance partition is readable via the API, with all requested
+// attributes but no allocated resources. Its state is `CREATING`. Until
+// completion of the returned operation: * Cancelling the operation
+// renders the instance partition immediately unreadable via the API. *
+// The instance partition can be deleted. * All other attempts to modify
+// the instance partition are rejected. Upon completion of the returned
+// operation: * Billing for all successfully-allocated resources begins
+// (some types may have lower than the requested levels). * Databases
+// can start using this instance partition. * The instance partition's
+// allocated resource levels are readable via the API. * The instance
+// partition's state becomes `READY`. The returned long-running
+// operation will have a name of the format `/operations/` and can be
+// used to track creation of the instance partition. The metadata field
+// type is CreateInstancePartitionMetadata. The response field type is
+// InstancePartition, if successful.
+//
+//   - parent: The name of the instance in which to create the instance
+//     partition. Values are of the form `projects//instances/`.
+func (r *ProjectsInstancesInstancePartitionsService) Create(parent string, createinstancepartitionrequest *CreateInstancePartitionRequest) *ProjectsInstancesInstancePartitionsCreateCall {
+	c := &ProjectsInstancesInstancePartitionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.createinstancepartitionrequest = createinstancepartitionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesInstancePartitionsCreateCall) Fields(s ...googleapi.Field) *ProjectsInstancesInstancePartitionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesInstancePartitionsCreateCall) Context(ctx context.Context) *ProjectsInstancesInstancePartitionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesInstancePartitionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesInstancePartitionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createinstancepartitionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/instancePartitions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.instancePartitions.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesInstancePartitionsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates an instance partition and begins preparing it to be used. The returned long-running operation can be used to track the progress of preparing the new instance partition. The instance partition name is assigned by the caller. If the named instance partition already exists, `CreateInstancePartition` returns `ALREADY_EXISTS`. Immediately upon completion of this request: * The instance partition is readable via the API, with all requested attributes but no allocated resources. Its state is `CREATING`. Until completion of the returned operation: * Cancelling the operation renders the instance partition immediately unreadable via the API. * The instance partition can be deleted. * All other attempts to modify the instance partition are rejected. Upon completion of the returned operation: * Billing for all successfully-allocated resources begins (some types may have lower than the requested levels). * Databases can start using this instance partition. * The instance partition's allocated resource levels are readable via the API. * The instance partition's state becomes `READY`. The returned long-running operation will have a name of the format `/operations/` and can be used to track creation of the instance partition. The metadata field type is CreateInstancePartitionMetadata. The response field type is InstancePartition, if successful.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/instancePartitions",
+	//   "httpMethod": "POST",
+	//   "id": "spanner.projects.instances.instancePartitions.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The name of the instance in which to create the instance partition. Values are of the form `projects//instances/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/instancePartitions",
+	//   "request": {
+	//     "$ref": "CreateInstancePartitionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
+}
+
+// method id "spanner.projects.instances.instancePartitions.delete":
+
+type ProjectsInstancesInstancePartitionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes an existing instance partition. Requires that the
+// instance partition is not used by any database or backup and is not
+// the default instance partition of an instance. Authorization requires
+// `spanner.instancePartitions.delete` permission on the resource name.
+//
+//   - name: The name of the instance partition to be deleted. Values are
+//     of the form
+//     `projects/{project}/instances/{instance}/instancePartitions/{instanc
+//     e_partition}`.
+func (r *ProjectsInstancesInstancePartitionsService) Delete(name string) *ProjectsInstancesInstancePartitionsDeleteCall {
+	c := &ProjectsInstancesInstancePartitionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": If not empty, the API only
+// deletes the instance partition when the etag provided matches the
+// current status of the requested instance partition. Otherwise,
+// deletes the instance partition without checking the current status of
+// the requested instance partition.
+func (c *ProjectsInstancesInstancePartitionsDeleteCall) Etag(etag string) *ProjectsInstancesInstancePartitionsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesInstancePartitionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsInstancesInstancePartitionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesInstancePartitionsDeleteCall) Context(ctx context.Context) *ProjectsInstancesInstancePartitionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesInstancePartitionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesInstancePartitionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.instancePartitions.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsInstancesInstancePartitionsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes an existing instance partition. Requires that the instance partition is not used by any database or backup and is not the default instance partition of an instance. Authorization requires `spanner.instancePartitions.delete` permission on the resource name.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/instancePartitions/{instancePartitionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "spanner.projects.instances.instancePartitions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "etag": {
+	//       "description": "Optional. If not empty, the API only deletes the instance partition when the etag provided matches the current status of the requested instance partition. Otherwise, deletes the instance partition without checking the current status of the requested instance partition.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The name of the instance partition to be deleted. Values are of the form `projects/{project}/instances/{instance}/instancePartitions/{instance_partition}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/instancePartitions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
+}
+
+// method id "spanner.projects.instances.instancePartitions.get":
+
+type ProjectsInstancesInstancePartitionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about a particular instance partition.
+//
+//   - name: The name of the requested instance partition. Values are of
+//     the form
+//     `projects/{project}/instances/{instance}/instancePartitions/{instanc
+//     e_partition}`.
+func (r *ProjectsInstancesInstancePartitionsService) Get(name string) *ProjectsInstancesInstancePartitionsGetCall {
+	c := &ProjectsInstancesInstancePartitionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesInstancePartitionsGetCall) Fields(s ...googleapi.Field) *ProjectsInstancesInstancePartitionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstancesInstancePartitionsGetCall) IfNoneMatch(entityTag string) *ProjectsInstancesInstancePartitionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesInstancePartitionsGetCall) Context(ctx context.Context) *ProjectsInstancesInstancePartitionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesInstancePartitionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesInstancePartitionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.instancePartitions.get" call.
+// Exactly one of *InstancePartition or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *InstancePartition.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsInstancesInstancePartitionsGetCall) Do(opts ...googleapi.CallOption) (*InstancePartition, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &InstancePartition{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about a particular instance partition.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/instancePartitions/{instancePartitionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "spanner.projects.instances.instancePartitions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the requested instance partition. Values are of the form `projects/{project}/instances/{instance}/instancePartitions/{instance_partition}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/instancePartitions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "InstancePartition"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
+}
+
+// method id "spanner.projects.instances.instancePartitions.list":
+
+type ProjectsInstancesInstancePartitionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all instance partitions for the given instance.
+//
+//   - parent: The instance whose instance partitions should be listed.
+//     Values are of the form `projects//instances/`.
+func (r *ProjectsInstancesInstancePartitionsService) List(parent string) *ProjectsInstancesInstancePartitionsListCall {
+	c := &ProjectsInstancesInstancePartitionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// InstancePartitionDeadline sets the optional parameter
+// "instancePartitionDeadline": Deadline used while retrieving metadata
+// for instance partitions. Instance partitions whose metadata cannot be
+// retrieved within this deadline will be added to unreachable in
+// ListInstancePartitionsResponse.
+func (c *ProjectsInstancesInstancePartitionsListCall) InstancePartitionDeadline(instancePartitionDeadline string) *ProjectsInstancesInstancePartitionsListCall {
+	c.urlParams_.Set("instancePartitionDeadline", instancePartitionDeadline)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of instance
+// partitions to be returned in the response. If 0 or less, defaults to
+// the server's maximum allowed page size.
+func (c *ProjectsInstancesInstancePartitionsListCall) PageSize(pageSize int64) *ProjectsInstancesInstancePartitionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": If non-empty,
+// `page_token` should contain a next_page_token from a previous
+// ListInstancePartitionsResponse.
+func (c *ProjectsInstancesInstancePartitionsListCall) PageToken(pageToken string) *ProjectsInstancesInstancePartitionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesInstancePartitionsListCall) Fields(s ...googleapi.Field) *ProjectsInstancesInstancePartitionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstancesInstancePartitionsListCall) IfNoneMatch(entityTag string) *ProjectsInstancesInstancePartitionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesInstancePartitionsListCall) Context(ctx context.Context) *ProjectsInstancesInstancePartitionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesInstancePartitionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesInstancePartitionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/instancePartitions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.instancePartitions.list" call.
+// Exactly one of *ListInstancePartitionsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListInstancePartitionsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsInstancesInstancePartitionsListCall) Do(opts ...googleapi.CallOption) (*ListInstancePartitionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListInstancePartitionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all instance partitions for the given instance.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/instancePartitions",
+	//   "httpMethod": "GET",
+	//   "id": "spanner.projects.instances.instancePartitions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "instancePartitionDeadline": {
+	//       "description": "Optional. Deadline used while retrieving metadata for instance partitions. Instance partitions whose metadata cannot be retrieved within this deadline will be added to unreachable in ListInstancePartitionsResponse.",
+	//       "format": "google-datetime",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Number of instance partitions to be returned in the response. If 0 or less, defaults to the server's maximum allowed page size.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "If non-empty, `page_token` should contain a next_page_token from a previous ListInstancePartitionsResponse.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The instance whose instance partitions should be listed. Values are of the form `projects//instances/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/instancePartitions",
+	//   "response": {
+	//     "$ref": "ListInstancePartitionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsInstancesInstancePartitionsListCall) Pages(ctx context.Context, f func(*ListInstancePartitionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "spanner.projects.instances.instancePartitions.patch":
+
+type ProjectsInstancesInstancePartitionsPatchCall struct {
+	s                              *Service
+	nameid                         string
+	updateinstancepartitionrequest *UpdateInstancePartitionRequest
+	urlParams_                     gensupport.URLParams
+	ctx_                           context.Context
+	header_                        http.Header
+}
+
+// Patch: Updates an instance partition, and begins allocating or
+// releasing resources as requested. The returned long-running operation
+// can be used to track the progress of updating the instance partition.
+// If the named instance partition does not exist, returns `NOT_FOUND`.
+// Immediately upon completion of this request: * For resource types for
+// which a decrease in the instance partition's allocation has been
+// requested, billing is based on the newly-requested level. Until
+// completion of the returned operation: * Cancelling the operation sets
+// its metadata's cancel_time, and begins restoring resources to their
+// pre-request values. The operation is guaranteed to succeed at undoing
+// all resource changes, after which point it terminates with a
+// `CANCELLED` status. * All other attempts to modify the instance
+// partition are rejected. * Reading the instance partition via the API
+// continues to give the pre-request resource levels. Upon completion of
+// the returned operation: * Billing begins for all
+// successfully-allocated resources (some types may have lower than the
+// requested levels). * All newly-reserved resources are available for
+// serving the instance partition's tables. * The instance partition's
+// new resource levels are readable via the API. The returned
+// long-running operation will have a name of the format `/operations/`
+// and can be used to track the instance partition modification. The
+// metadata field type is UpdateInstancePartitionMetadata. The response
+// field type is InstancePartition, if successful. Authorization
+// requires `spanner.instancePartitions.update` permission on the
+// resource name.
+//
+//   - name: A unique identifier for the instance partition. Values are of
+//     the form `projects//instances//instancePartitions/a-z*[a-z0-9]`.
+//     The final segment of the name must be between 2 and 64 characters
+//     in length. An instance partition's name cannot be changed after the
+//     instance partition is created.
+func (r *ProjectsInstancesInstancePartitionsService) Patch(nameid string, updateinstancepartitionrequest *UpdateInstancePartitionRequest) *ProjectsInstancesInstancePartitionsPatchCall {
+	c := &ProjectsInstancesInstancePartitionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.nameid = nameid
+	c.updateinstancepartitionrequest = updateinstancepartitionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesInstancePartitionsPatchCall) Fields(s ...googleapi.Field) *ProjectsInstancesInstancePartitionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesInstancePartitionsPatchCall) Context(ctx context.Context) *ProjectsInstancesInstancePartitionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesInstancePartitionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesInstancePartitionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updateinstancepartitionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.nameid,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.instancePartitions.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesInstancePartitionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an instance partition, and begins allocating or releasing resources as requested. The returned long-running operation can be used to track the progress of updating the instance partition. If the named instance partition does not exist, returns `NOT_FOUND`. Immediately upon completion of this request: * For resource types for which a decrease in the instance partition's allocation has been requested, billing is based on the newly-requested level. Until completion of the returned operation: * Cancelling the operation sets its metadata's cancel_time, and begins restoring resources to their pre-request values. The operation is guaranteed to succeed at undoing all resource changes, after which point it terminates with a `CANCELLED` status. * All other attempts to modify the instance partition are rejected. * Reading the instance partition via the API continues to give the pre-request resource levels. Upon completion of the returned operation: * Billing begins for all successfully-allocated resources (some types may have lower than the requested levels). * All newly-reserved resources are available for serving the instance partition's tables. * The instance partition's new resource levels are readable via the API. The returned long-running operation will have a name of the format `/operations/` and can be used to track the instance partition modification. The metadata field type is UpdateInstancePartitionMetadata. The response field type is InstancePartition, if successful. Authorization requires `spanner.instancePartitions.update` permission on the resource name.",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}/instancePartitions/{instancePartitionsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "spanner.projects.instances.instancePartitions.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. A unique identifier for the instance partition. Values are of the form `projects//instances//instancePartitions/a-z*[a-z0-9]`. The final segment of the name must be between 2 and 64 characters in length. An instance partition's name cannot be changed after the instance partition is created.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/instancePartitions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "UpdateInstancePartitionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
 	//   ]
 	// }
 

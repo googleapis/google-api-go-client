@@ -1196,12 +1196,16 @@ type ConnectionProfile struct {
 	// Provider: The database provider.
 	//
 	// Possible values:
-	//   "DATABASE_PROVIDER_UNSPECIFIED" - The database provider is unknown.
-	//   "CLOUDSQL" - CloudSQL runs the database.
-	//   "RDS" - RDS runs the database.
-	//   "AURORA" - Amazon Aurora.
-	//   "ALLOYDB" - AlloyDB.
+	//   "DATABASE_PROVIDER_UNSPECIFIED" - Use this value for on-premise
+	// source database instances.
+	//   "CLOUDSQL" - Cloud SQL is the source instance provider.
+	//   "RDS" - Amazon RDS is the source instance provider.
+	//   "AURORA" - Amazon Aurora is the source instance provider.
+	//   "ALLOYDB" - AlloyDB for PostgreSQL is the source instance provider.
 	Provider string `json:"provider,omitempty"`
+
+	// Sqlserver: Connection profile for a SQL Server data source.
+	Sqlserver *SqlServerConnectionProfile `json:"sqlserver,omitempty"`
 
 	// State: The current connection profile state (e.g. DRAFT, READY, or
 	// FAILED).
@@ -1564,6 +1568,7 @@ type DatabaseEngineInfo struct {
 	// migration job is unknown.
 	//   "MYSQL" - The source engine is MySQL.
 	//   "POSTGRESQL" - The source engine is PostgreSQL.
+	//   "SQLSERVER" - The source engine is SQL Server.
 	//   "ORACLE" - The source engine is Oracle.
 	Engine string `json:"engine,omitempty"`
 
@@ -1748,17 +1753,19 @@ type DatabaseType struct {
 	// migration job is unknown.
 	//   "MYSQL" - The source engine is MySQL.
 	//   "POSTGRESQL" - The source engine is PostgreSQL.
+	//   "SQLSERVER" - The source engine is SQL Server.
 	//   "ORACLE" - The source engine is Oracle.
 	Engine string `json:"engine,omitempty"`
 
 	// Provider: The database provider.
 	//
 	// Possible values:
-	//   "DATABASE_PROVIDER_UNSPECIFIED" - The database provider is unknown.
-	//   "CLOUDSQL" - CloudSQL runs the database.
-	//   "RDS" - RDS runs the database.
-	//   "AURORA" - Amazon Aurora.
-	//   "ALLOYDB" - AlloyDB.
+	//   "DATABASE_PROVIDER_UNSPECIFIED" - Use this value for on-premise
+	// source database instances.
+	//   "CLOUDSQL" - Cloud SQL is the source instance provider.
+	//   "RDS" - Amazon RDS is the source instance provider.
+	//   "AURORA" - Amazon Aurora is the source instance provider.
+	//   "ALLOYDB" - AlloyDB for PostgreSQL is the source instance provider.
 	Provider string `json:"provider,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Engine") to
@@ -3494,6 +3501,7 @@ type MigrationJob struct {
 	// source writes to stop
 	//   "PREPARING_THE_DUMP" - Only RDS flow - the sources writes stopped,
 	// waiting for dump to begin
+	//   "READY_FOR_PROMOTE" - The migration job is ready to be promoted.
 	Phase string `json:"phase,omitempty"`
 
 	// ReverseSshConnectivity: The details needed to communicate to the
@@ -3506,6 +3514,10 @@ type MigrationJob struct {
 
 	// SourceDatabase: The database engine type and provider of the source.
 	SourceDatabase *DatabaseType `json:"sourceDatabase,omitempty"`
+
+	// SqlserverHomogeneousMigrationJobConfig: Optional. Configuration for
+	// SQL Server homogeneous migration.
+	SqlserverHomogeneousMigrationJobConfig *SqlServerHomogeneousMigrationJobConfig `json:"sqlserverHomogeneousMigrationJobConfig,omitempty"`
 
 	// State: The current migration job state.
 	//
@@ -5238,6 +5250,229 @@ type SqlIpConfig struct {
 
 func (s *SqlIpConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod SqlIpConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerBackups: Specifies the backup details in Cloud Storage for
+// homogeneous migration to Cloud SQL for SQL Server.
+type SqlServerBackups struct {
+	// GcsBucket: Required. The Cloud Storage bucket that stores backups for
+	// all replicated databases.
+	GcsBucket string `json:"gcsBucket,omitempty"`
+
+	// GcsPrefix: Optional. Cloud Storage path inside the bucket that stores
+	// backups.
+	GcsPrefix string `json:"gcsPrefix,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GcsBucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GcsBucket") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerBackups) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerBackups
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerConnectionProfile: Specifies connection parameters required
+// specifically for SQL Server databases.
+type SqlServerConnectionProfile struct {
+	// Backups: The backup details in Cloud Storage for homogeneous
+	// migration to Cloud SQL for SQL Server.
+	Backups *SqlServerBackups `json:"backups,omitempty"`
+
+	// CloudSqlId: If the source is a Cloud SQL database, use this field to
+	// provide the Cloud SQL instance ID of the source.
+	CloudSqlId string `json:"cloudSqlId,omitempty"`
+
+	// ForwardSshConnectivity: Forward SSH tunnel connectivity.
+	ForwardSshConnectivity *ForwardSshTunnelConnectivity `json:"forwardSshConnectivity,omitempty"`
+
+	// Host: Required. The IP or hostname of the source SQL Server database.
+	Host string `json:"host,omitempty"`
+
+	// Password: Required. Input only. The password for the user that
+	// Database Migration Service will be using to connect to the database.
+	// This field is not returned on request, and the value is encrypted
+	// when stored in Database Migration Service.
+	Password string `json:"password,omitempty"`
+
+	// PasswordSet: Output only. Indicates whether a new password is
+	// included in the request.
+	PasswordSet bool `json:"passwordSet,omitempty"`
+
+	// Port: Required. The network port of the source SQL Server database.
+	Port int64 `json:"port,omitempty"`
+
+	// PrivateConnectivity: Private connectivity.
+	PrivateConnectivity *PrivateConnectivity `json:"privateConnectivity,omitempty"`
+
+	// PrivateServiceConnectConnectivity: Private Service Connect
+	// connectivity.
+	PrivateServiceConnectConnectivity *PrivateServiceConnectConnectivity `json:"privateServiceConnectConnectivity,omitempty"`
+
+	// Ssl: SSL configuration for the destination to connect to the source
+	// database.
+	Ssl *SslConfig `json:"ssl,omitempty"`
+
+	// StaticIpConnectivity: Static IP connectivity data (default, no
+	// additional details needed).
+	StaticIpConnectivity *StaticIpConnectivity `json:"staticIpConnectivity,omitempty"`
+
+	// Username: Required. The username that Database Migration Service will
+	// use to connect to the database. The value is encrypted when stored in
+	// Database Migration Service.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Backups") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backups") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerConnectionProfile) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerConnectionProfile
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerDatabaseBackup: Specifies the backup details for a single
+// database in Cloud Storage for homogeneous migration to Cloud SQL for
+// SQL Server.
+type SqlServerDatabaseBackup struct {
+	// Database: Required. Name of a SQL Server database for which to define
+	// backup configuration.
+	Database string `json:"database,omitempty"`
+
+	// EncryptionOptions: Optional. Encryption settings for the database.
+	// Required if provided database backups are encrypted. Encryption
+	// settings include path to certificate, path to certificate private
+	// key, and key password.
+	EncryptionOptions *SqlServerEncryptionOptions `json:"encryptionOptions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Database") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Database") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerDatabaseBackup) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerDatabaseBackup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerEncryptionOptions: Encryption settings for the SQL Server
+// database.
+type SqlServerEncryptionOptions struct {
+	// CertPath: Required. Path to certificate.
+	CertPath string `json:"certPath,omitempty"`
+
+	// PvkPassword: Required. Input only. Private key password.
+	PvkPassword string `json:"pvkPassword,omitempty"`
+
+	// PvkPath: Required. Path to certificate private key.
+	PvkPath string `json:"pvkPath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CertPath") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertPath") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerEncryptionOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerEncryptionOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerHomogeneousMigrationJobConfig: Configuration for homogeneous
+// migration to Cloud SQL for SQL Server.
+type SqlServerHomogeneousMigrationJobConfig struct {
+	// BackupFilePattern: Required. Pattern that describes the default
+	// backup naming strategy. The specified pattern should ensure
+	// lexicographical order of backups. The pattern must define one of the
+	// following capture group sets: Capture group set #1 yy/yyyy - year, 2
+	// or 4 digits mm - month number, 1-12 dd - day of month, 1-31 hh - hour
+	// of day, 00-23 mi - minutes, 00-59 ss - seconds, 00-59 Example: For
+	// backup file TestDB_backup_20230802_155400.trn, use pattern:
+	// (?.*)_backup_(?\d{4})(?\d{2})(?\d{2})_(?\d{2})(?\d{2})(?\d{2}).trn
+	// Capture group set #2 timestamp - unix timestamp Example: For backup
+	// file TestDB_backup_1691448254.trn, use pattern:
+	// (?.*)_backup_(?.*).trn
+	BackupFilePattern string `json:"backupFilePattern,omitempty"`
+
+	// DatabaseBackups: Required. Backup details per database in Cloud
+	// Storage.
+	DatabaseBackups []*SqlServerDatabaseBackup `json:"databaseBackups,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupFilePattern")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupFilePattern") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerHomogeneousMigrationJobConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerHomogeneousMigrationJobConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

@@ -437,7 +437,8 @@ func (s *DecodeIntegrityTokenResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DeviceIntegrity: Contains the device attestation information.
+// DeviceIntegrity: Contains the device attestation information. Next
+// tag: 4
 type DeviceIntegrity struct {
 	// DeviceRecognitionVerdict: Details about the integrity of the device
 	// the app is running on.

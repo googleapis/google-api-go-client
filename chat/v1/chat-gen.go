@@ -1325,10 +1325,14 @@ func (s *DeletionMetadata) MarshalJSON() ([]byte, error) {
 // DeprecatedEvent: A Google Chat app interaction event. To learn about
 // interaction events, see Receive and respond to interactions with your
 // Google Chat app
-// (https://developers.google.com/chat/api/guides/message-formats). To
-// learn about event types and for example event payloads, see Types of
-// Google Chat app interaction events
-// (https://developers.google.com/chat/api/guides/message-formats/events).
+// (https://developers.google.com/workspace/chat/api/guides/message-formats).
+// To learn about event types and for example event payloads, see Types
+// of Google Chat app interaction events
+// (https://developers.google.com/workspace/chat/events). In addition to
+// receiving events from user interactions, Chat apps can receive events
+// about changes to spaces, such as when a new member is added to a
+// space. To learn about space events, see Work with events from Google
+// Chat (https://developers.google.com/workspace/chat/events-overview).
 type DeprecatedEvent struct {
 	// Action: For `CARD_CLICKED` interaction events, the form action data
 	// associated when a user clicks a card or dialog. To learn more, see
@@ -1398,7 +1402,7 @@ type DeprecatedEvent struct {
 
 	// Type: The type of interaction event. For details, see Types of Google
 	// Chat app interaction events
-	// (https://developers.google.com/chat/api/guides/message-formats/events).
+	// (https://developers.google.com/workspace/chat/events).
 	//
 	// Possible values:
 	//   "UNSPECIFIED" - Default value for the enum. DO NOT USE.
@@ -2646,6 +2650,16 @@ type GoogleAppsCardV1Icon struct {
 	// (https://developers.google.com/chat/format-messages#builtinicons).
 	KnownIcon string `json:"knownIcon,omitempty"`
 
+	// MaterialIcon: Display one of the Google Material Icons
+	// (https://fonts.google.com/icons). For example, to display a checkbox
+	// icon
+	// (https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Acheck_box%3AFILL%400%3Bwght%40400%3BGRAD%400%3Bopsz%4048),
+	// use "material_icon": { "name": "check_box" } Available for Chat apps
+	// and in Developer Preview
+	// (https://developers.google.com/workspace/preview) for Google
+	// Workspace Add-ons.
+	MaterialIcon *GoogleAppsCardV1MaterialIcon `json:"materialIcon,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AltText") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2809,6 +2823,65 @@ func (s *GoogleAppsCardV1ImageCropStyle) UnmarshalJSON(data []byte) error {
 	}
 	s.AspectRatio = float64(s1.AspectRatio)
 	return nil
+}
+
+// GoogleAppsCardV1MaterialIcon: A Google Material Icon
+// (https://fonts.google.com/icons), which includes over 2500+ options.
+// For example, to display a checkbox icon
+// (https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Acheck_box%3AFILL%400%3Bwght%40400%3BGRAD%400%3Bopsz%4048)
+// with customized weight and grade, write { "name": "check_box",
+// "fill": true, "weight": 300, "grade": -25 } Available for Chat apps
+// and in Developer Preview
+// (https://developers.google.com/workspace/preview) for Google
+// Workspace Add-ons.
+type GoogleAppsCardV1MaterialIcon struct {
+	// Fill: Whether it renders a filled icon. Default value is false. See
+	// Customization in Google Font Icon (https://fonts.google.com/icons)
+	// for details.
+	Fill bool `json:"fill,omitempty"`
+
+	// Grade: Weight and grade affect a symbol’s thickness. Adjustments to
+	// grade are more granular than adjustments to weight and have a small
+	// impact on the size of the symbol. Choose from {-25, 0, 200}. If
+	// absent, default value is 0. If any other value is specified, a broken
+	// image icon is displayed. See Customization in Google Font Icon
+	// (https://fonts.google.com/icons) for details.
+	Grade int64 `json:"grade,omitempty"`
+
+	// Name: The icon name defined in the Google Material Icon Icon
+	// (https://fonts.google.com/icons) in snake_case. e.g. "check_box". Any
+	// invalid names are abandoned and replaced with empty string and
+	// results in the icon failing to render.
+	Name string `json:"name,omitempty"`
+
+	// Weight: The stroke weight of the icon. Choose from {100, 200, 300,
+	// 400, 500, 600, 700}. If absent, default value is 400. If any other
+	// value is specified, a broken image icon is displayed. See
+	// Customization in Google Font Icon (https://fonts.google.com/icons)
+	// for details.
+	Weight int64 `json:"weight,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fill") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fill") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAppsCardV1MaterialIcon) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAppsCardV1MaterialIcon
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // GoogleAppsCardV1OnClick: Represents how to respond when users click

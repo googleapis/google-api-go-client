@@ -17346,10 +17346,10 @@ type ReportRow struct {
 	// explicitly in the query.
 	Segments *Segments `json:"segments,omitempty"`
 
-	// TopicTrends: Topic trends fields requested by the merchant in the
-	// query. Field values are only set if the merchant queries
-	// `TopicTrendsView`.
-	// https://support.google.com/merchants/answer/13542370.
+	// TopicTrends: Topic trends
+	// (https://support.google.com/merchants/answer/13542370) fields
+	// requested by the merchant in the query. Field values are only set if
+	// the merchant queries `TopicTrendsView`.
 	TopicTrends *TopicTrends `json:"topicTrends,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BestSellers") to
@@ -20427,7 +20427,15 @@ func (s *TimeZone) MarshalJSON() ([]byte, error) {
 
 // TopicTrends: Topic trends fields requested by the merchant in the
 // query. Field values are only set if the merchant queries
-// `TopicTrendsView`.
+// `TopicTrendsView`. Forecast data can be queried up to 13 weeks by
+// passing a future date in the `date` field. Historical data is
+// measured daily, and forecasted data is projected weekly. All data
+// points are normalized based on the highest data points returned in
+// the response. If you make separate queries with different date
+// ranges, you might see different values for the same date in each
+// response. The recommended way to get a trend score of a topic is
+// `last7_days_search_interest / last{$day}_days_search_interest - 1`.
+// You can view trends for up to eight topics at a time.
 type TopicTrends struct {
 	// CustomerCountryCode: Country trends are calculated for. Must be a
 	// two-letter country code (ISO 3166-1-alpha-2 code), for example,

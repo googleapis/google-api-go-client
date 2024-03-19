@@ -17174,7 +17174,7 @@ func (r *ExternaltransactionsService) Createexternaltransaction(parent string, e
 // "externalTransactionId": Required. The id to use for the external
 // transaction. Must be unique across all other transactions for the
 // app. This value should be 1-63 characters and valid characters are
-// /a-z0-9_-/. Do not use this field to store any Personally
+// /a-zA-Z0-9_-/. Do not use this field to store any Personally
 // Identifiable Information (PII) such as emails. Attempting to store
 // PII in this field may result in requests being blocked.
 func (c *ExternaltransactionsCreateexternaltransactionCall) ExternalTransactionId(externalTransactionId string) *ExternaltransactionsCreateexternaltransactionCall {
@@ -17282,7 +17282,7 @@ func (c *ExternaltransactionsCreateexternaltransactionCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "externalTransactionId": {
-	//       "description": "Required. The id to use for the external transaction. Must be unique across all other transactions for the app. This value should be 1-63 characters and valid characters are /a-z0-9_-/. Do not use this field to store any Personally Identifiable Information (PII) such as emails. Attempting to store PII in this field may result in requests being blocked.",
+	//       "description": "Required. The id to use for the external transaction. Must be unique across all other transactions for the app. This value should be 1-63 characters and valid characters are /a-zA-Z0-9_-/. Do not use this field to store any Personally Identifiable Information (PII) such as emails. Attempting to store PII in this field may result in requests being blocked.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

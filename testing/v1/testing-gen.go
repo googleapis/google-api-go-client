@@ -6,7 +6,7 @@
 
 // Package testing provides access to the Cloud Testing API.
 //
-// For product documentation, see: https://developers.google.com/cloud-test-lab/
+// For product documentation, see: https://firebase.google.com/docs/test-lab/
 //
 // # Library status
 //

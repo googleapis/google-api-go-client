@@ -8960,7 +8960,10 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestBoostSpecConditionBoostSpec st
 	// might still be shown. The document will have an upstream battle to
 	// get a fairly high ranking, but it is not blocked out completely.
 	// Setting to 0.0 means no boost applied. The boosting condition is
-	// ignored.
+	// ignored. Only one of the (condition, boost) combination or the
+	// boost_control_spec below are set. If both are set then the global
+	// boost is ignored and the more fine-grained boost_control_spec is
+	// applied.
 	Boost float64 `json:"boost,omitempty"`
 
 	// Condition: An expression which specifies a boost condition. The
@@ -9215,6 +9218,14 @@ type GoogleCloudDiscoveryengineV1betaSearchRequestContentSearchSpecSummarySpec s
 	// `summaryResultCount`, the summary is generated from all of the
 	// results. At most 10 results can be used to generate a summary.
 	SummaryResultCount int64 `json:"summaryResultCount,omitempty"`
+
+	// UseSemanticChunks: If true, answer will be generated from most
+	// relevant chunks from top search results. This feature will improve
+	// summary quality. Please note that with this feature enabled, not all
+	// top search results will be referenced and included in the reference
+	// list, so the citation source index only points to the search results
+	// listed in the reference list.
+	UseSemanticChunks bool `json:"useSemanticChunks,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "IgnoreAdversarialQuery") to unconditionally include in API requests.

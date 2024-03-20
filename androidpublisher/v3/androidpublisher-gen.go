@@ -9251,6 +9251,12 @@ type VoidedPurchase struct {
 	// use order_id (available starting from version 3 of the API).
 	PurchaseToken string `json:"purchaseToken,omitempty"`
 
+	// VoidedQuantity: The voided quantity as the result of a quantity-based
+	// partial refund. Voided purchases of quantity-based partial refunds
+	// may only be returned when includeQuantityBasedPartialRefund is set to
+	// true.
+	VoidedQuantity int64 `json:"voidedQuantity,omitempty"`
+
 	// VoidedReason: The reason why the purchase was voided, possible values
 	// are: 0. Other 1. Remorse 2. Not_received 3. Defective 4.
 	// Accidental_purchase 5. Fraud 6. Friendly_fraud 7. Chargeback
@@ -26433,6 +26439,18 @@ func (c *PurchasesVoidedpurchasesListCall) EndTime(endTime int64) *PurchasesVoid
 	return c
 }
 
+// IncludeQuantityBasedPartialRefund sets the optional parameter
+// "includeQuantityBasedPartialRefund": Whether to include voided
+// purchases of quantity-based partial refunds, which are applicable
+// only to multi-quantity purchases. If true, additional voided
+// purchases may be returned with voidedQuantity that indicates the
+// refund quantity of a quantity-based partial refund. The default value
+// is false.
+func (c *PurchasesVoidedpurchasesListCall) IncludeQuantityBasedPartialRefund(includeQuantityBasedPartialRefund bool) *PurchasesVoidedpurchasesListCall {
+	c.urlParams_.Set("includeQuantityBasedPartialRefund", fmt.Sprint(includeQuantityBasedPartialRefund))
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Defines how many
 // results the list operation should return. The default number depends
 // on the resource collection.
@@ -26596,6 +26614,11 @@ func (c *PurchasesVoidedpurchasesListCall) Do(opts ...googleapi.CallOption) (*Vo
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "includeQuantityBasedPartialRefund": {
+	//       "description": "Optional. Whether to include voided purchases of quantity-based partial refunds, which are applicable only to multi-quantity purchases. If true, additional voided purchases may be returned with voidedQuantity that indicates the refund quantity of a quantity-based partial refund. The default value is false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "maxResults": {
 	//       "description": "Defines how many results the list operation should return. The default number depends on the resource collection.",

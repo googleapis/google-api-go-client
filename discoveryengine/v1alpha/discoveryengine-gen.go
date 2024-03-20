@@ -6784,6 +6784,45 @@ func (s *GoogleCloudDiscoveryengineV1alphaPrincipal) MarshalJSON() ([]byte, erro
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1alphaProcessedDocument: Document captures
+// all raw metadata information of items to be recommended or searched.
+type GoogleCloudDiscoveryengineV1alphaProcessedDocument struct {
+	// Document: Required. Full resource name of the referenced document, in
+	// the format
+	// `projects/*/locations/*/collections/*/dataStores/*/branches/*/document
+	// s/*`.
+	Document string `json:"document,omitempty"`
+
+	// JsonData: The JSON string representation of the processed document.
+	JsonData string `json:"jsonData,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Document") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Document") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1alphaProcessedDocument) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1alphaProcessedDocument
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1alphaPurgeDocumentsMetadata: Metadata
 // related to the progress of the PurgeDocuments operation. This will be
 // returned by the google.longrunning.Operation.metadata field.
@@ -7944,7 +7983,10 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestBoostSpecConditionBoostSpec s
 	// might still be shown. The document will have an upstream battle to
 	// get a fairly high ranking, but it is not blocked out completely.
 	// Setting to 0.0 means no boost applied. The boosting condition is
-	// ignored.
+	// ignored. Only one of the (condition, boost) combination or the
+	// boost_control_spec below are set. If both are set then the global
+	// boost is ignored and the more fine-grained boost_control_spec is
+	// applied.
 	Boost float64 `json:"boost,omitempty"`
 
 	// Condition: An expression which specifies a boost condition. The
@@ -8212,6 +8254,14 @@ type GoogleCloudDiscoveryengineV1alphaSearchRequestContentSearchSpecSummarySpec 
 	// `summaryResultCount`, the summary is generated from all of the
 	// results. At most 10 results can be used to generate a summary.
 	SummaryResultCount int64 `json:"summaryResultCount,omitempty"`
+
+	// UseSemanticChunks: If true, answer will be generated from most
+	// relevant chunks from top search results. This feature will improve
+	// summary quality. Please note that with this feature enabled, not all
+	// top search results will be referenced and included in the reference
+	// list, so the citation source index only points to the search results
+	// listed in the reference list.
+	UseSemanticChunks bool `json:"useSemanticChunks,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "IgnoreAdversarialQuery") to unconditionally include in API requests.
@@ -16556,6 +16606,219 @@ func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetCall) Do(opts
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDocument"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.collections.dataStores.branches.documents.getProcessedDocument":
+
+type ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetProcessedDocument: Gets the parsed layout information for a
+// Document.
+//
+//   - name: Full resource name of Document, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}/documents/{document}`. If
+//     the caller does not have permission to access the Document,
+//     regardless of whether or not it exists, a `PERMISSION_DENIED` error
+//     is returned. If the requested Document does not exist, a
+//     `NOT_FOUND` error is returned.
+func (r *ProjectsLocationsCollectionsDataStoresBranchesDocumentsService) GetProcessedDocument(name string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall {
+	c := &ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// ProcessedDocumentFormat sets the optional parameter
+// "processedDocumentFormat": What format output should be. If
+// unspecified, defaults to JSON.
+//
+// Possible values:
+//
+//	"PROCESSED_DOCUMENT_FORMAT_UNSPECIFIED" - Default value.
+//	"JSON" - output format will be a JSON string representation of
+//
+// processed document.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall) ProcessedDocumentFormat(processedDocumentFormat string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall {
+	c.urlParams_.Set("processedDocumentFormat", processedDocumentFormat)
+	return c
+}
+
+// ProcessedDocumentType sets the optional parameter
+// "processedDocumentType": Required. What type of processing to return.
+//
+// Possible values:
+//
+//	"PROCESSED_DOCUMENT_TYPE_UNSPECIFIED" - Default value.
+//	"PARSED_DOCUMENT" - Available for all data store parsing configs.
+//	"CHUNKED_DOCUMENT" - Only available if ChunkingConfig is enabeld on
+//
+// the data store.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall) ProcessedDocumentType(processedDocumentType string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall {
+	c.urlParams_.Set("processedDocumentType", processedDocumentType)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall) Fields(s ...googleapi.Field) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall) IfNoneMatch(entityTag string) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall) Context(ctx context.Context) *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:getProcessedDocument")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.collections.dataStores.branches.documents.getProcessedDocument" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaProcessedDocument or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaProcessedDocument.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsCollectionsDataStoresBranchesDocumentsGetProcessedDocumentCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaProcessedDocument, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaProcessedDocument{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the parsed layout information for a Document.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/collections/{collectionsId}/dataStores/{dataStoresId}/branches/{branchesId}/documents/{documentsId}:getProcessedDocument",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.collections.dataStores.branches.documents.getProcessedDocument",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to access the Document, regardless of whether or not it exists, a `PERMISSION_DENIED` error is returned. If the requested Document does not exist, a `NOT_FOUND` error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/collections/[^/]+/dataStores/[^/]+/branches/[^/]+/documents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "processedDocumentFormat": {
+	//       "description": "What format output should be. If unspecified, defaults to JSON.",
+	//       "enum": [
+	//         "PROCESSED_DOCUMENT_FORMAT_UNSPECIFIED",
+	//         "JSON"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value.",
+	//         "output format will be a JSON string representation of processed document."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "processedDocumentType": {
+	//       "description": "Required. What type of processing to return.",
+	//       "enum": [
+	//         "PROCESSED_DOCUMENT_TYPE_UNSPECIFIED",
+	//         "PARSED_DOCUMENT",
+	//         "CHUNKED_DOCUMENT"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value.",
+	//         "Available for all data store parsing configs.",
+	//         "Only available if ChunkingConfig is enabeld on the data store."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}:getProcessedDocument",
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaProcessedDocument"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -30762,6 +31025,219 @@ func (c *ProjectsLocationsDataStoresBranchesDocumentsGetCall) Do(opts ...googlea
 	//   "path": "v1alpha/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleCloudDiscoveryengineV1alphaDocument"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "discoveryengine.projects.locations.dataStores.branches.documents.getProcessedDocument":
+
+type ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetProcessedDocument: Gets the parsed layout information for a
+// Document.
+//
+//   - name: Full resource name of Document, such as
+//     `projects/{project}/locations/{location}/collections/{collection}/da
+//     taStores/{data_store}/branches/{branch}/documents/{document}`. If
+//     the caller does not have permission to access the Document,
+//     regardless of whether or not it exists, a `PERMISSION_DENIED` error
+//     is returned. If the requested Document does not exist, a
+//     `NOT_FOUND` error is returned.
+func (r *ProjectsLocationsDataStoresBranchesDocumentsService) GetProcessedDocument(name string) *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall {
+	c := &ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// ProcessedDocumentFormat sets the optional parameter
+// "processedDocumentFormat": What format output should be. If
+// unspecified, defaults to JSON.
+//
+// Possible values:
+//
+//	"PROCESSED_DOCUMENT_FORMAT_UNSPECIFIED" - Default value.
+//	"JSON" - output format will be a JSON string representation of
+//
+// processed document.
+func (c *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall) ProcessedDocumentFormat(processedDocumentFormat string) *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall {
+	c.urlParams_.Set("processedDocumentFormat", processedDocumentFormat)
+	return c
+}
+
+// ProcessedDocumentType sets the optional parameter
+// "processedDocumentType": Required. What type of processing to return.
+//
+// Possible values:
+//
+//	"PROCESSED_DOCUMENT_TYPE_UNSPECIFIED" - Default value.
+//	"PARSED_DOCUMENT" - Available for all data store parsing configs.
+//	"CHUNKED_DOCUMENT" - Only available if ChunkingConfig is enabeld on
+//
+// the data store.
+func (c *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall) ProcessedDocumentType(processedDocumentType string) *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall {
+	c.urlParams_.Set("processedDocumentType", processedDocumentType)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall) Fields(s ...googleapi.Field) *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall) IfNoneMatch(entityTag string) *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall) Context(ctx context.Context) *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:getProcessedDocument")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "discoveryengine.projects.locations.dataStores.branches.documents.getProcessedDocument" call.
+// Exactly one of *GoogleCloudDiscoveryengineV1alphaProcessedDocument or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudDiscoveryengineV1alphaProcessedDocument.ServerResponse.Hea
+// der or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsDataStoresBranchesDocumentsGetProcessedDocumentCall) Do(opts ...googleapi.CallOption) (*GoogleCloudDiscoveryengineV1alphaProcessedDocument, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudDiscoveryengineV1alphaProcessedDocument{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the parsed layout information for a Document.",
+	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/dataStores/{dataStoresId}/branches/{branchesId}/documents/{documentsId}:getProcessedDocument",
+	//   "httpMethod": "GET",
+	//   "id": "discoveryengine.projects.locations.dataStores.branches.documents.getProcessedDocument",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Full resource name of Document, such as `projects/{project}/locations/{location}/collections/{collection}/dataStores/{data_store}/branches/{branch}/documents/{document}`. If the caller does not have permission to access the Document, regardless of whether or not it exists, a `PERMISSION_DENIED` error is returned. If the requested Document does not exist, a `NOT_FOUND` error is returned.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/dataStores/[^/]+/branches/[^/]+/documents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "processedDocumentFormat": {
+	//       "description": "What format output should be. If unspecified, defaults to JSON.",
+	//       "enum": [
+	//         "PROCESSED_DOCUMENT_FORMAT_UNSPECIFIED",
+	//         "JSON"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value.",
+	//         "output format will be a JSON string representation of processed document."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "processedDocumentType": {
+	//       "description": "Required. What type of processing to return.",
+	//       "enum": [
+	//         "PROCESSED_DOCUMENT_TYPE_UNSPECIFIED",
+	//         "PARSED_DOCUMENT",
+	//         "CHUNKED_DOCUMENT"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Default value.",
+	//         "Available for all data store parsing configs.",
+	//         "Only available if ChunkingConfig is enabeld on the data store."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha/{+name}:getProcessedDocument",
+	//   "response": {
+	//     "$ref": "GoogleCloudDiscoveryengineV1alphaProcessedDocument"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

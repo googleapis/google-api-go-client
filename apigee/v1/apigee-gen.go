@@ -1433,6 +1433,47 @@ func (s *GoogleCloudApigeeV1AccessGet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1AccessLoggingConfig: Access logging configuration
+// enables customers to ship the access logs from the tenant projects to
+// their own project's cloud logging. The feature is at the instance
+// level ad disabled by default. It can be enabled during CreateInstance
+// or UpdateInstance.
+type GoogleCloudApigeeV1AccessLoggingConfig struct {
+	// Enabled: Optional. Boolean flag that specifies whether the customer
+	// access log feature is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// Filter: Optional. Ship the access log entries that match the
+	// status_code defined in the filter. The status_code is the only
+	// expected/supported filter field. (Ex: status_code) The filter will
+	// parse it to the Common Expression Language semantics for expression
+	// evaluation to build the filter condition. (Ex: "filter": status_code
+	// >= 200 && status_code < 300 )
+	Filter string `json:"filter,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1AccessLoggingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1AccessLoggingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1AccessRemove: Remove action. For example, "Remove"
 // : { "name" : "target.name", "success" : true }
 type GoogleCloudApigeeV1AccessRemove struct {
@@ -6434,6 +6475,12 @@ func (s *GoogleCloudApigeeV1IngressConfig) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudApigeeV1Instance: Apigee runtime instance.
 type GoogleCloudApigeeV1Instance struct {
+	// AccessLoggingConfig: Optional. Access logging configuration enables
+	// the access logging feature at the instance. Apigee customers can
+	// enable access logging to ship the access logs to their own project's
+	// cloud logging.
+	AccessLoggingConfig *GoogleCloudApigeeV1AccessLoggingConfig `json:"accessLoggingConfig,omitempty"`
+
 	// ConsumerAcceptList: Optional. Customer accept list represents the
 	// list of projects (id/number) on customer side that can privately
 	// connect to the service attachment. It is an optional field which the
@@ -6533,7 +6580,7 @@ type GoogleCloudApigeeV1Instance struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "ConsumerAcceptList")
+	// ForceSendFields is a list of field names (e.g. "AccessLoggingConfig")
 	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -6541,7 +6588,7 @@ type GoogleCloudApigeeV1Instance struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ConsumerAcceptList") to
+	// NullFields is a list of field names (e.g. "AccessLoggingConfig") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the

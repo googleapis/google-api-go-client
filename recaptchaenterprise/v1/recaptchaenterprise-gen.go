@@ -1468,7 +1468,7 @@ func (s *GoogleCloudRecaptchaenterpriseV1Key) MarshalJSON() ([]byte, error) {
 }
 
 // GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse:
-// Response to request to list firewall policies belonging to a key.
+// Response to request to list firewall policies belonging to a project.
 type GoogleCloudRecaptchaenterpriseV1ListFirewallPoliciesResponse struct {
 	// FirewallPolicies: Policy details.
 	FirewallPolicies []*GoogleCloudRecaptchaenterpriseV1FirewallPolicy `json:"firewallPolicies,omitempty"`

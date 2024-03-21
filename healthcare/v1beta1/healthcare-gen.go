@@ -517,11 +517,9 @@ type AccessDeterminationLogConfig struct {
 	// [`consentMode`](https://cloud.google.com/healthcare-api/docs/fhir-cons
 	// ent#audit_logs) fields:
 	// (`off`|`emptyScope`|`enforced`|`btg`|`bypass`). * The accessor's
-	// request headers * The `log_level` of the
-	// [AccessDeterminationLogConfig](https://cloud.google.com/healthcare-api
-	// /docs/reference/rest/v1beta1/projects.locations.datasets.fhirStores#Ac
-	// cessDeterminationLogConfig) * The final consent evaluation (`PERMIT`,
-	// `DENY`, or `NO_CONSENT`) * A human-readable summary of the evaluation
+	// request headers * The `log_level` of the AccessDeterminationLogConfig
+	// * The final consent evaluation (`PERMIT`, `DENY`, or `NO_CONSENT`) *
+	// A human-readable summary of the evaluation
 	//   "VERBOSE" - Includes `MINIMUM` and, for each resource owner,
 	// returns: * The resource owner's name * Most specific part of the
 	// `X-Consent-Scope` resulting in consensual determination * Timestamp
@@ -2003,11 +2001,11 @@ type ConsentAccessorScope struct {
 	Actor string `json:"actor,omitempty"`
 
 	// Environment: An abstract identifier that describes the environment or
-	// conditions under which the accessor is acting. Can be “*” if it
+	// conditions under which the accessor is acting. Can be "*" if it
 	// applies to all environments.
 	Environment string `json:"environment,omitempty"`
 
-	// Purpose: The intent of data use. Can be “*” if it applies to all
+	// Purpose: The intent of data use. Can be "*" if it applies to all
 	// purposes.
 	Purpose string `json:"purpose,omitempty"`
 
@@ -3483,8 +3481,8 @@ type ExplainDataAccessConsentInfo struct {
 	CascadeOrigins []string `json:"cascadeOrigins,omitempty"`
 
 	// ConsentResource: The resource name of this consent resource. Format:
-	// `projects/{projectId}/datasets/{datasetId}/fhirStores/{fhirStoreId}/fh
-	// ir/{resourceType}/{id}`.
+	// `projects/{projectId}/locations/{locationId}/datasets/{datasetId}/fhir
+	// Stores/{fhirStoreId}/fhir/{resourceType}/{id}`.
 	ConsentResource string `json:"consentResource,omitempty"`
 
 	// EnforcementTime: Last enforcement timestamp of this consent resource.
@@ -3514,10 +3512,10 @@ type ExplainDataAccessConsentInfo struct {
 	// have multiple variants.
 	//
 	// Possible values:
-	//   "VARIANT_UNSPECIFIED" - Consent variant unspecified.
-	//   "VARIANT_STANDARD" - Consent is a standard patient or admin
+	//   "CONSENT_VARIANT_UNSPECIFIED" - Consent variant unspecified.
+	//   "CONSENT_VARIANT_STANDARD" - Consent is a standard patient or admin
 	// consent.
-	//   "VARIANT_CASCADE" - Consent is a cascading consent.
+	//   "CONSENT_VARIANT_CASCADE" - Consent is a cascading consent.
 	Variants []string `json:"variants,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CascadeOrigins") to
@@ -8506,8 +8504,8 @@ type SetBlobStorageSettingsRequest struct {
 	// FilterConfig: Optional. A filter configuration. If `filter_config` is
 	// specified, set the value of `resource` to the resource name of a
 	// DICOM store in the format
-	// `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}`
-	// .
+	// `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dico
+	// mStores/{dicomStoreID}`.
 	FilterConfig *DicomFilterConfig `json:"filterConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BlobStorageSettings")
@@ -8667,9 +8665,9 @@ type StorageInfo struct {
 
 	// ReferencedResource: The resource whose storage info is returned. For
 	// example, to specify the resource path of a DICOM Instance:
-	// `projects/{projectid}/datasets/{datasetid}/dicomStores/{dicom_store_id
-	// }/dicomWeb/studi/{study_uid}/series/{series_uid}/instances/{instance_u
-	// id}`
+	// `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dico
+	// mStores/{dicom_store_id}/dicomWeb/studi/{study_uid}/series/{series_uid
+	// }/instances/{instance_uid}`
 	ReferencedResource string `json:"referencedResource,omitempty"`
 
 	// StructuredStorageInfo: Info about the data stored in structured
@@ -22213,16 +22211,18 @@ type ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall struct {
 //
 //   - resource: The path of the resource to update the blob storage
 //     settings in the format of
-//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
-//     }/dicomWeb/studies/{studyUID}`,
-//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
-//     }/dicomWeb/studies/{studyUID}/series/{seriesUID}/`, or
-//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
-//     }/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/{instance
-//     UID}`. If `filter_config` is specified, set the value of `resource`
-//     to the resource name of a DICOM store in the format
-//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
-//     }`.
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/di
+//     comStores/{dicomStoreID}/dicomWeb/studies/{studyUID}`,
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/di
+//     comStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesU
+//     ID}/`, or
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/di
+//     comStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesU
+//     ID}/instances/{instanceUID}`. If `filter_config` is specified, set
+//     the value of `resource` to the resource name of a DICOM store in
+//     the format
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/di
+//     comStores/{dicomStoreID}`.
 func (r *ProjectsLocationsDatasetsDicomStoresService) SetBlobStorageSettings(resource string, setblobstoragesettingsrequest *SetBlobStorageSettingsRequest) *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall {
 	c := &ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -22330,7 +22330,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresSetBlobStorageSettingsCall) Do(opts
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "Required. The path of the resource to update the blob storage settings in the format of `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}`, `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/`, or `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/{instanceUID}`. If `filter_config` is specified, set the value of `resource` to the resource name of a DICOM store in the format `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}`.",
+	//       "description": "Required. The path of the resource to update the blob storage settings in the format of `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}`, `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/`, or `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/{instanceUID}`. If `filter_config` is specified, set the value of `resource` to the resource name of a DICOM store in the format `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStores/{dicomStoreID}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+$",
 	//       "required": true,
@@ -22945,16 +22945,18 @@ type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCa
 //
 //   - resource: The path of the resource to update the blob storage
 //     settings in the format of
-//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
-//     }/dicomWeb/studies/{studyUID}`,
-//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
-//     }/dicomWeb/studies/{studyUID}/series/{seriesUID}/`, or
-//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
-//     }/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/{instance
-//     UID}`. If `filter_config` is specified, set the value of `resource`
-//     to the resource name of a DICOM store in the format
-//     `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID
-//     }`.
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/di
+//     comStores/{dicomStoreID}/dicomWeb/studies/{studyUID}`,
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/di
+//     comStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesU
+//     ID}/`, or
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/di
+//     comStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesU
+//     ID}/instances/{instanceUID}`. If `filter_config` is specified, set
+//     the value of `resource` to the resource name of a DICOM store in
+//     the format
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/di
+//     comStores/{dicomStoreID}`.
 func (r *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesService) SetBlobStorageSettings(resource string, setblobstoragesettingsrequest *SetBlobStorageSettingsRequest) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall {
 	c := &ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -23062,7 +23064,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSetBlobStorageSettin
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "Required. The path of the resource to update the blob storage settings in the format of `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}`, `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/`, or `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/{instanceUID}`. If `filter_config` is specified, set the value of `resource` to the resource name of a DICOM store in the format `projects/{projectID}/datasets/{datasetID}/dicomStores/{dicomStoreID}`.",
+	//       "description": "Required. The path of the resource to update the blob storage settings in the format of `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}`, `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/`, or `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStores/{dicomStoreID}/dicomWeb/studies/{studyUID}/series/{seriesUID}/instances/{instanceUID}`. If `filter_config` is specified, set the value of `resource` to the resource name of a DICOM store in the format `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStores/{dicomStoreID}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+/dicomWeb/studies/.*$",
 	//       "required": true,
@@ -23250,9 +23252,9 @@ type ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorag
 //
 //   - resource: The path of the resource for which the storage info is
 //     requested (for exaxmple for a DICOM Instance:
-//     `projects/{projectid}/datasets/{datasetid}/dicomStores/{dicomStoreId
-//     }/dicomWeb/studies/{study_uid}/series/{series_uid}/instances/{instan
-//     ce_uid}`).
+//     `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/di
+//     comStores/{dicomStoreId}/dicomWeb/studies/{study_uid}/series/{series
+//     _uid}/instances/{instance_uid}`).
 func (r *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesService) GetStorageInfo(resource string) *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall {
 	c := &ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetStorageInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -23367,7 +23369,7 @@ func (c *ProjectsLocationsDatasetsDicomStoresDicomWebStudiesSeriesInstancesGetSt
 	//   ],
 	//   "parameters": {
 	//     "resource": {
-	//       "description": "Required. The path of the resource for which the storage info is requested (for exaxmple for a DICOM Instance: `projects/{projectid}/datasets/{datasetid}/dicomStores/{dicomStoreId}/dicomWeb/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`)",
+	//       "description": "Required. The path of the resource for which the storage info is requested (for exaxmple for a DICOM Instance: `projects/{projectID}/locations/{locationID}/datasets/{datasetID}/dicomStores/{dicomStoreId}/dicomWeb/studies/{study_uid}/series/{series_uid}/instances/{instance_uid}`)",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/dicomStores/[^/]+/dicomWeb/studies/[^/]+/series/[^/]+/instances/[^/]+$",
 	//       "required": true,

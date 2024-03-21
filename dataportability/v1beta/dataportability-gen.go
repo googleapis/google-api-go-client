@@ -101,6 +101,9 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
+	// Move a copy of the Google Alerts subscriptions you created.
+	DataportabilityAlertsSubscriptionsScope = "https://www.googleapis.com/auth/dataportability.alerts.subscriptions"
+
 	// Move a copy of messages between you and the businesses you have
 	// conversations with across Google services.
 	DataportabilityBusinessmessagingConversationsScope = "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations"
@@ -127,6 +130,19 @@ const (
 	// Move a copy of your settings in Chrome.
 	DataportabilityChromeSettingsScope = "https://www.googleapis.com/auth/dataportability.chrome.settings"
 
+	// Move a copy of searches and sites you follow, saved by Discover.
+	DataportabilityDiscoverFollowsScope = "https://www.googleapis.com/auth/dataportability.discover.follows"
+
+	// Move a copy of links to your liked documents, saved by Discover.
+	DataportabilityDiscoverLikesScope = "https://www.googleapis.com/auth/dataportability.discover.likes"
+
+	// Move a copy of content you marked as not interested, saved by
+	// Discover.
+	DataportabilityDiscoverNotInterestedScope = "https://www.googleapis.com/auth/dataportability.discover.not_interested"
+
+	// Move a copy of the places you labeled on Maps.
+	DataportabilityMapsAliasedPlacesScope = "https://www.googleapis.com/auth/dataportability.maps.aliased_places"
+
 	// Move a copy of your pinned trips on Maps.
 	DataportabilityMapsCommuteRoutesScope = "https://www.googleapis.com/auth/dataportability.maps.commute_routes"
 
@@ -136,11 +152,22 @@ const (
 	// Move a copy of your electric vehicle profile on Maps.
 	DataportabilityMapsEvProfileScope = "https://www.googleapis.com/auth/dataportability.maps.ev_profile"
 
+	// Move a copy of the corrections you made to places or map information
+	// on Maps.
+	DataportabilityMapsFactualContributionsScope = "https://www.googleapis.com/auth/dataportability.maps.factual_contributions"
+
 	// Move a copy of your updates to places on Maps.
 	DataportabilityMapsOfferingContributionsScope = "https://www.googleapis.com/auth/dataportability.maps.offering_contributions"
 
 	// Move a copy of the photos and videos you posted on Maps.
 	DataportabilityMapsPhotosVideosScope = "https://www.googleapis.com/auth/dataportability.maps.photos_videos"
+
+	// Move a copy of feedback you gave after completing trips using Maps
+	// directions.
+	DataportabilityMapsPostTripFeedbackScope = "https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback"
+
+	// Move a copy of the questions and answers you posted on Maps.
+	DataportabilityMapsQuestionsAnswersScope = "https://www.googleapis.com/auth/dataportability.maps.questions_answers"
 
 	// Move a copy of your reviews and posts on Maps.
 	DataportabilityMapsReviewsScope = "https://www.googleapis.com/auth/dataportability.maps.reviews"
@@ -151,6 +178,12 @@ const (
 	// Move a copy of your Maps activity.
 	DataportabilityMyactivityMapsScope = "https://www.googleapis.com/auth/dataportability.myactivity.maps"
 
+	// Move a copy of your My Ad Center activity.
+	DataportabilityMyactivityMyadcenterScope = "https://www.googleapis.com/auth/dataportability.myactivity.myadcenter"
+
+	// Move a copy of your Google Play activity.
+	DataportabilityMyactivityPlayScope = "https://www.googleapis.com/auth/dataportability.myactivity.play"
+
 	// Move a copy of your Google Search activity.
 	DataportabilityMyactivitySearchScope = "https://www.googleapis.com/auth/dataportability.myactivity.search"
 
@@ -160,9 +193,69 @@ const (
 	// Move a copy of your YouTube activity.
 	DataportabilityMyactivityYoutubeScope = "https://www.googleapis.com/auth/dataportability.myactivity.youtube"
 
+	// Move a copy of the maps you created in My Maps.
+	DataportabilityMymapsMapsScope = "https://www.googleapis.com/auth/dataportability.mymaps.maps"
+
+	// Move a copy of your food purchase and reservation activity.
+	DataportabilityOrderReservePurchasesReservationsScope = "https://www.googleapis.com/auth/dataportability.order_reserve.purchases_reservations"
+
+	// Move a copy of information about your devices with Google Play Store
+	// installed.
+	DataportabilityPlayDevicesScope = "https://www.googleapis.com/auth/dataportability.play.devices"
+
+	// Move a copy of your Google Play Store Grouping tags created by app
+	// developers.
+	DataportabilityPlayGroupingScope = "https://www.googleapis.com/auth/dataportability.play.grouping"
+
+	// Move a copy of your Google Play Store app installations.
+	DataportabilityPlayInstallsScope = "https://www.googleapis.com/auth/dataportability.play.installs"
+
+	// Move a copy of your Google Play Store downloads, including books,
+	// games, and apps.
+	DataportabilityPlayLibraryScope = "https://www.googleapis.com/auth/dataportability.play.library"
+
+	// Move a copy of information about your Google Play Store Points.
+	DataportabilityPlayPlaypointsScope = "https://www.googleapis.com/auth/dataportability.play.playpoints"
+
+	// Move a copy of information about your Google Play Store promotions.
+	DataportabilityPlayPromotionsScope = "https://www.googleapis.com/auth/dataportability.play.promotions"
+
+	// Move a copy of your Google Play Store purchases.
+	DataportabilityPlayPurchasesScope = "https://www.googleapis.com/auth/dataportability.play.purchases"
+
+	// Move a copy of your Google Play Store redemption activities.
+	DataportabilityPlayRedemptionsScope = "https://www.googleapis.com/auth/dataportability.play.redemptions"
+
+	// Move a copy of your Google Play Store subscriptions.
+	DataportabilityPlaySubscriptionsScope = "https://www.googleapis.com/auth/dataportability.play.subscriptions"
+
+	// Move a copy of your Google Play Store user settings and preferences.
+	DataportabilityPlayUsersettingsScope = "https://www.googleapis.com/auth/dataportability.play.usersettings"
+
 	// Move a copy of your saved links, images, places, and collections from
 	// your use of Google services.
 	DataportabilitySavedCollectionsScope = "https://www.googleapis.com/auth/dataportability.saved.collections"
+
+	// Move a copy of your media reviews on Google Search.
+	DataportabilitySearchUgcMediaReviewsAndStarsScope = "https://www.googleapis.com/auth/dataportability.search_ugc.media.reviews_and_stars"
+
+	// Move a copy of your self-reported video streaming provider
+	// preferences from Google Search and Google TV.
+	DataportabilitySearchUgcMediaStreamingVideoProvidersScope = "https://www.googleapis.com/auth/dataportability.search_ugc.media.streaming_video_providers"
+
+	// Move a copy of your indicated thumbs up and thumbs down on media in
+	// Google Search and Google TV.
+	DataportabilitySearchUgcMediaThumbsScope = "https://www.googleapis.com/auth/dataportability.search_ugc.media.thumbs"
+
+	// Move a copy of information about the movies and TV shows you marked
+	// as watched on Google Search and Google TV.
+	DataportabilitySearchUgcMediaWatchedScope = "https://www.googleapis.com/auth/dataportability.search_ugc.media.watched"
+
+	// Move a copy of your notification settings on the Google Search app.
+	DataportabilitySearchnotificationsSettingsScope = "https://www.googleapis.com/auth/dataportability.searchnotifications.settings"
+
+	// Move a copy of your notification subscriptions on Google Search app.
+	DataportabilitySearchnotificationsSubscriptionsScope = "https://www.googleapis.com/auth/dataportability.searchnotifications.subscriptions"
 
 	// Move a copy of your shipping information on Shopping.
 	DataportabilityShoppingAddressesScope = "https://www.googleapis.com/auth/dataportability.shopping.addresses"
@@ -170,6 +263,9 @@ const (
 	// Move a copy of reviews you wrote about products or online stores on
 	// Google Search.
 	DataportabilityShoppingReviewsScope = "https://www.googleapis.com/auth/dataportability.shopping.reviews"
+
+	// Move a copy of the images and videos you uploaded to Street View.
+	DataportabilityStreetviewImageryScope = "https://www.googleapis.com/auth/dataportability.streetview.imagery"
 
 	// Move a copy of information about your YouTube channel.
 	DataportabilityYoutubeChannelScope = "https://www.googleapis.com/auth/dataportability.youtube.channel"
@@ -221,6 +317,7 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
+		"https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 		"https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 		"https://www.googleapis.com/auth/dataportability.chrome.autofill",
 		"https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
@@ -229,20 +326,48 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/dataportability.chrome.history",
 		"https://www.googleapis.com/auth/dataportability.chrome.reading_list",
 		"https://www.googleapis.com/auth/dataportability.chrome.settings",
+		"https://www.googleapis.com/auth/dataportability.discover.follows",
+		"https://www.googleapis.com/auth/dataportability.discover.likes",
+		"https://www.googleapis.com/auth/dataportability.discover.not_interested",
+		"https://www.googleapis.com/auth/dataportability.maps.aliased_places",
 		"https://www.googleapis.com/auth/dataportability.maps.commute_routes",
 		"https://www.googleapis.com/auth/dataportability.maps.commute_settings",
 		"https://www.googleapis.com/auth/dataportability.maps.ev_profile",
+		"https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
 		"https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
 		"https://www.googleapis.com/auth/dataportability.maps.photos_videos",
+		"https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback",
+		"https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 		"https://www.googleapis.com/auth/dataportability.maps.reviews",
 		"https://www.googleapis.com/auth/dataportability.maps.starred_places",
 		"https://www.googleapis.com/auth/dataportability.myactivity.maps",
+		"https://www.googleapis.com/auth/dataportability.myactivity.myadcenter",
+		"https://www.googleapis.com/auth/dataportability.myactivity.play",
 		"https://www.googleapis.com/auth/dataportability.myactivity.search",
 		"https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 		"https://www.googleapis.com/auth/dataportability.myactivity.youtube",
+		"https://www.googleapis.com/auth/dataportability.mymaps.maps",
+		"https://www.googleapis.com/auth/dataportability.order_reserve.purchases_reservations",
+		"https://www.googleapis.com/auth/dataportability.play.devices",
+		"https://www.googleapis.com/auth/dataportability.play.grouping",
+		"https://www.googleapis.com/auth/dataportability.play.installs",
+		"https://www.googleapis.com/auth/dataportability.play.library",
+		"https://www.googleapis.com/auth/dataportability.play.playpoints",
+		"https://www.googleapis.com/auth/dataportability.play.promotions",
+		"https://www.googleapis.com/auth/dataportability.play.purchases",
+		"https://www.googleapis.com/auth/dataportability.play.redemptions",
+		"https://www.googleapis.com/auth/dataportability.play.subscriptions",
+		"https://www.googleapis.com/auth/dataportability.play.usersettings",
 		"https://www.googleapis.com/auth/dataportability.saved.collections",
+		"https://www.googleapis.com/auth/dataportability.search_ugc.media.reviews_and_stars",
+		"https://www.googleapis.com/auth/dataportability.search_ugc.media.streaming_video_providers",
+		"https://www.googleapis.com/auth/dataportability.search_ugc.media.thumbs",
+		"https://www.googleapis.com/auth/dataportability.search_ugc.media.watched",
+		"https://www.googleapis.com/auth/dataportability.searchnotifications.settings",
+		"https://www.googleapis.com/auth/dataportability.searchnotifications.subscriptions",
 		"https://www.googleapis.com/auth/dataportability.shopping.addresses",
 		"https://www.googleapis.com/auth/dataportability.shopping.reviews",
+		"https://www.googleapis.com/auth/dataportability.streetview.imagery",
 		"https://www.googleapis.com/auth/dataportability.youtube.channel",
 		"https://www.googleapis.com/auth/dataportability.youtube.comments",
 		"https://www.googleapis.com/auth/dataportability.youtube.live_chat",
@@ -652,6 +777,7 @@ func (c *ArchiveJobsGetPortabilityArchiveStateCall) Do(opts ...googleapi.CallOpt
 	//     "$ref": "PortabilityArchiveState"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
@@ -660,20 +786,48 @@ func (c *ArchiveJobsGetPortabilityArchiveStateCall) Do(opts ...googleapi.CallOpt
 	//     "https://www.googleapis.com/auth/dataportability.chrome.history",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.reading_list",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.settings",
+	//     "https://www.googleapis.com/auth/dataportability.discover.follows",
+	//     "https://www.googleapis.com/auth/dataportability.discover.likes",
+	//     "https://www.googleapis.com/auth/dataportability.discover.not_interested",
+	//     "https://www.googleapis.com/auth/dataportability.maps.aliased_places",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
 	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
+	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
+	//     "https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback",
+	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.maps",
+	//     "https://www.googleapis.com/auth/dataportability.myactivity.myadcenter",
+	//     "https://www.googleapis.com/auth/dataportability.myactivity.play",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",
+	//     "https://www.googleapis.com/auth/dataportability.mymaps.maps",
+	//     "https://www.googleapis.com/auth/dataportability.order_reserve.purchases_reservations",
+	//     "https://www.googleapis.com/auth/dataportability.play.devices",
+	//     "https://www.googleapis.com/auth/dataportability.play.grouping",
+	//     "https://www.googleapis.com/auth/dataportability.play.installs",
+	//     "https://www.googleapis.com/auth/dataportability.play.library",
+	//     "https://www.googleapis.com/auth/dataportability.play.playpoints",
+	//     "https://www.googleapis.com/auth/dataportability.play.promotions",
+	//     "https://www.googleapis.com/auth/dataportability.play.purchases",
+	//     "https://www.googleapis.com/auth/dataportability.play.redemptions",
+	//     "https://www.googleapis.com/auth/dataportability.play.subscriptions",
+	//     "https://www.googleapis.com/auth/dataportability.play.usersettings",
 	//     "https://www.googleapis.com/auth/dataportability.saved.collections",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.reviews_and_stars",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.streaming_video_providers",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.thumbs",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.watched",
+	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.settings",
+	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.addresses",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.reviews",
+	//     "https://www.googleapis.com/auth/dataportability.streetview.imagery",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.channel",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.comments",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.live_chat",
@@ -831,6 +985,7 @@ func (c *ArchiveJobsRetryCall) Do(opts ...googleapi.CallOption) (*RetryPortabili
 	//     "$ref": "RetryPortabilityArchiveResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
@@ -839,20 +994,48 @@ func (c *ArchiveJobsRetryCall) Do(opts ...googleapi.CallOption) (*RetryPortabili
 	//     "https://www.googleapis.com/auth/dataportability.chrome.history",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.reading_list",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.settings",
+	//     "https://www.googleapis.com/auth/dataportability.discover.follows",
+	//     "https://www.googleapis.com/auth/dataportability.discover.likes",
+	//     "https://www.googleapis.com/auth/dataportability.discover.not_interested",
+	//     "https://www.googleapis.com/auth/dataportability.maps.aliased_places",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
 	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
+	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
+	//     "https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback",
+	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.maps",
+	//     "https://www.googleapis.com/auth/dataportability.myactivity.myadcenter",
+	//     "https://www.googleapis.com/auth/dataportability.myactivity.play",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",
+	//     "https://www.googleapis.com/auth/dataportability.mymaps.maps",
+	//     "https://www.googleapis.com/auth/dataportability.order_reserve.purchases_reservations",
+	//     "https://www.googleapis.com/auth/dataportability.play.devices",
+	//     "https://www.googleapis.com/auth/dataportability.play.grouping",
+	//     "https://www.googleapis.com/auth/dataportability.play.installs",
+	//     "https://www.googleapis.com/auth/dataportability.play.library",
+	//     "https://www.googleapis.com/auth/dataportability.play.playpoints",
+	//     "https://www.googleapis.com/auth/dataportability.play.promotions",
+	//     "https://www.googleapis.com/auth/dataportability.play.purchases",
+	//     "https://www.googleapis.com/auth/dataportability.play.redemptions",
+	//     "https://www.googleapis.com/auth/dataportability.play.subscriptions",
+	//     "https://www.googleapis.com/auth/dataportability.play.usersettings",
 	//     "https://www.googleapis.com/auth/dataportability.saved.collections",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.reviews_and_stars",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.streaming_video_providers",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.thumbs",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.watched",
+	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.settings",
+	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.addresses",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.reviews",
+	//     "https://www.googleapis.com/auth/dataportability.streetview.imagery",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.channel",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.comments",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.live_chat",
@@ -996,6 +1179,7 @@ func (c *AuthorizationResetCall) Do(opts ...googleapi.CallOption) (*Empty, error
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
@@ -1004,20 +1188,48 @@ func (c *AuthorizationResetCall) Do(opts ...googleapi.CallOption) (*Empty, error
 	//     "https://www.googleapis.com/auth/dataportability.chrome.history",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.reading_list",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.settings",
+	//     "https://www.googleapis.com/auth/dataportability.discover.follows",
+	//     "https://www.googleapis.com/auth/dataportability.discover.likes",
+	//     "https://www.googleapis.com/auth/dataportability.discover.not_interested",
+	//     "https://www.googleapis.com/auth/dataportability.maps.aliased_places",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
 	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
+	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
+	//     "https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback",
+	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.maps",
+	//     "https://www.googleapis.com/auth/dataportability.myactivity.myadcenter",
+	//     "https://www.googleapis.com/auth/dataportability.myactivity.play",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",
+	//     "https://www.googleapis.com/auth/dataportability.mymaps.maps",
+	//     "https://www.googleapis.com/auth/dataportability.order_reserve.purchases_reservations",
+	//     "https://www.googleapis.com/auth/dataportability.play.devices",
+	//     "https://www.googleapis.com/auth/dataportability.play.grouping",
+	//     "https://www.googleapis.com/auth/dataportability.play.installs",
+	//     "https://www.googleapis.com/auth/dataportability.play.library",
+	//     "https://www.googleapis.com/auth/dataportability.play.playpoints",
+	//     "https://www.googleapis.com/auth/dataportability.play.promotions",
+	//     "https://www.googleapis.com/auth/dataportability.play.purchases",
+	//     "https://www.googleapis.com/auth/dataportability.play.redemptions",
+	//     "https://www.googleapis.com/auth/dataportability.play.subscriptions",
+	//     "https://www.googleapis.com/auth/dataportability.play.usersettings",
 	//     "https://www.googleapis.com/auth/dataportability.saved.collections",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.reviews_and_stars",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.streaming_video_providers",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.thumbs",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.watched",
+	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.settings",
+	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.addresses",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.reviews",
+	//     "https://www.googleapis.com/auth/dataportability.streetview.imagery",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.channel",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.comments",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.live_chat",
@@ -1157,6 +1369,7 @@ func (c *PortabilityArchiveInitiateCall) Do(opts ...googleapi.CallOption) (*Init
 	//     "$ref": "InitiatePortabilityArchiveResponse"
 	//   },
 	//   "scopes": [
+	//     "https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
@@ -1165,20 +1378,48 @@ func (c *PortabilityArchiveInitiateCall) Do(opts ...googleapi.CallOption) (*Init
 	//     "https://www.googleapis.com/auth/dataportability.chrome.history",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.reading_list",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.settings",
+	//     "https://www.googleapis.com/auth/dataportability.discover.follows",
+	//     "https://www.googleapis.com/auth/dataportability.discover.likes",
+	//     "https://www.googleapis.com/auth/dataportability.discover.not_interested",
+	//     "https://www.googleapis.com/auth/dataportability.maps.aliased_places",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_routes",
 	//     "https://www.googleapis.com/auth/dataportability.maps.commute_settings",
 	//     "https://www.googleapis.com/auth/dataportability.maps.ev_profile",
+	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
+	//     "https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback",
+	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.maps",
+	//     "https://www.googleapis.com/auth/dataportability.myactivity.myadcenter",
+	//     "https://www.googleapis.com/auth/dataportability.myactivity.play",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.search",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.shopping",
 	//     "https://www.googleapis.com/auth/dataportability.myactivity.youtube",
+	//     "https://www.googleapis.com/auth/dataportability.mymaps.maps",
+	//     "https://www.googleapis.com/auth/dataportability.order_reserve.purchases_reservations",
+	//     "https://www.googleapis.com/auth/dataportability.play.devices",
+	//     "https://www.googleapis.com/auth/dataportability.play.grouping",
+	//     "https://www.googleapis.com/auth/dataportability.play.installs",
+	//     "https://www.googleapis.com/auth/dataportability.play.library",
+	//     "https://www.googleapis.com/auth/dataportability.play.playpoints",
+	//     "https://www.googleapis.com/auth/dataportability.play.promotions",
+	//     "https://www.googleapis.com/auth/dataportability.play.purchases",
+	//     "https://www.googleapis.com/auth/dataportability.play.redemptions",
+	//     "https://www.googleapis.com/auth/dataportability.play.subscriptions",
+	//     "https://www.googleapis.com/auth/dataportability.play.usersettings",
 	//     "https://www.googleapis.com/auth/dataportability.saved.collections",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.reviews_and_stars",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.streaming_video_providers",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.thumbs",
+	//     "https://www.googleapis.com/auth/dataportability.search_ugc.media.watched",
+	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.settings",
+	//     "https://www.googleapis.com/auth/dataportability.searchnotifications.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.addresses",
 	//     "https://www.googleapis.com/auth/dataportability.shopping.reviews",
+	//     "https://www.googleapis.com/auth/dataportability.streetview.imagery",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.channel",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.comments",
 	//     "https://www.googleapis.com/auth/dataportability.youtube.live_chat",

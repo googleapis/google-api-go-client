@@ -9798,6 +9798,11 @@ type SpreadsheetProperties struct {
 	// equal to this default format. This field is read-only.
 	DefaultFormat *CellFormat `json:"defaultFormat,omitempty"`
 
+	// ImportFunctionsExternalUrlAccessAllowed: Whether to allow external
+	// url access for image and import functions. Read only when true. When
+	// false, you can set to true.
+	ImportFunctionsExternalUrlAccessAllowed bool `json:"importFunctionsExternalUrlAccessAllowed,omitempty"`
+
 	// IterativeCalculationSettings: Determines whether and how circular
 	// references are resolved with iterative calculation. Absence of this
 	// field means that circular references result in calculation errors.

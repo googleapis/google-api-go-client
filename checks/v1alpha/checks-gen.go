@@ -716,6 +716,7 @@ type GoogleChecksReportV1alphaCheckCitation struct {
 	// Act.
 	//   "SOUTH_AFRICA_POPIA" - South Africa Protection of Personal
 	// Information Act.
+	//   "JAPAN_APPI" - Japan Act on the Protection of Personal Information.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to

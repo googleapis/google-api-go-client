@@ -4687,6 +4687,17 @@ func (s *GoogleCloudDatacatalogV1beta1TagFieldEnumValue) MarshalJSON() ([]byte, 
 // role, which includes permission to use the tag template to tag
 // resources.
 type GoogleCloudDatacatalogV1beta1TagTemplate struct {
+	// DataplexTransferStatus: Output only. Transfer status of the
+	// TagTemplate
+	//
+	// Possible values:
+	//   "DATAPLEX_TRANSFER_STATUS_UNSPECIFIED" - Default value. TagTemplate
+	// and its tags are only visible and editable in DataCatalog.
+	//   "MIGRATED" - TagTemplate and its tags are auto-copied to Dataplex
+	// service. Visible in both services. Editable in DataCatalog, read-only
+	// in Dataplex.
+	DataplexTransferStatus string `json:"dataplexTransferStatus,omitempty"`
+
 	// DisplayName: The display name for this template. Defaults to an empty
 	// string.
 	DisplayName string `json:"displayName,omitempty"`
@@ -4711,20 +4722,22 @@ type GoogleCloudDatacatalogV1beta1TagTemplate struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DataplexTransferStatus") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DataplexTransferStatus")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

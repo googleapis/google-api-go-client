@@ -2516,6 +2516,8 @@ type PretargetingConfig struct {
 	//   "GOOGLE_COOKIE" - Google cookie, referring to google_user_id in the
 	// bid request.
 	//   "DEVICE_ID" - Mobile device advertising ID.
+	//   "PUBLISHER_PROVIDED_ID" - The request has a publisher-provided ID
+	// available to the bidder.
 	IncludedUserIdTypes []string `json:"includedUserIdTypes,omitempty"`
 
 	// InterstitialTargeting: The interstitial targeting specified for this

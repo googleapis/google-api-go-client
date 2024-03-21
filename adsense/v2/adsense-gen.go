@@ -2847,11 +2847,12 @@ type AccountsAdclientsAdunitsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates an ad unit. This method can only be used by projects
-// enabled for the AdSense for Platforms
-// (https://developers.google.com/adsense/platforms/) product. Note that
-// ad units can only be created for ad clients with an "AFC" product
-// code. For more info see the AdClient resource
+// Create: Creates an ad unit. This method can be called only by a
+// restricted set of projects, which are usually owned by AdSense for
+// Platforms (https://developers.google.com/adsense/platforms/)
+// publishers. Contact your account manager if you need to use this
+// method. Note that ad units can only be created for ad clients with an
+// "AFC" product code. For more info see the AdClient resource
 // (/adsense/management/reference/rest/v2/accounts.adclients). For now,
 // this method can only be used to create `DISPLAY` ad units. See:
 // https://support.google.com/adsense/answer/9183566
@@ -2956,7 +2957,7 @@ func (c *AccountsAdclientsAdunitsCreateCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates an ad unit. This method can only be used by projects enabled for the [AdSense for Platforms](https://developers.google.com/adsense/platforms/) product. Note that ad units can only be created for ad clients with an \"AFC\" product code. For more info see the [AdClient resource](/adsense/management/reference/rest/v2/accounts.adclients). For now, this method can only be used to create `DISPLAY` ad units. See: https://support.google.com/adsense/answer/9183566",
+	//   "description": "Creates an ad unit. This method can be called only by a restricted set of projects, which are usually owned by [AdSense for Platforms](https://developers.google.com/adsense/platforms/) publishers. Contact your account manager if you need to use this method. Note that ad units can only be created for ad clients with an \"AFC\" product code. For more info see the [AdClient resource](/adsense/management/reference/rest/v2/accounts.adclients). For now, this method can only be used to create `DISPLAY` ad units. See: https://support.google.com/adsense/answer/9183566",
 	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/adunits",
 	//   "httpMethod": "POST",
 	//   "id": "adsense.accounts.adclients.adunits.create",
@@ -3695,11 +3696,12 @@ type AccountsAdclientsAdunitsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates an ad unit. This method can only be used by projects
-// enabled for the AdSense for Platforms
-// (https://developers.google.com/adsense/platforms/) product. For now,
-// this method can only be used to update `DISPLAY` ad units. See:
-// https://support.google.com/adsense/answer/9183566
+// Patch: Updates an ad unit. This method can be called only by a
+// restricted set of projects, which are usually owned by AdSense for
+// Platforms (https://developers.google.com/adsense/platforms/)
+// publishers. Contact your account manager if you need to use this
+// method. For now, this method can only be used to update `DISPLAY` ad
+// units. See: https://support.google.com/adsense/answer/9183566
 //
 //   - name: Output only. Resource name of the ad unit. Format:
 //     accounts/{account}/adclients/{adclient}/adunits/{adunit}.
@@ -3808,7 +3810,7 @@ func (c *AccountsAdclientsAdunitsPatchCall) Do(opts ...googleapi.CallOption) (*A
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates an ad unit. This method can only be used by projects enabled for the [AdSense for Platforms](https://developers.google.com/adsense/platforms/) product. For now, this method can only be used to update `DISPLAY` ad units. See: https://support.google.com/adsense/answer/9183566",
+	//   "description": "Updates an ad unit. This method can be called only by a restricted set of projects, which are usually owned by [AdSense for Platforms](https://developers.google.com/adsense/platforms/) publishers. Contact your account manager if you need to use this method. For now, this method can only be used to update `DISPLAY` ad units. See: https://support.google.com/adsense/answer/9183566",
 	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/adunits/{adunitsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "adsense.accounts.adclients.adunits.patch",
@@ -3855,9 +3857,11 @@ type AccountsAdclientsCustomchannelsCreateCall struct {
 	header_       http.Header
 }
 
-// Create: Creates a custom channel. This method can only be used by
-// projects enabled for the AdSense for Platforms
-// (https://developers.google.com/adsense/platforms/) product.
+// Create: Creates a custom channel. This method can be called only by a
+// restricted set of projects, which are usually owned by AdSense for
+// Platforms (https://developers.google.com/adsense/platforms/)
+// publishers. Contact your account manager if you need to use this
+// method.
 //
 //   - parent: The ad client to create a custom channel under. Format:
 //     accounts/{account}/adclients/{adclient}.
@@ -3959,7 +3963,7 @@ func (c *AccountsAdclientsCustomchannelsCreateCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a custom channel. This method can only be used by projects enabled for the [AdSense for Platforms](https://developers.google.com/adsense/platforms/) product.",
+	//   "description": "Creates a custom channel. This method can be called only by a restricted set of projects, which are usually owned by [AdSense for Platforms](https://developers.google.com/adsense/platforms/) publishers. Contact your account manager if you need to use this method.",
 	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/customchannels",
 	//   "httpMethod": "POST",
 	//   "id": "adsense.accounts.adclients.customchannels.create",
@@ -3999,9 +4003,11 @@ type AccountsAdclientsCustomchannelsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a custom channel. This method can only be used by
-// projects enabled for the AdSense for Platforms
-// (https://developers.google.com/adsense/platforms/) product.
+// Delete: Deletes a custom channel. This method can be called only by a
+// restricted set of projects, which are usually owned by AdSense for
+// Platforms (https://developers.google.com/adsense/platforms/)
+// publishers. Contact your account manager if you need to use this
+// method.
 //
 //   - name: Name of the custom channel to delete. Format:
 //     accounts/{account}/adclients/{adclient}/customchannels/{customchanne
@@ -4098,7 +4104,7 @@ func (c *AccountsAdclientsCustomchannelsDeleteCall) Do(opts ...googleapi.CallOpt
 	}
 	return ret, nil
 	// {
-	//   "description": "Deletes a custom channel. This method can only be used by projects enabled for the [AdSense for Platforms](https://developers.google.com/adsense/platforms/) product.",
+	//   "description": "Deletes a custom channel. This method can be called only by a restricted set of projects, which are usually owned by [AdSense for Platforms](https://developers.google.com/adsense/platforms/) publishers. Contact your account manager if you need to use this method.",
 	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/customchannels/{customchannelsId}",
 	//   "httpMethod": "DELETE",
 	//   "id": "adsense.accounts.adclients.customchannels.delete",
@@ -4686,9 +4692,11 @@ type AccountsAdclientsCustomchannelsPatchCall struct {
 	header_       http.Header
 }
 
-// Patch: Updates a custom channel. This method can only be used by
-// projects enabled for the AdSense for Platforms
-// (https://developers.google.com/adsense/platforms/) product.
+// Patch: Updates a custom channel. This method can be called only by a
+// restricted set of projects, which are usually owned by AdSense for
+// Platforms (https://developers.google.com/adsense/platforms/)
+// publishers. Contact your account manager if you need to use this
+// method.
 //
 //   - name: Output only. Resource name of the custom channel. Format:
 //     accounts/{account}/adclients/{adclient}/customchannels/{customchanne
@@ -4798,7 +4806,7 @@ func (c *AccountsAdclientsCustomchannelsPatchCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a custom channel. This method can only be used by projects enabled for the [AdSense for Platforms](https://developers.google.com/adsense/platforms/) product.",
+	//   "description": "Updates a custom channel. This method can be called only by a restricted set of projects, which are usually owned by [AdSense for Platforms](https://developers.google.com/adsense/platforms/) publishers. Contact your account manager if you need to use this method.",
 	//   "flatPath": "v2/accounts/{accountsId}/adclients/{adclientsId}/customchannels/{customchannelsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "adsense.accounts.adclients.customchannels.patch",

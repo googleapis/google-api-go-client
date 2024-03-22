@@ -1694,6 +1694,14 @@ func (c *CseListCall) SiteSearchFilter(siteSearchFilter string) *CseListCall {
 	return c
 }
 
+// SnippetLength sets the optional parameter "snippetLength": Maximum
+// length of snippet text, in characters, to be returned with results. *
+// Valid values are integers between 1 and 160, inclusive.
+func (c *CseListCall) SnippetLength(snippetLength int64) *CseListCall {
+	c.urlParams_.Set("snippetLength", fmt.Sprint(snippetLength))
+	return c
+}
+
 // Sort sets the optional parameter "sort": The sort expression to apply
 // to the results. The sort parameter specifies that the results be
 // sorted according to the specified expression i.e. sort by date.
@@ -2086,6 +2094,12 @@ func (c *CseListCall) Do(opts ...googleapi.CallOption) (*Search, error) {
 	//       "location": "query",
 	//       "type": "string"
 	//     },
+	//     "snippetLength": {
+	//       "description": "Optional. Maximum length of snippet text, in characters, to be returned with results. * Valid values are integers between 1 and 160, inclusive.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
 	//     "sort": {
 	//       "description": "The sort expression to apply to the results. The sort parameter specifies that the results be sorted according to the specified expression i.e. sort by date. [Example: sort=date](https://developers.google.com/custom-search/docs/structured_search#sort-by-attribute).",
 	//       "location": "query",
@@ -2470,6 +2484,14 @@ func (c *CseSiterestrictListCall) SiteSearch(siteSearch string) *CseSiterestrict
 //	"i" - Include only results from the listed sites.
 func (c *CseSiterestrictListCall) SiteSearchFilter(siteSearchFilter string) *CseSiterestrictListCall {
 	c.urlParams_.Set("siteSearchFilter", siteSearchFilter)
+	return c
+}
+
+// SnippetLength sets the optional parameter "snippetLength": Maximum
+// length of snippet text, in characters, to be returned with results. *
+// Valid values are integers between 1 and 160, inclusive.
+func (c *CseSiterestrictListCall) SnippetLength(snippetLength int64) *CseSiterestrictListCall {
+	c.urlParams_.Set("snippetLength", fmt.Sprint(snippetLength))
 	return c
 }
 
@@ -2864,6 +2886,12 @@ func (c *CseSiterestrictListCall) Do(opts ...googleapi.CallOption) (*Search, err
 	//       ],
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "snippetLength": {
+	//       "description": "Optional. Maximum length of snippet text, in characters, to be returned with results. * Valid values are integers between 1 and 160, inclusive.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
 	//     },
 	//     "sort": {
 	//       "description": "The sort expression to apply to the results. The sort parameter specifies that the results be sorted according to the specified expression i.e. sort by date. [Example: sort=date](https://developers.google.com/custom-search/docs/structured_search#sort-by-attribute).",

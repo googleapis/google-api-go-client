@@ -526,9 +526,6 @@ type CaseClassification struct {
 	// requests using the classification ID will fail.
 	Id string `json:"id,omitempty"`
 
-	// Product: The full product the classification corresponds to.
-	Product *Product `json:"product,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1335,44 +1332,6 @@ func (s *ObjectId) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Product: The full product a case may be associated with, including
-// Product Line and Product Subline.
-type Product struct {
-	// ProductLine: The Product Line of the Product.
-	//
-	// Possible values:
-	//   "PRODUCT_LINE_UNSPECIFIED" - Unknown product type.
-	//   "GOOGLE_CLOUD" - Google Cloud
-	//   "GOOGLE_MAPS" - Google Maps
-	ProductLine string `json:"productLine,omitempty"`
-
-	// ProductSubline: The Product Subline of the Product, such as "Maps
-	// Billing".
-	ProductSubline string `json:"productSubline,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ProductLine") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ProductLine") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Product) MarshalJSON() ([]byte, error) {
-	type NoMethod Product
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // SearchCaseClassificationsResponse: The response message for
 // SearchCaseClassifications endpoint.
 type SearchCaseClassificationsResponse struct {
@@ -1553,27 +1512,6 @@ func (c *CaseClassificationsSearchCall) PageToken(pageToken string) *CaseClassif
 	return c
 }
 
-// ProductProductLine sets the optional parameter "product.productLine":
-// The Product Line of the Product.
-//
-// Possible values:
-//
-//	"PRODUCT_LINE_UNSPECIFIED" - Unknown product type.
-//	"GOOGLE_CLOUD" - Google Cloud
-//	"GOOGLE_MAPS" - Google Maps
-func (c *CaseClassificationsSearchCall) ProductProductLine(productProductLine string) *CaseClassificationsSearchCall {
-	c.urlParams_.Set("product.productLine", productProductLine)
-	return c
-}
-
-// ProductProductSubline sets the optional parameter
-// "product.productSubline": The Product Subline of the Product, such as
-// "Maps Billing".
-func (c *CaseClassificationsSearchCall) ProductProductSubline(productProductSubline string) *CaseClassificationsSearchCall {
-	c.urlParams_.Set("product.productSubline", productProductSubline)
-	return c
-}
-
 // Query sets the optional parameter "query": An expression used to
 // filter case classifications. If it's an empty string, then no
 // filtering happens. Otherwise, case classifications will be returned
@@ -1694,26 +1632,6 @@ func (c *CaseClassificationsSearchCall) Do(opts ...googleapi.CallOption) (*Searc
 	//     },
 	//     "pageToken": {
 	//       "description": "A token identifying the page of results to return. If unspecified, the first page is retrieved.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "product.productLine": {
-	//       "description": "The Product Line of the Product.",
-	//       "enum": [
-	//         "PRODUCT_LINE_UNSPECIFIED",
-	//         "GOOGLE_CLOUD",
-	//         "GOOGLE_MAPS"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unknown product type.",
-	//         "Google Cloud",
-	//         "Google Maps"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "product.productSubline": {
-	//       "description": "The Product Subline of the Product, such as \"Maps Billing\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -2457,20 +2375,6 @@ func (c *CasesListCall) PageToken(pageToken string) *CasesListCall {
 	return c
 }
 
-// ProductLine sets the optional parameter "productLine": The product
-// line for which to request cases for. If unspecified, only Google
-// Cloud cases will be returned.
-//
-// Possible values:
-//
-//	"PRODUCT_LINE_UNSPECIFIED" - Unknown product type.
-//	"GOOGLE_CLOUD" - Google Cloud
-//	"GOOGLE_MAPS" - Google Maps
-func (c *CasesListCall) ProductLine(productLine string) *CasesListCall {
-	c.urlParams_.Set("productLine", productLine)
-	return c
-}
-
 // Fields allows partial responses to be retrieved. See
 // https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
 // for more information.
@@ -2599,21 +2503,6 @@ func (c *CasesListCall) Do(opts ...googleapi.CallOption) (*ListCasesResponse, er
 	//       "location": "path",
 	//       "pattern": "^[^/]+/[^/]+$",
 	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "productLine": {
-	//       "description": "The product line for which to request cases for. If unspecified, only Google Cloud cases will be returned.",
-	//       "enum": [
-	//         "PRODUCT_LINE_UNSPECIFIED",
-	//         "GOOGLE_CLOUD",
-	//         "GOOGLE_MAPS"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unknown product type.",
-	//         "Google Cloud",
-	//         "Google Maps"
-	//       ],
-	//       "location": "query",
 	//       "type": "string"
 	//     }
 	//   },

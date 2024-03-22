@@ -1881,6 +1881,10 @@ type GooglePrivacyDlpV2ColumnDataProfile struct {
 	// field name.
 	//   "TYPE_BIGNUMERIC" - Decimal type.
 	//   "TYPE_JSON" - Json type.
+	//   "TYPE_INTERVAL" - Interval type.
+	//   "TYPE_RANGE_DATE" - Range type.
+	//   "TYPE_RANGE_DATETIME" - Range type.
+	//   "TYPE_RANGE_TIMESTAMP" - Range type.
 	ColumnType string `json:"columnType,omitempty"`
 
 	// DataRiskLevel: The data risk level for this column.

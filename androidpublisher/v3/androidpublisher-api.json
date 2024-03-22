@@ -4731,7 +4731,7 @@
       }
     }
   },
-  "revision": "20240319",
+  "revision": "20240321",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -7708,6 +7708,11 @@
         },
         "quantity": {
           "description": "The quantity associated with the purchase of the inapp product. If not present, the quantity is 1.",
+          "format": "int32",
+          "type": "integer"
+        },
+        "refundableQuantity": {
+          "description": "The quantity eligible for refund, i.e. quantity that hasn't been refunded. The value reflects quantity-based partial refunds and full refunds.",
           "format": "int32",
           "type": "integer"
         },

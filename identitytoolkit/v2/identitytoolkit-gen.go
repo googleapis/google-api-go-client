@@ -2007,7 +2007,7 @@ type GoogleCloudIdentitytoolkitAdminV2RecaptchaConfig struct {
 	// tenant project.
 	ManagedRules []*GoogleCloudIdentitytoolkitAdminV2RecaptchaManagedRule `json:"managedRules,omitempty"`
 
-	// RecaptchaKeys: Output only. The reCAPTCHA keys.
+	// RecaptchaKeys: The reCAPTCHA keys.
 	RecaptchaKeys []*GoogleCloudIdentitytoolkitAdminV2RecaptchaKey `json:"recaptchaKeys,omitempty"`
 
 	// UseAccountDefender: Whether to use the account defender for reCAPTCHA

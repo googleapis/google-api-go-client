@@ -2572,6 +2572,11 @@ type DeviceRadioState struct {
 	// connect to Wi-Fi network below this security level. This is stricter
 	// than PERSONAL_NETWORK_SECURITY. A nonComplianceDetail with API_LEVEL
 	// is reported if the Android version is less than 13.
+	//   "ENTERPRISE_BIT192_NETWORK_SECURITY" - A 192-bit enterprise network
+	// is the minimum required security level. The device will not be able
+	// to connect to Wi-Fi network below this security level. This is
+	// stricter than ENTERPRISE_NETWORK_SECURITY. A nonComplianceDetail with
+	// API_LEVEL is reported if the Android version is less than 13.
 	MinimumWifiSecurityLevel string `json:"minimumWifiSecurityLevel,omitempty"`
 
 	// UltraWidebandState: Controls the state of the ultra wideband setting

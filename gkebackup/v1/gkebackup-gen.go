@@ -361,7 +361,7 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 // capture of some portion of the state of a GKE cluster, the record of
 // the backup operation itself, and an anchor for the underlying
 // artifacts that comprise the Backup (the config backup and
-// VolumeBackups). Next id: 29
+// VolumeBackups).
 type Backup struct {
 	// AllNamespaces: Output only. If True, all namespaces were included in
 	// the Backup.
@@ -1823,7 +1823,7 @@ func (s *ResourceFilter) MarshalJSON() ([]byte, error) {
 
 // Restore: Represents both a request to Restore some portion of a
 // Backup into a target GKE cluster and a record of the restore
-// operation itself. Next id: 20
+// operation itself.
 type Restore struct {
 	// Backup: Required. Immutable. A reference to the Backup used as the
 	// source from which this Restore will restore. Note that this Backup
@@ -1942,7 +1942,7 @@ func (s *Restore) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// RestoreConfig: Configuration of a restore. Next id: 14
+// RestoreConfig: Configuration of a restore.
 type RestoreConfig struct {
 	// AllNamespaces: Restore all namespaced resources in the Backup if set
 	// to "True". Specifying this field to "False" is an error.
@@ -2076,7 +2076,7 @@ func (s *RestoreConfig) MarshalJSON() ([]byte, error) {
 
 // RestorePlan: The configuration of a potential series of Restore
 // operations to be performed against Backups belong to a particular
-// BackupPlan. Next id: 13
+// BackupPlan.
 type RestorePlan struct {
 	// BackupPlan: Required. Immutable. A reference to the BackupPlan from
 	// which Backups may be used as the source for Restores created via this
@@ -2557,7 +2557,7 @@ func (s *TransformationRuleAction) MarshalJSON() ([]byte, error) {
 
 // VolumeBackup: Represents the backup of a specific persistent volume
 // as a component of a Backup - both the record of the operation and a
-// pointer to the underlying storage-specific artifacts. Next id: 14
+// pointer to the underlying storage-specific artifacts.
 type VolumeBackup struct {
 	// CompleteTime: Output only. The timestamp when the associated
 	// underlying volume backup operation completed.
@@ -2667,7 +2667,7 @@ func (s *VolumeBackup) MarshalJSON() ([]byte, error) {
 }
 
 // VolumeRestore: Represents the operation of restoring a volume from a
-// VolumeBackup. Next id: 13
+// VolumeBackup.
 type VolumeRestore struct {
 	// CompleteTime: Output only. The timestamp when the associated
 	// underlying volume restoration completed.

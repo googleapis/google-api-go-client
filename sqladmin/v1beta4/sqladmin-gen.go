@@ -483,6 +483,24 @@ type BackupConfiguration struct {
 	// we retain for point in time restore, from 1-7.
 	TransactionLogRetentionDays int64 `json:"transactionLogRetentionDays,omitempty"`
 
+	// TransactionalLogStorageState: Output only. This value contains the
+	// storage location of transactional logs for the database for
+	// point-in-time recovery.
+	//
+	// Possible values:
+	//   "TRANSACTIONAL_LOG_STORAGE_STATE_UNSPECIFIED" - Unspecified.
+	//   "DISK" - The transaction logs for the instance are stored on a data
+	// disk.
+	//   "SWITCHING_TO_CLOUD_STORAGE" - The transaction logs for the
+	// instance are switching from being stored on a data disk to being
+	// stored in Cloud Storage.
+	//   "SWITCHED_TO_CLOUD_STORAGE" - The transaction logs for the instance
+	// are now stored in Cloud Storage. Previously, they were stored on a
+	// data disk.
+	//   "CLOUD_STORAGE" - The transaction logs for the instance are stored
+	// in Cloud Storage.
+	TransactionalLogStorageState string `json:"transactionalLogStorageState,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
 	// "BackupRetentionSettings") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
@@ -1287,6 +1305,9 @@ type DatabaseInstance struct {
 	// instance.
 	GceZone string `json:"gceZone,omitempty"`
 
+	// GeminiConfig: Gemini instance configuration.
+	GeminiConfig *GeminiInstanceConfig `json:"geminiConfig,omitempty"`
+
 	// InstanceType: The instance type.
 	//
 	// Possible values:
@@ -1359,6 +1380,12 @@ type DatabaseInstance struct {
 
 	// ReplicaNames: The replicas of the instance.
 	ReplicaNames []string `json:"replicaNames,omitempty"`
+
+	// ReplicationCluster: The pair of a primary instance and disaster
+	// recovery (DR) replica. A DR replica is a cross-region replica that
+	// you designate for failover in the event that the primary instance has
+	// regional failure.
+	ReplicationCluster *ReplicationCluster `json:"replicationCluster,omitempty"`
 
 	// RootPassword: Initial root password. Use only on creation. You must
 	// set root passwords before you can connect to PostgreSQL instances.
@@ -2295,6 +2322,53 @@ type FlagsListResponse struct {
 
 func (s *FlagsListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod FlagsListResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GeminiInstanceConfig: Gemini configuration.
+type GeminiInstanceConfig struct {
+	// ActiveQueryEnabled: Output only. Whether active query is enabled.
+	ActiveQueryEnabled bool `json:"activeQueryEnabled,omitempty"`
+
+	// Entitled: Output only. Whether Gemini is enabled.
+	Entitled bool `json:"entitled,omitempty"`
+
+	// FlagRecommenderEnabled: Output only. Whether flag recommender is
+	// enabled.
+	FlagRecommenderEnabled bool `json:"flagRecommenderEnabled,omitempty"`
+
+	// GoogleVacuumMgmtEnabled: Output only. Whether vacuum management is
+	// enabled.
+	GoogleVacuumMgmtEnabled bool `json:"googleVacuumMgmtEnabled,omitempty"`
+
+	// IndexAdvisorEnabled: Output only. Whether index advisor is enabled.
+	IndexAdvisorEnabled bool `json:"indexAdvisorEnabled,omitempty"`
+
+	// OomSessionCancelEnabled: Output only. Whether oom session cancel is
+	// enabled.
+	OomSessionCancelEnabled bool `json:"oomSessionCancelEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActiveQueryEnabled")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActiveQueryEnabled") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GeminiInstanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GeminiInstanceConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3605,6 +3679,10 @@ type Operation struct {
 	// Reporting Services (SSRS).
 	//   "RELEASE_SSRS_LEASE" - Release a lease for the setup of SQL Server
 	// Reporting Services (SSRS).
+	//   "RECONFIGURE_OLD_PRIMARY" - Reconfigures old primary after a
+	// promote replica operation. Effect of a promote operation to the old
+	// primary is executed in this operation, asynchronously from the
+	// promote replica operation executed to the replica.
 	OperationType string `json:"operationType,omitempty"`
 
 	// SelfLink: The URI of this resource.
@@ -4027,6 +4105,43 @@ func (s *ReplicaConfiguration) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ReplicationCluster: Primary-DR replica pair
+type ReplicationCluster struct {
+	// DrReplica: Output only. read-only field that indicates if the replica
+	// is a dr_replica; not set for a primary.
+	DrReplica bool `json:"drReplica,omitempty"`
+
+	// FailoverDrReplicaName: Optional. If the instance is a primary
+	// instance, then this field identifies the disaster recovery (DR)
+	// replica. A DR replica is an optional configuration for Enterprise
+	// Plus edition instances. If the instance is a read replica, then the
+	// field is not set. Users can set this field to set a designated DR
+	// replica for a primary. Removing this field removes the DR replica.
+	FailoverDrReplicaName string `json:"failoverDrReplicaName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DrReplica") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DrReplica") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReplicationCluster) MarshalJSON() ([]byte, error) {
+	type NoMethod ReplicationCluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Reschedule struct {
 	// RescheduleType: Required. The type of the reschedule.
 	//
@@ -4256,8 +4371,10 @@ type Settings struct {
 	//   "ENTERPRISE_PLUS" - The instance is an Enterprise Plus edition.
 	Edition string `json:"edition,omitempty"`
 
-	// EnableGoogleMlIntegration: Optional. Configuration to enable Cloud
-	// SQL Vertex AI Integration
+	// EnableGoogleMlIntegration: Optional. When this parameter is set to
+	// true, Cloud SQL instances can connect to Vertex AI to pass requests
+	// for real-time predictions and insights to the AI. The default value
+	// is false. This applies only to Cloud SQL for PostgreSQL instances.
 	EnableGoogleMlIntegration bool `json:"enableGoogleMlIntegration,omitempty"`
 
 	// InsightsConfig: Insights configuration, for now relevant only for
@@ -4705,6 +4822,16 @@ type SqlInstancesResetReplicaSizeRequest struct {
 }
 
 type SqlInstancesStartExternalSyncRequest struct {
+	// MigrationType: Optional. MigrationType decides if the migration is a
+	// physical file based migration or logical migration.
+	//
+	// Possible values:
+	//   "MIGRATION_TYPE_UNSPECIFIED" - If no migration type is specified it
+	// will be defaulted to LOGICAL.
+	//   "LOGICAL" - Logical Migrations
+	//   "PHYSICAL" - Physical file based Migrations
+	MigrationType string `json:"migrationType,omitempty"`
+
 	// MysqlSyncConfig: MySQL-specific settings for start external sync.
 	MysqlSyncConfig *MySqlSyncConfig `json:"mysqlSyncConfig,omitempty"`
 
@@ -4733,7 +4860,7 @@ type SqlInstancesStartExternalSyncRequest struct {
 	//   "MAX" - Maximum parallel level.
 	SyncParallelLevel string `json:"syncParallelLevel,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MysqlSyncConfig") to
+	// ForceSendFields is a list of field names (e.g. "MigrationType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4741,13 +4868,12 @@ type SqlInstancesStartExternalSyncRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MysqlSyncConfig") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MigrationType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -4758,6 +4884,16 @@ func (s *SqlInstancesStartExternalSyncRequest) MarshalJSON() ([]byte, error) {
 }
 
 type SqlInstancesVerifyExternalSyncSettingsRequest struct {
+	// MigrationType: Optional. MigrationType field decides if the migration
+	// is a physical file based migration or logical migration
+	//
+	// Possible values:
+	//   "MIGRATION_TYPE_UNSPECIFIED" - If no migration type is specified it
+	// will be defaulted to LOGICAL.
+	//   "LOGICAL" - Logical Migrations
+	//   "PHYSICAL" - Physical file based Migrations
+	MigrationType string `json:"migrationType,omitempty"`
+
 	// MysqlSyncConfig: Optional. MySQL-specific settings for start external
 	// sync.
 	MysqlSyncConfig *MySqlSyncConfig `json:"mysqlSyncConfig,omitempty"`
@@ -4791,7 +4927,7 @@ type SqlInstancesVerifyExternalSyncSettingsRequest struct {
 	// replication setup only
 	VerifyReplicationOnly bool `json:"verifyReplicationOnly,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "MysqlSyncConfig") to
+	// ForceSendFields is a list of field names (e.g. "MigrationType") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4799,13 +4935,12 @@ type SqlInstancesVerifyExternalSyncSettingsRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "MysqlSyncConfig") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MigrationType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

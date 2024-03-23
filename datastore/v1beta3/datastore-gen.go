@@ -784,6 +784,114 @@ func (s *EntityResult) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ExecutionStats: Execution statistics for the query.
+type ExecutionStats struct {
+	// DebugStats: Debugging statistics from the execution of the query.
+	// Note that the debugging stats are subject to change as Firestore
+	// evolves. It could include: { "indexes_entries_scanned": "1000",
+	// "documents_scanned": "20", "billing_details" : {
+	// "documents_billable": "20", "index_entries_billable": "1000",
+	// "min_query_cost": "0" } }
+	DebugStats googleapi.RawMessage `json:"debugStats,omitempty"`
+
+	// ExecutionDuration: Total time to execute the query in the backend.
+	ExecutionDuration string `json:"executionDuration,omitempty"`
+
+	// ReadOperations: Total billable read operations.
+	ReadOperations int64 `json:"readOperations,omitempty,string"`
+
+	// ResultsReturned: Total number of results returned, including
+	// documents, projections, aggregation results, keys.
+	ResultsReturned int64 `json:"resultsReturned,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DebugStats") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DebugStats") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExecutionStats) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecutionStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExplainMetrics: Explain metrics for the query.
+type ExplainMetrics struct {
+	// ExecutionStats: Aggregated stats from the execution of the query.
+	// Only present when ExplainOptions.analyze is set to true.
+	ExecutionStats *ExecutionStats `json:"executionStats,omitempty"`
+
+	// PlanSummary: Planning phase information for the query.
+	PlanSummary *PlanSummary `json:"planSummary,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExecutionStats") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExecutionStats") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExplainMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod ExplainMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExplainOptions: Explain options for the query.
+type ExplainOptions struct {
+	// Analyze: Optional. Whether to execute this query. When false (the
+	// default), the query will be planned, returning only metrics from the
+	// planning stages. When true, the query will be planned and executed,
+	// returning the full query results along with both planning and
+	// execution stage metrics.
+	Analyze bool `json:"analyze,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Analyze") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Analyze") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExplainOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ExplainOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Filter: A holder for any type of filter.
 type Filter struct {
 	// CompositeFilter: A composite filter.
@@ -1820,6 +1928,13 @@ type LookupRequest struct {
 	// Keys: Required. Keys of entities to look up.
 	Keys []*Key `json:"keys,omitempty"`
 
+	// PropertyMask: The properties to return. Defaults to returning all
+	// properties. If this field is set and an entity has a property not
+	// referenced in the mask, it will be absent from
+	// LookupResponse.found.entity.properties. The entity's key is always
+	// returned.
+	PropertyMask *PropertyMask `json:"propertyMask,omitempty"`
+
 	// ReadOptions: The options for this lookup request.
 	ReadOptions *ReadOptions `json:"readOptions,omitempty"`
 
@@ -1909,6 +2024,14 @@ type Mutation struct {
 	// Insert: The entity to insert. The entity must not already exist. The
 	// entity key's final path element may be incomplete.
 	Insert *Entity `json:"insert,omitempty"`
+
+	// PropertyMask: The properties to write in this mutation. None of the
+	// properties in the mask may have a reserved name, except for
+	// `__key__`. This field is ignored for `delete`. If the entity already
+	// exists, only properties referenced in the mask are updated, others
+	// are left untouched. Properties referenced in the mask but not in the
+	// entity are deleted.
+	PropertyMask *PropertyMask `json:"propertyMask,omitempty"`
 
 	// Update: The entity to update. The entity must already exist. Must
 	// have a complete key path.
@@ -2087,6 +2210,37 @@ func (s *PathElement) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PlanSummary: Planning phase information for the query.
+type PlanSummary struct {
+	// IndexesUsed: The indexes selected for the query. For example: [
+	// {"query_scope": "Collection", "properties": "(foo ASC, __name__
+	// ASC)"}, {"query_scope": "Collection", "properties": "(bar ASC,
+	// __name__ ASC)"} ]
+	IndexesUsed []googleapi.RawMessage `json:"indexesUsed,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IndexesUsed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IndexesUsed") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PlanSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod PlanSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Projection: A representation of a property in a projection.
 type Projection struct {
 	// Property: The property to project.
@@ -2172,6 +2326,40 @@ type PropertyFilter struct {
 
 func (s *PropertyFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod PropertyFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PropertyMask: The set of arbitrarily nested property paths used to
+// restrict an operation to only a subset of properties in an entity.
+type PropertyMask struct {
+	// Paths: The paths to the properties covered by this mask. A path is a
+	// list of property names separated by dots (`.`), for example `foo.bar`
+	// means the property `bar` inside the entity property `foo` inside the
+	// entity associated with this path. If a property name contains a dot
+	// `.` or a backslash `\`, then that name must be escaped. A path must
+	// not be empty, and may not reference a value inside an array value.
+	Paths []string `json:"paths,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Paths") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Paths") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PropertyMask) MarshalJSON() ([]byte, error) {
+	type NoMethod PropertyMask
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2589,6 +2777,11 @@ type RunAggregationQueryRequest struct {
 	// AggregationQuery: The query to run.
 	AggregationQuery *AggregationQuery `json:"aggregationQuery,omitempty"`
 
+	// ExplainOptions: Optional. Explain options for the query. If set,
+	// additional query statistics will be returned. If not, only query
+	// results will be returned.
+	ExplainOptions *ExplainOptions `json:"explainOptions,omitempty"`
+
 	// GqlQuery: The GQL query to run. This query must be an aggregation
 	// query.
 	GqlQuery *GqlQuery `json:"gqlQuery,omitempty"`
@@ -2632,6 +2825,11 @@ type RunAggregationQueryResponse struct {
 	// Batch: A batch of aggregation results. Always present.
 	Batch *AggregationResultBatch `json:"batch,omitempty"`
 
+	// ExplainMetrics: Query explain metrics. This is only present when the
+	// RunAggregationQueryRequest.explain_options is provided, and it is
+	// sent only once with the last response in the stream.
+	ExplainMetrics *ExplainMetrics `json:"explainMetrics,omitempty"`
+
 	// Query: The parsed form of the `GqlQuery` from the request, if it was
 	// set.
 	Query *AggregationQuery `json:"query,omitempty"`
@@ -2665,6 +2863,11 @@ func (s *RunAggregationQueryResponse) MarshalJSON() ([]byte, error) {
 
 // RunQueryRequest: The request for Datastore.RunQuery.
 type RunQueryRequest struct {
+	// ExplainOptions: Optional. Explain options for the query. If set,
+	// additional query statistics will be returned. If not, only query
+	// results will be returned.
+	ExplainOptions *ExplainOptions `json:"explainOptions,omitempty"`
+
 	// GqlQuery: The GQL query to run. This query must be a non-aggregation
 	// query.
 	GqlQuery *GqlQuery `json:"gqlQuery,omitempty"`
@@ -2675,13 +2878,17 @@ type RunQueryRequest struct {
 	// partition ID.
 	PartitionId *PartitionId `json:"partitionId,omitempty"`
 
+	// PropertyMask: The properties to return. This field must not be set
+	// for a projection query. See LookupRequest.property_mask.
+	PropertyMask *PropertyMask `json:"propertyMask,omitempty"`
+
 	// Query: The query to run.
 	Query *Query `json:"query,omitempty"`
 
 	// ReadOptions: The options for this query.
 	ReadOptions *ReadOptions `json:"readOptions,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "GqlQuery") to
+	// ForceSendFields is a list of field names (e.g. "ExplainOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2689,12 +2896,13 @@ type RunQueryRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GqlQuery") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExplainOptions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2708,6 +2916,11 @@ func (s *RunQueryRequest) MarshalJSON() ([]byte, error) {
 type RunQueryResponse struct {
 	// Batch: A batch of query results (always present).
 	Batch *QueryResultBatch `json:"batch,omitempty"`
+
+	// ExplainMetrics: Query explain metrics. This is only present when the
+	// RunQueryRequest.explain_options is provided, and it is sent only once
+	// with the last response in the stream.
+	ExplainMetrics *ExplainMetrics `json:"explainMetrics,omitempty"`
 
 	// Query: The parsed form of the `GqlQuery` from the request, if it was
 	// set.

@@ -1178,6 +1178,49 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// ExecutionStats: Execution statistics for the query.
+type ExecutionStats struct {
+	// DebugStats: Debugging statistics from the execution of the query.
+	// Note that the debugging stats are subject to change as Firestore
+	// evolves. It could include: { "indexes_entries_scanned": "1000",
+	// "documents_scanned": "20", "billing_details" : {
+	// "documents_billable": "20", "index_entries_billable": "1000",
+	// "min_query_cost": "0" } }
+	DebugStats googleapi.RawMessage `json:"debugStats,omitempty"`
+
+	// ExecutionDuration: Total time to execute the query in the backend.
+	ExecutionDuration string `json:"executionDuration,omitempty"`
+
+	// ReadOperations: Total billable read operations.
+	ReadOperations int64 `json:"readOperations,omitempty,string"`
+
+	// ResultsReturned: Total number of results returned, including
+	// documents, projections, aggregation results, keys.
+	ResultsReturned int64 `json:"resultsReturned,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "DebugStats") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DebugStats") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExecutionStats) MarshalJSON() ([]byte, error) {
+	type NoMethod ExecutionStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ExistenceFilter: A digest of all the documents that match a given
 // target.
 type ExistenceFilter struct {
@@ -1225,6 +1268,71 @@ type ExistenceFilter struct {
 
 func (s *ExistenceFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod ExistenceFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExplainMetrics: Explain metrics for the query.
+type ExplainMetrics struct {
+	// ExecutionStats: Aggregated stats from the execution of the query.
+	// Only present when ExplainOptions.analyze is set to true.
+	ExecutionStats *ExecutionStats `json:"executionStats,omitempty"`
+
+	// PlanSummary: Planning phase information for the query.
+	PlanSummary *PlanSummary `json:"planSummary,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExecutionStats") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExecutionStats") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExplainMetrics) MarshalJSON() ([]byte, error) {
+	type NoMethod ExplainMetrics
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExplainOptions: Explain options for the query.
+type ExplainOptions struct {
+	// Analyze: Optional. Whether to execute this query. When false (the
+	// default), the query will be planned, returning only metrics from the
+	// planning stages. When true, the query will be planned and executed,
+	// returning the full query results along with both planning and
+	// execution stage metrics.
+	Analyze bool `json:"analyze,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Analyze") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Analyze") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExplainOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ExplainOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2520,6 +2628,37 @@ func (s *PartitionQueryResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PlanSummary: Planning phase information for the query.
+type PlanSummary struct {
+	// IndexesUsed: The indexes selected for the query. For example: [
+	// {"query_scope": "Collection", "properties": "(foo ASC, __name__
+	// ASC)"}, {"query_scope": "Collection", "properties": "(bar ASC,
+	// __name__ ASC)"} ]
+	IndexesUsed []googleapi.RawMessage `json:"indexesUsed,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IndexesUsed") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IndexesUsed") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PlanSummary) MarshalJSON() ([]byte, error) {
+	type NoMethod PlanSummary
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Precondition: A precondition on a document, used for conditional
 // operations.
 type Precondition struct {
@@ -2714,6 +2853,11 @@ func (s *RollbackRequest) MarshalJSON() ([]byte, error) {
 // RunAggregationQueryRequest: The request for
 // Firestore.RunAggregationQuery.
 type RunAggregationQueryRequest struct {
+	// ExplainOptions: Optional. Explain options for the query. If set,
+	// additional query statistics will be returned. If not, only query
+	// results will be returned.
+	ExplainOptions *ExplainOptions `json:"explainOptions,omitempty"`
+
 	// NewTransaction: Starts a new transaction as part of the query,
 	// defaulting to read-only. The new transaction ID will be returned as
 	// the first response in the stream.
@@ -2733,7 +2877,7 @@ type RunAggregationQueryRequest struct {
 	// the query in.
 	Transaction string `json:"transaction,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "NewTransaction") to
+	// ForceSendFields is a list of field names (e.g. "ExplainOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2741,7 +2885,7 @@ type RunAggregationQueryRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NewTransaction") to
+	// NullFields is a list of field names (e.g. "ExplainOptions") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2760,6 +2904,11 @@ func (s *RunAggregationQueryRequest) MarshalJSON() ([]byte, error) {
 // RunAggregationQueryResponse: The response for
 // Firestore.RunAggregationQuery.
 type RunAggregationQueryResponse struct {
+	// ExplainMetrics: Query explain metrics. This is only present when the
+	// RunAggregationQueryRequest.explain_options is provided, and it is
+	// sent only once with the last response in the stream.
+	ExplainMetrics *ExplainMetrics `json:"explainMetrics,omitempty"`
+
 	// ReadTime: The time at which the aggregate result was computed. This
 	// is always monotonically increasing; in this case, the previous
 	// AggregationResult in the result stream are guaranteed not to have
@@ -2781,7 +2930,7 @@ type RunAggregationQueryResponse struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "ReadTime") to
+	// ForceSendFields is a list of field names (e.g. "ExplainMetrics") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2789,12 +2938,13 @@ type RunAggregationQueryResponse struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ReadTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ExplainMetrics") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2806,6 +2956,11 @@ func (s *RunAggregationQueryResponse) MarshalJSON() ([]byte, error) {
 
 // RunQueryRequest: The request for Firestore.RunQuery.
 type RunQueryRequest struct {
+	// ExplainOptions: Optional. Explain options for the query. If set,
+	// additional query statistics will be returned. If not, only query
+	// results will be returned.
+	ExplainOptions *ExplainOptions `json:"explainOptions,omitempty"`
+
 	// NewTransaction: Starts a new transaction and reads the documents.
 	// Defaults to a read-only transaction. The new transaction ID will be
 	// returned as the first response in the stream.
@@ -2824,7 +2979,7 @@ type RunQueryRequest struct {
 	// value here is the opaque transaction ID to execute the query in.
 	Transaction string `json:"transaction,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "NewTransaction") to
+	// ForceSendFields is a list of field names (e.g. "ExplainOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2832,7 +2987,7 @@ type RunQueryRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "NewTransaction") to
+	// NullFields is a list of field names (e.g. "ExplainOptions") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -2856,6 +3011,11 @@ type RunQueryResponse struct {
 	// Done: If present, Firestore has completely finished the request and
 	// no more documents will be returned.
 	Done bool `json:"done,omitempty"`
+
+	// ExplainMetrics: Query explain metrics. This is only present when the
+	// RunQueryRequest.explain_options is provided, and it is sent only once
+	// with the last response in the stream.
+	ExplainMetrics *ExplainMetrics `json:"explainMetrics,omitempty"`
 
 	// ReadTime: The time at which the document was read. This may be
 	// monotonically increasing; in this case, the previous documents in the

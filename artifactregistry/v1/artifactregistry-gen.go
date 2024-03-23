@@ -2993,6 +2993,8 @@ type Repository struct {
 	// one or more sources.
 	//   "REMOTE_REPOSITORY" - A remote repository to serve artifacts from a
 	// remote source.
+	//   "AOSS_REPOSITORY" - An AOSS repository provides artifacts from AOSS
+	// upstreams.
 	Mode string `json:"mode,omitempty"`
 
 	// Name: The name of the repository, for example:

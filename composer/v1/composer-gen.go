@@ -595,7 +595,7 @@ func (s *DagProcessorResource) UnmarshalJSON(data []byte) error {
 // data retention mechanism.
 type DataRetentionConfig struct {
 	// AirflowMetadataRetentionConfig: Optional. The retention policy for
-	// airflow metadata database. Details: go/composer-database-retention-2
+	// airflow metadata database.
 	AirflowMetadataRetentionConfig *AirflowMetadataRetentionPolicyConfig `json:"airflowMetadataRetentionConfig,omitempty"`
 
 	// TaskLogsRetentionConfig: Optional. The configuration settings for

@@ -8269,13 +8269,16 @@ func (r *CustomersTelemetryDevicesService) List(parent string) *CustomersTelemet
 }
 
 // Filter sets the optional parameter "filter": Only include resources
-// that match the filter. Supported filter fields: - org_unit_id -
-// serial_number - device_id - reports_timestamp The "reports_timestamp"
-// filter accepts either the Unix Epoch milliseconds format or the
-// RFC3339 UTC "Zulu" format with nanosecond resolution and up to nine
-// fractional digits. Both formats should be surrounded by simple double
-// quotes. Examples: "2014-10-02T15:01:23Z",
-// "2014-10-02T15:01:23.045123456Z", "1679283943823".
+// that match the filter. Requests that don't specify a
+// "reports_timestamp" value will default to returning only recent
+// reports. Specify "reports_timestamp>=0" to get all report data.
+// Supported filter fields: - org_unit_id - serial_number - device_id -
+// reports_timestamp The "reports_timestamp" filter accepts either the
+// Unix Epoch milliseconds format or the RFC3339 UTC "Zulu" format with
+// nanosecond resolution and up to nine fractional digits. Both formats
+// should be surrounded by simple double quotes. Examples:
+// "2014-10-02T15:01:23Z", "2014-10-02T15:01:23.045123456Z",
+// "1679283943823".
 func (c *CustomersTelemetryDevicesListCall) Filter(filter string) *CustomersTelemetryDevicesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -8421,7 +8424,7 @@ func (c *CustomersTelemetryDevicesListCall) Do(opts ...googleapi.CallOption) (*G
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Only include resources that match the filter. Supported filter fields: - org_unit_id - serial_number - device_id - reports_timestamp The \"reports_timestamp\" filter accepts either the Unix Epoch milliseconds format or the RFC3339 UTC \"Zulu\" format with nanosecond resolution and up to nine fractional digits. Both formats should be surrounded by simple double quotes. Examples: \"2014-10-02T15:01:23Z\", \"2014-10-02T15:01:23.045123456Z\", \"1679283943823\".",
+	//       "description": "Optional. Only include resources that match the filter. Requests that don't specify a \"reports_timestamp\" value will default to returning only recent reports. Specify \"reports_timestamp\u003e=0\" to get all report data. Supported filter fields: - org_unit_id - serial_number - device_id - reports_timestamp The \"reports_timestamp\" filter accepts either the Unix Epoch milliseconds format or the RFC3339 UTC \"Zulu\" format with nanosecond resolution and up to nine fractional digits. Both formats should be surrounded by simple double quotes. Examples: \"2014-10-02T15:01:23Z\", \"2014-10-02T15:01:23.045123456Z\", \"1679283943823\".",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

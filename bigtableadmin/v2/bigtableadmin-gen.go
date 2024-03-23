@@ -337,6 +337,10 @@ type ProjectsLocationsService struct {
 // AppProfile: A configuration object describing how Cloud Bigtable
 // should treat traffic from a particular end user application.
 type AppProfile struct {
+	// DataBoostIsolationReadOnly: Specifies that this app profile is
+	// intended for read-only usage via the Data Boost feature.
+	DataBoostIsolationReadOnly *DataBoostIsolationReadOnly `json:"dataBoostIsolationReadOnly,omitempty"`
+
 	// Description: Long form description of the use case for this
 	// AppProfile.
 	Description string `json:"description,omitempty"`
@@ -381,20 +385,22 @@ type AppProfile struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DataBoostIsolationReadOnly") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "DataBoostIsolationReadOnly") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -941,6 +947,17 @@ type CheckConsistencyRequest struct {
 	// GenerateConsistencyToken for the Table.
 	ConsistencyToken string `json:"consistencyToken,omitempty"`
 
+	// DataBoostReadLocalWrites: Checks that reads using an app profile with
+	// `DataBoostIsolationReadOnly` can see all writes committed before the
+	// token was created, but only if the read and write target the same
+	// cluster.
+	DataBoostReadLocalWrites *DataBoostReadLocalWrites `json:"dataBoostReadLocalWrites,omitempty"`
+
+	// StandardReadRemoteWrites: Checks that reads using an app profile with
+	// `StandardIsolation` can see all writes committed before the token was
+	// created, even if the read and write target different clusters.
+	StandardReadRemoteWrites *StandardReadRemoteWrites `json:"standardReadRemoteWrites,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ConsistencyToken") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1218,6 +1235,15 @@ type ColumnFamily struct {
 	// summary statistics about column family contents. For statistics over
 	// an entire table, see TableStats above.
 	Stats *ColumnFamilyStats `json:"stats,omitempty"`
+
+	// ValueType: The type of data stored in each of this family's cell
+	// values, including its full encoding. If omitted, the family only
+	// serves raw untyped bytes. For now, only the `Aggregate` type is
+	// supported. `Aggregate` can only be set at family creation and is
+	// immutable afterwards. If `value_type` is `Aggregate`, written data
+	// must be compatible with: * `value_type.input_type` for `AddInput`
+	// mutations
+	ValueType *Type `json:"valueType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "GcRule") to
 	// unconditionally include in API requests. By default, fields with
@@ -1733,6 +1759,57 @@ func (s *CreateTableRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DataBoostIsolationReadOnly: Data Boost is a serverless compute
+// capability that lets you run high-throughput read jobs on your
+// Bigtable data, without impacting the performance of the clusters that
+// handle your application traffic. Currently, Data Boost exclusively
+// supports read-only use-cases with single-cluster routing. Data Boost
+// reads are only guaranteed to see the results of writes that were
+// written at least 30 minutes ago. This means newly written values may
+// not become visible for up to 30m, and also means that old values may
+// remain visible for up to 30m after being deleted or overwritten. To
+// mitigate the staleness of the data, users may either wait 30m, or use
+// CheckConsistency.
+type DataBoostIsolationReadOnly struct {
+	// ComputeBillingOwner: The Compute Billing Owner for this Data Boost
+	// App Profile.
+	//
+	// Possible values:
+	//   "COMPUTE_BILLING_OWNER_UNSPECIFIED" - Unspecified value.
+	//   "HOST_PAYS" - The host Cloud Project containing the targeted
+	// Bigtable Instance / Table pays for compute.
+	ComputeBillingOwner string `json:"computeBillingOwner,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComputeBillingOwner")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ComputeBillingOwner") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataBoostIsolationReadOnly) MarshalJSON() ([]byte, error) {
+	type NoMethod DataBoostIsolationReadOnly
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataBoostReadLocalWrites: Checks that all writes before the
+// consistency token was generated in the same cluster are readable by
+// Databoost.
+type DataBoostReadLocalWrites struct {
+}
+
 // DropRowRangeRequest: Request message for
 // google.bigtable.admin.v2.BigtableTableAdmin.DropRowRange
 type DropRowRangeRequest struct {
@@ -2153,6 +2230,211 @@ type GoogleBigtableAdminV2AuthorizedViewSubsetView struct {
 
 func (s *GoogleBigtableAdminV2AuthorizedViewSubsetView) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleBigtableAdminV2AuthorizedViewSubsetView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeAggregate: A value that combines incremental
+// updates into a summarized value. Data is never directly written or
+// read using type `Aggregate`. Writes will provide either the
+// `input_type` or `state_type`, and reads will always return the
+// `state_type` .
+type GoogleBigtableAdminV2TypeAggregate struct {
+	// InputType: Type of the inputs that are accumulated by this
+	// `Aggregate`, which must specify a full encoding. Use `AddInput`
+	// mutations to accumulate new inputs.
+	InputType *Type `json:"inputType,omitempty"`
+
+	// StateType: Output only. Type that holds the internal accumulator
+	// state for the `Aggregate`. This is a function of the `input_type` and
+	// `aggregator` chosen, and will always specify a full encoding.
+	StateType *Type `json:"stateType,omitempty"`
+
+	// Sum: Sum aggregator.
+	Sum *GoogleBigtableAdminV2TypeAggregateSum `json:"sum,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InputType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InputType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleBigtableAdminV2TypeAggregate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeAggregate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeAggregateSum: Computes the sum of the input
+// values. Allowed input: `Int64` State: same as input
+type GoogleBigtableAdminV2TypeAggregateSum struct {
+}
+
+// GoogleBigtableAdminV2TypeBytes: Bytes Values of type `Bytes` are
+// stored in `Value.bytes_value`.
+type GoogleBigtableAdminV2TypeBytes struct {
+	// Encoding: The encoding to use when converting to/from lower level
+	// types.
+	Encoding *GoogleBigtableAdminV2TypeBytesEncoding `json:"encoding,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Encoding") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Encoding") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleBigtableAdminV2TypeBytes) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeBytes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeBytesEncoding: Rules used to convert to/from
+// lower level types.
+type GoogleBigtableAdminV2TypeBytesEncoding struct {
+	// Raw: Use `Raw` encoding.
+	Raw *GoogleBigtableAdminV2TypeBytesEncodingRaw `json:"raw,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Raw") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Raw") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleBigtableAdminV2TypeBytesEncoding) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeBytesEncoding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeBytesEncodingRaw: Leaves the value "as-is" *
+// Natural sort? Yes * Self-delimiting? No * Compatibility? N/A
+type GoogleBigtableAdminV2TypeBytesEncodingRaw struct {
+}
+
+// GoogleBigtableAdminV2TypeInt64: Int64 Values of type `Int64` are
+// stored in `Value.int_value`.
+type GoogleBigtableAdminV2TypeInt64 struct {
+	// Encoding: The encoding to use when converting to/from lower level
+	// types.
+	Encoding *GoogleBigtableAdminV2TypeInt64Encoding `json:"encoding,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Encoding") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Encoding") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleBigtableAdminV2TypeInt64) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeInt64
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeInt64Encoding: Rules used to convert to/from
+// lower level types.
+type GoogleBigtableAdminV2TypeInt64Encoding struct {
+	// BigEndianBytes: Use `BigEndianBytes` encoding.
+	BigEndianBytes *GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes `json:"bigEndianBytes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BigEndianBytes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigEndianBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleBigtableAdminV2TypeInt64Encoding) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeInt64Encoding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes: Encodes the
+// value as an 8-byte big endian twos complement `Bytes` value. *
+// Natural sort? No (positive values only) * Self-delimiting? Yes *
+// Compatibility? - BigQuery Federation `BINARY` encoding - HBase
+// `Bytes.toBytes` - Java `ByteBuffer.putLong()` with
+// `ByteOrder.BIG_ENDIAN`
+type GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes struct {
+	// BytesType: The underlying `Bytes` type, which may be able to encode
+	// further.
+	BytesType *GoogleBigtableAdminV2TypeBytes `json:"bytesType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BytesType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BytesType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3479,6 +3761,12 @@ func (s *StandardIsolation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StandardReadRemoteWrites: Checks that all writes before the
+// consistency token was generated are replicated in every cluster and
+// readable.
+type StandardReadRemoteWrites struct {
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -3793,6 +4081,66 @@ type TestIamPermissionsResponse struct {
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Type: `Type` represents the type of data that is written to, read
+// from, or stored in Bigtable. It is heavily based on the GoogleSQL
+// standard to help maintain familiarity and consistency across products
+// and features. For compatibility with Bigtable's existing untyped
+// APIs, each `Type` includes an `Encoding` which describes how to
+// convert to/from the underlying data. This might involve composing a
+// series of steps into an "encoding chain," for example to convert from
+// INT64 -> STRING -> raw bytes. In most cases, a "link" in the encoding
+// chain will be based an on existing GoogleSQL conversion function like
+// `CAST`. Each link in the encoding chain also defines the following
+// properties: * Natural sort: Does the encoded value sort consistently
+// with the original typed value? Note that Bigtable will always sort
+// data based on the raw encoded value, *not* the decoded type. -
+// Example: STRING values sort in the same order as their UTF-8
+// encodings. - Counterexample: Encoding INT64 to a fixed-width STRING
+// does *not* preserve sort order when dealing with negative numbers.
+// INT64(1) > INT64(-1), but STRING("-00001") > STRING("00001). - The
+// overall encoding chain sorts naturally if *every* link does. *
+// Self-delimiting: If we concatenate two encoded values, can we always
+// tell where the first one ends and the second one begins? - Example:
+// If we encode INT64s to fixed-width STRINGs, the first value will
+// always contain exactly N digits, possibly preceded by a sign. -
+// Counterexample: If we concatenate two UTF-8 encoded STRINGs, we have
+// no way to tell where the first one ends. - The overall encoding chain
+// is self-delimiting if *any* link is. * Compatibility: Which other
+// systems have matching encoding schemes? For example, does this
+// encoding have a GoogleSQL equivalent? HBase? Java?
+type Type struct {
+	// AggregateType: Aggregate
+	AggregateType *GoogleBigtableAdminV2TypeAggregate `json:"aggregateType,omitempty"`
+
+	// BytesType: Bytes
+	BytesType *GoogleBigtableAdminV2TypeBytes `json:"bytesType,omitempty"`
+
+	// Int64Type: Int64
+	Int64Type *GoogleBigtableAdminV2TypeInt64 `json:"int64Type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregateType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregateType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Type) MarshalJSON() ([]byte, error) {
+	type NoMethod Type
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

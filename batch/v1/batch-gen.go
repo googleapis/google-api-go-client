@@ -750,7 +750,8 @@ type AgentTaskSpec struct {
 	Environment *AgentEnvironment `json:"environment,omitempty"`
 
 	// MaxRunDuration: Maximum duration the task should run. The task will
-	// be killed and marked as FAILED if over this limit.
+	// be killed and marked as FAILED if over this limit. The valid value
+	// range for max_run_duration in seconds is [0, 315576000000.999999999],
 	MaxRunDuration string `json:"maxRunDuration,omitempty"`
 
 	// Runnables: AgentTaskRunnable is runanbles that will be executed on
@@ -2904,7 +2905,8 @@ type TaskSpec struct {
 	MaxRetryCount int64 `json:"maxRetryCount,omitempty"`
 
 	// MaxRunDuration: Maximum duration the task should run. The task will
-	// be killed and marked as FAILED if over this limit.
+	// be killed and marked as FAILED if over this limit. The valid value
+	// range for max_run_duration in seconds is [0, 315576000000.999999999],
 	MaxRunDuration string `json:"maxRunDuration,omitempty"`
 
 	// Runnables: The sequence of scripts or containers to run for this

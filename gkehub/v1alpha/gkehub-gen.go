@@ -3805,6 +3805,9 @@ type IdentityServiceAuthMethod struct {
 	// GoogleConfig: GoogleConfig specific configuration.
 	GoogleConfig *IdentityServiceGoogleConfig `json:"googleConfig,omitempty"`
 
+	// LdapConfig: LDAP specific configuration.
+	LdapConfig *IdentityServiceLdapConfig `json:"ldapConfig,omitempty"`
+
 	// Name: Identifier for auth config.
 	Name string `json:"name,omitempty"`
 
@@ -3919,6 +3922,89 @@ type IdentityServiceGoogleConfig struct {
 
 func (s *IdentityServiceGoogleConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentityServiceGoogleConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceGroupConfig: Contains the properties for locating and
+// authenticating groups in the directory.
+type IdentityServiceGroupConfig struct {
+	// BaseDn: Required. The location of the subtree in the LDAP directory
+	// to search for group entries.
+	BaseDn string `json:"baseDn,omitempty"`
+
+	// Filter: Optional. Optional filter to be used when searching for
+	// groups a user belongs to. This can be used to explicitly match only
+	// certain groups in order to reduce the amount of groups returned for
+	// each user. This defaults to "(objectClass=Group)".
+	Filter string `json:"filter,omitempty"`
+
+	// IdAttribute: Optional. The identifying name of each group a user
+	// belongs to. For example, if this is set to "distinguishedName" then
+	// RBACs and other group expectations should be written as full DNs.
+	// This defaults to "distinguishedName".
+	IdAttribute string `json:"idAttribute,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseDn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseDn") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceGroupConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceGroupConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceLdapConfig: Configuration for the LDAP Auth flow.
+type IdentityServiceLdapConfig struct {
+	// Group: Optional. Contains the properties for locating and
+	// authenticating groups in the directory.
+	Group *IdentityServiceGroupConfig `json:"group,omitempty"`
+
+	// Server: Required. Server settings for the external LDAP server.
+	Server *IdentityServiceServerConfig `json:"server,omitempty"`
+
+	// ServiceAccount: Required. Contains the credentials of the service
+	// account which is authorized to perform the LDAP search in the
+	// directory. The credentials can be supplied by the combination of the
+	// DN and password or the client certificate.
+	ServiceAccount *IdentityServiceServiceAccountConfig `json:"serviceAccount,omitempty"`
+
+	// User: Required. Defines where users exist in the LDAP directory.
+	User *IdentityServiceUserConfig `json:"user,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Group") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Group") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceLdapConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceLdapConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4129,6 +4215,173 @@ type IdentityServiceSamlConfig struct {
 
 func (s *IdentityServiceSamlConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentityServiceSamlConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceServerConfig: Server settings for the external LDAP
+// server.
+type IdentityServiceServerConfig struct {
+	// CertificateAuthorityData: Optional. Contains a Base64 encoded, PEM
+	// formatted certificate authority certificate for the LDAP server. This
+	// must be provided for the "ldaps" and "startTLS" connections.
+	CertificateAuthorityData string `json:"certificateAuthorityData,omitempty"`
+
+	// ConnectionType: Optional. Defines the connection type to communicate
+	// with the LDAP server. If `starttls` or `ldaps` is specified, the
+	// certificate_authority_data should not be empty.
+	ConnectionType string `json:"connectionType,omitempty"`
+
+	// Host: Required. Defines the hostname or IP of the LDAP server. Port
+	// is optional and will default to 389, if unspecified. For example,
+	// "ldap.server.example" or "10.10.10.10:389".
+	Host string `json:"host,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CertificateAuthorityData") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertificateAuthorityData")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceServerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceServerConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceServiceAccountConfig: Contains the credentials of the
+// service account which is authorized to perform the LDAP search in the
+// directory. The credentials can be supplied by the combination of the
+// DN and password or the client certificate.
+type IdentityServiceServiceAccountConfig struct {
+	// SimpleBindCredentials: Credentials for basic auth.
+	SimpleBindCredentials *IdentityServiceSimpleBindCredentials `json:"simpleBindCredentials,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SimpleBindCredentials") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SimpleBindCredentials") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceServiceAccountConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceServiceAccountConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceSimpleBindCredentials: The structure holds the LDAP
+// simple binding credential.
+type IdentityServiceSimpleBindCredentials struct {
+	// Dn: Required. The distinguished name(DN) of the service account
+	// object/user.
+	Dn string `json:"dn,omitempty"`
+
+	// EncryptedPassword: Output only. The encrypted password of the service
+	// account object/user.
+	EncryptedPassword string `json:"encryptedPassword,omitempty"`
+
+	// Password: Required. Input only. The password of the service account
+	// object/user.
+	Password string `json:"password,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dn") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceSimpleBindCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceSimpleBindCredentials
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceUserConfig: Defines where users exist in the LDAP
+// directory.
+type IdentityServiceUserConfig struct {
+	// BaseDn: Required. The location of the subtree in the LDAP directory
+	// to search for user entries.
+	BaseDn string `json:"baseDn,omitempty"`
+
+	// Filter: Optional. Filter to apply when searching for the user. This
+	// can be used to further restrict the user accounts which are allowed
+	// to login. This defaults to "(objectClass=User)".
+	Filter string `json:"filter,omitempty"`
+
+	// IdAttribute: Optional. Determines which attribute to use as the
+	// user's identity after they are authenticated. This is distinct from
+	// the loginAttribute field to allow users to login with a username, but
+	// then have their actual identifier be an email address or full
+	// Distinguished Name (DN). For example, setting loginAttribute to
+	// "sAMAccountName" and identifierAttribute to "userPrincipalName" would
+	// allow a user to login as "bsmith", but actual RBAC policies for the
+	// user would be written as "bsmith@example.com". Using
+	// "userPrincipalName" is recommended since this will be unique for each
+	// user. This defaults to "userPrincipalName".
+	IdAttribute string `json:"idAttribute,omitempty"`
+
+	// LoginAttribute: Optional. The name of the attribute which matches
+	// against the input username. This is used to find the user in the LDAP
+	// database e.g. "(=)" and is combined with the optional filter field.
+	// This defaults to "userPrincipalName".
+	LoginAttribute string `json:"loginAttribute,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseDn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseDn") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceUserConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceUserConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

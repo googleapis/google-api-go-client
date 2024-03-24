@@ -260,6 +260,37 @@ type ProjectsLocationsTrustConfigsService struct {
 	s *Service
 }
 
+// AllowlistedCertificate: Defines an allowlisted certificate.
+type AllowlistedCertificate struct {
+	// PemCertificate: Required. PEM certificate that is allowlisted. The
+	// certificate can be up to 5k bytes, and must be a parseable X.509
+	// certificate.
+	PemCertificate string `json:"pemCertificate,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PemCertificate") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PemCertificate") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AllowlistedCertificate) MarshalJSON() ([]byte, error) {
+	type NoMethod AllowlistedCertificate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AuthorizationAttemptInfo: State of the latest attempt to authorize a
 // domain for certificate issuance.
 type AuthorizationAttemptInfo struct {
@@ -1620,6 +1651,13 @@ func (s *TrustAnchor) MarshalJSON() ([]byte, error) {
 
 // TrustConfig: Defines a trust config.
 type TrustConfig struct {
+	// AllowlistedCertificates: Optional. A certificate matching an
+	// allowlisted certificate is always considered valid as long as the
+	// certificate is parseable, proof of private key possession is
+	// established, and constraints on the certificate’s SAN field are
+	// met.
+	AllowlistedCertificates []*AllowlistedCertificate `json:"allowlistedCertificates,omitempty"`
+
 	// CreateTime: Output only. The creation timestamp of a TrustConfig.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -1653,20 +1691,22 @@ type TrustConfig struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowlistedCertificates") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AllowlistedCertificates")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

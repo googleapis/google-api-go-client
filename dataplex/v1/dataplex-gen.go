@@ -2058,72 +2058,6 @@ func (s *GoogleCloudDataplexV1DataAttributeBindingPath) MarshalJSON() ([]byte, e
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudDataplexV1DataDocumentationResult: The output of a
-// DataDocumentation scan.
-type GoogleCloudDataplexV1DataDocumentationResult struct {
-	// Queries: Output only. The list of generated queries.
-	Queries []*GoogleCloudDataplexV1DataDocumentationResultQuery `json:"queries,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Queries") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Queries") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDataplexV1DataDocumentationResult) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDataplexV1DataDocumentationResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDataplexV1DataDocumentationResultQuery: A query in data
-// documentation
-type GoogleCloudDataplexV1DataDocumentationResultQuery struct {
-	// Description: Output only. The description for the query.
-	Description string `json:"description,omitempty"`
-
-	// Sql: Output only. The SQL query string which can be executed.
-	Sql string `json:"sql,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudDataplexV1DataDocumentationResultQuery) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudDataplexV1DataDocumentationResultQuery
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleCloudDataplexV1DataDocumentationSpec: DataDocumentation scan
-// related spec.
-type GoogleCloudDataplexV1DataDocumentationSpec struct {
-}
-
 // GoogleCloudDataplexV1DataProfileResult: DataProfileResult defines the
 // output of DataProfileScan. Each field of the table will have field
 // type specific profile result.
@@ -3858,13 +3792,6 @@ type GoogleCloudDataplexV1DataScan struct {
 	// Data: Required. The data source for DataScan.
 	Data *GoogleCloudDataplexV1DataSource `json:"data,omitempty"`
 
-	// DataDocumentationResult: Output only. The result of the data
-	// documentation scan.
-	DataDocumentationResult *GoogleCloudDataplexV1DataDocumentationResult `json:"dataDocumentationResult,omitempty"`
-
-	// DataDocumentationSpec: DataDocumentationScan related setting.
-	DataDocumentationSpec *GoogleCloudDataplexV1DataDocumentationSpec `json:"dataDocumentationSpec,omitempty"`
-
 	// DataProfileResult: Output only. The result of the data profile scan.
 	DataProfileResult *GoogleCloudDataplexV1DataProfileResult `json:"dataProfileResult,omitempty"`
 
@@ -3918,7 +3845,6 @@ type GoogleCloudDataplexV1DataScan struct {
 	//   "DATA_SCAN_TYPE_UNSPECIFIED" - The DataScan type is unspecified.
 	//   "DATA_QUALITY" - Data Quality scan.
 	//   "DATA_PROFILE" - Data Profile scan.
-	//   "DATA_DOCUMENTATION" - Data Documentation scan.
 	Type string `json:"type,omitempty"`
 
 	// Uid: Output only. System generated globally unique ID for the scan.
@@ -4399,14 +4325,6 @@ func (s *GoogleCloudDataplexV1DataScanExecutionStatus) MarshalJSON() ([]byte, er
 // GoogleCloudDataplexV1DataScanJob: A DataScanJob represents an
 // instance of DataScan execution.
 type GoogleCloudDataplexV1DataScanJob struct {
-	// DataDocumentationResult: Output only. The result of the data
-	// documentation scan.
-	DataDocumentationResult *GoogleCloudDataplexV1DataDocumentationResult `json:"dataDocumentationResult,omitempty"`
-
-	// DataDocumentationSpec: Output only. DataDocumentationScan related
-	// setting.
-	DataDocumentationSpec *GoogleCloudDataplexV1DataDocumentationSpec `json:"dataDocumentationSpec,omitempty"`
-
 	// DataProfileResult: Output only. The result of the data profile scan.
 	DataProfileResult *GoogleCloudDataplexV1DataProfileResult `json:"dataProfileResult,omitempty"`
 
@@ -4454,7 +4372,6 @@ type GoogleCloudDataplexV1DataScanJob struct {
 	//   "DATA_SCAN_TYPE_UNSPECIFIED" - The DataScan type is unspecified.
 	//   "DATA_QUALITY" - Data Quality scan.
 	//   "DATA_PROFILE" - Data Profile scan.
-	//   "DATA_DOCUMENTATION" - Data Documentation scan.
 	Type string `json:"type,omitempty"`
 
 	// Uid: Output only. System generated globally unique ID for the
@@ -4465,19 +4382,18 @@ type GoogleCloudDataplexV1DataScanJob struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "DataDocumentationResult") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DataProfileResult")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DataDocumentationResult")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "DataProfileResult") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.

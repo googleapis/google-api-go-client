@@ -3356,6 +3356,9 @@ type IdentityServiceAuthMethod struct {
 	// GoogleConfig: GoogleConfig specific configuration.
 	GoogleConfig *IdentityServiceGoogleConfig `json:"googleConfig,omitempty"`
 
+	// LdapConfig: LDAP specific configuration.
+	LdapConfig *IdentityServiceLdapConfig `json:"ldapConfig,omitempty"`
+
 	// Name: Identifier for auth config.
 	Name string `json:"name,omitempty"`
 
@@ -3470,6 +3473,89 @@ type IdentityServiceGoogleConfig struct {
 
 func (s *IdentityServiceGoogleConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod IdentityServiceGoogleConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceGroupConfig: Contains the properties for locating and
+// authenticating groups in the directory.
+type IdentityServiceGroupConfig struct {
+	// BaseDn: Required. The location of the subtree in the LDAP directory
+	// to search for group entries.
+	BaseDn string `json:"baseDn,omitempty"`
+
+	// Filter: Optional. Optional filter to be used when searching for
+	// groups a user belongs to. This can be used to explicitly match only
+	// certain groups in order to reduce the amount of groups returned for
+	// each user. This defaults to "(objectClass=Group)".
+	Filter string `json:"filter,omitempty"`
+
+	// IdAttribute: Optional. The identifying name of each group a user
+	// belongs to. For example, if this is set to "distinguishedName" then
+	// RBACs and other group expectations should be written as full DNs.
+	// This defaults to "distinguishedName".
+	IdAttribute string `json:"idAttribute,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseDn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseDn") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceGroupConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceGroupConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceLdapConfig: Configuration for the LDAP Auth flow.
+type IdentityServiceLdapConfig struct {
+	// Group: Optional. Contains the properties for locating and
+	// authenticating groups in the directory.
+	Group *IdentityServiceGroupConfig `json:"group,omitempty"`
+
+	// Server: Required. Server settings for the external LDAP server.
+	Server *IdentityServiceServerConfig `json:"server,omitempty"`
+
+	// ServiceAccount: Required. Contains the credentials of the service
+	// account which is authorized to perform the LDAP search in the
+	// directory. The credentials can be supplied by the combination of the
+	// DN and password or the client certificate.
+	ServiceAccount *IdentityServiceServiceAccountConfig `json:"serviceAccount,omitempty"`
+
+	// User: Required. Defines where users exist in the LDAP directory.
+	User *IdentityServiceUserConfig `json:"user,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Group") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Group") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceLdapConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceLdapConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3684,6 +3770,173 @@ func (s *IdentityServiceSamlConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// IdentityServiceServerConfig: Server settings for the external LDAP
+// server.
+type IdentityServiceServerConfig struct {
+	// CertificateAuthorityData: Optional. Contains a Base64 encoded, PEM
+	// formatted certificate authority certificate for the LDAP server. This
+	// must be provided for the "ldaps" and "startTLS" connections.
+	CertificateAuthorityData string `json:"certificateAuthorityData,omitempty"`
+
+	// ConnectionType: Optional. Defines the connection type to communicate
+	// with the LDAP server. If `starttls` or `ldaps` is specified, the
+	// certificate_authority_data should not be empty.
+	ConnectionType string `json:"connectionType,omitempty"`
+
+	// Host: Required. Defines the hostname or IP of the LDAP server. Port
+	// is optional and will default to 389, if unspecified. For example,
+	// "ldap.server.example" or "10.10.10.10:389".
+	Host string `json:"host,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CertificateAuthorityData") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CertificateAuthorityData")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceServerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceServerConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceServiceAccountConfig: Contains the credentials of the
+// service account which is authorized to perform the LDAP search in the
+// directory. The credentials can be supplied by the combination of the
+// DN and password or the client certificate.
+type IdentityServiceServiceAccountConfig struct {
+	// SimpleBindCredentials: Credentials for basic auth.
+	SimpleBindCredentials *IdentityServiceSimpleBindCredentials `json:"simpleBindCredentials,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SimpleBindCredentials") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SimpleBindCredentials") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceServiceAccountConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceServiceAccountConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceSimpleBindCredentials: The structure holds the LDAP
+// simple binding credential.
+type IdentityServiceSimpleBindCredentials struct {
+	// Dn: Required. The distinguished name(DN) of the service account
+	// object/user.
+	Dn string `json:"dn,omitempty"`
+
+	// EncryptedPassword: Output only. The encrypted password of the service
+	// account object/user.
+	EncryptedPassword string `json:"encryptedPassword,omitempty"`
+
+	// Password: Required. Input only. The password of the service account
+	// object/user.
+	Password string `json:"password,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Dn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Dn") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceSimpleBindCredentials) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceSimpleBindCredentials
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IdentityServiceUserConfig: Defines where users exist in the LDAP
+// directory.
+type IdentityServiceUserConfig struct {
+	// BaseDn: Required. The location of the subtree in the LDAP directory
+	// to search for user entries.
+	BaseDn string `json:"baseDn,omitempty"`
+
+	// Filter: Optional. Filter to apply when searching for the user. This
+	// can be used to further restrict the user accounts which are allowed
+	// to login. This defaults to "(objectClass=User)".
+	Filter string `json:"filter,omitempty"`
+
+	// IdAttribute: Optional. Determines which attribute to use as the
+	// user's identity after they are authenticated. This is distinct from
+	// the loginAttribute field to allow users to login with a username, but
+	// then have their actual identifier be an email address or full
+	// Distinguished Name (DN). For example, setting loginAttribute to
+	// "sAMAccountName" and identifierAttribute to "userPrincipalName" would
+	// allow a user to login as "bsmith", but actual RBAC policies for the
+	// user would be written as "bsmith@example.com". Using
+	// "userPrincipalName" is recommended since this will be unique for each
+	// user. This defaults to "userPrincipalName".
+	IdAttribute string `json:"idAttribute,omitempty"`
+
+	// LoginAttribute: Optional. The name of the attribute which matches
+	// against the input username. This is used to find the user in the LDAP
+	// database e.g. "(=)" and is combined with the optional filter field.
+	// This defaults to "userPrincipalName".
+	LoginAttribute string `json:"loginAttribute,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BaseDn") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BaseDn") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IdentityServiceUserConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod IdentityServiceUserConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // KubernetesMetadata: KubernetesMetadata provides informational
 // metadata for Memberships representing Kubernetes clusters.
 type KubernetesMetadata struct {
@@ -3796,6 +4049,47 @@ type KubernetesResource struct {
 
 func (s *KubernetesResource) MarshalJSON() ([]byte, error) {
 	type NoMethod KubernetesResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListBoundMembershipsResponse: List of Memberships bound to a Scope.
+type ListBoundMembershipsResponse struct {
+	// Memberships: The list of Memberships bound to the given Scope.
+	Memberships []*Membership `json:"memberships,omitempty"`
+
+	// NextPageToken: A token to request the next page of resources from the
+	// `ListBoundMemberships` method. The value of an empty string means
+	// that there are no more resources to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: List of locations that could not be reached while
+	// fetching this list.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Memberships") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Memberships") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListBoundMembershipsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListBoundMembershipsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4026,6 +4320,43 @@ type ListOperationsResponse struct {
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListPermittedScopesResponse: List of permitted Scopes.
+type ListPermittedScopesResponse struct {
+	// NextPageToken: A token to request the next page of resources from the
+	// `ListPermittedScopes` method. The value of an empty string means that
+	// there are no more resources to return.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Scopes: The list of permitted Scopes
+	Scopes []*Scope `json:"scopes,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPermittedScopesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPermittedScopesResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13092,6 +13423,415 @@ func (c *ProjectsLocationsScopesListCall) Do(opts ...googleapi.CallOption) (*Lis
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsScopesListCall) Pages(ctx context.Context, f func(*ListScopesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "gkehub.projects.locations.scopes.listMemberships":
+
+type ProjectsLocationsScopesListMembershipsCall struct {
+	s            *Service
+	scopeName    string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListMemberships: Lists Memberships bound to a Scope. The response
+// includes relevant Memberships from all regions.
+//
+//   - scopeName: Name of the Scope, in the format
+//     `projects/*/locations/global/scopes/*`, to which the Memberships
+//     are bound.
+func (r *ProjectsLocationsScopesService) ListMemberships(scopeName string) *ProjectsLocationsScopesListMembershipsCall {
+	c := &ProjectsLocationsScopesListMembershipsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.scopeName = scopeName
+	return c
+}
+
+// Filter sets the optional parameter "filter": Lists Memberships that
+// match the filter expression, following the syntax outlined in
+// https://google.aip.dev/160. Currently, filtering can be done only
+// based on Memberships's `name`, `labels`, `create_time`,
+// `update_time`, and `unique_id`.
+func (c *ProjectsLocationsScopesListMembershipsCall) Filter(filter string) *ProjectsLocationsScopesListMembershipsCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": When requesting a
+// 'page' of resources, `page_size` specifies number of resources to
+// return. If unspecified or set to 0, all resources will be returned.
+// Pagination is currently not supported; therefore, setting this field
+// does not have any impact for now.
+func (c *ProjectsLocationsScopesListMembershipsCall) PageSize(pageSize int64) *ProjectsLocationsScopesListMembershipsCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned by
+// previous call to `ListBoundMemberships` which specifies the position
+// in the list from where to continue listing the resources.
+func (c *ProjectsLocationsScopesListMembershipsCall) PageToken(pageToken string) *ProjectsLocationsScopesListMembershipsCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsScopesListMembershipsCall) Fields(s ...googleapi.Field) *ProjectsLocationsScopesListMembershipsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsScopesListMembershipsCall) IfNoneMatch(entityTag string) *ProjectsLocationsScopesListMembershipsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsScopesListMembershipsCall) Context(ctx context.Context) *ProjectsLocationsScopesListMembershipsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsScopesListMembershipsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsScopesListMembershipsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+scopeName}:listMemberships")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"scopeName": c.scopeName,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.scopes.listMemberships" call.
+// Exactly one of *ListBoundMembershipsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListBoundMembershipsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsScopesListMembershipsCall) Do(opts ...googleapi.CallOption) (*ListBoundMembershipsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListBoundMembershipsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Memberships bound to a Scope. The response includes relevant Memberships from all regions.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/scopes/{scopesId}:listMemberships",
+	//   "httpMethod": "GET",
+	//   "id": "gkehub.projects.locations.scopes.listMemberships",
+	//   "parameterOrder": [
+	//     "scopeName"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Lists Memberships that match the filter expression, following the syntax outlined in https://google.aip.dev/160. Currently, filtering can be done only based on Memberships's `name`, `labels`, `create_time`, `update_time`, and `unique_id`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. When requesting a 'page' of resources, `page_size` specifies number of resources to return. If unspecified or set to 0, all resources will be returned. Pagination is currently not supported; therefore, setting this field does not have any impact for now.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Token returned by previous call to `ListBoundMemberships` which specifies the position in the list from where to continue listing the resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "scopeName": {
+	//       "description": "Required. Name of the Scope, in the format `projects/*/locations/global/scopes/*`, to which the Memberships are bound.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/scopes/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+scopeName}:listMemberships",
+	//   "response": {
+	//     "$ref": "ListBoundMembershipsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsScopesListMembershipsCall) Pages(ctx context.Context, f func(*ListBoundMembershipsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "gkehub.projects.locations.scopes.listPermitted":
+
+type ProjectsLocationsScopesListPermittedCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ListPermitted: Lists permitted Scopes.
+//
+//   - parent: The parent (project and location) where the Scope will be
+//     listed. Specified in the format `projects/*/locations/*`.
+func (r *ProjectsLocationsScopesService) ListPermitted(parent string) *ProjectsLocationsScopesListPermittedCall {
+	c := &ProjectsLocationsScopesListPermittedCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": When requesting a
+// 'page' of resources, `page_size` specifies number of resources to
+// return. If unspecified or set to 0, all resources will be returned.
+func (c *ProjectsLocationsScopesListPermittedCall) PageSize(pageSize int64) *ProjectsLocationsScopesListPermittedCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Token returned by
+// previous call to `ListPermittedScopes` which specifies the position
+// in the list from where to continue listing the resources.
+func (c *ProjectsLocationsScopesListPermittedCall) PageToken(pageToken string) *ProjectsLocationsScopesListPermittedCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsScopesListPermittedCall) Fields(s ...googleapi.Field) *ProjectsLocationsScopesListPermittedCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsScopesListPermittedCall) IfNoneMatch(entityTag string) *ProjectsLocationsScopesListPermittedCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsScopesListPermittedCall) Context(ctx context.Context) *ProjectsLocationsScopesListPermittedCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsScopesListPermittedCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsScopesListPermittedCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/scopes:listPermitted")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkehub.projects.locations.scopes.listPermitted" call.
+// Exactly one of *ListPermittedScopesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPermittedScopesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsScopesListPermittedCall) Do(opts ...googleapi.CallOption) (*ListPermittedScopesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListPermittedScopesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists permitted Scopes.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/scopes:listPermitted",
+	//   "httpMethod": "GET",
+	//   "id": "gkehub.projects.locations.scopes.listPermitted",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. When requesting a 'page' of resources, `page_size` specifies number of resources to return. If unspecified or set to 0, all resources will be returned.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Token returned by previous call to `ListPermittedScopes` which specifies the position in the list from where to continue listing the resources.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The parent (project and location) where the Scope will be listed. Specified in the format `projects/*/locations/*`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/scopes:listPermitted",
+	//   "response": {
+	//     "$ref": "ListPermittedScopesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsScopesListPermittedCall) Pages(ctx context.Context, f func(*ListPermittedScopesResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

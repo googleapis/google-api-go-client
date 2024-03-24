@@ -3498,7 +3498,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// restricted to authorized networks.
 	//   "SIGNAL_TYPE_VIOLATE_POLICY_RESTRICT_PUBLIC_IP" - Represents
 	// violate org policy restrict public ip.
-	//   "SIGNAL_TYPE_CLUSTER_QUOTA_LIMIT" - Cluster nearing quota limit
+	//   "SIGNAL_TYPE_QUOTA_LIMIT" - Cluster nearing quota limit
 	//   "SIGNAL_TYPE_NO_PASSWORD_POLICY" - No password policy set on
 	// resources
 	//   "SIGNAL_TYPE_CONNECTIONS_PERFORMANCE_IMPACT" - Performance impact
@@ -3947,7 +3947,7 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	// restricted to authorized networks.
 	//   "SIGNAL_TYPE_VIOLATE_POLICY_RESTRICT_PUBLIC_IP" - Represents
 	// violate org policy restrict public ip.
-	//   "SIGNAL_TYPE_CLUSTER_QUOTA_LIMIT" - Cluster nearing quota limit
+	//   "SIGNAL_TYPE_QUOTA_LIMIT" - Cluster nearing quota limit
 	//   "SIGNAL_TYPE_NO_PASSWORD_POLICY" - No password policy set on
 	// resources
 	//   "SIGNAL_TYPE_CONNECTIONS_PERFORMANCE_IMPACT" - Performance impact

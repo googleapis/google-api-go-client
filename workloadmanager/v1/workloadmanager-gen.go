@@ -1331,6 +1331,10 @@ type SapDiscoveryComponentApplicationProperties struct {
 	// instance. true means it is ABAP, false means it is Java.
 	Abap bool `json:"abap,omitempty"`
 
+	// AppInstanceNumber: Optional. Instance number of the SAP application
+	// instance.
+	AppInstanceNumber string `json:"appInstanceNumber,omitempty"`
+
 	// ApplicationType: Required. Type of the application. Netweaver, etc.
 	//
 	// Possible values:
@@ -1338,12 +1342,12 @@ type SapDiscoveryComponentApplicationProperties struct {
 	//   "NETWEAVER" - SAP Netweaver
 	ApplicationType string `json:"applicationType,omitempty"`
 
+	// AscsInstanceNumber: Optional. Instance number of the ASCS instance.
+	AscsInstanceNumber string `json:"ascsInstanceNumber,omitempty"`
+
 	// AscsUri: Optional. Resource URI of the recognized ASCS host of the
 	// application.
 	AscsUri string `json:"ascsUri,omitempty"`
-
-	// InstanceNumber: Optional. Instance number of the SAP instance.
-	InstanceNumber string `json:"instanceNumber,omitempty"`
 
 	// KernelVersion: Optional. Kernel version for Netweaver running in the
 	// system.
@@ -1380,6 +1384,9 @@ func (s *SapDiscoveryComponentApplicationProperties) MarshalJSON() ([]byte, erro
 // SapDiscoveryComponentDatabaseProperties: A set of properties
 // describing an SAP Database layer.
 type SapDiscoveryComponentDatabaseProperties struct {
+	// DatabaseSid: Optional. SID of the system database.
+	DatabaseSid string `json:"databaseSid,omitempty"`
+
 	// DatabaseType: Required. Type of the database. HANA, DB2, etc.
 	//
 	// Possible values:
@@ -1404,7 +1411,7 @@ type SapDiscoveryComponentDatabaseProperties struct {
 	// database. May be empty if the database has only a single node.
 	SharedNfsUri string `json:"sharedNfsUri,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DatabaseType") to
+	// ForceSendFields is a list of field names (e.g. "DatabaseSid") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -1412,7 +1419,7 @@ type SapDiscoveryComponentDatabaseProperties struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DatabaseType") to include
+	// NullFields is a list of field names (e.g. "DatabaseSid") to include
 	// in API requests with the JSON null value. By default, fields with
 	// empty values are omitted from API requests. However, any field with
 	// an empty value appearing in NullFields will be sent to the server as
@@ -1547,6 +1554,9 @@ type SapDiscoveryResourceInstanceProperties struct {
 	// ClusterInstances: Optional. A list of instance URIs that are part of
 	// a cluster with this one.
 	ClusterInstances []string `json:"clusterInstances,omitempty"`
+
+	// InstanceNumber: Optional. The VM's instance number.
+	InstanceNumber int64 `json:"instanceNumber,omitempty,string"`
 
 	// VirtualHostname: Optional. A virtual hostname of the instance if it
 	// has one.
@@ -2614,6 +2624,13 @@ func (r *ProjectsLocationsEvaluationsService) Delete(name string) *ProjectsLocat
 	return c
 }
 
+// Force sets the optional parameter "force": Followed the best practice
+// from https://aip.dev/135#cascading-delete
+func (c *ProjectsLocationsEvaluationsDeleteCall) Force(force bool) *ProjectsLocationsEvaluationsDeleteCall {
+	c.urlParams_.Set("force", fmt.Sprint(force))
+	return c
+}
+
 // RequestId sets the optional parameter "requestId": An optional
 // request ID to identify requests. Specify a unique request ID so that
 // if you must retry your request, the server will know to ignore the
@@ -2726,6 +2743,11 @@ func (c *ProjectsLocationsEvaluationsDeleteCall) Do(opts ...googleapi.CallOption
 	//     "name"
 	//   ],
 	//   "parameters": {
+	//     "force": {
+	//       "description": "Optional. Followed the best practice from https://aip.dev/135#cascading-delete",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
 	//     "name": {
 	//       "description": "Required. Name of the resource",
 	//       "location": "path",

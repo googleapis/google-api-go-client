@@ -214,6 +214,43 @@ type ProjectsLocationsOperationsService struct {
 	s *Service
 }
 
+// AOFConfig: Configuration of the AOF based persistence.
+type AOFConfig struct {
+	// AppendFsync: Optional. fsync configuration.
+	//
+	// Possible values:
+	//   "APPEND_FSYNC_UNSPECIFIED" - Not set. Default: EVERYSEC
+	//   "NO" - Never fsync. Normally Linux will flush data every 30 seconds
+	// with this configuration, but it's up to the kernel's exact tuning.
+	//   "EVERYSEC" - fsync every second. Fast enough, and you may lose 1
+	// second of data if there is a disaster
+	//   "ALWAYS" - fsync every time new commands are appended to the AOF.
+	// It has the best data loss protection at the cost of performance
+	AppendFsync string `json:"appendFsync,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AppendFsync") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AppendFsync") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AOFConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AOFConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AvailabilityConfiguration: Configuration for availability of database
 // instance
 type AvailabilityConfiguration struct {
@@ -432,6 +469,10 @@ type Cluster struct {
 	// `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`
 	Name string `json:"name,omitempty"`
 
+	// PersistenceConfig: Optional. Persistence config (RDB, AOF) for the
+	// cluster.
+	PersistenceConfig *ClusterPersistenceConfig `json:"persistenceConfig,omitempty"`
+
 	// PscConfigs: Required. Each PscConfig configures the consumer network
 	// where IPs will be designated to the cluster for client access through
 	// Private Service Connect Automation. Currently, only one PscConfig is
@@ -441,6 +482,10 @@ type Cluster struct {
 	// PscConnections: Output only. PSC connections for discovery of the
 	// cluster topology and accessing the cluster.
 	PscConnections []*PscConnection `json:"pscConnections,omitempty"`
+
+	// RedisConfigs: Optional. Key/Value pairs of customer overrides for
+	// mutable Redis Configs
+	RedisConfigs map[string]string `json:"redisConfigs,omitempty"`
 
 	// ReplicaCount: Optional. The number of replica nodes per shard.
 	ReplicaCount int64 `json:"replicaCount,omitempty"`
@@ -507,6 +552,50 @@ type Cluster struct {
 
 func (s *Cluster) MarshalJSON() ([]byte, error) {
 	type NoMethod Cluster
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ClusterPersistenceConfig: Configuration of the persistence
+// functionality.
+type ClusterPersistenceConfig struct {
+	// AofConfig: Optional. AOF configuration. This field will be ignored if
+	// mode is not AOF.
+	AofConfig *AOFConfig `json:"aofConfig,omitempty"`
+
+	// Mode: Optional. The mode of persistence.
+	//
+	// Possible values:
+	//   "PERSISTENCE_MODE_UNSPECIFIED" - Not set.
+	//   "DISABLED" - Persistence is disabled, and any snapshot data is
+	// deleted.
+	//   "RDB" - RDB based persistence is enabled.
+	//   "AOF" - AOF based persistence is enabled.
+	Mode string `json:"mode,omitempty"`
+
+	// RdbConfig: Optional. RDB configuration. This field will be ignored if
+	// mode is not RDB.
+	RdbConfig *RDBConfig `json:"rdbConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AofConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AofConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ClusterPersistenceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ClusterPersistenceConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -907,7 +996,7 @@ type DatabaseResourceHealthSignalData struct {
 	// restricted to authorized networks.
 	//   "SIGNAL_TYPE_VIOLATE_POLICY_RESTRICT_PUBLIC_IP" - Represents
 	// violate org policy restrict public ip.
-	//   "SIGNAL_TYPE_CLUSTER_QUOTA_LIMIT" - Cluster nearing quota limit
+	//   "SIGNAL_TYPE_QUOTA_LIMIT" - Cluster nearing quota limit
 	//   "SIGNAL_TYPE_NO_PASSWORD_POLICY" - No password policy set on
 	// resources
 	//   "SIGNAL_TYPE_CONNECTIONS_PERFORMANCE_IMPACT" - Performance impact
@@ -1354,7 +1443,7 @@ type DatabaseResourceRecommendationSignalData struct {
 	// restricted to authorized networks.
 	//   "SIGNAL_TYPE_VIOLATE_POLICY_RESTRICT_PUBLIC_IP" - Represents
 	// violate org policy restrict public ip.
-	//   "SIGNAL_TYPE_CLUSTER_QUOTA_LIMIT" - Cluster nearing quota limit
+	//   "SIGNAL_TYPE_QUOTA_LIMIT" - Cluster nearing quota limit
 	//   "SIGNAL_TYPE_NO_PASSWORD_POLICY" - No password policy set on
 	// resources
 	//   "SIGNAL_TYPE_CONNECTIONS_PERFORMANCE_IMPACT" - Performance impact
@@ -2831,6 +2920,47 @@ type PscConnection struct {
 
 func (s *PscConnection) MarshalJSON() ([]byte, error) {
 	type NoMethod PscConnection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// RDBConfig: Configuration of the RDB based persistence.
+type RDBConfig struct {
+	// RdbSnapshotPeriod: Optional. Period between RDB snapshots.
+	//
+	// Possible values:
+	//   "SNAPSHOT_PERIOD_UNSPECIFIED" - Not set.
+	//   "ONE_HOUR" - One hour.
+	//   "SIX_HOURS" - Six hours.
+	//   "TWELVE_HOURS" - Twelve hours.
+	//   "TWENTY_FOUR_HOURS" - Twenty four hours.
+	RdbSnapshotPeriod string `json:"rdbSnapshotPeriod,omitempty"`
+
+	// RdbSnapshotStartTime: Optional. The time that the first snapshot
+	// was/will be attempted, and to which future snapshots will be aligned.
+	// If not provided, the current time will be used.
+	RdbSnapshotStartTime string `json:"rdbSnapshotStartTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RdbSnapshotPeriod")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RdbSnapshotPeriod") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RDBConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RDBConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

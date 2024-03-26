@@ -216,7 +216,8 @@ type Task struct {
 	// Links: Collection of links. This collection is read-only.
 	Links []*TaskLinks `json:"links,omitempty"`
 
-	// Notes: Notes describing the task. Optional.
+	// Notes: Notes describing the task. Optional. Maximum length allowed:
+	// 8192 characters.
 	Notes string `json:"notes,omitempty"`
 
 	// Parent: Parent task identifier. This field is omitted if it is a
@@ -241,7 +242,7 @@ type Task struct {
 	// "completed".
 	Status string `json:"status,omitempty"`
 
-	// Title: Title of the task.
+	// Title: Title of the task. Maximum length allowed: 1024 characters.
 	Title string `json:"title,omitempty"`
 
 	// Updated: Last modification time of the task (as a RFC 3339
@@ -327,7 +328,8 @@ type TaskList struct {
 	// or delete this task list.
 	SelfLink string `json:"selfLink,omitempty"`
 
-	// Title: Title of the task list.
+	// Title: Title of the task list. Maximum length allowed: 1024
+	// characters.
 	Title string `json:"title,omitempty"`
 
 	// Updated: Last modification time of the task list (as a RFC 3339
@@ -702,7 +704,7 @@ type TasklistsInsertCall struct {
 }
 
 // Insert: Creates a new task list and adds it to the authenticated
-// user's task lists.
+// user's task lists. A user can have up to 2000 lists at a time.
 func (r *TasklistsService) Insert(tasklist *TaskList) *TasklistsInsertCall {
 	c := &TasklistsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklist = tasklist
@@ -797,7 +799,7 @@ func (c *TasklistsInsertCall) Do(opts ...googleapi.CallOption) (*TaskList, error
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new task list and adds it to the authenticated user's task lists.",
+	//   "description": "Creates a new task list and adds it to the authenticated user's task lists. A user can have up to 2000 lists at a time.",
 	//   "flatPath": "tasks/v1/users/@me/lists",
 	//   "httpMethod": "POST",
 	//   "id": "tasks.tasklists.insert",
@@ -827,7 +829,8 @@ type TasklistsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns all the authenticated user's task lists.
+// List: Returns all the authenticated user's task lists. A user can
+// have up to 2000 lists at a time.
 func (r *TasklistsService) List() *TasklistsListCall {
 	c := &TasklistsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -944,7 +947,7 @@ func (c *TasklistsListCall) Do(opts ...googleapi.CallOption) (*TaskLists, error)
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns all the authenticated user's task lists.",
+	//   "description": "Returns all the authenticated user's task lists. A user can have up to 2000 lists at a time.",
 	//   "flatPath": "tasks/v1/users/@me/lists",
 	//   "httpMethod": "GET",
 	//   "id": "tasks.tasklists.list",
@@ -1665,7 +1668,9 @@ type TasksInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Creates a new task on the specified task list.
+// Insert: Creates a new task on the specified task list. A user can
+// have up to 20,000 uncompleted tasks per list and up to 100,000 tasks
+// in total at a time.
 //
 // - tasklist: Task list identifier.
 func (r *TasksService) Insert(tasklistid string, task *Task) *TasksInsertCall {
@@ -1781,7 +1786,7 @@ func (c *TasksInsertCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a new task on the specified task list.",
+	//   "description": "Creates a new task on the specified task list. A user can have up to 20,000 uncompleted tasks per list and up to 100,000 tasks in total at a time.",
 	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks",
 	//   "httpMethod": "POST",
 	//   "id": "tasks.tasks.insert",
@@ -1831,7 +1836,9 @@ type TasksListCall struct {
 	header_      http.Header
 }
 
-// List: Returns all tasks in the specified task list.
+// List: Returns all tasks in the specified task list. A user can have
+// up to 20,000 uncompleted tasks per list and up to 100,000 tasks in
+// total at a time.
 //
 // - tasklist: Task list identifier.
 func (r *TasksService) List(tasklistid string) *TasksListCall {
@@ -2019,7 +2026,7 @@ func (c *TasksListCall) Do(opts ...googleapi.CallOption) (*Tasks, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns all tasks in the specified task list.",
+	//   "description": "Returns all tasks in the specified task list. A user can have up to 20,000 uncompleted tasks per list and up to 100,000 tasks in total at a time.",
 	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks",
 	//   "httpMethod": "GET",
 	//   "id": "tasks.tasks.list",
@@ -2131,7 +2138,8 @@ type TasksMoveCall struct {
 
 // Move: Moves the specified task to another position in the task list.
 // This can include putting it as a child task under a new parent and/or
-// move it to a different position among its sibling tasks.
+// move it to a different position among its sibling tasks. A user can
+// have up to 2,000 subtasks per task.
 //
 // - task: Task identifier.
 // - tasklist: Task list identifier.
@@ -2245,7 +2253,7 @@ func (c *TasksMoveCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Moves the specified task to another position in the task list. This can include putting it as a child task under a new parent and/or move it to a different position among its sibling tasks.",
+	//   "description": "Moves the specified task to another position in the task list. This can include putting it as a child task under a new parent and/or move it to a different position among its sibling tasks. A user can have up to 2,000 subtasks per task.",
 	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks/{task}/move",
 	//   "httpMethod": "POST",
 	//   "id": "tasks.tasks.move",

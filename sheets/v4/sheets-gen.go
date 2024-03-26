@@ -4129,6 +4129,7 @@ type DataExecutionStatus struct {
 	// error state. To force refresh, set force in RefreshDataSourceRequest.
 	//   "OBJECT_SPEC_INVALID" - The data source object specification is
 	// invalid.
+	//   "DATA_EXECUTION_CANCELLED" - The data execution has been cancelled.
 	ErrorCode string `json:"errorCode,omitempty"`
 
 	// ErrorMessage: The error message, which may be empty.
@@ -4143,6 +4144,7 @@ type DataExecutionStatus struct {
 	//   "DATA_EXECUTION_STATE_UNSPECIFIED" - Default value, do not use.
 	//   "NOT_STARTED" - The data execution has not started.
 	//   "RUNNING" - The data execution has started and is running.
+	//   "CANCELLING" - The data execution is currently being cancelled.
 	//   "SUCCEEDED" - The data execution has completed successfully.
 	//   "FAILED" - The data execution has completed with errors.
 	State string `json:"state,omitempty"`

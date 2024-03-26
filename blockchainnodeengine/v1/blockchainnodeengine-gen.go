@@ -413,8 +413,9 @@ type EthereumDetails struct {
 	//   "NETWORK_UNSPECIFIED" - The network has not been specified, but
 	// should be.
 	//   "MAINNET" - The Ethereum Mainnet.
-	//   "TESTNET_GOERLI_PRATER" - The Ethereum Testnet based on Goerli
-	// protocol.
+	//   "TESTNET_GOERLI_PRATER" - Deprecated: The Ethereum Testnet based on
+	// Goerli protocol. Holesky (TESTNET_HOLESKY) is the recommended testnet
+	// to replace Goerli.
 	//   "TESTNET_SEPOLIA" - The Ethereum Testnet based on Sepolia/Bepolia
 	// protocol. See https://github.com/eth-clients/sepolia.
 	//   "TESTNET_HOLESKY" - The Ethereum Testnet based on Holesky

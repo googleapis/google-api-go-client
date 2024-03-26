@@ -548,6 +548,11 @@ type Empty struct {
 	googleapi.ServerResponse `json:"-"`
 }
 
+// FailoverReservationRequest: The request for
+// ReservationService.FailoverReservation.
+type FailoverReservationRequest struct {
+}
+
 // ListAssignmentsResponse: The response for
 // ReservationService.ListAssignments.
 type ListAssignmentsResponse struct {
@@ -787,6 +792,30 @@ type Reservation struct {
 	// must start with a letter and must not end with a dash. Its maximum
 	// length is 64 characters.
 	Name string `json:"name,omitempty"`
+
+	// OriginalPrimaryLocation: Optional. The original primary location of
+	// the reservation which is set only during its creation and remains
+	// unchanged afterwards. It can be used by the customer to answer
+	// questions about disaster recovery billing. The field is output only
+	// for customers and should not be specified, however, the
+	// google.api.field_behavior is not set to OUTPUT_ONLY since these
+	// fields are set in rerouted requests sent across regions.
+	OriginalPrimaryLocation string `json:"originalPrimaryLocation,omitempty"`
+
+	// PrimaryLocation: Optional. The primary location of the reservation.
+	// The field is only meaningful for reservation used for cross region
+	// disaster recovery. The field is output only for customers and should
+	// not be specified, however, the google.api.field_behavior is not set
+	// to OUTPUT_ONLY since these fields are set in rerouted requests sent
+	// across regions.
+	PrimaryLocation string `json:"primaryLocation,omitempty"`
+
+	// SecondaryLocation: Optional. The secondary location of the
+	// reservation which is used for cross region disaster recovery
+	// purposes. Customer can set this in create/update reservation calls to
+	// create a failover reservation or convert a non-failover reservation
+	// to a failover reservation.
+	SecondaryLocation string `json:"secondaryLocation,omitempty"`
 
 	// SlotCapacity: Baseline slots available to this reservation. A slot is
 	// a unit of computational power in BigQuery, and serves as the unit of
@@ -3219,6 +3248,155 @@ func (c *ProjectsLocationsReservationsDeleteCall) Do(opts ...googleapi.CallOptio
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigqueryreservation.projects.locations.reservations.failoverReservation":
+
+type ProjectsLocationsReservationsFailoverReservationCall struct {
+	s                          *Service
+	name                       string
+	failoverreservationrequest *FailoverReservationRequest
+	urlParams_                 gensupport.URLParams
+	ctx_                       context.Context
+	header_                    http.Header
+}
+
+// FailoverReservation: Failover a reservation to the secondary
+// location. The operation should be done in the current secondary
+// location, which will be promoted to the new primary location for the
+// reservation. Attempting to failover a reservation in the current
+// primary location will fail with the error code
+// `google.rpc.Code.FAILED_PRECONDITION`.
+//
+//   - name: Resource name of the reservation to failover. E.g.,
+//     `projects/myproject/locations/US/reservations/team1-prod`.
+func (r *ProjectsLocationsReservationsService) FailoverReservation(name string, failoverreservationrequest *FailoverReservationRequest) *ProjectsLocationsReservationsFailoverReservationCall {
+	c := &ProjectsLocationsReservationsFailoverReservationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.failoverreservationrequest = failoverreservationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsReservationsFailoverReservationCall) Fields(s ...googleapi.Field) *ProjectsLocationsReservationsFailoverReservationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsReservationsFailoverReservationCall) Context(ctx context.Context) *ProjectsLocationsReservationsFailoverReservationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsReservationsFailoverReservationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsReservationsFailoverReservationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.failoverreservationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:failoverReservation")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigqueryreservation.projects.locations.reservations.failoverReservation" call.
+// Exactly one of *Reservation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Reservation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsReservationsFailoverReservationCall) Do(opts ...googleapi.CallOption) (*Reservation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Reservation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Failover a reservation to the secondary location. The operation should be done in the current secondary location, which will be promoted to the new primary location for the reservation. Attempting to failover a reservation in the current primary location will fail with the error code `google.rpc.Code.FAILED_PRECONDITION`.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/reservations/{reservationsId}:failoverReservation",
+	//   "httpMethod": "POST",
+	//   "id": "bigqueryreservation.projects.locations.reservations.failoverReservation",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the reservation to failover. E.g., `projects/myproject/locations/US/reservations/team1-prod`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/reservations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:failoverReservation",
+	//   "request": {
+	//     "$ref": "FailoverReservationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Reservation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigquery",

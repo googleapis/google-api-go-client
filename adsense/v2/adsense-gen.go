@@ -168,6 +168,7 @@ func NewAccountsService(s *Service) *AccountsService {
 	rs.Adclients = NewAccountsAdclientsService(s)
 	rs.Alerts = NewAccountsAlertsService(s)
 	rs.Payments = NewAccountsPaymentsService(s)
+	rs.PolicyIssues = NewAccountsPolicyIssuesService(s)
 	rs.Reports = NewAccountsReportsService(s)
 	rs.Sites = NewAccountsSitesService(s)
 	return rs
@@ -181,6 +182,8 @@ type AccountsService struct {
 	Alerts *AccountsAlertsService
 
 	Payments *AccountsPaymentsService
+
+	PolicyIssues *AccountsPolicyIssuesService
 
 	Reports *AccountsReportsService
 
@@ -247,6 +250,15 @@ func NewAccountsPaymentsService(s *Service) *AccountsPaymentsService {
 }
 
 type AccountsPaymentsService struct {
+	s *Service
+}
+
+func NewAccountsPolicyIssuesService(s *Service) *AccountsPolicyIssuesService {
+	rs := &AccountsPolicyIssuesService{s: s}
+	return rs
+}
+
+type AccountsPolicyIssuesService struct {
 	s *Service
 }
 
@@ -1230,6 +1242,47 @@ func (s *ListPaymentsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListPolicyIssuesResponse: Response definition for the policy issues
+// list rpc. Policy issues are reported only if the publisher has at
+// least one AFC ad client in READY or GETTING_READY state. If the
+// publisher has no such AFC ad client, the response will be an empty
+// list.
+type ListPolicyIssuesResponse struct {
+	// NextPageToken: Continuation token used to page through policy issues.
+	// To retrieve the next page of the results, set the next request's
+	// "page_token" value to this.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// PolicyIssues: The policy issues returned in the list response.
+	PolicyIssues []*PolicyIssue `json:"policyIssues,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListPolicyIssuesResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListPolicyIssuesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListSavedReportsResponse: Response definition for the saved reports
 // list rpc.
 type ListSavedReportsResponse struct {
@@ -1388,6 +1441,161 @@ type Payment struct {
 
 func (s *Payment) MarshalJSON() ([]byte, error) {
 	type NoMethod Payment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyIssue: Representation of a policy issue for a single entity
+// (site, site-section, or page). All issues for a single entity are
+// represented by a single PolicyIssue resource, though that PolicyIssue
+// can have multiple causes (or "topics") that can change over time.
+// Policy issues are removed if there are no issues detected recently or
+// if there's a recent successful appeal for the entity.
+type PolicyIssue struct {
+	// Action: Required. The most severe action taken on the entity over the
+	// past seven days.
+	//
+	// Possible values:
+	//   "ENFORCEMENT_ACTION_UNSPECIFIED" - The action is unspecified.
+	//   "WARNED" - No ad serving enforcement is currently present, but
+	// enforcement will start on the `warning_escalation_date` if the issue
+	// is not resolved.
+	//   "AD_SERVING_RESTRICTED" - Ad serving demand has been restricted on
+	// the entity.
+	//   "AD_SERVING_DISABLED" - Ad serving has been disabled on the entity.
+	//   "AD_SERVED_WITH_CLICK_CONFIRMATION" - Ads are being served for the
+	// entity but Confirmed Click is being applied to the ads. See
+	// https://support.google.com/adsense/answer/10025624.
+	//   "AD_PERSONALIZATION_RESTRICTED" - Ad personalization is restricted
+	// because the ad requests coming from the EEA and UK do not have a TCF
+	// string or the Consent Management Platform (CMP) indicated by the TCF
+	// string is not Google certified. As a result, basic/limited ads will
+	// be served. See https://support.google.com/adsense/answer/13554116
+	Action string `json:"action,omitempty"`
+
+	// AdClients: Optional. List of ad clients associated with the policy
+	// issue (either as the primary ad client or an associated
+	// host/secondary ad client). In the latter case, this will be an ad
+	// client that is not owned by the current account.
+	AdClients []string `json:"adClients,omitempty"`
+
+	// AdRequestCount: Required. Total number of ad requests affected by the
+	// policy violations over the past seven days.
+	AdRequestCount int64 `json:"adRequestCount,omitempty,string"`
+
+	// EntityType: Required. Type of the entity indicating if the entity is
+	// a site, site-section, or page.
+	//
+	// Possible values:
+	//   "ENTITY_TYPE_UNSPECIFIED" - The entity type is unspecified.
+	//   "SITE" - The enforced entity is an entire website.
+	//   "SITE_SECTION" - The enforced entity is a particular section of a
+	// website. All the pages with this prefix are enforced.
+	//   "PAGE" - The enforced entity is a single web page.
+	EntityType string `json:"entityType,omitempty"`
+
+	// FirstDetectedDate: Required. The date (in the America/Los_Angeles
+	// timezone) when policy violations were first detected on the entity.
+	FirstDetectedDate *Date `json:"firstDetectedDate,omitempty"`
+
+	// LastDetectedDate: Required. The date (in the America/Los_Angeles
+	// timezone) when policy violations were last detected on the entity.
+	LastDetectedDate *Date `json:"lastDetectedDate,omitempty"`
+
+	// Name: Required. Resource name of the entity with policy issues.
+	// Format: accounts/{account}/policyIssues/{policy_issue}
+	Name string `json:"name,omitempty"`
+
+	// PolicyTopics: Required. Unordered list. The policy topics that this
+	// entity was found to violate over the past seven days.
+	PolicyTopics []*PolicyTopic `json:"policyTopics,omitempty"`
+
+	// Site: Required. Hostname/domain of the entity (for example "foo.com"
+	// or "www.foo.com"). This _should_ be a bare domain/host name without
+	// any protocol. This will be present for all policy issues.
+	Site string `json:"site,omitempty"`
+
+	// SiteSection: Optional. Prefix of the site-section having policy
+	// issues (For example "foo.com/bar-section"). This will be present if
+	// the `entity_type` is `SITE_SECTION` and will be absent for other
+	// entity types.
+	SiteSection string `json:"siteSection,omitempty"`
+
+	// Uri: Optional. URI of the page having policy violations (for example
+	// "foo.com/bar" or "www.foo.com/bar"). This will be present if the
+	// `entity_type` is `PAGE` and will be absent for other entity types.
+	Uri string `json:"uri,omitempty"`
+
+	// WarningEscalationDate: Optional. The date (in the America/Los_Angeles
+	// timezone) when the entity will have ad serving demand restricted or
+	// ad serving disabled. This is present only for issues with a `WARNED`
+	// enforcement action. See
+	// https://support.google.com/adsense/answer/11066888.
+	WarningEscalationDate *Date `json:"warningEscalationDate,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Action") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Action") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyIssue) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyIssue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PolicyTopic: Information about a particular policy topic. A policy
+// topic represents a single class of policy issue that can impact ad
+// serving for your site. For example, sexual content or having ads that
+// obscure your content. A single policy issue can have multiple policy
+// topics for a single entity.
+type PolicyTopic struct {
+	// MustFix: Required. Indicates if this is a policy violation or not.
+	// When the value is true, issues that are instances of this topic must
+	// be addressed to remain in compliance with the partner's agreements
+	// with Google. A false value indicates that it's not mandatory to fix
+	// the issues but advertising demand might be restricted.
+	MustFix bool `json:"mustFix,omitempty"`
+
+	// Topic: Required. The policy topic. For example, "sexual-content" or
+	// "ads-obscuring-content"."
+	Topic string `json:"topic,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MustFix") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MustFix") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PolicyTopic) MarshalJSON() ([]byte, error) {
+	type NoMethod PolicyTopic
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5499,6 +5707,353 @@ func (c *AccountsPaymentsListCall) Do(opts ...googleapi.CallOption) (*ListPaymen
 	//   ]
 	// }
 
+}
+
+// method id "adsense.accounts.policyIssues.get":
+
+type AccountsPolicyIssuesGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information about the selected policy issue.
+//
+//   - name: Name of the policy issue. Format:
+//     accounts/{account}/policyIssues/{policy_issue}.
+func (r *AccountsPolicyIssuesService) Get(name string) *AccountsPolicyIssuesGetCall {
+	c := &AccountsPolicyIssuesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsPolicyIssuesGetCall) Fields(s ...googleapi.Field) *AccountsPolicyIssuesGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsPolicyIssuesGetCall) IfNoneMatch(entityTag string) *AccountsPolicyIssuesGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsPolicyIssuesGetCall) Context(ctx context.Context) *AccountsPolicyIssuesGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsPolicyIssuesGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsPolicyIssuesGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adsense.accounts.policyIssues.get" call.
+// Exactly one of *PolicyIssue or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *PolicyIssue.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *AccountsPolicyIssuesGetCall) Do(opts ...googleapi.CallOption) (*PolicyIssue, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &PolicyIssue{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information about the selected policy issue.",
+	//   "flatPath": "v2/accounts/{accountsId}/policyIssues/{policyIssuesId}",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.policyIssues.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the policy issue. Format: accounts/{account}/policyIssues/{policy_issue}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+/policyIssues/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "PolicyIssue"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "adsense.accounts.policyIssues.list":
+
+type AccountsPolicyIssuesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the policy issues for the specified account.
+//
+//   - parent: The account for which policy issues are being retrieved.
+//     Format: accounts/{account}.
+func (r *AccountsPolicyIssuesService) List(parent string) *AccountsPolicyIssuesListCall {
+	c := &AccountsPolicyIssuesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of policy issues to include in the response, used for paging. If
+// unspecified, at most 10000 policy issues will be returned. The
+// maximum value is 10000; values above 10000 will be coerced to 10000.
+func (c *AccountsPolicyIssuesListCall) PageSize(pageSize int64) *AccountsPolicyIssuesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListPolicyIssues` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListPolicyIssues` must match the call that provided the
+// page token.
+func (c *AccountsPolicyIssuesListCall) PageToken(pageToken string) *AccountsPolicyIssuesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *AccountsPolicyIssuesListCall) Fields(s ...googleapi.Field) *AccountsPolicyIssuesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *AccountsPolicyIssuesListCall) IfNoneMatch(entityTag string) *AccountsPolicyIssuesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *AccountsPolicyIssuesListCall) Context(ctx context.Context) *AccountsPolicyIssuesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *AccountsPolicyIssuesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *AccountsPolicyIssuesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/policyIssues")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "adsense.accounts.policyIssues.list" call.
+// Exactly one of *ListPolicyIssuesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPolicyIssuesResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *AccountsPolicyIssuesListCall) Do(opts ...googleapi.CallOption) (*ListPolicyIssuesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListPolicyIssuesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the policy issues for the specified account.",
+	//   "flatPath": "v2/accounts/{accountsId}/policyIssues",
+	//   "httpMethod": "GET",
+	//   "id": "adsense.accounts.policyIssues.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of policy issues to include in the response, used for paging. If unspecified, at most 10000 policy issues will be returned. The maximum value is 10000; values above 10000 will be coerced to 10000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListPolicyIssues` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPolicyIssues` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The account for which policy issues are being retrieved. Format: accounts/{account}",
+	//       "location": "path",
+	//       "pattern": "^accounts/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/policyIssues",
+	//   "response": {
+	//     "$ref": "ListPolicyIssuesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/adsense",
+	//     "https://www.googleapis.com/auth/adsense.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *AccountsPolicyIssuesListCall) Pages(ctx context.Context, f func(*ListPolicyIssuesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "adsense.accounts.reports.generate":

@@ -7520,6 +7520,10 @@ type UsageLogEvent struct {
 	// set.
 	//   "ENROLLMENT_COMPLETE" - Indicates enrollment_complete_event has
 	// been set.
+	//   "MAX_DEVICES_REGISTRATION_QUOTA_WARNING" - Indicates
+	// max_devices_registration_quota_warning_event has been set.
+	//   "MAX_DEVICES_REGISTRATION_QUOTA_EXHAUSTED" - Indicates
+	// max_devices_registration_quota_exhausted_event has been set.
 	EventType string `json:"eventType,omitempty"`
 
 	// FilePulledEvent: A file was downloaded from the device. Part of

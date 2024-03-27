@@ -3,6 +3,8 @@ module google.golang.org/api
 go 1.19
 
 require (
+	cloud.google.com/go/auth v0.1.0
+	cloud.google.com/go/auth/oauth2adapt v0.1.0
 	cloud.google.com/go/compute/metadata v0.2.3
 	github.com/google/go-cmp v0.6.0
 	github.com/google/s2a-go v0.1.7

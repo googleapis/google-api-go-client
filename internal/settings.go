@@ -13,6 +13,7 @@ import (
 	"strconv"
 	"time"
 
+	"cloud.google.com/go/auth"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 	"google.golang.org/api/internal/impersonate"
@@ -20,8 +21,9 @@ import (
 )
 
 const (
-	newAuthLibEnVar       = "GOOGLE_API_GO_EXPERIMENTAL_USE_NEW_AUTH_LIB"
-	universeDomainDefault = "googleapis.com"
+	newAuthLibEnVar         = "GOOGLE_API_GO_EXPERIMENTAL_ENABLE_NEW_AUTH_LIB"
+	newAuthLibDisabledEnVar = "GOOGLE_API_GO_EXPERIMENTAL_DISABLE_NEW_AUTH_LIB"
+	universeDomainDefault   = "googleapis.com"
 )
 
 // DialSettings holds information needed to establish a connection with a
@@ -56,7 +58,6 @@ type DialSettings struct {
 	ImpersonationConfig           *impersonate.Config
 	EnableDirectPath              bool
 	EnableDirectPathXds           bool
-	EnableNewAuthLibrary          bool
 	AllowNonDefaultServiceAccount bool
 	UniverseDomain                string
 	DefaultUniverseDomain         string
@@ -65,6 +66,10 @@ type DialSettings struct {
 	// https://cloud.google.com/apis/docs/system-parameters
 	QuotaProject  string
 	RequestReason string
+
+	// New Auth library Options
+	TokenProvider        auth.TokenProvider
+	EnableNewAuthLibrary bool
 }
 
 // GetScopes returns the user-provided scopes, if set, or else falls back to the
@@ -91,6 +96,11 @@ func (ds *DialSettings) HasCustomAudience() bool {
 
 // IsNewAuthLibraryEnabled returns true if the new auth library should be used.
 func (ds *DialSettings) IsNewAuthLibraryEnabled() bool {
+	// Disabled env is for future rollouts to make sure there is a way to easily
+	// disable this behaviour once we switch in on by default.
+	if b, err := strconv.ParseBool(os.Getenv(newAuthLibDisabledEnVar)); err == nil && b {
+		return false
+	}
 	if ds.EnableNewAuthLibrary {
 		return true
 	}

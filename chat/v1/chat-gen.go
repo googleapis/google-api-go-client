@@ -234,6 +234,7 @@ func NewSpacesService(s *Service) *SpacesService {
 	rs := &SpacesService{s: s}
 	rs.Members = NewSpacesMembersService(s)
 	rs.Messages = NewSpacesMessagesService(s)
+	rs.SpaceEvents = NewSpacesSpaceEventsService(s)
 	return rs
 }
 
@@ -243,6 +244,8 @@ type SpacesService struct {
 	Members *SpacesMembersService
 
 	Messages *SpacesMessagesService
+
+	SpaceEvents *SpacesSpaceEventsService
 }
 
 func NewSpacesMembersService(s *Service) *SpacesMembersService {
@@ -285,6 +288,46 @@ func NewSpacesMessagesReactionsService(s *Service) *SpacesMessagesReactionsServi
 
 type SpacesMessagesReactionsService struct {
 	s *Service
+}
+
+func NewSpacesSpaceEventsService(s *Service) *SpacesSpaceEventsService {
+	rs := &SpacesSpaceEventsService{s: s}
+	return rs
+}
+
+type SpacesSpaceEventsService struct {
+	s *Service
+}
+
+// AccessoryWidget: One or more interactive widgets that appear at the
+// bottom of a message. For details, see Add interactive widgets at the
+// bottom of a message
+// (https://developers.google.com/workspace/chat/create-messages#add-accessory-widgets).
+type AccessoryWidget struct {
+	// ButtonList: A list of buttons.
+	ButtonList *GoogleAppsCardV1ButtonList `json:"buttonList,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ButtonList") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ButtonList") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AccessoryWidget) MarshalJSON() ([]byte, error) {
+	type NoMethod AccessoryWidget
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ActionParameter: List of string parameters to supply when the action
@@ -2654,10 +2697,8 @@ type GoogleAppsCardV1Icon struct {
 	// (https://fonts.google.com/icons). For example, to display a checkbox
 	// icon
 	// (https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Acheck_box%3AFILL%400%3Bwght%40400%3BGRAD%400%3Bopsz%4048),
-	// use "material_icon": { "name": "check_box" } Available for Chat apps
-	// and in Developer Preview
-	// (https://developers.google.com/workspace/preview) for Google
-	// Workspace Add-ons.
+	// use ``` "material_icon": { "name": "check_box" } ``` Google Chat apps
+	// (https://developers.google.com/workspace/chat):
 	MaterialIcon *GoogleAppsCardV1MaterialIcon `json:"materialIcon,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AltText") to
@@ -2829,36 +2870,37 @@ func (s *GoogleAppsCardV1ImageCropStyle) UnmarshalJSON(data []byte) error {
 // (https://fonts.google.com/icons), which includes over 2500+ options.
 // For example, to display a checkbox icon
 // (https://fonts.google.com/icons?selected=Material%20Symbols%20Outlined%3Acheck_box%3AFILL%400%3Bwght%40400%3BGRAD%400%3Bopsz%4048)
-// with customized weight and grade, write { "name": "check_box",
-// "fill": true, "weight": 300, "grade": -25 } Available for Chat apps
-// and in Developer Preview
-// (https://developers.google.com/workspace/preview) for Google
-// Workspace Add-ons.
+// with customized weight and grade, write the following: ``` { "name":
+// "check_box", "fill": true, "weight": 300, "grade": -25 } ``` Google
+// Chat apps (https://developers.google.com/workspace/chat):
 type GoogleAppsCardV1MaterialIcon struct {
-	// Fill: Whether it renders a filled icon. Default value is false. See
-	// Customization in Google Font Icon (https://fonts.google.com/icons)
-	// for details.
+	// Fill: Whether the icon renders as filled. Default value is false. To
+	// preview different icon settings, go to Google Font Icons
+	// (https://fonts.google.com/icons) and adjust the settings under
+	// **Customize**.
 	Fill bool `json:"fill,omitempty"`
 
 	// Grade: Weight and grade affect a symbol’s thickness. Adjustments to
 	// grade are more granular than adjustments to weight and have a small
 	// impact on the size of the symbol. Choose from {-25, 0, 200}. If
 	// absent, default value is 0. If any other value is specified, a broken
-	// image icon is displayed. See Customization in Google Font Icon
-	// (https://fonts.google.com/icons) for details.
+	// image icon is displayed. To preview different icon settings, go to
+	// Google Font Icons (https://fonts.google.com/icons) and adjust the
+	// settings under **Customize**.
 	Grade int64 `json:"grade,omitempty"`
 
-	// Name: The icon name defined in the Google Material Icon Icon
-	// (https://fonts.google.com/icons) in snake_case. e.g. "check_box". Any
+	// Name: The icon name defined in the Google Material Icon
+	// (https://fonts.google.com/icons), for example, `check_box`. Any
 	// invalid names are abandoned and replaced with empty string and
 	// results in the icon failing to render.
 	Name string `json:"name,omitempty"`
 
 	// Weight: The stroke weight of the icon. Choose from {100, 200, 300,
 	// 400, 500, 600, 700}. If absent, default value is 400. If any other
-	// value is specified, a broken image icon is displayed. See
-	// Customization in Google Font Icon (https://fonts.google.com/icons)
-	// for details.
+	// value is specified, a broken image icon is displayed. To preview
+	// different icon settings, go to Google Font Icons
+	// (https://fonts.google.com/icons) and adjust the settings under
+	// **Customize**.
 	Weight int64 `json:"weight,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Fill") to
@@ -4144,6 +4186,43 @@ func (s *ListReactionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListSpaceEventsResponse: Response message for listing space events.
+type ListSpaceEventsResponse struct {
+	// NextPageToken: Continuation token used to fetch more events. If this
+	// field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SpaceEvents: Results are returned in chronological order (oldest
+	// event first).
+	SpaceEvents []*SpaceEvent `json:"spaceEvents,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListSpaceEventsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListSpaceEventsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type ListSpacesResponse struct {
 	// NextPageToken: You can send a token as `pageToken` to retrieve the
 	// next page of results. If empty, there are no subsequent pages.
@@ -4332,8 +4411,200 @@ func (s *Membership) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MembershipBatchCreatedEventData: Payload for batch new membership
+// events where the `EventType` field is
+// `google.workspace.chat.membership.v1.batchCreated`.
+type MembershipBatchCreatedEventData struct {
+	// Memberships: A list of created memberships.
+	Memberships []*MembershipCreatedEventData `json:"memberships,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Memberships") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Memberships") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MembershipBatchCreatedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod MembershipBatchCreatedEventData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MembershipBatchDeletedEventData: Payload for batch deleted membership
+// events where the `EventType` field is
+// `google.workspace.chat.membership.v1.batchDeleted`.
+type MembershipBatchDeletedEventData struct {
+	// Memberships: A list of deleted memberships.
+	Memberships []*MembershipDeletedEventData `json:"memberships,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Memberships") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Memberships") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MembershipBatchDeletedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod MembershipBatchDeletedEventData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MembershipBatchUpdatedEventData: Payload for batch updated membership
+// events where the `EventType` field is
+// `google.workspace.chat.membership.v1.batchUpdated`.
+type MembershipBatchUpdatedEventData struct {
+	// Memberships: A list of updated memberships.
+	Memberships []*MembershipUpdatedEventData `json:"memberships,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Memberships") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Memberships") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MembershipBatchUpdatedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod MembershipBatchUpdatedEventData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MembershipCreatedEventData: Payload for new membership events where
+// the `EventType` field is
+// `google.workspace.chat.membership.v1.created`.
+type MembershipCreatedEventData struct {
+	// Membership: The most recent version of membership.
+	Membership *Membership `json:"membership,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Membership") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Membership") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MembershipCreatedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod MembershipCreatedEventData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MembershipDeletedEventData: Payload for deleted membership events
+// where the `EventType` field is
+// `google.workspace.chat.membership.v1.deleted`.
+type MembershipDeletedEventData struct {
+	// Membership: The deleted membership. Only `name` and `state` are
+	// populated.
+	Membership *Membership `json:"membership,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Membership") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Membership") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MembershipDeletedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod MembershipDeletedEventData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MembershipUpdatedEventData: Payload for updated membership events
+// where the `EventType` field is
+// `google.workspace.chat.membership.v1.updated`.
+type MembershipUpdatedEventData struct {
+	// Membership: The most recent version of membership.
+	Membership *Membership `json:"membership,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Membership") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Membership") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MembershipUpdatedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod MembershipUpdatedEventData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Message: A message in a Google Chat space.
 type Message struct {
+	// AccessoryWidgets: One or more interactive widgets that appear at the
+	// bottom of a message. You can add accessory widgets to messages that
+	// contain text, cards, or both text and cards. Not supported for
+	// messages that contain dialogs. For details, see Add interactive
+	// widgets at the bottom of a message
+	// (https://developers.google.com/workspace/chat/create-messages#add-accessory-widgets).
+	// Creating a message with accessory widgets requires [app
+	// authentication]
+	// (https://developers.google.com/chat/api/guides/auth/service-accounts).
+	AccessoryWidgets []*AccessoryWidget `json:"accessoryWidgets,omitempty"`
+
 	// ActionResponse: Input only. Parameters that a Chat app can use to
 	// configure how its response is posted.
 	ActionResponse *ActionResponse `json:"actionResponse,omitempty"`
@@ -4502,7 +4773,7 @@ type Message struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "ActionResponse") to
+	// ForceSendFields is a list of field names (e.g. "AccessoryWidgets") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -4510,7 +4781,7 @@ type Message struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ActionResponse") to
+	// NullFields is a list of field names (e.g. "AccessoryWidgets") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -4522,6 +4793,184 @@ type Message struct {
 
 func (s *Message) MarshalJSON() ([]byte, error) {
 	type NoMethod Message
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MessageBatchCreatedEventData: Payload for batch new message events
+// where the `EventType` field is
+// `google.workspace.chat.message.v1.batchCreated`.
+type MessageBatchCreatedEventData struct {
+	// Messages: A list of created messages.
+	Messages []*MessageCreatedEventData `json:"messages,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Messages") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Messages") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MessageBatchCreatedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod MessageBatchCreatedEventData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MessageBatchDeletedEventData: Payload for batch deleted message
+// events where the `EventType` field is
+// `google.workspace.chat.message.v1.batchDeleted`.
+type MessageBatchDeletedEventData struct {
+	// Messages: A list of deleted messages.
+	Messages []*MessageDeletedEventData `json:"messages,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Messages") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Messages") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MessageBatchDeletedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod MessageBatchDeletedEventData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MessageBatchUpdatedEventData: Payload for batch updated message
+// events where the `EventType` field is
+// `google.workspace.chat.message.v1.batchUpdated`.
+type MessageBatchUpdatedEventData struct {
+	// Messages: A list of updated messages.
+	Messages []*MessageUpdatedEventData `json:"messages,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Messages") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Messages") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MessageBatchUpdatedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod MessageBatchUpdatedEventData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MessageCreatedEventData: Payload for new message events where the
+// `EventType` field is `google.workspace.chat.message.v1.created`.
+type MessageCreatedEventData struct {
+	// Message: The most recent version of the message.
+	Message *Message `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MessageCreatedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod MessageCreatedEventData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MessageDeletedEventData: Payload for deleted message events where the
+// `EventType` field is `google.workspace.chat.message.v1.deleted`.
+type MessageDeletedEventData struct {
+	// Message: The deleted message. Only `name`, `createTime`,
+	// `deleteTime`, and `deletionMetadata` are populated.
+	Message *Message `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MessageDeletedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod MessageDeletedEventData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MessageUpdatedEventData: Payload for updated message events where the
+// `EventType` field is `google.workspace.chat.message.v1.updated`.
+type MessageUpdatedEventData struct {
+	// Message: The most recent version of the message.
+	Message *Message `json:"message,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MessageUpdatedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod MessageUpdatedEventData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4656,6 +5105,124 @@ type Reaction struct {
 
 func (s *Reaction) MarshalJSON() ([]byte, error) {
 	type NoMethod Reaction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReactionBatchCreatedEventData: Payload for batch new reaction events
+// where the `EventType` field is
+// `google.workspace.chat.reaction.v1.batchCreated`.
+type ReactionBatchCreatedEventData struct {
+	// Reactions: A list of created reactions.
+	Reactions []*ReactionCreatedEventData `json:"reactions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Reactions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Reactions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReactionBatchCreatedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod ReactionBatchCreatedEventData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReactionBatchDeletedEventData: Payload for batch deleted reaction
+// events where the `EventType` field is
+// `google.workspace.chat.reaction.v1.batchDeleted`.
+type ReactionBatchDeletedEventData struct {
+	// Reactions: A list of deleted reactions.
+	Reactions []*ReactionDeletedEventData `json:"reactions,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Reactions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Reactions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReactionBatchDeletedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod ReactionBatchDeletedEventData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReactionCreatedEventData: Payload for new reaction events where the
+// `EventType` field is `google.workspace.chat.reaction.v1.created`.
+type ReactionCreatedEventData struct {
+	// Reaction: The created reaction.
+	Reaction *Reaction `json:"reaction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Reaction") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Reaction") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReactionCreatedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod ReactionCreatedEventData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ReactionDeletedEventData: Payload for deleted reaction events where
+// the `EventType` field is `google.workspace.chat.reaction.v1.deleted`.
+type ReactionDeletedEventData struct {
+	// Reaction: The deleted reaction.
+	Reaction *Reaction `json:"reaction,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Reaction") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Reaction") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReactionDeletedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod ReactionDeletedEventData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4939,9 +5506,10 @@ type Space struct {
 	// ExternalUserAllowed: Immutable. Whether this space permits any Google
 	// Chat user as a member. Input when creating a space in a Google
 	// Workspace organization. Omit this field when creating spaces in the
-	// following conditions: * The authenticated user uses a Google Account.
-	// By default, the space permits any Google Chat user. * The space is
-	// used to [import data to Google Chat]
+	// following conditions: * The authenticated user uses a consumer
+	// account (unmanaged user account). By default, a space created by a
+	// consumer account permits any Google Chat user. * The space is used to
+	// [import data to Google Chat]
 	// (https://developers.google.com/chat/api/guides/import-data-overview).
 	// Import mode spaces must only permit members from the same Google
 	// Workspace organization. For existing spaces, this field is output
@@ -5047,6 +5615,36 @@ func (s *Space) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SpaceBatchUpdatedEventData: Payload for batch updated space events
+// where the `EventType` field is
+// `google.workspace.chat.space.v1.batchUpdated`.
+type SpaceBatchUpdatedEventData struct {
+	// Spaces: A list of updated spaces.
+	Spaces []*SpaceUpdatedEventData `json:"spaces,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Spaces") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Spaces") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpaceBatchUpdatedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod SpaceBatchUpdatedEventData
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SpaceDataSource: A data source that populates Google Chat spaces as
 // selection items for a multiselect menu. Only populates spaces that
 // the user is a member of. Google Chat apps
@@ -5112,6 +5710,175 @@ type SpaceDetails struct {
 
 func (s *SpaceDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod SpaceDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpaceEvent: An event that happens in a specific space.
+type SpaceEvent struct {
+	// EventTime: Time of the event.
+	EventTime string `json:"eventTime,omitempty"`
+
+	// EventType: Type of the space event. The following event types are
+	// supported: * New membership:
+	// `google.workspace.chat.membership.v1.created` * Deleted membership:
+	// `google.workspace.chat.membership.v1.deleted` * Updated membership:
+	// `google.workspace.chat.membership.v1.updated` * New message:
+	// `google.workspace.chat.message.v1.created` * Deleted message:
+	// `google.workspace.chat.message.v1.deleted` * Updated message:
+	// `google.workspace.chat.message.v1.updated` * New reaction:
+	// `google.workspace.chat.reaction.v1.created` * Deleted reaction:
+	// `google.workspace.chat.reaction.v1.deleted` * Updated space:
+	// `google.workspace.chat.space.v1.updated` Note that requesting or
+	// subscribing to the preceding event types automatically sets up the
+	// subscription or response to also return batched versions of the event
+	// type. For example, if you subscribe to
+	// `google.workspace.chat.membership.v1.created`, you also receive
+	// events for `google.workspace.chat.membership.v1.batchCreated`. For
+	// more details see
+	// https://developers.google.com/workspace/events/guides/events-chat#output_only_event_types.
+	EventType string `json:"eventType,omitempty"`
+
+	// MembershipBatchCreatedEventData: Payload for batch new membership
+	// events where the `EventType` field is
+	// `google.workspace.chat.membership.v1.batchCreated`.
+	MembershipBatchCreatedEventData *MembershipBatchCreatedEventData `json:"membershipBatchCreatedEventData,omitempty"`
+
+	// MembershipBatchDeletedEventData: Payload for batch deleted membership
+	// events where the `EventType` field is
+	// `google.workspace.chat.membership.v1.batchDeleted`.
+	MembershipBatchDeletedEventData *MembershipBatchDeletedEventData `json:"membershipBatchDeletedEventData,omitempty"`
+
+	// MembershipBatchUpdatedEventData: Payload for batch updated membership
+	// events where the `EventType` field is
+	// `google.workspace.chat.membership.v1.batchUpdated`.
+	MembershipBatchUpdatedEventData *MembershipBatchUpdatedEventData `json:"membershipBatchUpdatedEventData,omitempty"`
+
+	// MembershipCreatedEventData: Payload for new membership events where
+	// the `EventType` field is
+	// `google.workspace.chat.membership.v1.created`.
+	MembershipCreatedEventData *MembershipCreatedEventData `json:"membershipCreatedEventData,omitempty"`
+
+	// MembershipDeletedEventData: Payload for deleted membership events
+	// where the `EventType` field is
+	// `google.workspace.chat.membership.v1.deleted`.
+	MembershipDeletedEventData *MembershipDeletedEventData `json:"membershipDeletedEventData,omitempty"`
+
+	// MembershipUpdatedEventData: Payload for updated membership events
+	// where the `EventType` field is
+	// `google.workspace.chat.membership.v1.updated`.
+	MembershipUpdatedEventData *MembershipUpdatedEventData `json:"membershipUpdatedEventData,omitempty"`
+
+	// MessageBatchCreatedEventData: Payload for batch new message events
+	// where the `EventType` field is
+	// `google.workspace.chat.message.v1.batchCreated`.
+	MessageBatchCreatedEventData *MessageBatchCreatedEventData `json:"messageBatchCreatedEventData,omitempty"`
+
+	// MessageBatchDeletedEventData: Payload for batch deleted message
+	// events where the `EventType` field is
+	// `google.workspace.chat.message.v1.batchDeleted`.
+	MessageBatchDeletedEventData *MessageBatchDeletedEventData `json:"messageBatchDeletedEventData,omitempty"`
+
+	// MessageBatchUpdatedEventData: Payload for batch updated message
+	// events where the `EventType` field is
+	// `google.workspace.chat.message.v1.batchUpdated`.
+	MessageBatchUpdatedEventData *MessageBatchUpdatedEventData `json:"messageBatchUpdatedEventData,omitempty"`
+
+	// MessageCreatedEventData: Payload for new message events where the
+	// `EventType` field is `google.workspace.chat.message.v1.created`.
+	MessageCreatedEventData *MessageCreatedEventData `json:"messageCreatedEventData,omitempty"`
+
+	// MessageDeletedEventData: Payload for deleted message events where the
+	// `EventType` field is `google.workspace.chat.message.v1.deleted`.
+	MessageDeletedEventData *MessageDeletedEventData `json:"messageDeletedEventData,omitempty"`
+
+	// MessageUpdatedEventData: Payload for updated message events where the
+	// `EventType` field is `google.workspace.chat.message.v1.updated`.
+	MessageUpdatedEventData *MessageUpdatedEventData `json:"messageUpdatedEventData,omitempty"`
+
+	// Name: The resource name of the space event. Format:
+	// `spaces/{space}/spaceEvents/{spaceEvent}`
+	Name string `json:"name,omitempty"`
+
+	// ReactionBatchCreatedEventData: Payload for batch new reaction events
+	// where the `EventType` field is
+	// `google.workspace.chat.reaction.v1.batchCreated`.
+	ReactionBatchCreatedEventData *ReactionBatchCreatedEventData `json:"reactionBatchCreatedEventData,omitempty"`
+
+	// ReactionBatchDeletedEventData: Payload for batch deleted reaction
+	// events where the `EventType` field is
+	// `google.workspace.chat.reaction.v1.batchDeleted`.
+	ReactionBatchDeletedEventData *ReactionBatchDeletedEventData `json:"reactionBatchDeletedEventData,omitempty"`
+
+	// ReactionCreatedEventData: Payload for new reaction events where the
+	// `EventType` field is `google.workspace.chat.reaction.v1.created`.
+	ReactionCreatedEventData *ReactionCreatedEventData `json:"reactionCreatedEventData,omitempty"`
+
+	// ReactionDeletedEventData: Payload for deleted reaction events where
+	// the `EventType` field is `google.workspace.chat.reaction.v1.deleted`.
+	ReactionDeletedEventData *ReactionDeletedEventData `json:"reactionDeletedEventData,omitempty"`
+
+	// SpaceBatchUpdatedEventData: Payload for batch updated space events
+	// where the `EventType` field is
+	// `google.workspace.chat.space.v1.batchUpdated`.
+	SpaceBatchUpdatedEventData *SpaceBatchUpdatedEventData `json:"spaceBatchUpdatedEventData,omitempty"`
+
+	// SpaceUpdatedEventData: Payload for updated space events where the
+	// `EventType` field is `google.workspace.chat.space.v1.updated`.
+	SpaceUpdatedEventData *SpaceUpdatedEventData `json:"spaceUpdatedEventData,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "EventTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "EventTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpaceEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod SpaceEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpaceUpdatedEventData: Payload for updated space events where the
+// `EventType` field is `google.workspace.chat.space.v1.updated`.
+type SpaceUpdatedEventData struct {
+	// Space: The recent version of the space.
+	Space *Space `json:"space,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Space") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Space") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpaceUpdatedEventData) MarshalJSON() ([]byte, error) {
+	type NoMethod SpaceUpdatedEventData
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8970,8 +9737,8 @@ func (c *SpacesMessagesPatchCall) AllowMissing(allowMissing bool) *SpacesMessage
 // `*` to update all field paths. Currently supported field paths: -
 // `text` - `attachment` - `cards` (Requires app authentication
 // (/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires app
-// authentication (/chat/api/guides/auth/service-accounts).) - Developer
-// Preview: `accessory_widgets` (Requires app authentication
+// authentication (/chat/api/guides/auth/service-accounts).) -
+// `accessory_widgets` (Requires app authentication
 // (/chat/api/guides/auth/service-accounts).)
 func (c *SpacesMessagesPatchCall) UpdateMask(updateMask string) *SpacesMessagesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -9090,7 +9857,7 @@ func (c *SpacesMessagesPatchCall) Do(opts ...googleapi.CallOption) (*Message, er
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The field paths to update. Separate multiple values with commas or use `*` to update all field paths. Currently supported field paths: - `text` - `attachment` - `cards` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - Developer Preview: `accessory_widgets` (Requires [app authentication](/chat/api/guides/auth/service-accounts).)",
+	//       "description": "Required. The field paths to update. Separate multiple values with commas or use `*` to update all field paths. Currently supported field paths: - `text` - `attachment` - `cards` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `accessory_widgets` (Requires [app authentication](/chat/api/guides/auth/service-accounts).)",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -9171,8 +9938,8 @@ func (c *SpacesMessagesUpdateCall) AllowMissing(allowMissing bool) *SpacesMessag
 // `*` to update all field paths. Currently supported field paths: -
 // `text` - `attachment` - `cards` (Requires app authentication
 // (/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires app
-// authentication (/chat/api/guides/auth/service-accounts).) - Developer
-// Preview: `accessory_widgets` (Requires app authentication
+// authentication (/chat/api/guides/auth/service-accounts).) -
+// `accessory_widgets` (Requires app authentication
 // (/chat/api/guides/auth/service-accounts).)
 func (c *SpacesMessagesUpdateCall) UpdateMask(updateMask string) *SpacesMessagesUpdateCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -9291,7 +10058,7 @@ func (c *SpacesMessagesUpdateCall) Do(opts ...googleapi.CallOption) (*Message, e
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. The field paths to update. Separate multiple values with commas or use `*` to update all field paths. Currently supported field paths: - `text` - `attachment` - `cards` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - Developer Preview: `accessory_widgets` (Requires [app authentication](/chat/api/guides/auth/service-accounts).)",
+	//       "description": "Required. The field paths to update. Separate multiple values with commas or use `*` to update all field paths. Currently supported field paths: - `text` - `attachment` - `cards` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `cards_v2` (Requires [app authentication](/chat/api/guides/auth/service-accounts).) - `accessory_widgets` (Requires [app authentication](/chat/api/guides/auth/service-accounts).)",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -9980,6 +10747,414 @@ func (c *SpacesMessagesReactionsListCall) Do(opts ...googleapi.CallOption) (*Lis
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *SpacesMessagesReactionsListCall) Pages(ctx context.Context, f func(*ListReactionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "chat.spaces.spaceEvents.get":
+
+type SpacesSpaceEventsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Returns a SpaceEvent. You can request events from up to 28 days
+// before the time of the request. The server will return the most
+// recent version of the resource. For example, if a
+// `google.workspace.chat.message.v1.created` event is requested and the
+// message has since been deleted, the returned event will contain the
+// deleted message resource in the payload. Requires user authentication
+// (https://developers.google.com/chat/api/guides/auth/users).
+//
+//   - name: The resource name of the event. Format:
+//     `spaces/{space}/spaceEvents/{spaceEvent}`.
+func (r *SpacesSpaceEventsService) Get(name string) *SpacesSpaceEventsGetCall {
+	c := &SpacesSpaceEventsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SpacesSpaceEventsGetCall) Fields(s ...googleapi.Field) *SpacesSpaceEventsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SpacesSpaceEventsGetCall) IfNoneMatch(entityTag string) *SpacesSpaceEventsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SpacesSpaceEventsGetCall) Context(ctx context.Context) *SpacesSpaceEventsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpacesSpaceEventsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesSpaceEventsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.spaceEvents.get" call.
+// Exactly one of *SpaceEvent or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *SpaceEvent.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SpacesSpaceEventsGetCall) Do(opts ...googleapi.CallOption) (*SpaceEvent, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &SpaceEvent{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a SpaceEvent. You can request events from up to 28 days before the time of the request. The server will return the most recent version of the resource. For example, if a `google.workspace.chat.message.v1.created` event is requested and the message has since been deleted, the returned event will contain the deleted message resource in the payload. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
+	//   "flatPath": "v1/spaces/{spacesId}/spaceEvents/{spaceEventsId}",
+	//   "httpMethod": "GET",
+	//   "id": "chat.spaces.spaceEvents.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the event. Format: `spaces/{space}/spaceEvents/{spaceEvent}`",
+	//       "location": "path",
+	//       "pattern": "^spaces/[^/]+/spaceEvents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "SpaceEvent"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.memberships",
+	//     "https://www.googleapis.com/auth/chat.memberships.readonly",
+	//     "https://www.googleapis.com/auth/chat.messages",
+	//     "https://www.googleapis.com/auth/chat.messages.reactions",
+	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
+	//     "https://www.googleapis.com/auth/chat.messages.readonly",
+	//     "https://www.googleapis.com/auth/chat.spaces",
+	//     "https://www.googleapis.com/auth/chat.spaces.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "chat.spaces.spaceEvents.list":
+
+type SpacesSpaceEventsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists SpaceEvents in a space that the caller is a member of.
+// You can request events from up to 28 days before the time of the
+// request. The server will return the most recent version of the
+// resources. For example, if a
+// `google.workspace.chat.message.v1.created` event is requested and the
+// message has since been deleted, the returned event will contain the
+// deleted message resource in the payload. Requires user authentication
+// (https://developers.google.com/chat/api/guides/auth/users).
+//
+//   - parent: The resource name of the space from which to list events.
+//     Format: `spaces/{space}`.
+func (r *SpacesSpaceEventsService) List(parent string) *SpacesSpaceEventsListCall {
+	c := &SpacesSpaceEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Required. A query
+// filter. This method supports filtering by: `event_types`,
+// `start_time`, and `end_time`. `event_types`: You must specify at
+// least one event type in your query. `event_types` supports the has
+// `:` operator. To filter by multiple event types, use the `OR`
+// operator. To see the list of currently supported event types, see
+// google.chat.v1.SpaceEvent.event_type `start_time`: Exclusive
+// timestamp from which to start listing space events. You can list
+// events that occurred up to 28 days ago. If unspecified, lists space
+// events from the 28 days ago up to end time. `end_time`: Inclusive
+// timestamp up to which space events are listed. Default value is the
+// present. `start_time` and `end_time` accept a timestamp in RFC-3339
+// (https://www.rfc-editor.org/rfc/rfc3339) format and support the
+// equals `=` comparison operator. To filter by both `start_time` and
+// `end_time`, use the `AND` operator. For example, the following
+// queries are valid: ``` start_time="2023-08-23T19:20:33+00:00" AND
+// end_time="2023-08-23T19:21:54+00:00" ``` ```
+// start_time="2023-08-23T19:20:33+00:00" AND
+// (event_types:"google.workspace.chat.space.v1.updated" OR
+// event_types:"google.workspace.chat.message.v1.created") ``` The
+// following queries are invalid: ```
+// start_time="2023-08-23T19:20:33+00:00" OR
+// end_time="2023-08-23T19:21:54+00:00" ``` ```
+// event_types:"google.workspace.chat.space.v1.updated" AND
+// event_types:"google.workspace.chat.message.v1.created" ``` Invalid
+// queries are rejected by the server with an `INVALID_ARGUMENT` error.
+func (c *SpacesSpaceEventsListCall) Filter(filter string) *SpacesSpaceEventsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of space events returned. The service may return fewer than this
+// value. Negative values return an `INVALID_ARGUMENT` error.
+func (c *SpacesSpaceEventsListCall) PageSize(pageSize int64) *SpacesSpaceEventsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous list space events call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to list space events must match the call that provided the
+// page token. Passing different values to the other parameters might
+// lead to unexpected results.
+func (c *SpacesSpaceEventsListCall) PageToken(pageToken string) *SpacesSpaceEventsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SpacesSpaceEventsListCall) Fields(s ...googleapi.Field) *SpacesSpaceEventsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *SpacesSpaceEventsListCall) IfNoneMatch(entityTag string) *SpacesSpaceEventsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SpacesSpaceEventsListCall) Context(ctx context.Context) *SpacesSpaceEventsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpacesSpaceEventsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesSpaceEventsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/spaceEvents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.spaceEvents.list" call.
+// Exactly one of *ListSpaceEventsResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *ListSpaceEventsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *SpacesSpaceEventsListCall) Do(opts ...googleapi.CallOption) (*ListSpaceEventsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListSpaceEventsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists SpaceEvents in a space that the caller is a member of. You can request events from up to 28 days before the time of the request. The server will return the most recent version of the resources. For example, if a `google.workspace.chat.message.v1.created` event is requested and the message has since been deleted, the returned event will contain the deleted message resource in the payload. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
+	//   "flatPath": "v1/spaces/{spacesId}/spaceEvents",
+	//   "httpMethod": "GET",
+	//   "id": "chat.spaces.spaceEvents.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Required. A query filter. This method supports filtering by: `event_types`, `start_time`, and `end_time`. `event_types`: You must specify at least one event type in your query. `event_types` supports the has `:` operator. To filter by multiple event types, use the `OR` operator. To see the list of currently supported event types, see google.chat.v1.SpaceEvent.event_type `start_time`: Exclusive timestamp from which to start listing space events. You can list events that occurred up to 28 days ago. If unspecified, lists space events from the 28 days ago up to end time. `end_time`: Inclusive timestamp up to which space events are listed. Default value is the present. `start_time` and `end_time` accept a timestamp in [RFC-3339](https://www.rfc-editor.org/rfc/rfc3339) format and support the equals `=` comparison operator. To filter by both `start_time` and `end_time`, use the `AND` operator. For example, the following queries are valid: ``` start_time=\"2023-08-23T19:20:33+00:00\" AND end_time=\"2023-08-23T19:21:54+00:00\" ``` ``` start_time=\"2023-08-23T19:20:33+00:00\" AND (event_types:\"google.workspace.chat.space.v1.updated\" OR event_types:\"google.workspace.chat.message.v1.created\") ``` The following queries are invalid: ``` start_time=\"2023-08-23T19:20:33+00:00\" OR end_time=\"2023-08-23T19:21:54+00:00\" ``` ``` event_types:\"google.workspace.chat.space.v1.updated\" AND event_types:\"google.workspace.chat.message.v1.created\" ``` Invalid queries are rejected by the server with an `INVALID_ARGUMENT` error.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of space events returned. The service may return fewer than this value. Negative values return an `INVALID_ARGUMENT` error.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous list space events call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to list space events must match the call that provided the page token. Passing different values to the other parameters might lead to unexpected results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the space from which to list events. Format: `spaces/{space}`.",
+	//       "location": "path",
+	//       "pattern": "^spaces/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/spaceEvents",
+	//   "response": {
+	//     "$ref": "ListSpaceEventsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.memberships",
+	//     "https://www.googleapis.com/auth/chat.memberships.readonly",
+	//     "https://www.googleapis.com/auth/chat.messages",
+	//     "https://www.googleapis.com/auth/chat.messages.reactions",
+	//     "https://www.googleapis.com/auth/chat.messages.reactions.readonly",
+	//     "https://www.googleapis.com/auth/chat.messages.readonly",
+	//     "https://www.googleapis.com/auth/chat.spaces",
+	//     "https://www.googleapis.com/auth/chat.spaces.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *SpacesSpaceEventsListCall) Pages(ctx context.Context, f func(*ListSpaceEventsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {

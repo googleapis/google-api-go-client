@@ -13790,6 +13790,15 @@ type Product struct {
 	// AgeGroup: Target age group of the item.
 	AgeGroup string `json:"ageGroup,omitempty"`
 
+	// AutoPricingMinPrice: A safeguard in the Automated Discounts
+	// (https://support.google.com/merchants/answer/10295759?hl=en) and
+	// Dynamic Promotions
+	// (https://support.google.com/merchants/answer/13949249?hl=en)
+	// projects, ensuring that discounts on merchants' offers do not fall
+	// below this value, thereby preserving the offer's value and
+	// profitability.
+	AutoPricingMinPrice *Price `json:"autoPricingMinPrice,omitempty"`
+
 	// Availability: Availability status of the item.
 	Availability string `json:"availability,omitempty"`
 

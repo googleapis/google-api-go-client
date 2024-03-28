@@ -1300,8 +1300,14 @@ type DeviceManagementRule struct {
 	// IosVendorId: Required for iOS, empty for others.
 	IosVendorId string `json:"iosVendorId,omitempty"`
 
+	// OwnerId: Obfuscated ID of the owner of the device
+	OwnerId string `json:"ownerId,omitempty"`
+
 	// ResourceId: The device resource ID.
 	ResourceId string `json:"resourceId,omitempty"`
+
+	// RuleAction: Action taken as result of the rule
+	RuleAction string `json:"ruleAction,omitempty"`
 
 	// SerialNumber: The serial number of the device.
 	SerialNumber string `json:"serialNumber,omitempty"`

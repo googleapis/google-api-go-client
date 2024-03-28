@@ -381,6 +381,7 @@ type GoogleCloudAssuredworkloadsV1beta1CreateWorkloadOperationMetadata struct {
 	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
 	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - KSA R5
 	// Controls.
+	//   "FREE_REGIONS" - Assured Workloads Free Regions
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// CreateTime: Optional. Time when the operation was created.
@@ -1037,6 +1038,7 @@ type GoogleCloudAssuredworkloadsV1beta1Workload struct {
 	//   "JP_REGIONS_AND_SUPPORT" - Assured Workloads for Japan Regions
 	//   "KSA_REGIONS_AND_SUPPORT_WITH_SOVEREIGNTY_CONTROLS" - KSA R5
 	// Controls.
+	//   "FREE_REGIONS" - Assured Workloads Free Regions
 	ComplianceRegime string `json:"complianceRegime,omitempty"`
 
 	// ComplianceStatus: Output only. Count of active Violations in the

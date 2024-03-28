@@ -257,6 +257,10 @@ type GoogleCloudRunV2BinaryAuthorization struct {
 	// https://cloud.google.com/binary-authorization/docs/using-breakglass
 	BreakglassJustification string `json:"breakglassJustification,omitempty"`
 
+	// Policy: The path to a binary authorization policy. Format:
+	// projects/{project}/platforms/cloudRun/{policy-name}
+	Policy string `json:"policy,omitempty"`
+
 	// UseDefault: If True, indicates to use the default project's binary
 	// authorization policy. If False, binary authorization will be
 	// disabled.
@@ -1072,13 +1076,126 @@ func (s *GoogleCloudRunV2ExecutionTemplate) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudRunV2GCSVolumeSource: Represents a GCS Bucket mounted as a
-// volume.
+// GoogleCloudRunV2ExportImageRequest: Request message for exporting
+// Cloud Run image.
+type GoogleCloudRunV2ExportImageRequest struct {
+	// DestinationRepo: Required. The export destination url (the Artifact
+	// Registry repo).
+	DestinationRepo string `json:"destinationRepo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DestinationRepo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DestinationRepo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2ExportImageRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ExportImageRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2ExportImageResponse: ExportImageResponse contains an
+// operation Id to track the image export operation.
+type GoogleCloudRunV2ExportImageResponse struct {
+	// OperationId: An operation ID used to track the status of image
+	// exports tied to the original pod ID in the request.
+	OperationId string `json:"operationId,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "OperationId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "OperationId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2ExportImageResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ExportImageResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2ExportStatusResponse: ExportStatusResponse contains
+// the status of image export operation, with the status of each image
+// export job.
+type GoogleCloudRunV2ExportStatusResponse struct {
+	// ImageExportStatuses: The status of each image export job.
+	ImageExportStatuses []*GoogleCloudRunV2ImageExportStatus `json:"imageExportStatuses,omitempty"`
+
+	// OperationId: The operation id.
+	OperationId string `json:"operationId,omitempty"`
+
+	// OperationState: Output only. The state of the overall export
+	// operation.
+	//
+	// Possible values:
+	//   "OPERATION_STATE_UNSPECIFIED" - State unspecified.
+	//   "IN_PROGRESS" - Operation still in progress.
+	//   "FINISHED" - Operation finished.
+	OperationState string `json:"operationState,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "ImageExportStatuses")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ImageExportStatuses") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2ExportStatusResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ExportStatusResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2GCSVolumeSource: Represents a volume backed by a
+// Cloud Storage bucket using Cloud Storage FUSE.
 type GoogleCloudRunV2GCSVolumeSource struct {
-	// Bucket: GCS Bucket name
+	// Bucket: Cloud Storage Bucket name.
 	Bucket string `json:"bucket,omitempty"`
 
-	// ReadOnly: If true, mount the GCS bucket as read-only
+	// ReadOnly: If true, the volume will be mounted as read only for all
+	// mounts.
 	ReadOnly bool `json:"readOnly,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Bucket") to
@@ -1207,6 +1324,51 @@ type GoogleCloudRunV2HTTPHeader struct {
 
 func (s *GoogleCloudRunV2HTTPHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudRunV2HTTPHeader
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudRunV2ImageExportStatus: The status of an image export job.
+type GoogleCloudRunV2ImageExportStatus struct {
+	// ExportJobState: Output only. Has the image export job finished
+	// (regardless of successful or failure).
+	//
+	// Possible values:
+	//   "EXPORT_JOB_STATE_UNSPECIFIED" - State unspecified.
+	//   "IN_PROGRESS" - Job still in progress.
+	//   "FINISHED" - Job finished.
+	ExportJobState string `json:"exportJobState,omitempty"`
+
+	// ExportedImageDigest: The exported image ID as it will appear in
+	// Artifact Registry.
+	ExportedImageDigest string `json:"exportedImageDigest,omitempty"`
+
+	// Status: The status of the export task if done.
+	Status *UtilStatusProto `json:"status,omitempty"`
+
+	// Tag: The image tag as it will appear in Artifact Registry.
+	Tag string `json:"tag,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExportJobState") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExportJobState") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2ImageExportStatus) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2ImageExportStatus
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1594,12 +1756,47 @@ func (s *GoogleCloudRunV2ListTasksResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudRunV2Metadata: Metadata represents the JSON encoded
+// generated customer metadata.
+type GoogleCloudRunV2Metadata struct {
+	// Metadata: JSON encoded Google-generated Customer Metadata for a given
+	// resource/project.
+	Metadata string `json:"metadata,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Metadata") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Metadata") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudRunV2Metadata) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudRunV2Metadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudRunV2NFSVolumeSource: Represents an NFS mount.
 type GoogleCloudRunV2NFSVolumeSource struct {
 	// Path: Path that is exported by the NFS server.
 	Path string `json:"path,omitempty"`
 
-	// ReadOnly: If true, mount the NFS volume as read only
+	// ReadOnly: If true, the volume will be mounted as read only for all
+	// mounts.
 	ReadOnly bool `json:"readOnly,omitempty"`
 
 	// Server: Hostname or IP address of the NFS server
@@ -5703,6 +5900,509 @@ func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Proto2BridgeMessageSet: This is proto2's version of MessageSet.
+type Proto2BridgeMessageSet struct {
+}
+
+// UtilStatusProto: Wire-format for a Status object
+type UtilStatusProto struct {
+	// CanonicalCode: The canonical error code (see codes.proto) that most
+	// closely corresponds to this status. This may be missing, and in the
+	// common case of the generic space, it definitely will be.
+	CanonicalCode int64 `json:"canonicalCode,omitempty"`
+
+	// Code: Numeric code drawn from the space specified below. Often, this
+	// is the canonical error space, and code is drawn from
+	// google3/util/task/codes.proto
+	Code int64 `json:"code,omitempty"`
+
+	// Message: Detail message
+	Message string `json:"message,omitempty"`
+
+	// MessageSet: message_set associates an arbitrary proto message with
+	// the status.
+	MessageSet *Proto2BridgeMessageSet `json:"messageSet,omitempty"`
+
+	// Space: The following are usually only present when code != 0 Space to
+	// which this status belongs
+	Space string `json:"space,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CanonicalCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CanonicalCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UtilStatusProto) MarshalJSON() ([]byte, error) {
+	type NoMethod UtilStatusProto
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// method id "run.projects.locations.exportImage":
+
+type ProjectsLocationsExportImageCall struct {
+	s                                  *Service
+	name                               string
+	googlecloudrunv2exportimagerequest *GoogleCloudRunV2ExportImageRequest
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// ExportImage: Export image for a given resource.
+//
+//   - name: The name of the resource of which image metadata should be
+//     exported. Format:
+//     `projects/{project_id_or_number}/locations/{location}/services/{serv
+//     ice}/revisions/{revision}` for Revision
+//     `projects/{project_id_or_number}/locations/{location}/jobs/{job}/exe
+//     cutions/{execution}` for Execution.
+func (r *ProjectsLocationsService) ExportImage(name string, googlecloudrunv2exportimagerequest *GoogleCloudRunV2ExportImageRequest) *ProjectsLocationsExportImageCall {
+	c := &ProjectsLocationsExportImageCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudrunv2exportimagerequest = googlecloudrunv2exportimagerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsExportImageCall) Fields(s ...googleapi.Field) *ProjectsLocationsExportImageCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsExportImageCall) Context(ctx context.Context) *ProjectsLocationsExportImageCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsExportImageCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExportImageCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudrunv2exportimagerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:exportImage")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.exportImage" call.
+// Exactly one of *GoogleCloudRunV2ExportImageResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudRunV2ExportImageResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsExportImageCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2ExportImageResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRunV2ExportImageResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Export image for a given resource.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/{locationsId1}:exportImage",
+	//   "httpMethod": "POST",
+	//   "id": "run.projects.locations.exportImage",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the resource of which image metadata should be exported. Format: `projects/{project_id_or_number}/locations/{location}/services/{service}/revisions/{revision}` for Revision `projects/{project_id_or_number}/locations/{location}/jobs/{job}/executions/{execution}` for Execution",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:exportImage",
+	//   "request": {
+	//     "$ref": "GoogleCloudRunV2ExportImageRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudRunV2ExportImageResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.projects.locations.exportImageMetadata":
+
+type ProjectsLocationsExportImageMetadataCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ExportImageMetadata: Export image metadata for a given resource.
+//
+//   - name: The name of the resource of which image metadata should be
+//     exported. Format:
+//     `projects/{project_id_or_number}/locations/{location}/services/{serv
+//     ice}/revisions/{revision}` for Revision
+//     `projects/{project_id_or_number}/locations/{location}/jobs/{job}/exe
+//     cutions/{execution}` for Execution.
+func (r *ProjectsLocationsService) ExportImageMetadata(name string) *ProjectsLocationsExportImageMetadataCall {
+	c := &ProjectsLocationsExportImageMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsExportImageMetadataCall) Fields(s ...googleapi.Field) *ProjectsLocationsExportImageMetadataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsExportImageMetadataCall) IfNoneMatch(entityTag string) *ProjectsLocationsExportImageMetadataCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsExportImageMetadataCall) Context(ctx context.Context) *ProjectsLocationsExportImageMetadataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsExportImageMetadataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExportImageMetadataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:exportImageMetadata")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.exportImageMetadata" call.
+// Exactly one of *GoogleCloudRunV2Metadata or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRunV2Metadata.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsExportImageMetadataCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2Metadata, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRunV2Metadata{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Export image metadata for a given resource.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/{locationsId1}:exportImageMetadata",
+	//   "httpMethod": "GET",
+	//   "id": "run.projects.locations.exportImageMetadata",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the resource of which image metadata should be exported. Format: `projects/{project_id_or_number}/locations/{location}/services/{service}/revisions/{revision}` for Revision `projects/{project_id_or_number}/locations/{location}/jobs/{job}/executions/{execution}` for Execution",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:exportImageMetadata",
+	//   "response": {
+	//     "$ref": "GoogleCloudRunV2Metadata"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.projects.locations.exportMetadata":
+
+type ProjectsLocationsExportMetadataCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ExportMetadata: Export generated customer metadata for a given
+// resource.
+//
+//   - name: The name of the resource of which metadata should be
+//     exported. Format:
+//     `projects/{project_id_or_number}/locations/{location}/services/{serv
+//     ice}` for Service
+//     `projects/{project_id_or_number}/locations/{location}/services/{serv
+//     ice}/revisions/{revision}` for Revision
+//     `projects/{project_id_or_number}/locations/{location}/jobs/{job}/exe
+//     cutions/{execution}` for Execution.
+func (r *ProjectsLocationsService) ExportMetadata(name string) *ProjectsLocationsExportMetadataCall {
+	c := &ProjectsLocationsExportMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsExportMetadataCall) Fields(s ...googleapi.Field) *ProjectsLocationsExportMetadataCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsExportMetadataCall) IfNoneMatch(entityTag string) *ProjectsLocationsExportMetadataCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsExportMetadataCall) Context(ctx context.Context) *ProjectsLocationsExportMetadataCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsExportMetadataCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsExportMetadataCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}:exportMetadata")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.exportMetadata" call.
+// Exactly one of *GoogleCloudRunV2Metadata or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudRunV2Metadata.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsExportMetadataCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2Metadata, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRunV2Metadata{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Export generated customer metadata for a given resource.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/{locationsId1}:exportMetadata",
+	//   "httpMethod": "GET",
+	//   "id": "run.projects.locations.exportMetadata",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the resource of which metadata should be exported. Format: `projects/{project_id_or_number}/locations/{location}/services/{service}` for Service `projects/{project_id_or_number}/locations/{location}/services/{service}/revisions/{revision}` for Revision `projects/{project_id_or_number}/locations/{location}/jobs/{job}/executions/{execution}` for Execution",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/.*$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}:exportMetadata",
+	//   "response": {
+	//     "$ref": "GoogleCloudRunV2Metadata"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "run.projects.locations.jobs.create":
 
 type ProjectsLocationsJobsCreateCall struct {
@@ -7467,6 +8167,170 @@ func (c *ProjectsLocationsJobsExecutionsDeleteCall) Do(opts ...googleapi.CallOpt
 	//   "path": "v2/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.projects.locations.jobs.executions.exportStatus":
+
+type ProjectsLocationsJobsExecutionsExportStatusCall struct {
+	s            *Service
+	name         string
+	operationId  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ExportStatus: Read the status of an image export operation.
+//
+//   - name: The name of the resource of which image export operation
+//     status has to be fetched. Format:
+//     `projects/{project_id_or_number}/locations/{location}/services/{serv
+//     ice}/revisions/{revision}` for Revision
+//     `projects/{project_id_or_number}/locations/{location}/jobs/{job}/exe
+//     cutions/{execution}` for Execution.
+//   - operationId: The operation id returned from ExportImage.
+func (r *ProjectsLocationsJobsExecutionsService) ExportStatus(name string, operationId string) *ProjectsLocationsJobsExecutionsExportStatusCall {
+	c := &ProjectsLocationsJobsExecutionsExportStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.operationId = operationId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsJobsExecutionsExportStatusCall) Fields(s ...googleapi.Field) *ProjectsLocationsJobsExecutionsExportStatusCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsJobsExecutionsExportStatusCall) IfNoneMatch(entityTag string) *ProjectsLocationsJobsExecutionsExportStatusCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsJobsExecutionsExportStatusCall) Context(ctx context.Context) *ProjectsLocationsJobsExecutionsExportStatusCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsJobsExecutionsExportStatusCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsJobsExecutionsExportStatusCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}/{+operationId}:exportStatus")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name":        c.name,
+		"operationId": c.operationId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.jobs.executions.exportStatus" call.
+// Exactly one of *GoogleCloudRunV2ExportStatusResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudRunV2ExportStatusResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsJobsExecutionsExportStatusCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2ExportStatusResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRunV2ExportStatusResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Read the status of an image export operation.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/jobs/{jobsId}/executions/{executionsId}/{executionsId1}:exportStatus",
+	//   "httpMethod": "GET",
+	//   "id": "run.projects.locations.jobs.executions.exportStatus",
+	//   "parameterOrder": [
+	//     "name",
+	//     "operationId"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the resource of which image export operation status has to be fetched. Format: `projects/{project_id_or_number}/locations/{location}/services/{service}/revisions/{revision}` for Revision `projects/{project_id_or_number}/locations/{location}/jobs/{job}/executions/{execution}` for Execution",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/jobs/[^/]+/executions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "operationId": {
+	//       "description": "Required. The operation id returned from ExportImage.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}/{+operationId}:exportStatus",
+	//   "response": {
+	//     "$ref": "GoogleCloudRunV2ExportStatusResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -10335,6 +11199,170 @@ func (c *ProjectsLocationsServicesRevisionsDeleteCall) Do(opts ...googleapi.Call
 	//   "path": "v2/{+name}",
 	//   "response": {
 	//     "$ref": "GoogleLongrunningOperation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "run.projects.locations.services.revisions.exportStatus":
+
+type ProjectsLocationsServicesRevisionsExportStatusCall struct {
+	s            *Service
+	name         string
+	operationId  string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ExportStatus: Read the status of an image export operation.
+//
+//   - name: The name of the resource of which image export operation
+//     status has to be fetched. Format:
+//     `projects/{project_id_or_number}/locations/{location}/services/{serv
+//     ice}/revisions/{revision}` for Revision
+//     `projects/{project_id_or_number}/locations/{location}/jobs/{job}/exe
+//     cutions/{execution}` for Execution.
+//   - operationId: The operation id returned from ExportImage.
+func (r *ProjectsLocationsServicesRevisionsService) ExportStatus(name string, operationId string) *ProjectsLocationsServicesRevisionsExportStatusCall {
+	c := &ProjectsLocationsServicesRevisionsExportStatusCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.operationId = operationId
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesRevisionsExportStatusCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesRevisionsExportStatusCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsServicesRevisionsExportStatusCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesRevisionsExportStatusCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesRevisionsExportStatusCall) Context(ctx context.Context) *ProjectsLocationsServicesRevisionsExportStatusCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesRevisionsExportStatusCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesRevisionsExportStatusCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}/{+operationId}:exportStatus")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name":        c.name,
+		"operationId": c.operationId,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "run.projects.locations.services.revisions.exportStatus" call.
+// Exactly one of *GoogleCloudRunV2ExportStatusResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleCloudRunV2ExportStatusResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsServicesRevisionsExportStatusCall) Do(opts ...googleapi.CallOption) (*GoogleCloudRunV2ExportStatusResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudRunV2ExportStatusResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Read the status of an image export operation.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/revisions/{revisionsId}/{revisionsId1}:exportStatus",
+	//   "httpMethod": "GET",
+	//   "id": "run.projects.locations.services.revisions.exportStatus",
+	//   "parameterOrder": [
+	//     "name",
+	//     "operationId"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The name of the resource of which image export operation status has to be fetched. Format: `projects/{project_id_or_number}/locations/{location}/services/{service}/revisions/{revision}` for Revision `projects/{project_id_or_number}/locations/{location}/jobs/{job}/executions/{execution}` for Execution",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/revisions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "operationId": {
+	//       "description": "Required. The operation id returned from ExportImage.",
+	//       "location": "path",
+	//       "pattern": "^[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}/{+operationId}:exportStatus",
+	//   "response": {
+	//     "$ref": "GoogleCloudRunV2ExportStatusResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

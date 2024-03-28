@@ -513,6 +513,73 @@ func (s *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage) MarshalJ
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchRes
+// ponse: Response from searching fact-checked claims by image.
+type GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse struct {
+	// NextPageToken: The next pagination token in the Search response. It
+	// should be used as the `page_token` for the following request. An
+	// empty value means no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Results: The list of claims and all of their associated information.
+	Results []*GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponseResult `json:"results,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NextPageToken") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchRes
+// ponseResult: A claim and its associated information.
+type GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponseResult struct {
+	// Claim: A claim which matched the query.
+	Claim *GoogleFactcheckingFactchecktoolsV1alpha1Claim `json:"claim,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Claim") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Claim") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponseResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponseResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse
 // : Response from searching fact-checked claims.
 type GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse struct {
@@ -636,6 +703,232 @@ type GoogleProtobufEmpty struct {
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
+}
+
+// method id "factchecktools.claims.imageSearch":
+
+type ClaimsImageSearchCall struct {
+	s            *Service
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// ImageSearch: Search through fact-checked claims using an image as the
+// query.
+func (r *ClaimsService) ImageSearch() *ClaimsImageSearchCall {
+	c := &ClaimsImageSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	return c
+}
+
+// ImageUri sets the optional parameter "imageUri": Required. The URI of
+// the source image. This must be a publicly-accessible image HTTP/HTTPS
+// URL. When fetching images from HTTP/HTTPS URLs, Google cannot
+// guarantee that the request will be completed. Your request may fail
+// if the specified host denies the request (e.g. due to request
+// throttling or DOS prevention), or if Google throttles requests to the
+// site for abuse prevention. You should not depend on externally-hosted
+// images for production applications.
+func (c *ClaimsImageSearchCall) ImageUri(imageUri string) *ClaimsImageSearchCall {
+	c.urlParams_.Set("imageUri", imageUri)
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": The BCP-47
+// language code, such as "en-US" or "sr-Latn". Can be used to restrict
+// results by language, though we do not currently consider the region.
+func (c *ClaimsImageSearchCall) LanguageCode(languageCode string) *ClaimsImageSearchCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// Offset sets the optional parameter "offset": An integer that
+// specifies the current offset (that is, starting result location) in
+// search results. This field is only considered if `page_token` is
+// unset. For example, 0 means to return results starting from the first
+// matching result, and 10 means to return from the 11th result.
+func (c *ClaimsImageSearchCall) Offset(offset int64) *ClaimsImageSearchCall {
+	c.urlParams_.Set("offset", fmt.Sprint(offset))
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The pagination size.
+// We will return up to that many results. Defaults to 10 if not set.
+func (c *ClaimsImageSearchCall) PageSize(pageSize int64) *ClaimsImageSearchCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The pagination
+// token. You may provide the `next_page_token` returned from a previous
+// List request, if any, in order to get the next page. All other fields
+// must have the same values as in the previous request.
+func (c *ClaimsImageSearchCall) PageToken(pageToken string) *ClaimsImageSearchCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ClaimsImageSearchCall) Fields(s ...googleapi.Field) *ClaimsImageSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ClaimsImageSearchCall) IfNoneMatch(entityTag string) *ClaimsImageSearchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ClaimsImageSearchCall) Context(ctx context.Context) *ClaimsImageSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ClaimsImageSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ClaimsImageSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/claims:imageSearch")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "factchecktools.claims.imageSearch" call.
+// Exactly one of
+// *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchRe
+// sponse or error will be non-nil. Any non-2xx status code is an error.
+// Response headers are in either
+// *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchRe
+// sponse.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ClaimsImageSearchCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Search through fact-checked claims using an image as the query.",
+	//   "flatPath": "v1alpha1/claims:imageSearch",
+	//   "httpMethod": "GET",
+	//   "id": "factchecktools.claims.imageSearch",
+	//   "parameterOrder": [],
+	//   "parameters": {
+	//     "imageUri": {
+	//       "description": "Required. The URI of the source image. This must be a publicly-accessible image HTTP/HTTPS URL. When fetching images from HTTP/HTTPS URLs, Google cannot guarantee that the request will be completed. Your request may fail if the specified host denies the request (e.g. due to request throttling or DOS prevention), or if Google throttles requests to the site for abuse prevention. You should not depend on externally-hosted images for production applications.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "languageCode": {
+	//       "description": "Optional. The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". Can be used to restrict results by language, though we do not currently consider the region.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "offset": {
+	//       "description": "Optional. An integer that specifies the current offset (that is, starting result location) in search results. This field is only considered if `page_token` is unset. For example, 0 means to return results starting from the first matching result, and 10 means to return from the 11th result.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The pagination size. We will return up to that many results. Defaults to 10 if not set.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The pagination token. You may provide the `next_page_token` returned from a previous List request, if any, in order to get the next page. All other fields must have the same values as in the previous request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/claims:imageSearch",
+	//   "response": {
+	//     "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse"
+	//   }
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ClaimsImageSearchCall) Pages(ctx context.Context, f func(*GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }
 
 // method id "factchecktools.claims.search":

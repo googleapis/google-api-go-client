@@ -447,6 +447,7 @@ type Platform struct {
 	//   "CHROMEOS"
 	//   "LACROS_ARM64"
 	//   "FUCHSIA"
+	//   "WIN_ARM64" - Chrome Desktop for Windows (ARM64).
 	PlatformType string `json:"platformType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to

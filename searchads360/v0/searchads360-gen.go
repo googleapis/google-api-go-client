@@ -1129,8 +1129,9 @@ func (s *GoogleAdsSearchads360V0Common__MaximizeConversions) MarshalJSON() ([]by
 
 // GoogleAdsSearchads360V0Common__Metrics: Metrics data.
 type GoogleAdsSearchads360V0Common__Metrics struct {
-	// AbsoluteTopImpressionPercentage: The percent of your ad impressions
-	// that are shown as the very first ad above the organic search results.
+	// AbsoluteTopImpressionPercentage: Search absolute top impression share
+	// is the percentage of your Search ad impressions that are shown in the
+	// most prominent Search position.
 	AbsoluteTopImpressionPercentage float64 `json:"absoluteTopImpressionPercentage,omitempty"`
 
 	// AllConversions: The total number of conversions. This includes all
@@ -1722,9 +1723,9 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	SearchAbsoluteTopImpressionShare float64 `json:"searchAbsoluteTopImpressionShare,omitempty"`
 
 	// SearchBudgetLostAbsoluteTopImpressionShare: The number estimating how
-	// often your ad wasn't the very first ad above the organic search
-	// results due to a low budget. Note: Search budget lost absolute top
-	// impression share is reported in the range of 0 to 0.9. Any value
+	// often your ad wasn't the very first ad among the top ads in the
+	// search results due to a low budget. Note: Search budget lost absolute
+	// top impression share is reported in the range of 0 to 0.9. Any value
 	// above 0.9 is reported as 0.9001.
 	SearchBudgetLostAbsoluteTopImpressionShare float64 `json:"searchBudgetLostAbsoluteTopImpressionShare,omitempty"`
 
@@ -1736,7 +1737,7 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	SearchBudgetLostImpressionShare float64 `json:"searchBudgetLostImpressionShare,omitempty"`
 
 	// SearchBudgetLostTopImpressionShare: The number estimating how often
-	// your ad didn't show anywhere above the organic search results due to
+	// your ad didn't show adjacent to the top organic search results due to
 	// a low budget. Note: Search budget lost top impression share is
 	// reported in the range of 0 to 0.9. Any value above 0.9 is reported as
 	// 0.9001.
@@ -1764,9 +1765,9 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	SearchImpressionShare float64 `json:"searchImpressionShare,omitempty"`
 
 	// SearchRankLostAbsoluteTopImpressionShare: The number estimating how
-	// often your ad wasn't the very first ad above the organic search
-	// results due to poor Ad Rank. Note: Search rank lost absolute top
-	// impression share is reported in the range of 0 to 0.9. Any value
+	// often your ad wasn't the very first ad among the top ads in the
+	// search results due to poor Ad Rank. Note: Search rank lost absolute
+	// top impression share is reported in the range of 0 to 0.9. Any value
 	// above 0.9 is reported as 0.9001.
 	SearchRankLostAbsoluteTopImpressionShare float64 `json:"searchRankLostAbsoluteTopImpressionShare,omitempty"`
 
@@ -1777,20 +1778,22 @@ type GoogleAdsSearchads360V0Common__Metrics struct {
 	SearchRankLostImpressionShare float64 `json:"searchRankLostImpressionShare,omitempty"`
 
 	// SearchRankLostTopImpressionShare: The number estimating how often
-	// your ad didn't show anywhere above the organic search results due to
+	// your ad didn't show adjacent to the top organic search results due to
 	// poor Ad Rank. Note: Search rank lost top impression share is reported
 	// in the range of 0 to 0.9. Any value above 0.9 is reported as 0.9001.
 	SearchRankLostTopImpressionShare float64 `json:"searchRankLostTopImpressionShare,omitempty"`
 
-	// SearchTopImpressionShare: The impressions you've received in the top
-	// location (anywhere above the organic search results) compared to the
-	// estimated number of impressions you were eligible to receive in the
-	// top location. Note: Search top impression share is reported in the
-	// range of 0.1 to 1. Any value below 0.1 is reported as 0.0999.
+	// SearchTopImpressionShare: The impressions you've received among the
+	// top ads compared to the estimated number of impressions you were
+	// eligible to receive among the top ads. Note: Search top impression
+	// share is reported in the range of 0.1 to 1. Any value below 0.1 is
+	// reported as 0.0999. Top ads are generally above the top organic
+	// results, although they may show below the top organic results on
+	// certain queries.
 	SearchTopImpressionShare float64 `json:"searchTopImpressionShare,omitempty"`
 
 	// TopImpressionPercentage: The percent of your ad impressions that are
-	// shown anywhere above the organic search results.
+	// shown adjacent to the top organic search results.
 	TopImpressionPercentage float64 `json:"topImpressionPercentage,omitempty"`
 
 	// ValuePerAllConversions: The value of all conversions divided by the
@@ -5574,7 +5577,8 @@ func (s *GoogleAdsSearchads360V0Resources__AdGroupBidModifier) UnmarshalJSON(dat
 }
 
 // GoogleAdsSearchads360V0Resources__AdGroupCriterion: An ad group
-// criterion.
+// criterion. The ad_group_criterion report only returns criteria that
+// were explicitly added to the ad group.
 type GoogleAdsSearchads360V0Resources__AdGroupCriterion struct {
 	// AdGroup: Immutable. The ad group to which the criterion belongs.
 	AdGroup string `json:"adGroup,omitempty"`
@@ -5764,6 +5768,7 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterion struct {
 	//   "LOCAL_SERVICE_ID" - Local Services Ads Service ID.
 	//   "BRAND" - Brand
 	//   "BRAND_LIST" - Brand List
+	//   "LIFE_EVENT" - Life Event
 	Type string `json:"type,omitempty"`
 
 	// UserList: Immutable. User List. The Similar Audiences sunset starts
@@ -6208,6 +6213,8 @@ type GoogleAdsSearchads360V0Resources__AssetGroupAsset struct {
 	//   "BUSINESS_LOGO" - The asset is linked for use as a business logo.
 	//   "HOTEL_PROPERTY" - The asset is linked for use as a hotel property
 	// in a Performance Max for travel goals campaign.
+	//   "DISCOVERY_CAROUSEL_CARD" - The asset is linked for use as a
+	// discovery carousel card.
 	FieldType string `json:"fieldType,omitempty"`
 
 	// ResourceName: Immutable. The resource name of the asset group asset.
@@ -7035,6 +7042,8 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	//   "BUSINESS_LOGO" - The asset is linked for use as a business logo.
 	//   "HOTEL_PROPERTY" - The asset is linked for use as a hotel property
 	// in a Performance Max for travel goals campaign.
+	//   "DISCOVERY_CAROUSEL_CARD" - The asset is linked for use as a
+	// discovery carousel card.
 	ExcludedParentAssetFieldTypes []string `json:"excludedParentAssetFieldTypes,omitempty"`
 
 	// FinalUrlSuffix: Suffix used to append query parameters to landing
@@ -7527,6 +7536,7 @@ type GoogleAdsSearchads360V0Resources__CampaignCriterion struct {
 	//   "LOCAL_SERVICE_ID" - Local Services Ads Service ID.
 	//   "BRAND" - Brand
 	//   "BRAND_LIST" - Brand List
+	//   "LIFE_EVENT" - Life Event
 	Type string `json:"type,omitempty"`
 
 	// UserList: Immutable. User List. The Similar Audiences sunset starts
@@ -7700,6 +7710,8 @@ type GoogleAdsSearchads360V0Resources__Conversion struct {
 	//   "BUSINESS_LOGO" - The asset is linked for use as a business logo.
 	//   "HOTEL_PROPERTY" - The asset is linked for use as a hotel property
 	// in a Performance Max for travel goals campaign.
+	//   "DISCOVERY_CAROUSEL_CARD" - The asset is linked for use as a
+	// discovery carousel card.
 	AssetFieldType string `json:"assetFieldType,omitempty"`
 
 	// AssetId: Output only. ID of the asset which was interacted with
@@ -8815,7 +8827,11 @@ func (s *GoogleAdsSearchads360V0Resources__DynamicSearchAdsSearchTermView) Marsh
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleAdsSearchads360V0Resources__GenderView: A gender view.
+// GoogleAdsSearchads360V0Resources__GenderView: A gender view. The
+// gender_view resource reflects the effective serving state, rather
+// than what criteria were added. An ad group without gender criteria by
+// default shows to all genders, so all genders appear in gender_view
+// with stats.
 type GoogleAdsSearchads360V0Resources__GenderView struct {
 	// ResourceName: Output only. The resource name of the gender view.
 	// Gender view resource names have the form:
@@ -9114,7 +9130,7 @@ func (s *GoogleAdsSearchads360V0Resources__ListingGroupFilterDimensionPath) Mars
 }
 
 // GoogleAdsSearchads360V0Resources__LocationView: A location view
-// summarizes the performance of campaigns by Location criteria.
+// summarizes the performance of campaigns by a Location criterion.
 type GoogleAdsSearchads360V0Resources__LocationView struct {
 	// ResourceName: Output only. The resource name of the location view.
 	// Location view resource names have the form:
@@ -9527,6 +9543,8 @@ type GoogleAdsSearchads360V0Resources__Visit struct {
 	//   "BUSINESS_LOGO" - The asset is linked for use as a business logo.
 	//   "HOTEL_PROPERTY" - The asset is linked for use as a hotel property
 	// in a Performance Max for travel goals campaign.
+	//   "DISCOVERY_CAROUSEL_CARD" - The asset is linked for use as a
+	// discovery carousel card.
 	AssetFieldType string `json:"assetFieldType,omitempty"`
 
 	// AssetId: Output only. ID of the asset which was interacted with
@@ -11050,10 +11068,11 @@ type SearchAds360FieldsSearchCall struct {
 	header_                                                          http.Header
 }
 
-// Search: Returns all fields that match the search query. List of
-// thrown errors: AuthenticationError () [AuthorizationError]()
-// HeaderError () [InternalError]() QueryError () [QuotaError]()
-// RequestError ()
+// Search: Returns all fields that match the search query
+// (/search-ads/reporting/concepts/field-service#use_a_query_to_get_field
+// _details). List of thrown errors: AuthenticationError ()
+// [AuthorizationError]() HeaderError () [InternalError]() QueryError ()
+// [QuotaError]() RequestError ()
 func (r *SearchAds360FieldsService) Search(googleadssearchads360v0services__searchsearchads360fieldsrequest *GoogleAdsSearchads360V0Services__SearchSearchAds360FieldsRequest) *SearchAds360FieldsSearchCall {
 	c := &SearchAds360FieldsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.googleadssearchads360v0services__searchsearchads360fieldsrequest = googleadssearchads360v0services__searchsearchads360fieldsrequest
@@ -11151,7 +11170,7 @@ func (c *SearchAds360FieldsSearchCall) Do(opts ...googleapi.CallOption) (*Google
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns all fields that match the search query. List of thrown errors: [AuthenticationError]() [AuthorizationError]() [HeaderError]() [InternalError]() [QueryError]() [QuotaError]() [RequestError]()",
+	//   "description": "Returns all fields that match the search [query](/search-ads/reporting/concepts/field-service#use_a_query_to_get_field_details). List of thrown errors: [AuthenticationError]() [AuthorizationError]() [HeaderError]() [InternalError]() [QueryError]() [QuotaError]() [RequestError]()",
 	//   "flatPath": "v0/searchAds360Fields:search",
 	//   "httpMethod": "POST",
 	//   "id": "searchads360.searchAds360Fields.search",

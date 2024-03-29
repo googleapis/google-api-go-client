@@ -271,7 +271,7 @@
       }
     }
   },
-  "revision": "20240123",
+  "revision": "20240327",
   "rootUrl": "https://versionhistory.googleapis.com/",
   "schemas": {
     "Channel": {
@@ -427,7 +427,8 @@
             "LACROS_ARM32",
             "CHROMEOS",
             "LACROS_ARM64",
-            "FUCHSIA"
+            "FUCHSIA",
+            "WIN_ARM64"
           ],
           "enumDescriptions": [
             "",
@@ -444,7 +445,8 @@
             "",
             "",
             "",
-            ""
+            "",
+            "Chrome Desktop for Windows (ARM64)."
           ],
           "type": "string"
         }

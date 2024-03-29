@@ -1274,7 +1274,7 @@ type GoogleMapsPlacesV1Place struct {
 	//   "PRICE_LEVEL_MODERATE" - Place provides moderately priced services.
 	//   "PRICE_LEVEL_EXPENSIVE" - Place provides expensive services.
 	//   "PRICE_LEVEL_VERY_EXPENSIVE" - Place provides very expensive
-	// service s.
+	// services.
 	PriceLevel string `json:"priceLevel,omitempty"`
 
 	// PrimaryType: The primary type of the given result. This type must one
@@ -2200,7 +2200,7 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	//   "PRICE_LEVEL_MODERATE" - Place provides moderately priced services.
 	//   "PRICE_LEVEL_EXPENSIVE" - Place provides expensive services.
 	//   "PRICE_LEVEL_VERY_EXPENSIVE" - Place provides very expensive
-	// service s.
+	// services.
 	PriceLevels []string `json:"priceLevels,omitempty"`
 
 	// RankPreference: How results will be ranked in the response.

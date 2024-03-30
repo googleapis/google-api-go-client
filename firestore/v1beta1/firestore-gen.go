@@ -1568,6 +1568,64 @@ func (s *Filter) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FindNearest: Nearest Neighbors search config.
+type FindNearest struct {
+	// DistanceMeasure: Required. The Distance Measure to use, required.
+	//
+	// Possible values:
+	//   "DISTANCE_MEASURE_UNSPECIFIED" - Should not be set.
+	//   "EUCLIDEAN" - Measures the EUCLIDEAN distance between the vectors.
+	// See [Euclidean](https://en.wikipedia.org/wiki/Euclidean_distance) to
+	// learn more
+	//   "COSINE" - Compares vectors based on the angle between them, which
+	// allows you to measure similarity that isn't based on the vectors
+	// magnitude. We recommend using DOT_PRODUCT with unit normalized
+	// vectors instead of COSINE distance, which is mathematically
+	// equivalent with better performance. See [Cosine
+	// Similarity](https://en.wikipedia.org/wiki/Cosine_similarity) to learn
+	// more.
+	//   "DOT_PRODUCT" - Similar to cosine but is affected by the magnitude
+	// of the vectors. See [Dot
+	// Product](https://en.wikipedia.org/wiki/Dot_product) to learn more.
+	DistanceMeasure string `json:"distanceMeasure,omitempty"`
+
+	// Limit: Required. The number of nearest neighbors to return. Must be a
+	// positive integer of no more than 1000.
+	Limit int64 `json:"limit,omitempty"`
+
+	// QueryVector: Required. The query vector that we are searching on.
+	// Must be a vector of no more than 2048 dimensions.
+	QueryVector *Value `json:"queryVector,omitempty"`
+
+	// VectorField: Required. An indexed vector field to search upon. Only
+	// documents which contain vectors whose dimensionality match the
+	// query_vector can be returned.
+	VectorField *FieldReference `json:"vectorField,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DistanceMeasure") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DistanceMeasure") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FindNearest) MarshalJSON() ([]byte, error) {
+	type NoMethod FindNearest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleFirestoreAdminV1CreateDatabaseMetadata: Metadata related to the
 // create database operation.
 type GoogleFirestoreAdminV1CreateDatabaseMetadata struct {
@@ -3150,6 +3208,11 @@ type StructuredQuery struct {
 	// of values cannot be greater than the number of fields specified in
 	// the `ORDER BY` clause.
 	EndAt *Cursor `json:"endAt,omitempty"`
+
+	// FindNearest: Optional. A potential Nearest Neighbors Search. Applies
+	// after all other filters and ordering. Finds the closest vector
+	// embeddings to the given query vector.
+	FindNearest *FindNearest `json:"findNearest,omitempty"`
 
 	// From: The collections to query.
 	From []*CollectionSelector `json:"from,omitempty"`

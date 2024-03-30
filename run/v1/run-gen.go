@@ -4723,7 +4723,7 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 
 // NFSVolumeSource: Represents a persistent volume that will be mounted
 // using NFS. This volume will be shared between all instances of the
-// Service and data will not be deleted when the instance is shut down.
+// resource and data will not be deleted when the instance is shut down.
 type NFSVolumeSource struct {
 	// Path: Path that is exported by the NFS server.
 	Path string `json:"path,omitempty"`

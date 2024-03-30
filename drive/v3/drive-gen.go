@@ -6896,7 +6896,7 @@ type DrivesUpdateCall struct {
 	header_    http.Header
 }
 
-// Update: Updates the metadate for a shared drive.
+// Update: Updates the metadata for a shared drive.
 //
 // - driveId: The ID of the shared drive.
 func (r *DrivesService) Update(driveId string, drive *Drive) *DrivesUpdateCall {
@@ -7006,7 +7006,7 @@ func (c *DrivesUpdateCall) Do(opts ...googleapi.CallOption) (*Drive, error) {
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the metadate for a shared drive.",
+	//   "description": "Updates the metadata for a shared drive.",
 	//   "flatPath": "drives/{driveId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "drive.drives.update",

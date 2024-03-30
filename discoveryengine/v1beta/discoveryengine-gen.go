@@ -5571,6 +5571,268 @@ func (s *GoogleCloudDiscoveryengineV1betaBigQuerySource) MarshalJSON() ([]byte, 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaBigtableOptions: The Bigtable Options
+// object that contains information to support the import.
+type GoogleCloudDiscoveryengineV1betaBigtableOptions struct {
+	// Families: The mapping from family names to an object that contains
+	// column families level information for the given column family. If a
+	// family is not present in this map it will be ignored.
+	Families map[string]GoogleCloudDiscoveryengineV1betaBigtableOptionsBigtableColumnFamily `json:"families,omitempty"`
+
+	// KeyFieldName: The field name used for saving row key value in the UCS
+	// document. The name has to match a-zA-Z0-9*
+	KeyFieldName string `json:"keyFieldName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Families") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Families") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaBigtableOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaBigtableOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDiscoveryengineV1betaBigtableOptionsBigtableColumn struct {
+	// Encoding: Optional. The encoding mode of the values when the type is
+	// not STRING. Acceptable encoding values are: TEXT - indicates values
+	// are alphanumeric text strings. BINARY - indicates values are encoded
+	// using HBase Bytes.toBytes family of functions. This can be overridden
+	// for a specific column by listing that column in 'columns' and
+	// specifying an encoding for it.
+	//
+	// Possible values:
+	//   "ENCODING_UNSPECIFIED"
+	//   "TEXT"
+	//   "BINARY"
+	Encoding string `json:"encoding,omitempty"`
+
+	// FieldName: The field name to use for this column in the UCS document.
+	// The name has to match a-zA-Z0-9* If not set, we will parse it from
+	// the qualifier bytes with best effort. However, field name collisions
+	// could happen, where parsing behavior is undefined.
+	FieldName string `json:"fieldName,omitempty"`
+
+	// Qualifier: Required. Qualifier of the column. If cannot decode with
+	// utf-8, store a base-64 encoded string.
+	Qualifier string `json:"qualifier,omitempty"`
+
+	// Type: Optional. The type of values in this column family. The values
+	// are expected to be encoded using HBase Bytes.toBytes function when
+	// the encoding value is set to BINARY.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED"
+	//   "STRING"
+	//   "NUMBER"
+	//   "INTEGER"
+	//   "VAR_INTEGER"
+	//   "BIG_NUMERIC"
+	//   "BOOLEAN"
+	//   "JSON"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Encoding") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Encoding") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaBigtableOptionsBigtableColumn) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaBigtableOptionsBigtableColumn
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+type GoogleCloudDiscoveryengineV1betaBigtableOptionsBigtableColumnFamily struct {
+	// Columns: The list of objects that contains column level information
+	// for each column. If a column is not present in this list it will be
+	// ignored.
+	Columns []*GoogleCloudDiscoveryengineV1betaBigtableOptionsBigtableColumn `json:"columns,omitempty"`
+
+	// Encoding: Optional. The encoding mode of the values when the type is
+	// not STRING. Acceptable encoding values are: TEXT - indicates values
+	// are alphanumeric text strings. BINARY - indicates values are encoded
+	// using HBase Bytes.toBytes family of functions. This can be overridden
+	// for a specific column by listing that column in 'columns' and
+	// specifying an encoding for it.
+	//
+	// Possible values:
+	//   "ENCODING_UNSPECIFIED"
+	//   "TEXT"
+	//   "BINARY"
+	Encoding string `json:"encoding,omitempty"`
+
+	// FieldName: The field name to use for this column family in the UCS
+	// document. The name has to match a-zA-Z0-9* If not set, we will parse
+	// it from the family name with best effort. However, due to difference
+	// naming pattern, there could be field name collisions, where parsing
+	// behavior is undefined.
+	FieldName string `json:"fieldName,omitempty"`
+
+	// Type: Optional. The type of values in this column family. The values
+	// are expected to be encoded using HBase Bytes.toBytes function when
+	// the encoding value is set to BINARY.
+	//
+	// Possible values:
+	//   "TYPE_UNSPECIFIED"
+	//   "STRING"
+	//   "NUMBER"
+	//   "INTEGER"
+	//   "VAR_INTEGER"
+	//   "BIG_NUMERIC"
+	//   "BOOLEAN"
+	//   "JSON"
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Columns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Columns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaBigtableOptionsBigtableColumnFamily) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaBigtableOptionsBigtableColumnFamily
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaBigtableSource: The Cloud Bigtable
+// source for importing data
+type GoogleCloudDiscoveryengineV1betaBigtableSource struct {
+	// BigtableOptions: Required. Bigtable options that contains information
+	// needed when parsing data into typed structures. For example, column
+	// type annotations.
+	BigtableOptions *GoogleCloudDiscoveryengineV1betaBigtableOptions `json:"bigtableOptions,omitempty"`
+
+	// InstanceId: Required. The instance ID of the Cloud Bigtable that
+	// needs to be exported.
+	InstanceId string `json:"instanceId,omitempty"`
+
+	// ProjectId: The project ID (can be project # or ID) that the Bigtable
+	// source is in with a length limit of 128 characters. If not specified,
+	// inherits the project ID from the parent request.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// TableId: Required. The table ID of the Cloud Bigtable that needs to
+	// be exported.
+	TableId string `json:"tableId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BigtableOptions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigtableOptions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaBigtableSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaBigtableSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaCloudSqlSource: Cloud SQL source
+// import data from.
+type GoogleCloudDiscoveryengineV1betaCloudSqlSource struct {
+	// DatabaseId: Required. The Cloud SQL database to copy the data from
+	// with a length limit of 256 characters.
+	DatabaseId string `json:"databaseId,omitempty"`
+
+	// GcsStagingDir: Optional. Intermediate Cloud Storage directory used
+	// for the import with a length limit of 2,000 characters. Can be
+	// specified if one wants to have the Cloud SQL export to a specific
+	// Cloud Storage directory. Please ensure that the Cloud SQL service
+	// account has the necessary GCS Storage Admin permissions to access the
+	// specified GCS directory.
+	GcsStagingDir string `json:"gcsStagingDir,omitempty"`
+
+	// InstanceId: Required. The Cloud SQL instance to copy the data from
+	// with a length limit of 256 characters.
+	InstanceId string `json:"instanceId,omitempty"`
+
+	// Offload: Optional. Option for serverless export. Enabling this option
+	// will incur additional cost. More info:
+	// https://cloud.google.com/sql/pricing#serverless
+	Offload bool `json:"offload,omitempty"`
+
+	// ProjectId: Optional. The project ID (can be project # or ID) that the
+	// Cloud SQL source is in with a length limit of 128 characters. If not
+	// specified, inherits the project ID from the parent request.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// TableId: Required. The Cloud SQL table to copy the data from with a
+	// length limit of 256 characters.
+	TableId string `json:"tableId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatabaseId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatabaseId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaCloudSqlSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaCloudSqlSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaCompleteQueryResponse: Response
 // message for CompletionService.CompleteQuery method.
 type GoogleCloudDiscoveryengineV1betaCompleteQueryResponse struct {
@@ -7281,6 +7543,53 @@ func (s *GoogleCloudDiscoveryengineV1betaFhirStoreSource) MarshalJSON() ([]byte,
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudDiscoveryengineV1betaFirestoreSource: Firestore source
+// import data from.
+type GoogleCloudDiscoveryengineV1betaFirestoreSource struct {
+	// CollectionId: Required. The Firestore collection to copy the data
+	// from with a length limit of 1500 characters.
+	CollectionId string `json:"collectionId,omitempty"`
+
+	// DatabaseId: Required. The Firestore database to copy the data from
+	// with a length limit of 256 characters.
+	DatabaseId string `json:"databaseId,omitempty"`
+
+	// GcsStagingDir: Optional. Intermediate Cloud Storage directory used
+	// for the import with a length limit of 2,000 characters. Can be
+	// specified if one wants to have the Firestore export to a specific
+	// Cloud Storage directory. Please ensure that the Firestore service
+	// account has the necessary GCS Storage Admin permissions to access the
+	// specified GCS directory.
+	GcsStagingDir string `json:"gcsStagingDir,omitempty"`
+
+	// ProjectId: Optional. The project ID (can be project # or ID) that the
+	// Cloud SQL source is in with a length limit of 128 characters. If not
+	// specified, inherits the project ID from the parent request.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CollectionId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CollectionId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaFirestoreSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaFirestoreSource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudDiscoveryengineV1betaGcsSource: Cloud Storage location for
 // input content.
 type GoogleCloudDiscoveryengineV1betaGcsSource struct {
@@ -7421,12 +7730,21 @@ type GoogleCloudDiscoveryengineV1betaImportDocumentsRequest struct {
 	// BigquerySource: BigQuery input source.
 	BigquerySource *GoogleCloudDiscoveryengineV1betaBigQuerySource `json:"bigquerySource,omitempty"`
 
+	// BigtableSource: Cloud Bigtable input source.
+	BigtableSource *GoogleCloudDiscoveryengineV1betaBigtableSource `json:"bigtableSource,omitempty"`
+
+	// CloudSqlSource: Cloud SQL input source.
+	CloudSqlSource *GoogleCloudDiscoveryengineV1betaCloudSqlSource `json:"cloudSqlSource,omitempty"`
+
 	// ErrorConfig: The desired location of errors incurred during the
 	// Import.
 	ErrorConfig *GoogleCloudDiscoveryengineV1betaImportErrorConfig `json:"errorConfig,omitempty"`
 
 	// FhirStoreSource: FhirStore input source.
 	FhirStoreSource *GoogleCloudDiscoveryengineV1betaFhirStoreSource `json:"fhirStoreSource,omitempty"`
+
+	// FirestoreSource: Firestore input source.
+	FirestoreSource *GoogleCloudDiscoveryengineV1betaFirestoreSource `json:"firestoreSource,omitempty"`
 
 	// GcsSource: Cloud Storage location for the input content.
 	GcsSource *GoogleCloudDiscoveryengineV1betaGcsSource `json:"gcsSource,omitempty"`
@@ -7465,6 +7783,9 @@ type GoogleCloudDiscoveryengineV1betaImportDocumentsRequest struct {
 	// Existing documents may be deleted if they are not present in the
 	// source location.
 	ReconciliationMode string `json:"reconciliationMode,omitempty"`
+
+	// SpannerSource: Spanner input source.
+	SpannerSource *GoogleCloudDiscoveryengineV1betaSpannerSource `json:"spannerSource,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutoGenerateIds") to
 	// unconditionally include in API requests. By default, fields with
@@ -11058,6 +11379,52 @@ type GoogleCloudDiscoveryengineV1betaSiteVerificationInfo struct {
 
 func (s *GoogleCloudDiscoveryengineV1betaSiteVerificationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDiscoveryengineV1betaSiteVerificationInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDiscoveryengineV1betaSpannerSource: The Spanner source for
+// importing data
+type GoogleCloudDiscoveryengineV1betaSpannerSource struct {
+	// DatabaseId: Required. The database ID of the source Spanner table.
+	DatabaseId string `json:"databaseId,omitempty"`
+
+	// EnableDataBoost: Optional. Whether to apply data boost on Spanner
+	// export. Enabling this option will incur additional cost. More info:
+	// https://cloud.google.com/spanner/docs/databoost/databoost-overview#billing_and_quotas
+	EnableDataBoost bool `json:"enableDataBoost,omitempty"`
+
+	// InstanceId: Required. The instance ID of the source Spanner table.
+	InstanceId string `json:"instanceId,omitempty"`
+
+	// ProjectId: The project ID that the Spanner source is in with a length
+	// limit of 128 characters. If not specified, inherits the project ID
+	// from the parent request.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// TableId: Required. The table name of the Spanner database that needs
+	// to be imported.
+	TableId string `json:"tableId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatabaseId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatabaseId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDiscoveryengineV1betaSpannerSource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDiscoveryengineV1betaSpannerSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

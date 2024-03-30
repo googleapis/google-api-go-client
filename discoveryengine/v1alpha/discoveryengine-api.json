@@ -5218,7 +5218,7 @@
       }
     }
   },
-  "revision": "20240323",
+  "revision": "20240329",
   "rootUrl": "https://discoveryengine.googleapis.com/",
   "schemas": {
     "GoogleApiHttpBody": {
@@ -6438,6 +6438,155 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaBigtableOptions": {
+      "description": "The Bigtable Options object that contains information to support the import.",
+      "id": "GoogleCloudDiscoveryengineV1alphaBigtableOptions",
+      "properties": {
+        "families": {
+          "additionalProperties": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaBigtableOptionsBigtableColumnFamily"
+          },
+          "description": "The mapping from family names to an object that contains column families level information for the given column family. If a family is not present in this map it will be ignored.",
+          "type": "object"
+        },
+        "keyFieldName": {
+          "description": "The field name used for saving row key value in the UCS document. The name has to match a-zA-Z0-9*",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaBigtableOptionsBigtableColumn": {
+      "id": "GoogleCloudDiscoveryengineV1alphaBigtableOptionsBigtableColumn",
+      "properties": {
+        "encoding": {
+          "description": "Optional. The encoding mode of the values when the type is not STRING. Acceptable encoding values are: TEXT - indicates values are alphanumeric text strings. BINARY - indicates values are encoded using HBase Bytes.toBytes family of functions. This can be overridden for a specific column by listing that column in 'columns' and specifying an encoding for it.",
+          "enum": [
+            "ENCODING_UNSPECIFIED",
+            "TEXT",
+            "BINARY"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "fieldName": {
+          "description": "The field name to use for this column in the UCS document. The name has to match a-zA-Z0-9* If not set, we will parse it from the qualifier bytes with best effort. However, field name collisions could happen, where parsing behavior is undefined.",
+          "type": "string"
+        },
+        "qualifier": {
+          "description": "Required. Qualifier of the column. If cannot decode with utf-8, store a base-64 encoded string.",
+          "format": "byte",
+          "type": "string"
+        },
+        "type": {
+          "description": "Optional. The type of values in this column family. The values are expected to be encoded using HBase Bytes.toBytes function when the encoding value is set to BINARY.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "STRING",
+            "NUMBER",
+            "INTEGER",
+            "VAR_INTEGER",
+            "BIG_NUMERIC",
+            "BOOLEAN",
+            "JSON"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaBigtableOptionsBigtableColumnFamily": {
+      "id": "GoogleCloudDiscoveryengineV1alphaBigtableOptionsBigtableColumnFamily",
+      "properties": {
+        "columns": {
+          "description": "The list of objects that contains column level information for each column. If a column is not present in this list it will be ignored.",
+          "items": {
+            "$ref": "GoogleCloudDiscoveryengineV1alphaBigtableOptionsBigtableColumn"
+          },
+          "type": "array"
+        },
+        "encoding": {
+          "description": "Optional. The encoding mode of the values when the type is not STRING. Acceptable encoding values are: TEXT - indicates values are alphanumeric text strings. BINARY - indicates values are encoded using HBase Bytes.toBytes family of functions. This can be overridden for a specific column by listing that column in 'columns' and specifying an encoding for it.",
+          "enum": [
+            "ENCODING_UNSPECIFIED",
+            "TEXT",
+            "BINARY"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        },
+        "fieldName": {
+          "description": "The field name to use for this column family in the UCS document. The name has to match a-zA-Z0-9* If not set, we will parse it from the family name with best effort. However, due to difference naming pattern, there could be field name collisions, where parsing behavior is undefined.",
+          "type": "string"
+        },
+        "type": {
+          "description": "Optional. The type of values in this column family. The values are expected to be encoded using HBase Bytes.toBytes function when the encoding value is set to BINARY.",
+          "enum": [
+            "TYPE_UNSPECIFIED",
+            "STRING",
+            "NUMBER",
+            "INTEGER",
+            "VAR_INTEGER",
+            "BIG_NUMERIC",
+            "BOOLEAN",
+            "JSON"
+          ],
+          "enumDescriptions": [
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            "",
+            ""
+          ],
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaBigtableSource": {
+      "description": "The Cloud Bigtable source for importing data",
+      "id": "GoogleCloudDiscoveryengineV1alphaBigtableSource",
+      "properties": {
+        "bigtableOptions": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaBigtableOptions",
+          "description": "Required. Bigtable options that contains information needed when parsing data into typed structures. For example, column type annotations."
+        },
+        "instanceId": {
+          "description": "Required. The instance ID of the Cloud Bigtable that needs to be exported.",
+          "type": "string"
+        },
+        "projectId": {
+          "description": "The project ID (can be project # or ID) that the Bigtable source is in with a length limit of 128 characters. If not specified, inherits the project ID from the parent request.",
+          "type": "string"
+        },
+        "tableId": {
+          "description": "Required. The table ID of the Cloud Bigtable that needs to be exported.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaChunk": {
       "description": "Chunk captures all raw metadata information of items to be recommended or searched in the chunk mode.",
       "id": "GoogleCloudDiscoveryengineV1alphaChunk",
@@ -6528,6 +6677,37 @@
           "description": "The start page of the chunk.",
           "format": "int32",
           "type": "integer"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaCloudSqlSource": {
+      "description": "Cloud SQL source import data from.",
+      "id": "GoogleCloudDiscoveryengineV1alphaCloudSqlSource",
+      "properties": {
+        "databaseId": {
+          "description": "Required. The Cloud SQL database to copy the data from with a length limit of 256 characters.",
+          "type": "string"
+        },
+        "gcsStagingDir": {
+          "description": "Optional. Intermediate Cloud Storage directory used for the import with a length limit of 2,000 characters. Can be specified if one wants to have the Cloud SQL export to a specific Cloud Storage directory. Please ensure that the Cloud SQL service account has the necessary GCS Storage Admin permissions to access the specified GCS directory.",
+          "type": "string"
+        },
+        "instanceId": {
+          "description": "Required. The Cloud SQL instance to copy the data from with a length limit of 256 characters.",
+          "type": "string"
+        },
+        "offload": {
+          "description": "Optional. Option for serverless export. Enabling this option will incur additional cost. More info: https://cloud.google.com/sql/pricing#serverless",
+          "type": "boolean"
+        },
+        "projectId": {
+          "description": "Optional. The project ID (can be project # or ID) that the Cloud SQL source is in with a length limit of 128 characters. If not specified, inherits the project ID from the parent request.",
+          "type": "string"
+        },
+        "tableId": {
+          "description": "Required. The Cloud SQL table to copy the data from with a length limit of 256 characters.",
+          "type": "string"
         }
       },
       "type": "object"
@@ -7930,6 +8110,29 @@
       },
       "type": "object"
     },
+    "GoogleCloudDiscoveryengineV1alphaFirestoreSource": {
+      "description": "Firestore source import data from.",
+      "id": "GoogleCloudDiscoveryengineV1alphaFirestoreSource",
+      "properties": {
+        "collectionId": {
+          "description": "Required. The Firestore collection to copy the data from with a length limit of 1500 characters.",
+          "type": "string"
+        },
+        "databaseId": {
+          "description": "Required. The Firestore database to copy the data from with a length limit of 256 characters.",
+          "type": "string"
+        },
+        "gcsStagingDir": {
+          "description": "Optional. Intermediate Cloud Storage directory used for the import with a length limit of 2,000 characters. Can be specified if one wants to have the Firestore export to a specific Cloud Storage directory. Please ensure that the Firestore service account has the necessary GCS Storage Admin permissions to access the specified GCS directory.",
+          "type": "string"
+        },
+        "projectId": {
+          "description": "Optional. The project ID (can be project # or ID) that the Cloud SQL source is in with a length limit of 128 characters. If not specified, inherits the project ID from the parent request.",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
     "GoogleCloudDiscoveryengineV1alphaGcsSource": {
       "description": "Cloud Storage location for input content.",
       "id": "GoogleCloudDiscoveryengineV1alphaGcsSource",
@@ -8095,6 +8298,14 @@
           "$ref": "GoogleCloudDiscoveryengineV1alphaBigQuerySource",
           "description": "BigQuery input source."
         },
+        "bigtableSource": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaBigtableSource",
+          "description": "Cloud Bigtable input source."
+        },
+        "cloudSqlSource": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaCloudSqlSource",
+          "description": "Cloud SQL input source."
+        },
         "errorConfig": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaImportErrorConfig",
           "description": "The desired location of errors incurred during the Import."
@@ -8102,6 +8313,10 @@
         "fhirStoreSource": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaFhirStoreSource",
           "description": "FhirStore input source."
+        },
+        "firestoreSource": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaFirestoreSource",
+          "description": "Firestore input source."
         },
         "gcsSource": {
           "$ref": "GoogleCloudDiscoveryengineV1alphaGcsSource",
@@ -8128,6 +8343,10 @@
             "Calculates diff and replaces the entire document dataset. Existing documents may be deleted if they are not present in the source location."
           ],
           "type": "string"
+        },
+        "spannerSource": {
+          "$ref": "GoogleCloudDiscoveryengineV1alphaSpannerSource",
+          "description": "Spanner input source."
         }
       },
       "type": "object"
@@ -10278,6 +10497,33 @@
         "verifyTime": {
           "description": "Latest site verification time.",
           "format": "google-datetime",
+          "type": "string"
+        }
+      },
+      "type": "object"
+    },
+    "GoogleCloudDiscoveryengineV1alphaSpannerSource": {
+      "description": "The Spanner source for importing data",
+      "id": "GoogleCloudDiscoveryengineV1alphaSpannerSource",
+      "properties": {
+        "databaseId": {
+          "description": "Required. The database ID of the source Spanner table.",
+          "type": "string"
+        },
+        "enableDataBoost": {
+          "description": "Optional. Whether to apply data boost on Spanner export. Enabling this option will incur additional cost. More info: https://cloud.google.com/spanner/docs/databoost/databoost-overview#billing_and_quotas",
+          "type": "boolean"
+        },
+        "instanceId": {
+          "description": "Required. The instance ID of the source Spanner table.",
+          "type": "string"
+        },
+        "projectId": {
+          "description": "The project ID that the Spanner source is in with a length limit of 128 characters. If not specified, inherits the project ID from the parent request.",
+          "type": "string"
+        },
+        "tableId": {
+          "description": "Required. The table name of the Spanner database that needs to be imported.",
           "type": "string"
         }
       },

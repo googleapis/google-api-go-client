@@ -991,7 +991,7 @@ type DropInfo struct {
 	//   "ROUTE_NEXT_HOP_RESOURCE_NOT_FOUND" - Route's next hop resource is
 	// not found.
 	//   "ROUTE_NEXT_HOP_INSTANCE_WRONG_NETWORK" - Route's next hop instance
-	// doesn't hace a NIC in the route's network.
+	// doesn't have a NIC in the route's network.
 	//   "ROUTE_NEXT_HOP_INSTANCE_NON_PRIMARY_IP" - Route's next hop IP
 	// address is not a primary IP address of the next hop instance.
 	//   "ROUTE_NEXT_HOP_FORWARDING_RULE_IP_MISMATCH" - Route's next hop

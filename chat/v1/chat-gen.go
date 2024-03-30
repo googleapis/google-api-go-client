@@ -2883,8 +2883,8 @@ type GoogleAppsCardV1MaterialIcon struct {
 	// Grade: Weight and grade affect a symbol’s thickness. Adjustments to
 	// grade are more granular than adjustments to weight and have a small
 	// impact on the size of the symbol. Choose from {-25, 0, 200}. If
-	// absent, default value is 0. If any other value is specified, a broken
-	// image icon is displayed. To preview different icon settings, go to
+	// absent, default value is 0. If any other value is specified, the
+	// default value is used. To preview different icon settings, go to
 	// Google Font Icons (https://fonts.google.com/icons) and adjust the
 	// settings under **Customize**.
 	Grade int64 `json:"grade,omitempty"`
@@ -2897,8 +2897,8 @@ type GoogleAppsCardV1MaterialIcon struct {
 
 	// Weight: The stroke weight of the icon. Choose from {100, 200, 300,
 	// 400, 500, 600, 700}. If absent, default value is 400. If any other
-	// value is specified, a broken image icon is displayed. To preview
-	// different icon settings, go to Google Font Icons
+	// value is specified, the default value is used. To preview different
+	// icon settings, go to Google Font Icons
 	// (https://fonts.google.com/icons) and adjust the settings under
 	// **Customize**.
 	Weight int64 `json:"weight,omitempty"`
@@ -3159,10 +3159,10 @@ type GoogleAppsCardV1SelectionInput struct {
 	MultiSelectMaxSelectedItems int64 `json:"multiSelectMaxSelectedItems,omitempty"`
 
 	// MultiSelectMinQueryLength: For multiselect menus, the number of text
-	// characters that a user inputs before the Chat app queries
-	// autocomplete and displays suggested items in the menu. If
-	// unspecified, defaults to 0 characters for static data sources and 3
-	// characters for external data sources.
+	// characters that a user inputs before the app queries autocomplete and
+	// displays suggested items in the menu. If unspecified, defaults to 0
+	// characters for static data sources and 3 characters for external data
+	// sources.
 	MultiSelectMinQueryLength int64 `json:"multiSelectMinQueryLength,omitempty"`
 
 	// Name: The name that identifies the selection input in a form input

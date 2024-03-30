@@ -4239,6 +4239,35 @@ func (s *MetricMatrixRow) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// MoveInstanceRequest: The request for MoveInstance.
+type MoveInstanceRequest struct {
+	// TargetConfig: Required. The target instance config for the instance
+	// to move. Values are of the form `projects//instanceConfigs/`.
+	TargetConfig string `json:"targetConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetConfig") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MoveInstanceRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod MoveInstanceRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Mutation: A modification to one or more Cloud Spanner rows. Mutations
 // can be applied to a Cloud Spanner database by sending them in a
 // Commit call.
@@ -10463,6 +10492,181 @@ func (c *ProjectsInstancesListCall) Pages(ctx context.Context, f func(*ListInsta
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "spanner.projects.instances.move":
+
+type ProjectsInstancesMoveCall struct {
+	s                   *Service
+	name                string
+	moveinstancerequest *MoveInstanceRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// Move: Moves the instance to the target instance config. The returned
+// long-running operation can be used to track the progress of moving
+// the instance. `MoveInstance` returns `FAILED_PRECONDITION` if the
+// instance meets any of the following criteria: * Has an ongoing move
+// to a different instance config * Has backups * Has an ongoing update
+// * Is under free trial * Contains any CMEK-enabled databases While the
+// operation is pending: * All other attempts to modify the instance,
+// including changes to its compute capacity, are rejected. * The
+// following database and backup admin operations are rejected: *
+// DatabaseAdmin.CreateDatabase, * DatabaseAdmin.UpdateDatabaseDdl
+// (Disabled if default_leader is specified in the request.) *
+// DatabaseAdmin.RestoreDatabase * DatabaseAdmin.CreateBackup *
+// DatabaseAdmin.CopyBackup * Both the source and target instance
+// configs are subject to hourly compute and storage charges. * The
+// instance may experience higher read-write latencies and a higher
+// transaction abort rate. However, moving an instance does not cause
+// any downtime. The returned long-running operation will have a name of
+// the format `/operations/` and can be used to track the move instance
+// operation. The metadata field type is MoveInstanceMetadata. The
+// response field type is Instance, if successful. Cancelling the
+// operation sets its metadata's cancel_time. Cancellation is not
+// immediate since it involves moving any data previously moved to
+// target instance config back to the original instance config. The same
+// operation can be used to track the progress of the cancellation. Upon
+// successful completion of the cancellation, the operation terminates
+// with CANCELLED status. Upon completion(if not cancelled) of the
+// returned operation: * Instance would be successfully moved to the
+// target instance config. * You are billed for compute and storage in
+// target instance config. Authorization requires
+// `spanner.instances.update` permission on the resource instance. For
+// more details, please see documentation
+// (https://cloud.google.com/spanner/docs/move-instance).
+//
+//   - name: The instance to move. Values are of the form
+//     `projects//instances/`.
+func (r *ProjectsInstancesService) Move(name string, moveinstancerequest *MoveInstanceRequest) *ProjectsInstancesMoveCall {
+	c := &ProjectsInstancesMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.moveinstancerequest = moveinstancerequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesMoveCall) Fields(s ...googleapi.Field) *ProjectsInstancesMoveCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesMoveCall) Context(ctx context.Context) *ProjectsInstancesMoveCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesMoveCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesMoveCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.moveinstancerequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:move")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "spanner.projects.instances.move" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesMoveCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Moves the instance to the target instance config. The returned long-running operation can be used to track the progress of moving the instance. `MoveInstance` returns `FAILED_PRECONDITION` if the instance meets any of the following criteria: * Has an ongoing move to a different instance config * Has backups * Has an ongoing update * Is under free trial * Contains any CMEK-enabled databases While the operation is pending: * All other attempts to modify the instance, including changes to its compute capacity, are rejected. * The following database and backup admin operations are rejected: * DatabaseAdmin.CreateDatabase, * DatabaseAdmin.UpdateDatabaseDdl (Disabled if default_leader is specified in the request.) * DatabaseAdmin.RestoreDatabase * DatabaseAdmin.CreateBackup * DatabaseAdmin.CopyBackup * Both the source and target instance configs are subject to hourly compute and storage charges. * The instance may experience higher read-write latencies and a higher transaction abort rate. However, moving an instance does not cause any downtime. The returned long-running operation will have a name of the format `/operations/` and can be used to track the move instance operation. The metadata field type is MoveInstanceMetadata. The response field type is Instance, if successful. Cancelling the operation sets its metadata's cancel_time. Cancellation is not immediate since it involves moving any data previously moved to target instance config back to the original instance config. The same operation can be used to track the progress of the cancellation. Upon successful completion of the cancellation, the operation terminates with CANCELLED status. Upon completion(if not cancelled) of the returned operation: * Instance would be successfully moved to the target instance config. * You are billed for compute and storage in target instance config. Authorization requires `spanner.instances.update` permission on the resource instance. For more details, please see [documentation](https://cloud.google.com/spanner/docs/move-instance).",
+	//   "flatPath": "v1/projects/{projectsId}/instances/{instancesId}:move",
+	//   "httpMethod": "POST",
+	//   "id": "spanner.projects.instances.move",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The instance to move. Values are of the form `projects//instances/`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:move",
+	//   "request": {
+	//     "$ref": "MoveInstanceRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/spanner.admin"
+	//   ]
+	// }
+
 }
 
 // method id "spanner.projects.instances.patch":

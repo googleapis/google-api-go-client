@@ -1226,8 +1226,8 @@ type TransferConfig struct {
 	// otherwise try to apply project default keys if it is absent.
 	EncryptionConfiguration *EncryptionConfiguration `json:"encryptionConfiguration,omitempty"`
 
-	// Name: The resource name of the transfer config. Transfer config names
-	// have the form either
+	// Name: Identifier. The resource name of the transfer config. Transfer
+	// config names have the form either
 	// `projects/{project_id}/locations/{region}/transferConfigs/{config_id}`
 	//  or `projects/{project_id}/transferConfigs/{config_id}`, where
 	// `config_id` is usually a UUID, even though it is not guaranteed or
@@ -1380,8 +1380,8 @@ type TransferRun struct {
 	// ErrorStatus: Status of the transfer run.
 	ErrorStatus *Status `json:"errorStatus,omitempty"`
 
-	// Name: The resource name of the transfer run. Transfer run names have
-	// the form
+	// Name: Identifier. The resource name of the transfer run. Transfer run
+	// names have the form
 	// `projects/{project_id}/locations/{location}/transferConfigs/{config_id
 	// }/runs/{run_id}`. The name is ignored when creating a transfer run.
 	Name string `json:"name,omitempty"`
@@ -1652,7 +1652,7 @@ func (c *ProjectsEnrollDataSourcesCall) Do(opts ...googleapi.CallOption) (*Empty
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the project resource in the form: `projects/{project_id}`",
+	//       "description": "Required. The name of the project resource in the form: `projects/{project_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+$",
 	//       "required": true,
@@ -2302,7 +2302,7 @@ func (c *ProjectsLocationsEnrollDataSourcesCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the project resource in the form: `projects/{project_id}`",
+	//       "description": "Required. The name of the project resource in the form: `projects/{project_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -2810,7 +2810,7 @@ func (c *ProjectsLocationsUnenrollDataSourcesCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "The name of the project resource in the form: `projects/{project_id}`",
+	//       "description": "Required. The name of the project resource in the form: `projects/{project_id}`",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -4055,8 +4055,8 @@ type ProjectsLocationsTransferConfigsPatchCall struct {
 // Patch: Updates a data transfer configuration. All fields must be set,
 // even if they are not updated.
 //
-//   - name: The resource name of the transfer config. Transfer config
-//     names have the form either
+//   - name: Identifier. The resource name of the transfer config.
+//     Transfer config names have the form either
 //     `projects/{project_id}/locations/{region}/transferConfigs/{config_id
 //     }` or `projects/{project_id}/transferConfigs/{config_id}`, where
 //     `config_id` is usually a UUID, even though it is not guaranteed or
@@ -4226,7 +4226,7 @@ func (c *ProjectsLocationsTransferConfigsPatchCall) Do(opts ...googleapi.CallOpt
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The resource name of the transfer config. Transfer config names have the form either `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or `projects/{project_id}/transferConfigs/{config_id}`, where `config_id` is usually a UUID, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
+	//       "description": "Identifier. The resource name of the transfer config. Transfer config names have the form either `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or `projects/{project_id}/transferConfigs/{config_id}`, where `config_id` is usually a UUID, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -4541,7 +4541,7 @@ func (c *ProjectsLocationsTransferConfigsStartManualRunsCall) Do(opts ...googlea
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
+	//       "description": "Required. Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -6081,8 +6081,8 @@ type ProjectsTransferConfigsPatchCall struct {
 // Patch: Updates a data transfer configuration. All fields must be set,
 // even if they are not updated.
 //
-//   - name: The resource name of the transfer config. Transfer config
-//     names have the form either
+//   - name: Identifier. The resource name of the transfer config.
+//     Transfer config names have the form either
 //     `projects/{project_id}/locations/{region}/transferConfigs/{config_id
 //     }` or `projects/{project_id}/transferConfigs/{config_id}`, where
 //     `config_id` is usually a UUID, even though it is not guaranteed or
@@ -6252,7 +6252,7 @@ func (c *ProjectsTransferConfigsPatchCall) Do(opts ...googleapi.CallOption) (*Tr
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "The resource name of the transfer config. Transfer config names have the form either `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or `projects/{project_id}/transferConfigs/{config_id}`, where `config_id` is usually a UUID, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
+	//       "description": "Identifier. The resource name of the transfer config. Transfer config names have the form either `projects/{project_id}/locations/{region}/transferConfigs/{config_id}` or `projects/{project_id}/transferConfigs/{config_id}`, where `config_id` is usually a UUID, even though it is not guaranteed or required. The name is ignored when creating a transfer config.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,
@@ -6567,7 +6567,7 @@ func (c *ProjectsTransferConfigsStartManualRunsCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
+	//       "description": "Required. Transfer configuration name in the form: `projects/{project_id}/transferConfigs/{config_id}` or `projects/{project_id}/locations/{location_id}/transferConfigs/{config_id}`.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/transferConfigs/[^/]+$",
 	//       "required": true,

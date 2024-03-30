@@ -873,13 +873,13 @@ func (c *ProjectsProfilesListCall) Do(opts ...googleapi.CallOption) (*ListProfil
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "The maximum number of items to return. Default page_size is 1000. Max limit is 1000.",
+	//       "description": "Optional. The maximum number of items to return. Default page_size is 1000. Max limit is 1000.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "The token to continue pagination and get profiles from a particular page. When paginating, all other parameters provided to `ListProfiles` must match the call that provided the page token.",
+	//       "description": "Optional. The token to continue pagination and get profiles from a particular page. When paginating, all other parameters provided to `ListProfiles` must match the call that provided the page token.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

@@ -8498,7 +8498,8 @@ func (r *ProjectsLocationsConnectionsService) Patch(name string, connection *Con
 // update the connection details: * `description` * `labels` *
 // `connector_version` * `config_variables` * `auth_config` *
 // `destination_configs` * `node_config` * `log_config` * `ssl_config` *
-// `eventing_enablement_type` * `eventing_config`
+// `eventing_enablement_type` * `eventing_config` *
+// `auth_override_enabled`
 func (c *ProjectsLocationsConnectionsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsConnectionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -8611,7 +8612,7 @@ func (c *ProjectsLocationsConnectionsPatchCall) Do(opts ...googleapi.CallOption)
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. You can modify only the fields listed below. To lock/unlock a connection: * `lock_config` To suspend/resume a connection: * `suspended` To update the connection details: * `description` * `labels` * `connector_version` * `config_variables` * `auth_config` * `destination_configs` * `node_config` * `log_config` * `ssl_config` * `eventing_enablement_type` * `eventing_config`",
+	//       "description": "Required. You can modify only the fields listed below. To lock/unlock a connection: * `lock_config` To suspend/resume a connection: * `suspended` To update the connection details: * `description` * `labels` * `connector_version` * `config_variables` * `auth_config` * `destination_configs` * `node_config` * `log_config` * `ssl_config` * `eventing_enablement_type` * `eventing_config` * `auth_override_enabled`",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

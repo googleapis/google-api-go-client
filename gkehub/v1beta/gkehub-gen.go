@@ -6852,6 +6852,65 @@ func (s *SecurityPostureConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ServiceMeshCondition: Condition being reported.
+type ServiceMeshCondition struct {
+	// Code: Unique identifier of the condition which describes the
+	// condition recognizable to the user.
+	//
+	// Possible values:
+	//   "CODE_UNSPECIFIED" - Default Unspecified code
+	//   "MESH_IAM_PERMISSION_DENIED" - Mesh IAM permission denied error
+	// code
+	//   "CNI_CONFIG_UNSUPPORTED" - CNI config unsupported error code
+	//   "GKE_SANDBOX_UNSUPPORTED" - GKE sandbox unsupported error code
+	//   "NODEPOOL_WORKLOAD_IDENTITY_FEDERATION_REQUIRED" - Nodepool
+	// workload identity federation required error code
+	//   "CNI_INSTALLATION_FAILED" - CNI installation failed error code
+	//   "CNI_POD_UNSCHEDULABLE" - CNI pod unschedulable error code
+	//   "UNSUPPORTED_MULTIPLE_CONTROL_PLANES" - Multiple control planes
+	// unsupported error code
+	Code string `json:"code,omitempty"`
+
+	// Details: A short summary about the issue.
+	Details string `json:"details,omitempty"`
+
+	// DocumentationLink: Links contains actionable information.
+	DocumentationLink string `json:"documentationLink,omitempty"`
+
+	// Severity: Severity level of the condition.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Unspecified severity
+	//   "ERROR" - Indicates an issue that prevents the mesh from operating
+	// correctly
+	//   "WARNING" - Indicates a setting is likely wrong, but the mesh is
+	// still able to operate
+	//   "INFO" - An informational message, not requiring any action
+	Severity string `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Code") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Code") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceMeshCondition) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceMeshCondition
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ServiceMeshControlPlaneManagement: Status of control plane
 // management.
 type ServiceMeshControlPlaneManagement struct {
@@ -6998,6 +7057,10 @@ func (s *ServiceMeshMembershipSpec) MarshalJSON() ([]byte, error) {
 // ServiceMeshMembershipState: **Service Mesh**: State for a single
 // Membership, as analyzed by the Service Mesh Hub Controller.
 type ServiceMeshMembershipState struct {
+	// Conditions: Output only. List of condition reporting membership
+	// statues
+	Conditions []*ServiceMeshCondition `json:"conditions,omitempty"`
+
 	// ControlPlaneManagement: Output only. Status of control plane
 	// management
 	ControlPlaneManagement *ServiceMeshControlPlaneManagement `json:"controlPlaneManagement,omitempty"`
@@ -7005,22 +7068,20 @@ type ServiceMeshMembershipState struct {
 	// DataPlaneManagement: Output only. Status of data plane management.
 	DataPlaneManagement *ServiceMeshDataPlaneManagement `json:"dataPlaneManagement,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ControlPlaneManagement") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Conditions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ControlPlaneManagement")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "Conditions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

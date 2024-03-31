@@ -688,6 +688,11 @@ type Cluster struct {
 	// Labels: Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 
+	// MaintenanceSchedule: Output only. The maintenance schedule for the
+	// cluster, generated for a specific rollout if a maintenance window is
+	// set.
+	MaintenanceSchedule *MaintenanceSchedule `json:"maintenanceSchedule,omitempty"`
+
 	// MaintenanceUpdatePolicy: Optional. The maintenance update policy
 	// determines when to allow or deny updates.
 	MaintenanceUpdatePolicy *MaintenanceUpdatePolicy `json:"maintenanceUpdatePolicy,omitempty"`
@@ -1990,6 +1995,39 @@ func (s *MachineConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MaintenanceSchedule: MaintenanceSchedule stores the maintenance
+// schedule generated from the MaintenanceUpdatePolicy, once a
+// maintenance rollout is triggered, if MaintenanceWindow is set, and if
+// there is no conflicting DenyPeriod. The schedule is cleared once the
+// update takes place. This field cannot be manually changed; modify the
+// MaintenanceUpdatePolicy instead.
+type MaintenanceSchedule struct {
+	// StartTime: Output only. The scheduled start time for the maintenance.
+	StartTime string `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "StartTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "StartTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenanceSchedule) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenanceSchedule
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MaintenanceUpdatePolicy: MaintenanceUpdatePolicy defines the policy
 // for system updates.
 type MaintenanceUpdatePolicy struct {
@@ -2489,36 +2527,14 @@ func (s *PscConfig) MarshalJSON() ([]byte, error) {
 // PscInstanceConfig: PscInstanceConfig contains PSC related
 // configuration at an instance level.
 type PscInstanceConfig struct {
-	// AllowedConsumerNetworks: Optional. List of consumer networks that are
-	// allowed to create PSC endpoints to service-attachments to this
-	// instance.
-	AllowedConsumerNetworks []string `json:"allowedConsumerNetworks,omitempty"`
-
 	// AllowedConsumerProjects: Optional. List of consumer projects that are
 	// allowed to create PSC endpoints to service-attachments to this
 	// instance.
 	AllowedConsumerProjects []string `json:"allowedConsumerProjects,omitempty"`
 
-	// OutgoingServiceAttachmentLinks: Optional. List of service attachments
-	// that this instance has created endpoints to connect with. Currently,
-	// only a single outgoing service attachment is supported per instance.
-	OutgoingServiceAttachmentLinks []string `json:"outgoingServiceAttachmentLinks,omitempty"`
-
 	// PscDnsName: Output only. The DNS name of the instance for PSC
 	// connectivity. Name convention: ...alloydb-psc.goog
 	PscDnsName string `json:"pscDnsName,omitempty"`
-
-	// PscEnabled: Optional. Whether PSC connectivity is enabled for this
-	// instance. This is populated by referencing the value from the parent
-	// cluster.
-	PscEnabled bool `json:"pscEnabled,omitempty"`
-
-	// PscInterfaceConfigs: Optional. Configurations for setting up PSC
-	// interfaces attached to the instance which are used for outbound
-	// connectivity. Only primary instances can have PSC interface attached.
-	// All the VMs created for the primary instance will share the same
-	// configurations. Currently we only support 0 or 1 PSC interface.
-	PscInterfaceConfigs []*PscInterfaceConfig `json:"pscInterfaceConfigs,omitempty"`
 
 	// ServiceAttachmentLink: Output only. The service attachment created
 	// when Private Service Connect (PSC) is enabled for the instance. The
@@ -2527,7 +2543,7 @@ type PscInstanceConfig struct {
 	ServiceAttachmentLink string `json:"serviceAttachmentLink,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "AllowedConsumerNetworks") to unconditionally include in API
+	// "AllowedConsumerProjects") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
 	// from API requests. However, any non-pointer, non-interface field
 	// appearing in ForceSendFields will be sent to the server regardless of
@@ -2535,7 +2551,7 @@ type PscInstanceConfig struct {
 	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AllowedConsumerNetworks")
+	// NullFields is a list of field names (e.g. "AllowedConsumerProjects")
 	// to include in API requests with the JSON null value. By default,
 	// fields with empty values are omitted from API requests. However, any
 	// field with an empty value appearing in NullFields will be sent to the
@@ -2547,49 +2563,6 @@ type PscInstanceConfig struct {
 
 func (s *PscInstanceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PscInstanceConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// PscInterfaceConfig: Configuration for setting up a PSC interface.
-// This information needs to be provided by the customer. PSC interfaces
-// will be created and added to VMs via SLM (adding a network interface
-// will require recreating the VM). For HA instances this will be done
-// via LDTM.
-type PscInterfaceConfig struct {
-	// ConsumerEndpointIps: A list of endpoints in the consumer VPC the
-	// interface might initiate outbound connections to. This list has to be
-	// provided when the PSC interface is created.
-	ConsumerEndpointIps []string `json:"consumerEndpointIps,omitempty"`
-
-	// NetworkAttachment: The NetworkAttachment resource created in the
-	// consumer VPC to which the PSC interface will be linked, in the form
-	// of:
-	// `projects/${CONSUMER_PROJECT}/regions/${REGION}/networkAttachments/${N
-	// ETWORK_ATTACHMENT_NAME}`. NetworkAttachment has to be provided when
-	// the PSC interface is created.
-	NetworkAttachment string `json:"networkAttachment,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConsumerEndpointIps")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConsumerEndpointIps") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *PscInterfaceConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod PscInterfaceConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

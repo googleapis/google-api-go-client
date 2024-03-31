@@ -657,11 +657,12 @@ func (s *ContactInfo) MarshalJSON() ([]byte, error) {
 type Criticality struct {
 	// Level: Optional. Criticality level. Can contain only lowercase
 	// letters, numeric characters, underscores, and dashes. Can have a
-	// maximum length of 63 characters.
+	// maximum length of 63 characters. Deprecated: Please refer to type
+	// instead.
 	Level string `json:"level,omitempty"`
 
 	// MissionCritical: Optional. Indicates mission-critical Application,
-	// Service, or Workload.
+	// Service, or Workload. Deprecated: Please refer to type instead.
 	MissionCritical bool `json:"missionCritical,omitempty"`
 
 	// Type: Required. Criticality Type.
@@ -817,7 +818,8 @@ type Empty struct {
 type Environment struct {
 	// Environment: Optional. Environment name. Can contain only lowercase
 	// letters, numeric characters, underscores, and dashes. Can have a
-	// maximum length of 63 characters.
+	// maximum length of 63 characters. Deprecated: Please refer to type
+	// instead.
 	Environment string `json:"environment,omitempty"`
 
 	// Type: Required. Environment Type.

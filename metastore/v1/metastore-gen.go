@@ -822,8 +822,8 @@ type Empty struct {
 type EncryptionConfig struct {
 	// KmsKey: The fully qualified customer provided Cloud KMS key name to
 	// use for customer data encryption, in the following
-	// form:projects/{project_number}/locations/{location_id}/keyRings/{key_r
-	// ing_id}/cryptoKeys/{crypto_key_id}.
+	// format:projects/{project_number}/locations/{location_id}/keyRings/{key
+	// _ring_id}/cryptoKeys/{crypto_key_id}.
 	KmsKey string `json:"kmsKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KmsKey") to

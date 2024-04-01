@@ -469,9 +469,24 @@ type Cluster struct {
 	// `projects/{project_id}/locations/{location_id}/clusters/{cluster_id}`
 	Name string `json:"name,omitempty"`
 
+	// NodeType: Optional. The type of a redis node in the cluster. NodeType
+	// determines the underlying machine-type of a redis node.
+	//
+	// Possible values:
+	//   "NODE_TYPE_UNSPECIFIED"
+	//   "REDIS_SHARED_CORE_NANO" - Redis shared core nano node_type.
+	//   "REDIS_HIGHMEM_MEDIUM" - Redis highmem medium node_type.
+	//   "REDIS_HIGHMEM_XLARGE" - Redis highmem xlarge node_type.
+	//   "REDIS_STANDARD_SMALL" - Redis standard small node_type.
+	NodeType string `json:"nodeType,omitempty"`
+
 	// PersistenceConfig: Optional. Persistence config (RDB, AOF) for the
 	// cluster.
 	PersistenceConfig *ClusterPersistenceConfig `json:"persistenceConfig,omitempty"`
+
+	// PreciseSizeGb: Output only. Precise value of redis memory size in GB
+	// for the entire cluster.
+	PreciseSizeGb float64 `json:"preciseSizeGb,omitempty"`
 
 	// PscConfigs: Required. Each PscConfig configures the consumer network
 	// where IPs will be designated to the cluster for client access through
@@ -554,6 +569,20 @@ func (s *Cluster) MarshalJSON() ([]byte, error) {
 	type NoMethod Cluster
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *Cluster) UnmarshalJSON(data []byte) error {
+	type NoMethod Cluster
+	var s1 struct {
+		PreciseSizeGb gensupport.JSONFloat64 `json:"preciseSizeGb"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.PreciseSizeGb = float64(s1.PreciseSizeGb)
+	return nil
 }
 
 // ClusterPersistenceConfig: Configuration of the persistence

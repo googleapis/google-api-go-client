@@ -882,7 +882,15 @@ type AllocationPolicy struct {
 	// Placement: The placement policy.
 	Placement *PlacementPolicy `json:"placement,omitempty"`
 
-	// ServiceAccount: Service account that VMs will run as.
+	// ServiceAccount: Defines the service account for Batch-created VMs. If
+	// omitted, the default Compute Engine service account
+	// (https://cloud.google.com/compute/docs/access/service-accounts#default_service_account)
+	// is used. Must match the service account specified in any used
+	// instance template configured in the Batch job. Includes the following
+	// fields: * email: The service account's email address. If not set, the
+	// default Compute Engine service account is used. * scopes: Additional
+	// OAuth scopes to grant the service account, beyond the default
+	// cloud-platform scope. (list of strings)
 	ServiceAccount *ServiceAccount `json:"serviceAccount,omitempty"`
 
 	// Tags: Optional. Tags applied to the VM instances. The tags identify
@@ -2562,16 +2570,10 @@ func (s *Script) MarshalJSON() ([]byte, error) {
 // ServiceAccount: Carries information about a Google Cloud service
 // account.
 type ServiceAccount struct {
-	// Email: Email address of the service account. If not specified, the
-	// default Compute Engine service account for the project will be used.
-	// If instance template is being used, the service account has to be
-	// specified in the instance template and it has to match the email
-	// field here.
+	// Email: Email address of the service account.
 	Email string `json:"email,omitempty"`
 
-	// Scopes: List of scopes to be enabled for this service account on the
-	// VM, in addition to the cloud-platform API scope that will be added by
-	// default.
+	// Scopes: List of scopes to be enabled for this service account.
 	Scopes []string `json:"scopes,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Email") to

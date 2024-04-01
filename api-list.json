@@ -5634,6 +5634,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "solar:v1",
+      "name": "solar",
+      "version": "v1",
+      "title": "Solar API",
+      "description": "Solar API.",
+      "discoveryRestUrl": "https://solar.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/maps/documentation/solar",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "sourcerepo:v1",
       "name": "sourcerepo",
       "version": "v1",

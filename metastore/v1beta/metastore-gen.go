@@ -208,6 +208,7 @@ func NewProjectsLocationsServicesService(s *APIService) *ProjectsLocationsServic
 	rs.Backups = NewProjectsLocationsServicesBackupsService(s)
 	rs.Databases = NewProjectsLocationsServicesDatabasesService(s)
 	rs.MetadataImports = NewProjectsLocationsServicesMetadataImportsService(s)
+	rs.MigrationExecutions = NewProjectsLocationsServicesMigrationExecutionsService(s)
 	return rs
 }
 
@@ -219,6 +220,8 @@ type ProjectsLocationsServicesService struct {
 	Databases *ProjectsLocationsServicesDatabasesService
 
 	MetadataImports *ProjectsLocationsServicesMetadataImportsService
+
+	MigrationExecutions *ProjectsLocationsServicesMigrationExecutionsService
 }
 
 func NewProjectsLocationsServicesBackupsService(s *APIService) *ProjectsLocationsServicesBackupsService {
@@ -257,6 +260,15 @@ func NewProjectsLocationsServicesMetadataImportsService(s *APIService) *Projects
 }
 
 type ProjectsLocationsServicesMetadataImportsService struct {
+	s *APIService
+}
+
+func NewProjectsLocationsServicesMigrationExecutionsService(s *APIService) *ProjectsLocationsServicesMigrationExecutionsService {
+	rs := &ProjectsLocationsServicesMigrationExecutionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsServicesMigrationExecutionsService struct {
 	s *APIService
 }
 
@@ -701,9 +713,261 @@ func (s *Binding) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CancelMigrationRequest: Request message for
+// DataprocMetastore.CancelMigration.
+type CancelMigrationRequest struct {
+}
+
+// CancelMigrationResponse: Response message for
+// DataprocMetastore.CancelMigration.
+type CancelMigrationResponse struct {
+	// MigrationExecution: The relative resource name of the migration
+	// execution, in the following
+	// form:projects/{project_number}/locations/{location_id}/services/{servi
+	// ce_id}/migrationExecutions/{migration_execution_id}.
+	MigrationExecution string `json:"migrationExecution,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MigrationExecution")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MigrationExecution") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CancelMigrationResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CancelMigrationResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CancelOperationRequest: The request message for
 // Operations.CancelOperation.
 type CancelOperationRequest struct {
+}
+
+// CdcConfig: Configuration information to start the Change Data Capture
+// (CDC) streams from customer database to backend database of Dataproc
+// Metastore.
+type CdcConfig struct {
+	// Bucket: Optional. The bucket to write the intermediate stream event
+	// data in. The bucket name must be without any prefix like "gs://". See
+	// the bucket naming requirements
+	// (https://cloud.google.com/storage/docs/buckets#naming). This field is
+	// optional. If not set, the Artifacts Cloud Storage bucket will be
+	// used.
+	Bucket string `json:"bucket,omitempty"`
+
+	// Password: Required. Input only. The password for the user that
+	// Datastream service should use for the MySQL connection. This field is
+	// not returned on request.
+	Password string `json:"password,omitempty"`
+
+	// ReverseProxySubnet: Required. The URL of the subnetwork resource to
+	// create the VM instance hosting the reverse proxy in. More context in
+	// https://cloud.google.com/datastream/docs/private-connectivity#reverse-csql-proxy
+	// The subnetwork should reside in the network provided in the request
+	// that Datastream will peer to and should be in the same region as
+	// Datastream, in the following format.
+	// projects/{project_id}/regions/{region_id}/subnetworks/{subnetwork_id}
+	ReverseProxySubnet string `json:"reverseProxySubnet,omitempty"`
+
+	// RootPath: Optional. The root path inside the Cloud Storage bucket.
+	// The stream event data will be written to this path. The default value
+	// is /migration.
+	RootPath string `json:"rootPath,omitempty"`
+
+	// SubnetIpRange: Required. A /29 CIDR IP range for peering with
+	// datastream.
+	SubnetIpRange string `json:"subnetIpRange,omitempty"`
+
+	// Username: Required. The username that the Datastream service should
+	// use for the MySQL connection.
+	Username string `json:"username,omitempty"`
+
+	// VpcNetwork: Required. Fully qualified name of the Cloud SQL
+	// instance's VPC network or the shared VPC network that Datastream will
+	// peer to, in the following format:
+	// projects/{project_id}/locations/global/networks/{network_id}. More
+	// context in
+	// https://cloud.google.com/datastream/docs/network-connectivity-options#privateconnectivity
+	VpcNetwork string `json:"vpcNetwork,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Bucket") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Bucket") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CdcConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CdcConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudSQLConnectionConfig: Configuration information to establish
+// customer database connection before the cutover phase of migration
+type CloudSQLConnectionConfig struct {
+	// HiveDatabaseName: Required. The hive database name.
+	HiveDatabaseName string `json:"hiveDatabaseName,omitempty"`
+
+	// InstanceConnectionName: Required. Cloud SQL database connection name
+	// (project_id:region:instance_name)
+	InstanceConnectionName string `json:"instanceConnectionName,omitempty"`
+
+	// IpAddress: Required. The private IP address of the Cloud SQL
+	// instance.
+	IpAddress string `json:"ipAddress,omitempty"`
+
+	// NatSubnet: Required. The relative resource name of the subnetwork to
+	// be used for Private Service Connect. Note that this cannot be a
+	// regular subnet and is used only for NAT.
+	// (https://cloud.google.com/vpc/docs/about-vpc-hosted-services#psc-subnets)
+	// This subnet is used to publish the SOCKS5 proxy service. The subnet
+	// size must be at least /29 and it should reside in a network through
+	// which the Cloud SQL instance is accessible. The resource name should
+	// be in the format,
+	// projects/{project_id}/regions/{region_id}/subnetworks/{subnetwork_id}
+	NatSubnet string `json:"natSubnet,omitempty"`
+
+	// Password: Required. Input only. The password for the user that
+	// Dataproc Metastore service will be using to connect to the database.
+	// This field is not returned on request.
+	Password string `json:"password,omitempty"`
+
+	// Port: Required. The network port of the database.
+	Port int64 `json:"port,omitempty"`
+
+	// ProxySubnet: Required. The relative resource name of the subnetwork
+	// to deploy the SOCKS5 proxy service in. The subnetwork should reside
+	// in a network through which the Cloud SQL instance is accessible. The
+	// resource name should be in the format,
+	// projects/{project_id}/regions/{region_id}/subnetworks/{subnetwork_id}
+	ProxySubnet string `json:"proxySubnet,omitempty"`
+
+	// Username: Required. The username that Dataproc Metastore service will
+	// use to connect to the database.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HiveDatabaseName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HiveDatabaseName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudSQLConnectionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSQLConnectionConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudSQLMigrationConfig: Configuration information for migrating from
+// self-managed hive metastore on GCP using Cloud SQL as the backend
+// database to DPMS.
+type CloudSQLMigrationConfig struct {
+	// CdcConfig: Required. Configuration information to start the Change
+	// Data Capture (CDC) streams from customer database to backend database
+	// of Dataproc Metastore. Dataproc Metastore switches to using its
+	// backend database after the cutover phase of migration.
+	CdcConfig *CdcConfig `json:"cdcConfig,omitempty"`
+
+	// CloudSqlConnectionConfig: Required. Configuration information to
+	// establish customer database connection before the cutover phase of
+	// migration
+	CloudSqlConnectionConfig *CloudSQLConnectionConfig `json:"cloudSqlConnectionConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CdcConfig") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CdcConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudSQLMigrationConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSQLMigrationConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CompleteMigrationRequest: Request message for
+// DataprocMetastore.CompleteMigration.
+type CompleteMigrationRequest struct {
+}
+
+// CompleteMigrationResponse: Response message for
+// DataprocMetastore.CompleteMigration.
+type CompleteMigrationResponse struct {
+	// MigrationExecution: The relative resource name of the migration
+	// execution, in the following
+	// form:projects/{project_number}/locations/{location_id}/services/{servi
+	// ce_id}/migrationExecutions/{migration_execution_id}.
+	MigrationExecution string `json:"migrationExecution,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MigrationExecution")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MigrationExecution") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CompleteMigrationResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod CompleteMigrationResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Consumer: Contains information of the customer's network
@@ -878,8 +1142,8 @@ type Empty struct {
 type EncryptionConfig struct {
 	// KmsKey: The fully qualified customer provided Cloud KMS key name to
 	// use for customer data encryption, in the following
-	// form:projects/{project_number}/locations/{location_id}/keyRings/{key_r
-	// ing_id}/cryptoKeys/{crypto_key_id}.
+	// format:projects/{project_number}/locations/{location_id}/keyRings/{key
+	// _ring_id}/cryptoKeys/{crypto_key_id}.
 	KmsKey string `json:"kmsKey,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "KmsKey") to
@@ -1510,6 +1774,48 @@ func (s *ListMetadataImportsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListMigrationExecutionsResponse: Response message for
+// DataprocMetastore.ListMigrationExecutions.
+type ListMigrationExecutionsResponse struct {
+	// MigrationExecutions: The migration executions on the specified
+	// service.
+	MigrationExecutions []*MigrationExecution `json:"migrationExecutions,omitempty"`
+
+	// NextPageToken: A token that can be sent as page_token to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "MigrationExecutions")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MigrationExecutions") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListMigrationExecutionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListMigrationExecutionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ListOperationsResponse: The response message for
 // Operations.ListOperations.
 type ListOperationsResponse struct {
@@ -1898,6 +2204,92 @@ type MetadataManagementActivity struct {
 
 func (s *MetadataManagementActivity) MarshalJSON() ([]byte, error) {
 	type NoMethod MetadataManagementActivity
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MigrationExecution: The details of a migration execution resource.
+type MigrationExecution struct {
+	// CloudSqlMigrationConfig: Configuration information specific to
+	// migrating from self-managed hive metastore on GCP using Cloud SQL as
+	// the backend database to DPMS.
+	CloudSqlMigrationConfig *CloudSQLMigrationConfig `json:"cloudSqlMigrationConfig,omitempty"`
+
+	// CreateTime: Output only. The time when the migration execution was
+	// started.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// EndTime: Output only. The time when the migration execution finished.
+	EndTime string `json:"endTime,omitempty"`
+
+	// Name: Output only. The relative resource name of the migration
+	// execution, in the following form:
+	// projects/{project_number}/locations/{location_id}/services/{service_id
+	// }/migrationExecutions/{migration_execution_id}
+	Name string `json:"name,omitempty"`
+
+	// Phase: Output only. The current phase of the migration execution.
+	//
+	// Possible values:
+	//   "PHASE_UNSPECIFIED" - The phase of the migration execution is
+	// unknown.
+	//   "REPLICATION" - Replication phase refers to the migration phase
+	// when Dataproc Metastore is running a pipeline to replicate changes in
+	// the customer database to its backend database. During this phase,
+	// Dataproc Metastore uses the customer database as the hive metastore
+	// backend database.
+	//   "CUTOVER" - Cutover phase refers to the migration phase when
+	// Dataproc Metastore switches to using its own backend database.
+	// Migration enters this phase when customer is done migrating all their
+	// clusters/workloads to DPMS and triggers CompleteMigration.
+	Phase string `json:"phase,omitempty"`
+
+	// State: Output only. The current state of the migration execution.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The state of the migration execution is
+	// unknown.
+	//   "STARTING" - The migration execution is starting.
+	//   "RUNNING" - The migration execution is running.
+	//   "CANCELLING" - The migration execution is in the process of being
+	// cancelled.
+	//   "AWAITING_USER_ACTION" - The migration execution is awaiting user
+	// action.
+	//   "SUCCEEDED" - The migration execution has completed successfully.
+	//   "FAILED" - The migration execution has failed.
+	//   "CANCELLED" - The migration execution is cancelled.
+	//   "DELETING" - The migration execution is being deleted.
+	State string `json:"state,omitempty"`
+
+	// StateMessage: Output only. Additional information about the current
+	// state of the migration execution.
+	StateMessage string `json:"stateMessage,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CloudSqlMigrationConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudSqlMigrationConfig")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MigrationExecution) MarshalJSON() ([]byte, error) {
+	type NoMethod MigrationExecution
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2825,6 +3217,49 @@ type SetIamPolicyRequest struct {
 
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StartMigrationRequest: Request message for
+// DataprocMetastore.StartMigration.
+type StartMigrationRequest struct {
+	// MigrationExecution: Required. The configuration details for the
+	// migration.
+	MigrationExecution *MigrationExecution `json:"migrationExecution,omitempty"`
+
+	// RequestId: Optional. A request ID. Specify a unique request ID to
+	// allow the server to ignore the request if it has completed. The
+	// server will ignore subsequent requests that provide a duplicate
+	// request ID for at least 60 minutes after the first request.For
+	// example, if an initial request times out, followed by another request
+	// with the same request ID, the server ignores the second request to
+	// prevent the creation of duplicate commitments.The request ID must be
+	// a valid UUID
+	// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format)
+	// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+	RequestId string `json:"requestId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MigrationExecution")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MigrationExecution") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StartMigrationRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod StartMigrationRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5627,6 +6062,298 @@ func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Do(opts ...googleapi
 
 }
 
+// method id "metastore.projects.locations.services.cancelMigration":
+
+type ProjectsLocationsServicesCancelMigrationCall struct {
+	s                      *APIService
+	service                string
+	cancelmigrationrequest *CancelMigrationRequest
+	urlParams_             gensupport.URLParams
+	ctx_                   context.Context
+	header_                http.Header
+}
+
+// CancelMigration: Cancels the ongoing Managed Migration process.
+//
+//   - service: The relative resource name of the metastore service to
+//     cancel the ongoing migration to, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{servi
+//     ce_id}.
+func (r *ProjectsLocationsServicesService) CancelMigration(service string, cancelmigrationrequest *CancelMigrationRequest) *ProjectsLocationsServicesCancelMigrationCall {
+	c := &ProjectsLocationsServicesCancelMigrationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.service = service
+	c.cancelmigrationrequest = cancelmigrationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesCancelMigrationCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesCancelMigrationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesCancelMigrationCall) Context(ctx context.Context) *ProjectsLocationsServicesCancelMigrationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesCancelMigrationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesCancelMigrationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cancelmigrationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+service}:cancelMigration")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"service": c.service,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.services.cancelMigration" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesCancelMigrationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Cancels the ongoing Managed Migration process.",
+	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:cancelMigration",
+	//   "httpMethod": "POST",
+	//   "id": "metastore.projects.locations.services.cancelMigration",
+	//   "parameterOrder": [
+	//     "service"
+	//   ],
+	//   "parameters": {
+	//     "service": {
+	//       "description": "Required. The relative resource name of the metastore service to cancel the ongoing migration to, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+service}:cancelMigration",
+	//   "request": {
+	//     "$ref": "CancelMigrationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "metastore.projects.locations.services.completeMigration":
+
+type ProjectsLocationsServicesCompleteMigrationCall struct {
+	s                        *APIService
+	service                  string
+	completemigrationrequest *CompleteMigrationRequest
+	urlParams_               gensupport.URLParams
+	ctx_                     context.Context
+	header_                  http.Header
+}
+
+// CompleteMigration: Completes the managed migration process. The
+// Dataproc Metastore service will switch to using its own backend
+// database after successful migration.
+//
+//   - service: The relative resource name of the metastore service to
+//     complete the migration to, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{servi
+//     ce_id}.
+func (r *ProjectsLocationsServicesService) CompleteMigration(service string, completemigrationrequest *CompleteMigrationRequest) *ProjectsLocationsServicesCompleteMigrationCall {
+	c := &ProjectsLocationsServicesCompleteMigrationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.service = service
+	c.completemigrationrequest = completemigrationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesCompleteMigrationCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesCompleteMigrationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesCompleteMigrationCall) Context(ctx context.Context) *ProjectsLocationsServicesCompleteMigrationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesCompleteMigrationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesCompleteMigrationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.completemigrationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+service}:completeMigration")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"service": c.service,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.services.completeMigration" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesCompleteMigrationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Completes the managed migration process. The Dataproc Metastore service will switch to using its own backend database after successful migration.",
+	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:completeMigration",
+	//   "httpMethod": "POST",
+	//   "id": "metastore.projects.locations.services.completeMigration",
+	//   "parameterOrder": [
+	//     "service"
+	//   ],
+	//   "parameters": {
+	//     "service": {
+	//       "description": "Required. The relative resource name of the metastore service to complete the migration to, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+service}:completeMigration",
+	//   "request": {
+	//     "$ref": "CompleteMigrationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
 // method id "metastore.projects.locations.services.create":
 
 type ProjectsLocationsServicesCreateCall struct {
@@ -7558,6 +8285,151 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "response": {
 	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "metastore.projects.locations.services.startMigration":
+
+type ProjectsLocationsServicesStartMigrationCall struct {
+	s                     *APIService
+	service               string
+	startmigrationrequest *StartMigrationRequest
+	urlParams_            gensupport.URLParams
+	ctx_                  context.Context
+	header_               http.Header
+}
+
+// StartMigration: Starts the Managed Migration process.
+//
+//   - service: The relative resource name of the metastore service to
+//     start migrating to, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{servi
+//     ce_id}.
+func (r *ProjectsLocationsServicesService) StartMigration(service string, startmigrationrequest *StartMigrationRequest) *ProjectsLocationsServicesStartMigrationCall {
+	c := &ProjectsLocationsServicesStartMigrationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.service = service
+	c.startmigrationrequest = startmigrationrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesStartMigrationCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesStartMigrationCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesStartMigrationCall) Context(ctx context.Context) *ProjectsLocationsServicesStartMigrationCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesStartMigrationCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesStartMigrationCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.startmigrationrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+service}:startMigration")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"service": c.service,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.services.startMigration" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesStartMigrationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Starts the Managed Migration process.",
+	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:startMigration",
+	//   "httpMethod": "POST",
+	//   "id": "metastore.projects.locations.services.startMigration",
+	//   "parameterOrder": [
+	//     "service"
+	//   ],
+	//   "parameters": {
+	//     "service": {
+	//       "description": "Required. The relative resource name of the metastore service to start migrating to, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+service}:startMigration",
+	//   "request": {
+	//     "$ref": "StartMigrationRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -10579,4 +11451,536 @@ func (c *ProjectsLocationsServicesMetadataImportsPatchCall) Do(opts ...googleapi
 	//   ]
 	// }
 
+}
+
+// method id "metastore.projects.locations.services.migrationExecutions.delete":
+
+type ProjectsLocationsServicesMigrationExecutionsDeleteCall struct {
+	s          *APIService
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a single migration execution.
+//
+//   - name: The relative resource name of the migrationExecution to
+//     delete, in the following
+//     form:projects/{project_number}/locations/{location_id}/services/{ser
+//     vice_id}/migrationExecutions/{migration_execution_id}.
+func (r *ProjectsLocationsServicesMigrationExecutionsService) Delete(name string) *ProjectsLocationsServicesMigrationExecutionsDeleteCall {
+	c := &ProjectsLocationsServicesMigrationExecutionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": A request ID.
+// Specify a unique request ID to allow the server to ignore the request
+// if it has completed. The server will ignore subsequent requests that
+// provide a duplicate request ID for at least 60 minutes after the
+// first request.For example, if an initial request times out, followed
+// by another request with the same request ID, the server ignores the
+// second request to prevent the creation of duplicate commitments.The
+// request ID must be a valid UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format)
+// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) RequestId(requestId string) *ProjectsLocationsServicesMigrationExecutionsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesMigrationExecutionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsServicesMigrationExecutionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.services.migrationExecutions.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a single migration execution.",
+	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/migrationExecutions/{migrationExecutionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "metastore.projects.locations.services.migrationExecutions.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The relative resource name of the migrationExecution to delete, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/migrationExecutions/{migration_execution_id}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/migrationExecutions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. A request ID. Specify a unique request ID to allow the server to ignore the request if it has completed. The server will ignore subsequent requests that provide a duplicate request ID for at least 60 minutes after the first request.For example, if an initial request times out, followed by another request with the same request ID, the server ignores the second request to prevent the creation of duplicate commitments.The request ID must be a valid UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "metastore.projects.locations.services.migrationExecutions.get":
+
+type ProjectsLocationsServicesMigrationExecutionsGetCall struct {
+	s            *APIService
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets details of a single migration execution.
+//
+//   - name: The relative resource name of the migration execution to
+//     retrieve, in the following
+//     form:projects/{project_number}/locations/{location_id}/services/{ser
+//     vice_id}/migrationExecutions/{migration_execution_id}.
+func (r *ProjectsLocationsServicesMigrationExecutionsService) Get(name string) *ProjectsLocationsServicesMigrationExecutionsGetCall {
+	c := &ProjectsLocationsServicesMigrationExecutionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesMigrationExecutionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesMigrationExecutionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) Context(ctx context.Context) *ProjectsLocationsServicesMigrationExecutionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.services.migrationExecutions.get" call.
+// Exactly one of *MigrationExecution or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *MigrationExecution.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) Do(opts ...googleapi.CallOption) (*MigrationExecution, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &MigrationExecution{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets details of a single migration execution.",
+	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/migrationExecutions/{migrationExecutionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "metastore.projects.locations.services.migrationExecutions.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The relative resource name of the migration execution to retrieve, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/migrationExecutions/{migration_execution_id}.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/migrationExecutions/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+name}",
+	//   "response": {
+	//     "$ref": "MigrationExecution"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "metastore.projects.locations.services.migrationExecutions.list":
+
+type ProjectsLocationsServicesMigrationExecutionsListCall struct {
+	s            *APIService
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists migration executions on a service.
+//
+//   - parent: The relative resource name of the service whose migration
+//     executions to list, in the following
+//     form:projects/{project_number}/locations/{location_id}/services/{ser
+//     vice_id}/migrationExecutions.
+func (r *ProjectsLocationsServicesMigrationExecutionsService) List(parent string) *ProjectsLocationsServicesMigrationExecutionsListCall {
+	c := &ProjectsLocationsServicesMigrationExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": The filter to apply to
+// list results.
+func (c *ProjectsLocationsServicesMigrationExecutionsListCall) Filter(filter string) *ProjectsLocationsServicesMigrationExecutionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Specify the ordering
+// of results as described in Sorting Order
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order).
+// If not specified, the results will be sorted in the default order.
+func (c *ProjectsLocationsServicesMigrationExecutionsListCall) OrderBy(orderBy string) *ProjectsLocationsServicesMigrationExecutionsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of migration executions to return. The response may contain less than
+// the maximum number. If unspecified, no more than 500 migration
+// executions are returned. The maximum value is 1000; values above 1000
+// are changed to 1000.
+func (c *ProjectsLocationsServicesMigrationExecutionsListCall) PageSize(pageSize int64) *ProjectsLocationsServicesMigrationExecutionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous DataprocMetastore.ListMigrationExecutions
+// call. Provide this token to retrieve the subsequent page.To retrieve
+// the first page, supply an empty page token.When paginating, other
+// parameters provided to DataprocMetastore.ListMigrationExecutions must
+// match the call that provided the page token.
+func (c *ProjectsLocationsServicesMigrationExecutionsListCall) PageToken(pageToken string) *ProjectsLocationsServicesMigrationExecutionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsServicesMigrationExecutionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesMigrationExecutionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsServicesMigrationExecutionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesMigrationExecutionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsServicesMigrationExecutionsListCall) Context(ctx context.Context) *ProjectsLocationsServicesMigrationExecutionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsServicesMigrationExecutionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsServicesMigrationExecutionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/migrationExecutions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "metastore.projects.locations.services.migrationExecutions.list" call.
+// Exactly one of *ListMigrationExecutionsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListMigrationExecutionsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsServicesMigrationExecutionsListCall) Do(opts ...googleapi.CallOption) (*ListMigrationExecutionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListMigrationExecutionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists migration executions on a service.",
+	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/migrationExecutions",
+	//   "httpMethod": "GET",
+	//   "id": "metastore.projects.locations.services.migrationExecutions.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. The filter to apply to list results.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Specify the ordering of results as described in Sorting Order (https://cloud.google.com/apis/design/design_patterns#sorting_order). If not specified, the results will be sorted in the default order.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of migration executions to return. The response may contain less than the maximum number. If unspecified, no more than 500 migration executions are returned. The maximum value is 1000; values above 1000 are changed to 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous DataprocMetastore.ListMigrationExecutions call. Provide this token to retrieve the subsequent page.To retrieve the first page, supply an empty page token.When paginating, other parameters provided to DataprocMetastore.ListMigrationExecutions must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The relative resource name of the service whose migration executions to list, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/migrationExecutions.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+parent}/migrationExecutions",
+	//   "response": {
+	//     "$ref": "ListMigrationExecutionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsServicesMigrationExecutionsListCall) Pages(ctx context.Context, f func(*ListMigrationExecutionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
 }

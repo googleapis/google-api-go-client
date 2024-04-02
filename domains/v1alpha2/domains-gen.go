@@ -1952,6 +1952,14 @@ type Registration struct {
 	// email they receive.
 	PendingContactSettings *ContactSettings `json:"pendingContactSettings,omitempty"`
 
+	// Provider: Output only. Current domain management provider.
+	//
+	// Possible values:
+	//   "REGISTRAR_UNSPECIFIED" - Registrar is not selected.
+	//   "GOOGLE_DOMAINS" - Use Google Domains registrar.
+	//   "SQUARESPACE" - Use Squarespace registrar
+	Provider string `json:"provider,omitempty"`
+
 	// RegisterFailureReason: Output only. The reason the domain
 	// registration failed. Only set for domains in REGISTRATION_FAILED
 	// state.
@@ -3245,7 +3253,17 @@ type ProjectsLocationsRegistrationsConfigureContactSettingsCall struct {
 
 // ConfigureContactSettings: Updates a `Registration`'s contact
 // settings. Some changes require confirmation by the domain's
-// registrant contact .
+// registrant contact . Caution: Please consider carefully any changes
+// to contact privacy settings when changing from
+// `REDACTED_CONTACT_DATA` to `PUBLIC_CONTACT_DATA.` There may be a
+// delay in reflecting updates you make to registrant contact
+// information such that any changes you make to contact privacy
+// (including from `REDACTED_CONTACT_DATA` to `PUBLIC_CONTACT_DATA`)
+// will be applied without delay but changes to registrant contact
+// information may take a limited time to be publicized. This means that
+// changes to contact privacy from `REDACTED_CONTACT_DATA` to
+// `PUBLIC_CONTACT_DATA` may make the previous registrant contact data
+// public until the modified registrant contact details are published.
 //
 //   - registration: The name of the `Registration` whose contact settings
 //     are being updated, in the format
@@ -3348,7 +3366,7 @@ func (c *ProjectsLocationsRegistrationsConfigureContactSettingsCall) Do(opts ...
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates a `Registration`'s contact settings. Some changes require confirmation by the domain's registrant contact .",
+	//   "description": "Updates a `Registration`'s contact settings. Some changes require confirmation by the domain's registrant contact . Caution: Please consider carefully any changes to contact privacy settings when changing from `REDACTED_CONTACT_DATA` to `PUBLIC_CONTACT_DATA.` There may be a delay in reflecting updates you make to registrant contact information such that any changes you make to contact privacy (including from `REDACTED_CONTACT_DATA` to `PUBLIC_CONTACT_DATA`) will be applied without delay but changes to registrant contact information may take a limited time to be publicized. This means that changes to contact privacy from `REDACTED_CONTACT_DATA` to `PUBLIC_CONTACT_DATA` may make the previous registrant contact data public until the modified registrant contact details are published.",
 	//   "flatPath": "v1alpha2/projects/{projectsId}/locations/{locationsId}/registrations/{registrationsId}:configureContactSettings",
 	//   "httpMethod": "POST",
 	//   "id": "domains.projects.locations.registrations.configureContactSettings",

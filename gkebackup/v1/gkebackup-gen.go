@@ -640,6 +640,15 @@ type BackupPlan struct {
 	// Backups created under this plan.
 	RetentionPolicy *RetentionPolicy `json:"retentionPolicy,omitempty"`
 
+	// RpoRiskLevel: Output only. A number that represents the current risk
+	// level of this BackupPlan from RPO perspective with 1 being no risk
+	// and 5 being highest risk.
+	RpoRiskLevel int64 `json:"rpoRiskLevel,omitempty"`
+
+	// RpoRiskReason: Output only. Human-readable description of why the
+	// BackupPlan is in the current rpo_risk_level and action items if any.
+	RpoRiskReason string `json:"rpoRiskReason,omitempty"`
+
 	// State: Output only. State of the BackupPlan. This State field
 	// reflects the various stages a BackupPlan can be in during the Create
 	// operation. It will be set to "DEACTIVATED" if the BackupPlan is
@@ -909,6 +918,91 @@ func (s *ClusterResourceRestoreScope) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Date: Represents a whole or partial calendar date, such as a
+// birthday. The time of day and time zone are either specified
+// elsewhere or are insignificant. The date is relative to the Gregorian
+// Calendar. This can represent one of the following: * A full date,
+// with non-zero year, month, and day values. * A month and day, with a
+// zero year (for example, an anniversary). * A year on its own, with a
+// zero month and a zero day. * A year and month, with a zero day (for
+// example, a credit card expiration date). Related types: *
+// google.type.TimeOfDay * google.type.DateTime *
+// google.protobuf.Timestamp
+type Date struct {
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
+	// month, or 0 to specify a year by itself or a year and month where the
+	// day isn't significant.
+	Day int64 `json:"day,omitempty"`
+
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
+	// without a month and day.
+	Month int64 `json:"month,omitempty"`
+
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
+	// date without a year.
+	Year int64 `json:"year,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Date) MarshalJSON() ([]byte, error) {
+	type NoMethod Date
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DayOfWeekList: Holds repeated DaysOfWeek values as a container.
+type DayOfWeekList struct {
+	// DaysOfWeek: Optional. A list of days of week.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	DaysOfWeek []string `json:"daysOfWeek,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DaysOfWeek") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DaysOfWeek") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DayOfWeekList) MarshalJSON() ([]byte, error) {
+	type NoMethod DayOfWeekList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -947,6 +1041,57 @@ type EncryptionKey struct {
 
 func (s *EncryptionKey) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExclusionWindow: Defines a time window during which no backup should
+// happen. All time and date are in UTC.
+type ExclusionWindow struct {
+	// Daily: The exclusion window occurs every day if set to "True".
+	// Specifying this field to "False" is an error.
+	Daily bool `json:"daily,omitempty"`
+
+	// DaysOfWeek: The exclusion window occurs on these days of each week in
+	// UTC.
+	DaysOfWeek *DayOfWeekList `json:"daysOfWeek,omitempty"`
+
+	// Duration: Required. Specifies duration of the window. Restrictions
+	// for duration based on the recurrence type to allow some time for
+	// backup to happen: - single_occurrence_date: no restriction, but UI
+	// may warn about this when duration >= target RPO - daily window:
+	// duration < 24 hours - weekly window: - days of week includes all
+	// seven days of a week: duration < 24 hours - all other weekly window:
+	// duration < 168 hours (i.e., 24 * 7 hours)
+	Duration string `json:"duration,omitempty"`
+
+	// SingleOccurrenceDate: No recurrence. The exclusion window occurs only
+	// once and on this date in UTC.
+	SingleOccurrenceDate *Date `json:"singleOccurrenceDate,omitempty"`
+
+	// StartTime: Required. Specifies the start time of the window using
+	// time of the day in UTC.
+	StartTime *TimeOfDay `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Daily") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Daily") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExclusionWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod ExclusionWindow
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1007,6 +1152,38 @@ type Expr struct {
 
 func (s *Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GetBackupIndexDownloadUrlResponse: Response message for
+// GetBackupIndexDownloadUrl.
+type GetBackupIndexDownloadUrlResponse struct {
+	SignedUrl string `json:"signedUrl,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "SignedUrl") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SignedUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GetBackupIndexDownloadUrlResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GetBackupIndexDownloadUrlResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2230,6 +2407,50 @@ func (s *RetentionPolicy) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RpoConfig: Defines RPO scheduling configuration for automatically
+// creating Backups via this BackupPlan.
+type RpoConfig struct {
+	// ExclusionWindows: Optional. User specified time windows during which
+	// backup can NOT happen for this BackupPlan - backups should start and
+	// finish outside of any given exclusion window. Note: backup jobs will
+	// be scheduled to start and finish outside the duration of the window
+	// as much as possible, but running jobs will not get canceled when it
+	// runs into the window. All the time and date values in
+	// exclusion_windows entry in the API are in UTC. We only allow <=1
+	// recurrence (daily or weekly) exclusion window for a BackupPlan while
+	// no restriction on number of single occurrence windows.
+	ExclusionWindows []*ExclusionWindow `json:"exclusionWindows,omitempty"`
+
+	// TargetRpoMinutes: Required. Defines the target RPO for the BackupPlan
+	// in minutes, which means the target maximum data loss in time that is
+	// acceptable for this BackupPlan. This must be at least 60, i.e., 1
+	// hour, and at most 86400, i.e., 60 days.
+	TargetRpoMinutes int64 `json:"targetRpoMinutes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ExclusionWindows") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ExclusionWindows") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RpoConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod RpoConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Schedule: Defines scheduling parameters for automatically creating
 // Backups via this BackupPlan.
 type Schedule struct {
@@ -2242,9 +2463,20 @@ type Schedule struct {
 	// will occur.
 	CronSchedule string `json:"cronSchedule,omitempty"`
 
+	// NextScheduledBackupTime: Output only. Start time of next scheduled
+	// backup under this BackupPlan by either cron_schedule or rpo config.
+	NextScheduledBackupTime string `json:"nextScheduledBackupTime,omitempty"`
+
 	// Paused: Optional. This flag denotes whether automatic Backup creation
 	// is paused for this BackupPlan. Default: False
 	Paused bool `json:"paused,omitempty"`
+
+	// RpoConfig: Optional. Defines the RPO schedule configuration for this
+	// BackupPlan. This is mutually exclusive with the cron_schedule field
+	// since at most one schedule can be defined for a BackupPLan. If this
+	// is defined, then backup_retain_days must also be defined. Default
+	// (empty): no automatic backup creation will occur.
+	RpoConfig *RpoConfig `json:"rpoConfig,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CronSchedule") to
 	// unconditionally include in API requests. By default, fields with
@@ -2440,6 +2672,50 @@ type TestIamPermissionsResponse struct {
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TimeOfDay: Represents a time of day. The date and time zone are
+// either not significant or are specified elsewhere. An API may choose
+// to allow leap seconds. Related types are google.type.Date and
+// `google.protobuf.Timestamp`.
+type TimeOfDay struct {
+	// Hours: Hours of day in 24 hour format. Should be from 0 to 23. An API
+	// may choose to allow the value "24:00:00" for scenarios like business
+	// closing time.
+	Hours int64 `json:"hours,omitempty"`
+
+	// Minutes: Minutes of hour of day. Must be from 0 to 59.
+	Minutes int64 `json:"minutes,omitempty"`
+
+	// Nanos: Fractions of seconds in nanoseconds. Must be from 0 to
+	// 999,999,999.
+	Nanos int64 `json:"nanos,omitempty"`
+
+	// Seconds: Seconds of minutes of the time. Must normally be from 0 to
+	// 59. An API may allow the value 60 if it allows leap-seconds.
+	Seconds int64 `json:"seconds,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Hours") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Hours") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TimeOfDay) MarshalJSON() ([]byte, error) {
+	type NoMethod TimeOfDay
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4886,6 +5162,155 @@ func (c *ProjectsLocationsBackupPlansBackupsGetCall) Do(opts ...googleapi.CallOp
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Backup"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "gkebackup.projects.locations.backupPlans.backups.getBackupIndexDownloadUrl":
+
+type ProjectsLocationsBackupPlansBackupsGetBackupIndexDownloadUrlCall struct {
+	s            *Service
+	backup       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetBackupIndexDownloadUrl: Retrieve the link to the backupIndex.
+//
+//   - backup: Full name of Backup resource. Format:
+//     projects/{project}/locations/{location}/backupPlans/{backup_plan}/ba
+//     ckups/{backup}.
+func (r *ProjectsLocationsBackupPlansBackupsService) GetBackupIndexDownloadUrl(backup string) *ProjectsLocationsBackupPlansBackupsGetBackupIndexDownloadUrlCall {
+	c := &ProjectsLocationsBackupPlansBackupsGetBackupIndexDownloadUrlCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.backup = backup
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsBackupPlansBackupsGetBackupIndexDownloadUrlCall) Fields(s ...googleapi.Field) *ProjectsLocationsBackupPlansBackupsGetBackupIndexDownloadUrlCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsBackupPlansBackupsGetBackupIndexDownloadUrlCall) IfNoneMatch(entityTag string) *ProjectsLocationsBackupPlansBackupsGetBackupIndexDownloadUrlCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsBackupPlansBackupsGetBackupIndexDownloadUrlCall) Context(ctx context.Context) *ProjectsLocationsBackupPlansBackupsGetBackupIndexDownloadUrlCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsBackupPlansBackupsGetBackupIndexDownloadUrlCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsBackupPlansBackupsGetBackupIndexDownloadUrlCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+backup}:getBackupIndexDownloadUrl")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"backup": c.backup,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "gkebackup.projects.locations.backupPlans.backups.getBackupIndexDownloadUrl" call.
+// Exactly one of *GetBackupIndexDownloadUrlResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GetBackupIndexDownloadUrlResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsBackupPlansBackupsGetBackupIndexDownloadUrlCall) Do(opts ...googleapi.CallOption) (*GetBackupIndexDownloadUrlResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GetBackupIndexDownloadUrlResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve the link to the backupIndex.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/backupPlans/{backupPlansId}/backups/{backupsId}:getBackupIndexDownloadUrl",
+	//   "httpMethod": "GET",
+	//   "id": "gkebackup.projects.locations.backupPlans.backups.getBackupIndexDownloadUrl",
+	//   "parameterOrder": [
+	//     "backup"
+	//   ],
+	//   "parameters": {
+	//     "backup": {
+	//       "description": "Required. Full name of Backup resource. Format: projects/{project}/locations/{location}/backupPlans/{backup_plan}/backups/{backup}",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/backupPlans/[^/]+/backups/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+backup}:getBackupIndexDownloadUrl",
+	//   "response": {
+	//     "$ref": "GetBackupIndexDownloadUrlResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

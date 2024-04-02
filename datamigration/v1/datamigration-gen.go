@@ -3455,6 +3455,16 @@ type MigrationJob struct {
 	// "dump_flags" field are mutually exclusive.
 	DumpPath string `json:"dumpPath,omitempty"`
 
+	// DumpType: Optional. The type of the data dump. Supported for MySQL to
+	// CloudSQL for MySQL migrations only.
+	//
+	// Possible values:
+	//   "DUMP_TYPE_UNSPECIFIED" - If not specified, defaults to LOGICAL
+	//   "LOGICAL" - Logical dump.
+	//   "PHYSICAL" - Physical file-based dump. Supported for MySQL to
+	// CloudSQL for MySQL migrations only.
+	DumpType string `json:"dumpType,omitempty"`
+
 	// Duration: Output only. The duration of the migration job (in
 	// seconds). A duration in seconds with up to nine fractional digits,
 	// terminated by 's'. Example: "3.5s".
@@ -4513,6 +4523,32 @@ func (s *RestartMigrationJobRequest) MarshalJSON() ([]byte, error) {
 // ResumeMigrationJobRequest: Request message for 'ResumeMigrationJob'
 // request.
 type ResumeMigrationJobRequest struct {
+	// SkipValidation: Optional. Resume the migration job without running
+	// prior configuration verification. Defaults to `false`.
+	SkipValidation bool `json:"skipValidation,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SkipValidation") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SkipValidation") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ResumeMigrationJobRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod ResumeMigrationJobRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ReverseSshConnectivity: The details needed to configure a reverse SSH

@@ -3551,8 +3551,8 @@ func (s *GoogleCloudRetailV2alphaExperimentInfo) MarshalJSON() ([]byte, error) {
 // Metadata for active serving config A/B tests.
 type GoogleCloudRetailV2alphaExperimentInfoServingConfigExperiment struct {
 	// ExperimentServingConfig: The fully qualified resource name of the
-	// serving config VariantArm.serving_config_id responsible for
-	// generating the search response. For example:
+	// serving config Experiment.VariantArm.serving_config_id responsible
+	// for generating the search response. For example:
 	// `projects/*/locations/*/catalogs/*/servingConfigs/*`.
 	ExperimentServingConfig string `json:"experimentServingConfig,omitempty"`
 
@@ -11948,9 +11948,9 @@ func (r *ProjectsService) UpdateLoggingConfig(name string, googlecloudretailv2al
 
 // UpdateMask sets the optional parameter "updateMask": Indicates which
 // fields in the provided LoggingConfig to update. The following are the
-// only supported fields: * default_log_generation_rule *
-// per_service_log_generation_rules If not set, all supported fields are
-// updated.
+// only supported fields: * LoggingConfig.default_log_generation_rule *
+// LoggingConfig.per_service_log_generation_rules If not set, all
+// supported fields are updated.
 func (c *ProjectsUpdateLoggingConfigCall) UpdateMask(updateMask string) *ProjectsUpdateLoggingConfigCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -12064,7 +12064,7 @@ func (c *ProjectsUpdateLoggingConfigCall) Do(opts ...googleapi.CallOption) (*Goo
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Indicates which fields in the provided LoggingConfig to update. The following are the only supported fields: * default_log_generation_rule * per_service_log_generation_rules If not set, all supported fields are updated.",
+	//       "description": "Indicates which fields in the provided LoggingConfig to update. The following are the only supported fields: * LoggingConfig.default_log_generation_rule * LoggingConfig.per_service_log_generation_rules If not set, all supported fields are updated.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

@@ -5060,10 +5060,11 @@ type DatafeedTarget struct {
 	// as a CLDR territory code.
 	Country string `json:"country,omitempty"`
 
-	// ExcludedDestinations: The list of destinations to exclude for this
-	// target (corresponds to cleared check boxes in Merchant Center).
-	// Products that are excluded from all destinations for more than 7 days
-	// are automatically deleted.
+	// ExcludedDestinations: The list of destinations to exclude
+	// (//support.google.com/merchants/answer/6324486) for this target
+	// (corresponds to cleared check boxes in Merchant Center). Products
+	// that are excluded from all destinations for more than 7 days are
+	// automatically deleted.
 	ExcludedDestinations []string `json:"excludedDestinations,omitempty"`
 
 	// FeedLabel: Feed label for the DatafeedTarget. Either `country` or
@@ -5072,9 +5073,10 @@ type DatafeedTarget struct {
 	// uppercase letters (A-Z), numbers (0-9), and dashes (-).
 	FeedLabel string `json:"feedLabel,omitempty"`
 
-	// IncludedDestinations: The list of destinations to include for this
-	// target (corresponds to checked check boxes in Merchant Center).
-	// Default destinations are always included unless provided in
+	// IncludedDestinations: The list of destinations to include
+	// (//support.google.com/merchants/answer/7501026) for this target
+	// (corresponds to checked check boxes in Merchant Center). Default
+	// destinations are always included unless provided in
 	// `excludedDestinations`.
 	IncludedDestinations []string `json:"includedDestinations,omitempty"`
 
@@ -8252,17 +8254,22 @@ func (s *MerchantRejectionReason) MarshalJSON() ([]byte, error) {
 
 // MethodQuota: The quota information per method in the Content API.
 type MethodQuota struct {
-	// Method: The method name, for example `products.list`. Method name
-	// does not contain version because quota can be shared between
-	// different API versions of the same method.
+	// Method: Output only. The method name, for example `products.list`.
+	// Method name does not contain version because quota can be shared
+	// between different API versions of the same method.
 	Method string `json:"method,omitempty"`
 
-	// QuotaLimit: The current quota limit per day, meaning the maximum
-	// number of calls for the method.
+	// QuotaLimit: Output only. The maximum number of calls allowed per day
+	// for the method.
 	QuotaLimit int64 `json:"quotaLimit,omitempty,string"`
 
-	// QuotaUsage: The current quota usage, meaning the number of calls
-	// already made to the method.
+	// QuotaMinuteLimit: Output only. The maximum number of calls allowed
+	// per minute for the method.
+	QuotaMinuteLimit int64 `json:"quotaMinuteLimit,omitempty,string"`
+
+	// QuotaUsage: Output only. The current quota usage, meaning the number
+	// of calls already made to the method per day. Usage is reset every day
+	// at 12 PM midday UTC.
 	QuotaUsage int64 `json:"quotaUsage,omitempty,string"`
 
 	// ForceSendFields is a list of field names (e.g. "Method") to
@@ -13783,6 +13790,15 @@ type Product struct {
 	// AgeGroup: Target age group of the item.
 	AgeGroup string `json:"ageGroup,omitempty"`
 
+	// AutoPricingMinPrice: A safeguard in the Automated Discounts
+	// (https://support.google.com/merchants/answer/10295759?hl=en) and
+	// Dynamic Promotions
+	// (https://support.google.com/merchants/answer/13949249?hl=en)
+	// projects, ensuring that discounts on merchants' offers do not fall
+	// below this value, thereby preserving the offer's value and
+	// profitability.
+	AutoPricingMinPrice *Price `json:"autoPricingMinPrice,omitempty"`
+
 	// Availability: Availability status of the item.
 	Availability string `json:"availability,omitempty"`
 
@@ -13884,10 +13900,11 @@ type Product struct {
 	// directive 2010/30/EU.
 	EnergyEfficiencyClass string `json:"energyEfficiencyClass,omitempty"`
 
-	// ExcludedDestinations: The list of destinations to exclude for this
-	// target (corresponds to cleared check boxes in Merchant Center).
-	// Products that are excluded from all destinations for more than 7 days
-	// are automatically deleted.
+	// ExcludedDestinations: The list of destinations to exclude
+	// (//support.google.com/merchants/answer/6324486) for this target
+	// (corresponds to cleared check boxes in Merchant Center). Products
+	// that are excluded from all destinations for more than 7 days are
+	// automatically deleted.
 	ExcludedDestinations []string `json:"excludedDestinations,omitempty"`
 
 	// ExpirationDate: Date on which the item should expire, as specified
@@ -13936,9 +13953,10 @@ type Product struct {
 	// ImageLink: URL of an image of the item.
 	ImageLink string `json:"imageLink,omitempty"`
 
-	// IncludedDestinations: The list of destinations to include for this
-	// target (corresponds to checked check boxes in Merchant Center).
-	// Default destinations are always included unless provided in
+	// IncludedDestinations: The list of destinations to include
+	// (//support.google.com/merchants/answer/7501026) for this target
+	// (corresponds to checked check boxes in Merchant Center). Default
+	// destinations are always included unless provided in
 	// `excludedDestinations`.
 	IncludedDestinations []string `json:"includedDestinations,omitempty"`
 
@@ -15279,6 +15297,25 @@ type ProductView struct {
 	//   "LOCAL" - Indicates that the channel is local.
 	//   "ONLINE" - Indicates that the channel is online.
 	Channel string `json:"channel,omitempty"`
+
+	// ClickPotential: Estimated performance potential compared to highest
+	// performing products of the merchant.
+	//
+	// Possible values:
+	//   "CLICK_POTENTIAL_UNSPECIFIED" - Unknown predicted clicks impact.
+	//   "LOW" - Potential to receive a low number of clicks compared to the
+	// highest performing products of the merchant.
+	//   "MEDIUM" - Potential to receive a moderate number of clicks
+	// compared to the highest performing products of the merchant.
+	//   "HIGH" - Potential to receive a similar number of clicks as the
+	// highest performing products of the merchant.
+	ClickPotential string `json:"clickPotential,omitempty"`
+
+	// ClickPotentialRank: Rank of the product based on its click potential.
+	// A product with `click_potential_rank` 1 has the highest click
+	// potential among the merchant's products that fulfill the search query
+	// conditions.
+	ClickPotentialRank int64 `json:"clickPotentialRank,omitempty,string"`
 
 	// Condition: Condition of the product.
 	Condition string `json:"condition,omitempty"`
@@ -17317,6 +17354,12 @@ type ReportRow struct {
 	// query. Dimension values are only set for dimensions requested
 	// explicitly in the query.
 	Segments *Segments `json:"segments,omitempty"`
+
+	// TopicTrends: Topic trends
+	// (https://support.google.com/merchants/answer/13542370) fields
+	// requested by the merchant in the query. Field values are only set if
+	// the merchant queries `TopicTrendsView`.
+	TopicTrends *TopicTrends `json:"topicTrends,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BestSellers") to
 	// unconditionally include in API requests. By default, fields with
@@ -20389,6 +20432,110 @@ func (s *TimeZone) MarshalJSON() ([]byte, error) {
 	type NoMethod TimeZone
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TopicTrends: Topic trends fields requested by the merchant in the
+// query. Field values are only set if the merchant queries
+// `TopicTrendsView`. Forecast data can be queried up to 13 weeks by
+// passing a future date in the `date` field. Historical data is
+// measured daily, and forecasted data is projected weekly. All data
+// points are normalized based on the highest data points returned in
+// the response. If you make separate queries with different date
+// ranges, you might see different values for the same date in each
+// response. The recommended way to get a trend score of a topic is
+// `last7_days_search_interest / last{$day}_days_search_interest - 1`.
+// You can view trends for up to eight topics at a time.
+type TopicTrends struct {
+	// CustomerCountryCode: Country trends are calculated for. Must be a
+	// two-letter country code (ISO 3166-1-alpha-2 code), for example,
+	// `“US”`.
+	CustomerCountryCode string `json:"customerCountryCode,omitempty"`
+
+	// Date: Date the trend score was retrieved.
+	Date *Date `json:"date,omitempty"`
+
+	// Last120DaysSearchInterest: Search interest in the last 120 days, with
+	// the same normalization as search_interest. This field is only present
+	// for a past date.
+	Last120DaysSearchInterest float64 `json:"last120DaysSearchInterest,omitempty"`
+
+	// Last30DaysSearchInterest: Search interest in the last 30 days, with
+	// the same normalization as search_interest. This field is only present
+	// for a past date.
+	Last30DaysSearchInterest float64 `json:"last30DaysSearchInterest,omitempty"`
+
+	// Last7DaysSearchInterest: Search interest in the last 7 days, with the
+	// same normalization as search_interest. This field is only present for
+	// a past date.
+	Last7DaysSearchInterest float64 `json:"last7DaysSearchInterest,omitempty"`
+
+	// Last90DaysSearchInterest: Search interest in the last 90 days, with
+	// the same normalization as search_interest. This field is only present
+	// for a past date.
+	Last90DaysSearchInterest float64 `json:"last90DaysSearchInterest,omitempty"`
+
+	// Next7DaysSearchInterest: Estimated search interest in the next 7
+	// days, with the same normalization as search_interest. This field is
+	// only present for a future date.
+	Next7DaysSearchInterest float64 `json:"next7DaysSearchInterest,omitempty"`
+
+	// SearchInterest: Daily search interest, normalized to the time and
+	// country to make comparisons easier, with 100 representing peak
+	// popularity (from 0 to 100) for the requested time period and
+	// location.
+	SearchInterest float64 `json:"searchInterest,omitempty"`
+
+	// Topic: Google-provided topic trends are calculated for. Only top
+	// eight topics are returned. Topic is what shoppers are searching for
+	// on Google, grouped by the same concept.
+	Topic string `json:"topic,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CustomerCountryCode")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CustomerCountryCode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TopicTrends) MarshalJSON() ([]byte, error) {
+	type NoMethod TopicTrends
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *TopicTrends) UnmarshalJSON(data []byte) error {
+	type NoMethod TopicTrends
+	var s1 struct {
+		Last120DaysSearchInterest gensupport.JSONFloat64 `json:"last120DaysSearchInterest"`
+		Last30DaysSearchInterest  gensupport.JSONFloat64 `json:"last30DaysSearchInterest"`
+		Last7DaysSearchInterest   gensupport.JSONFloat64 `json:"last7DaysSearchInterest"`
+		Last90DaysSearchInterest  gensupport.JSONFloat64 `json:"last90DaysSearchInterest"`
+		Next7DaysSearchInterest   gensupport.JSONFloat64 `json:"next7DaysSearchInterest"`
+		SearchInterest            gensupport.JSONFloat64 `json:"searchInterest"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.Last120DaysSearchInterest = float64(s1.Last120DaysSearchInterest)
+	s.Last30DaysSearchInterest = float64(s1.Last30DaysSearchInterest)
+	s.Last7DaysSearchInterest = float64(s1.Last7DaysSearchInterest)
+	s.Last90DaysSearchInterest = float64(s1.Last90DaysSearchInterest)
+	s.Next7DaysSearchInterest = float64(s1.Next7DaysSearchInterest)
+	s.SearchInterest = float64(s1.SearchInterest)
+	return nil
 }
 
 type TransitTable struct {

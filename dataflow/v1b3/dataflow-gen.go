@@ -1994,7 +1994,9 @@ type Environment struct {
 	// processing guarantees. Reduces cost and latency but might result in
 	// duplicate messages committed to storage. Designed to run simple
 	// mapping streaming ETL jobs at the lowest cost. For example, Change
-	// Data Capture (CDC) to BigQuery is a canonical use case.
+	// Data Capture (CDC) to BigQuery is a canonical use case. For more
+	// information, see Set the pipeline streaming mode
+	// (https://cloud.google.com/dataflow/docs/guides/streaming-modes).
 	//
 	// Possible values:
 	//   "STREAMING_MODE_UNSPECIFIED" - Run in the default mode.
@@ -2429,7 +2431,9 @@ type FlexTemplateRuntimeEnvironment struct {
 	// processing guarantees. Reduces cost and latency but might result in
 	// duplicate messages committed to storage. Designed to run simple
 	// mapping streaming ETL jobs at the lowest cost. For example, Change
-	// Data Capture (CDC) to BigQuery is a canonical use case.
+	// Data Capture (CDC) to BigQuery is a canonical use case. For more
+	// information, see Set the pipeline streaming mode
+	// (https://cloud.google.com/dataflow/docs/guides/streaming-modes).
 	//
 	// Possible values:
 	//   "STREAMING_MODE_UNSPECIFIED" - Run in the default mode.
@@ -5552,6 +5556,7 @@ type ResourceUtilizationReportResponse struct {
 }
 
 // RuntimeEnvironment: The environment values to set at runtime.
+// LINT.IfChange
 type RuntimeEnvironment struct {
 	// AdditionalExperiments: Optional. Additional experiment flags for the
 	// job, specified with the `--experiments` option.
@@ -5615,7 +5620,9 @@ type RuntimeEnvironment struct {
 	// processing guarantees. Reduces cost and latency but might result in
 	// duplicate messages committed to storage. Designed to run simple
 	// mapping streaming ETL jobs at the lowest cost. For example, Change
-	// Data Capture (CDC) to BigQuery is a canonical use case.
+	// Data Capture (CDC) to BigQuery is a canonical use case. For more
+	// information, see Set the pipeline streaming mode
+	// (https://cloud.google.com/dataflow/docs/guides/streaming-modes).
 	//
 	// Possible values:
 	//   "STREAMING_MODE_UNSPECIFIED" - Run in the default mode.
@@ -5734,7 +5741,9 @@ type RuntimeUpdatableParams struct {
 	// WorkerUtilizationHint: Target worker utilization, compared against
 	// the aggregate utilization of the worker pool by autoscaler, to
 	// determine upscaling and downscaling when absent other constraints
-	// such as backlog.
+	// such as backlog. For more information, see Update an existing
+	// pipeline
+	// (https://cloud.google.com/dataflow/docs/guides/updating-a-pipeline).
 	WorkerUtilizationHint float64 `json:"workerUtilizationHint,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxNumWorkers") to
@@ -16134,9 +16143,9 @@ func (r *ProjectsLocationsTemplatesService) Launch(projectId string, location st
 }
 
 // DynamicTemplateGcsPath sets the optional parameter
-// "dynamicTemplate.gcsPath": Path to dynamic template spec file on
-// Cloud Storage. The file must be a Json serialized
-// DynamicTemplateFieSpec object.
+// "dynamicTemplate.gcsPath": Path to the dynamic template specification
+// file on Cloud Storage. The file must be a JSON serialized
+// `DynamicTemplateFileSpec` object.
 func (c *ProjectsLocationsTemplatesLaunchCall) DynamicTemplateGcsPath(dynamicTemplateGcsPath string) *ProjectsLocationsTemplatesLaunchCall {
 	c.urlParams_.Set("dynamicTemplate.gcsPath", dynamicTemplateGcsPath)
 	return c
@@ -16152,8 +16161,8 @@ func (c *ProjectsLocationsTemplatesLaunchCall) DynamicTemplateStagingLocation(dy
 }
 
 // GcsPath sets the optional parameter "gcsPath": A Cloud Storage path
-// to the template from which to create the job. Must be valid Cloud
-// Storage URL, beginning with 'gs://'.
+// to the template to use to create the job. Must be valid Cloud Storage
+// URL, beginning with `gs://`.
 func (c *ProjectsLocationsTemplatesLaunchCall) GcsPath(gcsPath string) *ProjectsLocationsTemplatesLaunchCall {
 	c.urlParams_.Set("gcsPath", gcsPath)
 	return c
@@ -16268,7 +16277,7 @@ func (c *ProjectsLocationsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "dynamicTemplate.gcsPath": {
-	//       "description": "Path to dynamic template spec file on Cloud Storage. The file must be a Json serialized DynamicTemplateFieSpec object.",
+	//       "description": "Path to the dynamic template specification file on Cloud Storage. The file must be a JSON serialized `DynamicTemplateFileSpec` object.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -16278,7 +16287,7 @@ func (c *ProjectsLocationsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "gcsPath": {
-	//       "description": "A Cloud Storage path to the template from which to create the job. Must be valid Cloud Storage URL, beginning with 'gs://'.",
+	//       "description": "A Cloud Storage path to the template to use to create the job. Must be valid Cloud Storage URL, beginning with `gs://`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17025,9 +17034,9 @@ func (r *ProjectsTemplatesService) Launch(projectId string, launchtemplateparame
 }
 
 // DynamicTemplateGcsPath sets the optional parameter
-// "dynamicTemplate.gcsPath": Path to dynamic template spec file on
-// Cloud Storage. The file must be a Json serialized
-// DynamicTemplateFieSpec object.
+// "dynamicTemplate.gcsPath": Path to the dynamic template specification
+// file on Cloud Storage. The file must be a JSON serialized
+// `DynamicTemplateFileSpec` object.
 func (c *ProjectsTemplatesLaunchCall) DynamicTemplateGcsPath(dynamicTemplateGcsPath string) *ProjectsTemplatesLaunchCall {
 	c.urlParams_.Set("dynamicTemplate.gcsPath", dynamicTemplateGcsPath)
 	return c
@@ -17043,8 +17052,8 @@ func (c *ProjectsTemplatesLaunchCall) DynamicTemplateStagingLocation(dynamicTemp
 }
 
 // GcsPath sets the optional parameter "gcsPath": A Cloud Storage path
-// to the template from which to create the job. Must be valid Cloud
-// Storage URL, beginning with 'gs://'.
+// to the template to use to create the job. Must be valid Cloud Storage
+// URL, beginning with `gs://`.
 func (c *ProjectsTemplatesLaunchCall) GcsPath(gcsPath string) *ProjectsTemplatesLaunchCall {
 	c.urlParams_.Set("gcsPath", gcsPath)
 	return c
@@ -17166,7 +17175,7 @@ func (c *ProjectsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) (*LaunchT
 	//   ],
 	//   "parameters": {
 	//     "dynamicTemplate.gcsPath": {
-	//       "description": "Path to dynamic template spec file on Cloud Storage. The file must be a Json serialized DynamicTemplateFieSpec object.",
+	//       "description": "Path to the dynamic template specification file on Cloud Storage. The file must be a JSON serialized `DynamicTemplateFileSpec` object.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -17176,7 +17185,7 @@ func (c *ProjectsTemplatesLaunchCall) Do(opts ...googleapi.CallOption) (*LaunchT
 	//       "type": "string"
 	//     },
 	//     "gcsPath": {
-	//       "description": "A Cloud Storage path to the template from which to create the job. Must be valid Cloud Storage URL, beginning with 'gs://'.",
+	//       "description": "A Cloud Storage path to the template to use to create the job. Must be valid Cloud Storage URL, beginning with `gs://`.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

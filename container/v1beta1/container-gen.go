@@ -1686,6 +1686,9 @@ type Cluster struct {
 	// unspecified.
 	ResourceUsageExportConfig *ResourceUsageExportConfig `json:"resourceUsageExportConfig,omitempty"`
 
+	// SecretManagerConfig: Secret CSI driver configuration.
+	SecretManagerConfig *SecretManagerConfig `json:"secretManagerConfig,omitempty"`
+
 	// SecurityPostureConfig: Enable/Disable Security Posture API features
 	// for the cluster.
 	SecurityPostureConfig *SecurityPostureConfig `json:"securityPostureConfig,omitempty"`
@@ -1977,9 +1980,17 @@ type ClusterUpdate struct {
 	// cluster.
 	DesiredDnsConfig *DNSConfig `json:"desiredDnsConfig,omitempty"`
 
+	// DesiredEnableCiliumClusterwideNetworkPolicy: Enable/Disable Cilium
+	// Clusterwide Network Policy for the cluster.
+	DesiredEnableCiliumClusterwideNetworkPolicy bool `json:"desiredEnableCiliumClusterwideNetworkPolicy,omitempty"`
+
 	// DesiredEnableFqdnNetworkPolicy: Enable/Disable FQDN Network Policy
 	// for the cluster.
 	DesiredEnableFqdnNetworkPolicy bool `json:"desiredEnableFqdnNetworkPolicy,omitempty"`
+
+	// DesiredEnableMultiNetworking: Enable/Disable Multi-Networking for the
+	// cluster
+	DesiredEnableMultiNetworking bool `json:"desiredEnableMultiNetworking,omitempty"`
 
 	// DesiredEnablePrivateEndpoint: Enable/Disable private endpoint for the
 	// cluster's master.
@@ -2167,6 +2178,9 @@ type ClusterUpdate struct {
 	// DesiredResourceUsageExportConfig: The desired configuration for
 	// exporting resource usage.
 	DesiredResourceUsageExportConfig *ResourceUsageExportConfig `json:"desiredResourceUsageExportConfig,omitempty"`
+
+	// DesiredSecretManagerConfig: Enable/Disable Secret Manager Config.
+	DesiredSecretManagerConfig *SecretManagerConfig `json:"desiredSecretManagerConfig,omitempty"`
 
 	// DesiredSecurityPostureConfig: Enable/Disable Security Posture API
 	// features for the cluster.
@@ -2604,11 +2618,39 @@ func (s *DailyMaintenanceWindow) MarshalJSON() ([]byte, error) {
 
 // DatabaseEncryption: Configuration of etcd encryption.
 type DatabaseEncryption struct {
+	// CurrentState: Output only. The current state of etcd encryption.
+	//
+	// Possible values:
+	//   "CURRENT_STATE_UNSPECIFIED" - Should never be set
+	//   "CURRENT_STATE_ENCRYPTED" - Secrets in etcd are encrypted.
+	//   "CURRENT_STATE_DECRYPTED" - Secrets in etcd are stored in plain
+	// text (at etcd level) - this is unrelated to Compute Engine level full
+	// disk encryption.
+	//   "CURRENT_STATE_ENCRYPTION_PENDING" - Encryption (or re-encryption
+	// with a different CloudKMS key) of Secrets is in progress.
+	//   "CURRENT_STATE_ENCRYPTION_ERROR" - Encryption (or re-encryption
+	// with a different CloudKMS key) of Secrets in etcd encountered an
+	// error.
+	//   "CURRENT_STATE_DECRYPTION_PENDING" - De-crypting Secrets to plain
+	// text in etcd is in progress.
+	//   "CURRENT_STATE_DECRYPTION_ERROR" - De-crypting Secrets to plain
+	// text in etcd encountered an error.
+	CurrentState string `json:"currentState,omitempty"`
+
+	// DecryptionKeys: Output only. Keys in use by the cluster for
+	// decrypting existing objects, in addition to the key in `key_name`.
+	// Each item is a CloudKMS key resource.
+	DecryptionKeys []string `json:"decryptionKeys,omitempty"`
+
 	// KeyName: Name of CloudKMS key to use for the encryption of secrets in
 	// etcd. Ex.
 	// projects/my-project/locations/global/keyRings/my-ring/cryptoKeys/my-ke
 	// y
 	KeyName string `json:"keyName,omitempty"`
+
+	// LastOperationErrors: Output only. Records errors seen during
+	// DatabaseEncryption update operations.
+	LastOperationErrors []*OperationError `json:"lastOperationErrors,omitempty"`
 
 	// State: The desired state of etcd encryption.
 	//
@@ -2620,7 +2662,7 @@ type DatabaseEncryption struct {
 	// encryption.
 	State string `json:"state,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "KeyName") to
+	// ForceSendFields is a list of field names (e.g. "CurrentState") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2628,10 +2670,10 @@ type DatabaseEncryption struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "KeyName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "CurrentState") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -4897,6 +4939,10 @@ type NetworkConfig struct {
 	// DnsConfig: DNSConfig contains clusterDNS config for this cluster.
 	DnsConfig *DNSConfig `json:"dnsConfig,omitempty"`
 
+	// EnableCiliumClusterwideNetworkPolicy: Whether
+	// CiliumClusterWideNetworkPolicy is enabled on this cluster.
+	EnableCiliumClusterwideNetworkPolicy bool `json:"enableCiliumClusterwideNetworkPolicy,omitempty"`
+
 	// EnableFqdnNetworkPolicy: Whether FQDN Network Policy is enabled on
 	// this cluster.
 	EnableFqdnNetworkPolicy bool `json:"enableFqdnNetworkPolicy,omitempty"`
@@ -5338,6 +5384,9 @@ type NodeConfig struct {
 
 	// SandboxConfig: Sandbox configuration for this node.
 	SandboxConfig *SandboxConfig `json:"sandboxConfig,omitempty"`
+
+	// SecondaryBootDiskUpdateStrategy: Secondary boot disk update strategy.
+	SecondaryBootDiskUpdateStrategy *SecondaryBootDiskUpdateStrategy `json:"secondaryBootDiskUpdateStrategy,omitempty"`
 
 	// SecondaryBootDisks: List of secondary boot disks attached to the
 	// nodes.
@@ -6261,6 +6310,41 @@ type Operation struct {
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// OperationError: OperationError records errors seen from CloudKMS keys
+// encountered during updates to DatabaseEncryption configuration.
+type OperationError struct {
+	// ErrorMessage: Description of the error seen during the operation.
+	ErrorMessage string `json:"errorMessage,omitempty"`
+
+	// KeyName: CloudKMS key resource that had the error.
+	KeyName string `json:"keyName,omitempty"`
+
+	// Timestamp: Time when the CloudKMS error was seen.
+	Timestamp string `json:"timestamp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ErrorMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ErrorMessage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *OperationError) MarshalJSON() ([]byte, error) {
+	type NoMethod OperationError
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -7244,6 +7328,42 @@ type SecondaryBootDisk struct {
 
 func (s *SecondaryBootDisk) MarshalJSON() ([]byte, error) {
 	type NoMethod SecondaryBootDisk
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SecondaryBootDiskUpdateStrategy: SecondaryBootDiskUpdateStrategy is a
+// placeholder which will be extended in the future to define different
+// options for updating secondary boot disks.
+type SecondaryBootDiskUpdateStrategy struct {
+}
+
+// SecretManagerConfig: SecretManagerConfig is config for secret manager
+// enablement.
+type SecretManagerConfig struct {
+	// Enabled: Whether the cluster is configured to use secret manager CSI
+	// component.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SecretManagerConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod SecretManagerConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

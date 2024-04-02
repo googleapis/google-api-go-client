@@ -1274,7 +1274,7 @@ type GoogleMapsPlacesV1Place struct {
 	//   "PRICE_LEVEL_MODERATE" - Place provides moderately priced services.
 	//   "PRICE_LEVEL_EXPENSIVE" - Place provides expensive services.
 	//   "PRICE_LEVEL_VERY_EXPENSIVE" - Place provides very expensive
-	// service s.
+	// services.
 	PriceLevel string `json:"priceLevel,omitempty"`
 
 	// PrimaryType: The primary type of the given result. This type must one
@@ -2142,6 +2142,10 @@ func (s *GoogleMapsPlacesV1SearchNearbyResponse) MarshalJSON() ([]byte, error) {
 
 // GoogleMapsPlacesV1SearchTextRequest: Request proto for SearchText.
 type GoogleMapsPlacesV1SearchTextRequest struct {
+	// EvOptions: Optional. Set the searchable EV options of a place search
+	// request.
+	EvOptions *GoogleMapsPlacesV1SearchTextRequestEVOptions `json:"evOptions,omitempty"`
+
 	// IncludedType: The requested place type. Full list of types supported:
 	// https://developers.google.com/maps/documentation/places/web-service/place-types.
 	// Only support one included type.
@@ -2196,7 +2200,7 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	//   "PRICE_LEVEL_MODERATE" - Place provides moderately priced services.
 	//   "PRICE_LEVEL_EXPENSIVE" - Place provides expensive services.
 	//   "PRICE_LEVEL_VERY_EXPENSIVE" - Place provides very expensive
-	// service s.
+	// services.
 	PriceLevels []string `json:"priceLevels,omitempty"`
 
 	// RankPreference: How results will be ranked in the response.
@@ -2226,7 +2230,7 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	// TextQuery: Required. The text query for textual search.
 	TextQuery string `json:"textQuery,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "IncludedType") to
+	// ForceSendFields is a list of field names (e.g. "EvOptions") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2234,10 +2238,10 @@ type GoogleMapsPlacesV1SearchTextRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "IncludedType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "EvOptions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -2260,6 +2264,79 @@ func (s *GoogleMapsPlacesV1SearchTextRequest) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.MinRating = float64(s1.MinRating)
+	return nil
+}
+
+// GoogleMapsPlacesV1SearchTextRequestEVOptions: Searchable EV options
+// of a place search request.
+type GoogleMapsPlacesV1SearchTextRequestEVOptions struct {
+	// ConnectorTypes: Optional. The list of preferred EV connector types. A
+	// place that does not support any of the listed connector types are
+	// filter out.
+	//
+	// Possible values:
+	//   "EV_CONNECTOR_TYPE_UNSPECIFIED" - Unspecified connector.
+	//   "EV_CONNECTOR_TYPE_OTHER" - Other connector types.
+	//   "EV_CONNECTOR_TYPE_J1772" - J1772 type 1 connector.
+	//   "EV_CONNECTOR_TYPE_TYPE_2" - IEC 62196 type 2 connector. Often
+	// referred to as MENNEKES.
+	//   "EV_CONNECTOR_TYPE_CHADEMO" - CHAdeMO type connector.
+	//   "EV_CONNECTOR_TYPE_CCS_COMBO_1" - Combined Charging System (AC and
+	// DC). Based on SAE. Type-1 J-1772 connector
+	//   "EV_CONNECTOR_TYPE_CCS_COMBO_2" - Combined Charging System (AC and
+	// DC). Based on Type-2 Mennekes connector
+	//   "EV_CONNECTOR_TYPE_TESLA" - The generic TESLA connector. This is
+	// NACS in the North America but can be non-NACS in other parts of the
+	// world (e.g. CCS Combo 2 (CCS2) or GB/T). This value is less
+	// representative of an actual connector type, and more represents the
+	// ability to charge a Tesla brand vehicle at a Tesla owned charging
+	// station.
+	//   "EV_CONNECTOR_TYPE_UNSPECIFIED_GB_T" - GB/T type corresponds to the
+	// GB/T standard in China. This type covers all GB_T types.
+	//   "EV_CONNECTOR_TYPE_UNSPECIFIED_WALL_OUTLET" - Unspecified wall
+	// outlet.
+	ConnectorTypes []string `json:"connectorTypes,omitempty"`
+
+	// MinimumChargingRateKw: Optional. Filtering places by minimum charging
+	// rate. Any places with charging a rate less than the minimum charging
+	// rate are filtered out.
+	MinimumChargingRateKw float64 `json:"minimumChargingRateKw,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectorTypes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectorTypes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleMapsPlacesV1SearchTextRequestEVOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleMapsPlacesV1SearchTextRequestEVOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleMapsPlacesV1SearchTextRequestEVOptions) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleMapsPlacesV1SearchTextRequestEVOptions
+	var s1 struct {
+		MinimumChargingRateKw gensupport.JSONFloat64 `json:"minimumChargingRateKw"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MinimumChargingRateKw = float64(s1.MinimumChargingRateKw)
 	return nil
 }
 

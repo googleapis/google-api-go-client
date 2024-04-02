@@ -2115,7 +2115,8 @@ type PipelineRun struct {
 	// Security: Optional. Security configuration.
 	Security *Security `json:"security,omitempty"`
 
-	// ServiceAccount: Service account used in the Pipeline.
+	// ServiceAccount: Service account used in the Pipeline. Deprecated;
+	// please use security.service_account instead.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// SkippedTasks: Output only. List of tasks that were skipped due to
@@ -6505,7 +6506,7 @@ func (r *ProjectsLocationsConnectionsRepositoriesService) FetchGitRefs(repositor
 }
 
 // PageSize sets the optional parameter "pageSize": Number of results to
-// return in the list. Default to 100.
+// return in the list. Default to 20.
 func (c *ProjectsLocationsConnectionsRepositoriesFetchGitRefsCall) PageSize(pageSize int64) *ProjectsLocationsConnectionsRepositoriesFetchGitRefsCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -6637,7 +6638,7 @@ func (c *ProjectsLocationsConnectionsRepositoriesFetchGitRefsCall) Do(opts ...go
 	//   ],
 	//   "parameters": {
 	//     "pageSize": {
-	//       "description": "Optional. Number of results to return in the list. Default to 100.",
+	//       "description": "Optional. Number of results to return in the list. Default to 20.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"

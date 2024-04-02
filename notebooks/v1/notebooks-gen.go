@@ -268,6 +268,7 @@ type AcceleratorConfig struct {
 	//   "NVIDIA_TESLA_T4" - Accelerator type is Nvidia Tesla T4.
 	//   "NVIDIA_TESLA_A100" - Accelerator type is Nvidia Tesla A100.
 	//   "NVIDIA_L4" - Accelerator type is Nvidia Tesla L4.
+	//   "NVIDIA_A100_80GB" - Accelerator type is Nvidia Tesla A100 80GB.
 	//   "NVIDIA_TESLA_T4_VWS" - Accelerator type is NVIDIA Tesla T4 Virtual
 	// Workstations.
 	//   "NVIDIA_TESLA_P100_VWS" - Accelerator type is NVIDIA Tesla P100
@@ -1318,7 +1319,7 @@ type Instance struct {
 	// Metadata: Custom metadata to apply to this instance. For example, to
 	// specify a Cloud Storage bucket for automatic backup, you can use the
 	// `gcs-data-bucket` metadata tag. Format:
-	// "--metadata=gcs-data-bucket=``BUCKET''".
+	// "--metadata=gcs-data-bucket=BUCKET".
 	Metadata map[string]string `json:"metadata,omitempty"`
 
 	// Migrated: Output only. Bool indicating whether this notebook has been
@@ -3360,6 +3361,7 @@ type SetInstanceAcceleratorRequest struct {
 	//   "NVIDIA_TESLA_T4" - Accelerator type is Nvidia Tesla T4.
 	//   "NVIDIA_TESLA_A100" - Accelerator type is Nvidia Tesla A100.
 	//   "NVIDIA_L4" - Accelerator type is Nvidia Tesla L4.
+	//   "NVIDIA_A100_80GB" - Accelerator type is Nvidia Tesla A100 80GB.
 	//   "NVIDIA_TESLA_T4_VWS" - Accelerator type is NVIDIA Tesla T4 Virtual
 	// Workstations.
 	//   "NVIDIA_TESLA_P100_VWS" - Accelerator type is NVIDIA Tesla P100

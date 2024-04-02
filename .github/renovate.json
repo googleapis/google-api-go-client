@@ -12,8 +12,13 @@
   "commitMessageAction": "update",
   "groupName": "all",
   "ignoreDeps": [
-    "google.golang.org/appengine",
-    "github.com/google/go-github"
+    "google.golang.org/appengine"
+  ],
+  "packageRules": [
+    {
+      "matchPackageNames": ["^github.com/google/go-github/v"],
+      "enabled": false
+    }
   ],
   "force": {
     "constraints": {

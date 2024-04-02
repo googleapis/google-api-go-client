@@ -363,7 +363,7 @@ type CustomDomainMetadata struct {
 	// the update's purpose: - `A` and `AAAA`: Updates your domain name's IP
 	// addresses so that they direct traffic to Hosting servers. - `TXT`:
 	// Updates ownership permissions on your domain name, letting Hosting
-	// know that your custom domain's project has permission to perfrom
+	// know that your custom domain's project has permission to perform
 	// actions for that domain name. - `CAA`: Updates your domain name's
 	// list of authorized Certificate Authorities (CAs). Only present if you
 	// have existing `CAA` records that prohibit Hosting's CA from minting

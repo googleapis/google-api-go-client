@@ -197,13 +197,14 @@ type Channel struct {
 	//
 	// Possible values:
 	//   "CHANNEL_TYPE_UNSPECIFIED"
-	//   "STABLE"
-	//   "BETA"
-	//   "DEV"
-	//   "CANARY"
-	//   "CANARY_ASAN"
+	//   "STABLE" - The Stable channel.
+	//   "BETA" - The Beta channel.
+	//   "DEV" - The Dev channel.
+	//   "CANARY" - The Canary channel.
+	//   "CANARY_ASAN" - The Canary channel for Chrome, with DCHECK/ASAN
+	// enabled.
 	//   "ALL"
-	//   "EXTENDED"
+	//   "EXTENDED" - The Extended Stable channel for Chrome.
 	//   "LTS" - The Long-term support channel for ChromeOS.
 	//   "LTC" - The Long-term support candidate channel for ChromeOS.
 	ChannelType string `json:"channelType,omitempty"`
@@ -433,20 +434,21 @@ type Platform struct {
 	//
 	// Possible values:
 	//   "PLATFORM_TYPE_UNSPECIFIED"
-	//   "WIN"
-	//   "WIN64"
-	//   "MAC"
-	//   "LINUX"
-	//   "ANDROID"
-	//   "WEBVIEW"
-	//   "IOS"
+	//   "WIN" - Chrome Desktop for Windows (32-bit).
+	//   "WIN64" - Chrome Desktop for Windows (x86_64).
+	//   "MAC" - Chrome Desktop for macOS (x86_64).
+	//   "LINUX" - Chrome Desktop for Linux.
+	//   "ANDROID" - Chrome for Android.
+	//   "WEBVIEW" - WebView for Android.
+	//   "IOS" - Chrome for iOS.
 	//   "ALL"
-	//   "MAC_ARM64"
-	//   "LACROS"
-	//   "LACROS_ARM32"
-	//   "CHROMEOS"
-	//   "LACROS_ARM64"
-	//   "FUCHSIA"
+	//   "MAC_ARM64" - Chrome for macOS (ARM64).
+	//   "LACROS" - ChromeOS Lacros (x86_64).
+	//   "LACROS_ARM32" - ChromeOS Lacros (ARM).
+	//   "CHROMEOS" - ChromeOS.
+	//   "LACROS_ARM64" - ChromeOS Lacros (ARM64).
+	//   "FUCHSIA" - Chrome for Fuchsia.
+	//   "WIN_ARM64" - Chrome Desktop for Windows (ARM64).
 	PlatformType string `json:"platformType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to

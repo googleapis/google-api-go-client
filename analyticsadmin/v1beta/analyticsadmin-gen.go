@@ -1015,6 +1015,12 @@ type GoogleAnalyticsAdminV1betaAccount struct {
 	// DisplayName: Required. Human-readable display name for this account.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// GmpOrganization: Output only. The URI for a Google Marketing Platform
+	// organization resource. Only set when this account is connected to a
+	// GMP organization. Format:
+	// marketingplatformadmin.googleapis.com/organizations/{org_id}
+	GmpOrganization string `json:"gmpOrganization,omitempty"`
+
 	// Name: Output only. Resource name of this account. Format:
 	// accounts/{account} Example: "accounts/100"
 	Name string `json:"name,omitempty"`

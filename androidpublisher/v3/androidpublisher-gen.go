@@ -3875,6 +3875,7 @@ type Grant struct {
 	//   "CAN_VIEW_NON_FINANCIAL_DATA" - View app information (read-only).
 	//   "CAN_VIEW_APP_QUALITY" - View app quality data such as Vitals,
 	// Crashes etc.
+	//   "CAN_MANAGE_DEEPLINKS" - Manage the deep links setup of an app.
 	AppLevelPermissions []string `json:"appLevelPermissions,omitempty"`
 
 	// Name: Required. Resource name for this grant, following the pattern
@@ -5237,8 +5238,8 @@ func (s *OfferDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OfferTag: Represents a custom tag specified for base plans and
-// subscription offers.
+// OfferTag: Represents a custom tag specified for one-time products,
+// purchase options, base plans and offers.
 type OfferTag struct {
 	// Tag: Must conform with RFC-1034. That is, this string can only
 	// contain lower-case letters (a-z), numbers (0-9), and hyphens (-), and
@@ -5750,6 +5751,11 @@ type ProductPurchase struct {
 	// Quantity: The quantity associated with the purchase of the inapp
 	// product. If not present, the quantity is 1.
 	Quantity int64 `json:"quantity,omitempty"`
+
+	// RefundableQuantity: The quantity eligible for refund, i.e. quantity
+	// that hasn't been refunded. The value reflects quantity-based partial
+	// refunds and full refunds.
+	RefundableQuantity int64 `json:"refundableQuantity,omitempty"`
 
 	// RegionCode: ISO 3166-1 alpha-2 billing region code of the user at the
 	// time the product was granted.
@@ -8883,6 +8889,8 @@ type User struct {
 	// download bulk reports (read-only).
 	//   "CAN_VIEW_APP_QUALITY_GLOBAL" - View app quality information for
 	// all apps for the developer.
+	//   "CAN_MANAGE_DEEPLINKS_GLOBAL" - Manage the deep links setup for all
+	// apps for the developer.
 	DeveloperAccountPermissions []string `json:"developerAccountPermissions,omitempty"`
 
 	// Email: Immutable. The user's email address.
@@ -9250,6 +9258,12 @@ type VoidedPurchase struct {
 	// purchase or subscription. To uniquely identify subscription renewals
 	// use order_id (available starting from version 3 of the API).
 	PurchaseToken string `json:"purchaseToken,omitempty"`
+
+	// VoidedQuantity: The voided quantity as the result of a quantity-based
+	// partial refund. Voided purchases of quantity-based partial refunds
+	// may only be returned when includeQuantityBasedPartialRefund is set to
+	// true.
+	VoidedQuantity int64 `json:"voidedQuantity,omitempty"`
 
 	// VoidedReason: The reason why the purchase was voided, possible values
 	// are: 0. Other 1. Remorse 2. Not_received 3. Defective 4.
@@ -17174,7 +17188,7 @@ func (r *ExternaltransactionsService) Createexternaltransaction(parent string, e
 // "externalTransactionId": Required. The id to use for the external
 // transaction. Must be unique across all other transactions for the
 // app. This value should be 1-63 characters and valid characters are
-// /a-z0-9_-/. Do not use this field to store any Personally
+// /a-zA-Z0-9_-/. Do not use this field to store any Personally
 // Identifiable Information (PII) such as emails. Attempting to store
 // PII in this field may result in requests being blocked.
 func (c *ExternaltransactionsCreateexternaltransactionCall) ExternalTransactionId(externalTransactionId string) *ExternaltransactionsCreateexternaltransactionCall {
@@ -17282,7 +17296,7 @@ func (c *ExternaltransactionsCreateexternaltransactionCall) Do(opts ...googleapi
 	//   ],
 	//   "parameters": {
 	//     "externalTransactionId": {
-	//       "description": "Required. The id to use for the external transaction. Must be unique across all other transactions for the app. This value should be 1-63 characters and valid characters are /a-z0-9_-/. Do not use this field to store any Personally Identifiable Information (PII) such as emails. Attempting to store PII in this field may result in requests being blocked.",
+	//       "description": "Required. The id to use for the external transaction. Must be unique across all other transactions for the app. This value should be 1-63 characters and valid characters are /a-zA-Z0-9_-/. Do not use this field to store any Personally Identifiable Information (PII) such as emails. Attempting to store PII in this field may result in requests being blocked.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -26433,6 +26447,18 @@ func (c *PurchasesVoidedpurchasesListCall) EndTime(endTime int64) *PurchasesVoid
 	return c
 }
 
+// IncludeQuantityBasedPartialRefund sets the optional parameter
+// "includeQuantityBasedPartialRefund": Whether to include voided
+// purchases of quantity-based partial refunds, which are applicable
+// only to multi-quantity purchases. If true, additional voided
+// purchases may be returned with voidedQuantity that indicates the
+// refund quantity of a quantity-based partial refund. The default value
+// is false.
+func (c *PurchasesVoidedpurchasesListCall) IncludeQuantityBasedPartialRefund(includeQuantityBasedPartialRefund bool) *PurchasesVoidedpurchasesListCall {
+	c.urlParams_.Set("includeQuantityBasedPartialRefund", fmt.Sprint(includeQuantityBasedPartialRefund))
+	return c
+}
+
 // MaxResults sets the optional parameter "maxResults": Defines how many
 // results the list operation should return. The default number depends
 // on the resource collection.
@@ -26596,6 +26622,11 @@ func (c *PurchasesVoidedpurchasesListCall) Do(opts ...googleapi.CallOption) (*Vo
 	//       "format": "int64",
 	//       "location": "query",
 	//       "type": "string"
+	//     },
+	//     "includeQuantityBasedPartialRefund": {
+	//       "description": "Optional. Whether to include voided purchases of quantity-based partial refunds, which are applicable only to multi-quantity purchases. If true, additional voided purchases may be returned with voidedQuantity that indicates the refund quantity of a quantity-based partial refund. The default value is false.",
+	//       "location": "query",
+	//       "type": "boolean"
 	//     },
 	//     "maxResults": {
 	//       "description": "Defines how many results the list operation should return. The default number depends on the resource collection.",

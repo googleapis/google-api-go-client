@@ -1926,12 +1926,16 @@ func (s *StaticRouteConfig) MarshalJSON() ([]byte, error) {
 }
 
 // StringMatcher: Specifies the way to match a string.
-// [#next-free-field: 8]
+// [#next-free-field: 9]
 type StringMatcher struct {
 	// Contains: The input string must have the substring specified here.
 	// Note: empty contains match is not allowed, please use regex instead.
 	// Examples: * ``abc`` matches the value ``xyz.abc.def``
 	Contains string `json:"contains,omitempty"`
+
+	// Custom: Use an extension as the matcher type. [#extension-category:
+	// envoy.string_matcher]
+	Custom *TypedExtensionConfig `json:"custom,omitempty"`
 
 	// Exact: The input string must match exactly the string specified here.
 	// Examples: * ``abc`` only matches the value ``abc``.
@@ -2022,6 +2026,43 @@ type StructMatcher struct {
 
 func (s *StructMatcher) MarshalJSON() ([]byte, error) {
 	type NoMethod StructMatcher
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TypedExtensionConfig: Message type for extension configuration.
+type TypedExtensionConfig struct {
+	// Name: The name of an extension. This is not used to select the
+	// extension, instead it serves the role of an opaque identifier.
+	Name string `json:"name,omitempty"`
+
+	// TypedConfig: The typed config for the extension. The type URL will be
+	// used to identify the extension. In the case that the type URL is
+	// *xds.type.v3.TypedStruct* (or, for historical reasons,
+	// *udpa.type.v1.TypedStruct*), the inner type URL of *TypedStruct* will
+	// be utilized. See the :ref:`extension configuration overview ` for
+	// further details.
+	TypedConfig googleapi.RawMessage `json:"typedConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TypedExtensionConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod TypedExtensionConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

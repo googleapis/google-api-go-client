@@ -2472,9 +2472,7 @@ type DeviceConnectivityManagement struct {
 	//
 	// Possible values:
 	//   "USB_DATA_ACCESS_UNSPECIFIED" - Unspecified. Defaults to
-	// ALLOW_USB_DATA_TRANSFER, unless usbFileTransferDisabled is set to
-	// true. If usbFileTransferDisabled is set to true, this is equivalent
-	// to DISALLOW_USB_FILE_TRANSFER.
+	// DISALLOW_USB_FILE_TRANSFER.
 	//   "ALLOW_USB_DATA_TRANSFER" - All types of USB data transfers are
 	// allowed. usbFileTransferDisabled is ignored.
 	//   "DISALLOW_USB_FILE_TRANSFER" - Transferring files over USB is
@@ -2574,6 +2572,11 @@ type DeviceRadioState struct {
 	// connect to Wi-Fi network below this security level. This is stricter
 	// than PERSONAL_NETWORK_SECURITY. A nonComplianceDetail with API_LEVEL
 	// is reported if the Android version is less than 13.
+	//   "ENTERPRISE_BIT192_NETWORK_SECURITY" - A 192-bit enterprise network
+	// is the minimum required security level. The device will not be able
+	// to connect to Wi-Fi network below this security level. This is
+	// stricter than ENTERPRISE_NETWORK_SECURITY. A nonComplianceDetail with
+	// API_LEVEL is reported if the Android version is less than 13.
 	MinimumWifiSecurityLevel string `json:"minimumWifiSecurityLevel,omitempty"`
 
 	// UltraWidebandState: Controls the state of the ultra wideband setting
@@ -7517,6 +7520,10 @@ type UsageLogEvent struct {
 	// set.
 	//   "ENROLLMENT_COMPLETE" - Indicates enrollment_complete_event has
 	// been set.
+	//   "MAX_DEVICES_REGISTRATION_QUOTA_WARNING" - Indicates
+	// max_devices_registration_quota_warning_event has been set.
+	//   "MAX_DEVICES_REGISTRATION_QUOTA_EXHAUSTED" - Indicates
+	// max_devices_registration_quota_exhausted_event has been set.
 	EventType string `json:"eventType,omitempty"`
 
 	// FilePulledEvent: A file was downloaded from the device. Part of

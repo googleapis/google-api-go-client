@@ -248,6 +248,35 @@ type ProjectsLocationsSupportedDatabaseFlagsService struct {
 	s *Service
 }
 
+// AuthorizedNetwork: AuthorizedNetwork contains metadata for an
+// authorized network.
+type AuthorizedNetwork struct {
+	// CidrRange: CIDR range for one authorzied network of the instance.
+	CidrRange string `json:"cidrRange,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CidrRange") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CidrRange") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuthorizedNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthorizedNetwork
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // AutomatedBackupPolicy: Message describing the user-specified
 // automated backup policy. All fields in the automated backup policy
 // are optional. Defaults for each field are provided if they are not
@@ -778,6 +807,11 @@ type ConnectionInfo struct {
 	// ionInfo This field currently has no semantic meaning.
 	Name string `json:"name,omitempty"`
 
+	// PublicIpAddress: Output only. The public IP addresses for the
+	// Instance. This is available ONLY when enable_public_ip is set. This
+	// is the connection endpoint for an end-user application.
+	PublicIpAddress string `json:"publicIpAddress,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`
@@ -1067,99 +1101,6 @@ func (s *FailoverInstanceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GenerateClientCertificateRequest: Message for requests to generate a
-// client certificate signed by the Cluster CA.
-type GenerateClientCertificateRequest struct {
-	// CertDuration: Optional. An optional hint to the endpoint to generate
-	// the client certificate with the requested duration. The duration can
-	// be from 1 hour to 24 hours. The endpoint may or may not honor the
-	// hint. If the hint is left unspecified or is not honored, then the
-	// endpoint will pick an appropriate default duration.
-	CertDuration string `json:"certDuration,omitempty"`
-
-	// PublicKey: Optional. The public key from the client.
-	PublicKey string `json:"publicKey,omitempty"`
-
-	// RequestId: Optional. An optional request ID to identify requests.
-	// Specify a unique request ID so that if you must retry your request,
-	// the server will know to ignore the request if it has already been
-	// completed. The server will guarantee that for at least 60 minutes
-	// after the first request. For example, consider a situation where you
-	// make an initial request and the request times out. If you make the
-	// request again with the same request ID, the server can check if
-	// original operation with the same request ID was received, and if so,
-	// will ignore the second request. This prevents clients from
-	// accidentally creating duplicate commitments. The request ID must be a
-	// valid UUID with the exception that zero UUID is not supported
-	// (00000000-0000-0000-0000-000000000000).
-	RequestId string `json:"requestId,omitempty"`
-
-	// UseMetadataExchange: Optional. An optional hint to the endpoint to
-	// generate a client ceritificate that can be used by AlloyDB connectors
-	// to exchange additional metadata with the server after TLS handshake.
-	UseMetadataExchange bool `json:"useMetadataExchange,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CertDuration") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CertDuration") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GenerateClientCertificateRequest) MarshalJSON() ([]byte, error) {
-	type NoMethod GenerateClientCertificateRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GenerateClientCertificateResponse: Message returned by a
-// GenerateClientCertificate operation.
-type GenerateClientCertificateResponse struct {
-	// CaCert: Optional. The pem-encoded cluster ca X.509 certificate.
-	CaCert string `json:"caCert,omitempty"`
-
-	// PemCertificateChain: Output only. The pem-encoded chain that may be
-	// used to verify the X.509 certificate. Expected to be in
-	// issuer-to-root order according to RFC 5246.
-	PemCertificateChain []string `json:"pemCertificateChain,omitempty"`
-
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
-	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "CaCert") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CaCert") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GenerateClientCertificateResponse) MarshalJSON() ([]byte, error) {
-	type NoMethod GenerateClientCertificateResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudLocationListLocationsResponse: The response message for
 // Locations.ListLocations.
 type GoogleCloudLocationListLocationsResponse struct {
@@ -1441,9 +1382,17 @@ type Instance struct {
 	// projects/{project}/locations/{region}/clusters/{cluster_id}
 	Name string `json:"name,omitempty"`
 
+	// NetworkConfig: Optional. Instance level network configuration.
+	NetworkConfig *InstanceNetworkConfig `json:"networkConfig,omitempty"`
+
 	// Nodes: Output only. List of available read-only VMs in this instance,
 	// including the standby for a PRIMARY instance.
 	Nodes []*Node `json:"nodes,omitempty"`
+
+	// PublicIpAddress: Output only. The public IP addresses for the
+	// Instance. This is available ONLY when enable_public_ip is set. This
+	// is the connection endpoint for an end-user application.
+	PublicIpAddress string `json:"publicIpAddress,omitempty"`
 
 	// QueryInsightsConfig: Configuration for query insights.
 	QueryInsightsConfig *QueryInsightsInstanceConfig `json:"queryInsightsConfig,omitempty"`
@@ -1519,6 +1468,41 @@ type Instance struct {
 
 func (s *Instance) MarshalJSON() ([]byte, error) {
 	type NoMethod Instance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InstanceNetworkConfig: Metadata related to instance level network
+// configuration.
+type InstanceNetworkConfig struct {
+	// AuthorizedExternalNetworks: Optional. A list of external network
+	// authorized to access this instance.
+	AuthorizedExternalNetworks []*AuthorizedNetwork `json:"authorizedExternalNetworks,omitempty"`
+
+	// EnablePublicIp: Optional. Enabling public ip for the instance.
+	EnablePublicIp bool `json:"enablePublicIp,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AuthorizedExternalNetworks") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AuthorizedExternalNetworks") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InstanceNetworkConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod InstanceNetworkConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3040,6 +3024,17 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceHealthSignalData struc
 	// restricted to authorized networks.
 	//   "SIGNAL_TYPE_VIOLATE_POLICY_RESTRICT_PUBLIC_IP" - Represents
 	// violate org policy restrict public ip.
+	//   "SIGNAL_TYPE_QUOTA_LIMIT" - Cluster nearing quota limit
+	//   "SIGNAL_TYPE_NO_PASSWORD_POLICY" - No password policy set on
+	// resources
+	//   "SIGNAL_TYPE_CONNECTIONS_PERFORMANCE_IMPACT" - Performance impact
+	// of connections settings
+	//   "SIGNAL_TYPE_TMP_TABLES_PERFORMANCE_IMPACT" - Performance impact of
+	// temporary tables settings
+	//   "SIGNAL_TYPE_TRANS_LOGS_PERFORMANCE_IMPACT" - Performance impact of
+	// transaction logs settings
+	//   "SIGNAL_TYPE_HIGH_JOINS_WITHOUT_INDEXES" - Performance impact of
+	// high joins without indexes
 	SignalType string `json:"signalType,omitempty"`
 
 	// Possible values:
@@ -3233,6 +3228,9 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceMetadata struct {
 	// UpdationTime: The time at which the resource was updated and recorded
 	// at partner service.
 	UpdationTime string `json:"updationTime,omitempty"`
+
+	// UserLabelSet: User-provided labels associated with the resource
+	UserLabelSet *StorageDatabasecenterPartnerapiV1mainUserLabels `json:"userLabelSet,omitempty"`
 
 	// UserLabels: User-provided labels, represented as a dictionary where
 	// each label is a single key value pair.
@@ -3475,6 +3473,17 @@ type StorageDatabasecenterPartnerapiV1mainDatabaseResourceRecommendationSignalDa
 	// restricted to authorized networks.
 	//   "SIGNAL_TYPE_VIOLATE_POLICY_RESTRICT_PUBLIC_IP" - Represents
 	// violate org policy restrict public ip.
+	//   "SIGNAL_TYPE_QUOTA_LIMIT" - Cluster nearing quota limit
+	//   "SIGNAL_TYPE_NO_PASSWORD_POLICY" - No password policy set on
+	// resources
+	//   "SIGNAL_TYPE_CONNECTIONS_PERFORMANCE_IMPACT" - Performance impact
+	// of connections settings
+	//   "SIGNAL_TYPE_TMP_TABLES_PERFORMANCE_IMPACT" - Performance impact of
+	// temporary tables settings
+	//   "SIGNAL_TYPE_TRANS_LOGS_PERFORMANCE_IMPACT" - Performance impact of
+	// transaction logs settings
+	//   "SIGNAL_TYPE_HIGH_JOINS_WITHOUT_INDEXES" - Performance impact of
+	// high joins without indexes
 	SignalType string `json:"signalType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AdditionalMetadata")
@@ -3521,6 +3530,8 @@ type StorageDatabasecenterPartnerapiV1mainEntitlement struct {
 	// Possible values:
 	//   "ENTITLEMENT_TYPE_UNSPECIFIED"
 	//   "DUET_AI" - The root entitlement representing Duet AI package
+	// ownership.
+	//   "GEMINI" - The root entitlement representing Gemini package
 	// ownership.
 	Type string `json:"type,omitempty"`
 
@@ -3631,6 +3642,36 @@ type StorageDatabasecenterPartnerapiV1mainRetentionSettings struct {
 
 func (s *StorageDatabasecenterPartnerapiV1mainRetentionSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod StorageDatabasecenterPartnerapiV1mainRetentionSettings
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// StorageDatabasecenterPartnerapiV1mainUserLabels: Message type for
+// storing user labels. User labels are used to tag App Engine
+// resources, allowing users to search for resources matching a set of
+// labels and to aggregate usage data by labels.
+type StorageDatabasecenterPartnerapiV1mainUserLabels struct {
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Labels") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Labels") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageDatabasecenterPartnerapiV1mainUserLabels) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDatabasecenterPartnerapiV1mainUserLabels
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5861,155 +5902,6 @@ func (c *ProjectsLocationsClustersDeleteCall) Do(opts ...googleapi.CallOption) (
 	//   "path": "v1/{+name}",
 	//   "response": {
 	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
-}
-
-// method id "alloydb.projects.locations.clusters.generateClientCertificate":
-
-type ProjectsLocationsClustersGenerateClientCertificateCall struct {
-	s                                *Service
-	parent                           string
-	generateclientcertificaterequest *GenerateClientCertificateRequest
-	urlParams_                       gensupport.URLParams
-	ctx_                             context.Context
-	header_                          http.Header
-}
-
-// GenerateClientCertificate: Generate a client certificate signed by a
-// Cluster CA. The sole purpose of this endpoint is to support AlloyDB
-// connectors and the Auth Proxy client. The endpoint's behavior is
-// subject to change without notice, so do not rely on its behavior
-// remaining constant. Future changes will not break AlloyDB connectors
-// or the Auth Proxy client.
-//
-//   - parent: The name of the parent resource. The required format is: *
-//     projects/{project}/locations/{location}/clusters/{cluster}.
-func (r *ProjectsLocationsClustersService) GenerateClientCertificate(parent string, generateclientcertificaterequest *GenerateClientCertificateRequest) *ProjectsLocationsClustersGenerateClientCertificateCall {
-	c := &ProjectsLocationsClustersGenerateClientCertificateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
-	c.parent = parent
-	c.generateclientcertificaterequest = generateclientcertificaterequest
-	return c
-}
-
-// Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
-func (c *ProjectsLocationsClustersGenerateClientCertificateCall) Fields(s ...googleapi.Field) *ProjectsLocationsClustersGenerateClientCertificateCall {
-	c.urlParams_.Set("fields", googleapi.CombineFields(s))
-	return c
-}
-
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
-func (c *ProjectsLocationsClustersGenerateClientCertificateCall) Context(ctx context.Context) *ProjectsLocationsClustersGenerateClientCertificateCall {
-	c.ctx_ = ctx
-	return c
-}
-
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
-func (c *ProjectsLocationsClustersGenerateClientCertificateCall) Header() http.Header {
-	if c.header_ == nil {
-		c.header_ = make(http.Header)
-	}
-	return c.header_
-}
-
-func (c *ProjectsLocationsClustersGenerateClientCertificateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
-	var body io.Reader = nil
-	body, err := googleapi.WithoutDataWrapper.JSONReader(c.generateclientcertificaterequest)
-	if err != nil {
-		return nil, err
-	}
-	reqHeaders.Set("Content-Type", "application/json")
-	c.urlParams_.Set("alt", alt)
-	c.urlParams_.Set("prettyPrint", "false")
-	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}:generateClientCertificate")
-	urls += "?" + c.urlParams_.Encode()
-	req, err := http.NewRequest("POST", urls, body)
-	if err != nil {
-		return nil, err
-	}
-	req.Header = reqHeaders
-	googleapi.Expand(req.URL, map[string]string{
-		"parent": c.parent,
-	})
-	return gensupport.SendRequest(c.ctx_, c.s.client, req)
-}
-
-// Do executes the "alloydb.projects.locations.clusters.generateClientCertificate" call.
-// Exactly one of *GenerateClientCertificateResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GenerateClientCertificateResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
-func (c *ProjectsLocationsClustersGenerateClientCertificateCall) Do(opts ...googleapi.CallOption) (*GenerateClientCertificateResponse, error) {
-	gensupport.SetOptions(c.urlParams_, opts...)
-	res, err := c.doRequest("json")
-	if res != nil && res.StatusCode == http.StatusNotModified {
-		if res.Body != nil {
-			res.Body.Close()
-		}
-		return nil, gensupport.WrapError(&googleapi.Error{
-			Code:   res.StatusCode,
-			Header: res.Header,
-		})
-	}
-	if err != nil {
-		return nil, err
-	}
-	defer googleapi.CloseBody(res)
-	if err := googleapi.CheckResponse(res); err != nil {
-		return nil, gensupport.WrapError(err)
-	}
-	ret := &GenerateClientCertificateResponse{
-		ServerResponse: googleapi.ServerResponse{
-			Header:         res.Header,
-			HTTPStatusCode: res.StatusCode,
-		},
-	}
-	target := &ret
-	if err := gensupport.DecodeResponse(target, res); err != nil {
-		return nil, err
-	}
-	return ret, nil
-	// {
-	//   "description": "Generate a client certificate signed by a Cluster CA. The sole purpose of this endpoint is to support AlloyDB connectors and the Auth Proxy client. The endpoint's behavior is subject to change without notice, so do not rely on its behavior remaining constant. Future changes will not break AlloyDB connectors or the Auth Proxy client.",
-	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/clusters/{clustersId}:generateClientCertificate",
-	//   "httpMethod": "POST",
-	//   "id": "alloydb.projects.locations.clusters.generateClientCertificate",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The name of the parent resource. The required format is: * projects/{project}/locations/{location}/clusters/{cluster}",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/clusters/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}:generateClientCertificate",
-	//   "request": {
-	//     "$ref": "GenerateClientCertificateRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GenerateClientCertificateResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

@@ -4371,7 +4371,7 @@ type V1ValidateAttributeExpressionCall struct {
 	header_    http.Header
 }
 
-// ValidateAttributeExpression: Validates a given CEL expression
+// ValidateAttributeExpression: Validates that a given CEL expression
 // conforms to IAP restrictions.
 //
 // - name: The resource name of the IAP protected resource.
@@ -4383,8 +4383,8 @@ func (r *V1Service) ValidateAttributeExpression(name string) *V1ValidateAttribut
 
 // Expression sets the optional parameter "expression": Required. User
 // input string expression. Should be of the form
-// 'attributes.saml_attributes.filter(attribute, attribute.name in
-// ['{attribute_name}', '{attribute_name}'])'
+// `attributes.saml_attributes.filter(attribute, attribute.name in
+// ['{attribute_name}', '{attribute_name}'])`
 func (c *V1ValidateAttributeExpressionCall) Expression(expression string) *V1ValidateAttributeExpressionCall {
 	c.urlParams_.Set("expression", expression)
 	return c
@@ -4477,7 +4477,7 @@ func (c *V1ValidateAttributeExpressionCall) Do(opts ...googleapi.CallOption) (*V
 	}
 	return ret, nil
 	// {
-	//   "description": "Validates a given CEL expression conforms to IAP restrictions.",
+	//   "description": "Validates that a given CEL expression conforms to IAP restrictions.",
 	//   "flatPath": "v1/{v1Id}:validateAttributeExpression",
 	//   "httpMethod": "POST",
 	//   "id": "iap.validateAttributeExpression",
@@ -4486,7 +4486,7 @@ func (c *V1ValidateAttributeExpressionCall) Do(opts ...googleapi.CallOption) (*V
 	//   ],
 	//   "parameters": {
 	//     "expression": {
-	//       "description": "Required. User input string expression. Should be of the form 'attributes.saml_attributes.filter(attribute, attribute.name in ['{attribute_name}', '{attribute_name}'])'",
+	//       "description": "Required. User input string expression. Should be of the form `attributes.saml_attributes.filter(attribute, attribute.name in ['{attribute_name}', '{attribute_name}'])`",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

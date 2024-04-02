@@ -712,6 +712,11 @@ type GoogleChecksReportV1alphaCheckCitation struct {
 	//   "QUEBEC_BILL_64" - Quebec Bill 64: An Act to Modernize Legislative
 	// Provisions as Regards the Protection of Personal Information.
 	//   "CHINA_PIPL" - China Personal Information Protection Law.
+	//   "SOUTH_KOREA_PIPA" - South Korea Personal Information Protection
+	// Act.
+	//   "SOUTH_AFRICA_POPIA" - South Africa Protection of Personal
+	// Information Act.
+	//   "JAPAN_APPI" - Japan Act on the Protection of Personal Information.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to

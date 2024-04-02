@@ -5687,7 +5687,7 @@ type RollbackFhirResourcesRequest struct {
 	// explicit confirmation
 	Force bool `json:"force,omitempty"`
 
-	// InputGcsObject: Optional. GCS object containing list of
+	// InputGcsObject: Optional. Cloud Storage object containing list of
 	// {resourceType}/{resourceId} lines, identifying resources to be
 	// reverted
 	InputGcsObject string `json:"inputGcsObject,omitempty"`

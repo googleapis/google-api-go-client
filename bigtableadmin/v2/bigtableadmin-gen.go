@@ -306,10 +306,22 @@ type ProjectsInstancesClustersHotTabletsService struct {
 
 func NewProjectsInstancesTablesService(s *Service) *ProjectsInstancesTablesService {
 	rs := &ProjectsInstancesTablesService{s: s}
+	rs.AuthorizedViews = NewProjectsInstancesTablesAuthorizedViewsService(s)
 	return rs
 }
 
 type ProjectsInstancesTablesService struct {
+	s *Service
+
+	AuthorizedViews *ProjectsInstancesTablesAuthorizedViewsService
+}
+
+func NewProjectsInstancesTablesAuthorizedViewsService(s *Service) *ProjectsInstancesTablesAuthorizedViewsService {
+	rs := &ProjectsInstancesTablesAuthorizedViewsService{s: s}
+	return rs
+}
+
+type ProjectsInstancesTablesAuthorizedViewsService struct {
 	s *Service
 }
 
@@ -325,6 +337,10 @@ type ProjectsLocationsService struct {
 // AppProfile: A configuration object describing how Cloud Bigtable
 // should treat traffic from a particular end user application.
 type AppProfile struct {
+	// DataBoostIsolationReadOnly: Specifies that this app profile is
+	// intended for read-only usage via the Data Boost feature.
+	DataBoostIsolationReadOnly *DataBoostIsolationReadOnly `json:"dataBoostIsolationReadOnly,omitempty"`
+
 	// Description: Long form description of the use case for this
 	// AppProfile.
 	Description string `json:"description,omitempty"`
@@ -369,20 +385,22 @@ type AppProfile struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DataBoostIsolationReadOnly") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "DataBoostIsolationReadOnly") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -485,6 +503,57 @@ type AuditLogConfig struct {
 
 func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// AuthorizedView: Placeholder for admin API work while we work out the
+// internals.
+type AuthorizedView struct {
+	// DeletionProtection: Set to true to make the AuthorizedView protected
+	// against deletion. The parent Table and containing Instance cannot be
+	// deleted if an AuthorizedView has this bit set.
+	DeletionProtection bool `json:"deletionProtection,omitempty"`
+
+	// Etag: The etag for this AuthorizedView. If this is provided on
+	// update, it must match the server's etag. The server returns ABORTED
+	// error on a mismatched etag.
+	Etag string `json:"etag,omitempty"`
+
+	// Name: Identifier. The name of this AuthorizedView. Values are of the
+	// form
+	// `projects/{project}/instances/{instance}/tables/{table}/authorizedView
+	// s/{authorized_view}`
+	Name string `json:"name,omitempty"`
+
+	// SubsetView: An AuthorizedView permitting access to an explicit subset
+	// of a Table.
+	SubsetView *GoogleBigtableAdminV2AuthorizedViewSubsetView `json:"subsetView,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DeletionProtection")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeletionProtection") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AuthorizedView) MarshalJSON() ([]byte, error) {
+	type NoMethod AuthorizedView
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -878,6 +947,17 @@ type CheckConsistencyRequest struct {
 	// GenerateConsistencyToken for the Table.
 	ConsistencyToken string `json:"consistencyToken,omitempty"`
 
+	// DataBoostReadLocalWrites: Checks that reads using an app profile with
+	// `DataBoostIsolationReadOnly` can see all writes committed before the
+	// token was created, but only if the read and write target the same
+	// cluster.
+	DataBoostReadLocalWrites *DataBoostReadLocalWrites `json:"dataBoostReadLocalWrites,omitempty"`
+
+	// StandardReadRemoteWrites: Checks that reads using an app profile with
+	// `StandardIsolation` can see all writes committed before the token was
+	// created, even if the read and write target different clusters.
+	StandardReadRemoteWrites *StandardReadRemoteWrites `json:"standardReadRemoteWrites,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ConsistencyToken") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1156,6 +1236,15 @@ type ColumnFamily struct {
 	// an entire table, see TableStats above.
 	Stats *ColumnFamilyStats `json:"stats,omitempty"`
 
+	// ValueType: The type of data stored in each of this family's cell
+	// values, including its full encoding. If omitted, the family only
+	// serves raw untyped bytes. For now, only the `Aggregate` type is
+	// supported. `Aggregate` can only be set at family creation and is
+	// immutable afterwards. If `value_type` is `Aggregate`, written data
+	// must be compatible with: * `value_type.input_type` for `AddInput`
+	// mutations
+	ValueType *Type `json:"valueType,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "GcRule") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1335,6 +1424,84 @@ type CopyBackupRequest struct {
 
 func (s *CopyBackupRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CopyBackupRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateAuthorizedViewMetadata: The metadata for the Operation returned
+// by CreateAuthorizedView.
+type CreateAuthorizedViewMetadata struct {
+	// FinishTime: The time at which the operation failed or was completed
+	// successfully.
+	FinishTime string `json:"finishTime,omitempty"`
+
+	// OriginalRequest: The request that prompted the initiation of this
+	// CreateInstance operation.
+	OriginalRequest *CreateAuthorizedViewRequest `json:"originalRequest,omitempty"`
+
+	// RequestTime: The time at which the original request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FinishTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FinishTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateAuthorizedViewMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateAuthorizedViewMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CreateAuthorizedViewRequest: The request for CreateAuthorizedView
+type CreateAuthorizedViewRequest struct {
+	// AuthorizedView: Required. The AuthorizedView to create.
+	AuthorizedView *AuthorizedView `json:"authorizedView,omitempty"`
+
+	// AuthorizedViewId: Required. The id of the AuthorizedView to create.
+	// This AuthorizedView must not already exist. The `authorized_view_id`
+	// appended to `parent` forms the full AuthorizedView name of the form
+	// `projects/{project}/instances/{instance}/tables/{table}/authorizedView
+	// /{authorized_view}`.
+	AuthorizedViewId string `json:"authorizedViewId,omitempty"`
+
+	// Parent: Required. This is the name of the table the AuthorizedView
+	// belongs to. Values are of the form
+	// `projects/{project}/instances/{instance}/tables/{table}`.
+	Parent string `json:"parent,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthorizedView") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthorizedView") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CreateAuthorizedViewRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod CreateAuthorizedViewRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1590,6 +1757,57 @@ func (s *CreateTableRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateTableRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataBoostIsolationReadOnly: Data Boost is a serverless compute
+// capability that lets you run high-throughput read jobs on your
+// Bigtable data, without impacting the performance of the clusters that
+// handle your application traffic. Currently, Data Boost exclusively
+// supports read-only use-cases with single-cluster routing. Data Boost
+// reads are only guaranteed to see the results of writes that were
+// written at least 30 minutes ago. This means newly written values may
+// not become visible for up to 30m, and also means that old values may
+// remain visible for up to 30m after being deleted or overwritten. To
+// mitigate the staleness of the data, users may either wait 30m, or use
+// CheckConsistency.
+type DataBoostIsolationReadOnly struct {
+	// ComputeBillingOwner: The Compute Billing Owner for this Data Boost
+	// App Profile.
+	//
+	// Possible values:
+	//   "COMPUTE_BILLING_OWNER_UNSPECIFIED" - Unspecified value.
+	//   "HOST_PAYS" - The host Cloud Project containing the targeted
+	// Bigtable Instance / Table pays for compute.
+	ComputeBillingOwner string `json:"computeBillingOwner,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComputeBillingOwner")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ComputeBillingOwner") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DataBoostIsolationReadOnly) MarshalJSON() ([]byte, error) {
+	type NoMethod DataBoostIsolationReadOnly
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DataBoostReadLocalWrites: Checks that all writes before the
+// consistency token was generated in the same cluster are readable by
+// Databoost.
+type DataBoostReadLocalWrites struct {
 }
 
 // DropRowRangeRequest: Request message for
@@ -1944,6 +2162,283 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleBigtableAdminV2AuthorizedViewFamilySubsets: Subsets of a column
+// family that are included in this AuthorizedView.
+type GoogleBigtableAdminV2AuthorizedViewFamilySubsets struct {
+	// QualifierPrefixes: Prefixes for qualifiers to be included in the
+	// AuthorizedView. Every qualifier starting with one of these prefixes
+	// is included in the AuthorizedView. To provide access to all
+	// qualifiers, include the empty string as a prefix ("").
+	QualifierPrefixes []string `json:"qualifierPrefixes,omitempty"`
+
+	// Qualifiers: Individual exact column qualifiers to be included in the
+	// AuthorizedView.
+	Qualifiers []string `json:"qualifiers,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "QualifierPrefixes")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "QualifierPrefixes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleBigtableAdminV2AuthorizedViewFamilySubsets) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2AuthorizedViewFamilySubsets
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2AuthorizedViewSubsetView: Defines a simple
+// AuthorizedView that is a subset of the underlying Table.
+type GoogleBigtableAdminV2AuthorizedViewSubsetView struct {
+	// FamilySubsets: Map from column family name to the columns in this
+	// family to be included in the AuthorizedView.
+	FamilySubsets map[string]GoogleBigtableAdminV2AuthorizedViewFamilySubsets `json:"familySubsets,omitempty"`
+
+	// RowPrefixes: Row prefixes to be included in the AuthorizedView. To
+	// provide access to all rows, include the empty string as a prefix
+	// ("").
+	RowPrefixes []string `json:"rowPrefixes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FamilySubsets") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FamilySubsets") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleBigtableAdminV2AuthorizedViewSubsetView) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2AuthorizedViewSubsetView
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeAggregate: A value that combines incremental
+// updates into a summarized value. Data is never directly written or
+// read using type `Aggregate`. Writes will provide either the
+// `input_type` or `state_type`, and reads will always return the
+// `state_type` .
+type GoogleBigtableAdminV2TypeAggregate struct {
+	// InputType: Type of the inputs that are accumulated by this
+	// `Aggregate`, which must specify a full encoding. Use `AddInput`
+	// mutations to accumulate new inputs.
+	InputType *Type `json:"inputType,omitempty"`
+
+	// StateType: Output only. Type that holds the internal accumulator
+	// state for the `Aggregate`. This is a function of the `input_type` and
+	// `aggregator` chosen, and will always specify a full encoding.
+	StateType *Type `json:"stateType,omitempty"`
+
+	// Sum: Sum aggregator.
+	Sum *GoogleBigtableAdminV2TypeAggregateSum `json:"sum,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InputType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InputType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleBigtableAdminV2TypeAggregate) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeAggregate
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeAggregateSum: Computes the sum of the input
+// values. Allowed input: `Int64` State: same as input
+type GoogleBigtableAdminV2TypeAggregateSum struct {
+}
+
+// GoogleBigtableAdminV2TypeBytes: Bytes Values of type `Bytes` are
+// stored in `Value.bytes_value`.
+type GoogleBigtableAdminV2TypeBytes struct {
+	// Encoding: The encoding to use when converting to/from lower level
+	// types.
+	Encoding *GoogleBigtableAdminV2TypeBytesEncoding `json:"encoding,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Encoding") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Encoding") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleBigtableAdminV2TypeBytes) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeBytes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeBytesEncoding: Rules used to convert to/from
+// lower level types.
+type GoogleBigtableAdminV2TypeBytesEncoding struct {
+	// Raw: Use `Raw` encoding.
+	Raw *GoogleBigtableAdminV2TypeBytesEncodingRaw `json:"raw,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Raw") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Raw") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleBigtableAdminV2TypeBytesEncoding) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeBytesEncoding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeBytesEncodingRaw: Leaves the value "as-is" *
+// Natural sort? Yes * Self-delimiting? No * Compatibility? N/A
+type GoogleBigtableAdminV2TypeBytesEncodingRaw struct {
+}
+
+// GoogleBigtableAdminV2TypeInt64: Int64 Values of type `Int64` are
+// stored in `Value.int_value`.
+type GoogleBigtableAdminV2TypeInt64 struct {
+	// Encoding: The encoding to use when converting to/from lower level
+	// types.
+	Encoding *GoogleBigtableAdminV2TypeInt64Encoding `json:"encoding,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Encoding") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Encoding") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleBigtableAdminV2TypeInt64) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeInt64
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeInt64Encoding: Rules used to convert to/from
+// lower level types.
+type GoogleBigtableAdminV2TypeInt64Encoding struct {
+	// BigEndianBytes: Use `BigEndianBytes` encoding.
+	BigEndianBytes *GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes `json:"bigEndianBytes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BigEndianBytes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BigEndianBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleBigtableAdminV2TypeInt64Encoding) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeInt64Encoding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes: Encodes the
+// value as an 8-byte big endian twos complement `Bytes` value. *
+// Natural sort? No (positive values only) * Self-delimiting? Yes *
+// Compatibility? - BigQuery Federation `BINARY` encoding - HBase
+// `Bytes.toBytes` - Java `ByteBuffer.putLong()` with
+// `ByteOrder.BIG_ENDIAN`
+type GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes struct {
+	// BytesType: The underlying `Bytes` type, which may be able to encode
+	// further.
+	BytesType *GoogleBigtableAdminV2TypeBytes `json:"bytesType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BytesType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BytesType") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleBigtableAdminV2TypeInt64EncodingBigEndianBytes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // HotTablet: A tablet is a defined by a start and end key and is
 // explained in
 // https://cloud.google.com/bigtable/docs/overview#architecture and
@@ -2171,6 +2666,45 @@ type ListAppProfilesResponse struct {
 
 func (s *ListAppProfilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAppProfilesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListAuthorizedViewsResponse: Response message for
+// google.bigtable.admin.v2.BigtableTableAdmin.ListAuthorizedViews
+type ListAuthorizedViewsResponse struct {
+	// AuthorizedViews: The AuthorizedViews present in the requested table.
+	AuthorizedViews []*AuthorizedView `json:"authorizedViews,omitempty"`
+
+	// NextPageToken: Set if not all tables could be returned in a single
+	// response. Pass this value to `page_token` in another request to get
+	// the next page of results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthorizedViews") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthorizedViews") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListAuthorizedViewsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListAuthorizedViewsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3227,6 +3761,12 @@ func (s *StandardIsolation) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StandardReadRemoteWrites: Checks that all writes before the
+// consistency token was generated are replicated in every cluster and
+// readable.
+type StandardReadRemoteWrites struct {
+}
+
 // Status: The `Status` type defines a logical error model that is
 // suitable for different programming environments, including REST APIs
 // and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
@@ -3545,6 +4085,66 @@ func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// Type: `Type` represents the type of data that is written to, read
+// from, or stored in Bigtable. It is heavily based on the GoogleSQL
+// standard to help maintain familiarity and consistency across products
+// and features. For compatibility with Bigtable's existing untyped
+// APIs, each `Type` includes an `Encoding` which describes how to
+// convert to/from the underlying data. This might involve composing a
+// series of steps into an "encoding chain," for example to convert from
+// INT64 -> STRING -> raw bytes. In most cases, a "link" in the encoding
+// chain will be based an on existing GoogleSQL conversion function like
+// `CAST`. Each link in the encoding chain also defines the following
+// properties: * Natural sort: Does the encoded value sort consistently
+// with the original typed value? Note that Bigtable will always sort
+// data based on the raw encoded value, *not* the decoded type. -
+// Example: STRING values sort in the same order as their UTF-8
+// encodings. - Counterexample: Encoding INT64 to a fixed-width STRING
+// does *not* preserve sort order when dealing with negative numbers.
+// INT64(1) > INT64(-1), but STRING("-00001") > STRING("00001). - The
+// overall encoding chain sorts naturally if *every* link does. *
+// Self-delimiting: If we concatenate two encoded values, can we always
+// tell where the first one ends and the second one begins? - Example:
+// If we encode INT64s to fixed-width STRINGs, the first value will
+// always contain exactly N digits, possibly preceded by a sign. -
+// Counterexample: If we concatenate two UTF-8 encoded STRINGs, we have
+// no way to tell where the first one ends. - The overall encoding chain
+// is self-delimiting if *any* link is. * Compatibility: Which other
+// systems have matching encoding schemes? For example, does this
+// encoding have a GoogleSQL equivalent? HBase? Java?
+type Type struct {
+	// AggregateType: Aggregate
+	AggregateType *GoogleBigtableAdminV2TypeAggregate `json:"aggregateType,omitempty"`
+
+	// BytesType: Bytes
+	BytesType *GoogleBigtableAdminV2TypeBytes `json:"bytesType,omitempty"`
+
+	// Int64Type: Int64
+	Int64Type *GoogleBigtableAdminV2TypeInt64 `json:"int64Type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregateType") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregateType") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Type) MarshalJSON() ([]byte, error) {
+	type NoMethod Type
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // UndeleteTableMetadata: Metadata type for the operation returned by
 // google.bigtable.admin.v2.BigtableTableAdmin.UndeleteTable.
 type UndeleteTableMetadata struct {
@@ -3617,6 +4217,88 @@ func (s *Union) MarshalJSON() ([]byte, error) {
 // UpdateAppProfileMetadata: The metadata for the Operation returned by
 // UpdateAppProfile.
 type UpdateAppProfileMetadata struct {
+}
+
+// UpdateAuthorizedViewMetadata: Metadata for the
+// google.longrunning.Operation returned by UpdateAuthorizedView.
+type UpdateAuthorizedViewMetadata struct {
+	// FinishTime: The time at which the operation failed or was completed
+	// successfully.
+	FinishTime string `json:"finishTime,omitempty"`
+
+	// OriginalRequest: The request that prompted the initiation of this
+	// UpdateAuthorizedView operation.
+	OriginalRequest *UpdateAuthorizedViewRequest `json:"originalRequest,omitempty"`
+
+	// RequestTime: The time at which the original request was received.
+	RequestTime string `json:"requestTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FinishTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FinishTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateAuthorizedViewMetadata) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateAuthorizedViewMetadata
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// UpdateAuthorizedViewRequest: The request for UpdateAuthorizedView.
+type UpdateAuthorizedViewRequest struct {
+	// AuthorizedView: Required. The AuthorizedView to update. The `name` in
+	// `authorized_view` is used to identify the AuthorizedView.
+	// AuthorizedView name must in this format
+	// projects//instances//tables//authorizedViews/
+	AuthorizedView *AuthorizedView `json:"authorizedView,omitempty"`
+
+	// IgnoreWarnings: Optional. If true, ignore the safety checks when
+	// updating the AuthorizedView.
+	IgnoreWarnings bool `json:"ignoreWarnings,omitempty"`
+
+	// UpdateMask: Optional. The list of fields to update. A mask specifying
+	// which fields in the AuthorizedView resource should be updated. This
+	// mask is relative to the AuthorizedView resource, not to the request
+	// message. A field will be overwritten if it is in the mask. If empty,
+	// all fields set in the request will be overwritten. A special value
+	// `*` means to overwrite all fields (including fields not set in the
+	// request).
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AuthorizedView") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AuthorizedView") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *UpdateAuthorizedViewRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod UpdateAuthorizedViewRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // UpdateClusterMetadata: The metadata for the Operation returned by
@@ -11318,6 +12000,1383 @@ func (c *ProjectsInstancesTablesUndeleteCall) Do(opts ...googleapi.CallOption) (
 	//   },
 	//   "response": {
 	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigtableadmin.projects.instances.tables.authorizedViews.create":
+
+type ProjectsInstancesTablesAuthorizedViewsCreateCall struct {
+	s              *Service
+	parent         string
+	authorizedview *AuthorizedView
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Create: Creates a new AuthorizedView in a table.
+//
+//   - parent: This is the name of the table the AuthorizedView belongs
+//     to. Values are of the form
+//     `projects/{project}/instances/{instance}/tables/{table}`.
+func (r *ProjectsInstancesTablesAuthorizedViewsService) Create(parent string, authorizedview *AuthorizedView) *ProjectsInstancesTablesAuthorizedViewsCreateCall {
+	c := &ProjectsInstancesTablesAuthorizedViewsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.authorizedview = authorizedview
+	return c
+}
+
+// AuthorizedViewId sets the optional parameter "authorizedViewId":
+// Required. The id of the AuthorizedView to create. This AuthorizedView
+// must not already exist. The `authorized_view_id` appended to `parent`
+// forms the full AuthorizedView name of the form
+// `projects/{project}/instances/{instance}/tables/{table}/authorizedView
+// /{authorized_view}`.
+func (c *ProjectsInstancesTablesAuthorizedViewsCreateCall) AuthorizedViewId(authorizedViewId string) *ProjectsInstancesTablesAuthorizedViewsCreateCall {
+	c.urlParams_.Set("authorizedViewId", authorizedViewId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesTablesAuthorizedViewsCreateCall) Fields(s ...googleapi.Field) *ProjectsInstancesTablesAuthorizedViewsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesTablesAuthorizedViewsCreateCall) Context(ctx context.Context) *ProjectsInstancesTablesAuthorizedViewsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesTablesAuthorizedViewsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesTablesAuthorizedViewsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.authorizedview)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/authorizedViews")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.tables.authorizedViews.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesTablesAuthorizedViewsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new AuthorizedView in a table.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}/authorizedViews",
+	//   "httpMethod": "POST",
+	//   "id": "bigtableadmin.projects.instances.tables.authorizedViews.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "authorizedViewId": {
+	//       "description": "Required. The id of the AuthorizedView to create. This AuthorizedView must not already exist. The `authorized_view_id` appended to `parent` forms the full AuthorizedView name of the form `projects/{project}/instances/{instance}/tables/{table}/authorizedView/{authorized_view}`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. This is the name of the table the AuthorizedView belongs to. Values are of the form `projects/{project}/instances/{instance}/tables/{table}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/authorizedViews",
+	//   "request": {
+	//     "$ref": "AuthorizedView"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigtableadmin.projects.instances.tables.authorizedViews.delete":
+
+type ProjectsInstancesTablesAuthorizedViewsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Permanently deletes a specified AuthorizedView.
+//
+//   - name: The unique name of the AuthorizedView to be deleted. Values
+//     are of the form
+//     `projects/{project}/instances/{instance}/tables/{table}/authorizedVi
+//     ews/{authorized_view}`.
+func (r *ProjectsInstancesTablesAuthorizedViewsService) Delete(name string) *ProjectsInstancesTablesAuthorizedViewsDeleteCall {
+	c := &ProjectsInstancesTablesAuthorizedViewsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Etag sets the optional parameter "etag": The current etag of the
+// AuthorizedView. If an etag is provided and does not match the current
+// etag of the AuthorizedView, deletion will be blocked and an ABORTED
+// error will be returned.
+func (c *ProjectsInstancesTablesAuthorizedViewsDeleteCall) Etag(etag string) *ProjectsInstancesTablesAuthorizedViewsDeleteCall {
+	c.urlParams_.Set("etag", etag)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesTablesAuthorizedViewsDeleteCall) Fields(s ...googleapi.Field) *ProjectsInstancesTablesAuthorizedViewsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesTablesAuthorizedViewsDeleteCall) Context(ctx context.Context) *ProjectsInstancesTablesAuthorizedViewsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesTablesAuthorizedViewsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesTablesAuthorizedViewsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.tables.authorizedViews.delete" call.
+// Exactly one of *Empty or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsInstancesTablesAuthorizedViewsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Empty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Permanently deletes a specified AuthorizedView.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}/authorizedViews/{authorizedViewsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "bigtableadmin.projects.instances.tables.authorizedViews.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "etag": {
+	//       "description": "Optional. The current etag of the AuthorizedView. If an etag is provided and does not match the current etag of the AuthorizedView, deletion will be blocked and an ABORTED error will be returned.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "name": {
+	//       "description": "Required. The unique name of the AuthorizedView to be deleted. Values are of the form `projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+/authorizedViews/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "Empty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigtableadmin.projects.instances.tables.authorizedViews.get":
+
+type ProjectsInstancesTablesAuthorizedViewsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets information from a specified AuthorizedView.
+//
+//   - name: The unique name of the requested AuthorizedView. Values are
+//     of the form
+//     `projects/{project}/instances/{instance}/tables/{table}/authorizedVi
+//     ews/{authorized_view}`.
+func (r *ProjectsInstancesTablesAuthorizedViewsService) Get(name string) *ProjectsInstancesTablesAuthorizedViewsGetCall {
+	c := &ProjectsInstancesTablesAuthorizedViewsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// View sets the optional parameter "view": The resource_view to be
+// applied to the returned AuthorizedView's fields. Default to BASIC.
+//
+// Possible values:
+//
+//	"RESPONSE_VIEW_UNSPECIFIED" - Uses the default view for each method
+//
+// as documented in the request.
+//
+//	"NAME_ONLY" - Only populates `name`.
+//	"BASIC" - Only populates the AuthorizedView's basic metadata. This
+//
+// includes: name, deletion_protection, etag.
+//
+//	"FULL" - Populates every fields.
+func (c *ProjectsInstancesTablesAuthorizedViewsGetCall) View(view string) *ProjectsInstancesTablesAuthorizedViewsGetCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesTablesAuthorizedViewsGetCall) Fields(s ...googleapi.Field) *ProjectsInstancesTablesAuthorizedViewsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstancesTablesAuthorizedViewsGetCall) IfNoneMatch(entityTag string) *ProjectsInstancesTablesAuthorizedViewsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesTablesAuthorizedViewsGetCall) Context(ctx context.Context) *ProjectsInstancesTablesAuthorizedViewsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesTablesAuthorizedViewsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesTablesAuthorizedViewsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.tables.authorizedViews.get" call.
+// Exactly one of *AuthorizedView or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *AuthorizedView.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsInstancesTablesAuthorizedViewsGetCall) Do(opts ...googleapi.CallOption) (*AuthorizedView, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &AuthorizedView{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets information from a specified AuthorizedView.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}/authorizedViews/{authorizedViewsId}",
+	//   "httpMethod": "GET",
+	//   "id": "bigtableadmin.projects.instances.tables.authorizedViews.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The unique name of the requested AuthorizedView. Values are of the form `projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+/authorizedViews/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Optional. The resource_view to be applied to the returned AuthorizedView's fields. Default to BASIC.",
+	//       "enum": [
+	//         "RESPONSE_VIEW_UNSPECIFIED",
+	//         "NAME_ONLY",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Uses the default view for each method as documented in the request.",
+	//         "Only populates `name`.",
+	//         "Only populates the AuthorizedView's basic metadata. This includes: name, deletion_protection, etag.",
+	//         "Populates every fields."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "AuthorizedView"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigtableadmin.projects.instances.tables.authorizedViews.getIamPolicy":
+
+type ProjectsInstancesTablesAuthorizedViewsGetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	getiampolicyrequest *GetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a Table or Backup
+// resource. Returns an empty policy if the resource exists but does not
+// have a policy set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
+func (r *ProjectsInstancesTablesAuthorizedViewsService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsInstancesTablesAuthorizedViewsGetIamPolicyCall {
+	c := &ProjectsInstancesTablesAuthorizedViewsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.getiampolicyrequest = getiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesTablesAuthorizedViewsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsInstancesTablesAuthorizedViewsGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesTablesAuthorizedViewsGetIamPolicyCall) Context(ctx context.Context) *ProjectsInstancesTablesAuthorizedViewsGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesTablesAuthorizedViewsGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesTablesAuthorizedViewsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.tables.authorizedViews.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsInstancesTablesAuthorizedViewsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a Table or Backup resource. Returns an empty policy if the resource exists but does not have a policy set.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}/authorizedViews/{authorizedViewsId}:getIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "bigtableadmin.projects.instances.tables.authorizedViews.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+/authorizedViews/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+resource}:getIamPolicy",
+	//   "request": {
+	//     "$ref": "GetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigtableadmin.projects.instances.tables.authorizedViews.list":
+
+type ProjectsInstancesTablesAuthorizedViewsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all AuthorizedViews from a specific table.
+//
+//   - parent: The unique name of the table for which AuthorizedViews
+//     should be listed. Values are of the form
+//     `projects/{project}/instances/{instance}/tables/{table}`.
+func (r *ProjectsInstancesTablesAuthorizedViewsService) List(parent string) *ProjectsInstancesTablesAuthorizedViewsListCall {
+	c := &ProjectsInstancesTablesAuthorizedViewsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Maximum number of
+// results per page. A page_size of zero lets the server choose the
+// number of items to return. A page_size which is strictly positive
+// will return at most that many items. A negative page_size will cause
+// an error. Following the first request, subsequent paginated calls are
+// not required to pass a page_size. If a page_size is set in subsequent
+// calls, it must match the page_size given in the first request.
+func (c *ProjectsInstancesTablesAuthorizedViewsListCall) PageSize(pageSize int64) *ProjectsInstancesTablesAuthorizedViewsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The value of
+// `next_page_token` returned by a previous call.
+func (c *ProjectsInstancesTablesAuthorizedViewsListCall) PageToken(pageToken string) *ProjectsInstancesTablesAuthorizedViewsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// View sets the optional parameter "view": The resource_view to be
+// applied to the returned views' fields. Default to NAME_ONLY.
+//
+// Possible values:
+//
+//	"RESPONSE_VIEW_UNSPECIFIED" - Uses the default view for each method
+//
+// as documented in the request.
+//
+//	"NAME_ONLY" - Only populates `name`.
+//	"BASIC" - Only populates the AuthorizedView's basic metadata. This
+//
+// includes: name, deletion_protection, etag.
+//
+//	"FULL" - Populates every fields.
+func (c *ProjectsInstancesTablesAuthorizedViewsListCall) View(view string) *ProjectsInstancesTablesAuthorizedViewsListCall {
+	c.urlParams_.Set("view", view)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesTablesAuthorizedViewsListCall) Fields(s ...googleapi.Field) *ProjectsInstancesTablesAuthorizedViewsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsInstancesTablesAuthorizedViewsListCall) IfNoneMatch(entityTag string) *ProjectsInstancesTablesAuthorizedViewsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesTablesAuthorizedViewsListCall) Context(ctx context.Context) *ProjectsInstancesTablesAuthorizedViewsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesTablesAuthorizedViewsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesTablesAuthorizedViewsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/authorizedViews")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.tables.authorizedViews.list" call.
+// Exactly one of *ListAuthorizedViewsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAuthorizedViewsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsInstancesTablesAuthorizedViewsListCall) Do(opts ...googleapi.CallOption) (*ListAuthorizedViewsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAuthorizedViewsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all AuthorizedViews from a specific table.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}/authorizedViews",
+	//   "httpMethod": "GET",
+	//   "id": "bigtableadmin.projects.instances.tables.authorizedViews.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "Optional. Maximum number of results per page. A page_size of zero lets the server choose the number of items to return. A page_size which is strictly positive will return at most that many items. A negative page_size will cause an error. Following the first request, subsequent paginated calls are not required to pass a page_size. If a page_size is set in subsequent calls, it must match the page_size given in the first request.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. The value of `next_page_token` returned by a previous call.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The unique name of the table for which AuthorizedViews should be listed. Values are of the form `projects/{project}/instances/{instance}/tables/{table}`.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "view": {
+	//       "description": "Optional. The resource_view to be applied to the returned views' fields. Default to NAME_ONLY.",
+	//       "enum": [
+	//         "RESPONSE_VIEW_UNSPECIFIED",
+	//         "NAME_ONLY",
+	//         "BASIC",
+	//         "FULL"
+	//       ],
+	//       "enumDescriptions": [
+	//         "Uses the default view for each method as documented in the request.",
+	//         "Only populates `name`.",
+	//         "Only populates the AuthorizedView's basic metadata. This includes: name, deletion_protection, etag.",
+	//         "Populates every fields."
+	//       ],
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/authorizedViews",
+	//   "response": {
+	//     "$ref": "ListAuthorizedViewsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsInstancesTablesAuthorizedViewsListCall) Pages(ctx context.Context, f func(*ListAuthorizedViewsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "bigtableadmin.projects.instances.tables.authorizedViews.patch":
+
+type ProjectsInstancesTablesAuthorizedViewsPatchCall struct {
+	s              *Service
+	name           string
+	authorizedview *AuthorizedView
+	urlParams_     gensupport.URLParams
+	ctx_           context.Context
+	header_        http.Header
+}
+
+// Patch: Updates an AuthorizedView in a table.
+//
+//   - name: Identifier. The name of this AuthorizedView. Values are of
+//     the form
+//     `projects/{project}/instances/{instance}/tables/{table}/authorizedVi
+//     ews/{authorized_view}`.
+func (r *ProjectsInstancesTablesAuthorizedViewsService) Patch(name string, authorizedview *AuthorizedView) *ProjectsInstancesTablesAuthorizedViewsPatchCall {
+	c := &ProjectsInstancesTablesAuthorizedViewsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.authorizedview = authorizedview
+	return c
+}
+
+// IgnoreWarnings sets the optional parameter "ignoreWarnings": If true,
+// ignore the safety checks when updating the AuthorizedView.
+func (c *ProjectsInstancesTablesAuthorizedViewsPatchCall) IgnoreWarnings(ignoreWarnings bool) *ProjectsInstancesTablesAuthorizedViewsPatchCall {
+	c.urlParams_.Set("ignoreWarnings", fmt.Sprint(ignoreWarnings))
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": The list of
+// fields to update. A mask specifying which fields in the
+// AuthorizedView resource should be updated. This mask is relative to
+// the AuthorizedView resource, not to the request message. A field will
+// be overwritten if it is in the mask. If empty, all fields set in the
+// request will be overwritten. A special value `*` means to overwrite
+// all fields (including fields not set in the request).
+func (c *ProjectsInstancesTablesAuthorizedViewsPatchCall) UpdateMask(updateMask string) *ProjectsInstancesTablesAuthorizedViewsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesTablesAuthorizedViewsPatchCall) Fields(s ...googleapi.Field) *ProjectsInstancesTablesAuthorizedViewsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesTablesAuthorizedViewsPatchCall) Context(ctx context.Context) *ProjectsInstancesTablesAuthorizedViewsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesTablesAuthorizedViewsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesTablesAuthorizedViewsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.authorizedview)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.tables.authorizedViews.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsInstancesTablesAuthorizedViewsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates an AuthorizedView in a table.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}/authorizedViews/{authorizedViewsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "bigtableadmin.projects.instances.tables.authorizedViews.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "ignoreWarnings": {
+	//       "description": "Optional. If true, ignore the safety checks when updating the AuthorizedView.",
+	//       "location": "query",
+	//       "type": "boolean"
+	//     },
+	//     "name": {
+	//       "description": "Identifier. The name of this AuthorizedView. Values are of the form `projects/{project}/instances/{instance}/tables/{table}/authorizedViews/{authorized_view}`",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+/authorizedViews/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Optional. The list of fields to update. A mask specifying which fields in the AuthorizedView resource should be updated. This mask is relative to the AuthorizedView resource, not to the request message. A field will be overwritten if it is in the mask. If empty, all fields set in the request will be overwritten. A special value `*` means to overwrite all fields (including fields not set in the request).",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "AuthorizedView"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigtableadmin.projects.instances.tables.authorizedViews.setIamPolicy":
+
+type ProjectsInstancesTablesAuthorizedViewsSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on a Table or Backup
+// resource. Replaces any existing policy.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
+func (r *ProjectsInstancesTablesAuthorizedViewsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsInstancesTablesAuthorizedViewsSetIamPolicyCall {
+	c := &ProjectsInstancesTablesAuthorizedViewsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesTablesAuthorizedViewsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsInstancesTablesAuthorizedViewsSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesTablesAuthorizedViewsSetIamPolicyCall) Context(ctx context.Context) *ProjectsInstancesTablesAuthorizedViewsSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesTablesAuthorizedViewsSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesTablesAuthorizedViewsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.tables.authorizedViews.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *ProjectsInstancesTablesAuthorizedViewsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on a Table or Backup resource. Replaces any existing policy.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}/authorizedViews/{authorizedViewsId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "bigtableadmin.projects.instances.tables.authorizedViews.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+/authorizedViews/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigtable.admin",
+	//     "https://www.googleapis.com/auth/bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin",
+	//     "https://www.googleapis.com/auth/cloud-bigtable.admin.table",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "bigtableadmin.projects.instances.tables.authorizedViews.testIamPermissions":
+
+type ProjectsInstancesTablesAuthorizedViewsTestIamPermissionsCall struct {
+	s                         *Service
+	resource                  string
+	testiampermissionsrequest *TestIamPermissionsRequest
+	urlParams_                gensupport.URLParams
+	ctx_                      context.Context
+	header_                   http.Header
+}
+
+// TestIamPermissions: Returns permissions that the caller has on the
+// specified Table or Backup resource.
+//
+//   - resource: REQUIRED: The resource for which the policy detail is
+//     being requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
+func (r *ProjectsInstancesTablesAuthorizedViewsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsInstancesTablesAuthorizedViewsTestIamPermissionsCall {
+	c := &ProjectsInstancesTablesAuthorizedViewsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.testiampermissionsrequest = testiampermissionsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsInstancesTablesAuthorizedViewsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsInstancesTablesAuthorizedViewsTestIamPermissionsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsInstancesTablesAuthorizedViewsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsInstancesTablesAuthorizedViewsTestIamPermissionsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsInstancesTablesAuthorizedViewsTestIamPermissionsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsInstancesTablesAuthorizedViewsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+resource}:testIamPermissions")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigtableadmin.projects.instances.tables.authorizedViews.testIamPermissions" call.
+// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsInstancesTablesAuthorizedViewsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TestIamPermissionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns permissions that the caller has on the specified Table or Backup resource.",
+	//   "flatPath": "v2/projects/{projectsId}/instances/{instancesId}/tables/{tablesId}/authorizedViews/{authorizedViewsId}:testIamPermissions",
+	//   "httpMethod": "POST",
+	//   "id": "bigtableadmin.projects.instances.tables.authorizedViews.testIamPermissions",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/instances/[^/]+/tables/[^/]+/authorizedViews/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+resource}:testIamPermissions",
+	//   "request": {
+	//     "$ref": "TestIamPermissionsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "TestIamPermissionsResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/bigtable.admin",

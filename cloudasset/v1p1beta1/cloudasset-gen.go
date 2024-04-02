@@ -2550,7 +2550,7 @@ type IamPoliciesSearchAllCall struct {
 // callers especially administrators the ability to search all the IAM
 // policies within a scope, even if they don't have `.getIamPolicy`
 // permission of all the IAM policies. Callers should have
-// `cloud.assets.SearchAllIamPolicies` permission on the requested
+// `cloudasset.assets.searchAllIamPolicies` permission on the requested
 // scope, otherwise the request will be rejected.
 //
 //   - scope: The relative name of an asset. The search is limited to the
@@ -2692,7 +2692,7 @@ func (c *IamPoliciesSearchAllCall) Do(opts ...googleapi.CallOption) (*SearchAllI
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches all the IAM policies within a given accessible Resource Manager scope (project/folder/organization). This RPC gives callers especially administrators the ability to search all the IAM policies within a scope, even if they don't have `.getIamPolicy` permission of all the IAM policies. Callers should have `cloud.assets.SearchAllIamPolicies` permission on the requested scope, otherwise the request will be rejected.",
+	//   "description": "Searches all the IAM policies within a given accessible Resource Manager scope (project/folder/organization). This RPC gives callers especially administrators the ability to search all the IAM policies within a scope, even if they don't have `.getIamPolicy` permission of all the IAM policies. Callers should have `cloudasset.assets.searchAllIamPolicies` permission on the requested scope, otherwise the request will be rejected.",
 	//   "flatPath": "v1p1beta1/{v1p1beta1Id}/{v1p1beta1Id1}/iamPolicies:searchAll",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.iamPolicies.searchAll",
@@ -2772,8 +2772,8 @@ type ResourcesSearchAllCall struct {
 // callers especially administrators the ability to search all the
 // resources within a scope, even if they don't have `.get` permission
 // of all the resources. Callers should have
-// `cloud.assets.SearchAllResources` permission on the requested scope,
-// otherwise the request will be rejected.
+// `cloudasset.assets.searchAllResources` permission on the requested
+// scope, otherwise the request will be rejected.
 //
 //   - scope: The relative name of an asset. The search is limited to the
 //     resources within the `scope`. The allowed value must be: *
@@ -2930,7 +2930,7 @@ func (c *ResourcesSearchAllCall) Do(opts ...googleapi.CallOption) (*SearchAllRes
 	}
 	return ret, nil
 	// {
-	//   "description": "Searches all the resources within a given accessible Resource Manager scope (project/folder/organization). This RPC gives callers especially administrators the ability to search all the resources within a scope, even if they don't have `.get` permission of all the resources. Callers should have `cloud.assets.SearchAllResources` permission on the requested scope, otherwise the request will be rejected.",
+	//   "description": "Searches all the resources within a given accessible Resource Manager scope (project/folder/organization). This RPC gives callers especially administrators the ability to search all the resources within a scope, even if they don't have `.get` permission of all the resources. Callers should have `cloudasset.assets.searchAllResources` permission on the requested scope, otherwise the request will be rejected.",
 	//   "flatPath": "v1p1beta1/{v1p1beta1Id}/{v1p1beta1Id1}/resources:searchAll",
 	//   "httpMethod": "GET",
 	//   "id": "cloudasset.resources.searchAll",

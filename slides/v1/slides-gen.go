@@ -3259,6 +3259,9 @@ type PageElement struct {
 	// Size: The size of the page element.
 	Size *Size `json:"size,omitempty"`
 
+	// SpeakerSpotlight: A Speaker Spotlight.
+	SpeakerSpotlight *SpeakerSpotlight `json:"speakerSpotlight,omitempty"`
+
 	// Table: A table page element.
 	Table *Table `json:"table,omitempty"`
 
@@ -5223,6 +5226,70 @@ func (s *SolidFill) UnmarshalJSON(data []byte) error {
 	}
 	s.Alpha = float64(s1.Alpha)
 	return nil
+}
+
+// SpeakerSpotlight: A PageElement kind representing a Speaker
+// Spotlight.
+type SpeakerSpotlight struct {
+	// SpeakerSpotlightProperties: The properties of the Speaker Spotlight.
+	SpeakerSpotlightProperties *SpeakerSpotlightProperties `json:"speakerSpotlightProperties,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "SpeakerSpotlightProperties") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "SpeakerSpotlightProperties") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpeakerSpotlight) MarshalJSON() ([]byte, error) {
+	type NoMethod SpeakerSpotlight
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SpeakerSpotlightProperties: The properties of the SpeakerSpotlight.
+type SpeakerSpotlightProperties struct {
+	// Outline: The outline of the Speaker Spotlight. If not set, it has no
+	// outline.
+	Outline *Outline `json:"outline,omitempty"`
+
+	// Shadow: The shadow of the Speaker Spotlight. If not set, it has no
+	// shadow.
+	Shadow *Shadow `json:"shadow,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Outline") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Outline") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SpeakerSpotlightProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod SpeakerSpotlightProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // StretchedPictureFill: The stretched picture fill. The page or page

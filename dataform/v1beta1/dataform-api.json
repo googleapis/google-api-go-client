@@ -558,7 +558,7 @@
                   ],
                   "parameters": {
                     "name": {
-                      "description": "Output only. The repository's name.",
+                      "description": "Identifier. The repository's name.",
                       "location": "path",
                       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+$",
                       "required": true,
@@ -1148,7 +1148,7 @@
                       ],
                       "parameters": {
                         "name": {
-                          "description": "Output only. The workflow config's name.",
+                          "description": "Identifier. The workflow config's name.",
                           "location": "path",
                           "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/workflowConfigs/[^/]+$",
                           "required": true,
@@ -2103,7 +2103,7 @@
       }
     }
   },
-  "revision": "20240302",
+  "revision": "20240323",
   "rootUrl": "https://dataform.googleapis.com/",
   "schemas": {
     "Assertion": {
@@ -3501,8 +3501,7 @@
           "type": "object"
         },
         "name": {
-          "description": "Output only. The repository's name.",
-          "readOnly": true,
+          "description": "Identifier. The repository's name.",
           "type": "string"
         },
         "npmrcEnvironmentVariablesSecretVersion": {
@@ -3757,8 +3756,7 @@
           "description": "Optional. If left unset, a default InvocationConfig will be used."
         },
         "name": {
-          "description": "Output only. The workflow config's name.",
-          "readOnly": true,
+          "description": "Identifier. The workflow config's name.",
           "type": "string"
         },
         "recentScheduledExecutionRecords": {
@@ -3895,8 +3893,7 @@
       "id": "Workspace",
       "properties": {
         "name": {
-          "description": "Output only. The workspace's name.",
-          "readOnly": true,
+          "description": "Identifier. The workspace's name.",
           "type": "string"
         }
       },

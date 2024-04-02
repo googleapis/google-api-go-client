@@ -290,6 +290,10 @@ type AbortInfo struct {
 	// forwarding rule as a source are not supported.
 	//   "NON_ROUTABLE_IP_ADDRESS" - Aborted because one of the endpoints is
 	// a non-routable IP address (loopback, link-local, etc).
+	//   "UNKNOWN_ISSUE_IN_GOOGLE_MANAGED_PROJECT" - Aborted due to an
+	// unknown issue in the Google-managed project.
+	//   "UNSUPPORTED_GOOGLE_MANAGED_PROJECT_CONFIG" - Aborted due to an
+	// unsupported configuration of the Google-managed project.
 	Cause string `json:"cause,omitempty"`
 
 	// IpAddress: IP address that caused the abort.
@@ -794,6 +798,10 @@ func (s *CloudSQLInstanceInfo) MarshalJSON() ([]byte, error) {
 // ConnectivityTest: A Connectivity Test for a network reachability
 // analysis.
 type ConnectivityTest struct {
+	// BypassFirewallChecks: Whether the test should skip firewall checking.
+	// If not provided, we assume false.
+	BypassFirewallChecks bool `json:"bypassFirewallChecks,omitempty"`
+
 	// CreateTime: Output only. The time the test was created.
 	CreateTime string `json:"createTime,omitempty"`
 
@@ -871,20 +879,22 @@ type ConnectivityTest struct {
 	// server.
 	googleapi.ServerResponse `json:"-"`
 
-	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "BypassFirewallChecks") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BypassFirewallChecks") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -984,7 +994,7 @@ type DropInfo struct {
 	//   "ROUTE_NEXT_HOP_RESOURCE_NOT_FOUND" - Route's next hop resource is
 	// not found.
 	//   "ROUTE_NEXT_HOP_INSTANCE_WRONG_NETWORK" - Route's next hop instance
-	// doesn't hace a NIC in the route's network.
+	// doesn't have a NIC in the route's network.
 	//   "ROUTE_NEXT_HOP_INSTANCE_NON_PRIMARY_IP" - Route's next hop IP
 	// address is not a primary IP address of the next hop instance.
 	//   "ROUTE_NEXT_HOP_FORWARDING_RULE_IP_MISMATCH" - Route's next hop
@@ -1099,6 +1109,9 @@ type DropInfo struct {
 	//   "PSC_NEG_PRODUCER_FORWARDING_RULE_MULTIPLE_PORTS" - The packet is
 	// sent to the Private Service Connect backend (network endpoint group),
 	// but the producer PSC forwarding rule has multiple ports specified.
+	//   "CLOUD_SQL_PSC_NEG_UNSUPPORTED" - The packet is sent to the Private
+	// Service Connect backend (network endpoint group) targeting a Cloud
+	// SQL service attachment, but this configuration is not supported.
 	//   "NO_NAT_SUBNETS_FOR_PSC_SERVICE_ATTACHMENT" - No NAT subnets are
 	// defined for the PSC service attachment.
 	//   "HYBRID_NEG_NON_DYNAMIC_ROUTE_MATCHED" - The packet sent from the
@@ -1116,6 +1129,7 @@ type DropInfo struct {
 	// found.
 	//   "CLOUD_NAT_NO_ADDRESSES" - Packet sent to Cloud Nat without active
 	// NAT IPs.
+	//   "ROUTING_LOOP" - Packet is stuck in a routing loop.
 	Cause string `json:"cause,omitempty"`
 
 	// DestinationIp: Destination IP address of the dropped packet (if

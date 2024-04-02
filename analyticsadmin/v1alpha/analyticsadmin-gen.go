@@ -1253,6 +1253,12 @@ type GoogleAnalyticsAdminV1alphaAccount struct {
 	// DisplayName: Required. Human-readable display name for this account.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// GmpOrganization: Output only. The URI for a Google Marketing Platform
+	// organization resource. Only set when this account is connected to a
+	// GMP organization. Format:
+	// marketingplatformadmin.googleapis.com/organizations/{org_id}
+	GmpOrganization string `json:"gmpOrganization,omitempty"`
+
 	// Name: Output only. Resource name of this account. Format:
 	// accounts/{account} Example: "accounts/100"
 	Name string `json:"name,omitempty"`
@@ -2894,6 +2900,14 @@ type GoogleAnalyticsAdminV1alphaChannelGroup struct {
 	// Name: Output only. The resource name for this Channel Group resource.
 	// Format: properties/{property}/channelGroups/{channel_group}
 	Name string `json:"name,omitempty"`
+
+	// Primary: Optional. If true, this channel group will be used as the
+	// default channel group for reports. Only one channel group can be set
+	// as `primary` at any time. If the `primary` field gets set on a
+	// channel group, it will get unset on the previous primary channel
+	// group. The Google Analytics predefined channel group is the primary
+	// by default.
+	Primary bool `json:"primary,omitempty"`
 
 	// SystemDefined: Output only. If true, then this channel group is the
 	// Default Channel Group predefined by Google Analytics. Display name

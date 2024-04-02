@@ -764,6 +764,10 @@ func (s *RestDescriptionIcons) MarshalJSON() ([]byte, error) {
 }
 
 type RestMethod struct {
+	// ApiVersion: The API Version of this method, as passed in via the
+	// `X-Goog-Api-Version` header or `$apiVersion` query parameter.
+	ApiVersion string `json:"apiVersion,omitempty"`
+
 	// Deprecated -- Whether this method is deprecated.
 	Deprecated bool `json:"deprecated,omitempty"`
 
@@ -824,7 +828,7 @@ type RestMethod struct {
 	// if the method supports media download.
 	UseMediaDownloadService bool `json:"useMediaDownloadService,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Deprecated") to
+	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -832,7 +836,7 @@ type RestMethod struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Deprecated") to include in
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in
 	// API requests with the JSON null value. By default, fields with empty
 	// values are omitted from API requests. However, any field with an
 	// empty value appearing in NullFields will be sent to the server as

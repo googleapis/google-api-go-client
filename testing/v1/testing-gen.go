@@ -6,7 +6,7 @@
 
 // Package testing provides access to the Cloud Testing API.
 //
-// For product documentation, see: https://developers.google.com/cloud-test-lab/
+// For product documentation, see: https://firebase.google.com/docs/test-lab/
 //
 // # Library status
 //
@@ -1308,7 +1308,7 @@ type DeviceSession struct {
 
 	// Ttl: Optional. The amount of time that a device will be initially
 	// allocated for. This can eventually be extended with the
-	// UpdateDeviceSession RPC. Default: 30 minutes.
+	// UpdateDeviceSession RPC. Default: 15 minutes.
 	Ttl string `json:"ttl,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

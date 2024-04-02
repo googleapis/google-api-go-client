@@ -170,6 +170,7 @@ type ProjectsService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.Assets = NewProjectsLocationsAssetsService(s)
+	rs.DiscoveryClients = NewProjectsLocationsDiscoveryClientsService(s)
 	rs.Groups = NewProjectsLocationsGroupsService(s)
 	rs.ImportJobs = NewProjectsLocationsImportJobsService(s)
 	rs.Operations = NewProjectsLocationsOperationsService(s)
@@ -183,6 +184,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	Assets *ProjectsLocationsAssetsService
+
+	DiscoveryClients *ProjectsLocationsDiscoveryClientsService
 
 	Groups *ProjectsLocationsGroupsService
 
@@ -203,6 +206,15 @@ func NewProjectsLocationsAssetsService(s *Service) *ProjectsLocationsAssetsServi
 }
 
 type ProjectsLocationsAssetsService struct {
+	s *Service
+}
+
+func NewProjectsLocationsDiscoveryClientsService(s *Service) *ProjectsLocationsDiscoveryClientsService {
+	rs := &ProjectsLocationsDiscoveryClientsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsDiscoveryClientsService struct {
 	s *Service
 }
 
@@ -823,6 +835,19 @@ type AssetFrame struct {
 	// Attributes: Generic asset attributes.
 	Attributes map[string]string `json:"attributes,omitempty"`
 
+	// CollectionType: Optional. Frame collection type, if not specified the
+	// collection type will be based on the source type of the source the
+	// frame was reported on.
+	//
+	// Possible values:
+	//   "SOURCE_TYPE_UNKNOWN" - Unspecified
+	//   "SOURCE_TYPE_UPLOAD" - Manually uploaded file (e.g. CSV)
+	//   "SOURCE_TYPE_GUEST_OS_SCAN" - Guest-level info
+	//   "SOURCE_TYPE_INVENTORY_SCAN" - Inventory-level scan
+	//   "SOURCE_TYPE_CUSTOM" - Third-party owned sources.
+	//   "SOURCE_TYPE_DISCOVERY_CLIENT" - Discovery clients
+	CollectionType string `json:"collectionType,omitempty"`
+
 	// Labels: Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
 
@@ -1164,9 +1189,10 @@ func (s *ComputeEngineMigrationTarget) MarshalJSON() ([]byte, error) {
 // ComputeEnginePreferences: The user preferences relating to Compute
 // Engine target platform.
 type ComputeEnginePreferences struct {
-	// LicenseType: License type to consider when calculating costs for
-	// virtual machine insights and recommendations. If unspecified, costs
-	// are calculated based on the default licensing plan.
+	// LicenseType: Overridden by os_pricing_preferences if specified.
+	// License type to consider when calculating costs for virtual machine
+	// insights and recommendations. If unspecified, costs are calculated
+	// based on the default licensing plan.
 	//
 	// Possible values:
 	//   "LICENSE_TYPE_UNSPECIFIED" - Unspecified (default value).
@@ -1728,6 +1754,104 @@ func (s *DetectedSoftware) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// DiscoveryClient: Represents an installed Migration Center Discovery
+// Client instance.
+type DiscoveryClient struct {
+	// CreateTime: Output only. Time when the discovery client was first
+	// created.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Description: Optional. Free text description. Maximum length is 1000
+	// characters.
+	Description string `json:"description,omitempty"`
+
+	// DisplayName: Optional. Free text display name. Maximum length is 63
+	// characters.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Errors: Output only. Errors affecting client functionality.
+	Errors []*Status `json:"errors,omitempty"`
+
+	// ExpireTime: Optional. Client expiration time in UTC. If specified,
+	// the backend will not accept new frames after this time.
+	ExpireTime string `json:"expireTime,omitempty"`
+
+	// HeartbeatTime: Output only. Last heartbeat time. Healthy clients are
+	// expected to send heartbeats regularly (normally every few minutes).
+	HeartbeatTime string `json:"heartbeatTime,omitempty"`
+
+	// Labels: Optional. Labels as key value pairs.
+	Labels map[string]string `json:"labels,omitempty"`
+
+	// Name: Output only. Identifier. Full name of this discovery client.
+	Name string `json:"name,omitempty"`
+
+	// ServiceAccount: Required. Service account used by the discovery
+	// client for various operation.
+	ServiceAccount string `json:"serviceAccount,omitempty"`
+
+	// SignalsEndpoint: Output only. This field is intended for internal
+	// use.
+	SignalsEndpoint string `json:"signalsEndpoint,omitempty"`
+
+	// Source: Required. Full name of the source object associated with this
+	// discovery client.
+	Source string `json:"source,omitempty"`
+
+	// State: Output only. Current state of the discovery client.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - Client state is unspecified.
+	//   "ACTIVE" - Client is active.
+	//   "OFFLINE" - Client is offline.
+	//   "DEGRADED" - Client is in a degraded state. See the `errors` field
+	// for details.
+	//   "EXPIRED" - Client has expired. See the expire_time field for the
+	// expire time.
+	State string `json:"state,omitempty"`
+
+	// Ttl: Optional. Input only. Client time-to-live. If specified, the
+	// backend will not accept new frames after this time. This field is
+	// input only. The derived expiration time is provided as output through
+	// the `expire_time` field.
+	Ttl string `json:"ttl,omitempty"`
+
+	// UpdateTime: Output only. Time when the discovery client was last
+	// updated. This value is not updated by heartbeats, to view the last
+	// heartbeat time please refer to the `heartbeat_time` field.
+	UpdateTime string `json:"updateTime,omitempty"`
+
+	// Version: Output only. Client version, as reported in recent
+	// heartbeat.
+	Version string `json:"version,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DiscoveryClient) MarshalJSON() ([]byte, error) {
+	type NoMethod DiscoveryClient
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // DiskEntry: Single disk entry.
 type DiskEntry struct {
 	// DiskLabel: Disk label.
@@ -2239,11 +2363,17 @@ type GCSPayloadInfo struct {
 	//   "IMPORT_JOB_FORMAT_RVTOOLS_XLSX" - RVTools format (XLSX).
 	//   "IMPORT_JOB_FORMAT_RVTOOLS_CSV" - RVTools format (CSV).
 	//   "IMPORT_JOB_FORMAT_EXPORTED_AWS_CSV" - CSV format exported from AWS
-	// using the AWS collection script.
+	// using the [AWS collection
+	// script](https://github.com/GoogleCloudPlatform/aws-to-stratozone-expor
+	// t).
 	//   "IMPORT_JOB_FORMAT_EXPORTED_AZURE_CSV" - CSV format exported from
-	// Azure using the Azure collection script.
+	// Azure using the [Azure collection
+	// script](https://github.com/GoogleCloudPlatform/azure-to-stratozone-exp
+	// ort).
 	//   "IMPORT_JOB_FORMAT_MANUAL_CSV" - CSV format created manually. For
-	// more information, see Manually create and upload data tables.
+	// more information, see [Manually create and upload data
+	// tables](https://cloud.google.com/migrate/stratozone/docs/import-data-p
+	// ortal).
 	Format string `json:"format,omitempty"`
 
 	// Path: The payload path in Google Cloud Storage.
@@ -2669,11 +2799,17 @@ type ImportDataFile struct {
 	//   "IMPORT_JOB_FORMAT_RVTOOLS_XLSX" - RVTools format (XLSX).
 	//   "IMPORT_JOB_FORMAT_RVTOOLS_CSV" - RVTools format (CSV).
 	//   "IMPORT_JOB_FORMAT_EXPORTED_AWS_CSV" - CSV format exported from AWS
-	// using the AWS collection script.
+	// using the [AWS collection
+	// script](https://github.com/GoogleCloudPlatform/aws-to-stratozone-expor
+	// t).
 	//   "IMPORT_JOB_FORMAT_EXPORTED_AZURE_CSV" - CSV format exported from
-	// Azure using the Azure collection script.
+	// Azure using the [Azure collection
+	// script](https://github.com/GoogleCloudPlatform/azure-to-stratozone-exp
+	// ort).
 	//   "IMPORT_JOB_FORMAT_MANUAL_CSV" - CSV format created manually. For
-	// more information, see Manually create and upload data tables.
+	// more information, see [Manually create and upload data
+	// tables](https://cloud.google.com/migrate/stratozone/docs/import-data-p
+	// ortal).
 	Format string `json:"format,omitempty"`
 
 	// Name: Output only. The name of the file.
@@ -2892,11 +3028,17 @@ type InlinePayloadInfo struct {
 	//   "IMPORT_JOB_FORMAT_RVTOOLS_XLSX" - RVTools format (XLSX).
 	//   "IMPORT_JOB_FORMAT_RVTOOLS_CSV" - RVTools format (CSV).
 	//   "IMPORT_JOB_FORMAT_EXPORTED_AWS_CSV" - CSV format exported from AWS
-	// using the AWS collection script.
+	// using the [AWS collection
+	// script](https://github.com/GoogleCloudPlatform/aws-to-stratozone-expor
+	// t).
 	//   "IMPORT_JOB_FORMAT_EXPORTED_AZURE_CSV" - CSV format exported from
-	// Azure using the Azure collection script.
+	// Azure using the [Azure collection
+	// script](https://github.com/GoogleCloudPlatform/azure-to-stratozone-exp
+	// ort).
 	//   "IMPORT_JOB_FORMAT_MANUAL_CSV" - CSV format created manually. For
-	// more information, see Manually create and upload data tables.
+	// more information, see [Manually create and upload data
+	// tables](https://cloud.google.com/migrate/stratozone/docs/import-data-p
+	// ortal).
 	Format string `json:"format,omitempty"`
 
 	// Payload: List of payload files.
@@ -3028,6 +3170,48 @@ type ListAssetsResponse struct {
 
 func (s *ListAssetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAssetsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ListDiscoveryClientsResponse: Response message for listing discovery
+// clients.
+type ListDiscoveryClientsResponse struct {
+	// DiscoveryClients: List of discovery clients.
+	DiscoveryClients []*DiscoveryClient `json:"discoveryClients,omitempty"`
+
+	// NextPageToken: A token that can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// Unreachable: Locations that could not be reached.
+	Unreachable []string `json:"unreachable,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "DiscoveryClients") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DiscoveryClients") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ListDiscoveryClientsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod ListDiscoveryClientsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -5517,6 +5701,38 @@ func (s *Selinux) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SendDiscoveryClientHeartbeatRequest: A request to send a discovery
+// client heartbeat.
+type SendDiscoveryClientHeartbeatRequest struct {
+	// Errors: Optional. Errors affecting client functionality.
+	Errors []*Status `json:"errors,omitempty"`
+
+	// Version: Optional. Client application version.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Errors") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SendDiscoveryClientHeartbeatRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod SendDiscoveryClientHeartbeatRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // Settings: Describes the Migration Center settings related to the
 // project.
 type Settings struct {
@@ -5599,8 +5815,8 @@ type SoleTenancyPreferences struct {
 	// Possible values:
 	//   "COMMITMENT_PLAN_UNSPECIFIED" - Unspecified commitment plan.
 	//   "ON_DEMAND" - No commitment plan (on-demand usage).
-	//   "COMMITMENT_1_YEAR" - 1 year commitment.
-	//   "COMMITMENT_3_YEAR" - 3 years commitment.
+	//   "COMMITMENT_1_YEAR" - 1-year regular committed use discount.
+	//   "COMMITMENT_3_YEAR" - 3-year regular committed use discount.
 	CommitmentPlan string `json:"commitmentPlan,omitempty"`
 
 	// CpuOvercommitRatio: CPU overcommit ratio. Acceptable values are
@@ -5739,6 +5955,7 @@ type Source struct {
 	//   "SOURCE_TYPE_GUEST_OS_SCAN" - Guest-level info
 	//   "SOURCE_TYPE_INVENTORY_SCAN" - Inventory-level scan
 	//   "SOURCE_TYPE_CUSTOM" - Third-party owned sources.
+	//   "SOURCE_TYPE_DISCOVERY_CLIENT" - Discovery clients
 	Type string `json:"type,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the source was last
@@ -6242,8 +6459,9 @@ type VirtualMachinePreferences struct {
 	// Possible values:
 	//   "COMMITMENT_PLAN_UNSPECIFIED" - Unspecified commitment plan.
 	//   "COMMITMENT_PLAN_NONE" - No commitment plan.
-	//   "COMMITMENT_PLAN_ONE_YEAR" - 1 year commitment.
-	//   "COMMITMENT_PLAN_THREE_YEARS" - 3 years commitment.
+	//   "COMMITMENT_PLAN_ONE_YEAR" - 1-year regular committed use discount.
+	//   "COMMITMENT_PLAN_THREE_YEARS" - 3-year regular committed use
+	// discount.
 	CommitmentPlan string `json:"commitmentPlan,omitempty"`
 
 	// ComputeEnginePreferences: Compute Engine preferences concern insights
@@ -8661,6 +8879,1034 @@ func (c *ProjectsLocationsAssetsReportAssetFramesCall) Do(opts ...googleapi.Call
 	//   },
 	//   "response": {
 	//     "$ref": "ReportAssetFramesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "migrationcenter.projects.locations.discoveryClients.create":
+
+type ProjectsLocationsDiscoveryClientsCreateCall struct {
+	s               *Service
+	parent          string
+	discoveryclient *DiscoveryClient
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Create: Creates a new discovery client.
+//
+// - parent: Parent resource.
+func (r *ProjectsLocationsDiscoveryClientsService) Create(parent string, discoveryclient *DiscoveryClient) *ProjectsLocationsDiscoveryClientsCreateCall {
+	c := &ProjectsLocationsDiscoveryClientsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.discoveryclient = discoveryclient
+	return c
+}
+
+// DiscoveryClientId sets the optional parameter "discoveryClientId":
+// Required. User specified ID for the discovery client. It will become
+// the last component of the discovery client name. The ID must be
+// unique within the project, is restricted to lower-cased letters and
+// has a maximum length of 63 characters. The ID must match the regular
+// expression: `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.
+func (c *ProjectsLocationsDiscoveryClientsCreateCall) DiscoveryClientId(discoveryClientId string) *ProjectsLocationsDiscoveryClientsCreateCall {
+	c.urlParams_.Set("discoveryClientId", discoveryClientId)
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed. The server will guarantee
+// that for at least 60 minutes since the first request. For example,
+// consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDiscoveryClientsCreateCall) RequestId(requestId string) *ProjectsLocationsDiscoveryClientsCreateCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDiscoveryClientsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveryClientsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDiscoveryClientsCreateCall) Context(ctx context.Context) *ProjectsLocationsDiscoveryClientsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDiscoveryClientsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDiscoveryClientsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.discoveryclient)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/discoveryClients")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.discoveryClients.create" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDiscoveryClientsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a new discovery client.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/discoveryClients",
+	//   "httpMethod": "POST",
+	//   "id": "migrationcenter.projects.locations.discoveryClients.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "discoveryClientId": {
+	//       "description": "Required. User specified ID for the discovery client. It will become the last component of the discovery client name. The ID must be unique within the project, is restricted to lower-cased letters and has a maximum length of 63 characters. The ID must match the regular expression: `[a-z]([a-z0-9-]{0,61}[a-z0-9])?`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+parent}/discoveryClients",
+	//   "request": {
+	//     "$ref": "DiscoveryClient"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "migrationcenter.projects.locations.discoveryClients.delete":
+
+type ProjectsLocationsDiscoveryClientsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a discovery client.
+//
+// - name: The discovery client name.
+func (r *ProjectsLocationsDiscoveryClientsService) Delete(name string) *ProjectsLocationsDiscoveryClientsDeleteCall {
+	c := &ProjectsLocationsDiscoveryClientsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed. The server will guarantee
+// that for at least 60 minutes after the first request. For example,
+// consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDiscoveryClientsDeleteCall) RequestId(requestId string) *ProjectsLocationsDiscoveryClientsDeleteCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDiscoveryClientsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveryClientsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDiscoveryClientsDeleteCall) Context(ctx context.Context) *ProjectsLocationsDiscoveryClientsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDiscoveryClientsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDiscoveryClientsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.discoveryClients.delete" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDiscoveryClientsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a discovery client.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/discoveryClients/{discoveryClientsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "migrationcenter.projects.locations.discoveryClients.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The discovery client name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/discoveryClients/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes after the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+name}",
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "migrationcenter.projects.locations.discoveryClients.get":
+
+type ProjectsLocationsDiscoveryClientsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Gets the details of a discovery client.
+//
+// - name: The discovery client name.
+func (r *ProjectsLocationsDiscoveryClientsService) Get(name string) *ProjectsLocationsDiscoveryClientsGetCall {
+	c := &ProjectsLocationsDiscoveryClientsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDiscoveryClientsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveryClientsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDiscoveryClientsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsDiscoveryClientsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDiscoveryClientsGetCall) Context(ctx context.Context) *ProjectsLocationsDiscoveryClientsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDiscoveryClientsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDiscoveryClientsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.discoveryClients.get" call.
+// Exactly one of *DiscoveryClient or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *DiscoveryClient.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDiscoveryClientsGetCall) Do(opts ...googleapi.CallOption) (*DiscoveryClient, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &DiscoveryClient{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the details of a discovery client.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/discoveryClients/{discoveryClientsId}",
+	//   "httpMethod": "GET",
+	//   "id": "migrationcenter.projects.locations.discoveryClients.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The discovery client name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/discoveryClients/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+name}",
+	//   "response": {
+	//     "$ref": "DiscoveryClient"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "migrationcenter.projects.locations.discoveryClients.list":
+
+type ProjectsLocationsDiscoveryClientsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists all the discovery clients in a given project and
+// location.
+//
+// - parent: Parent resource.
+func (r *ProjectsLocationsDiscoveryClientsService) List(parent string) *ProjectsLocationsDiscoveryClientsListCall {
+	c := &ProjectsLocationsDiscoveryClientsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Filter expression to
+// filter results by.
+func (c *ProjectsLocationsDiscoveryClientsListCall) Filter(filter string) *ProjectsLocationsDiscoveryClientsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// OrderBy sets the optional parameter "orderBy": Field to sort by.
+func (c *ProjectsLocationsDiscoveryClientsListCall) OrderBy(orderBy string) *ProjectsLocationsDiscoveryClientsListCall {
+	c.urlParams_.Set("orderBy", orderBy)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of items to return. The server may return fewer items than requested.
+// If unspecified, the server will pick an appropriate default value.
+func (c *ProjectsLocationsDiscoveryClientsListCall) PageSize(pageSize int64) *ProjectsLocationsDiscoveryClientsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListDiscoveryClients` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListDiscoveryClients` must match the call that provided
+// the page token.
+func (c *ProjectsLocationsDiscoveryClientsListCall) PageToken(pageToken string) *ProjectsLocationsDiscoveryClientsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDiscoveryClientsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveryClientsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsDiscoveryClientsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsDiscoveryClientsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDiscoveryClientsListCall) Context(ctx context.Context) *ProjectsLocationsDiscoveryClientsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDiscoveryClientsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDiscoveryClientsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+parent}/discoveryClients")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.discoveryClients.list" call.
+// Exactly one of *ListDiscoveryClientsResponse or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *ListDiscoveryClientsResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsDiscoveryClientsListCall) Do(opts ...googleapi.CallOption) (*ListDiscoveryClientsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListDiscoveryClientsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists all the discovery clients in a given project and location.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/discoveryClients",
+	//   "httpMethod": "GET",
+	//   "id": "migrationcenter.projects.locations.discoveryClients.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Filter expression to filter results by.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "orderBy": {
+	//       "description": "Optional. Field to sort by.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. The maximum number of items to return. The server may return fewer items than requested. If unspecified, the server will pick an appropriate default value.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. A page token, received from a previous `ListDiscoveryClients` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListDiscoveryClients` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent resource.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+parent}/discoveryClients",
+	//   "response": {
+	//     "$ref": "ListDiscoveryClientsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsDiscoveryClientsListCall) Pages(ctx context.Context, f func(*ListDiscoveryClientsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "migrationcenter.projects.locations.discoveryClients.patch":
+
+type ProjectsLocationsDiscoveryClientsPatchCall struct {
+	s               *Service
+	name            string
+	discoveryclient *DiscoveryClient
+	urlParams_      gensupport.URLParams
+	ctx_            context.Context
+	header_         http.Header
+}
+
+// Patch: Updates a discovery client.
+//
+// - name: Output only. Identifier. Full name of this discovery client.
+func (r *ProjectsLocationsDiscoveryClientsService) Patch(name string, discoveryclient *DiscoveryClient) *ProjectsLocationsDiscoveryClientsPatchCall {
+	c := &ProjectsLocationsDiscoveryClientsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.discoveryclient = discoveryclient
+	return c
+}
+
+// RequestId sets the optional parameter "requestId": An optional
+// request ID to identify requests. Specify a unique request ID so that
+// if you must retry your request, the server will know to ignore the
+// request if it has already been completed. The server will guarantee
+// that for at least 60 minutes since the first request. For example,
+// consider a situation where you make an initial request and the
+// request times out. If you make the request again with the same
+// request ID, the server can check if original operation with the same
+// request ID was received, and if so, will ignore the second request.
+// This prevents clients from accidentally creating duplicate
+// commitments. The request ID must be a valid UUID with the exception
+// that zero UUID is not supported
+// (00000000-0000-0000-0000-000000000000).
+func (c *ProjectsLocationsDiscoveryClientsPatchCall) RequestId(requestId string) *ProjectsLocationsDiscoveryClientsPatchCall {
+	c.urlParams_.Set("requestId", requestId)
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. Update
+// mask is used to specify the fields to be overwritten in the
+// `DiscoveryClient` resource by the update. The values specified in the
+// `update_mask` field are relative to the resource, not the full
+// request. A field will be overwritten if it is in the mask. A single *
+// value in the mask lets you to overwrite all fields.
+func (c *ProjectsLocationsDiscoveryClientsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsDiscoveryClientsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDiscoveryClientsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveryClientsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDiscoveryClientsPatchCall) Context(ctx context.Context) *ProjectsLocationsDiscoveryClientsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDiscoveryClientsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDiscoveryClientsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.discoveryclient)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.discoveryClients.patch" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDiscoveryClientsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a discovery client.",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/discoveryClients/{discoveryClientsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "migrationcenter.projects.locations.discoveryClients.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Identifier. Full name of this discovery client.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/discoveryClients/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "requestId": {
+	//       "description": "Optional. An optional request ID to identify requests. Specify a unique request ID so that if you must retry your request, the server will know to ignore the request if it has already been completed. The server will guarantee that for at least 60 minutes since the first request. For example, consider a situation where you make an initial request and the request times out. If you make the request again with the same request ID, the server can check if original operation with the same request ID was received, and if so, will ignore the second request. This prevents clients from accidentally creating duplicate commitments. The request ID must be a valid UUID with the exception that zero UUID is not supported (00000000-0000-0000-0000-000000000000).",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. Update mask is used to specify the fields to be overwritten in the `DiscoveryClient` resource by the update. The values specified in the `update_mask` field are relative to the resource, not the full request. A field will be overwritten if it is in the mask. A single * value in the mask lets you to overwrite all fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+name}",
+	//   "request": {
+	//     "$ref": "DiscoveryClient"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "migrationcenter.projects.locations.discoveryClients.sendHeartbeat":
+
+type ProjectsLocationsDiscoveryClientsSendHeartbeatCall struct {
+	s                                   *Service
+	name                                string
+	senddiscoveryclientheartbeatrequest *SendDiscoveryClientHeartbeatRequest
+	urlParams_                          gensupport.URLParams
+	ctx_                                context.Context
+	header_                             http.Header
+}
+
+// SendHeartbeat: Sends a discovery client heartbeat. Healthy clients
+// are expected to send heartbeats regularly (normally every few
+// minutes).
+//
+// - name: The discovery client name.
+func (r *ProjectsLocationsDiscoveryClientsService) SendHeartbeat(name string, senddiscoveryclientheartbeatrequest *SendDiscoveryClientHeartbeatRequest) *ProjectsLocationsDiscoveryClientsSendHeartbeatCall {
+	c := &ProjectsLocationsDiscoveryClientsSendHeartbeatCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.senddiscoveryclientheartbeatrequest = senddiscoveryclientheartbeatrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsDiscoveryClientsSendHeartbeatCall) Fields(s ...googleapi.Field) *ProjectsLocationsDiscoveryClientsSendHeartbeatCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsDiscoveryClientsSendHeartbeatCall) Context(ctx context.Context) *ProjectsLocationsDiscoveryClientsSendHeartbeatCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsDiscoveryClientsSendHeartbeatCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsDiscoveryClientsSendHeartbeatCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.senddiscoveryclientheartbeatrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}:sendHeartbeat")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "migrationcenter.projects.locations.discoveryClients.sendHeartbeat" call.
+// Exactly one of *Operation or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *ProjectsLocationsDiscoveryClientsSendHeartbeatCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Operation{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sends a discovery client heartbeat. Healthy clients are expected to send heartbeats regularly (normally every few minutes).",
+	//   "flatPath": "v1alpha1/projects/{projectsId}/locations/{locationsId}/discoveryClients/{discoveryClientsId}:sendHeartbeat",
+	//   "httpMethod": "POST",
+	//   "id": "migrationcenter.projects.locations.discoveryClients.sendHeartbeat",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The discovery client name.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/discoveryClients/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1alpha1/{+name}:sendHeartbeat",
+	//   "request": {
+	//     "$ref": "SendDiscoveryClientHeartbeatRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Operation"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

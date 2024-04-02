@@ -5014,6 +5014,11 @@ type GoogleCloudDialogflowCxV3beta1Agent struct {
 	// within the location.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// EnableMultiLanguageTraining: Optional. Enable training multi-lingual
+	// models for this agent. These models will be trained on all the
+	// languages supported by the agent.
+	EnableMultiLanguageTraining bool `json:"enableMultiLanguageTraining,omitempty"`
+
 	// EnableSpellCorrection: Indicates if automatic spell correction is
 	// enabled in detect intent requests.
 	EnableSpellCorrection bool `json:"enableSpellCorrection,omitempty"`
@@ -8269,6 +8274,10 @@ type GoogleCloudDialogflowCxV3beta1Flow struct {
 	// configuration.
 	KnowledgeConnectorSettings *GoogleCloudDialogflowCxV3beta1KnowledgeConnectorSettings `json:"knowledgeConnectorSettings,omitempty"`
 
+	// MultiLanguageSettings: Optional. Multi-lingual agent settings for
+	// this flow.
+	MultiLanguageSettings *GoogleCloudDialogflowCxV3beta1FlowMultiLanguageSettings `json:"multiLanguageSettings,omitempty"`
+
 	// Name: The unique identifier of the flow. Format:
 	// `projects//locations//agents//flows/`.
 	Name string `json:"name,omitempty"`
@@ -8373,6 +8382,47 @@ type GoogleCloudDialogflowCxV3beta1FlowImportStrategy struct {
 
 func (s *GoogleCloudDialogflowCxV3beta1FlowImportStrategy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDialogflowCxV3beta1FlowImportStrategy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDialogflowCxV3beta1FlowMultiLanguageSettings: Settings for
+// multi-lingual agents.
+type GoogleCloudDialogflowCxV3beta1FlowMultiLanguageSettings struct {
+	// EnableMultiLanguageDetection: Optional. Enable multi-language
+	// detection for this flow. This can be set only if agent level multi
+	// language setting is enabled.
+	EnableMultiLanguageDetection bool `json:"enableMultiLanguageDetection,omitempty"`
+
+	// SupportedResponseLanguageCodes: Optional. Agent will respond in the
+	// detected language if the detected language code is in the supported
+	// resolved languages for this flow. This will be used only if
+	// multi-language training is enabled in the agent and multi-language
+	// detection is enabled in the flow. The supported languages must be a
+	// subset of the languages supported by the agent.
+	SupportedResponseLanguageCodes []string `json:"supportedResponseLanguageCodes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "EnableMultiLanguageDetection") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "EnableMultiLanguageDetection") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDialogflowCxV3beta1FlowMultiLanguageSettings) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDialogflowCxV3beta1FlowMultiLanguageSettings
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

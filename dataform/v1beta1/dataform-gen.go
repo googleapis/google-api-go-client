@@ -3242,7 +3242,7 @@ type WorkflowConfig struct {
 	// will be used.
 	InvocationConfig *InvocationConfig `json:"invocationConfig,omitempty"`
 
-	// Name: Output only. The workflow config's name.
+	// Name: Identifier. The workflow config's name.
 	Name string `json:"name,omitempty"`
 
 	// RecentScheduledExecutionRecords: Output only. Records of the 10 most
@@ -8872,7 +8872,7 @@ type ProjectsLocationsRepositoriesWorkflowConfigsPatchCall struct {
 
 // Patch: Updates a single WorkflowConfig.
 //
-// - name: Output only. The workflow config's name.
+// - name: Identifier. The workflow config's name.
 func (r *ProjectsLocationsRepositoriesWorkflowConfigsService) Patch(name string, workflowconfig *WorkflowConfig) *ProjectsLocationsRepositoriesWorkflowConfigsPatchCall {
 	c := &ProjectsLocationsRepositoriesWorkflowConfigsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -8988,7 +8988,7 @@ func (c *ProjectsLocationsRepositoriesWorkflowConfigsPatchCall) Do(opts ...googl
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Output only. The workflow config's name.",
+	//       "description": "Identifier. The workflow config's name.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+/repositories/[^/]+/workflowConfigs/[^/]+$",
 	//       "required": true,

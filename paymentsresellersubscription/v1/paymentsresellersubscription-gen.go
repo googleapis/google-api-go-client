@@ -1471,9 +1471,9 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
 	LineItemIndex int64 `json:"lineItemIndex,omitempty"`
 
 	// LineItemPromotionSpecs: Optional. The promotions applied on the line
-	// item. It can be: - a free trial promotion, which overrides the
-	// subscription-level free trial promotion. - an introductory pricing
-	// promotion. When used as input in Create or Provision API, specify its
+	// item. It can be: - an introductory pricing promotion. - a free trial
+	// promotion. This feature is not enabled. If used, the request will be
+	// rejected. When used as input in Create or Provision API, specify its
 	// resource name only.
 	LineItemPromotionSpecs []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec `json:"lineItemPromotionSpecs,omitempty"`
 

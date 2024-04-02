@@ -3371,7 +3371,7 @@
       "id": "gkeonprem:v1",
       "name": "gkeonprem",
       "version": "v1",
-      "title": "Anthos On-Prem API",
+      "title": "GDC Virtual API",
       "description": "",
       "discoveryRestUrl": "https://gkeonprem.googleapis.com/$discovery/rest?version=v1",
       "icons": {

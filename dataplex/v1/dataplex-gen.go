@@ -3046,6 +3046,10 @@ type GoogleCloudDataplexV1DataQualityRule struct {
 	// value is contained by a specified set.
 	SetExpectation *GoogleCloudDataplexV1DataQualityRuleSetExpectation `json:"setExpectation,omitempty"`
 
+	// SqlAssertion: Aggregate rule which evaluates the number of rows
+	// returned for the provided statement.
+	SqlAssertion *GoogleCloudDataplexV1DataQualityRuleSqlAssertion `json:"sqlAssertion,omitempty"`
+
 	// StatisticRangeExpectation: Aggregate rule which evaluates whether the
 	// column aggregate statistic lies between a specified range.
 	StatisticRangeExpectation *GoogleCloudDataplexV1DataQualityRuleStatisticRangeExpectation `json:"statisticRangeExpectation,omitempty"`
@@ -3185,6 +3189,11 @@ func (s *GoogleCloudDataplexV1DataQualityRuleRegexExpectation) MarshalJSON() ([]
 // GoogleCloudDataplexV1DataQualityRuleResult: DataQualityRuleResult
 // provides a more detailed, per-rule view of the results.
 type GoogleCloudDataplexV1DataQualityRuleResult struct {
+	// AssertionRowCount: Output only. The number of rows returned by the
+	// sql statement in the SqlAssertion rule.This field is only valid for
+	// SqlAssertion rules.
+	AssertionRowCount int64 `json:"assertionRowCount,omitempty,string"`
+
 	// EvaluatedCount: The number of rows a rule was evaluated against.This
 	// field is only valid for row-level type rules.Evaluated count can be
 	// configured to either include all rows (default) - with null rows
@@ -3214,15 +3223,15 @@ type GoogleCloudDataplexV1DataQualityRuleResult struct {
 	// Rule: The rule specified in the DataQualitySpec, as is.
 	Rule *GoogleCloudDataplexV1DataQualityRule `json:"rule,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "EvaluatedCount") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AssertionRowCount")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "EvaluatedCount") to
+	// NullFields is a list of field names (e.g. "AssertionRowCount") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -3309,6 +3318,40 @@ type GoogleCloudDataplexV1DataQualityRuleSetExpectation struct {
 
 func (s *GoogleCloudDataplexV1DataQualityRuleSetExpectation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudDataplexV1DataQualityRuleSetExpectation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudDataplexV1DataQualityRuleSqlAssertion: Queries for rows
+// returned by the provided SQL statement. If any rows are are returned,
+// this rule fails.The SQL statement needs to use BigQuery standard SQL
+// syntax, and must not contain any semicolons.${data()} can be used to
+// reference the rows being evaluated, i.e. the table after all
+// additional filters (row filters, incremental data filters, sampling)
+// are applied.Example: SELECT * FROM ${data()} WHERE price < 0
+type GoogleCloudDataplexV1DataQualityRuleSqlAssertion struct {
+	// SqlStatement: Optional. The SQL statement.
+	SqlStatement string `json:"sqlStatement,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SqlStatement") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SqlStatement") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudDataplexV1DataQualityRuleSqlAssertion) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudDataplexV1DataQualityRuleSqlAssertion
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -19643,14 +19686,17 @@ func (r *ProjectsLocationsEntryGroupsEntriesService) List(parent string) *Projec
 
 // Filter sets the optional parameter "filter": A filter on the entries
 // to return. Filters are case-sensitive. The request can be filtered by
-// the following fields: entry_type, display_name. The comparison
-// operators are =, !=, <, >, <=, >= (strings are compared according to
-// lexical order) The logical operators AND, OR, NOT can be used in the
-// filter. Example filter expressions:
-// "display_name=AnExampleDisplayName"
+// the following fields: entry_type, entry_source.display_name. The
+// comparison operators are =, !=, <, >, <=, >= (strings are compared
+// according to lexical order) The logical operators AND, OR, NOT can be
+// used in the filter. Wildcard "*" can be used, but for entry_type the
+// full project id or number needs to be provided. Example filter
+// expressions: "entry_source.display_name=AnExampleDisplayName"
 // "entry_type=projects/example-project/locations/global/entryTypes/examp
-// le-entry_type" "entry_type=projects/a* OR "entry_type=projects/k*"
-// "NOT display_name=AnotherExampleDisplayName"
+// le-entry_type"
+// "entry_type=projects/example-project/locations/us/entryTypes/a* OR
+// entry_type=projects/another-project/locations/*" "NOT
+// entry_source.display_name=AnotherExampleDisplayName"
 func (c *ProjectsLocationsEntryGroupsEntriesListCall) Filter(filter string) *ProjectsLocationsEntryGroupsEntriesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -19779,7 +19825,7 @@ func (c *ProjectsLocationsEntryGroupsEntriesListCall) Do(opts ...googleapi.CallO
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. A filter on the entries to return. Filters are case-sensitive. The request can be filtered by the following fields: entry_type, display_name. The comparison operators are =, !=, \u003c, \u003e, \u003c=, \u003e= (strings are compared according to lexical order) The logical operators AND, OR, NOT can be used in the filter. Example filter expressions: \"display_name=AnExampleDisplayName\" \"entry_type=projects/example-project/locations/global/entryTypes/example-entry_type\" \"entry_type=projects/a* OR \"entry_type=projects/k*\" \"NOT display_name=AnotherExampleDisplayName\"",
+	//       "description": "Optional. A filter on the entries to return. Filters are case-sensitive. The request can be filtered by the following fields: entry_type, entry_source.display_name. The comparison operators are =, !=, \u003c, \u003e, \u003c=, \u003e= (strings are compared according to lexical order) The logical operators AND, OR, NOT can be used in the filter. Wildcard \"*\" can be used, but for entry_type the full project id or number needs to be provided. Example filter expressions: \"entry_source.display_name=AnExampleDisplayName\" \"entry_type=projects/example-project/locations/global/entryTypes/example-entry_type\" \"entry_type=projects/example-project/locations/us/entryTypes/a* OR entry_type=projects/another-project/locations/*\" \"NOT entry_source.display_name=AnotherExampleDisplayName\"",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

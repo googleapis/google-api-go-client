@@ -6900,8 +6900,8 @@ type StartLostModeParams struct {
 	// the device is in lost mode.
 	LostOrganization *UserFacingMessage `json:"lostOrganization,omitempty"`
 
-	// LostPhoneNumber: The phone number displayed to the user when the
-	// device is in lost mode.
+	// LostPhoneNumber: The phone number that will be called when the device
+	// is in lost mode and the call owner button is tapped.
 	LostPhoneNumber *UserFacingMessage `json:"lostPhoneNumber,omitempty"`
 
 	// LostStreetAddress: The street address displayed to the user when the

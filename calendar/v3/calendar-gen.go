@@ -7184,8 +7184,7 @@ func (c *EventsListCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsList
 
 // EventTypes sets the optional parameter "eventTypes": Event types to
 // return.  This parameter can be repeated multiple times to return
-// events of different types. The default is ["default", "focusTime",
-// "outOfOffice"].
+// events of different types. If unset, returns all event types.
 //
 // Possible values:
 //
@@ -7511,7 +7510,7 @@ func (c *EventsListCall) Do(opts ...googleapi.CallOption) (*Events, error) {
 	//       "type": "string"
 	//     },
 	//     "eventTypes": {
-	//       "description": "Event types to return. Optional. This parameter can be repeated multiple times to return events of different types. The default is [\"default\", \"focusTime\", \"outOfOffice\"].",
+	//       "description": "Event types to return. Optional. This parameter can be repeated multiple times to return events of different types. If unset, returns all event types.",
 	//       "enum": [
 	//         "default",
 	//         "focusTime",
@@ -8631,8 +8630,7 @@ func (c *EventsWatchCall) AlwaysIncludeEmail(alwaysIncludeEmail bool) *EventsWat
 
 // EventTypes sets the optional parameter "eventTypes": Event types to
 // return.  This parameter can be repeated multiple times to return
-// events of different types. The default is ["default", "focusTime",
-// "outOfOffice"].
+// events of different types. If unset, returns all event types.
 //
 // Possible values:
 //
@@ -8950,7 +8948,7 @@ func (c *EventsWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	//       "type": "string"
 	//     },
 	//     "eventTypes": {
-	//       "description": "Event types to return. Optional. This parameter can be repeated multiple times to return events of different types. The default is [\"default\", \"focusTime\", \"outOfOffice\"].",
+	//       "description": "Event types to return. Optional. This parameter can be repeated multiple times to return events of different types. If unset, returns all event types.",
 	//       "enum": [
 	//         "default",
 	//         "focusTime",

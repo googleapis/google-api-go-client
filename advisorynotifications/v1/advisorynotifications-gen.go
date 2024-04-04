@@ -523,7 +523,8 @@ type GoogleCloudAdvisorynotificationsV1Settings struct {
 	Etag string `json:"etag,omitempty"`
 
 	// Name: Identifier. The resource name of the settings to retrieve.
-	// Format: organizations/{organization}/locations/{location}/settings.
+	// Format: organizations/{organization}/locations/{location}/settings or
+	// projects/{projects}/locations/{location}/settings.
 	Name string `json:"name,omitempty"`
 
 	// NotificationSettings: Required. Map of each notification type and its
@@ -649,7 +650,8 @@ type OrganizationsLocationsGetSettingsCall struct {
 // GetSettings: Get notification settings.
 //
 //   - name: The resource name of the settings to retrieve. Format:
-//     organizations/{organization}/locations/{location}/settings.
+//     organizations/{organization}/locations/{location}/settings or
+//     projects/{projects}/locations/{location}/settings.
 func (r *OrganizationsLocationsService) GetSettings(name string) *OrganizationsLocationsGetSettingsCall {
 	c := &OrganizationsLocationsGetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -766,7 +768,7 @@ func (c *OrganizationsLocationsGetSettingsCall) Do(opts ...googleapi.CallOption)
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the settings to retrieve. Format: organizations/{organization}/locations/{location}/settings.",
+	//       "description": "Required. The resource name of the settings to retrieve. Format: organizations/{organization}/locations/{location}/settings or projects/{projects}/locations/{location}/settings.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/settings$",
 	//       "required": true,
@@ -798,7 +800,8 @@ type OrganizationsLocationsUpdateSettingsCall struct {
 // UpdateSettings: Update notification settings.
 //
 //   - name: Identifier. The resource name of the settings to retrieve.
-//     Format: organizations/{organization}/locations/{location}/settings.
+//     Format: organizations/{organization}/locations/{location}/settings
+//     or projects/{projects}/locations/{location}/settings.
 func (r *OrganizationsLocationsService) UpdateSettings(name string, googlecloudadvisorynotificationsv1settings *GoogleCloudAdvisorynotificationsV1Settings) *OrganizationsLocationsUpdateSettingsCall {
 	c := &OrganizationsLocationsUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -908,7 +911,7 @@ func (c *OrganizationsLocationsUpdateSettingsCall) Do(opts ...googleapi.CallOpti
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Identifier. The resource name of the settings to retrieve. Format: organizations/{organization}/locations/{location}/settings.",
+	//       "description": "Identifier. The resource name of the settings to retrieve. Format: organizations/{organization}/locations/{location}/settings or projects/{projects}/locations/{location}/settings.",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+/settings$",
 	//       "required": true,
@@ -1298,7 +1301,7 @@ func (c *OrganizationsLocationsNotificationsListCall) Do(opts ...googleapi.CallO
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of notifications. Must be of the form \"organizations/{organization}/locations/{location}\" or \"projects/{project}/locations/{location}\"",
+	//       "description": "Required. The parent, which owns this collection of notifications. Must be of the form \"organizations/{organization}/locations/{location}\" or \"projects/{project}/locations/{location}\".",
 	//       "location": "path",
 	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
 	//       "required": true,
@@ -1350,6 +1353,302 @@ func (c *OrganizationsLocationsNotificationsListCall) Pages(ctx context.Context,
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "advisorynotifications.projects.locations.getSettings":
+
+type ProjectsLocationsGetSettingsCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// GetSettings: Get notification settings.
+//
+//   - name: The resource name of the settings to retrieve. Format:
+//     organizations/{organization}/locations/{location}/settings or
+//     projects/{projects}/locations/{location}/settings.
+func (r *ProjectsLocationsService) GetSettings(name string) *ProjectsLocationsGetSettingsCall {
+	c := &ProjectsLocationsGetSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsGetSettingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsGetSettingsCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetSettingsCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsGetSettingsCall) Context(ctx context.Context) *ProjectsLocationsGetSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsGetSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsGetSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "advisorynotifications.projects.locations.getSettings" call.
+// Exactly one of *GoogleCloudAdvisorynotificationsV1Settings or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudAdvisorynotificationsV1Settings.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsGetSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAdvisorynotificationsV1Settings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAdvisorynotificationsV1Settings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get notification settings.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/settings",
+	//   "httpMethod": "GET",
+	//   "id": "advisorynotifications.projects.locations.getSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the settings to retrieve. Format: organizations/{organization}/locations/{location}/settings or projects/{projects}/locations/{location}/settings.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/settings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleCloudAdvisorynotificationsV1Settings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "advisorynotifications.projects.locations.updateSettings":
+
+type ProjectsLocationsUpdateSettingsCall struct {
+	s                                          *Service
+	name                                       string
+	googlecloudadvisorynotificationsv1settings *GoogleCloudAdvisorynotificationsV1Settings
+	urlParams_                                 gensupport.URLParams
+	ctx_                                       context.Context
+	header_                                    http.Header
+}
+
+// UpdateSettings: Update notification settings.
+//
+//   - name: Identifier. The resource name of the settings to retrieve.
+//     Format: organizations/{organization}/locations/{location}/settings
+//     or projects/{projects}/locations/{location}/settings.
+func (r *ProjectsLocationsService) UpdateSettings(name string, googlecloudadvisorynotificationsv1settings *GoogleCloudAdvisorynotificationsV1Settings) *ProjectsLocationsUpdateSettingsCall {
+	c := &ProjectsLocationsUpdateSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudadvisorynotificationsv1settings = googlecloudadvisorynotificationsv1settings
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsUpdateSettingsCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateSettingsCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsUpdateSettingsCall) Context(ctx context.Context) *ProjectsLocationsUpdateSettingsCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsUpdateSettingsCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsUpdateSettingsCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudadvisorynotificationsv1settings)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "advisorynotifications.projects.locations.updateSettings" call.
+// Exactly one of *GoogleCloudAdvisorynotificationsV1Settings or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudAdvisorynotificationsV1Settings.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsUpdateSettingsCall) Do(opts ...googleapi.CallOption) (*GoogleCloudAdvisorynotificationsV1Settings, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudAdvisorynotificationsV1Settings{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update notification settings.",
+	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/settings",
+	//   "httpMethod": "PATCH",
+	//   "id": "advisorynotifications.projects.locations.updateSettings",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Identifier. The resource name of the settings to retrieve. Format: organizations/{organization}/locations/{location}/settings or projects/{projects}/locations/{location}/settings.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/settings$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleCloudAdvisorynotificationsV1Settings"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudAdvisorynotificationsV1Settings"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "advisorynotifications.projects.locations.notifications.get":
@@ -1721,7 +2020,7 @@ func (c *ProjectsLocationsNotificationsListCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The parent, which owns this collection of notifications. Must be of the form \"organizations/{organization}/locations/{location}\" or \"projects/{project}/locations/{location}\"",
+	//       "description": "Required. The parent, which owns this collection of notifications. Must be of the form \"organizations/{organization}/locations/{location}\" or \"projects/{project}/locations/{location}\".",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
 	//       "required": true,

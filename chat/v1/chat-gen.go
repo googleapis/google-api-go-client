@@ -4411,11 +4411,11 @@ func (s *Membership) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MembershipBatchCreatedEventData: Payload for batch new membership
-// events where the `EventType` field is
-// `google.workspace.chat.membership.v1.batchCreated`.
+// MembershipBatchCreatedEventData: Event payload for multiple new
+// memberships. Event type:
+// `google.workspace.chat.membership.v1.batchCreated`
 type MembershipBatchCreatedEventData struct {
-	// Memberships: A list of created memberships.
+	// Memberships: A list of new memberships.
 	Memberships []*MembershipCreatedEventData `json:"memberships,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Memberships") to
@@ -4441,9 +4441,9 @@ func (s *MembershipBatchCreatedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MembershipBatchDeletedEventData: Payload for batch deleted membership
-// events where the `EventType` field is
-// `google.workspace.chat.membership.v1.batchDeleted`.
+// MembershipBatchDeletedEventData: Event payload for multiple deleted
+// memberships. Event type:
+// `google.workspace.chat.membership.v1.batchDeleted`
 type MembershipBatchDeletedEventData struct {
 	// Memberships: A list of deleted memberships.
 	Memberships []*MembershipDeletedEventData `json:"memberships,omitempty"`
@@ -4471,9 +4471,9 @@ func (s *MembershipBatchDeletedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MembershipBatchUpdatedEventData: Payload for batch updated membership
-// events where the `EventType` field is
-// `google.workspace.chat.membership.v1.batchUpdated`.
+// MembershipBatchUpdatedEventData: Event payload for multiple updated
+// memberships. Event type:
+// `google.workspace.chat.membership.v1.batchUpdated`
 type MembershipBatchUpdatedEventData struct {
 	// Memberships: A list of updated memberships.
 	Memberships []*MembershipUpdatedEventData `json:"memberships,omitempty"`
@@ -4501,11 +4501,10 @@ func (s *MembershipBatchUpdatedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MembershipCreatedEventData: Payload for new membership events where
-// the `EventType` field is
-// `google.workspace.chat.membership.v1.created`.
+// MembershipCreatedEventData: Event payload for a new membership. Event
+// type: `google.workspace.chat.membership.v1.created`.
 type MembershipCreatedEventData struct {
-	// Membership: The most recent version of membership.
+	// Membership: The new membership.
 	Membership *Membership `json:"membership,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Membership") to
@@ -4531,12 +4530,11 @@ func (s *MembershipCreatedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MembershipDeletedEventData: Payload for deleted membership events
-// where the `EventType` field is
-// `google.workspace.chat.membership.v1.deleted`.
+// MembershipDeletedEventData: Event payload for a deleted membership.
+// Event type: `google.workspace.chat.membership.v1.deleted`
 type MembershipDeletedEventData struct {
-	// Membership: The deleted membership. Only `name` and `state` are
-	// populated.
+	// Membership: The deleted membership. Only the `name` and `state`
+	// fields are populated.
 	Membership *Membership `json:"membership,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Membership") to
@@ -4562,11 +4560,10 @@ func (s *MembershipDeletedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MembershipUpdatedEventData: Payload for updated membership events
-// where the `EventType` field is
-// `google.workspace.chat.membership.v1.updated`.
+// MembershipUpdatedEventData: Event payload for an updated membership.
+// Event type: `google.workspace.chat.membership.v1.updated`
 type MembershipUpdatedEventData struct {
-	// Membership: The most recent version of membership.
+	// Membership: The updated membership.
 	Membership *Membership `json:"membership,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Membership") to
@@ -4797,11 +4794,10 @@ func (s *Message) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MessageBatchCreatedEventData: Payload for batch new message events
-// where the `EventType` field is
-// `google.workspace.chat.message.v1.batchCreated`.
+// MessageBatchCreatedEventData: Event payload for multiple new
+// messages. Event type: `google.workspace.chat.message.v1.batchCreated`
 type MessageBatchCreatedEventData struct {
-	// Messages: A list of created messages.
+	// Messages: A list of new messages.
 	Messages []*MessageCreatedEventData `json:"messages,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Messages") to
@@ -4827,9 +4823,8 @@ func (s *MessageBatchCreatedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MessageBatchDeletedEventData: Payload for batch deleted message
-// events where the `EventType` field is
-// `google.workspace.chat.message.v1.batchDeleted`.
+// MessageBatchDeletedEventData: Event payload for multiple deleted
+// messages. Event type: `google.workspace.chat.message.v1.batchDeleted`
 type MessageBatchDeletedEventData struct {
 	// Messages: A list of deleted messages.
 	Messages []*MessageDeletedEventData `json:"messages,omitempty"`
@@ -4857,9 +4852,8 @@ func (s *MessageBatchDeletedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MessageBatchUpdatedEventData: Payload for batch updated message
-// events where the `EventType` field is
-// `google.workspace.chat.message.v1.batchUpdated`.
+// MessageBatchUpdatedEventData: Event payload for multiple updated
+// messages. Event type: `google.workspace.chat.message.v1.batchUpdated`
 type MessageBatchUpdatedEventData struct {
 	// Messages: A list of updated messages.
 	Messages []*MessageUpdatedEventData `json:"messages,omitempty"`
@@ -4887,10 +4881,10 @@ func (s *MessageBatchUpdatedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MessageCreatedEventData: Payload for new message events where the
-// `EventType` field is `google.workspace.chat.message.v1.created`.
+// MessageCreatedEventData: Event payload for a new message. Event type:
+// `google.workspace.chat.message.v1.created`
 type MessageCreatedEventData struct {
-	// Message: The most recent version of the message.
+	// Message: The new message.
 	Message *Message `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Message") to
@@ -4916,11 +4910,11 @@ func (s *MessageCreatedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MessageDeletedEventData: Payload for deleted message events where the
-// `EventType` field is `google.workspace.chat.message.v1.deleted`.
+// MessageDeletedEventData: Event payload for a deleted message. Event
+// type: `google.workspace.chat.message.v1.deleted`
 type MessageDeletedEventData struct {
-	// Message: The deleted message. Only `name`, `createTime`,
-	// `deleteTime`, and `deletionMetadata` are populated.
+	// Message: The deleted message. Only the `name`, `createTime`,
+	// `deleteTime`, and `deletionMetadata` fields are populated.
 	Message *Message `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Message") to
@@ -4946,10 +4940,10 @@ func (s *MessageDeletedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MessageUpdatedEventData: Payload for updated message events where the
-// `EventType` field is `google.workspace.chat.message.v1.updated`.
+// MessageUpdatedEventData: Event payload for an updated message. Event
+// type: `google.workspace.chat.message.v1.updated`
 type MessageUpdatedEventData struct {
-	// Message: The most recent version of the message.
+	// Message: The updated message.
 	Message *Message `json:"message,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Message") to
@@ -5109,11 +5103,11 @@ func (s *Reaction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ReactionBatchCreatedEventData: Payload for batch new reaction events
-// where the `EventType` field is
-// `google.workspace.chat.reaction.v1.batchCreated`.
+// ReactionBatchCreatedEventData: Event payload for multiple new
+// reactions. Event type:
+// `google.workspace.chat.reaction.v1.batchCreated`
 type ReactionBatchCreatedEventData struct {
-	// Reactions: A list of created reactions.
+	// Reactions: A list of new reactions.
 	Reactions []*ReactionCreatedEventData `json:"reactions,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Reactions") to
@@ -5139,9 +5133,9 @@ func (s *ReactionBatchCreatedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ReactionBatchDeletedEventData: Payload for batch deleted reaction
-// events where the `EventType` field is
-// `google.workspace.chat.reaction.v1.batchDeleted`.
+// ReactionBatchDeletedEventData: Event payload for multiple deleted
+// reactions. Event type:
+// `google.workspace.chat.reaction.v1.batchDeleted`
 type ReactionBatchDeletedEventData struct {
 	// Reactions: A list of deleted reactions.
 	Reactions []*ReactionDeletedEventData `json:"reactions,omitempty"`
@@ -5169,10 +5163,10 @@ func (s *ReactionBatchDeletedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ReactionCreatedEventData: Payload for new reaction events where the
-// `EventType` field is `google.workspace.chat.reaction.v1.created`.
+// ReactionCreatedEventData: Event payload for a new reaction. Event
+// type: `google.workspace.chat.reaction.v1.created`
 type ReactionCreatedEventData struct {
-	// Reaction: The created reaction.
+	// Reaction: The new reaction.
 	Reaction *Reaction `json:"reaction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Reaction") to
@@ -5198,8 +5192,8 @@ func (s *ReactionCreatedEventData) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// ReactionDeletedEventData: Payload for deleted reaction events where
-// the `EventType` field is `google.workspace.chat.reaction.v1.deleted`.
+// ReactionDeletedEventData: Event payload for a deleted reaction. Type:
+// `google.workspace.chat.reaction.v1.deleted`
 type ReactionDeletedEventData struct {
 	// Reaction: The deleted reaction.
 	Reaction *Reaction `json:"reaction,omitempty"`
@@ -5615,9 +5609,8 @@ func (s *Space) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SpaceBatchUpdatedEventData: Payload for batch updated space events
-// where the `EventType` field is
-// `google.workspace.chat.space.v1.batchUpdated`.
+// SpaceBatchUpdatedEventData: Event payload for multiple updates to a
+// space. Event type: `google.workspace.chat.space.v1.batchUpdated`
 type SpaceBatchUpdatedEventData struct {
 	// Spaces: A list of updated spaces.
 	Spaces []*SpaceUpdatedEventData `json:"spaces,omitempty"`
@@ -5714,117 +5707,128 @@ func (s *SpaceDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SpaceEvent: An event that happens in a specific space.
+// SpaceEvent: An event that represents a change or activity in a Google
+// Chat space. To learn more, see Work with events from Google Chat
+// (https://developers.google.com/workspace/chat/events-overview).
 type SpaceEvent struct {
-	// EventTime: Time of the event.
+	// EventTime: Time when the event occurred.
 	EventTime string `json:"eventTime,omitempty"`
 
-	// EventType: Type of the space event. The following event types are
-	// supported: * New membership:
-	// `google.workspace.chat.membership.v1.created` * Deleted membership:
-	// `google.workspace.chat.membership.v1.deleted` * Updated membership:
-	// `google.workspace.chat.membership.v1.updated` * New message:
-	// `google.workspace.chat.message.v1.created` * Deleted message:
-	// `google.workspace.chat.message.v1.deleted` * Updated message:
-	// `google.workspace.chat.message.v1.updated` * New reaction:
-	// `google.workspace.chat.reaction.v1.created` * Deleted reaction:
-	// `google.workspace.chat.reaction.v1.deleted` * Updated space:
-	// `google.workspace.chat.space.v1.updated` Note that requesting or
-	// subscribing to the preceding event types automatically sets up the
-	// subscription or response to also return batched versions of the event
-	// type. For example, if you subscribe to
-	// `google.workspace.chat.membership.v1.created`, you also receive
-	// events for `google.workspace.chat.membership.v1.batchCreated`. For
-	// more details see
-	// https://developers.google.com/workspace/events/guides/events-chat#output_only_event_types.
+	// EventType: Type of space event. Each event type has a batch version,
+	// which represents multiple instances of the event type that occur in a
+	// short period of time. For `spaceEvents.list()` requests, omit batch
+	// event types in your query filter. By default, the server returns both
+	// event type and its batch version. Supported event types for messages
+	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages):
+	// * New message: `google.workspace.chat.message.v1.created` * Updated
+	// message: `google.workspace.chat.message.v1.updated` * Deleted
+	// message: `google.workspace.chat.message.v1.deleted` * Multiple new
+	// messages: `google.workspace.chat.message.v1.batchCreated` * Multiple
+	// updated messages: `google.workspace.chat.message.v1.batchUpdated` *
+	// Multiple deleted messages:
+	// `google.workspace.chat.message.v1.batchDeleted` Supported event types
+	// for memberships
+	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.members):
+	// * New membership: `google.workspace.chat.membership.v1.created` *
+	// Updated membership: `google.workspace.chat.membership.v1.updated` *
+	// Deleted membership: `google.workspace.chat.membership.v1.deleted` *
+	// Multiple new memberships:
+	// `google.workspace.chat.membership.v1.batchCreated` * Multiple updated
+	// memberships: `google.workspace.chat.membership.v1.batchUpdated` *
+	// Multiple deleted memberships:
+	// `google.workspace.chat.membership.v1.batchDeleted` Supported event
+	// types for reactions
+	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.messages.reactions):
+	// * New reaction: `google.workspace.chat.reaction.v1.created` * Deleted
+	// reaction: `google.workspace.chat.reaction.v1.deleted` * Multiple new
+	// reactions: `google.workspace.chat.reaction.v1.batchCreated` *
+	// Multiple deleted reactions:
+	// `google.workspace.chat.reaction.v1.batchDeleted` Supported event
+	// types about the space
+	// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces):
+	// * Updated space: `google.workspace.chat.space.v1.updated` * Multiple
+	// space updates: `google.workspace.chat.space.v1.batchUpdated`
 	EventType string `json:"eventType,omitempty"`
 
-	// MembershipBatchCreatedEventData: Payload for batch new membership
-	// events where the `EventType` field is
-	// `google.workspace.chat.membership.v1.batchCreated`.
+	// MembershipBatchCreatedEventData: Event payload for multiple new
+	// memberships. Event type:
+	// `google.workspace.chat.membership.v1.batchCreated`
 	MembershipBatchCreatedEventData *MembershipBatchCreatedEventData `json:"membershipBatchCreatedEventData,omitempty"`
 
-	// MembershipBatchDeletedEventData: Payload for batch deleted membership
-	// events where the `EventType` field is
-	// `google.workspace.chat.membership.v1.batchDeleted`.
+	// MembershipBatchDeletedEventData: Event payload for multiple deleted
+	// memberships. Event type:
+	// `google.workspace.chat.membership.v1.batchDeleted`
 	MembershipBatchDeletedEventData *MembershipBatchDeletedEventData `json:"membershipBatchDeletedEventData,omitempty"`
 
-	// MembershipBatchUpdatedEventData: Payload for batch updated membership
-	// events where the `EventType` field is
-	// `google.workspace.chat.membership.v1.batchUpdated`.
+	// MembershipBatchUpdatedEventData: Event payload for multiple updated
+	// memberships. Event type:
+	// `google.workspace.chat.membership.v1.batchUpdated`
 	MembershipBatchUpdatedEventData *MembershipBatchUpdatedEventData `json:"membershipBatchUpdatedEventData,omitempty"`
 
-	// MembershipCreatedEventData: Payload for new membership events where
-	// the `EventType` field is
-	// `google.workspace.chat.membership.v1.created`.
+	// MembershipCreatedEventData: Event payload for a new membership. Event
+	// type: `google.workspace.chat.membership.v1.created`
 	MembershipCreatedEventData *MembershipCreatedEventData `json:"membershipCreatedEventData,omitempty"`
 
-	// MembershipDeletedEventData: Payload for deleted membership events
-	// where the `EventType` field is
-	// `google.workspace.chat.membership.v1.deleted`.
+	// MembershipDeletedEventData: Event payload for a deleted membership.
+	// Event type: `google.workspace.chat.membership.v1.deleted`
 	MembershipDeletedEventData *MembershipDeletedEventData `json:"membershipDeletedEventData,omitempty"`
 
-	// MembershipUpdatedEventData: Payload for updated membership events
-	// where the `EventType` field is
-	// `google.workspace.chat.membership.v1.updated`.
+	// MembershipUpdatedEventData: Event payload for an updated membership.
+	// Event type: `google.workspace.chat.membership.v1.updated`
 	MembershipUpdatedEventData *MembershipUpdatedEventData `json:"membershipUpdatedEventData,omitempty"`
 
-	// MessageBatchCreatedEventData: Payload for batch new message events
-	// where the `EventType` field is
-	// `google.workspace.chat.message.v1.batchCreated`.
+	// MessageBatchCreatedEventData: Event payload for multiple new
+	// messages. Event type: `google.workspace.chat.message.v1.batchCreated`
 	MessageBatchCreatedEventData *MessageBatchCreatedEventData `json:"messageBatchCreatedEventData,omitempty"`
 
-	// MessageBatchDeletedEventData: Payload for batch deleted message
-	// events where the `EventType` field is
-	// `google.workspace.chat.message.v1.batchDeleted`.
+	// MessageBatchDeletedEventData: Event payload for multiple deleted
+	// messages. Event type: `google.workspace.chat.message.v1.batchDeleted`
 	MessageBatchDeletedEventData *MessageBatchDeletedEventData `json:"messageBatchDeletedEventData,omitempty"`
 
-	// MessageBatchUpdatedEventData: Payload for batch updated message
-	// events where the `EventType` field is
-	// `google.workspace.chat.message.v1.batchUpdated`.
+	// MessageBatchUpdatedEventData: Event payload for multiple updated
+	// messages. Event type: `google.workspace.chat.message.v1.batchUpdated`
 	MessageBatchUpdatedEventData *MessageBatchUpdatedEventData `json:"messageBatchUpdatedEventData,omitempty"`
 
-	// MessageCreatedEventData: Payload for new message events where the
-	// `EventType` field is `google.workspace.chat.message.v1.created`.
+	// MessageCreatedEventData: Event payload for a new message. Event type:
+	// `google.workspace.chat.message.v1.created`
 	MessageCreatedEventData *MessageCreatedEventData `json:"messageCreatedEventData,omitempty"`
 
-	// MessageDeletedEventData: Payload for deleted message events where the
-	// `EventType` field is `google.workspace.chat.message.v1.deleted`.
+	// MessageDeletedEventData: Event payload for a deleted message. Event
+	// type: `google.workspace.chat.message.v1.deleted`
 	MessageDeletedEventData *MessageDeletedEventData `json:"messageDeletedEventData,omitempty"`
 
-	// MessageUpdatedEventData: Payload for updated message events where the
-	// `EventType` field is `google.workspace.chat.message.v1.updated`.
+	// MessageUpdatedEventData: Event payload for an updated message. Event
+	// type: `google.workspace.chat.message.v1.updated`
 	MessageUpdatedEventData *MessageUpdatedEventData `json:"messageUpdatedEventData,omitempty"`
 
-	// Name: The resource name of the space event. Format:
+	// Name: Resource name of the space event. Format:
 	// `spaces/{space}/spaceEvents/{spaceEvent}`
 	Name string `json:"name,omitempty"`
 
-	// ReactionBatchCreatedEventData: Payload for batch new reaction events
-	// where the `EventType` field is
-	// `google.workspace.chat.reaction.v1.batchCreated`.
+	// ReactionBatchCreatedEventData: Event payload for multiple new
+	// reactions. Event type:
+	// `google.workspace.chat.reaction.v1.batchCreated`
 	ReactionBatchCreatedEventData *ReactionBatchCreatedEventData `json:"reactionBatchCreatedEventData,omitempty"`
 
-	// ReactionBatchDeletedEventData: Payload for batch deleted reaction
-	// events where the `EventType` field is
-	// `google.workspace.chat.reaction.v1.batchDeleted`.
+	// ReactionBatchDeletedEventData: Event payload for multiple deleted
+	// reactions. Event type:
+	// `google.workspace.chat.reaction.v1.batchDeleted`
 	ReactionBatchDeletedEventData *ReactionBatchDeletedEventData `json:"reactionBatchDeletedEventData,omitempty"`
 
-	// ReactionCreatedEventData: Payload for new reaction events where the
-	// `EventType` field is `google.workspace.chat.reaction.v1.created`.
+	// ReactionCreatedEventData: Event payload for a new reaction. Event
+	// type: `google.workspace.chat.reaction.v1.created`
 	ReactionCreatedEventData *ReactionCreatedEventData `json:"reactionCreatedEventData,omitempty"`
 
-	// ReactionDeletedEventData: Payload for deleted reaction events where
-	// the `EventType` field is `google.workspace.chat.reaction.v1.deleted`.
+	// ReactionDeletedEventData: Event payload for a deleted reaction. Event
+	// type: `google.workspace.chat.reaction.v1.deleted`
 	ReactionDeletedEventData *ReactionDeletedEventData `json:"reactionDeletedEventData,omitempty"`
 
-	// SpaceBatchUpdatedEventData: Payload for batch updated space events
-	// where the `EventType` field is
-	// `google.workspace.chat.space.v1.batchUpdated`.
+	// SpaceBatchUpdatedEventData: Event payload for multiple updates to a
+	// space. Event type: `google.workspace.chat.space.v1.batchUpdated`
 	SpaceBatchUpdatedEventData *SpaceBatchUpdatedEventData `json:"spaceBatchUpdatedEventData,omitempty"`
 
-	// SpaceUpdatedEventData: Payload for updated space events where the
-	// `EventType` field is `google.workspace.chat.space.v1.updated`.
+	// SpaceUpdatedEventData: Event payload for a space update. Event type:
+	// `google.workspace.chat.space.v1.updated`
 	SpaceUpdatedEventData *SpaceUpdatedEventData `json:"spaceUpdatedEventData,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -5854,10 +5858,10 @@ func (s *SpaceEvent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// SpaceUpdatedEventData: Payload for updated space events where the
-// `EventType` field is `google.workspace.chat.space.v1.updated`.
+// SpaceUpdatedEventData: Event payload for an updated space. Event
+// type: `google.workspace.chat.space.v1.updated`
 type SpaceUpdatedEventData struct {
-	// Space: The recent version of the space.
+	// Space: The updated space.
 	Space *Space `json:"space,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Space") to
@@ -10775,15 +10779,18 @@ type SpacesSpaceEventsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Returns a SpaceEvent. You can request events from up to 28 days
-// before the time of the request. The server will return the most
-// recent version of the resource. For example, if a
-// `google.workspace.chat.message.v1.created` event is requested and the
-// message has since been deleted, the returned event will contain the
-// deleted message resource in the payload. Requires user authentication
-// (https://developers.google.com/chat/api/guides/auth/users).
+// Get: Returns an event from a Google Chat space. The event payload
+// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.spaceEvents#SpaceEvent.FIELDS.oneof_payload)
+// contains the most recent version of the resource that changed. For
+// example, if you request an event about a new message but the message
+// was later updated, the server returns the updated `Message` resource
+// in the event payload. Requires user authentication
+// (https://developers.google.com/chat/api/guides/auth/users). To get an
+// event, the authenticated user must be a member of the space. For an
+// example, see Get details about an event from a Google Chat space
+// (https://developers.google.com/workspace/chat/get-space-event).
 //
-//   - name: The resource name of the event. Format:
+//   - name: The resource name of the space event. Format:
 //     `spaces/{space}/spaceEvents/{spaceEvent}`.
 func (r *SpacesSpaceEventsService) Get(name string) *SpacesSpaceEventsGetCall {
 	c := &SpacesSpaceEventsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -10890,7 +10897,7 @@ func (c *SpacesSpaceEventsGetCall) Do(opts ...googleapi.CallOption) (*SpaceEvent
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a SpaceEvent. You can request events from up to 28 days before the time of the request. The server will return the most recent version of the resource. For example, if a `google.workspace.chat.message.v1.created` event is requested and the message has since been deleted, the returned event will contain the deleted message resource in the payload. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
+	//   "description": "Returns an event from a Google Chat space. The [event payload](https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.spaceEvents#SpaceEvent.FIELDS.oneof_payload) contains the most recent version of the resource that changed. For example, if you request an event about a new message but the message was later updated, the server returns the updated `Message` resource in the event payload. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users). To get an event, the authenticated user must be a member of the space. For an example, see [Get details about an event from a Google Chat space](https://developers.google.com/workspace/chat/get-space-event).",
 	//   "flatPath": "v1/spaces/{spacesId}/spaceEvents/{spaceEventsId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.spaceEvents.get",
@@ -10899,7 +10906,7 @@ func (c *SpacesSpaceEventsGetCall) Do(opts ...googleapi.CallOption) (*SpaceEvent
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. The resource name of the event. Format: `spaces/{space}/spaceEvents/{spaceEvent}`",
+	//       "description": "Required. The resource name of the space event. Format: `spaces/{space}/spaceEvents/{spaceEvent}`",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/spaceEvents/[^/]+$",
 	//       "required": true,
@@ -10935,17 +10942,23 @@ type SpacesSpaceEventsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists SpaceEvents in a space that the caller is a member of.
-// You can request events from up to 28 days before the time of the
-// request. The server will return the most recent version of the
-// resources. For example, if a
-// `google.workspace.chat.message.v1.created` event is requested and the
-// message has since been deleted, the returned event will contain the
-// deleted message resource in the payload. Requires user authentication
-// (https://developers.google.com/chat/api/guides/auth/users).
+// List: Lists events from a Google Chat space. For each event, the
+// payload
+// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.spaceEvents#SpaceEvent.FIELDS.oneof_payload)
+// contains the most recent version of the Chat resource. For example,
+// if you list events about new space members, the server returns
+// `Membership` resources that contain the latest membership details. If
+// new members were removed during the requested period, the event
+// payload contains an empty `Membership` resource. Requires user
+// authentication
+// (https://developers.google.com/chat/api/guides/auth/users). To list
+// events, the authenticated user must be a member of the space. For an
+// example, see List events from a Google Chat space
+// (https://developers.google.com/workspace/chat/list-space-events).
 //
-//   - parent: The resource name of the space from which to list events.
-//     Format: `spaces/{space}`.
+//   - parent: Resource name of the Google Chat space
+//     (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces)
+//     where the events occurred. Format: `spaces/{space}`.
 func (r *SpacesSpaceEventsService) List(parent string) *SpacesSpaceEventsListCall {
 	c := &SpacesSpaceEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10953,21 +10966,27 @@ func (r *SpacesSpaceEventsService) List(parent string) *SpacesSpaceEventsListCal
 }
 
 // Filter sets the optional parameter "filter": Required. A query
-// filter. This method supports filtering by: `event_types`,
-// `start_time`, and `end_time`. `event_types`: You must specify at
-// least one event type in your query. `event_types` supports the has
-// `:` operator. To filter by multiple event types, use the `OR`
-// operator. To see the list of currently supported event types, see
-// google.chat.v1.SpaceEvent.event_type `start_time`: Exclusive
-// timestamp from which to start listing space events. You can list
-// events that occurred up to 28 days ago. If unspecified, lists space
-// events from the 28 days ago up to end time. `end_time`: Inclusive
-// timestamp up to which space events are listed. Default value is the
-// present. `start_time` and `end_time` accept a timestamp in RFC-3339
-// (https://www.rfc-editor.org/rfc/rfc3339) format and support the
-// equals `=` comparison operator. To filter by both `start_time` and
-// `end_time`, use the `AND` operator. For example, the following
-// queries are valid: ``` start_time="2023-08-23T19:20:33+00:00" AND
+// filter. You must specify at least one event type (`event_type`) using
+// the has `:` operator. To filter by multiple event types, use the `OR`
+// operator. Omit batch event types in your filter. The request
+// automatically returns any related batch events. For example, if you
+// filter by new reactions
+// (`google.workspace.chat.reaction.v1.created`), the server also
+// returns batch new reactions events
+// (`google.workspace.chat.reaction.v1.batchCreated`). For a list of
+// supported event types, see the `SpaceEvents` reference documentation
+// (https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.spaceEvents#SpaceEvent.FIELDS.event_type).
+// Optionally, you can also filter by start time (`start_time`) and end
+// time (`end_time`): * `start_time`: Exclusive timestamp from which to
+// start listing space events. You can list events that occurred up to
+// 28 days ago. If unspecified, lists space events from the past 28
+// days. * `end_time`: Inclusive timestamp until which space events are
+// listed. If unspecified, lists events up to the time of the request.
+// To specify a start or end time, use the equals `=` operator and
+// format in RFC-3339 (https://www.rfc-editor.org/rfc/rfc3339). To
+// filter by both `start_time` and `end_time`, use the `AND` operator.
+// For example, the following queries are valid: ```
+// start_time="2023-08-23T19:20:33+00:00" AND
 // end_time="2023-08-23T19:21:54+00:00" ``` ```
 // start_time="2023-08-23T19:20:33+00:00" AND
 // (event_types:"google.workspace.chat.space.v1.updated" OR
@@ -10984,7 +11003,7 @@ func (c *SpacesSpaceEventsListCall) Filter(filter string) *SpacesSpaceEventsList
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of space events returned. The service may return fewer than this
+// of space events returned. The service might return fewer than this
 // value. Negative values return an `INVALID_ARGUMENT` error.
 func (c *SpacesSpaceEventsListCall) PageSize(pageSize int64) *SpacesSpaceEventsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
@@ -11101,7 +11120,7 @@ func (c *SpacesSpaceEventsListCall) Do(opts ...googleapi.CallOption) (*ListSpace
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists SpaceEvents in a space that the caller is a member of. You can request events from up to 28 days before the time of the request. The server will return the most recent version of the resources. For example, if a `google.workspace.chat.message.v1.created` event is requested and the message has since been deleted, the returned event will contain the deleted message resource in the payload. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users).",
+	//   "description": "Lists events from a Google Chat space. For each event, the [payload](https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.spaceEvents#SpaceEvent.FIELDS.oneof_payload) contains the most recent version of the Chat resource. For example, if you list events about new space members, the server returns `Membership` resources that contain the latest membership details. If new members were removed during the requested period, the event payload contains an empty `Membership` resource. Requires [user authentication](https://developers.google.com/chat/api/guides/auth/users). To list events, the authenticated user must be a member of the space. For an example, see [List events from a Google Chat space](https://developers.google.com/workspace/chat/list-space-events).",
 	//   "flatPath": "v1/spaces/{spacesId}/spaceEvents",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.spaceEvents.list",
@@ -11110,12 +11129,12 @@ func (c *SpacesSpaceEventsListCall) Do(opts ...googleapi.CallOption) (*ListSpace
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Required. A query filter. This method supports filtering by: `event_types`, `start_time`, and `end_time`. `event_types`: You must specify at least one event type in your query. `event_types` supports the has `:` operator. To filter by multiple event types, use the `OR` operator. To see the list of currently supported event types, see google.chat.v1.SpaceEvent.event_type `start_time`: Exclusive timestamp from which to start listing space events. You can list events that occurred up to 28 days ago. If unspecified, lists space events from the 28 days ago up to end time. `end_time`: Inclusive timestamp up to which space events are listed. Default value is the present. `start_time` and `end_time` accept a timestamp in [RFC-3339](https://www.rfc-editor.org/rfc/rfc3339) format and support the equals `=` comparison operator. To filter by both `start_time` and `end_time`, use the `AND` operator. For example, the following queries are valid: ``` start_time=\"2023-08-23T19:20:33+00:00\" AND end_time=\"2023-08-23T19:21:54+00:00\" ``` ``` start_time=\"2023-08-23T19:20:33+00:00\" AND (event_types:\"google.workspace.chat.space.v1.updated\" OR event_types:\"google.workspace.chat.message.v1.created\") ``` The following queries are invalid: ``` start_time=\"2023-08-23T19:20:33+00:00\" OR end_time=\"2023-08-23T19:21:54+00:00\" ``` ``` event_types:\"google.workspace.chat.space.v1.updated\" AND event_types:\"google.workspace.chat.message.v1.created\" ``` Invalid queries are rejected by the server with an `INVALID_ARGUMENT` error.",
+	//       "description": "Required. A query filter. You must specify at least one event type (`event_type`) using the has `:` operator. To filter by multiple event types, use the `OR` operator. Omit batch event types in your filter. The request automatically returns any related batch events. For example, if you filter by new reactions (`google.workspace.chat.reaction.v1.created`), the server also returns batch new reactions events (`google.workspace.chat.reaction.v1.batchCreated`). For a list of supported event types, see the [`SpaceEvents` reference documentation](https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.spaceEvents#SpaceEvent.FIELDS.event_type). Optionally, you can also filter by start time (`start_time`) and end time (`end_time`): * `start_time`: Exclusive timestamp from which to start listing space events. You can list events that occurred up to 28 days ago. If unspecified, lists space events from the past 28 days. * `end_time`: Inclusive timestamp until which space events are listed. If unspecified, lists events up to the time of the request. To specify a start or end time, use the equals `=` operator and format in [RFC-3339](https://www.rfc-editor.org/rfc/rfc3339). To filter by both `start_time` and `end_time`, use the `AND` operator. For example, the following queries are valid: ``` start_time=\"2023-08-23T19:20:33+00:00\" AND end_time=\"2023-08-23T19:21:54+00:00\" ``` ``` start_time=\"2023-08-23T19:20:33+00:00\" AND (event_types:\"google.workspace.chat.space.v1.updated\" OR event_types:\"google.workspace.chat.message.v1.created\") ``` The following queries are invalid: ``` start_time=\"2023-08-23T19:20:33+00:00\" OR end_time=\"2023-08-23T19:21:54+00:00\" ``` ``` event_types:\"google.workspace.chat.space.v1.updated\" AND event_types:\"google.workspace.chat.message.v1.created\" ``` Invalid queries are rejected by the server with an `INVALID_ARGUMENT` error.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "Optional. The maximum number of space events returned. The service may return fewer than this value. Negative values return an `INVALID_ARGUMENT` error.",
+	//       "description": "Optional. The maximum number of space events returned. The service might return fewer than this value. Negative values return an `INVALID_ARGUMENT` error.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
@@ -11126,7 +11145,7 @@ func (c *SpacesSpaceEventsListCall) Do(opts ...googleapi.CallOption) (*ListSpace
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The resource name of the space from which to list events. Format: `spaces/{space}`.",
+	//       "description": "Required. Resource name of the [Google Chat space](https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces) where the events occurred. Format: `spaces/{space}`.",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+$",
 	//       "required": true,

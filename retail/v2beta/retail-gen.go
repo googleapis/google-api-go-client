@@ -9630,6 +9630,11 @@ type GoogleCloudRetailV2betaServingConfig struct {
 	// is 100. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
 	IgnoreControlIds []string `json:"ignoreControlIds,omitempty"`
 
+	// IgnoreRecsDenylist: When the flag is enabled, the products in the
+	// denylist will not be filtered out in the recommendation filtering
+	// results.
+	IgnoreRecsDenylist bool `json:"ignoreRecsDenylist,omitempty"`
+
 	// ModelId: The id of the model in the same Catalog to use at serving
 	// time. Currently only RecommendationModels are supported:
 	// https://cloud.google.com/retail/recommendations-ai/docs/create-models

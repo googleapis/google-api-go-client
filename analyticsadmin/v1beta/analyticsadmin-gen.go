@@ -195,6 +195,7 @@ func NewPropertiesService(s *Service) *PropertiesService {
 	rs.DataStreams = NewPropertiesDataStreamsService(s)
 	rs.FirebaseLinks = NewPropertiesFirebaseLinksService(s)
 	rs.GoogleAdsLinks = NewPropertiesGoogleAdsLinksService(s)
+	rs.KeyEvents = NewPropertiesKeyEventsService(s)
 	return rs
 }
 
@@ -212,6 +213,8 @@ type PropertiesService struct {
 	FirebaseLinks *PropertiesFirebaseLinksService
 
 	GoogleAdsLinks *PropertiesGoogleAdsLinksService
+
+	KeyEvents *PropertiesKeyEventsService
 }
 
 func NewPropertiesConversionEventsService(s *Service) *PropertiesConversionEventsService {
@@ -277,6 +280,15 @@ func NewPropertiesGoogleAdsLinksService(s *Service) *PropertiesGoogleAdsLinksSer
 }
 
 type PropertiesGoogleAdsLinksService struct {
+	s *Service
+}
+
+func NewPropertiesKeyEventsService(s *Service) *PropertiesKeyEventsService {
+	rs := &PropertiesKeyEventsService{s: s}
+	return rs
+}
+
+type PropertiesKeyEventsService struct {
 	s *Service
 }
 
@@ -2000,6 +2012,126 @@ func (s *GoogleAnalyticsAdminV1betaGoogleAdsLink) MarshalJSON() ([]byte, error) 
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAnalyticsAdminV1betaKeyEvent: A key event in a Google Analytics
+// property.
+type GoogleAnalyticsAdminV1betaKeyEvent struct {
+	// CountingMethod: Required. The method by which Key Events will be
+	// counted across multiple events within a session.
+	//
+	// Possible values:
+	//   "COUNTING_METHOD_UNSPECIFIED" - Counting method not specified.
+	//   "ONCE_PER_EVENT" - Each Event instance is considered a Key Event.
+	//   "ONCE_PER_SESSION" - An Event instance is considered a Key Event at
+	// most once per session per user.
+	CountingMethod string `json:"countingMethod,omitempty"`
+
+	// CreateTime: Output only. Time when this key event was created in the
+	// property.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Custom: Output only. If set to true, this key event refers to a
+	// custom event. If set to false, this key event refers to a default
+	// event in GA. Default events typically have special meaning in GA.
+	// Default events are usually created for you by the GA system, but in
+	// some cases can be created by property admins. Custom events count
+	// towards the maximum number of custom key events that may be created
+	// per property.
+	Custom bool `json:"custom,omitempty"`
+
+	// DefaultValue: Optional. Defines a default value/currency for a key
+	// event.
+	DefaultValue *GoogleAnalyticsAdminV1betaKeyEventDefaultValue `json:"defaultValue,omitempty"`
+
+	// Deletable: Output only. If set to true, this event can be deleted.
+	Deletable bool `json:"deletable,omitempty"`
+
+	// EventName: Immutable. The event name for this key event. Examples:
+	// 'click', 'purchase'
+	EventName string `json:"eventName,omitempty"`
+
+	// Name: Output only. Resource name of this key event. Format:
+	// properties/{property}/keyEvents/{key_event}
+	Name string `json:"name,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CountingMethod") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CountingMethod") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaKeyEvent) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaKeyEvent
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaKeyEventDefaultValue: Defines a default
+// value/currency for a key event.
+type GoogleAnalyticsAdminV1betaKeyEventDefaultValue struct {
+	// CurrencyCode: Required. When an occurrence of this Key Event
+	// (specified by event_name) has no set currency this currency will be
+	// applied as the default. Must be in ISO 4217 currency code format. See
+	// https://en.wikipedia.org/wiki/ISO_4217 for more information.
+	CurrencyCode string `json:"currencyCode,omitempty"`
+
+	// NumericValue: Required. This will be used to populate the "value"
+	// parameter for all occurrences of this Key Event (specified by
+	// event_name) where that parameter is unset.
+	NumericValue float64 `json:"numericValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaKeyEventDefaultValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaKeyEventDefaultValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAnalyticsAdminV1betaKeyEventDefaultValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAnalyticsAdminV1betaKeyEventDefaultValue
+	var s1 struct {
+		NumericValue gensupport.JSONFloat64 `json:"numericValue"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.NumericValue = float64(s1.NumericValue)
+	return nil
+}
+
 // GoogleAnalyticsAdminV1betaListAccountSummariesResponse: Response
 // message for ListAccountSummaries RPC.
 type GoogleAnalyticsAdminV1betaListAccountSummariesResponse struct {
@@ -2307,6 +2439,44 @@ type GoogleAnalyticsAdminV1betaListGoogleAdsLinksResponse struct {
 
 func (s *GoogleAnalyticsAdminV1betaListGoogleAdsLinksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleAnalyticsAdminV1betaListGoogleAdsLinksResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAnalyticsAdminV1betaListKeyEventsResponse: Response message for
+// ListKeyEvents RPC.
+type GoogleAnalyticsAdminV1betaListKeyEventsResponse struct {
+	// KeyEvents: The requested Key Events
+	KeyEvents []*GoogleAnalyticsAdminV1betaKeyEvent `json:"keyEvents,omitempty"`
+
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve
+	// the next page. If this field is omitted, there are no subsequent
+	// pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "KeyEvents") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "KeyEvents") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAnalyticsAdminV1betaListKeyEventsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAnalyticsAdminV1betaListKeyEventsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6033,6 +6203,7 @@ func (c *PropertiesConversionEventsCreateCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Creates a conversion event with the specified attributes.",
 	//   "flatPath": "v1beta/properties/{propertiesId}/conversionEvents",
 	//   "httpMethod": "POST",
@@ -6170,6 +6341,7 @@ func (c *PropertiesConversionEventsDeleteCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Deletes a conversion event in a property.",
 	//   "flatPath": "v1beta/properties/{propertiesId}/conversionEvents/{conversionEventsId}",
 	//   "httpMethod": "DELETE",
@@ -6320,6 +6492,7 @@ func (c *PropertiesConversionEventsGetCall) Do(opts ...googleapi.CallOption) (*G
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Retrieve a single conversion event.",
 	//   "flatPath": "v1beta/properties/{propertiesId}/conversionEvents/{conversionEventsId}",
 	//   "httpMethod": "GET",
@@ -6491,6 +6664,7 @@ func (c *PropertiesConversionEventsListCall) Do(opts ...googleapi.CallOption) (*
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Returns a list of conversion events in the specified parent property. Returns an empty list if no conversion events are found.",
 	//   "flatPath": "v1beta/properties/{propertiesId}/conversionEvents",
 	//   "httpMethod": "GET",
@@ -6676,6 +6850,7 @@ func (c *PropertiesConversionEventsPatchCall) Do(opts ...googleapi.CallOption) (
 	}
 	return ret, nil
 	// {
+	//   "deprecated": true,
 	//   "description": "Updates a conversion event with the specified attributes.",
 	//   "flatPath": "v1beta/properties/{propertiesId}/conversionEvents/{conversionEventsId}",
 	//   "httpMethod": "PATCH",
@@ -10992,6 +11167,798 @@ func (c *PropertiesGoogleAdsLinksPatchCall) Do(opts ...googleapi.CallOption) (*G
 	//   },
 	//   "response": {
 	//     "$ref": "GoogleAnalyticsAdminV1betaGoogleAdsLink"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.keyEvents.create":
+
+type PropertiesKeyEventsCreateCall struct {
+	s                                  *Service
+	parent                             string
+	googleanalyticsadminv1betakeyevent *GoogleAnalyticsAdminV1betaKeyEvent
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// Create: Creates a Key Event.
+//
+//   - parent: The resource name of the parent property where this Key
+//     Event will be created. Format: properties/123.
+func (r *PropertiesKeyEventsService) Create(parent string, googleanalyticsadminv1betakeyevent *GoogleAnalyticsAdminV1betaKeyEvent) *PropertiesKeyEventsCreateCall {
+	c := &PropertiesKeyEventsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleanalyticsadminv1betakeyevent = googleanalyticsadminv1betakeyevent
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesKeyEventsCreateCall) Fields(s ...googleapi.Field) *PropertiesKeyEventsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesKeyEventsCreateCall) Context(ctx context.Context) *PropertiesKeyEventsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesKeyEventsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesKeyEventsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betakeyevent)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/keyEvents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.keyEvents.create" call.
+// Exactly one of *GoogleAnalyticsAdminV1betaKeyEvent or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleAnalyticsAdminV1betaKeyEvent.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesKeyEventsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaKeyEvent, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1betaKeyEvent{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Creates a Key Event.",
+	//   "flatPath": "v1beta/properties/{propertiesId}/keyEvents",
+	//   "httpMethod": "POST",
+	//   "id": "analyticsadmin.properties.keyEvents.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. The resource name of the parent property where this Key Event will be created. Format: properties/123",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+parent}/keyEvents",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1betaKeyEvent"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1betaKeyEvent"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.keyEvents.delete":
+
+type PropertiesKeyEventsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Deletes a Key Event.
+//
+//   - name: The resource name of the Key Event to delete. Format:
+//     properties/{property}/keyEvents/{key_event} Example:
+//     "properties/123/keyEvents/456".
+func (r *PropertiesKeyEventsService) Delete(name string) *PropertiesKeyEventsDeleteCall {
+	c := &PropertiesKeyEventsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesKeyEventsDeleteCall) Fields(s ...googleapi.Field) *PropertiesKeyEventsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesKeyEventsDeleteCall) Context(ctx context.Context) *PropertiesKeyEventsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesKeyEventsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesKeyEventsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.keyEvents.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *PropertiesKeyEventsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Deletes a Key Event.",
+	//   "flatPath": "v1beta/properties/{propertiesId}/keyEvents/{keyEventsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "analyticsadmin.properties.keyEvents.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Key Event to delete. Format: properties/{property}/keyEvents/{key_event} Example: \"properties/123/keyEvents/456\"",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/keyEvents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.keyEvents.get":
+
+type PropertiesKeyEventsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Retrieve a single Key Event.
+//
+//   - name: The resource name of the Key Event to retrieve. Format:
+//     properties/{property}/keyEvents/{key_event} Example:
+//     "properties/123/keyEvents/456".
+func (r *PropertiesKeyEventsService) Get(name string) *PropertiesKeyEventsGetCall {
+	c := &PropertiesKeyEventsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesKeyEventsGetCall) Fields(s ...googleapi.Field) *PropertiesKeyEventsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesKeyEventsGetCall) IfNoneMatch(entityTag string) *PropertiesKeyEventsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesKeyEventsGetCall) Context(ctx context.Context) *PropertiesKeyEventsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesKeyEventsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesKeyEventsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.keyEvents.get" call.
+// Exactly one of *GoogleAnalyticsAdminV1betaKeyEvent or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleAnalyticsAdminV1betaKeyEvent.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesKeyEventsGetCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaKeyEvent, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1betaKeyEvent{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Retrieve a single Key Event.",
+	//   "flatPath": "v1beta/properties/{propertiesId}/keyEvents/{keyEventsId}",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.keyEvents.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. The resource name of the Key Event to retrieve. Format: properties/{property}/keyEvents/{key_event} Example: \"properties/123/keyEvents/456\"",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/keyEvents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1betaKeyEvent"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// method id "analyticsadmin.properties.keyEvents.list":
+
+type PropertiesKeyEventsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Returns a list of Key Events in the specified parent property.
+// Returns an empty list if no Key Events are found.
+//
+//   - parent: The resource name of the parent property. Example:
+//     'properties/123'.
+func (r *PropertiesKeyEventsService) List(parent string) *PropertiesKeyEventsListCall {
+	c := &PropertiesKeyEventsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": The maximum number
+// of resources to return. If unspecified, at most 50 resources will be
+// returned. The maximum value is 200; (higher values will be coerced to
+// the maximum)
+func (c *PropertiesKeyEventsListCall) PageSize(pageSize int64) *PropertiesKeyEventsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": A page token,
+// received from a previous `ListKeyEvents` call. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to `ListKeyEvents` must match the call that provided the
+// page token.
+func (c *PropertiesKeyEventsListCall) PageToken(pageToken string) *PropertiesKeyEventsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesKeyEventsListCall) Fields(s ...googleapi.Field) *PropertiesKeyEventsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *PropertiesKeyEventsListCall) IfNoneMatch(entityTag string) *PropertiesKeyEventsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesKeyEventsListCall) Context(ctx context.Context) *PropertiesKeyEventsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesKeyEventsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesKeyEventsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/keyEvents")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.keyEvents.list" call.
+// Exactly one of *GoogleAnalyticsAdminV1betaListKeyEventsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleAnalyticsAdminV1betaListKeyEventsResponse.ServerResponse.Header
+//
+//	or (if a response was returned at all) in
+//
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesKeyEventsListCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaListKeyEventsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1betaListKeyEventsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Returns a list of Key Events in the specified parent property. Returns an empty list if no Key Events are found.",
+	//   "flatPath": "v1beta/properties/{propertiesId}/keyEvents",
+	//   "httpMethod": "GET",
+	//   "id": "analyticsadmin.properties.keyEvents.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "pageSize": {
+	//       "description": "The maximum number of resources to return. If unspecified, at most 50 resources will be returned. The maximum value is 200; (higher values will be coerced to the maximum)",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "A page token, received from a previous `ListKeyEvents` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListKeyEvents` must match the call that provided the page token.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. The resource name of the parent property. Example: 'properties/123'",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+parent}/keyEvents",
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1betaListKeyEventsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/analytics.edit",
+	//     "https://www.googleapis.com/auth/analytics.readonly"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *PropertiesKeyEventsListCall) Pages(ctx context.Context, f func(*GoogleAnalyticsAdminV1betaListKeyEventsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "analyticsadmin.properties.keyEvents.patch":
+
+type PropertiesKeyEventsPatchCall struct {
+	s                                  *Service
+	name                               string
+	googleanalyticsadminv1betakeyevent *GoogleAnalyticsAdminV1betaKeyEvent
+	urlParams_                         gensupport.URLParams
+	ctx_                               context.Context
+	header_                            http.Header
+}
+
+// Patch: Updates a Key Event.
+//
+//   - name: Output only. Resource name of this key event. Format:
+//     properties/{property}/keyEvents/{key_event}.
+func (r *PropertiesKeyEventsService) Patch(name string, googleanalyticsadminv1betakeyevent *GoogleAnalyticsAdminV1betaKeyEvent) *PropertiesKeyEventsPatchCall {
+	c := &PropertiesKeyEventsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleanalyticsadminv1betakeyevent = googleanalyticsadminv1betakeyevent
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// list of fields to be updated. Field names must be in snake case
+// (e.g., "field_to_update"). Omitted fields will not be updated. To
+// replace the entire entity, use one path with the string "*" to match
+// all fields.
+func (c *PropertiesKeyEventsPatchCall) UpdateMask(updateMask string) *PropertiesKeyEventsPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *PropertiesKeyEventsPatchCall) Fields(s ...googleapi.Field) *PropertiesKeyEventsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *PropertiesKeyEventsPatchCall) Context(ctx context.Context) *PropertiesKeyEventsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *PropertiesKeyEventsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *PropertiesKeyEventsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleanalyticsadminv1betakeyevent)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "analyticsadmin.properties.keyEvents.patch" call.
+// Exactly one of *GoogleAnalyticsAdminV1betaKeyEvent or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GoogleAnalyticsAdminV1betaKeyEvent.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *PropertiesKeyEventsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleAnalyticsAdminV1betaKeyEvent, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleAnalyticsAdminV1betaKeyEvent{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a Key Event.",
+	//   "flatPath": "v1beta/properties/{propertiesId}/keyEvents/{keyEventsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "analyticsadmin.properties.keyEvents.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Output only. Resource name of this key event. Format: properties/{property}/keyEvents/{key_event}",
+	//       "location": "path",
+	//       "pattern": "^properties/[^/]+/keyEvents/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The list of fields to be updated. Field names must be in snake case (e.g., \"field_to_update\"). Omitted fields will not be updated. To replace the entire entity, use one path with the string \"*\" to match all fields.",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1beta/{+name}",
+	//   "request": {
+	//     "$ref": "GoogleAnalyticsAdminV1betaKeyEvent"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleAnalyticsAdminV1betaKeyEvent"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/analytics.edit"

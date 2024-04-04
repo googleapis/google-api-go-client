@@ -18,7 +18,7 @@ import (
 	"time"
 
 	"cloud.google.com/go/auth"
-	"cloud.google.com/go/auth/detect"
+	"cloud.google.com/go/auth/credentials"
 	"cloud.google.com/go/auth/grpctransport"
 	"cloud.google.com/go/auth/oauth2adapt"
 	"cloud.google.com/go/compute/metadata"
@@ -182,11 +182,13 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 	} else if ds.TokenSource != nil {
 		ts = ds.TokenSource
 	}
-	var tp auth.TokenProvider
-	if ds.TokenProvider != nil {
-		tp = ds.TokenProvider
+	var creds *auth.Credentials
+	if ds.AuthCredentials != nil {
+		creds = ds.AuthCredentials
 	} else if ts != nil {
-		tp = oauth2adapt.TokenProviderFromTokenSource(ts)
+		creds = auth.NewCredentials(&auth.CredentialsOptions{
+			TokenProvider: oauth2adapt.TokenProviderFromTokenSource(ts),
+		})
 	}
 
 	var aud string
@@ -207,8 +209,8 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 		Metadata:              metadata,
 		GRPCDialOpts:          ds.GRPCDialOpts,
 		PoolSize:              poolSize,
-		TokenProvider:         tp,
-		DetectOpts: &detect.Options{
+		Credentials:           creds,
+		DetectOpts: &credentials.DetectOptions{
 			Scopes:          ds.Scopes,
 			Audience:        aud,
 			CredentialsFile: ds.CredentialsFile,
@@ -221,7 +223,7 @@ func dialPoolNewAuth(ctx context.Context, secure bool, poolSize int, ds *interna
 			EnableDirectPathXds:             ds.EnableDirectPathXds,
 			EnableJWTWithScope:              ds.EnableJwtWithScope,
 			DefaultAudience:                 ds.DefaultAudience,
-			DefaultEndpoint:                 ds.DefaultEndpoint,
+			DefaultEndpointTemplate:         ds.DefaultEndpointTemplate,
 			DefaultMTLSEndpoint:             ds.DefaultMTLSEndpoint,
 			DefaultScopes:                   ds.DefaultScopes,
 		},

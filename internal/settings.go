@@ -68,7 +68,7 @@ type DialSettings struct {
 	RequestReason string
 
 	// New Auth library Options
-	TokenProvider        auth.TokenProvider
+	AuthCredentials      *auth.Credentials
 	EnableNewAuthLibrary bool
 }
 

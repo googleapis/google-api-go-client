@@ -345,17 +345,17 @@ func WithCredentials(creds *google.Credentials) ClientOption {
 	return (*withCreds)(creds)
 }
 
-// WithTokenProvider returns a ClientOption that specifies an
-// [cloud.google.com/go/auth.TokenProvider] to be used as the basis for
+// WithAuthCredentials returns a ClientOption that specifies an
+// [cloud.google.com/go/auth.Credentials] to be used as the basis for
 // authentication.
-func WithTokenProvider(tp auth.TokenProvider) ClientOption {
-	return withTokenProvider{tp}
+func WithAuthCredentials(creds *auth.Credentials) ClientOption {
+	return withAuthCredentials{creds}
 }
 
-type withTokenProvider struct{ tp auth.TokenProvider }
+type withAuthCredentials struct{ creds *auth.Credentials }
 
-func (w withTokenProvider) Apply(o *internal.DialSettings) {
-	o.TokenProvider = w.tp
+func (w withAuthCredentials) Apply(o *internal.DialSettings) {
+	o.AuthCredentials = w.creds
 }
 
 // WithUniverseDomain returns a ClientOption that sets the universe domain.

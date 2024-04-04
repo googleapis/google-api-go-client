@@ -16,7 +16,7 @@ import (
 	"time"
 
 	"cloud.google.com/go/auth"
-	"cloud.google.com/go/auth/detect"
+	"cloud.google.com/go/auth/credentials"
 	"cloud.google.com/go/auth/httptransport"
 	"cloud.google.com/go/auth/oauth2adapt"
 	"go.opencensus.io/plugin/ochttp"
@@ -72,11 +72,13 @@ func newClientNewAuth(ctx context.Context, settings *internal.DialSettings) (*ht
 	} else if settings.TokenSource != nil {
 		ts = settings.TokenSource
 	}
-	var tp auth.TokenProvider
-	if settings.TokenProvider != nil {
-		tp = settings.TokenProvider
+	var creds *auth.Credentials
+	if settings.AuthCredentials != nil {
+		creds = settings.AuthCredentials
 	} else if ts != nil {
-		tp = oauth2adapt.TokenProviderFromTokenSource(ts)
+		creds = auth.NewCredentials(&auth.CredentialsOptions{
+			TokenProvider: oauth2adapt.TokenProviderFromTokenSource(ts),
+		})
 	}
 
 	var aud string
@@ -96,9 +98,9 @@ func newClientNewAuth(ctx context.Context, settings *internal.DialSettings) (*ht
 		Headers:               headers,
 		Endpoint:              settings.Endpoint,
 		APIKey:                settings.APIKey,
-		TokenProvider:         tp,
+		Credentials:           creds,
 		ClientCertProvider:    settings.ClientCertSource,
-		DetectOpts: &detect.Options{
+		DetectOpts: &credentials.DetectOptions{
 			Scopes:          settings.Scopes,
 			Audience:        aud,
 			CredentialsFile: settings.CredentialsFile,
@@ -106,11 +108,11 @@ func newClientNewAuth(ctx context.Context, settings *internal.DialSettings) (*ht
 			Client:          oauth2.NewClient(ctx, nil),
 		},
 		InternalOptions: &httptransport.InternalOptions{
-			EnableJWTWithScope:  settings.EnableJwtWithScope,
-			DefaultAudience:     settings.DefaultAudience,
-			DefaultEndpoint:     settings.DefaultEndpoint,
-			DefaultMTLSEndpoint: settings.DefaultMTLSEndpoint,
-			DefaultScopes:       settings.DefaultScopes,
+			EnableJWTWithScope:      settings.EnableJwtWithScope,
+			DefaultAudience:         settings.DefaultAudience,
+			DefaultEndpointTemplate: settings.DefaultEndpointTemplate,
+			DefaultMTLSEndpoint:     settings.DefaultMTLSEndpoint,
+			DefaultScopes:           settings.DefaultScopes,
 		},
 	})
 	if err != nil {

@@ -15,7 +15,7 @@ import (
 	"os"
 	"time"
 
-	"cloud.google.com/go/auth/detect"
+	"cloud.google.com/go/auth/credentials"
 	"cloud.google.com/go/auth/oauth2adapt"
 	"golang.org/x/oauth2"
 	"google.golang.org/api/internal/cert"
@@ -52,8 +52,8 @@ func credsNewAuth(ctx context.Context, settings *DialSettings) (*google.Credenti
 		return &google.Credentials{TokenSource: settings.TokenSource}, nil
 	}
 
-	if settings.TokenProvider != nil {
-		return &google.Credentials{TokenSource: oauth2adapt.TokenSourceFromTokenProvider(settings.TokenProvider)}, nil
+	if settings.AuthCredentials != nil {
+		return &google.Credentials{TokenSource: oauth2adapt.TokenSourceFromTokenProvider(settings.AuthCredentials)}, nil
 	}
 
 	var useSelfSignedJWT bool
@@ -76,7 +76,7 @@ func credsNewAuth(ctx context.Context, settings *DialSettings) (*google.Credenti
 		aud = settings.DefaultAudience
 	}
 
-	creds, err := detect.DefaultCredentials(&detect.Options{
+	creds, err := credentials.DetectDefault(&credentials.DetectOptions{
 		Scopes:           scopes,
 		Audience:         aud,
 		CredentialsFile:  settings.CredentialsFile,
@@ -88,12 +88,7 @@ func credsNewAuth(ctx context.Context, settings *DialSettings) (*google.Credenti
 		return nil, err
 	}
 
-	ts := oauth2adapt.TokenSourceFromTokenProvider(creds)
-	return &google.Credentials{
-		ProjectID:   creds.ProjectID(),
-		TokenSource: ts,
-		JSON:        creds.JSON(),
-	}, nil
+	return oauth2adapt.Oauth2CredentialsFromAuthCredentials(creds), nil
 }
 
 func baseCreds(ctx context.Context, ds *DialSettings) (*google.Credentials, error) {

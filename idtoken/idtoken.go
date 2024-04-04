@@ -16,7 +16,7 @@ import (
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 
-	newidtoken "cloud.google.com/go/auth/idtoken"
+	newidtoken "cloud.google.com/go/auth/credentials/idtoken"
 	"cloud.google.com/go/auth/oauth2adapt"
 	"google.golang.org/api/impersonate"
 	"google.golang.org/api/internal"
@@ -104,10 +104,10 @@ func NewTokenSource(ctx context.Context, audience string, opts ...ClientOption) 
 }
 
 func newTokenSourceNewAuth(ctx context.Context, audience string, ds *internal.DialSettings) (oauth2.TokenSource, error) {
-	if ds.TokenProvider != nil {
+	if ds.AuthCredentials != nil {
 		return nil, fmt.Errorf("idtoken: option.WithTokenProvider not supported")
 	}
-	tp, err := newidtoken.NewTokenProvider(&newidtoken.Options{
+	creds, err := newidtoken.NewCredentials(&newidtoken.Options{
 		Audience:        audience,
 		CustomClaims:    ds.CustomClaims,
 		CredentialsFile: ds.CredentialsFile,
@@ -117,7 +117,7 @@ func newTokenSourceNewAuth(ctx context.Context, audience string, ds *internal.Di
 	if err != nil {
 		return nil, err
 	}
-	return oauth2adapt.TokenSourceFromTokenProvider(tp), nil
+	return oauth2adapt.TokenSourceFromTokenProvider(creds), nil
 }
 
 func newTokenSource(ctx context.Context, audience string, ds *internal.DialSettings) (oauth2.TokenSource, error) {

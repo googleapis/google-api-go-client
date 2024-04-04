@@ -778,7 +778,6 @@ func (a *API) GenerateCode() ([]byte, error) {
 	if mtlsBase := a.mtlsAPIBaseURL(); mtlsBase != "" {
 		pn("const mtlsBasePath = %q", mtlsBase)
 	}
-	pn("const defaultUniverseDomain = %q", googleDefaultUniverse)
 
 	a.generateScopeConstants()
 	a.PopulateSchemas()
@@ -805,7 +804,6 @@ func (a *API) GenerateCode() ([]byte, error) {
 	if a.mtlsAPIBaseURL() != "" {
 		pn("opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))")
 	}
-	pn("opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))")
 	pn("client, endpoint, err := htransport.NewClient(ctx, opts...)")
 	pn("if err != nil { return nil, err }")
 	pn("s, err := New(client)")

@@ -79,3 +79,74 @@ func TestSettingsValidate(t *testing.T) {
 type dummyTS struct{}
 
 func (dummyTS) Token() (*oauth2.Token, error) { return nil, nil }
+
+func TestGetUniverseDomain(t *testing.T) {
+	testCases := []struct {
+		name                 string
+		ds                   *DialSettings
+		universeDomainEnvVar string
+		want                 string
+	}{
+		{
+			name: "none",
+			ds:   &DialSettings{},
+			want: "googleapis.com",
+		},
+		{
+			name: "settings",
+			ds: &DialSettings{
+				UniverseDomain: "settings-example.goog",
+			},
+			want: "settings-example.goog",
+		},
+		{
+			name:                 "env var",
+			ds:                   &DialSettings{},
+			universeDomainEnvVar: "env-example.goog",
+			want:                 "env-example.goog",
+		},
+		{
+			name: "both",
+			ds: &DialSettings{
+				UniverseDomain: "settings-example.goog",
+			},
+			universeDomainEnvVar: "env-example.goog",
+			want:                 "settings-example.goog",
+		},
+	}
+
+	for _, tc := range testCases {
+		t.Run(tc.name, func(t *testing.T) {
+			if tc.universeDomainEnvVar != "" {
+				t.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", tc.universeDomainEnvVar)
+			}
+
+			if got := tc.ds.GetUniverseDomain(); got != tc.want {
+				t.Errorf("got %s, want %s", got, tc.want)
+			}
+			if got, want := tc.ds.GetDefaultUniverseDomain(), "googleapis.com"; got != want {
+				t.Errorf("got %s, want %s", got, want)
+			}
+		})
+	}
+}
+
+func TestGetUniverseDomain_Race(t *testing.T) {
+	want := "example.com"
+	t.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", want)
+	creds := &DialSettings{}
+	c := make(chan bool)
+	go func() {
+		got := creds.GetUniverseDomain() // First conflicting access.
+		if got != want {
+			t.Errorf("got %q, want %q", got, want)
+		}
+		c <- true
+	}()
+	got := creds.GetUniverseDomain() // Second conflicting access.
+	<-c
+	if got != want {
+		t.Errorf("got %q, want %q", got, want)
+	}
+
+}

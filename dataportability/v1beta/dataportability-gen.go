@@ -162,10 +162,6 @@ const (
 	// Move a copy of the photos and videos you posted on Maps.
 	DataportabilityMapsPhotosVideosScope = "https://www.googleapis.com/auth/dataportability.maps.photos_videos"
 
-	// Move a copy of feedback you gave after completing trips using Maps
-	// directions.
-	DataportabilityMapsPostTripFeedbackScope = "https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback"
-
 	// Move a copy of the questions and answers you posted on Maps.
 	DataportabilityMapsQuestionsAnswersScope = "https://www.googleapis.com/auth/dataportability.maps.questions_answers"
 
@@ -336,7 +332,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
 		"https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
 		"https://www.googleapis.com/auth/dataportability.maps.photos_videos",
-		"https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback",
 		"https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 		"https://www.googleapis.com/auth/dataportability.maps.reviews",
 		"https://www.googleapis.com/auth/dataportability.maps.starred_places",
@@ -796,7 +791,6 @@ func (c *ArchiveJobsGetPortabilityArchiveStateCall) Do(opts ...googleapi.CallOpt
 	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
-	//     "https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback",
 	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
@@ -1004,7 +998,6 @@ func (c *ArchiveJobsRetryCall) Do(opts ...googleapi.CallOption) (*RetryPortabili
 	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
-	//     "https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback",
 	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
@@ -1198,7 +1191,6 @@ func (c *AuthorizationResetCall) Do(opts ...googleapi.CallOption) (*Empty, error
 	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
-	//     "https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback",
 	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
@@ -1388,7 +1380,6 @@ func (c *PortabilityArchiveInitiateCall) Do(opts ...googleapi.CallOption) (*Init
 	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
-	//     "https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback",
 	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",

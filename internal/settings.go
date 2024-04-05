@@ -11,7 +11,6 @@ import (
 	"net/http"
 	"os"
 	"strconv"
-	"sync"
 	"time"
 
 	"golang.org/x/oauth2"
@@ -61,9 +60,7 @@ type DialSettings struct {
 	EnableNewAuthLibrary          bool
 	AllowNonDefaultServiceAccount bool
 	DefaultUniverseDomain         string
-
-	udMu           sync.Mutex // guards universeDomain
-	UniverseDomain string
+	UniverseDomain                string
 	// Google API system parameters. For more information please read:
 	// https://cloud.google.com/apis/docs/system-parameters
 	QuotaProject  string
@@ -181,18 +178,13 @@ func (ds *DialSettings) GetDefaultUniverseDomain() string {
 // 2. A non-empty environment variable GOOGLE_CLOUD_UNIVERSE_DOMAIN.
 // 3. The default value "googleapis.com".
 func (ds *DialSettings) GetUniverseDomain() string {
-	ds.udMu.Lock()
-	defer ds.udMu.Unlock()
 	if ds.UniverseDomain != "" {
 		return ds.UniverseDomain
 	}
-	envVarUniverseDomain := os.Getenv(universeDomainEnvVar)
-	if envVarUniverseDomain != "" {
-		ds.UniverseDomain = envVarUniverseDomain
-	} else {
-		ds.UniverseDomain = defaultUniverseDomain
+	if envUD := os.Getenv(universeDomainEnvVar); envUD != "" {
+		return envUD
 	}
-	return ds.UniverseDomain
+	return defaultUniverseDomain
 }
 
 // IsUniverseDomainGDU returns true if the universe domain is the default Google

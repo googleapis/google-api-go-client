@@ -130,23 +130,3 @@ func TestGetUniverseDomain(t *testing.T) {
 		})
 	}
 }
-
-func TestGetUniverseDomain_Race(t *testing.T) {
-	want := "example.com"
-	t.Setenv("GOOGLE_CLOUD_UNIVERSE_DOMAIN", want)
-	creds := &DialSettings{}
-	c := make(chan bool)
-	go func() {
-		got := creds.GetUniverseDomain() // First conflicting access.
-		if got != want {
-			t.Errorf("got %q, want %q", got, want)
-		}
-		c <- true
-	}()
-	got := creds.GetUniverseDomain() // Second conflicting access.
-	<-c
-	if got != want {
-		t.Errorf("got %q, want %q", got, want)
-	}
-
-}

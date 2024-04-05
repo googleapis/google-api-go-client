@@ -55,7 +55,6 @@ func TestDefaultApply(t *testing.T) {
 	}
 	ignore := []cmp.Option{
 		cmpopts.IgnoreUnexported(grpc.ClientConn{}),
-		cmpopts.IgnoreFields(internal.DialSettings{}, "udMu"),
 		cmpopts.IgnoreFields(google.Credentials{}, "udMu", "universeDomain"),
 	}
 	if !cmp.Equal(got, want, ignore...) {

@@ -3113,6 +3113,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "firebaseml:v2beta",
+      "name": "firebaseml",
+      "version": "v2beta",
+      "title": "Firebase ML API",
+      "description": "Access custom machine learning models hosted via Firebase ML.",
+      "discoveryRestUrl": "https://firebaseml.googleapis.com/$discovery/rest?version=v2beta",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://firebase.google.com",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "firebaseml:v1",
       "name": "firebaseml",
       "version": "v1",

@@ -1888,6 +1888,7 @@ type AlgorithmRulesComparisonValue struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_DRAX" - Drax.
 	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
 	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
 	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
@@ -9237,6 +9238,7 @@ type ExchangeAssignedTargetingOptionDetails struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_DRAX" - Drax.
 	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
 	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
 	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
@@ -9381,6 +9383,7 @@ type ExchangeConfigEnabledExchange struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_DRAX" - Drax.
 	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
 	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
 	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
@@ -9507,6 +9510,7 @@ type ExchangeReviewStatus struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_DRAX" - Drax.
 	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
 	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
 	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
@@ -9632,6 +9636,7 @@ type ExchangeTargetingOptionDetails struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_DRAX" - Drax.
 	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
 	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
 	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
@@ -10877,6 +10882,7 @@ type GuaranteedOrder struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_DRAX" - Drax.
 	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
 	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
 	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.
@@ -11818,6 +11824,7 @@ type InventorySource struct {
 	//   "EXCHANGE_CONNATIX" - Connatix.
 	//   "EXCHANGE_RESET_DIGITAL" - Reset Digital.
 	//   "EXCHANGE_HIVESTACK" - Hivestack.
+	//   "EXCHANGE_DRAX" - Drax.
 	//   "EXCHANGE_APPLOVIN_GBID" - AppLovin MAX.
 	//   "EXCHANGE_FYBER_GBID" - DT Fairbid.
 	//   "EXCHANGE_UNITY_GBID" - Unity LevelPlay.

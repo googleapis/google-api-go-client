@@ -238,6 +238,7 @@ type OrganizationsInspectTemplatesService struct {
 func NewOrganizationsLocationsService(s *Service) *OrganizationsLocationsService {
 	rs := &OrganizationsLocationsService{s: s}
 	rs.ColumnDataProfiles = NewOrganizationsLocationsColumnDataProfilesService(s)
+	rs.Connections = NewOrganizationsLocationsConnectionsService(s)
 	rs.DeidentifyTemplates = NewOrganizationsLocationsDeidentifyTemplatesService(s)
 	rs.DiscoveryConfigs = NewOrganizationsLocationsDiscoveryConfigsService(s)
 	rs.DlpJobs = NewOrganizationsLocationsDlpJobsService(s)
@@ -253,6 +254,8 @@ type OrganizationsLocationsService struct {
 	s *Service
 
 	ColumnDataProfiles *OrganizationsLocationsColumnDataProfilesService
+
+	Connections *OrganizationsLocationsConnectionsService
 
 	DeidentifyTemplates *OrganizationsLocationsDeidentifyTemplatesService
 
@@ -277,6 +280,15 @@ func NewOrganizationsLocationsColumnDataProfilesService(s *Service) *Organizatio
 }
 
 type OrganizationsLocationsColumnDataProfilesService struct {
+	s *Service
+}
+
+func NewOrganizationsLocationsConnectionsService(s *Service) *OrganizationsLocationsConnectionsService {
+	rs := &OrganizationsLocationsConnectionsService{s: s}
+	return rs
+}
+
+type OrganizationsLocationsConnectionsService struct {
 	s *Service
 }
 
@@ -451,6 +463,7 @@ type ProjectsJobTriggersService struct {
 func NewProjectsLocationsService(s *Service) *ProjectsLocationsService {
 	rs := &ProjectsLocationsService{s: s}
 	rs.ColumnDataProfiles = NewProjectsLocationsColumnDataProfilesService(s)
+	rs.Connections = NewProjectsLocationsConnectionsService(s)
 	rs.Content = NewProjectsLocationsContentService(s)
 	rs.DeidentifyTemplates = NewProjectsLocationsDeidentifyTemplatesService(s)
 	rs.DiscoveryConfigs = NewProjectsLocationsDiscoveryConfigsService(s)
@@ -468,6 +481,8 @@ type ProjectsLocationsService struct {
 	s *Service
 
 	ColumnDataProfiles *ProjectsLocationsColumnDataProfilesService
+
+	Connections *ProjectsLocationsConnectionsService
 
 	Content *ProjectsLocationsContentService
 
@@ -496,6 +511,15 @@ func NewProjectsLocationsColumnDataProfilesService(s *Service) *ProjectsLocation
 }
 
 type ProjectsLocationsColumnDataProfilesService struct {
+	s *Service
+}
+
+func NewProjectsLocationsConnectionsService(s *Service) *ProjectsLocationsConnectionsService {
+	rs := &ProjectsLocationsConnectionsService{s: s}
+	return rs
+}
+
+type ProjectsLocationsConnectionsService struct {
 	s *Service
 }
 
@@ -694,6 +718,11 @@ type GooglePrivacyDlpV2AllInfoTypes struct {
 // for single-table configurations, which will only have a
 // TableReference target.
 type GooglePrivacyDlpV2AllOtherBigQueryTables struct {
+}
+
+// GooglePrivacyDlpV2AllOtherDatabaseResources: Match database resources
+// not covered by any other filter.
+type GooglePrivacyDlpV2AllOtherDatabaseResources struct {
 }
 
 // GooglePrivacyDlpV2AllText: Apply to all text.
@@ -1549,6 +1578,115 @@ func (s *GooglePrivacyDlpV2CharsToIgnore) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2CloudSqlDiscoveryTarget: Target used to match
+// against for discovery with Cloud SQL tables.
+type GooglePrivacyDlpV2CloudSqlDiscoveryTarget struct {
+	// Conditions: In addition to matching the filter, these conditions must
+	// be true before a profile is generated.
+	Conditions *GooglePrivacyDlpV2DiscoveryCloudSqlConditions `json:"conditions,omitempty"`
+
+	// Disabled: Disable profiling for database resources that match this
+	// filter.
+	Disabled *GooglePrivacyDlpV2Disabled `json:"disabled,omitempty"`
+
+	// Filter: Required. The tables the discovery cadence applies to. The
+	// first target with a matching filter will be the one to apply to a
+	// table.
+	Filter *GooglePrivacyDlpV2DiscoveryCloudSqlFilter `json:"filter,omitempty"`
+
+	// GenerationCadence: How often and when to update profiles. New tables
+	// that match both the filter and conditions are scanned as quickly as
+	// possible depending on system capacity.
+	GenerationCadence *GooglePrivacyDlpV2DiscoveryCloudSqlGenerationCadence `json:"generationCadence,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Conditions") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Conditions") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2CloudSqlDiscoveryTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2CloudSqlDiscoveryTarget
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2CloudSqlIamCredential: Use IAM auth to connect.
+// This requires the Cloud SQL IAM feature to be enabled on the
+// instance, which is not the default for Cloud SQL. See
+// https://cloud.google.com/sql/docs/postgres/authentication and
+// https://cloud.google.com/sql/docs/mysql/authentication.
+type GooglePrivacyDlpV2CloudSqlIamCredential struct {
+}
+
+// GooglePrivacyDlpV2CloudSqlProperties: Cloud SQL connection
+// properties.
+type GooglePrivacyDlpV2CloudSqlProperties struct {
+	// CloudSqlIam: Built-in IAM authentication (must be configured in Cloud
+	// SQL).
+	CloudSqlIam *GooglePrivacyDlpV2CloudSqlIamCredential `json:"cloudSqlIam,omitempty"`
+
+	// ConnectionName: Optional. Immutable. The Cloud SQL instance for which
+	// the connection is defined. Only one connection per instance is
+	// allowed. This can only be set at creation time, and cannot be
+	// updated. It is an error to use a connection_name from different
+	// project or region than the one that holds the connection. For
+	// example, a Connection resource for Cloud SQL connection_name
+	// "project-id:us-central1:sql-instance" must be created under the
+	// parent "projects/project-id/locations/us-central1"
+	ConnectionName string `json:"connectionName,omitempty"`
+
+	// DatabaseEngine: Required. The database engine used by the Cloud SQL
+	// instance that this connection configures.
+	//
+	// Possible values:
+	//   "DATABASE_ENGINE_UNKNOWN" - An engine that is not currently
+	// supported by SDP.
+	//   "DATABASE_ENGINE_MYSQL" - Cloud SQL for MySQL instance.
+	//   "DATABASE_ENGINE_POSTGRES" - Cloud SQL for Postgres instance.
+	DatabaseEngine string `json:"databaseEngine,omitempty"`
+
+	// MaxConnections: Required. DLP will limit its connections to
+	// max_connections. Must be 2 or greater.
+	MaxConnections int64 `json:"maxConnections,omitempty"`
+
+	// UsernamePassword: A username and password stored in Secret Manager.
+	UsernamePassword *GooglePrivacyDlpV2SecretManagerCredential `json:"usernamePassword,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CloudSqlIam") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudSqlIam") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2CloudSqlProperties) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2CloudSqlProperties
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2CloudStorageFileSet: Message representing a set of
 // files in Cloud Storage.
 type GooglePrivacyDlpV2CloudStorageFileSet struct {
@@ -2107,6 +2245,65 @@ func (s *GooglePrivacyDlpV2Conditions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2Connection: A data connection to allow DLP to
+// profile data in locations that require additional configuration.
+type GooglePrivacyDlpV2Connection struct {
+	// CloudSql: Connect to a Cloud SQL instance.
+	CloudSql *GooglePrivacyDlpV2CloudSqlProperties `json:"cloudSql,omitempty"`
+
+	// Errors: Output only. Set if status == ERROR, to provide additional
+	// details. Will store the last 10 errors sorted with the most recent
+	// first.
+	Errors []*GooglePrivacyDlpV2Error `json:"errors,omitempty"`
+
+	// Name: Output only. Name of the connection:
+	// projects/{project}/locations/{location}/connections/{name}.
+	Name string `json:"name,omitempty"`
+
+	// State: Required. The connection's state in its lifecycle.
+	//
+	// Possible values:
+	//   "CONNECTION_STATE_UNSPECIFIED" - Unused
+	//   "MISSING_CREDENTIALS" - DLP automatically created this connection
+	// during an initial scan, and it is awaiting full configuration by a
+	// user.
+	//   "AVAILABLE" - A configured connection that has not encountered any
+	// errors.
+	//   "ERROR" - A configured connection that encountered errors during
+	// its last use. It will not be used again until it is set to AVAILABLE.
+	// If the resolution requires external action, then a request to set the
+	// status to AVAILABLE will mark this connection for use. Otherwise, any
+	// changes to the connection properties will automatically mark it as
+	// AVAILABLE.
+	State string `json:"state,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "CloudSql") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudSql") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2Connection) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2Connection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2Container: Represents a container that may contain
 // DLP findings. Examples of a container include a file, table, or
 // database record.
@@ -2261,6 +2458,35 @@ type GooglePrivacyDlpV2ContentLocation struct {
 
 func (s *GooglePrivacyDlpV2ContentLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ContentLocation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2CreateConnectionRequest: Request message for
+// CreateConnection.
+type GooglePrivacyDlpV2CreateConnectionRequest struct {
+	// Connection: Required. The connection resource.
+	Connection *GooglePrivacyDlpV2Connection `json:"connection,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Connection") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Connection") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2CreateConnectionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2CreateConnectionRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3191,6 +3417,151 @@ func (s *GooglePrivacyDlpV2DataSourceType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2DatabaseResourceCollection: Match database
+// resources using regex filters. Examples of database resources are
+// tables, views, and stored procedures.
+type GooglePrivacyDlpV2DatabaseResourceCollection struct {
+	// IncludeRegexes: A collection of regular expressions to match a
+	// database resource against.
+	IncludeRegexes *GooglePrivacyDlpV2DatabaseResourceRegexes `json:"includeRegexes,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "IncludeRegexes") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "IncludeRegexes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DatabaseResourceCollection) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DatabaseResourceCollection
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DatabaseResourceReference: Identifies a single
+// database resource, like a table within a database.
+type GooglePrivacyDlpV2DatabaseResourceReference struct {
+	// Instance: Required. The instance where this resource is located. For
+	// example: Cloud SQL's instance id.
+	Instance string `json:"instance,omitempty"`
+
+	// ProjectId: Required. If within a project-level config, then this must
+	// match the config's project id.
+	ProjectId string `json:"projectId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Instance") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Instance") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DatabaseResourceReference) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DatabaseResourceReference
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DatabaseResourceRegex: A pattern to match against
+// one or more database resources. At least one pattern must be
+// specified. Regular expressions use RE2 syntax
+// (https://github.com/google/re2/wiki/Syntax); a guide can be found
+// under the google/re2 repository on GitHub.
+type GooglePrivacyDlpV2DatabaseResourceRegex struct {
+	// DatabaseRegex: Regex to test the database name against. If empty, all
+	// databases match.
+	DatabaseRegex string `json:"databaseRegex,omitempty"`
+
+	// DatabaseResourceNameRegex: Regex to test the database resource's name
+	// against. An example of a database resource name is a table's name.
+	// Other database resource names like view names could be included in
+	// the future. If empty, all database resources match.
+	DatabaseResourceNameRegex string `json:"databaseResourceNameRegex,omitempty"`
+
+	// InstanceRegex: Regex to test the instance name against. If empty, all
+	// instances match.
+	InstanceRegex string `json:"instanceRegex,omitempty"`
+
+	// ProjectIdRegex: For organizations, if unset, will match all projects.
+	// Has no effect for Data Profile configurations created within a
+	// project.
+	ProjectIdRegex string `json:"projectIdRegex,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatabaseRegex") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatabaseRegex") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DatabaseResourceRegex) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DatabaseResourceRegex
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DatabaseResourceRegexes: A collection of regular
+// expressions to determine what database resources to match against.
+type GooglePrivacyDlpV2DatabaseResourceRegexes struct {
+	// Patterns: A group of regular expression patterns to match against one
+	// or more database resources. Maximum of 100 entries. The sum of all
+	// regular expression's length can't exceed 10 KiB.
+	Patterns []*GooglePrivacyDlpV2DatabaseResourceRegex `json:"patterns,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Patterns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Patterns") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DatabaseResourceRegexes) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DatabaseResourceRegexes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2DatastoreKey: Record key for a finding in Cloud
 // Datastore.
 type GooglePrivacyDlpV2DatastoreKey struct {
@@ -4112,6 +4483,144 @@ func (s *GooglePrivacyDlpV2DiscoveryBigQueryFilter) MarshalJSON() ([]byte, error
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2DiscoveryCloudSqlConditions: Requirements that must
+// be true before a table is profiled for the first time.
+type GooglePrivacyDlpV2DiscoveryCloudSqlConditions struct {
+	// DatabaseEngines: Optional. Database engines that should be profiled.
+	// Optional. Defaults to ALL_SUPPORTED_DATABASE_ENGINES if unspecified.
+	//
+	// Possible values:
+	//   "DATABASE_ENGINE_UNSPECIFIED" - Unused.
+	//   "ALL_SUPPORTED_DATABASE_ENGINES" - Include all supported database
+	// engines.
+	//   "MYSQL" - MySql database.
+	//   "POSTGRES" - PostGres database.
+	DatabaseEngines []string `json:"databaseEngines,omitempty"`
+
+	// Types: Data profiles will only be generated for the database resource
+	// types specified in this field. If not specified, defaults to
+	// [DATABASE_RESOURCE_TYPE_ALL_SUPPORTED_TYPES].
+	//
+	// Possible values:
+	//   "DATABASE_RESOURCE_TYPE_UNSPECIFIED" - Unused.
+	//   "DATABASE_RESOURCE_TYPE_ALL_SUPPORTED_TYPES" - Includes database
+	// resource types that become supported at a later time.
+	//   "DATABASE_RESOURCE_TYPE_TABLE" - Tables.
+	Types []string `json:"types,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatabaseEngines") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatabaseEngines") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DiscoveryCloudSqlConditions) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryCloudSqlConditions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DiscoveryCloudSqlFilter: Determines what tables
+// will have profiles generated within an organization or project.
+// Includes the ability to filter by regular expression patterns on
+// project ID, location, instance, database, and database resource name.
+type GooglePrivacyDlpV2DiscoveryCloudSqlFilter struct {
+	// Collection: A specific set of database resources for this filter to
+	// apply to.
+	Collection *GooglePrivacyDlpV2DatabaseResourceCollection `json:"collection,omitempty"`
+
+	// DatabaseResourceReference: The database resource to scan. Targets
+	// including this can only include one target (the target with this
+	// database resource reference).
+	DatabaseResourceReference *GooglePrivacyDlpV2DatabaseResourceReference `json:"databaseResourceReference,omitempty"`
+
+	// Others: Catch-all. This should always be the last target in the list
+	// because anything above it will apply first. Should only appear once
+	// in a configuration. If none is specified, a default one will be added
+	// automatically.
+	Others *GooglePrivacyDlpV2AllOtherDatabaseResources `json:"others,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Collection") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Collection") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DiscoveryCloudSqlFilter) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryCloudSqlFilter
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2DiscoveryCloudSqlGenerationCadence: How often
+// existing tables should have their profiles refreshed. New tables are
+// scanned as quickly as possible depending on system capacity.
+type GooglePrivacyDlpV2DiscoveryCloudSqlGenerationCadence struct {
+	// RefreshFrequency: Data changes (non-schema changes) in Cloud SQL
+	// tables can't trigger reprofiling. If you set this field, profiles are
+	// refreshed at this frequency regardless of whether the underlying
+	// tables have changes. Defaults to never.
+	//
+	// Possible values:
+	//   "UPDATE_FREQUENCY_UNSPECIFIED" - Unspecified.
+	//   "UPDATE_FREQUENCY_NEVER" - After the data profile is created, it
+	// will never be updated.
+	//   "UPDATE_FREQUENCY_DAILY" - The data profile can be updated up to
+	// once every 24 hours.
+	//   "UPDATE_FREQUENCY_MONTHLY" - The data profile can be updated up to
+	// once every 30 days. Default.
+	RefreshFrequency string `json:"refreshFrequency,omitempty"`
+
+	// SchemaModifiedCadence: When to reprofile if the schema has changed.
+	SchemaModifiedCadence *GooglePrivacyDlpV2SchemaModifiedCadence `json:"schemaModifiedCadence,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RefreshFrequency") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RefreshFrequency") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2DiscoveryCloudSqlGenerationCadence) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2DiscoveryCloudSqlGenerationCadence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2DiscoveryConfig: Configuration for discovery to
 // scan resources for profile generation. Only one discovery
 // configuration may exist per organization, folder, or project. The
@@ -4381,6 +4890,10 @@ type GooglePrivacyDlpV2DiscoveryTarget struct {
 	// BigQueryTarget: BigQuery target for Discovery. The first target to
 	// match a table will be the one applied.
 	BigQueryTarget *GooglePrivacyDlpV2BigQueryDiscoveryTarget `json:"bigQueryTarget,omitempty"`
+
+	// CloudSqlTarget: Cloud SQL target for Discovery. The first target to
+	// match a table will be the one applied.
+	CloudSqlTarget *GooglePrivacyDlpV2CloudSqlDiscoveryTarget `json:"cloudSqlTarget,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "BigQueryTarget") to
 	// unconditionally include in API requests. By default, fields with
@@ -6420,8 +6933,8 @@ func (s *GooglePrivacyDlpV2InspectionRuleSet) MarshalJSON() ([]byte, error) {
 type GooglePrivacyDlpV2JobNotificationEmails struct {
 }
 
-// GooglePrivacyDlpV2JobTrigger: Contains a configuration to make dlp
-// api calls on a repeating basis. See
+// GooglePrivacyDlpV2JobTrigger: Contains a configuration to make api
+// calls on a repeating basis. See
 // https://cloud.google.com/sensitive-data-protection/docs/concepts-job-triggers
 // to learn more.
 type GooglePrivacyDlpV2JobTrigger struct {
@@ -7255,6 +7768,43 @@ type GooglePrivacyDlpV2ListColumnDataProfilesResponse struct {
 
 func (s *GooglePrivacyDlpV2ListColumnDataProfilesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2ListColumnDataProfilesResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2ListConnectionsResponse: Response message for
+// ListConnections.
+type GooglePrivacyDlpV2ListConnectionsResponse struct {
+	// Connections: List of connections.
+	Connections []*GooglePrivacyDlpV2Connection `json:"connections,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results. An empty
+	// value means there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Connections") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Connections") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2ListConnectionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2ListConnectionsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9390,6 +9940,132 @@ func (s *GooglePrivacyDlpV2Schedule) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GooglePrivacyDlpV2SchemaModifiedCadence: How frequency to modify the
+// profile when the table's schema is modified.
+type GooglePrivacyDlpV2SchemaModifiedCadence struct {
+	// Frequency: Frequency to regenerate data profiles when the schema is
+	// modified. Defaults to monthly.
+	//
+	// Possible values:
+	//   "UPDATE_FREQUENCY_UNSPECIFIED" - Unspecified.
+	//   "UPDATE_FREQUENCY_NEVER" - After the data profile is created, it
+	// will never be updated.
+	//   "UPDATE_FREQUENCY_DAILY" - The data profile can be updated up to
+	// once every 24 hours.
+	//   "UPDATE_FREQUENCY_MONTHLY" - The data profile can be updated up to
+	// once every 30 days. Default.
+	Frequency string `json:"frequency,omitempty"`
+
+	// Types: The types of schema modifications to consider. Defaults to
+	// NEW_COLUMNS.
+	//
+	// Possible values:
+	//   "SQL_SCHEMA_MODIFICATION_UNSPECIFIED" - Unused.
+	//   "NEW_COLUMNS" - New columns has appeared.
+	//   "REMOVED_COLUMNS" - Columns have been removed from the table.
+	Types []string `json:"types,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Frequency") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Frequency") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2SchemaModifiedCadence) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2SchemaModifiedCadence
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2SearchConnectionsResponse: Response message for
+// SearchConnections.
+type GooglePrivacyDlpV2SearchConnectionsResponse struct {
+	// Connections: List of connections that match the search query. Note
+	// that only a subset of the fields will be populated, and only "name"
+	// is guaranteed to be set. For full details of a Connection, call
+	// GetConnection with the name.
+	Connections []*GooglePrivacyDlpV2Connection `json:"connections,omitempty"`
+
+	// NextPageToken: Token to retrieve the next page of results. An empty
+	// value means there are no more results.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Connections") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Connections") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2SearchConnectionsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2SearchConnectionsResponse
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2SecretManagerCredential: A credential consisting of
+// a username and password, where the password is stored in a Secret
+// Manager resource. Note: Secret Manager charges apply
+// (https://cloud.google.com/secret-manager/pricing).
+type GooglePrivacyDlpV2SecretManagerCredential struct {
+	// PasswordSecretVersionName: Required. The name of the Secret Manager
+	// resource that stores the password, in the form
+	// "projects/project-id/secrets/secret-name/versions/version".
+	PasswordSecretVersionName string `json:"passwordSecretVersionName,omitempty"`
+
+	// Username: Required. The username.
+	Username string `json:"username,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PasswordSecretVersionName") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "PasswordSecretVersionName") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2SecretManagerCredential) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2SecretManagerCredential
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GooglePrivacyDlpV2SelectedInfoTypes: Apply transformation to the
 // selected info_types.
 type GooglePrivacyDlpV2SelectedInfoTypes struct {
@@ -10799,6 +11475,39 @@ type GooglePrivacyDlpV2UnwrappedCryptoKey struct {
 
 func (s *GooglePrivacyDlpV2UnwrappedCryptoKey) MarshalJSON() ([]byte, error) {
 	type NoMethod GooglePrivacyDlpV2UnwrappedCryptoKey
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GooglePrivacyDlpV2UpdateConnectionRequest: Request message for
+// UpdateConnection.
+type GooglePrivacyDlpV2UpdateConnectionRequest struct {
+	// Connection: Required. The connection with new values for the relevant
+	// fields.
+	Connection *GooglePrivacyDlpV2Connection `json:"connection,omitempty"`
+
+	// UpdateMask: Optional. Mask to control which fields get updated.
+	UpdateMask string `json:"updateMask,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Connection") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Connection") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GooglePrivacyDlpV2UpdateConnectionRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GooglePrivacyDlpV2UpdateConnectionRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -13717,6 +14426,214 @@ func (c *OrganizationsLocationsColumnDataProfilesListCall) Do(opts ...googleapi.
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsLocationsColumnDataProfilesListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListColumnDataProfilesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dlp.organizations.locations.connections.search":
+
+type OrganizationsLocationsConnectionsSearchCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Search: Searches for Connections in a parent.
+//
+//   - parent: Parent name, typically an organization, without location.
+//     For example: "organizations/12345678".
+func (r *OrganizationsLocationsConnectionsService) Search(parent string) *OrganizationsLocationsConnectionsSearchCall {
+	c := &OrganizationsLocationsConnectionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": * Supported
+// fields/values - `state` - MISSING|AVAILABLE|ERROR
+func (c *OrganizationsLocationsConnectionsSearchCall) Filter(filter string) *OrganizationsLocationsConnectionsSearchCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of results
+// per page, max 1000.
+func (c *OrganizationsLocationsConnectionsSearchCall) PageSize(pageSize int64) *OrganizationsLocationsConnectionsSearchCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token from a
+// previous page to return the next set of results. If set, all other
+// request fields must match the original request.
+func (c *OrganizationsLocationsConnectionsSearchCall) PageToken(pageToken string) *OrganizationsLocationsConnectionsSearchCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsConnectionsSearchCall) Fields(s ...googleapi.Field) *OrganizationsLocationsConnectionsSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *OrganizationsLocationsConnectionsSearchCall) IfNoneMatch(entityTag string) *OrganizationsLocationsConnectionsSearchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsConnectionsSearchCall) Context(ctx context.Context) *OrganizationsLocationsConnectionsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsConnectionsSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsConnectionsSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/connections:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.connections.search" call.
+// Exactly one of *GooglePrivacyDlpV2SearchConnectionsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GooglePrivacyDlpV2SearchConnectionsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsLocationsConnectionsSearchCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2SearchConnectionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2SearchConnectionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Searches for Connections in a parent.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/connections:search",
+	//   "httpMethod": "GET",
+	//   "id": "dlp.organizations.locations.connections.search",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. * Supported fields/values - `state` - MISSING|AVAILABLE|ERROR",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Number of results per page, max 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token from a previous page to return the next set of results. If set, all other request fields must match the original request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent name, typically an organization, without location. For example: \"organizations/12345678\".",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/connections:search",
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2SearchConnectionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsLocationsConnectionsSearchCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2SearchConnectionsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -18584,6 +19501,140 @@ func (c *OrganizationsLocationsStoredInfoTypesPatchCall) Do(opts ...googleapi.Ca
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2StoredInfoType"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.organizations.locations.tableDataProfiles.delete":
+
+type OrganizationsLocationsTableDataProfilesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a TableDataProfile. Will not prevent the profile from
+// being regenerated if the table is still included in a discovery
+// configuration.
+//
+// - name: Resource name of the table data profile.
+func (r *OrganizationsLocationsTableDataProfilesService) Delete(name string) *OrganizationsLocationsTableDataProfilesDeleteCall {
+	c := &OrganizationsLocationsTableDataProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsLocationsTableDataProfilesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsLocationsTableDataProfilesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsLocationsTableDataProfilesDeleteCall) Context(ctx context.Context) *OrganizationsLocationsTableDataProfilesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsLocationsTableDataProfilesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsLocationsTableDataProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.organizations.locations.tableDataProfiles.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *OrganizationsLocationsTableDataProfilesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete a TableDataProfile. Will not prevent the profile from being regenerated if the table is still included in a discovery configuration.",
+	//   "flatPath": "v2/organizations/{organizationsId}/locations/{locationsId}/tableDataProfiles/{tableDataProfilesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dlp.organizations.locations.tableDataProfiles.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the table data profile.",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/locations/[^/]+/tableDataProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"
@@ -24421,6 +25472,988 @@ func (c *ProjectsLocationsColumnDataProfilesListCall) Do(opts ...googleapi.CallO
 // A non-nil error returned from f will halt the iteration.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsColumnDataProfilesListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListColumnDataProfilesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dlp.projects.locations.connections.create":
+
+type ProjectsLocationsConnectionsCreateCall struct {
+	s                                         *Service
+	parent                                    string
+	googleprivacydlpv2createconnectionrequest *GooglePrivacyDlpV2CreateConnectionRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Create: Create a Connection to an external data source.
+//
+//   - parent: Parent resource name in the format:
+//     "projects/{project}/locations/{location}".
+func (r *ProjectsLocationsConnectionsService) Create(parent string, googleprivacydlpv2createconnectionrequest *GooglePrivacyDlpV2CreateConnectionRequest) *ProjectsLocationsConnectionsCreateCall {
+	c := &ProjectsLocationsConnectionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	c.googleprivacydlpv2createconnectionrequest = googleprivacydlpv2createconnectionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsCreateCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsCreateCall) Context(ctx context.Context) *ProjectsLocationsConnectionsCreateCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsCreateCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsCreateCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2createconnectionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/connections")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.connections.create" call.
+// Exactly one of *GooglePrivacyDlpV2Connection or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GooglePrivacyDlpV2Connection.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsCreateCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2Connection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2Connection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Create a Connection to an external data source.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/connections",
+	//   "httpMethod": "POST",
+	//   "id": "dlp.projects.locations.connections.create",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "parent": {
+	//       "description": "Required. Parent resource name in the format: \"projects/{project}/locations/{location}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/connections",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2CreateConnectionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2Connection"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.projects.locations.connections.delete":
+
+type ProjectsLocationsConnectionsDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a Connection.
+//
+//   - name: Resource name of the Connection to be deleted, in the format:
+//     "projects/{project}/locations/{location}/connections/{connection}".
+func (r *ProjectsLocationsConnectionsService) Delete(name string) *ProjectsLocationsConnectionsDeleteCall {
+	c := &ProjectsLocationsConnectionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsConnectionsDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.connections.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete a Connection.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dlp.projects.locations.connections.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the Connection to be deleted, in the format: \"projects/{project}/locations/{location}/connections/{connection}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.projects.locations.connections.get":
+
+type ProjectsLocationsConnectionsGetCall struct {
+	s            *Service
+	name         string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Get: Get a Connection by name.
+//
+//   - name: Resource name in the format:
+//     "projects/{project}/locations/{location}/connections/{connection}".
+func (r *ProjectsLocationsConnectionsService) Get(name string) *ProjectsLocationsConnectionsGetCall {
+	c := &ProjectsLocationsConnectionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsGetCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConnectionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsGetCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsGetCall) Context(ctx context.Context) *ProjectsLocationsConnectionsGetCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsGetCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsGetCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.connections.get" call.
+// Exactly one of *GooglePrivacyDlpV2Connection or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GooglePrivacyDlpV2Connection.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsGetCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2Connection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2Connection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Get a Connection by name.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}",
+	//   "httpMethod": "GET",
+	//   "id": "dlp.projects.locations.connections.get",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name in the format: \"projects/{project}/locations/{location}/connections/{connection}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2Connection"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.projects.locations.connections.list":
+
+type ProjectsLocationsConnectionsListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: Lists Connections in a parent.
+//
+//   - parent: Parent name, for example:
+//     "projects/project-id/locations/global".
+func (r *ProjectsLocationsConnectionsService) List(parent string) *ProjectsLocationsConnectionsListCall {
+	c := &ProjectsLocationsConnectionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": * Supported
+// fields/values - `state` - MISSING|AVAILABLE|ERROR
+func (c *ProjectsLocationsConnectionsListCall) Filter(filter string) *ProjectsLocationsConnectionsListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of results
+// per page, max 1000.
+func (c *ProjectsLocationsConnectionsListCall) PageSize(pageSize int64) *ProjectsLocationsConnectionsListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token from a
+// previous page to return the next set of results. If set, all other
+// request fields must match the original request.
+func (c *ProjectsLocationsConnectionsListCall) PageToken(pageToken string) *ProjectsLocationsConnectionsListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConnectionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsListCall) Context(ctx context.Context) *ProjectsLocationsConnectionsListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/connections")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.connections.list" call.
+// Exactly one of *GooglePrivacyDlpV2ListConnectionsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GooglePrivacyDlpV2ListConnectionsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConnectionsListCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2ListConnectionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2ListConnectionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Lists Connections in a parent.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/connections",
+	//   "httpMethod": "GET",
+	//   "id": "dlp.projects.locations.connections.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. * Supported fields/values - `state` - MISSING|AVAILABLE|ERROR",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Number of results per page, max 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token from a previous page to return the next set of results. If set, all other request fields must match the original request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent name, for example: \"projects/project-id/locations/global\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/connections",
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2ListConnectionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConnectionsListCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2ListConnectionsResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
+// method id "dlp.projects.locations.connections.patch":
+
+type ProjectsLocationsConnectionsPatchCall struct {
+	s                                         *Service
+	name                                      string
+	googleprivacydlpv2updateconnectionrequest *GooglePrivacyDlpV2UpdateConnectionRequest
+	urlParams_                                gensupport.URLParams
+	ctx_                                      context.Context
+	header_                                   http.Header
+}
+
+// Patch: Update a Connection.
+//
+//   - name: Resource name in the format:
+//     "projects/{project}/locations/{location}/connections/{connection}".
+func (r *ProjectsLocationsConnectionsService) Patch(name string, googleprivacydlpv2updateconnectionrequest *GooglePrivacyDlpV2UpdateConnectionRequest) *ProjectsLocationsConnectionsPatchCall {
+	c := &ProjectsLocationsConnectionsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googleprivacydlpv2updateconnectionrequest = googleprivacydlpv2updateconnectionrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsPatchCall) Context(ctx context.Context) *ProjectsLocationsConnectionsPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googleprivacydlpv2updateconnectionrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.connections.patch" call.
+// Exactly one of *GooglePrivacyDlpV2Connection or error will be
+// non-nil. Any non-2xx status code is an error. Response headers are in
+// either *GooglePrivacyDlpV2Connection.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsConnectionsPatchCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2Connection, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2Connection{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Update a Connection.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/connections/{connectionsId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "dlp.projects.locations.connections.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name in the format: \"projects/{project}/locations/{location}/connections/{connection}\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/connections/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "request": {
+	//     "$ref": "GooglePrivacyDlpV2UpdateConnectionRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2Connection"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.projects.locations.connections.search":
+
+type ProjectsLocationsConnectionsSearchCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// Search: Searches for Connections in a parent.
+//
+//   - parent: Parent name, typically an organization, without location.
+//     For example: "organizations/12345678".
+func (r *ProjectsLocationsConnectionsService) Search(parent string) *ProjectsLocationsConnectionsSearchCall {
+	c := &ProjectsLocationsConnectionsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": * Supported
+// fields/values - `state` - MISSING|AVAILABLE|ERROR
+func (c *ProjectsLocationsConnectionsSearchCall) Filter(filter string) *ProjectsLocationsConnectionsSearchCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Number of results
+// per page, max 1000.
+func (c *ProjectsLocationsConnectionsSearchCall) PageSize(pageSize int64) *ProjectsLocationsConnectionsSearchCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": Page token from a
+// previous page to return the next set of results. If set, all other
+// request fields must match the original request.
+func (c *ProjectsLocationsConnectionsSearchCall) PageToken(pageToken string) *ProjectsLocationsConnectionsSearchCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsConnectionsSearchCall) Fields(s ...googleapi.Field) *ProjectsLocationsConnectionsSearchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *ProjectsLocationsConnectionsSearchCall) IfNoneMatch(entityTag string) *ProjectsLocationsConnectionsSearchCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsConnectionsSearchCall) Context(ctx context.Context) *ProjectsLocationsConnectionsSearchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsConnectionsSearchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsConnectionsSearchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/connections:search")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.connections.search" call.
+// Exactly one of *GooglePrivacyDlpV2SearchConnectionsResponse or error
+// will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GooglePrivacyDlpV2SearchConnectionsResponse.ServerResponse.Header or
+// (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *ProjectsLocationsConnectionsSearchCall) Do(opts ...googleapi.CallOption) (*GooglePrivacyDlpV2SearchConnectionsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GooglePrivacyDlpV2SearchConnectionsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Searches for Connections in a parent.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/connections:search",
+	//   "httpMethod": "GET",
+	//   "id": "dlp.projects.locations.connections.search",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. * Supported fields/values - `state` - MISSING|AVAILABLE|ERROR",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Optional. Number of results per page, max 1000.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "Optional. Page token from a previous page to return the next set of results. If set, all other request fields must match the original request.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Parent name, typically an organization, without location. For example: \"organizations/12345678\".",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+parent}/connections:search",
+	//   "response": {
+	//     "$ref": "GooglePrivacyDlpV2SearchConnectionsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *ProjectsLocationsConnectionsSearchCall) Pages(ctx context.Context, f func(*GooglePrivacyDlpV2SearchConnectionsResponse) error) error {
 	c.ctx_ = ctx
 	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
 	for {
@@ -31096,6 +33129,140 @@ func (c *ProjectsLocationsStoredInfoTypesPatchCall) Do(opts ...googleapi.CallOpt
 	//   },
 	//   "response": {
 	//     "$ref": "GooglePrivacyDlpV2StoredInfoType"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// method id "dlp.projects.locations.tableDataProfiles.delete":
+
+type ProjectsLocationsTableDataProfilesDeleteCall struct {
+	s          *Service
+	name       string
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Delete: Delete a TableDataProfile. Will not prevent the profile from
+// being regenerated if the table is still included in a discovery
+// configuration.
+//
+// - name: Resource name of the table data profile.
+func (r *ProjectsLocationsTableDataProfilesService) Delete(name string) *ProjectsLocationsTableDataProfilesDeleteCall {
+	c := &ProjectsLocationsTableDataProfilesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *ProjectsLocationsTableDataProfilesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsTableDataProfilesDeleteCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *ProjectsLocationsTableDataProfilesDeleteCall) Context(ctx context.Context) *ProjectsLocationsTableDataProfilesDeleteCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *ProjectsLocationsTableDataProfilesDeleteCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *ProjectsLocationsTableDataProfilesDeleteCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("DELETE", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "dlp.projects.locations.tableDataProfiles.delete" call.
+// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *ProjectsLocationsTableDataProfilesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleProtobufEmpty{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Delete a TableDataProfile. Will not prevent the profile from being regenerated if the table is still included in a discovery configuration.",
+	//   "flatPath": "v2/projects/{projectsId}/locations/{locationsId}/tableDataProfiles/{tableDataProfilesId}",
+	//   "httpMethod": "DELETE",
+	//   "id": "dlp.projects.locations.tableDataProfiles.delete",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Resource name of the table data profile.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/locations/[^/]+/tableDataProfiles/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v2/{+name}",
+	//   "response": {
+	//     "$ref": "GoogleProtobufEmpty"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/cloud-platform"

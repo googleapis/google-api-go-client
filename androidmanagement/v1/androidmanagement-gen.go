@@ -936,8 +936,8 @@ type ApplicationPolicy struct {
 	// 90 days after it becomes out of date again.The user can still
 	// manually update the app from the Play Store at any time.
 	//   "AUTO_UPDATE_HIGH_PRIORITY" - The app is updated as soon as
-	// possible. No constraints are applied.The device is notified
-	// immediately about a new update after it becomes available.
+	// possible. No constraints are applied.The device is notified as soon
+	// as possible about a new update after it becomes available.
 	AutoUpdateMode string `json:"autoUpdateMode,omitempty"`
 
 	// ConnectedWorkAndPersonalApp: Controls whether the app can communicate
@@ -3048,9 +3048,8 @@ func (s *Enterprise) MarshalJSON() ([]byte, error) {
 // (https://developer.android.com/topic/performance/appstandby#restricted-bucket).
 // Extensions apps are also protected against users clearing their data
 // or force-closing the application, although admins can continue to use
-// the clear app data command
-// (https://developer.android.com/management/reference/rest/v1/enterprises.devices/issueCommand#CommandType)
-// on extension apps if needed for Android 13 and above.
+// the clear app data command on extension apps if needed for Android 13
+// and above.
 type ExtensionConfig struct {
 	// NotificationReceiver: Fully qualified class name of the receiver
 	// service class for Android Device Policy to notify the extension app

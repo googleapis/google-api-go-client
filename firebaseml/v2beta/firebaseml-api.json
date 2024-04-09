@@ -206,7 +206,7 @@
       }
     }
   },
-  "revision": "20240404",
+  "revision": "20240405",
   "rootUrl": "https://firebaseml.googleapis.com/",
   "schemas": {
     "Blob": {
@@ -652,43 +652,10 @@
       },
       "type": "object"
     },
-    "GroundingAttribution": {
-      "description": "Grounding attribution.",
-      "id": "GroundingAttribution",
-      "properties": {
-        "confidenceScore": {
-          "description": "Optional. Output only. Confidence score of the attribution. Ranges from 0 to 1. 1 is the most confident.",
-          "format": "float",
-          "readOnly": true,
-          "type": "number"
-        },
-        "retrievedContext": {
-          "$ref": "RetrievedContext",
-          "description": "Optional. Attribution from context retrieved by the retrieval tools."
-        },
-        "segment": {
-          "$ref": "Segment",
-          "description": "Output only. Segment of the content this attribution belongs to.",
-          "readOnly": true
-        },
-        "web": {
-          "$ref": "Web",
-          "description": "Optional. Attribution from the web."
-        }
-      },
-      "type": "object"
-    },
     "GroundingMetadata": {
       "description": "Metadata returned to client when grounding is enabled.",
       "id": "GroundingMetadata",
       "properties": {
-        "groundingAttributions": {
-          "description": "Optional. List of grounding attributions.",
-          "items": {
-            "$ref": "GroundingAttribution"
-          },
-          "type": "array"
-        },
         "retrievalQueries": {
           "description": "Optional. Queries executed by the retrieval tools.",
           "items": {
@@ -815,23 +782,6 @@
         "vertexRagStore": {
           "$ref": "VertexRagStore",
           "description": "Set to use data source powered by Vertex RAG store. User data is uploaded via the VertexRagDataService."
-        }
-      },
-      "type": "object"
-    },
-    "RetrievedContext": {
-      "description": "Attribution from context retrieved by the retrieval tools.",
-      "id": "RetrievedContext",
-      "properties": {
-        "title": {
-          "description": "Output only. Title of the attribution.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "uri": {
-          "description": "Output only. URI reference of the attribution.",
-          "readOnly": true,
-          "type": "string"
         }
       },
       "type": "object"
@@ -1096,31 +1046,6 @@
       },
       "type": "object"
     },
-    "Segment": {
-      "description": "Segment of the content.",
-      "id": "Segment",
-      "properties": {
-        "endIndex": {
-          "description": "Output only. End index in the given Part, measured in bytes. Offset from the start of the Part, exclusive, starting at zero.",
-          "format": "int32",
-          "readOnly": true,
-          "type": "integer"
-        },
-        "partIndex": {
-          "description": "Output only. The index of a Part object within its parent Content object.",
-          "format": "int32",
-          "readOnly": true,
-          "type": "integer"
-        },
-        "startIndex": {
-          "description": "Output only. Start index in the given Part, measured in bytes. Offset from the start of the Part, inclusive, starting at zero.",
-          "format": "int32",
-          "readOnly": true,
-          "type": "integer"
-        }
-      },
-      "type": "object"
-    },
     "Tool": {
       "description": "Tool details that the model may use to generate response. A `Tool` is a piece of code that enables the system to interact with external systems to perform an action, or set of actions, outside of knowledge and scope of the model. A Tool object should contain exactly one type of Tool (e.g FunctionDeclaration, Retrieval or GoogleSearchRetrieval).",
       "id": "Tool",
@@ -1218,23 +1143,6 @@
         "startOffset": {
           "description": "Optional. The start offset of the video.",
           "format": "google-duration",
-          "type": "string"
-        }
-      },
-      "type": "object"
-    },
-    "Web": {
-      "description": "Attribution from the web.",
-      "id": "Web",
-      "properties": {
-        "title": {
-          "description": "Output only. Title of the attribution.",
-          "readOnly": true,
-          "type": "string"
-        },
-        "uri": {
-          "description": "Output only. URI reference of the attribution.",
-          "readOnly": true,
           "type": "string"
         }
       },

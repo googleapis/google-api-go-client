@@ -8070,27 +8070,35 @@ func (s *TargetingInfo) MarshalJSON() ([]byte, error) {
 // targeting rule can match to target offers to users based on past or
 // current entitlement.
 type TargetingRuleScope struct {
+	// AnySubscriptionInApp: The scope of the current targeting rule is any
+	// subscription in the parent app.
+	AnySubscriptionInApp *TargetingRuleScopeAnySubscriptionInApp `json:"anySubscriptionInApp,omitempty"`
+
 	// SpecificSubscriptionInApp: The scope of the current targeting rule is
 	// the subscription with the specified subscription ID. Must be a
 	// subscription within the same parent app.
 	SpecificSubscriptionInApp string `json:"specificSubscriptionInApp,omitempty"`
 
+	// ThisSubscription: The scope of the current targeting rule is the
+	// subscription in which this offer is defined.
+	ThisSubscription *TargetingRuleScopeThisSubscription `json:"thisSubscription,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
-	// "SpecificSubscriptionInApp") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "AnySubscriptionInApp") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "SpecificSubscriptionInApp") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AnySubscriptionInApp") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -8098,6 +8106,17 @@ func (s *TargetingRuleScope) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetingRuleScope
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TargetingRuleScopeAnySubscriptionInApp: Represents the targeting rule
+// scope corresponding to any subscription in the parent app.
+type TargetingRuleScopeAnySubscriptionInApp struct {
+}
+
+// TargetingRuleScopeThisSubscription: Represents the targeting rule
+// scope corresponding to the subscriptions in which this offer is
+// defined.
+type TargetingRuleScopeThisSubscription struct {
 }
 
 // TargetingUpdate: Update type for targeting. Note it is always a

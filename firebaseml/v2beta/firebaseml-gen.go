@@ -925,67 +925,9 @@ func (s *GenerationConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// GroundingAttribution: Grounding attribution.
-type GroundingAttribution struct {
-	// ConfidenceScore: Optional. Output only. Confidence score of the
-	// attribution. Ranges from 0 to 1. 1 is the most confident.
-	ConfidenceScore float64 `json:"confidenceScore,omitempty"`
-
-	// RetrievedContext: Optional. Attribution from context retrieved by the
-	// retrieval tools.
-	RetrievedContext *RetrievedContext `json:"retrievedContext,omitempty"`
-
-	// Segment: Output only. Segment of the content this attribution belongs
-	// to.
-	Segment *Segment `json:"segment,omitempty"`
-
-	// Web: Optional. Attribution from the web.
-	Web *Web `json:"web,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConfidenceScore") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConfidenceScore") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GroundingAttribution) MarshalJSON() ([]byte, error) {
-	type NoMethod GroundingAttribution
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *GroundingAttribution) UnmarshalJSON(data []byte) error {
-	type NoMethod GroundingAttribution
-	var s1 struct {
-		ConfidenceScore gensupport.JSONFloat64 `json:"confidenceScore"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.ConfidenceScore = float64(s1.ConfidenceScore)
-	return nil
-}
-
 // GroundingMetadata: Metadata returned to client when grounding is
 // enabled.
 type GroundingMetadata struct {
-	// GroundingAttributions: Optional. List of grounding attributions.
-	GroundingAttributions []*GroundingAttribution `json:"groundingAttributions,omitempty"`
-
 	// RetrievalQueries: Optional. Queries executed by the retrieval tools.
 	RetrievalQueries []string `json:"retrievalQueries,omitempty"`
 
@@ -993,16 +935,15 @@ type GroundingMetadata struct {
 	// web search.
 	WebSearchQueries []string `json:"webSearchQueries,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "GroundingAttributions") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "RetrievalQueries") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GroundingAttributions") to
+	// NullFields is a list of field names (e.g. "RetrievalQueries") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -1192,38 +1133,6 @@ type Retrieval struct {
 
 func (s *Retrieval) MarshalJSON() ([]byte, error) {
 	type NoMethod Retrieval
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// RetrievedContext: Attribution from context retrieved by the retrieval
-// tools.
-type RetrievedContext struct {
-	// Title: Output only. Title of the attribution.
-	Title string `json:"title,omitempty"`
-
-	// Uri: Output only. URI reference of the attribution.
-	Uri string `json:"uri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Title") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Title") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *RetrievedContext) MarshalJSON() ([]byte, error) {
-	type NoMethod RetrievedContext
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -1497,45 +1406,6 @@ func (s *Schema) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Segment: Segment of the content.
-type Segment struct {
-	// EndIndex: Output only. End index in the given Part, measured in
-	// bytes. Offset from the start of the Part, exclusive, starting at
-	// zero.
-	EndIndex int64 `json:"endIndex,omitempty"`
-
-	// PartIndex: Output only. The index of a Part object within its parent
-	// Content object.
-	PartIndex int64 `json:"partIndex,omitempty"`
-
-	// StartIndex: Output only. Start index in the given Part, measured in
-	// bytes. Offset from the start of the Part, inclusive, starting at
-	// zero.
-	StartIndex int64 `json:"startIndex,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndIndex") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndIndex") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Segment) MarshalJSON() ([]byte, error) {
-	type NoMethod Segment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Tool: Tool details that the model may use to generate response. A
 // `Tool` is a piece of code that enables the system to interact with
 // external systems to perform an action, or set of actions, outside of
@@ -1764,37 +1634,6 @@ type VideoMetadata struct {
 
 func (s *VideoMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod VideoMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// Web: Attribution from the web.
-type Web struct {
-	// Title: Output only. Title of the attribution.
-	Title string `json:"title,omitempty"`
-
-	// Uri: Output only. URI reference of the attribution.
-	Uri string `json:"uri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Title") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Title") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *Web) MarshalJSON() ([]byte, error) {
-	type NoMethod Web
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

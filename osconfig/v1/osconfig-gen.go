@@ -3889,23 +3889,24 @@ func (s *PatchRollout) MarshalJSON() ([]byte, error) {
 type PausePatchDeploymentRequest struct {
 }
 
-// ProjectFeatureSettings: ProjectFeatureSettings represents the
-// features settings for the VM Manager. The project features settings
-// can be set for a project.
+// ProjectFeatureSettings: ProjectFeatureSettings represents the VM
+// Manager feature settings in a project. For more information, see
+// Enable full VM Manager functionality.
 type ProjectFeatureSettings struct {
-	// Name: Required. Immutable. Name of the config, e.g.
-	// projects/12345/locations/global/projectFeatureSettings
+	// Name: Required. Immutable. Name specifies the URL for the
+	// ProjectFeatureSettings resource:
+	// projects/project_id/locations/global/projectFeatureSettings.
 	Name string `json:"name,omitempty"`
 
-	// PatchAndConfigFeatureSet: Currently set PatchAndConfigFeatureSet for
-	// name.
+	// PatchAndConfigFeatureSet: Set PatchAndConfigFeatureSet for the
+	// project.
 	//
 	// Possible values:
 	//   "PATCH_AND_CONFIG_FEATURE_SET_UNSPECIFIED" - Not specified
 	// placeholder
-	//   "OSCONFIG_B" - Basic feature set. Enables only the basic set of
-	// features.
-	//   "OSCONFIG_C" - Classic set of functionality.
+	//   "OSCONFIG_B" - Enables only the basic set of VM Manager features in
+	// the project.
+	//   "OSCONFIG_C" - Enables all VM Manager features in the project.
 	PatchAndConfigFeatureSet string `json:"patchAndConfigFeatureSet,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -4652,11 +4653,12 @@ type ProjectsLocationsGlobalGetProjectFeatureSettingsCall struct {
 	header_      http.Header
 }
 
-// GetProjectFeatureSettings: GetProjectFeatureSettings returns the
-// feature settings for a project
+// GetProjectFeatureSettings: GetProjectFeatureSettings returns the VM
+// Manager feature settings for a project.
 //
-//   - name: Name of the billing config.
-//     "projects//locations/global/projectFeatureSettings".
+//   - name: Name specifies the URL for the ProjectFeatureSettings
+//     resource:
+//     projects/project_id/locations/global/projectFeatureSettings.
 func (r *ProjectsLocationsGlobalService) GetProjectFeatureSettings(name string) *ProjectsLocationsGlobalGetProjectFeatureSettingsCall {
 	c := &ProjectsLocationsGlobalGetProjectFeatureSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4762,7 +4764,7 @@ func (c *ProjectsLocationsGlobalGetProjectFeatureSettingsCall) Do(opts ...google
 	}
 	return ret, nil
 	// {
-	//   "description": "GetProjectFeatureSettings returns the feature settings for a project",
+	//   "description": "GetProjectFeatureSettings returns the VM Manager feature settings for a project.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/projectFeatureSettings",
 	//   "httpMethod": "GET",
 	//   "id": "osconfig.projects.locations.global.getProjectFeatureSettings",
@@ -4771,7 +4773,7 @@ func (c *ProjectsLocationsGlobalGetProjectFeatureSettingsCall) Do(opts ...google
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Name of the billing config. \"projects//locations/global/projectFeatureSettings\"",
+	//       "description": "Required. Name specifies the URL for the ProjectFeatureSettings resource: projects/project_id/locations/global/projectFeatureSettings.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/projectFeatureSettings$",
 	//       "required": true,
@@ -4801,10 +4803,11 @@ type ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall struct {
 }
 
 // UpdateProjectFeatureSettings: UpdateProjectFeatureSettings sets the
-// feature settings for a project.
+// VM Manager features for a project.
 //
-//   - name: Immutable. Name of the config, e.g.
-//     projects/12345/locations/global/projectFeatureSettings.
+//   - name: Immutable. Name specifies the URL for the
+//     ProjectFeatureSettings resource:
+//     projects/project_id/locations/global/projectFeatureSettings.
 func (r *ProjectsLocationsGlobalService) UpdateProjectFeatureSettings(name string, projectfeaturesettings *ProjectFeatureSettings) *ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall {
 	c := &ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4911,7 +4914,7 @@ func (c *ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall) Do(opts ...goo
 	}
 	return ret, nil
 	// {
-	//   "description": "UpdateProjectFeatureSettings sets the feature settings for a project.",
+	//   "description": "UpdateProjectFeatureSettings sets the VM Manager features for a project.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/projectFeatureSettings",
 	//   "httpMethod": "PATCH",
 	//   "id": "osconfig.projects.locations.global.updateProjectFeatureSettings",
@@ -4920,7 +4923,7 @@ func (c *ProjectsLocationsGlobalUpdateProjectFeatureSettingsCall) Do(opts ...goo
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Immutable. Name of the config, e.g. projects/12345/locations/global/projectFeatureSettings",
+	//       "description": "Required. Immutable. Name specifies the URL for the ProjectFeatureSettings resource: projects/project_id/locations/global/projectFeatureSettings.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/locations/global/projectFeatureSettings$",
 	//       "required": true,

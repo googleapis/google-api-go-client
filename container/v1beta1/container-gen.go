@@ -1222,6 +1222,42 @@ func (s *CancelOperationRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// CertificateAuthorityDomainConfig: CertificateAuthorityDomainConfig
+// configures one or more fully qualified domain names (FQDN) to a
+// specific certificate.
+type CertificateAuthorityDomainConfig struct {
+	// Fqdns: List of fully qualified domain names (FQDN). Specifying port
+	// is supported. Wilcards are NOT supported. Examples: -
+	// my.customdomain.com - 10.0.1.2:5000
+	Fqdns []string `json:"fqdns,omitempty"`
+
+	// GcpSecretManagerCertificateConfig: Google Secret Manager (GCP)
+	// certificate configuration.
+	GcpSecretManagerCertificateConfig *GCPSecretManagerCertificateConfig `json:"gcpSecretManagerCertificateConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Fqdns") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Fqdns") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CertificateAuthorityDomainConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CertificateAuthorityDomainConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // CheckAutopilotCompatibilityResponse:
 // CheckAutopilotCompatibilityResponse has a list of compatibility
 // issues.
@@ -1390,6 +1426,10 @@ type Cluster struct {
 
 	// ClusterTelemetry: Telemetry integration for the cluster.
 	ClusterTelemetry *ClusterTelemetry `json:"clusterTelemetry,omitempty"`
+
+	// CompliancePostureConfig: Enable/Disable Compliance Posture features
+	// for the cluster.
+	CompliancePostureConfig *CompliancePostureConfig `json:"compliancePostureConfig,omitempty"`
 
 	// Conditions: Which conditions caused the current cluster state.
 	Conditions []*StatusCondition `json:"conditions,omitempty"`
@@ -1952,6 +1992,10 @@ type ClusterUpdate struct {
 	// cluster.
 	DesiredClusterTelemetry *ClusterTelemetry `json:"desiredClusterTelemetry,omitempty"`
 
+	// DesiredContainerdConfig: The desired containerd config for the
+	// cluster.
+	DesiredContainerdConfig *ContainerdConfig `json:"desiredContainerdConfig,omitempty"`
+
 	// DesiredCostManagementConfig: The desired configuration for the
 	// fine-grained cost management feature.
 	DesiredCostManagementConfig *CostManagementConfig `json:"desiredCostManagementConfig,omitempty"`
@@ -2151,7 +2195,10 @@ type ClusterUpdate struct {
 	DesiredPodSecurityPolicyConfig *PodSecurityPolicyConfig `json:"desiredPodSecurityPolicyConfig,omitempty"`
 
 	// DesiredPrivateClusterConfig: The desired private cluster
-	// configuration.
+	// configuration. master_global_access_config is the only field that can
+	// be changed via this field. See also
+	// ClusterUpdate.desired_enable_private_endpoint for modifying other
+	// fields within PrivateClusterConfig.
 	DesiredPrivateClusterConfig *PrivateClusterConfig `json:"desiredPrivateClusterConfig,omitempty"`
 
 	// DesiredPrivateIpv6GoogleAccess: The desired state of IPv6
@@ -2231,6 +2278,10 @@ type ClusterUpdate struct {
 	// does not match the current etag of the cluster, update will be
 	// blocked and an ABORTED error will be returned.
 	Etag string `json:"etag,omitempty"`
+
+	// PrivateClusterConfig: The desired private cluster configuration. Has
+	// no effect. Use desired_private_cluster_config instead.
+	PrivateClusterConfig *PrivateClusterConfig `json:"privateClusterConfig,omitempty"`
 
 	// RemovedAdditionalPodRangesConfig: The additional pod ranges that are
 	// to be removed from the cluster. The pod ranges specified here must
@@ -2313,6 +2364,72 @@ func (s *CompleteIPRotationRequest) MarshalJSON() ([]byte, error) {
 // CompleteNodePoolUpgradeRequest: CompleteNodePoolUpgradeRequest sets
 // the name of target node pool to complete upgrade.
 type CompleteNodePoolUpgradeRequest struct {
+}
+
+// CompliancePostureConfig: CompliancePostureConfig defines the settings
+// needed to enable/disable features for the Compliance Posture.
+type CompliancePostureConfig struct {
+	// ComplianceStandards: List of enabled compliance standards.
+	ComplianceStandards []*ComplianceStandard `json:"complianceStandards,omitempty"`
+
+	// Mode: Defines the enablement mode for Compliance Posture.
+	//
+	// Possible values:
+	//   "MODE_UNSPECIFIED" - Default value not specified.
+	//   "DISABLED" - Disables Compliance Posture features on the cluster.
+	//   "ENABLED" - Enables Compliance Posture features on the cluster.
+	Mode string `json:"mode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ComplianceStandards")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ComplianceStandards") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CompliancePostureConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod CompliancePostureConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ComplianceStandard: Defines the details of a compliance standard.
+type ComplianceStandard struct {
+	// Standard: Name of the compliance standard.
+	Standard string `json:"standard,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Standard") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Standard") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ComplianceStandard) MarshalJSON() ([]byte, error) {
+	type NoMethod ComplianceStandard
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // ConfidentialNodes: ConfidentialNodes is configuration for the
@@ -2401,6 +2518,38 @@ type ConsumptionMeteringConfig struct {
 
 func (s *ConsumptionMeteringConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ConsumptionMeteringConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ContainerdConfig: ContainerdConfig contains configuration to
+// customize containerd.
+type ContainerdConfig struct {
+	// PrivateRegistryAccessConfig: PrivateRegistryAccessConfig is used to
+	// configure access configuration for private container registries.
+	PrivateRegistryAccessConfig *PrivateRegistryAccessConfig `json:"privateRegistryAccessConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PrivateRegistryAccessConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "PrivateRegistryAccessConfig") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ContainerdConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod ContainerdConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2532,6 +2681,10 @@ func (s *CreateNodePoolRequest) MarshalJSON() ([]byte, error) {
 // DNSConfig: DNSConfig contains the desired set of options for
 // configuring clusterDNS.
 type DNSConfig struct {
+	// AdditiveVpcScopeDnsDomain: Optional. The domain used in Additive VPC
+	// scope.
+	AdditiveVpcScopeDnsDomain string `json:"additiveVpcScopeDnsDomain,omitempty"`
+
 	// ClusterDns: cluster_dns indicates which in-cluster DNS provider
 	// should be used.
 	//
@@ -2558,20 +2711,22 @@ type DNSConfig struct {
 	//   "VPC_SCOPE" - DNS records are accessible from within the VPC.
 	ClusterDnsScope string `json:"clusterDnsScope,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ClusterDns") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AdditiveVpcScopeDnsDomain") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ClusterDns") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "AdditiveVpcScopeDnsDomain") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3029,6 +3184,38 @@ func (s *Fleet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GCPSecretManagerCertificateConfig: GCPSecretManagerCertificateConfig
+// configures a secret from Google Secret Manager
+// (https://cloud.google.com/secret-manager).
+type GCPSecretManagerCertificateConfig struct {
+	// SecretUri: Secret URI, in the form
+	// "projects/$PROJECT_ID/secrets/$SECRET_NAME/versions/$VERSION".
+	// Version can be fixed (e.g. "2") or "latest"
+	SecretUri string `json:"secretUri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SecretUri") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SecretUri") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GCPSecretManagerCertificateConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod GCPSecretManagerCertificateConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GPUDriverInstallationConfig: GPUDriverInstallationConfig specifies
 // the version of GPU driver to be auto installed.
 type GPUDriverInstallationConfig struct {
@@ -3076,6 +3263,7 @@ type GPUSharingConfig struct {
 	// Possible values:
 	//   "GPU_SHARING_STRATEGY_UNSPECIFIED" - Default value.
 	//   "TIME_SHARING" - GPUs are time-shared between containers.
+	//   "MPS" - GPUs are shared between containers with NVIDIA MPS.
 	GpuSharingStrategy string `json:"gpuSharingStrategy,omitempty"`
 
 	// MaxSharedClientsPerGpu: The max number of containers that can share a
@@ -3531,6 +3719,38 @@ type HttpLoadBalancing struct {
 
 func (s *HttpLoadBalancing) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpLoadBalancing
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// HugepagesConfig: Hugepages amount in both 2m and 1g size
+type HugepagesConfig struct {
+	// HugepageSize1g: Optional. Amount of 1G hugepages
+	HugepageSize1g int64 `json:"hugepageSize1g,omitempty"`
+
+	// HugepageSize2m: Optional. Amount of 2M hugepages
+	HugepageSize2m int64 `json:"hugepageSize2m,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HugepageSize1g") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HugepageSize1g") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *HugepagesConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod HugepagesConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4045,6 +4265,9 @@ type LinuxNodeConfig struct {
 	//   "CGROUP_MODE_V2" - CGROUP_MODE_V2 specifies to use cgroupv2 for the
 	// cgroup configuration on the node image.
 	CgroupMode string `json:"cgroupMode,omitempty"`
+
+	// Hugepages: Optional. Amounts for 2M and 1G hugepages
+	Hugepages *HugepagesConfig `json:"hugepages,omitempty"`
 
 	// Sysctls: The Linux kernel parameters to be applied to the nodes and
 	// all pods running on the nodes. The following parameters are
@@ -5240,6 +5463,9 @@ type NodeConfig struct {
 	// node pool will be Confidential VM once enabled.
 	ConfidentialNodes *ConfidentialNodes `json:"confidentialNodes,omitempty"`
 
+	// ContainerdConfig: Parameters for containerd customization.
+	ContainerdConfig *ContainerdConfig `json:"containerdConfig,omitempty"`
+
 	// DiskSizeGb: Size of the disk attached to each node, specified in GB.
 	// The smallest allowed disk size is 10GB. If unspecified, the default
 	// disk size is 100GB.
@@ -5453,6 +5679,9 @@ func (s *NodeConfig) MarshalJSON() ([]byte, error) {
 
 // NodeConfigDefaults: Subset of NodeConfig message that has defaults.
 type NodeConfigDefaults struct {
+	// ContainerdConfig: Parameters for containerd customization.
+	ContainerdConfig *ContainerdConfig `json:"containerdConfig,omitempty"`
+
 	// GcfsConfig: GCFS (Google Container File System, also known as
 	// Riptide) options.
 	GcfsConfig *GcfsConfig `json:"gcfsConfig,omitempty"`
@@ -5464,7 +5693,7 @@ type NodeConfigDefaults struct {
 	// LoggingConfig: Logging configuration for node pools.
 	LoggingConfig *NodePoolLoggingConfig `json:"loggingConfig,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "GcfsConfig") to
+	// ForceSendFields is a list of field names (e.g. "ContainerdConfig") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -5472,12 +5701,13 @@ type NodeConfigDefaults struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "GcfsConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContainerdConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -6702,6 +6932,41 @@ type PrivateClusterMasterGlobalAccessConfig struct {
 
 func (s *PrivateClusterMasterGlobalAccessConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod PrivateClusterMasterGlobalAccessConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PrivateRegistryAccessConfig: PrivateRegistryAccessConfig contains
+// access configuration for private container registries.
+type PrivateRegistryAccessConfig struct {
+	// CertificateAuthorityDomainConfig: Private registry access
+	// configuration.
+	CertificateAuthorityDomainConfig []*CertificateAuthorityDomainConfig `json:"certificateAuthorityDomainConfig,omitempty"`
+
+	// Enabled: Private registry access is enabled.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CertificateAuthorityDomainConfig") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "CertificateAuthorityDomainConfig") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PrivateRegistryAccessConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PrivateRegistryAccessConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -8849,6 +9114,11 @@ func (s *UpdateMasterRequest) MarshalJSON() ([]byte, error) {
 // UpdateNodePoolRequest: SetNodePoolVersionRequest updates the version
 // of a node pool.
 type UpdateNodePoolRequest struct {
+	// Accelerators: A list of hardware accelerators to be attached to each
+	// node. See https://cloud.google.com/compute/docs/gpus for more
+	// information about support for GPUs.
+	Accelerators []*AcceleratorConfig `json:"accelerators,omitempty"`
+
 	// ClusterId: Required. Deprecated. The name of the cluster to upgrade.
 	// This field has been deprecated and replaced by the name field.
 	ClusterId string `json:"clusterId,omitempty"`
@@ -8856,6 +9126,11 @@ type UpdateNodePoolRequest struct {
 	// ConfidentialNodes: Confidential nodes config. All the nodes in the
 	// node pool will be Confidential VM once enabled.
 	ConfidentialNodes *ConfidentialNodes `json:"confidentialNodes,omitempty"`
+
+	// ContainerdConfig: The desired containerd config for nodes in the node
+	// pool. Initiates an upgrade operation that recreates the nodes with
+	// the new config.
+	ContainerdConfig *ContainerdConfig `json:"containerdConfig,omitempty"`
 
 	// DiskSizeGb: Optional. The desired disk size for nodes in the node
 	// pool. Initiates an upgrade operation that migrates the nodes in the
@@ -8988,7 +9263,7 @@ type UpdateNodePoolRequest struct {
 	// the name field.
 	Zone string `json:"zone,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "ClusterId") to
+	// ForceSendFields is a list of field names (e.g. "Accelerators") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -8996,10 +9271,10 @@ type UpdateNodePoolRequest struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "ClusterId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "Accelerators") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`

@@ -5744,8 +5744,9 @@ type ProductPurchase struct {
 	// PurchaseType: The type of purchase of the inapp product. This field
 	// is only set if this purchase was not made using the standard in-app
 	// billing flow. Possible values are: 0. Test (i.e. purchased from a
-	// license testing account) 1. Promo (i.e. purchased using a promo code)
-	// 2. Rewarded (i.e. from watching a video ad instead of paying)
+	// license testing account) 1. Promo (i.e. purchased using a promo
+	// code). Does not include Play Points purchases. 2. Rewarded (i.e. from
+	// watching a video ad instead of paying)
 	PurchaseType *int64 `json:"purchaseType,omitempty"`
 
 	// Quantity: The quantity associated with the purchase of the inapp

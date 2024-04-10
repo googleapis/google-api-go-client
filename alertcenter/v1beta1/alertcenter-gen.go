@@ -1297,6 +1297,9 @@ type DeviceManagementRule struct {
 	// Email: The email of the user this alert was created for.
 	Email string `json:"email,omitempty"`
 
+	// Id: ID of the rule that triggered the alert
+	Id string `json:"id,omitempty"`
+
 	// IosVendorId: Required for iOS, empty for others.
 	IosVendorId string `json:"iosVendorId,omitempty"`
 

@@ -6219,7 +6219,7 @@
       }
     }
   },
-  "revision": "20240403",
+  "revision": "20240409",
   "rootUrl": "https://shoppingcontent.googleapis.com/",
   "schemas": {
     "Account": {
@@ -7015,7 +7015,7 @@
           "type": "boolean"
         },
         "reportingManager": {
-          "description": "Whether user is a reporting manager.",
+          "description": "Whether user is a reporting manager. This role is equivalent to the Performance and insights role in Merchant Center.",
           "type": "boolean"
         }
       },

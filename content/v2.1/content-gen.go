@@ -2048,7 +2048,8 @@ type AccountUser struct {
 	// PaymentsManager: Whether user can manage payment settings.
 	PaymentsManager bool `json:"paymentsManager,omitempty"`
 
-	// ReportingManager: Whether user is a reporting manager.
+	// ReportingManager: Whether user is a reporting manager. This role is
+	// equivalent to the Performance and insights role in Merchant Center.
 	ReportingManager bool `json:"reportingManager,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Admin") to

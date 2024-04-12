@@ -79,6 +79,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "addressvalidation:v1",
+      "name": "addressvalidation",
+      "version": "v1",
+      "title": "Address Validation API",
+      "description": "The Address Validation API allows developers to verify the accuracy of addresses. Given an address, it returns information about the correctness of the components of the parsed address, a geocode, and a verdict on the deliverability of the parsed address.",
+      "discoveryRestUrl": "https://addressvalidation.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/maps/documentation/addressvalidation",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "adexchangebuyer2:v2beta1",
       "name": "adexchangebuyer2",
       "version": "v2beta1",

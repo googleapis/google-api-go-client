@@ -101,9 +101,6 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// Move a copy of the Google Alerts subscriptions you created.
-	DataportabilityAlertsSubscriptionsScope = "https://www.googleapis.com/auth/dataportability.alerts.subscriptions"
-
 	// Move a copy of messages between you and the businesses you have
 	// conversations with across Google services.
 	DataportabilityBusinessmessagingConversationsScope = "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations"
@@ -313,7 +310,6 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
-		"https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 		"https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 		"https://www.googleapis.com/auth/dataportability.chrome.autofill",
 		"https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
@@ -772,7 +768,6 @@ func (c *ArchiveJobsGetPortabilityArchiveStateCall) Do(opts ...googleapi.CallOpt
 	//     "$ref": "PortabilityArchiveState"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
@@ -979,7 +974,6 @@ func (c *ArchiveJobsRetryCall) Do(opts ...googleapi.CallOption) (*RetryPortabili
 	//     "$ref": "RetryPortabilityArchiveResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
@@ -1172,7 +1166,6 @@ func (c *AuthorizationResetCall) Do(opts ...googleapi.CallOption) (*Empty, error
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
@@ -1361,7 +1354,6 @@ func (c *PortabilityArchiveInitiateCall) Do(opts ...googleapi.CallOption) (*Init
 	//     "$ref": "InitiatePortabilityArchiveResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",

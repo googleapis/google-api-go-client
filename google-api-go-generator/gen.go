@@ -74,6 +74,12 @@ var skipAPIGeneration = map[string]bool{
 	"datalineage:v1":       true,
 }
 
+// skipNewAuthLibrary is a set of APIs to not migrate to cloud.google.com/go/auth.
+var skipNewAuthLibrary = map[string]bool{
+	"bigquery:v2": true,
+	"storage:v1":  true,
+}
+
 // API represents an API to generate, as well as its state while it's
 // generating.
 type API struct {
@@ -805,7 +811,9 @@ func (a *API) GenerateCode() ([]byte, error) {
 	if a.mtlsAPIBaseURL() != "" {
 		pn("opts = append(opts, internaloption.WithDefaultMTLSEndpoint(mtlsBasePath))")
 	}
-	pn("opts = append(opts, internaloption.WithDefaultUniverseDomain(defaultUniverseDomain))")
+	if !skipNewAuthLibrary[a.ID] {
+		pn("opts = append(opts, internaloption.EnableNewAuthLibrary())")
+	}
 	pn("client, endpoint, err := htransport.NewClient(ctx, opts...)")
 	pn("if err != nil { return nil, err }")
 	pn("s, err := New(client)")

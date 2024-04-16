@@ -784,7 +784,6 @@ func (a *API) GenerateCode() ([]byte, error) {
 	if mtlsBase := a.mtlsAPIBaseURL(); mtlsBase != "" {
 		pn("const mtlsBasePath = %q", mtlsBase)
 	}
-	pn("const defaultUniverseDomain = %q", googleDefaultUniverse)
 
 	a.generateScopeConstants()
 	a.PopulateSchemas()

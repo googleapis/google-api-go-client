@@ -4108,6 +4108,264 @@ func (s *GoogleAdsSearchads360V0Errors__SearchAds360Failure) MarshalJSON() ([]by
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConve
+// rsionValue: An automated bidding strategy to help get the most
+// conversion value for your campaigns while spending your budget.
+type GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversionValue struct {
+	// TargetRoas: Output only. The target return on ad spend (ROAS) option.
+	// If set, the bid strategy will maximize revenue while averaging the
+	// target return on ad spend. If the target ROAS is high, the bid
+	// strategy may not be able to spend the full budget. If the target ROAS
+	// is not set, the bid strategy will aim to achieve the highest possible
+	// ROAS for the budget.
+	TargetRoas float64 `json:"targetRoas,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetRoas") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetRoas") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversionValue) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversionValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversionValue) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversionValue
+	var s1 struct {
+		TargetRoas gensupport.JSONFloat64 `json:"targetRoas"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TargetRoas = float64(s1.TargetRoas)
+	return nil
+}
+
+// GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConve
+// rsions: An automated bidding strategy to help get the most
+// conversions for your campaigns while spending your budget.
+type GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversions struct {
+	// TargetCpa: Output only. The target cost per acquisition (CPA) option.
+	// This is the average amount that you would like to spend per
+	// acquisition.
+	TargetCpa int64 `json:"targetCpa,omitempty,string"`
+
+	// TargetCpaMicros: Output only. The target cost per acquisition (CPA)
+	// option. This is the average amount that you would like to spend per
+	// acquisition.
+	TargetCpaMicros int64 `json:"targetCpaMicros,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetCpa") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetCpa") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversions) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetCpa:
+// An automated bid strategy that sets bids to help get as many
+// conversions as possible at the target cost-per-acquisition (CPA) you
+// set.
+type GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetCpa struct {
+	// TargetCpaMicros: Output only. Average CPA target. This target should
+	// be greater than or equal to minimum billable unit based on the
+	// currency for the account.
+	TargetCpaMicros int64 `json:"targetCpaMicros,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetCpaMicros") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetCpaMicros") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetCpa) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetCpa
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetImpress
+// ionShare: An automated bidding strategy that sets bids so that a
+// certain percentage of search ads are shown at the top of the first
+// page (or other targeted location).
+type GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetImpressionShare struct {
+	// CpcBidCeilingMicros: Output only. The highest CPC bid the automated
+	// bidding system is permitted to specify. This is a required field
+	// entered by the advertiser that sets the ceiling and specified in
+	// local micros.
+	CpcBidCeilingMicros int64 `json:"cpcBidCeilingMicros,omitempty,string"`
+
+	// Location: Output only. The targeted location on the search results
+	// page.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "ANYWHERE_ON_PAGE" - Any location on the web page.
+	//   "TOP_OF_PAGE" - Top box of ads.
+	//   "ABSOLUTE_TOP_OF_PAGE" - Top slot in the top box of ads.
+	Location string `json:"location,omitempty"`
+
+	// LocationFractionMicros: The chosen fraction of ads to be shown in the
+	// targeted location in micros. For example, 1% equals 10,000.
+	LocationFractionMicros int64 `json:"locationFractionMicros,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CpcBidCeilingMicros")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CpcBidCeilingMicros") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetImpressionShare) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetImpressionShare
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetRoas:
+// An automated bidding strategy that helps you maximize revenue while
+// averaging a specific target return on ad spend (ROAS).
+type GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetRoas struct {
+	// TargetRoas: Output only. The chosen revenue (based on conversion
+	// data) per unit of spend.
+	TargetRoas float64 `json:"targetRoas,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "TargetRoas") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "TargetRoas") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetRoas) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetRoas
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetRoas) UnmarshalJSON(data []byte) error {
+	type NoMethod GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetRoas
+	var s1 struct {
+		TargetRoas gensupport.JSONFloat64 `json:"targetRoas"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.TargetRoas = float64(s1.TargetRoas)
+	return nil
+}
+
+// GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetSpend:
+// An automated bid strategy that sets your bids to help get as many
+// clicks as possible within your budget.
+type GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetSpend struct {
+	// CpcBidCeilingMicros: Output only. Maximum bid limit that can be set
+	// by the bid strategy. The limit applies to all keywords managed by the
+	// strategy.
+	CpcBidCeilingMicros int64 `json:"cpcBidCeilingMicros,omitempty,string"`
+
+	// TargetSpendMicros: Output only. The spend target under which to
+	// maximize clicks. A TargetSpend bidder will attempt to spend the
+	// smaller of this value or the natural throttling spend amount. If not
+	// specified, the budget is used as the spend target. This field is
+	// deprecated and should no longer be used. See
+	// https://ads-developers.googleblog.com/2020/05/reminder-about-sunset-creation-of.html
+	// for details.
+	TargetSpendMicros int64 `json:"targetSpendMicros,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CpcBidCeilingMicros")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CpcBidCeilingMicros") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetSpend) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetSpend
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0ResourcesAdGroupCriterionPositionEstimates:
 // Estimates for criterion bids at various positions.
 type GoogleAdsSearchads360V0ResourcesAdGroupCriterionPositionEstimates struct {
@@ -4972,6 +5230,142 @@ func (s *GoogleAdsSearchads360V0ResourcesListingGroupFilterDimensionProductType)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleAdsSearchads360V0Resources__AccessibleBiddingStrategy:
+// Represents a view of BiddingStrategies owned by and shared with the
+// customer. In contrast to BiddingStrategy, this resource includes
+// strategies owned by managers of the customer and shared with this
+// customer - in addition to strategies owned by this customer. This
+// resource does not provide metrics and only exposes a limited subset
+// of the BiddingStrategy attributes.
+type GoogleAdsSearchads360V0Resources__AccessibleBiddingStrategy struct {
+	// Id: Output only. The ID of the bidding strategy.
+	Id int64 `json:"id,omitempty,string"`
+
+	// MaximizeConversionValue: Output only. An automated bidding strategy
+	// to help get the most conversion value for your campaigns while
+	// spending your budget.
+	MaximizeConversionValue *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversionValue `json:"maximizeConversionValue,omitempty"`
+
+	// MaximizeConversions: Output only. An automated bidding strategy to
+	// help get the most conversions for your campaigns while spending your
+	// budget.
+	MaximizeConversions *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyMaximizeConversions `json:"maximizeConversions,omitempty"`
+
+	// Name: Output only. The name of the bidding strategy.
+	Name string `json:"name,omitempty"`
+
+	// OwnerCustomerId: Output only. The ID of the Customer which owns the
+	// bidding strategy.
+	OwnerCustomerId int64 `json:"ownerCustomerId,omitempty,string"`
+
+	// OwnerDescriptiveName: Output only. descriptive_name of the Customer
+	// which owns the bidding strategy.
+	OwnerDescriptiveName string `json:"ownerDescriptiveName,omitempty"`
+
+	// ResourceName: Output only. The resource name of the accessible
+	// bidding strategy. AccessibleBiddingStrategy resource names have the
+	// form:
+	// `customers/{customer_id}/accessibleBiddingStrategies/{bidding_strategy
+	// _id}`
+	ResourceName string `json:"resourceName,omitempty"`
+
+	// TargetCpa: Output only. A bidding strategy that sets bids to help get
+	// as many conversions as possible at the target cost-per-acquisition
+	// (CPA) you set.
+	TargetCpa *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetCpa `json:"targetCpa,omitempty"`
+
+	// TargetImpressionShare: Output only. A bidding strategy that
+	// automatically optimizes towards a chosen percentage of impressions.
+	TargetImpressionShare *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetImpressionShare `json:"targetImpressionShare,omitempty"`
+
+	// TargetRoas: Output only. A bidding strategy that helps you maximize
+	// revenue while averaging a specific target Return On Ad Spend (ROAS).
+	TargetRoas *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetRoas `json:"targetRoas,omitempty"`
+
+	// TargetSpend: Output only. A bid strategy that sets your bids to help
+	// get as many clicks as possible within your budget.
+	TargetSpend *GoogleAdsSearchads360V0ResourcesAccessibleBiddingStrategyTargetSpend `json:"targetSpend,omitempty"`
+
+	// Type: Output only. The type of the bidding strategy.
+	//
+	// Possible values:
+	//   "UNSPECIFIED" - Not specified.
+	//   "UNKNOWN" - Used for return value only. Represents value unknown in
+	// this version.
+	//   "COMMISSION" - Commission is an automatic bidding strategy in which
+	// the advertiser pays a certain portion of the conversion value.
+	//   "ENHANCED_CPC" - Enhanced CPC is a bidding strategy that raises
+	// bids for clicks that seem more likely to lead to a conversion and
+	// lowers them for clicks where they seem less likely.
+	//   "INVALID" - Used for return value only. Indicates that a campaign
+	// does not have a bidding strategy. This prevents the campaign from
+	// serving. For example, a campaign may be attached to a manager bidding
+	// strategy and the serving account is subsequently unlinked from the
+	// manager account. In this case the campaign will automatically be
+	// detached from the now inaccessible manager bidding strategy and
+	// transition to the INVALID bidding strategy type.
+	//   "MANUAL_CPA" - Manual bidding strategy that allows advertiser to
+	// set the bid per advertiser-specified action.
+	//   "MANUAL_CPC" - Manual click based bidding where user pays per
+	// click.
+	//   "MANUAL_CPM" - Manual impression based bidding where user pays per
+	// thousand impressions.
+	//   "MANUAL_CPV" - A bidding strategy that pays a configurable amount
+	// per video view.
+	//   "MAXIMIZE_CONVERSIONS" - A bidding strategy that automatically
+	// maximizes number of conversions given a daily budget.
+	//   "MAXIMIZE_CONVERSION_VALUE" - An automated bidding strategy that
+	// automatically sets bids to maximize revenue while spending your
+	// budget.
+	//   "PAGE_ONE_PROMOTED" - Page-One Promoted bidding scheme, which sets
+	// max cpc bids to target impressions on page one or page one promoted
+	// slots on google.com. This enum value is deprecated.
+	//   "PERCENT_CPC" - Percent Cpc is bidding strategy where bids are a
+	// fraction of the advertised price for some good or service.
+	//   "TARGET_CPA" - Target CPA is an automated bid strategy that sets
+	// bids to help get as many conversions as possible at the target
+	// cost-per-acquisition (CPA) you set.
+	//   "TARGET_CPM" - Target CPM is an automated bid strategy that sets
+	// bids to help get as many impressions as possible at the target cost
+	// per one thousand impressions (CPM) you set.
+	//   "TARGET_IMPRESSION_SHARE" - An automated bidding strategy that sets
+	// bids so that a certain percentage of search ads are shown at the top
+	// of the first page (or other targeted location).
+	//   "TARGET_OUTRANK_SHARE" - Target Outrank Share is an automated
+	// bidding strategy that sets bids based on the target fraction of
+	// auctions where the advertiser should outrank a specific competitor.
+	// This enum value is deprecated.
+	//   "TARGET_ROAS" - Target ROAS is an automated bidding strategy that
+	// helps you maximize revenue while averaging a specific target Return
+	// On Average Spend (ROAS).
+	//   "TARGET_SPEND" - Target Spend is an automated bid strategy that
+	// sets your bids to help get as many clicks as possible within your
+	// budget.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Id") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Id") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleAdsSearchads360V0Resources__AccessibleBiddingStrategy) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleAdsSearchads360V0Resources__AccessibleBiddingStrategy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleAdsSearchads360V0Resources__Ad: An ad.
 type GoogleAdsSearchads360V0Resources__Ad struct {
 	// DisplayUrl: The URL that appears in the ad description for some ad
@@ -5771,10 +6165,7 @@ type GoogleAdsSearchads360V0Resources__AdGroupCriterion struct {
 	//   "LIFE_EVENT" - Life Event
 	Type string `json:"type,omitempty"`
 
-	// UserList: Immutable. User List. The Similar Audiences sunset starts
-	// May 2023. Refer to
-	// https://ads-developers.googleblog.com/2022/11/announcing-deprecation-and-sunset-of.html
-	// for other options.
+	// UserList: Immutable. User List.
 	UserList *GoogleAdsSearchads360V0Common__UserListInfo `json:"userList,omitempty"`
 
 	// Webpage: Immutable. Webpage
@@ -6750,6 +7141,18 @@ func (s *GoogleAdsSearchads360V0Resources__BiddingStrategy) MarshalJSON() ([]byt
 
 // GoogleAdsSearchads360V0Resources__Campaign: A campaign.
 type GoogleAdsSearchads360V0Resources__Campaign struct {
+	// AccessibleBiddingStrategy: Output only. Resource name of
+	// AccessibleBiddingStrategy, a read-only view of the unrestricted
+	// attributes of the attached portfolio bidding strategy identified by
+	// 'bidding_strategy'. Empty, if the campaign does not use a portfolio
+	// strategy. Unrestricted strategy attributes are available to all
+	// customers with whom the strategy is shared and are read from the
+	// AccessibleBiddingStrategy resource. In contrast, restricted
+	// attributes are only available to the owner customer of the strategy
+	// and their managers. Restricted attributes can only be read from the
+	// BiddingStrategy resource.
+	AccessibleBiddingStrategy string `json:"accessibleBiddingStrategy,omitempty"`
+
 	// AdServingOptimizationStatus: The ad serving optimization status of
 	// the campaign.
 	//
@@ -7204,7 +7607,7 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	UrlExpansionOptOut bool `json:"urlExpansionOptOut,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
-	// "AdServingOptimizationStatus") to unconditionally include in API
+	// "AccessibleBiddingStrategy") to unconditionally include in API
 	// requests. By default, fields with empty or default values are omitted
 	// from API requests. However, any non-pointer, non-interface field
 	// appearing in ForceSendFields will be sent to the server regardless of
@@ -7213,10 +7616,10 @@ type GoogleAdsSearchads360V0Resources__Campaign struct {
 	ForceSendFields []string `json:"-"`
 
 	// NullFields is a list of field names (e.g.
-	// "AdServingOptimizationStatus") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
+	// "AccessibleBiddingStrategy") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
 	// field in this list has a non-empty value. This may be used to include
 	// null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -7539,10 +7942,7 @@ type GoogleAdsSearchads360V0Resources__CampaignCriterion struct {
 	//   "LIFE_EVENT" - Life Event
 	Type string `json:"type,omitempty"`
 
-	// UserList: Immutable. User List. The Similar Audiences sunset starts
-	// May 2023. Refer to
-	// https://ads-developers.googleblog.com/2022/11/announcing-deprecation-and-sunset-of.html
-	// for other options.
+	// UserList: Immutable. User List.
 	UserList *GoogleAdsSearchads360V0Common__UserListInfo `json:"userList,omitempty"`
 
 	// Webpage: Immutable. Webpage.
@@ -9893,6 +10293,10 @@ func (s *GoogleAdsSearchads360V0Services__RawEventConversionMetricHeader) Marsha
 // GoogleAdsSearchads360V0Services__SearchAds360Row: A returned row from
 // the query.
 type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
+	// AccessibleBiddingStrategy: The accessible bidding strategy referenced
+	// in the query.
+	AccessibleBiddingStrategy *GoogleAdsSearchads360V0Resources__AccessibleBiddingStrategy `json:"accessibleBiddingStrategy,omitempty"`
+
 	// AdGroup: The ad group referenced in the query.
 	AdGroup *GoogleAdsSearchads360V0Resources__AdGroup `json:"adGroup,omitempty"`
 
@@ -10061,20 +10465,22 @@ type GoogleAdsSearchads360V0Services__SearchAds360Row struct {
 	// WebpageView: The webpage view referenced in the query.
 	WebpageView *GoogleAdsSearchads360V0Resources__WebpageView `json:"webpageView,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "AdGroup") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "AccessibleBiddingStrategy") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "AdGroup") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g.
+	// "AccessibleBiddingStrategy") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
 	NullFields []string `json:"-"`
 }
 

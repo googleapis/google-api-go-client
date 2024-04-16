@@ -4731,7 +4731,7 @@
       }
     }
   },
-  "revision": "20240409",
+  "revision": "20240415",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -7465,7 +7465,7 @@
       "type": "object"
     },
     "OfferTag": {
-      "description": "Represents a custom tag specified for one-time products, purchase options, base plans and offers.",
+      "description": "Represents a custom tag specified for base plans and subscription offers.",
       "id": "OfferTag",
       "properties": {
         "tag": {

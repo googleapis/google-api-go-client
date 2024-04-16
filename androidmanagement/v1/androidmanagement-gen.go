@@ -2916,11 +2916,7 @@ type EnrollmentToken struct {
 	// java.util.Properties representation of the properties in the JSON.
 	QrCode string `json:"qrCode,omitempty"`
 
-	// User: The user associated with this enrollment token. If it's
-	// specified when the enrollment token is created and the user does not
-	// exist, the user will be created. This field must not contain
-	// personally identifiable information. Only the account_identifier
-	// field needs to be set.
+	// User: This field is deprecated and the value is ignored.
 	User *User `json:"user,omitempty"`
 
 	// Value: The token value that's passed to the device and authorizes the
@@ -4568,6 +4564,9 @@ func (s *MemoryInfo) MarshalJSON() ([]byte, error) {
 // MigrationToken: A token to initiate the migration of a device from
 // being managed by a third-party DPC to being managed by Android
 // Management API. A migration token is valid only for a single device.
+// See the guide
+// (https://developers.google.com/android/management/dpc-migration) for
+// more details.
 type MigrationToken struct {
 	// AdditionalData: Immutable. Optional EMM-specified additional data.
 	// Once the device is migrated this will be populated in the
@@ -10903,10 +10902,13 @@ type EnterprisesMigrationTokensCreateCall struct {
 
 // Create: Creates a migration token, to migrate an existing device from
 // being managed by the EMM's Device Policy Controller (DPC) to being
-// managed by the Android Management API.
+// managed by the Android Management API. See the guide
+// (https://developers.google.com/android/management/dpc-migration) for
+// more details.
 //
-//   - parent: The enterprise in which this migration token will be
-//     created. Format: enterprises/{enterprise}.
+//   - parent: The enterprise in which this migration token is created.
+//     This must be the same enterprise which already manages the device
+//     in the Play EMM API. Format: enterprises/{enterprise}.
 func (r *EnterprisesMigrationTokensService) Create(parent string, migrationtoken *MigrationToken) *EnterprisesMigrationTokensCreateCall {
 	c := &EnterprisesMigrationTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11005,7 +11007,7 @@ func (c *EnterprisesMigrationTokensCreateCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a migration token, to migrate an existing device from being managed by the EMM's Device Policy Controller (DPC) to being managed by the Android Management API.",
+	//   "description": "Creates a migration token, to migrate an existing device from being managed by the EMM's Device Policy Controller (DPC) to being managed by the Android Management API. See the guide (https://developers.google.com/android/management/dpc-migration) for more details.",
 	//   "flatPath": "v1/enterprises/{enterprisesId}/migrationTokens",
 	//   "httpMethod": "POST",
 	//   "id": "androidmanagement.enterprises.migrationTokens.create",
@@ -11014,7 +11016,7 @@ func (c *EnterprisesMigrationTokensCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The enterprise in which this migration token will be created. Format: enterprises/{enterprise}",
+	//       "description": "Required. The enterprise in which this migration token is created. This must be the same enterprise which already manages the device in the Play EMM API. Format: enterprises/{enterprise}",
 	//       "location": "path",
 	//       "pattern": "^enterprises/[^/]+$",
 	//       "required": true,

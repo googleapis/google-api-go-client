@@ -8403,6 +8403,9 @@ type PivotValue struct {
 	//   "VARP" - Corresponds to the `VARP` function.
 	//   "CUSTOM" - Indicates the formula should be used as-is. Only valid
 	// if PivotValue.formula was set.
+	//   "NONE" - Indicates that the value is already summarized, and the
+	// summarization function is not explicitly specified. Used for Looker
+	// data source pivot tables where the value is already summarized.
 	SummarizeFunction string `json:"summarizeFunction,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.

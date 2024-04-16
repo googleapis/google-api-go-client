@@ -212,7 +212,7 @@ type TransferOperationsService struct {
 	s *Service
 }
 
-// AgentPool: Represents an On-Premises Agent pool.
+// AgentPool: Represents an agent pool.
 type AgentPool struct {
 	// BandwidthLimit: Specifies the bandwidth limit details. If this field
 	// is unspecified, the default value is set as 'No Limit'.
@@ -230,7 +230,7 @@ type AgentPool struct {
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default value. This value is unused.
 	//   "CREATING" - This is an initialization state. During this stage,
-	// the resources such as Pub/Sub topics are allocated for the AgentPool.
+	// resources are allocated for the AgentPool.
 	//   "CREATED" - Determines that the AgentPool is created for use. At
 	// this state, Agents can join the AgentPool and participate in the
 	// transfer jobs in that pool.
@@ -1253,7 +1253,8 @@ type MetadataOptions struct {
 
 	// TimeCreated: Specifies how each object's `timeCreated` metadata is
 	// preserved for transfers. If unspecified, the default behavior is the
-	// same as TIME_CREATED_SKIP.
+	// same as TIME_CREATED_SKIP. This behavior is supported for transfers
+	// to GCS buckets from GCS, S3, Azure, S3 Compatible, and Azure sources.
 	//
 	// Possible values:
 	//   "TIME_CREATED_UNSPECIFIED" - TimeCreated behavior is unspecified.
@@ -2043,8 +2044,7 @@ type TransferJob struct {
 	// involving OPI. Invalid job names fail with an INVALID_ARGUMENT error.
 	Name string `json:"name,omitempty"`
 
-	// NotificationConfig: Notification configuration. This is not supported
-	// for transfers involving PosixFilesystem.
+	// NotificationConfig: Notification configuration.
 	NotificationConfig *NotificationConfig `json:"notificationConfig,omitempty"`
 
 	// ProjectId: The ID of the Google Cloud project that owns the job.

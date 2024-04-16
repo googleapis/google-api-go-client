@@ -6814,7 +6814,7 @@ type InputFieldTextInput struct {
 	// in a tooltip.
 	AdditionalInfo *TextWithTooltip `json:"additionalInfo,omitempty"`
 
-	// AriaLabel: Text to be used as the aria label
+	// AriaLabel: Text to be used as the aria-label
 	// (https://www.w3.org/TR/WCAG20-TECHS/ARIA14.html) for the input.
 	AriaLabel string `json:"ariaLabel,omitempty"`
 
@@ -8517,54 +8517,57 @@ func (s *LocationIdSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type LoyaltyPoints struct {
-	// Name: Name of loyalty points program. It is recommended to limit the
-	// name to 12 full-width characters or 24 Roman characters.
-	Name string `json:"name,omitempty"`
+// LoyaltyProgram: Allows the setting up of loyalty program benefits
+// (for example price or points).
+// https://support.google.com/merchants/answer/12922446
+type LoyaltyProgram struct {
+	// CashbackForFutureUse: Optional. The cashback that can be used for
+	// future purchases.
+	CashbackForFutureUse *Price `json:"cashbackForFutureUse,omitempty"`
 
-	// PointsValue: The retailer's loyalty points in absolute value.
-	PointsValue int64 `json:"pointsValue,omitempty,string"`
+	// LoyaltyPoints: Optional. The amount of loyalty points earned on a
+	// purchase.
+	LoyaltyPoints int64 `json:"loyaltyPoints,omitempty,string"`
 
-	// Ratio: The ratio of a point when converted to currency. Google
-	// assumes currency based on Merchant Center settings. If ratio is left
-	// out, it defaults to 1.0.
-	Ratio float64 `json:"ratio,omitempty"`
+	// Price: Optional. The price for members of the given tier (instant
+	// discount price). Must be smaller or equal to the regular price.
+	Price *Price `json:"price,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ProgramLabel: Required. The label of the loyalty program. This is an
+	// internal label that uniquely identifies the relationship between a
+	// merchant entity and a loyalty program entity. It must be provided so
+	// that system can associate the assets below (for example, price and
+	// points) with a merchant. The corresponding program must be linked to
+	// the merchant account.
+	ProgramLabel string `json:"programLabel,omitempty"`
+
+	// TierLabel: Required. The label of the tier within the loyalty
+	// program. Must match one of the labels within the program.
+	TierLabel string `json:"tierLabel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CashbackForFutureUse") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CashbackForFutureUse") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *LoyaltyPoints) MarshalJSON() ([]byte, error) {
-	type NoMethod LoyaltyPoints
+func (s *LoyaltyProgram) MarshalJSON() ([]byte, error) {
+	type NoMethod LoyaltyProgram
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *LoyaltyPoints) UnmarshalJSON(data []byte) error {
-	type NoMethod LoyaltyPoints
-	var s1 struct {
-		Ratio gensupport.JSONFloat64 `json:"ratio"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Ratio = float64(s1.Ratio)
-	return nil
 }
 
 // MerchantCenterDestination: "Merchant Center Destination" sources can
@@ -14301,12 +14304,10 @@ type Product struct {
 	AgeGroup string `json:"ageGroup,omitempty"`
 
 	// AutoPricingMinPrice: A safeguard in the Automated Discounts
-	// (https://support.google.com/merchants/answer/10295759?hl=en) and
-	// Dynamic Promotions
-	// (https://support.google.com/merchants/answer/13949249?hl=en)
-	// projects, ensuring that discounts on merchants' offers do not fall
-	// below this value, thereby preserving the offer's value and
-	// profitability.
+	// (//support.google.com/merchants/answer/10295759) and Dynamic
+	// Promotions (//support.google.com/merchants/answer/13949249) projects,
+	// ensuring that discounts on merchants' offers do not fall below this
+	// value, thereby preserving the offer's value and profitability.
 	AutoPricingMinPrice *Price `json:"autoPricingMinPrice,omitempty"`
 
 	// Availability: Availability status of the item.
@@ -14496,9 +14497,10 @@ type Product struct {
 	// LinkTemplate: URL template for merchant hosted local storefront.
 	LinkTemplate string `json:"linkTemplate,omitempty"`
 
-	// LoyaltyPoints: Loyalty points that users receive after purchasing the
-	// item. Japan only.
-	LoyaltyPoints *LoyaltyPoints `json:"loyaltyPoints,omitempty"`
+	// LoyaltyProgram: Loyalty program information that is used to surface
+	// loyalty benefits ( for example pricing, points, etc) to the user for
+	// this item.
+	LoyaltyProgram *LoyaltyProgram `json:"loyaltyProgram,omitempty"`
 
 	// Material: The material of which the item is made.
 	Material string `json:"material,omitempty"`

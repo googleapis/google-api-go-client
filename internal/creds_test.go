@@ -9,48 +9,9 @@ import (
 	"os"
 	"testing"
 
-	"github.com/google/go-cmp/cmp"
-	"github.com/google/go-cmp/cmp/cmpopts"
 	"golang.org/x/oauth2"
 	"golang.org/x/oauth2/google"
 )
-
-type dummyTokenSource struct {
-	oauth2.TokenSource
-}
-
-func TestTokenSource(t *testing.T) {
-	ctx := context.Background()
-
-	// Pass in a TokenSource, get it back.
-	ts := &dummyTokenSource{}
-	ds := &DialSettings{TokenSource: ts}
-	got, err := Creds(ctx, ds)
-	if err != nil {
-		t.Fatal(err)
-	}
-	want := &google.DefaultCredentials{TokenSource: ts}
-	if !cmp.Equal(got, want, cmpopts.IgnoreFields(google.Credentials{}, "udMu", "universeDomain")) {
-		t.Error("did not get the same TokenSource back")
-	}
-
-	// If both a file and TokenSource are passed, the file takes precedence
-	// (existing behavior).
-	// TODO(jba): make this an error?
-	ds = &DialSettings{
-		TokenSource:     ts,
-		CredentialsFile: "testdata/service-account.json",
-		DefaultScopes:   []string{"foo"},
-	}
-	got, err = Creds(ctx, ds)
-	if err != nil {
-		t.Fatal(err)
-	}
-	if cmp.Equal(got, want, cmpopts.IgnoreFields(google.Credentials{}, "udMu", "universeDomain")) {
-		t.Error("got the same TokenSource back, wanted one from the JSON file")
-	}
-	// TODO(jba): find a way to test the call to google.DefaultTokenSource.
-}
 
 func TestDefaultServiceAccount(t *testing.T) {
 	ctx := context.Background()

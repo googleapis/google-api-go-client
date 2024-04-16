@@ -664,9 +664,9 @@ type Attachment struct {
 	// Source: Output only. The source of the attachment.
 	//
 	// Possible values:
-	//   "SOURCE_UNSPECIFIED"
-	//   "DRIVE_FILE"
-	//   "UPLOADED_CONTENT"
+	//   "SOURCE_UNSPECIFIED" - Reserved.
+	//   "DRIVE_FILE" - The file is a Google Drive file.
+	//   "UPLOADED_CONTENT" - The file is uploaded to Chat.
 	Source string `json:"source,omitempty"`
 
 	// ThumbnailUri: Output only. The thumbnail URL which should be used to
@@ -702,6 +702,7 @@ func (s *Attachment) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AttachmentDataRef: A reference to the attachment data.
 type AttachmentDataRef struct {
 	// AttachmentUploadToken: Opaque token containing a reference to an
 	// uploaded attachment. Treated by clients as an opaque string and used
@@ -1204,6 +1205,8 @@ func (s *CommonEventObject) MarshalJSON() ([]byte, error) {
 type CompleteImportSpaceRequest struct {
 }
 
+// CompleteImportSpaceResponse: Response message for completing the
+// import process for a space.
 type CompleteImportSpaceResponse struct {
 	// Space: The import mode space.
 	Space *Space `json:"space,omitempty"`
@@ -4089,6 +4092,7 @@ func (s *KeyValue) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListMembershipsResponse: Response to list memberships of the space.
 type ListMembershipsResponse struct {
 	// Memberships: Unordered list. List of memberships in the requested (or
 	// first) page.
@@ -4125,6 +4129,7 @@ func (s *ListMembershipsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListMessagesResponse: Response message for listing messages.
 type ListMessagesResponse struct {
 	// Messages: List of messages.
 	Messages []*Message `json:"messages,omitempty"`
@@ -4160,6 +4165,7 @@ func (s *ListMessagesResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListReactionsResponse: Response to a list reactions request.
 type ListReactionsResponse struct {
 	// NextPageToken: Continuation token to retrieve the next page of
 	// results. It's empty for the last page of results.
@@ -4232,6 +4238,7 @@ func (s *ListSpaceEventsResponse) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// ListSpacesResponse: The response for a list spaces request.
 type ListSpacesResponse struct {
 	// NextPageToken: You can send a token as `pageToken` to retrieve the
 	// next page of results. If empty, there are no subsequent pages.
@@ -5337,6 +5344,8 @@ func (s *SelectionItems) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SetUpSpaceRequest: Request to create a space and add specified users
+// to it.
 type SetUpSpaceRequest struct {
 	// Memberships: Optional. The Google Chat users to invite to join the
 	// space. Omit the calling user, as they are added automatically. The
@@ -5514,9 +5523,13 @@ type Space struct {
 	// account (unmanaged user account). By default, a space created by a
 	// consumer account permits any Google Chat user. * The space is used to
 	// [import data to Google Chat]
-	// (https://developers.google.com/workspace/chat/import-data). Import
-	// mode spaces must only permit members from the same Google Workspace
-	// organization. For existing spaces, this field is output only.
+	// (https://developers.google.com/chat/api/guides/import-data-overview)
+	// because import mode spaces must only permit members from the same
+	// Google Workspace organization. However, as part of the Google
+	// Workspace Developer Preview Program
+	// (https://developers.google.com/workspace/preview), import mode spaces
+	// can permit any Google Chat user so this field can then be set for
+	// import mode spaces. For existing spaces, this field is output only.
 	ExternalUserAllowed bool `json:"externalUserAllowed,omitempty"`
 
 	// ImportMode: Optional. Whether this space is created in `Import Mode`
@@ -5583,7 +5596,7 @@ type Space struct {
 	// a space.
 	//
 	// Possible values:
-	//   "TYPE_UNSPECIFIED"
+	//   "TYPE_UNSPECIFIED" - Reserved.
 	//   "ROOM" - Conversations between two or more humans.
 	//   "DM" - 1:1 Direct Message between a human and a Chat app, where all
 	// messages are flat. Note that this doesn't include direct messages
@@ -6179,6 +6192,7 @@ func (s *UpdatedWidget) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UploadAttachmentRequest: Request to upload an attachment.
 type UploadAttachmentRequest struct {
 	// Filename: Required. The filename of the attachment, including the
 	// file extension.
@@ -6207,6 +6221,7 @@ func (s *UploadAttachmentRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// UploadAttachmentResponse: Response of uploading an attachment.
 type UploadAttachmentResponse struct {
 	// AttachmentDataRef: Reference to the uploaded attachment.
 	AttachmentDataRef *AttachmentDataRef `json:"attachmentDataRef,omitempty"`
@@ -8607,8 +8622,7 @@ type SpacesMembersListCall struct {
 // Supports app authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-app)
 // and user authentication
-// (hhttps://developers.google.com/workspace/chat/authenticate-authorize-
-// chat-user).
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 //
 //   - parent: The resource name of the space for which to fetch a
 //     membership list. Format: spaces/{space}.
@@ -8778,7 +8792,7 @@ func (c *SpacesMembersListCall) Do(opts ...googleapi.CallOption) (*ListMembershi
 	}
 	return ret, nil
 	// {
-	//   "description": "Lists memberships in a space. For an example, see [List users and Google Chat apps in a space](https://developers.google.com/workspace/chat/list-members). Listing memberships with [app authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-app) lists memberships in spaces that the Chat app has access to, but excludes Chat app memberships, including its own. Listing memberships with [User authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user) lists memberships in spaces that the authenticated user has access to. Requires [authentication](https://developers.google.com/workspace/chat/authenticate-authorize). Supports [app authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-app) and [user authentication](hhttps://developers.google.com/workspace/chat/authenticate-authorize-chat-user).",
+	//   "description": "Lists memberships in a space. For an example, see [List users and Google Chat apps in a space](https://developers.google.com/workspace/chat/list-members). Listing memberships with [app authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-app) lists memberships in spaces that the Chat app has access to, but excludes Chat app memberships, including its own. Listing memberships with [User authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user) lists memberships in spaces that the authenticated user has access to. Requires [authentication](https://developers.google.com/workspace/chat/authenticate-authorize). Supports [app authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-app) and [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).",
 	//   "flatPath": "v1/spaces/{spacesId}/members",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.members.list",
@@ -10261,7 +10275,7 @@ type SpacesMessagesReactionsCreateCall struct {
 }
 
 // Create: Creates a reaction and adds it to a message. Only unicode
-// emojis are supported.For an example, see Add a reaction to a reaction
+// emojis are supported. For an example, see Add a reaction to a message
 // (https://developers.google.com/workspace/chat/create-reactions).
 // Requires user authentication
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
@@ -10366,7 +10380,7 @@ func (c *SpacesMessagesReactionsCreateCall) Do(opts ...googleapi.CallOption) (*R
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a reaction and adds it to a message. Only unicode emojis are supported.For an example, see [Add a reaction to a reaction](https://developers.google.com/workspace/chat/create-reactions). Requires [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).",
+	//   "description": "Creates a reaction and adds it to a message. Only unicode emojis are supported. For an example, see [Add a reaction to a message](https://developers.google.com/workspace/chat/create-reactions). Requires [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).",
 	//   "flatPath": "v1/spaces/{spacesId}/messages/{messagesId}/reactions",
 	//   "httpMethod": "POST",
 	//   "id": "chat.spaces.messages.reactions.create",
@@ -10796,10 +10810,10 @@ type SpacesSpaceEventsGetCall struct {
 // example, if you request an event about a new message but the message
 // was later updated, the server returns the updated `Message` resource
 // in the event payload. Requires user authentication
-// (hhttps://developers.google.com/workspace/chat/authenticate-authorize-
-// chat-user). To get an event, the authenticated user must be a member
-// of the space. For an example, see Get details about an event from a
-// Google Chat space
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+// To get an event, the authenticated user must be a member of the
+// space. For an example, see Get details about an event from a Google
+// Chat space
 // (https://developers.google.com/workspace/chat/get-space-event).
 //
 //   - name: The resource name of the space event. Format:
@@ -10909,7 +10923,7 @@ func (c *SpacesSpaceEventsGetCall) Do(opts ...googleapi.CallOption) (*SpaceEvent
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns an event from a Google Chat space. The [event payload](https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.spaceEvents#SpaceEvent.FIELDS.oneof_payload) contains the most recent version of the resource that changed. For example, if you request an event about a new message but the message was later updated, the server returns the updated `Message` resource in the event payload. Requires [user authentication](hhttps://developers.google.com/workspace/chat/authenticate-authorize-chat-user). To get an event, the authenticated user must be a member of the space. For an example, see [Get details about an event from a Google Chat space](https://developers.google.com/workspace/chat/get-space-event).",
+	//   "description": "Returns an event from a Google Chat space. The [event payload](https://developers.google.com/workspace/chat/api/reference/rest/v1/spaces.spaceEvents#SpaceEvent.FIELDS.oneof_payload) contains the most recent version of the resource that changed. For example, if you request an event about a new message but the message was later updated, the server returns the updated `Message` resource in the event payload. Requires [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user). To get an event, the authenticated user must be a member of the space. For an example, see [Get details about an event from a Google Chat space](https://developers.google.com/workspace/chat/get-space-event).",
 	//   "flatPath": "v1/spaces/{spacesId}/spaceEvents/{spaceEventsId}",
 	//   "httpMethod": "GET",
 	//   "id": "chat.spaces.spaceEvents.get",

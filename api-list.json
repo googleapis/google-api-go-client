@@ -1881,6 +1881,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "config:v1",
+      "name": "config",
+      "version": "v1",
+      "title": "Infrastructure Manager API",
+      "description": "Creates and manages Google Cloud Platform resources and infrastructure.",
+      "discoveryRestUrl": "https://config.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/infrastructure-manager/docs",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "connectors:v1",
       "name": "connectors",
       "version": "v1",

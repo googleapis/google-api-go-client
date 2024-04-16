@@ -203,6 +203,7 @@ func NewOrganizationsService(s *Service) *OrganizationsService {
 	rs.Operations = NewOrganizationsOperationsService(s)
 	rs.OptimizedHostStats = NewOrganizationsOptimizedHostStatsService(s)
 	rs.Reports = NewOrganizationsReportsService(s)
+	rs.SecurityAssessmentResults = NewOrganizationsSecurityAssessmentResultsService(s)
 	rs.SecurityProfiles = NewOrganizationsSecurityProfilesService(s)
 	rs.Sharedflows = NewOrganizationsSharedflowsService(s)
 	rs.Sites = NewOrganizationsSitesService(s)
@@ -249,6 +250,8 @@ type OrganizationsService struct {
 	OptimizedHostStats *OrganizationsOptimizedHostStatsService
 
 	Reports *OrganizationsReportsService
+
+	SecurityAssessmentResults *OrganizationsSecurityAssessmentResultsService
 
 	SecurityProfiles *OrganizationsSecurityProfilesService
 
@@ -1112,6 +1115,15 @@ type OrganizationsReportsService struct {
 	s *Service
 }
 
+func NewOrganizationsSecurityAssessmentResultsService(s *Service) *OrganizationsSecurityAssessmentResultsService {
+	rs := &OrganizationsSecurityAssessmentResultsService{s: s}
+	return rs
+}
+
+type OrganizationsSecurityAssessmentResultsService struct {
+	s *Service
+}
+
 func NewOrganizationsSecurityProfilesService(s *Service) *OrganizationsSecurityProfilesService {
 	rs := &OrganizationsSecurityProfilesService{s: s}
 	rs.Environments = NewOrganizationsSecurityProfilesEnvironmentsService(s)
@@ -1934,8 +1946,16 @@ type GoogleCloudApigeeV1ApiDoc struct {
 	Id int64 `json:"id,omitempty,string"`
 
 	// ImageUrl: Optional. Location of the image used for the catalog item
-	// in the catalog. For portal files, this can have the format
-	// `/files/{filename}`. Max length is 2,083 characters.
+	// in the catalog. This can be either an image with an external URL or a
+	// file path for image files stored in the portal
+	// (/apigee/docs/api-platform/publish/portal/portal-files"), for
+	// example, `/files/book-tree.jpg`. When specifying the URL of an
+	// external image, the image won't be uploaded to your assets;
+	// additionally, loading the image in the integrated portal will be
+	// subject to its availability, which may be blocked or restricted by
+	// content security policies
+	// (/apigee/docs/api-platform/publish/portal/csp). Max length of file
+	// path is 2,083 characters.
 	ImageUrl string `json:"imageUrl,omitempty"`
 
 	// Modified: Output only. Time the catalog item was last modified in
@@ -3198,6 +3218,169 @@ type GoogleCloudApigeeV1Attributes struct {
 
 func (s *GoogleCloudApigeeV1Attributes) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudApigeeV1Attributes
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest:
+// Request for BatchComputeSecurityAssessmentResults.
+type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest struct {
+	// Include: Include only these resources.
+	Include *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArray `json:"include,omitempty"`
+
+	// IncludeAllResources: Include all resources under the scope.
+	IncludeAllResources *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestIncludeAll `json:"includeAllResources,omitempty"`
+
+	// PageSize: Optional. The maximum number of results to return. The
+	// service may return fewer than this value. If unspecified, at most 50
+	// results will be returned.
+	PageSize int64 `json:"pageSize,omitempty"`
+
+	// PageToken: Optional. A page token, received from a previous
+	// `BatchComputeSecurityAssessmentResults` call. Provide this to
+	// retrieve the subsequent page.
+	PageToken string `json:"pageToken,omitempty"`
+
+	// Profile: Required. Name of the profile that is used for computation.
+	Profile string `json:"profile,omitempty"`
+
+	// Scope: Required. Scope of the resources for the computation. For
+	// Apigee, the environment is the scope of the resources.
+	Scope string `json:"scope,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Include") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Include") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestInclude
+// All: Message for include_all option.
+type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestIncludeAll struct {
+}
+
+// GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourc
+// eArray: An array of resource messages.
+type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArray struct {
+	// Resources: Required. The array of resources. For Apigee, the proxies
+	// are resources.
+	Resources []*GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArrayResource `json:"resources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Resources") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Resources") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArray) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArray
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourc
+// eArrayResource: Resource for which we are computing security
+// assessment.
+type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArrayResource struct {
+	// Name: Required. Name of this resource.
+	Name string `json:"name,omitempty"`
+
+	// Type: Required. Type of this resource.
+	//
+	// Possible values:
+	//   "RESOURCE_TYPE_UNSPECIFIED" - ResourceType not specified.
+	//   "API_PROXY" - Resource is an Apigee Proxy.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArrayResource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequestResourceArrayResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsResponse:
+// Response for BatchComputeSecurityAssessmentResults.
+type GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsResponse struct {
+	// AssessmentTime: The time of the assessment api call.
+	AssessmentTime string `json:"assessmentTime,omitempty"`
+
+	// NextPageToken: A token that can be sent as `page_token` to retrieve
+	// the next page. If this field is blank, there are no subsequent pages.
+	NextPageToken string `json:"nextPageToken,omitempty"`
+
+	// SecurityAssessmentResults: Default sort order is by resource name in
+	// alphabetic order.
+	SecurityAssessmentResults []*GoogleCloudApigeeV1SecurityAssessmentResult `json:"securityAssessmentResults,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "AssessmentTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssessmentTime") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6497,8 +6680,8 @@ type GoogleCloudApigeeV1Instance struct {
 	Description string `json:"description,omitempty"`
 
 	// DiskEncryptionKeyName: Customer Managed Encryption Key (CMEK) used
-	// for disk and volume encryption. Required for Apigee paid
-	// subscriptions only. Use the following format:
+	// for disk and volume encryption. If not specified, a Google-Managed
+	// encryption key will be used. Use the following format:
 	// `projects/([^/]+)/locations/([^/]+)/keyRings/([^/]+)/cryptoKeys/([^/]+
 	// )`
 	DiskEncryptionKeyName string `json:"diskEncryptionKeyName,omitempty"`
@@ -8907,18 +9090,16 @@ type GoogleCloudApigeeV1Organization struct {
 	AnalyticsRegion string `json:"analyticsRegion,omitempty"`
 
 	// ApiConsumerDataEncryptionKeyName: Cloud KMS key name used for
-	// encrypting API consumer data. Required for US/EU regions when
-	// BillingType (#BillingType) is `SUBSCRIPTION`. When BillingType
-	// (#BillingType) is `EVALUATION` or the region is not US/EU, a
-	// Google-Managed encryption key will be used. Format:
-	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`
+	// encrypting API consumer data. If not specified or BillingType
+	// (#BillingType) is `EVALUATION`, a Google-Managed encryption key will
+	// be used. Format: `projects/*/locations/*/keyRings/*/cryptoKeys/*`
 	ApiConsumerDataEncryptionKeyName string `json:"apiConsumerDataEncryptionKeyName,omitempty"`
 
-	// ApiConsumerDataLocation: This field is needed only for customers with
-	// control plane in US or EU. Apigee stores some control plane data only
-	// in single region. This field determines which single region Apigee
-	// should use. For example: "us-west1" when control plane is in US or
-	// "europe-west2" when control plane is in EU.
+	// ApiConsumerDataLocation: This field is needed only for customers
+	// using non-default data residency regions. Apigee stores some control
+	// plane data only in single region. This field determines which single
+	// region Apigee should use. For example: "us-west1" when control plane
+	// is in US or "europe-west2" when control plane is in EU.
 	ApiConsumerDataLocation string `json:"apiConsumerDataLocation,omitempty"`
 
 	// ApigeeProjectId: Output only. Apigee Project ID associated with the
@@ -8962,10 +9143,11 @@ type GoogleCloudApigeeV1Organization struct {
 	CaCertificate string `json:"caCertificate,omitempty"`
 
 	// ControlPlaneEncryptionKeyName: Cloud KMS key name used for encrypting
-	// control plane data that is stored in a multi region. Required when
-	// BillingType (#BillingType) is `SUBSCRIPTION`. When BillingType
-	// (#BillingType) is `EVALUATION`, a Google-Managed encryption key will
-	// be used. Format: `projects/*/locations/*/keyRings/*/cryptoKeys/*`
+	// control plane data that is stored in a multi region. Only used for
+	// the data residency region "US" or "EU". If not specified or
+	// BillingType (#BillingType) is `EVALUATION`, a Google-Managed
+	// encryption key will be used. Format:
+	// `projects/*/locations/*/keyRings/*/cryptoKeys/*`
 	ControlPlaneEncryptionKeyName string `json:"controlPlaneEncryptionKeyName,omitempty"`
 
 	// CreatedAt: Output only. Time that the Apigee organization was created
@@ -9024,9 +9206,8 @@ type GoogleCloudApigeeV1Organization struct {
 	// RuntimeDatabaseEncryptionKeyName: Cloud KMS key name used for
 	// encrypting the data that is stored and replicated across runtime
 	// instances. Update is not allowed after the organization is created.
-	// Required when RuntimeType (#RuntimeType) is `CLOUD`. If not specified
-	// when RuntimeType (#RuntimeType) is `TRIAL`, a Google-Managed
-	// encryption key will be used. For example:
+	// If not specified or RuntimeType (#RuntimeType) is `TRIAL`, a
+	// Google-Managed encryption key will be used. For example:
 	// "projects/foo/locations/us/keyRings/bar/cryptoKeys/baz". **Note:**
 	// Not supported for Apigee hybrid.
 	RuntimeDatabaseEncryptionKeyName string `json:"runtimeDatabaseEncryptionKeyName,omitempty"`
@@ -11595,6 +11776,263 @@ func (s *GoogleCloudApigeeV1SecurityActionsConfig) MarshalJSON() ([]byte, error)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// GoogleCloudApigeeV1SecurityAssessmentResult: The security assessment
+// result for one resource.
+type GoogleCloudApigeeV1SecurityAssessmentResult struct {
+	// CreateTime: The time of the assessment of this resource. This could
+	// lag behind `assessment_time` due to caching within the backend.
+	CreateTime string `json:"createTime,omitempty"`
+
+	// Error: The error status if scoring fails.
+	Error *GoogleRpcStatus `json:"error,omitempty"`
+
+	// Resource: The assessed resource.
+	Resource *GoogleCloudApigeeV1SecurityAssessmentResultResource `json:"resource,omitempty"`
+
+	// ScoringResult: The result of the assessment.
+	ScoringResult *GoogleCloudApigeeV1SecurityAssessmentResultScoringResult `json:"scoringResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CreateTime") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CreateTime") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityAssessmentResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityAssessmentResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityAssessmentResultResource: Resource for
+// which we are computing security assessment.
+type GoogleCloudApigeeV1SecurityAssessmentResultResource struct {
+	// Name: Required. Name of this resource.
+	Name string `json:"name,omitempty"`
+
+	// ResourceRevisionId: The revision id for the resource. In case of
+	// Apigee, this is proxy revision id.
+	ResourceRevisionId string `json:"resourceRevisionId,omitempty"`
+
+	// Type: Required. Type of this resource.
+	//
+	// Possible values:
+	//   "RESOURCE_TYPE_UNSPECIFIED" - ResourceType not specified.
+	//   "API_PROXY" - Resource is an Apigee Proxy.
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityAssessmentResultResource) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityAssessmentResultResource
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityAssessmentResultScoringResult: The result
+// of the assessment.
+type GoogleCloudApigeeV1SecurityAssessmentResultScoringResult struct {
+	// AssessmentRecommendations: The recommendations of the assessment. The
+	// key is the "name" of the assessment (not display_name), and the value
+	// are the recommendations.
+	AssessmentRecommendations map[string]GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendation `json:"assessmentRecommendations,omitempty"`
+
+	// DataUpdateTime: The time when resource data was last fetched for this
+	// resource. This time may be different than when the resource was
+	// actually updated due to lag in data collection.
+	DataUpdateTime string `json:"dataUpdateTime,omitempty"`
+
+	// FailedAssessmentPerWeight: The number of failed assessments grouped
+	// by its weight. Keys are one of the following: "MAJOR", "MODERATE",
+	// "MINOR".
+	FailedAssessmentPerWeight map[string]int64 `json:"failedAssessmentPerWeight,omitempty"`
+
+	// Score: The security score of the assessment.
+	Score int64 `json:"score,omitempty"`
+
+	// Severity: The severity of the assessment.
+	//
+	// Possible values:
+	//   "SEVERITY_UNSPECIFIED" - Severity is not defined.
+	//   "LOW" - Severity is low.
+	//   "MEDIUM" - Severity is medium.
+	//   "HIGH" - Severity is high.
+	//   "NONE" - Severity is none.
+	//   "NO_RISK" - Severity represents no risk
+	//   "MINIMAL" - Severity is minimal
+	Severity string `json:"severity,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AssessmentRecommendations") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "AssessmentRecommendations") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityAssessmentResultScoringResult) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityAssessmentResultScoringResult
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentReco
+// mmendation: The message format of a recommendation from the
+// assessment.
+type GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendation struct {
+	// DisplayName: The display name of the assessment.
+	DisplayName string `json:"displayName,omitempty"`
+
+	// Recommendations: The recommended steps of the assessment.
+	Recommendations []*GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendationRecommendation `json:"recommendations,omitempty"`
+
+	// ScoreImpact: Score impact indicates the impact on the overall score
+	// if the assessment were to pass.
+	ScoreImpact int64 `json:"scoreImpact,omitempty"`
+
+	// Verdict: Verdict indicates the assessment result.
+	//
+	// Possible values:
+	//   "VERDICT_UNSPECIFIED" - The verdict is unspecified.
+	//   "PASS" - The assessment has passed.
+	//   "FAIL" - The assessment has failed.
+	Verdict string `json:"verdict,omitempty"`
+
+	// Weight: The weight of the assessment which was set in the profile.
+	//
+	// Possible values:
+	//   "WEIGHT_UNSPECIFIED" - The weight is unspecified.
+	//   "MINOR" - The weight is minor.
+	//   "MODERATE" - The weight is moderate.
+	//   "MAJOR" - The weight is major.
+	Weight string `json:"weight,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DisplayName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DisplayName") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentReco
+// mmendationRecommendation: The format of the assessment
+// recommendation.
+type GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendationRecommendation struct {
+	// Description: The description of the recommendation.
+	Description string `json:"description,omitempty"`
+
+	// Link: The link for the recommendation.
+	Link *GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendationRecommendationLink `json:"link,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Description") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Description") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendationRecommendation) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendationRecommendation
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentReco
+// mmendationRecommendationLink: The format for a link in the
+// recommendation.
+type GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendationRecommendationLink struct {
+	// Text: The text of the url. (ie: "Learn more")
+	Text string `json:"text,omitempty"`
+
+	// Uri: The link itself.
+	Uri string `json:"uri,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Text") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Text") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendationRecommendationLink) MarshalJSON() ([]byte, error) {
+	type NoMethod GoogleCloudApigeeV1SecurityAssessmentResultScoringResultAssessmentRecommendationRecommendationLink
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GoogleCloudApigeeV1SecurityIncident: Represents an SecurityIncident
 // resource.
 type GoogleCloudApigeeV1SecurityIncident struct {
@@ -12902,6 +13340,9 @@ type GoogleCloudApigeeV1TlsInfo struct {
 	// TLS will be enabled.
 	Enabled bool `json:"enabled,omitempty"`
 
+	// Enforce: TLS is strictly enforced.
+	Enforce bool `json:"enforce,omitempty"`
+
 	// IgnoreValidationErrors: If true, Edge ignores TLS certificate errors.
 	// Valid when configuring TLS for target servers and target endpoints,
 	// and when configuring virtual hosts that use 2-way TLS. When used with
@@ -12993,6 +13434,9 @@ type GoogleCloudApigeeV1TlsInfoConfig struct {
 	// Enabled: Flag that specifies whether one-way TLS is enabled. Set to
 	// `true` to enable one-way TLS.
 	Enabled bool `json:"enabled,omitempty"`
+
+	// Enforce: Flag that enforces TLS settings
+	Enforce bool `json:"enforce,omitempty"`
 
 	// IgnoreValidationErrors: Flag that specifies whether to ignore TLS
 	// certificate validation errors. Set to `true` to ignore errors.
@@ -59305,6 +59749,174 @@ func (c *OrganizationsReportsUpdateCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ]
 	// }
 
+}
+
+// method id "apigee.organizations.securityAssessmentResults.batchCompute":
+
+type OrganizationsSecurityAssessmentResultsBatchComputeCall struct {
+	s                                                               *Service
+	name                                                            string
+	googlecloudapigeev1batchcomputesecurityassessmentresultsrequest *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest
+	urlParams_                                                      gensupport.URLParams
+	ctx_                                                            context.Context
+	header_                                                         http.Header
+}
+
+// BatchCompute: Compute RAV2 security scores for a set of resources.
+//
+//   - name: Name of the organization for which the score needs to be
+//     computed in the following format:
+//     `organizations/{org}/securityAssessmentResults`.
+func (r *OrganizationsSecurityAssessmentResultsService) BatchCompute(name string, googlecloudapigeev1batchcomputesecurityassessmentresultsrequest *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest) *OrganizationsSecurityAssessmentResultsBatchComputeCall {
+	c := &OrganizationsSecurityAssessmentResultsBatchComputeCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.googlecloudapigeev1batchcomputesecurityassessmentresultsrequest = googlecloudapigeev1batchcomputesecurityassessmentresultsrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *OrganizationsSecurityAssessmentResultsBatchComputeCall) Fields(s ...googleapi.Field) *OrganizationsSecurityAssessmentResultsBatchComputeCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *OrganizationsSecurityAssessmentResultsBatchComputeCall) Context(ctx context.Context) *OrganizationsSecurityAssessmentResultsBatchComputeCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *OrganizationsSecurityAssessmentResultsBatchComputeCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *OrganizationsSecurityAssessmentResultsBatchComputeCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudapigeev1batchcomputesecurityassessmentresultsrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:batchCompute")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "apigee.organizations.securityAssessmentResults.batchCompute" call.
+// Exactly one of
+// *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsResponse or
+// error will be non-nil. Any non-2xx status code is an error. Response
+// headers are in either
+// *GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsResponse.Serv
+// erResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was
+// returned.
+func (c *OrganizationsSecurityAssessmentResultsBatchComputeCall) Do(opts ...googleapi.CallOption) (*GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Compute RAV2 security scores for a set of resources.",
+	//   "flatPath": "v1/organizations/{organizationsId}/securityAssessmentResults:batchCompute",
+	//   "httpMethod": "POST",
+	//   "id": "apigee.organizations.securityAssessmentResults.batchCompute",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Required. Name of the organization for which the score needs to be computed in the following format: `organizations/{org}/securityAssessmentResults`",
+	//       "location": "path",
+	//       "pattern": "^organizations/[^/]+/securityAssessmentResults$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}:batchCompute",
+	//   "request": {
+	//     "$ref": "GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *OrganizationsSecurityAssessmentResultsBatchComputeCall) Pages(ctx context.Context, f func(*GoogleCloudApigeeV1BatchComputeSecurityAssessmentResultsResponse) error) error {
+	c.ctx_ = ctx
+	defer func(pt string) { c.googlecloudapigeev1batchcomputesecurityassessmentresultsrequest.PageToken = pt }(c.googlecloudapigeev1batchcomputesecurityassessmentresultsrequest.PageToken) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.googlecloudapigeev1batchcomputesecurityassessmentresultsrequest.PageToken = x.NextPageToken
+	}
 }
 
 // method id "apigee.organizations.securityProfiles.create":

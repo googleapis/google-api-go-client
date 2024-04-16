@@ -3,7 +3,7 @@ module google.golang.org/api/internal/kokoro/discogen
 go 1.19
 
 require (
-	github.com/google/go-github/v59 v59.0.0
+	github.com/google/go-github/v61 v61.0.0
 	golang.org/x/oauth2 v0.18.0
 )
 

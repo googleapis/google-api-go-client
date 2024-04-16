@@ -53,7 +53,7 @@ func credsNewAuth(ctx context.Context, settings *DialSettings) (*google.Credenti
 	}
 
 	if settings.AuthCredentials != nil {
-		return &google.Credentials{TokenSource: oauth2adapt.TokenSourceFromTokenProvider(settings.AuthCredentials)}, nil
+		return oauth2adapt.Oauth2CredentialsFromAuthCredentials(settings.AuthCredentials), nil
 	}
 
 	var useSelfSignedJWT bool

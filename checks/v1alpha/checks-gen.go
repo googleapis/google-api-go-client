@@ -717,6 +717,11 @@ type GoogleChecksReportV1alphaCheckCitation struct {
 	//   "SOUTH_AFRICA_POPIA" - South Africa Protection of Personal
 	// Information Act.
 	//   "JAPAN_APPI" - Japan Act on the Protection of Personal Information.
+	//   "INDIA_DPDPA" - India: The Digital Personal Data Protection Act,
+	// 2023.
+	//   "OCPA" - Oregon Consumer Privacy Act.
+	//   "TDPSA" - Texas Data Privacy and Security Act.
+	//   "MCDPA" - Montana Consumer Data Privacy Act.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Type") to

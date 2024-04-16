@@ -936,8 +936,8 @@ type ApplicationPolicy struct {
 	// 90 days after it becomes out of date again.The user can still
 	// manually update the app from the Play Store at any time.
 	//   "AUTO_UPDATE_HIGH_PRIORITY" - The app is updated as soon as
-	// possible. No constraints are applied.The device is notified
-	// immediately about a new update after it becomes available.
+	// possible. No constraints are applied.The device is notified as soon
+	// as possible about a new update after it becomes available.
 	AutoUpdateMode string `json:"autoUpdateMode,omitempty"`
 
 	// ConnectedWorkAndPersonalApp: Controls whether the app can communicate
@@ -2916,11 +2916,7 @@ type EnrollmentToken struct {
 	// java.util.Properties representation of the properties in the JSON.
 	QrCode string `json:"qrCode,omitempty"`
 
-	// User: The user associated with this enrollment token. If it's
-	// specified when the enrollment token is created and the user does not
-	// exist, the user will be created. This field must not contain
-	// personally identifiable information. Only the account_identifier
-	// field needs to be set.
+	// User: This field is deprecated and the value is ignored.
 	User *User `json:"user,omitempty"`
 
 	// Value: The token value that's passed to the device and authorizes the
@@ -3048,9 +3044,8 @@ func (s *Enterprise) MarshalJSON() ([]byte, error) {
 // (https://developer.android.com/topic/performance/appstandby#restricted-bucket).
 // Extensions apps are also protected against users clearing their data
 // or force-closing the application, although admins can continue to use
-// the clear app data command
-// (https://developer.android.com/management/reference/rest/v1/enterprises.devices/issueCommand#CommandType)
-// on extension apps if needed for Android 13 and above.
+// the clear app data command on extension apps if needed for Android 13
+// and above.
 type ExtensionConfig struct {
 	// NotificationReceiver: Fully qualified class name of the receiver
 	// service class for Android Device Policy to notify the extension app
@@ -4569,6 +4564,9 @@ func (s *MemoryInfo) MarshalJSON() ([]byte, error) {
 // MigrationToken: A token to initiate the migration of a device from
 // being managed by a third-party DPC to being managed by Android
 // Management API. A migration token is valid only for a single device.
+// See the guide
+// (https://developers.google.com/android/management/dpc-migration) for
+// more details.
 type MigrationToken struct {
 	// AdditionalData: Immutable. Optional EMM-specified additional data.
 	// Once the device is migrated this will be populated in the
@@ -6900,8 +6898,8 @@ type StartLostModeParams struct {
 	// the device is in lost mode.
 	LostOrganization *UserFacingMessage `json:"lostOrganization,omitempty"`
 
-	// LostPhoneNumber: The phone number displayed to the user when the
-	// device is in lost mode.
+	// LostPhoneNumber: The phone number that will be called when the device
+	// is in lost mode and the call owner button is tapped.
 	LostPhoneNumber *UserFacingMessage `json:"lostPhoneNumber,omitempty"`
 
 	// LostStreetAddress: The street address displayed to the user when the
@@ -10904,10 +10902,13 @@ type EnterprisesMigrationTokensCreateCall struct {
 
 // Create: Creates a migration token, to migrate an existing device from
 // being managed by the EMM's Device Policy Controller (DPC) to being
-// managed by the Android Management API.
+// managed by the Android Management API. See the guide
+// (https://developers.google.com/android/management/dpc-migration) for
+// more details.
 //
-//   - parent: The enterprise in which this migration token will be
-//     created. Format: enterprises/{enterprise}.
+//   - parent: The enterprise in which this migration token is created.
+//     This must be the same enterprise which already manages the device
+//     in the Play EMM API. Format: enterprises/{enterprise}.
 func (r *EnterprisesMigrationTokensService) Create(parent string, migrationtoken *MigrationToken) *EnterprisesMigrationTokensCreateCall {
 	c := &EnterprisesMigrationTokensCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -11006,7 +11007,7 @@ func (c *EnterprisesMigrationTokensCreateCall) Do(opts ...googleapi.CallOption) 
 	}
 	return ret, nil
 	// {
-	//   "description": "Creates a migration token, to migrate an existing device from being managed by the EMM's Device Policy Controller (DPC) to being managed by the Android Management API.",
+	//   "description": "Creates a migration token, to migrate an existing device from being managed by the EMM's Device Policy Controller (DPC) to being managed by the Android Management API. See the guide (https://developers.google.com/android/management/dpc-migration) for more details.",
 	//   "flatPath": "v1/enterprises/{enterprisesId}/migrationTokens",
 	//   "httpMethod": "POST",
 	//   "id": "androidmanagement.enterprises.migrationTokens.create",
@@ -11015,7 +11016,7 @@ func (c *EnterprisesMigrationTokensCreateCall) Do(opts ...googleapi.CallOption) 
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The enterprise in which this migration token will be created. Format: enterprises/{enterprise}",
+	//       "description": "Required. The enterprise in which this migration token is created. This must be the same enterprise which already manages the device in the Play EMM API. Format: enterprises/{enterprise}",
 	//       "location": "path",
 	//       "pattern": "^enterprises/[^/]+$",
 	//       "required": true,

@@ -53,7 +53,11 @@ func TestDefaultApply(t *testing.T) {
 		DefaultAudience:         "audience",
 		DefaultMTLSEndpoint:     "http://mtls.example.com:445",
 	}
-	if !cmp.Equal(got, want, cmpopts.IgnoreUnexported(grpc.ClientConn{}), cmpopts.IgnoreFields(google.Credentials{}, "udMu", "universeDomain")) {
-		t.Errorf(cmp.Diff(got, want, cmpopts.IgnoreUnexported(grpc.ClientConn{}), cmpopts.IgnoreFields(google.Credentials{}, "udMu", "universeDomain")))
+	ignore := []cmp.Option{
+		cmpopts.IgnoreUnexported(grpc.ClientConn{}),
+		cmpopts.IgnoreFields(google.Credentials{}, "udMu", "universeDomain"),
+	}
+	if !cmp.Equal(got, want, ignore...) {
+		t.Errorf(cmp.Diff(got, want, ignore...))
 	}
 }

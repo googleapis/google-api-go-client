@@ -12295,12 +12295,12 @@ type GoogleCloudDocumentaiV1beta3ProcessorVersion struct {
 	//   "MODEL_TYPE_CUSTOM" - The processor version has custom model type.
 	ModelType string `json:"modelType,omitempty"`
 
-	// Name: The resource name of the processor version. Format:
+	// Name: Identifier. The resource name of the processor version. Format:
 	// `projects/{project}/locations/{location}/processors/{processor}/proces
 	// sorVersions/{processor_version}`
 	Name string `json:"name,omitempty"`
 
-	// State: The state of the processor version.
+	// State: Output only. The state of the processor version.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The processor version is in an unspecified

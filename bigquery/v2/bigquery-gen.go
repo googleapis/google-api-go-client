@@ -2418,6 +2418,12 @@ type Dataset struct {
 	// Etag: Output only. A hash of the resource.
 	Etag string `json:"etag,omitempty"`
 
+	// ExternalCatalogDatasetOptions: Optional. Options defining open source
+	// compatible datasets living in the BigQuery catalog. Contains metadata
+	// of open source database, schema or namespace represented by the
+	// current dataset.
+	ExternalCatalogDatasetOptions *ExternalCatalogDatasetOptions `json:"externalCatalogDatasetOptions,omitempty"`
+
 	// ExternalDatasetReference: Optional. Reference to a read-only external
 	// dataset defined in data catalogs outside of BigQuery. Filled out when
 	// the dataset type is EXTERNAL.
@@ -2867,6 +2873,106 @@ func (s *DestinationTableProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod DestinationTableProperties
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DifferentialPrivacyPolicy: Represents privacy policy associated with
+// "differential privacy" method.
+type DifferentialPrivacyPolicy struct {
+	// DeltaBudget: Optional. The total delta budget for all queries against
+	// the privacy-protected view. Each subscriber query against this view
+	// charges the amount of delta that is pre-defined by the contributor
+	// through the privacy policy delta_per_query field. If there is
+	// sufficient budget, then the subscriber query attempts to complete. It
+	// might still fail due to other reasons, in which case the charge is
+	// refunded. If there is insufficient budget the query is rejected.
+	// There might be multiple charge attempts if a single query references
+	// multiple views. In this case there must be sufficient budget for all
+	// charges or the query is rejected and charges are refunded in best
+	// effort. The budget does not have a refresh policy and can only be
+	// updated via ALTER VIEW or circumvented by creating a new view that
+	// can be queried with a fresh budget.
+	DeltaBudget float64 `json:"deltaBudget,omitempty"`
+
+	// DeltaPerQuery: Optional. The delta value that is used per query.
+	// Delta represents the probability that any row will fail to be epsilon
+	// differentially private. Indicates the risk associated with exposing
+	// aggregate rows in the result of a query.
+	DeltaPerQuery float64 `json:"deltaPerQuery,omitempty"`
+
+	// EpsilonBudget: Optional. The total epsilon budget for all queries
+	// against the privacy-protected view. Each subscriber query against
+	// this view charges the amount of epsilon they request in their query.
+	// If there is sufficient budget, then the subscriber query attempts to
+	// complete. It might still fail due to other reasons, in which case the
+	// charge is refunded. If there is insufficient budget the query is
+	// rejected. There might be multiple charge attempts if a single query
+	// references multiple views. In this case there must be sufficient
+	// budget for all charges or the query is rejected and charges are
+	// refunded in best effort. The budget does not have a refresh policy
+	// and can only be updated via ALTER VIEW or circumvented by creating a
+	// new view that can be queried with a fresh budget.
+	EpsilonBudget float64 `json:"epsilonBudget,omitempty"`
+
+	// MaxEpsilonPerQuery: Optional. The maximum epsilon value that a query
+	// can consume. If the subscriber specifies epsilon as a parameter in a
+	// SELECT query, it must be less than or equal to this value. The
+	// epsilon parameter controls the amount of noise that is added to the
+	// groups — a higher epsilon means less noise.
+	MaxEpsilonPerQuery float64 `json:"maxEpsilonPerQuery,omitempty"`
+
+	// MaxGroupsContributed: Optional. The maximum groups contributed value
+	// that is used per query. Represents the maximum number of groups to
+	// which each protected entity can contribute. Changing this value does
+	// not improve or worsen privacy. The best value for accuracy and
+	// utility depends on the query and data.
+	MaxGroupsContributed int64 `json:"maxGroupsContributed,omitempty,string"`
+
+	// PrivacyUnitColumn: Optional. The privacy unit column associated with
+	// this policy. Differential privacy policies can only have one privacy
+	// unit column per data source object (table, view).
+	PrivacyUnitColumn string `json:"privacyUnitColumn,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DeltaBudget") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DeltaBudget") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DifferentialPrivacyPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod DifferentialPrivacyPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *DifferentialPrivacyPolicy) UnmarshalJSON(data []byte) error {
+	type NoMethod DifferentialPrivacyPolicy
+	var s1 struct {
+		DeltaBudget        gensupport.JSONFloat64 `json:"deltaBudget"`
+		DeltaPerQuery      gensupport.JSONFloat64 `json:"deltaPerQuery"`
+		EpsilonBudget      gensupport.JSONFloat64 `json:"epsilonBudget"`
+		MaxEpsilonPerQuery gensupport.JSONFloat64 `json:"maxEpsilonPerQuery"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.DeltaBudget = float64(s1.DeltaBudget)
+	s.DeltaPerQuery = float64(s1.DeltaPerQuery)
+	s.EpsilonBudget = float64(s1.EpsilonBudget)
+	s.MaxEpsilonPerQuery = float64(s1.MaxEpsilonPerQuery)
+	return nil
 }
 
 // DimensionalityReductionMetrics: Model evaluation metrics for
@@ -3570,6 +3676,89 @@ type Expr struct {
 
 func (s *Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExternalCatalogDatasetOptions: Options defining open source
+// compatible datasets living in the BigQuery catalog. Contains metadata
+// of open source database, schema or namespace represented by the
+// current dataset.
+type ExternalCatalogDatasetOptions struct {
+	// DefaultStorageLocationUri: Optional. The storage location URI for all
+	// tables in the dataset. Equivalent to hive metastore's database
+	// locationUri. Maximum length of 1024 characters.
+	DefaultStorageLocationUri string `json:"defaultStorageLocationUri,omitempty"`
+
+	// Parameters: Optional. A map of key value pairs defining the
+	// parameters and properties of the open source schema. Maximum size of
+	// 2Mib.
+	Parameters map[string]string `json:"parameters,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultStorageLocationUri") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "DefaultStorageLocationUri") to include in API requests with the JSON
+	// null value. By default, fields with empty values are omitted from API
+	// requests. However, any field with an empty value appearing in
+	// NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExternalCatalogDatasetOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalCatalogDatasetOptions
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ExternalCatalogTableOptions: Metadata about open source compatible
+// table. The fields contained in these options correspond to hive
+// metastore's table level properties.
+type ExternalCatalogTableOptions struct {
+	// ConnectionId: Optional. The connection specifying the credentials to
+	// be used to read external storage, such as Azure Blob, Cloud Storage,
+	// or S3. The connection is needed to read the open source table from
+	// BigQuery Engine. The connection_id can have the form `..` or
+	// `projects//locations//connections/`.
+	ConnectionId string `json:"connectionId,omitempty"`
+
+	// Parameters: Optional. A map of key value pairs defining the
+	// parameters and properties of the open source table. Corresponds with
+	// hive meta store table parameters. Maximum size of 4Mib.
+	Parameters map[string]string `json:"parameters,omitempty"`
+
+	// StorageDescriptor: Optional. A storage descriptor containing
+	// information about the physical storage of this table.
+	StorageDescriptor *StorageDescriptor `json:"storageDescriptor,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ConnectionId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ConnectionId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ExternalCatalogTableOptions) MarshalJSON() ([]byte, error) {
+	type NoMethod ExternalCatalogTableOptions
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6561,6 +6750,54 @@ func (s *JobStatus) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// JoinRestrictionPolicy: Represents privacy policy associated with
+// "join restrictions". Join restriction gives data providers the
+// ability to enforce joins on the 'join_allowed_columns' when data is
+// queried from a privacy protected view.
+type JoinRestrictionPolicy struct {
+	// JoinAllowedColumns: Optional. The only columns that joins are allowed
+	// on. This field is must be specified for join_conditions JOIN_ANY and
+	// JOIN_ALL and it cannot be set for JOIN_BLOCKED.
+	JoinAllowedColumns []string `json:"joinAllowedColumns,omitempty"`
+
+	// JoinCondition: Optional. Specifies if a join is required or not on
+	// queries for the view. Default is JOIN_CONDITION_UNSPECIFIED.
+	//
+	// Possible values:
+	//   "JOIN_CONDITION_UNSPECIFIED" - A join is neither required nor
+	// restricted on any column. Default value.
+	//   "JOIN_ANY" - A join is required on at least one of the specified
+	// columns.
+	//   "JOIN_ALL" - A join is required on all specified columns.
+	//   "JOIN_NOT_REQUIRED" - A join is not required, but if present it is
+	// only permitted on 'join_allowed_columns'
+	//   "JOIN_BLOCKED" - Joins are blocked for all queries.
+	JoinCondition string `json:"joinCondition,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "JoinAllowedColumns")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "JoinAllowedColumns") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *JoinRestrictionPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod JoinRestrictionPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // JsonOptions: Json Options for load and make external tables.
 type JsonOptions struct {
 	// Encoding: Optional. The character encoding of the data. The supported
@@ -7533,6 +7770,34 @@ func (s *ParquetOptions) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PartitionSkew: Partition skew detailed information.
+type PartitionSkew struct {
+	// SkewSources: Output only. Source stages which produce skewed data.
+	SkewSources []*SkewSource `json:"skewSources,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SkewSources") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SkewSources") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PartitionSkew) MarshalJSON() ([]byte, error) {
+	type NoMethod PartitionSkew
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // PartitionedColumn: The partitioning column information.
 type PartitionedColumn struct {
 	// Field: Output only. The name of the partition column.
@@ -7815,6 +8080,17 @@ type PrivacyPolicy struct {
 	// AggregationThresholdPolicy: Optional. Policy used for aggregation
 	// thresholds.
 	AggregationThresholdPolicy *AggregationThresholdPolicy `json:"aggregationThresholdPolicy,omitempty"`
+
+	// DifferentialPrivacyPolicy: Optional. Policy used for differential
+	// privacy.
+	DifferentialPrivacyPolicy *DifferentialPrivacyPolicy `json:"differentialPrivacyPolicy,omitempty"`
+
+	// JoinRestrictionPolicy: Optional. Join restriction policy is outside
+	// of the one of policies, since this policy can be set along with other
+	// policies. This policy gives data providers the ability to enforce
+	// joins on the 'join_allowed_columns' when data is queried from a
+	// privacy protected view.
+	JoinRestrictionPolicy *JoinRestrictionPolicy `json:"joinRestrictionPolicy,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "AggregationThresholdPolicy") to unconditionally include in API
@@ -9369,6 +9645,46 @@ func (s *SearchStatistics) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// SerDeInfo: Serializer and deserializer information.
+type SerDeInfo struct {
+	// Name: Optional. Name of the SerDe. The maximum length is 256
+	// characters.
+	Name string `json:"name,omitempty"`
+
+	// Parameters: Optional. Key-value pairs that define the initialization
+	// parameters for the serialization library. Maximum size 10 Kib.
+	Parameters map[string]string `json:"parameters,omitempty"`
+
+	// SerializationLibrary: Required. Specifies a fully-qualified class
+	// name of the serialization library that is responsible for the
+	// translation of data between table representation and the underlying
+	// low-level input and output format structures. The maximum length is
+	// 256 characters.
+	SerializationLibrary string `json:"serializationLibrary,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Name") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Name") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SerDeInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod SerDeInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // SessionInfo: [Preview] Information related to sessions.
 type SessionInfo struct {
 	// SessionId: Output only. The id of the session.
@@ -9430,6 +9746,34 @@ type SetIamPolicyRequest struct {
 
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SkewSource: Details about source stages which produce skewed data.
+type SkewSource struct {
+	// StageId: Output only. Stage id of the skew source stage.
+	StageId int64 `json:"stageId,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "StageId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "StageId") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SkewSource) MarshalJSON() ([]byte, error) {
+	type NoMethod SkewSource
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -9696,6 +10040,9 @@ type StagePerformanceStandaloneInsight struct {
 	// insufficient shuffle quota.
 	InsufficientShuffleQuota bool `json:"insufficientShuffleQuota,omitempty"`
 
+	// PartitionSkew: Output only. Partition skew in the stage.
+	PartitionSkew *PartitionSkew `json:"partitionSkew,omitempty"`
+
 	// SlotContention: Output only. True if the stage has a slot contention
 	// issue.
 	SlotContention bool `json:"slotContention,omitempty"`
@@ -9892,6 +10239,53 @@ func (s *StandardSqlTableType) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// StorageDescriptor: Contains information about how a table's data is
+// stored and accessed by open source query engines.
+type StorageDescriptor struct {
+	// InputFormat: Optional. Specifies the fully qualified class name of
+	// the InputFormat (e.g.
+	// "org.apache.hadoop.hive.ql.io.orc.OrcInputFormat"). The maximum
+	// length is 128 characters.
+	InputFormat string `json:"inputFormat,omitempty"`
+
+	// LocationUri: Optional. The physical location of the table (e.g.
+	// 'gs://spark-dataproc-data/pangea-data/case_sensitive/' or
+	// 'gs://spark-dataproc-data/pangea-data/*'). The maximum length is 2056
+	// bytes.
+	LocationUri string `json:"locationUri,omitempty"`
+
+	// OutputFormat: Optional. Specifies the fully qualified class name of
+	// the OutputFormat (e.g.
+	// "org.apache.hadoop.hive.ql.io.orc.OrcOutputFormat"). The maximum
+	// length is 128 characters.
+	OutputFormat string `json:"outputFormat,omitempty"`
+
+	// SerdeInfo: Optional. Serializer and deserializer information.
+	SerdeInfo *SerDeInfo `json:"serdeInfo,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "InputFormat") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "InputFormat") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *StorageDescriptor) MarshalJSON() ([]byte, error) {
+	type NoMethod StorageDescriptor
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type Streamingbuffer struct {
 	// EstimatedBytes: Output only. A lower-bound estimate of the number of
 	// bytes currently in the streaming buffer.
@@ -10055,6 +10449,10 @@ type Table struct {
 	// dataset can be used to set a default expirationTime on newly created
 	// tables.
 	ExpirationTime int64 `json:"expirationTime,omitempty,string"`
+
+	// ExternalCatalogTableOptions: Optional. Options defining open source
+	// compatible table.
+	ExternalCatalogTableOptions *ExternalCatalogTableOptions `json:"externalCatalogTableOptions,omitempty"`
 
 	// ExternalDataConfiguration: Optional. Describes the data format,
 	// location, and other properties of a table stored outside of BigQuery.
@@ -12175,7 +12573,7 @@ func (s *TransformColumn) MarshalJSON() ([]byte, error) {
 // UndeleteDatasetRequest: Request format for undeleting a dataset.
 type UndeleteDatasetRequest struct {
 	// DeletionTime: Optional. The exact time when the dataset was deleted.
-	// If not specified, it will undelete the most recently deleted version.
+	// If not specified, the most recently deleted version is undeleted.
 	DeletionTime string `json:"deletionTime,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DeletionTime") to
@@ -16278,6 +16676,155 @@ func (c *RoutinesGetCall) Do(opts ...googleapi.CallOption) (*Routine, error) {
 
 }
 
+// method id "bigquery.routines.getIamPolicy":
+
+type RoutinesGetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	getiampolicyrequest *GetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// GetIamPolicy: Gets the access control policy for a resource. Returns
+// an empty policy if the resource exists and does not have a policy
+// set.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
+func (r *RoutinesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *RoutinesGetIamPolicyCall {
+	c := &RoutinesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.getiampolicyrequest = getiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RoutinesGetIamPolicyCall) Fields(s ...googleapi.Field) *RoutinesGetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RoutinesGetIamPolicyCall) Context(ctx context.Context) *RoutinesGetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RoutinesGetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RoutinesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+resource}:getIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquery.routines.getIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *RoutinesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/routines/{routinesId}:getIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "bigquery.routines.getIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/datasets/[^/]+/routines/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{+resource}:getIamPolicy",
+	//   "request": {
+	//     "$ref": "GetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform",
+	//     "https://www.googleapis.com/auth/cloud-platform.read-only"
+	//   ]
+	// }
+
+}
+
 // method id "bigquery.routines.insert":
 
 type RoutinesInsertCall struct {
@@ -16670,6 +17217,154 @@ func (c *RoutinesListCall) Pages(ctx context.Context, f func(*ListRoutinesRespon
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "bigquery.routines.setIamPolicy":
+
+type RoutinesSetIamPolicyCall struct {
+	s                   *Service
+	resource            string
+	setiampolicyrequest *SetIamPolicyRequest
+	urlParams_          gensupport.URLParams
+	ctx_                context.Context
+	header_             http.Header
+}
+
+// SetIamPolicy: Sets the access control policy on the specified
+// resource. Replaces any existing policy. Can return `NOT_FOUND`,
+// `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.
+//
+//   - resource: REQUIRED: The resource for which the policy is being
+//     specified. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the
+//     appropriate value for this field.
+func (r *RoutinesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *RoutinesSetIamPolicyCall {
+	c := &RoutinesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.resource = resource
+	c.setiampolicyrequest = setiampolicyrequest
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *RoutinesSetIamPolicyCall) Fields(s ...googleapi.Field) *RoutinesSetIamPolicyCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *RoutinesSetIamPolicyCall) Context(ctx context.Context) *RoutinesSetIamPolicyCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *RoutinesSetIamPolicyCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *RoutinesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{+resource}:setIamPolicy")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"resource": c.resource,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "bigquery.routines.setIamPolicy" call.
+// Exactly one of *Policy or error will be non-nil. Any non-2xx status
+// code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified
+// was returned.
+func (c *RoutinesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Policy{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy. Can return `NOT_FOUND`, `INVALID_ARGUMENT`, and `PERMISSION_DENIED` errors.",
+	//   "flatPath": "projects/{projectsId}/datasets/{datasetsId}/routines/{routinesId}:setIamPolicy",
+	//   "httpMethod": "POST",
+	//   "id": "bigquery.routines.setIamPolicy",
+	//   "parameterOrder": [
+	//     "resource"
+	//   ],
+	//   "parameters": {
+	//     "resource": {
+	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
+	//       "location": "path",
+	//       "pattern": "^projects/[^/]+/datasets/[^/]+/routines/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{+resource}:setIamPolicy",
+	//   "request": {
+	//     "$ref": "SetIamPolicyRequest"
+	//   },
+	//   "response": {
+	//     "$ref": "Policy"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/bigquery",
+	//     "https://www.googleapis.com/auth/cloud-platform"
+	//   ]
+	// }
+
 }
 
 // method id "bigquery.routines.update":

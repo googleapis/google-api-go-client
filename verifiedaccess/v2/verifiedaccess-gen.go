@@ -353,6 +353,10 @@ type DeviceSignals struct {
 	// Chrome Profile’s user or ChromeOS user.
 	ProfileAffiliationIds []string `json:"profileAffiliationIds,omitempty"`
 
+	// ProfileEnrollmentDomain: Enrollment domain of the customer which is
+	// currently managing the profile.
+	ProfileEnrollmentDomain string `json:"profileEnrollmentDomain,omitempty"`
+
 	// RealtimeUrlCheckMode: Whether Enterprise-grade (i.e. custom) unsafe
 	// URL scanning is enabled or not. This setting may be controlled by an
 	// enterprise policy:

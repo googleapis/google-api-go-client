@@ -3201,8 +3201,9 @@ type ProductPolicy struct {
 	// 90 days after it becomes out of date again. The user can still
 	// manually update the app from the Play Store at any time.
 	//   "autoUpdateHighPriority" - The app is updated as soon as possible.
-	// No constraints are applied. The device is notified immediately about
-	// a new app update after it is published by the developer.
+	// No constraints are applied. The device is notified as soon as
+	// possible about a new app update after it is published by the
+	// developer.
 	AutoUpdateMode string `json:"autoUpdateMode,omitempty"`
 
 	// EnterpriseAuthenticationAppLinkConfigs: An authentication URL

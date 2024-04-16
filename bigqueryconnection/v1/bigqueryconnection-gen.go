@@ -804,6 +804,9 @@ type ConnectorConfiguration struct {
 	// pointing to.
 	Endpoint *ConnectorConfigurationEndpoint `json:"endpoint,omitempty"`
 
+	// Network: Networking configuration.
+	Network *ConnectorConfigurationNetwork `json:"network,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Authentication") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -883,6 +886,69 @@ type ConnectorConfigurationEndpoint struct {
 
 func (s *ConnectorConfigurationEndpoint) MarshalJSON() ([]byte, error) {
 	type NoMethod ConnectorConfigurationEndpoint
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorConfigurationNetwork: Network related configuration.
+type ConnectorConfigurationNetwork struct {
+	// PrivateServiceConnect: Private Service Connect networking
+	// configuration.
+	PrivateServiceConnect *ConnectorConfigurationPrivateServiceConnect `json:"privateServiceConnect,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "PrivateServiceConnect") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PrivateServiceConnect") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectorConfigurationNetwork) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorConfigurationNetwork
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ConnectorConfigurationPrivateServiceConnect: Private Service Connect
+// configuration.
+type ConnectorConfigurationPrivateServiceConnect struct {
+	// NetworkAttachment: Required. Network Attachment name in the format of
+	// `projects/{project}/regions/{region}/networkAttachments/{networkattach
+	// ment}`.
+	NetworkAttachment string `json:"networkAttachment,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "NetworkAttachment")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "NetworkAttachment") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ConnectorConfigurationPrivateServiceConnect) MarshalJSON() ([]byte, error) {
+	type NoMethod ConnectorConfigurationPrivateServiceConnect
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

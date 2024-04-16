@@ -2048,7 +2048,8 @@ type AccountUser struct {
 	// PaymentsManager: Whether user can manage payment settings.
 	PaymentsManager bool `json:"paymentsManager,omitempty"`
 
-	// ReportingManager: Whether user is a reporting manager.
+	// ReportingManager: Whether user is a reporting manager. This role is
+	// equivalent to the Performance and insights role in Merchant Center.
 	ReportingManager bool `json:"reportingManager,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Admin") to
@@ -2985,6 +2986,13 @@ type Action struct {
 	// provide instructions, if the specific functionality is not available.
 	BuiltinSimpleAction *BuiltInSimpleAction `json:"builtinSimpleAction,omitempty"`
 
+	// BuiltinUserInputAction: Action implemented and performed in (your)
+	// third-party application. The application needs to show an additional
+	// content and input form to the merchant as specified for given action.
+	// They can trigger the action only when they provided all required
+	// inputs.
+	BuiltinUserInputAction *BuiltInUserInputAction `json:"builtinUserInputAction,omitempty"`
+
 	// ButtonLabel: Label of the action button.
 	ButtonLabel string `json:"buttonLabel,omitempty"`
 
@@ -3027,6 +3035,97 @@ type Action struct {
 
 func (s *Action) MarshalJSON() ([]byte, error) {
 	type NoMethod Action
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ActionFlow: Flow that can be selected for an action. When merchant
+// selects a flow, application should open a dialog with more
+// information and input form.
+type ActionFlow struct {
+	// DialogButtonLabel: Label for the button to trigger the action from
+	// the action dialog. For example: "Request review"
+	DialogButtonLabel string `json:"dialogButtonLabel,omitempty"`
+
+	// DialogCallout: Important message to be highlighted in the request
+	// dialog. For example: "You can only request a review for disagreeing
+	// with this issue once. If it's not approved, you'll need to fix the
+	// issue and wait a few days before you can request another review."
+	DialogCallout *Callout `json:"dialogCallout,omitempty"`
+
+	// DialogMessage: Message displayed in the request dialog. For example:
+	// "Make sure you've fixed all your country-specific issues. If not, you
+	// may have to wait 7 days to request another review". There may be an
+	// more information to be shown in a tooltip.
+	DialogMessage *TextWithTooltip `json:"dialogMessage,omitempty"`
+
+	// DialogTitle: Title of the request dialog. For example: "Before you
+	// request a review"
+	DialogTitle string `json:"dialogTitle,omitempty"`
+
+	// Id: Not for display but need to be sent back for the selected action
+	// flow.
+	Id string `json:"id,omitempty"`
+
+	// Inputs: A list of input fields.
+	Inputs []*InputField `json:"inputs,omitempty"`
+
+	// Label: Text value describing the intent for the action flow. It can
+	// be used as an input label if merchant needs to pick one of multiple
+	// flows. For example: "I disagree with the issue"
+	Label string `json:"label,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DialogButtonLabel")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DialogButtonLabel") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ActionFlow) MarshalJSON() ([]byte, error) {
+	type NoMethod ActionFlow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ActionInput: Input provided by the merchant.
+type ActionInput struct {
+	// ActionFlowId: Required. Id of the selected action flow.
+	ActionFlowId string `json:"actionFlowId,omitempty"`
+
+	// InputValues: Required. Values for input fields.
+	InputValues []*InputValue `json:"inputValues,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionFlowId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionFlowId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ActionInput) MarshalJSON() ([]byte, error) {
+	type NoMethod ActionInput
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3591,6 +3690,48 @@ func (s *BuiltInSimpleActionAdditionalContent) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// BuiltInUserInputAction: Action that is implemented and performed in
+// (your) third-party application. The application needs to show an
+// additional content and input form to the merchant. They can start the
+// action only when they provided all required inputs. The application
+// will request processing of the action by calling the triggeraction
+// method
+// (https://developers.google.com/shopping-content/reference/rest/v2.1/merchantsupport/triggeraction).
+type BuiltInUserInputAction struct {
+	// ActionContext: Internal details. Not for display but need to be sent
+	// back when triggering the action.
+	ActionContext string `json:"actionContext,omitempty"`
+
+	// Flows: Actions may provide multiple different flows. Merchant selects
+	// one that fits best to their intent. Selecting the flow is the first
+	// step in user's interaction with the action. It affects what input
+	// fields will be available and required and also how the request will
+	// be processed.
+	Flows []*ActionFlow `json:"flows,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionContext") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionContext") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *BuiltInUserInputAction) MarshalJSON() ([]byte, error) {
+	type NoMethod BuiltInUserInputAction
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 type BusinessDayConfig struct {
 	// BusinessDays: Regular business days, such as '"monday"'. May not be
 	// empty.
@@ -3729,6 +3870,51 @@ type BuyOnGoogleProgramStatus struct {
 
 func (s *BuyOnGoogleProgramStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod BuyOnGoogleProgramStatus
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Callout: An important message that should be highlighted. Usually
+// displayed as a banner.
+type Callout struct {
+	// FullMessage: A full message that needs to be shown to the merchant.
+	FullMessage *TextWithTooltip `json:"fullMessage,omitempty"`
+
+	// StyleHint: Can be used to render messages with different severity in
+	// different styles. Snippets off all types contain important
+	// information that should be displayed to merchants.
+	//
+	// Possible values:
+	//   "CALLOUT_STYLE_HINT_UNSPECIFIED" - Default value. Will never be
+	// provided by the API.
+	//   "ERROR" - The most important type of information highlighting
+	// problems, like an unsuccessful outcome of previously requested
+	// actions.
+	//   "WARNING" - Information warning about pending problems, risks or
+	// deadlines.
+	//   "INFO" - Default severity for important information like pending
+	// status of previously requested action or cooldown for re-review.
+	StyleHint string `json:"styleHint,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "FullMessage") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "FullMessage") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Callout) MarshalJSON() ([]byte, error) {
+	type NoMethod Callout
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -6478,6 +6664,330 @@ func (s *HolidaysHoliday) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// InputField: Input field that needs to be available to the merchant.
+// If the field is marked as required, then a value needs to be provided
+// for a successful processing of the request.
+type InputField struct {
+	// CheckboxInput: Input field to provide a boolean value. Corresponds to
+	// the html input type=checkbox
+	// (https://www.w3.org/TR/2012/WD-html-markup-20121025/input.checkbox.html#input.checkbox).
+	CheckboxInput *InputFieldCheckboxInput `json:"checkboxInput,omitempty"`
+
+	// ChoiceInput: Input field to select one of the offered choices.
+	// Corresponds to the html input type=radio
+	// (https://www.w3.org/TR/2012/WD-html-markup-20121025/input.radio.html#input.radio).
+	ChoiceInput *InputFieldChoiceInput `json:"choiceInput,omitempty"`
+
+	// Id: Not for display but need to be sent back for the given input
+	// field.
+	Id string `json:"id,omitempty"`
+
+	// Label: Input field label. There may be more information to be shown
+	// in a tooltip.
+	Label *TextWithTooltip `json:"label,omitempty"`
+
+	// Required: Whether the field is required. The action button needs to
+	// stay disabled till values for all required fields are provided.
+	Required bool `json:"required,omitempty"`
+
+	// TextInput: Input field to provide text information. Corresponds to
+	// the html input type=text
+	// (https://www.w3.org/TR/2012/WD-html-markup-20121025/input.text.html#input.text)
+	// or html textarea
+	// (https://www.w3.org/TR/2012/WD-html-markup-20121025/textarea.html#textarea).
+	TextInput *InputFieldTextInput `json:"textInput,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckboxInput") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CheckboxInput") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InputField) MarshalJSON() ([]byte, error) {
+	type NoMethod InputField
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InputFieldCheckboxInput: Checkbox input allows merchants to provide a
+// boolean value. Corresponds to the html input type=checkbox
+// (https://www.w3.org/TR/2012/WD-html-markup-20121025/input.checkbox.html#input.checkbox).
+// If merchant checks the box, the input value for the field is `true`,
+// otherwise it is `false`. This type of input is often used as a
+// confirmation that the merchant completed required steps before they
+// are allowed to start the action. In such a case, the input field is
+// marked as required and the button to trigger the action should stay
+// disabled until the merchant checks the box.
+type InputFieldCheckboxInput struct {
+}
+
+// InputFieldChoiceInput: Choice input allows merchants to select one of
+// the offered choices. Some choices may be linked to additional input
+// fields that should be displayed under or next to the choice option.
+// The value for the additional input field needs to be provided only
+// when the specific choice is selected by the merchant. For example,
+// additional input field can be hidden or disabled until the merchant
+// selects the specific choice.
+type InputFieldChoiceInput struct {
+	// Options: A list of choices. Only one option can be selected.
+	Options []*InputFieldChoiceInputChoiceInputOption `json:"options,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Options") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Options") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InputFieldChoiceInput) MarshalJSON() ([]byte, error) {
+	type NoMethod InputFieldChoiceInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InputFieldChoiceInputChoiceInputOption: A choice that merchant can
+// select.
+type InputFieldChoiceInputChoiceInputOption struct {
+	// AdditionalInput: Input that should be displayed when this option is
+	// selected. The additional input will not contain a `ChoiceInput`.
+	AdditionalInput *InputField `json:"additionalInput,omitempty"`
+
+	// Id: Not for display but need to be sent back for the selected choice
+	// option.
+	Id string `json:"id,omitempty"`
+
+	// Label: Short description of the choice option. There may be more
+	// information to be shown as a tooltip.
+	Label *TextWithTooltip `json:"label,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalInput") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalInput") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InputFieldChoiceInputChoiceInputOption) MarshalJSON() ([]byte, error) {
+	type NoMethod InputFieldChoiceInputChoiceInputOption
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InputFieldTextInput: Text input allows merchants to provide a text
+// value.
+type InputFieldTextInput struct {
+	// AdditionalInfo: Additional info regarding the field to be displayed
+	// to merchant. For example, warning to not include personal
+	// identifiable information. There may be more information to be shown
+	// in a tooltip.
+	AdditionalInfo *TextWithTooltip `json:"additionalInfo,omitempty"`
+
+	// AriaLabel: Text to be used as the aria-label
+	// (https://www.w3.org/TR/WCAG20-TECHS/ARIA14.html) for the input.
+	AriaLabel string `json:"ariaLabel,omitempty"`
+
+	// FormatInfo: Information about the required format. If present, it
+	// should be shown close to the input field to help merchants to provide
+	// a correct value. For example: "VAT numbers should be in a format
+	// similar to SK9999999999"
+	FormatInfo string `json:"formatInfo,omitempty"`
+
+	// Type: Type of the text input
+	//
+	// Possible values:
+	//   "TEXT_INPUT_TYPE_UNSPECIFIED" - Default value. Will never be
+	// provided by the API.
+	//   "GENERIC_SHORT_TEXT" - Used when a short text is expected. The
+	// field can be rendered as a [text
+	// field](https://www.w3.org/TR/2012/WD-html-markup-20121025/input.text.h
+	// tml#input.text).
+	//   "GENERIC_LONG_TEXT" - Used when a longer text is expected. The
+	// field should be rendered as a
+	// [textarea](https://www.w3.org/TR/2012/WD-html-markup-20121025/textarea
+	// .html#textarea).
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AdditionalInfo") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AdditionalInfo") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InputFieldTextInput) MarshalJSON() ([]byte, error) {
+	type NoMethod InputFieldTextInput
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InputValue: Input provided by the merchant for input field.
+type InputValue struct {
+	// CheckboxInputValue: Value for checkbox input field.
+	CheckboxInputValue *InputValueCheckboxInputValue `json:"checkboxInputValue,omitempty"`
+
+	// ChoiceInputValue: Value for choice input field.
+	ChoiceInputValue *InputValueChoiceInputValue `json:"choiceInputValue,omitempty"`
+
+	// InputFieldId: Required. Id of the corresponding input field.
+	InputFieldId string `json:"inputFieldId,omitempty"`
+
+	// TextInputValue: Value for text input field.
+	TextInputValue *InputValueTextInputValue `json:"textInputValue,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CheckboxInputValue")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CheckboxInputValue") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InputValue) MarshalJSON() ([]byte, error) {
+	type NoMethod InputValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InputValueCheckboxInputValue: Value for checkbox input field.
+type InputValueCheckboxInputValue struct {
+	// Value: Required. True if the merchant checked the box field. False
+	// otherwise.
+	Value bool `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Value") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InputValueCheckboxInputValue) MarshalJSON() ([]byte, error) {
+	type NoMethod InputValueCheckboxInputValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InputValueChoiceInputValue: Value for choice input field.
+type InputValueChoiceInputValue struct {
+	// ChoiceInputOptionId: Required. Id of the option that was selected by
+	// the merchant.
+	ChoiceInputOptionId string `json:"choiceInputOptionId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ChoiceInputOptionId")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ChoiceInputOptionId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InputValueChoiceInputValue) MarshalJSON() ([]byte, error) {
+	type NoMethod InputValueChoiceInputValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// InputValueTextInputValue: Value for text input field.
+type InputValueTextInputValue struct {
+	// Value: Required. Text provided by the merchant.
+	Value string `json:"value,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Value") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Value") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *InputValueTextInputValue) MarshalJSON() ([]byte, error) {
+	type NoMethod InputValueTextInputValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // InsertCheckoutSettingsRequest: Request message for the
 // `InsertCheckoutSettings` method.
 type InsertCheckoutSettingsRequest struct {
@@ -8007,54 +8517,57 @@ func (s *LocationIdSet) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-type LoyaltyPoints struct {
-	// Name: Name of loyalty points program. It is recommended to limit the
-	// name to 12 full-width characters or 24 Roman characters.
-	Name string `json:"name,omitempty"`
+// LoyaltyProgram: Allows the setting up of loyalty program benefits
+// (for example price or points).
+// https://support.google.com/merchants/answer/12922446
+type LoyaltyProgram struct {
+	// CashbackForFutureUse: Optional. The cashback that can be used for
+	// future purchases.
+	CashbackForFutureUse *Price `json:"cashbackForFutureUse,omitempty"`
 
-	// PointsValue: The retailer's loyalty points in absolute value.
-	PointsValue int64 `json:"pointsValue,omitempty,string"`
+	// LoyaltyPoints: Optional. The amount of loyalty points earned on a
+	// purchase.
+	LoyaltyPoints int64 `json:"loyaltyPoints,omitempty,string"`
 
-	// Ratio: The ratio of a point when converted to currency. Google
-	// assumes currency based on Merchant Center settings. If ratio is left
-	// out, it defaults to 1.0.
-	Ratio float64 `json:"ratio,omitempty"`
+	// Price: Optional. The price for members of the given tier (instant
+	// discount price). Must be smaller or equal to the regular price.
+	Price *Price `json:"price,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ProgramLabel: Required. The label of the loyalty program. This is an
+	// internal label that uniquely identifies the relationship between a
+	// merchant entity and a loyalty program entity. It must be provided so
+	// that system can associate the assets below (for example, price and
+	// points) with a merchant. The corresponding program must be linked to
+	// the merchant account.
+	ProgramLabel string `json:"programLabel,omitempty"`
+
+	// TierLabel: Required. The label of the tier within the loyalty
+	// program. Must match one of the labels within the program.
+	TierLabel string `json:"tierLabel,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CashbackForFutureUse") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CashbackForFutureUse") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
-func (s *LoyaltyPoints) MarshalJSON() ([]byte, error) {
-	type NoMethod LoyaltyPoints
+func (s *LoyaltyProgram) MarshalJSON() ([]byte, error) {
+	type NoMethod LoyaltyProgram
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-func (s *LoyaltyPoints) UnmarshalJSON(data []byte) error {
-	type NoMethod LoyaltyPoints
-	var s1 struct {
-		Ratio gensupport.JSONFloat64 `json:"ratio"`
-		*NoMethod
-	}
-	s1.NoMethod = (*NoMethod)(s)
-	if err := json.Unmarshal(data, &s1); err != nil {
-		return err
-	}
-	s.Ratio = float64(s1.Ratio)
-	return nil
 }
 
 // MerchantCenterDestination: "Merchant Center Destination" sources can
@@ -13791,12 +14304,10 @@ type Product struct {
 	AgeGroup string `json:"ageGroup,omitempty"`
 
 	// AutoPricingMinPrice: A safeguard in the Automated Discounts
-	// (https://support.google.com/merchants/answer/10295759?hl=en) and
-	// Dynamic Promotions
-	// (https://support.google.com/merchants/answer/13949249?hl=en)
-	// projects, ensuring that discounts on merchants' offers do not fall
-	// below this value, thereby preserving the offer's value and
-	// profitability.
+	// (//support.google.com/merchants/answer/10295759) and Dynamic
+	// Promotions (//support.google.com/merchants/answer/13949249) projects,
+	// ensuring that discounts on merchants' offers do not fall below this
+	// value, thereby preserving the offer's value and profitability.
 	AutoPricingMinPrice *Price `json:"autoPricingMinPrice,omitempty"`
 
 	// Availability: Availability status of the item.
@@ -13986,9 +14497,10 @@ type Product struct {
 	// LinkTemplate: URL template for merchant hosted local storefront.
 	LinkTemplate string `json:"linkTemplate,omitempty"`
 
-	// LoyaltyPoints: Loyalty points that users receive after purchasing the
-	// item. Japan only.
-	LoyaltyPoints *LoyaltyPoints `json:"loyaltyPoints,omitempty"`
+	// LoyaltyProgram: Loyalty program information that is used to surface
+	// loyalty benefits ( for example pricing, points, etc) to the user for
+	// this item.
+	LoyaltyProgram *LoyaltyProgram `json:"loyaltyProgram,omitempty"`
 
 	// Material: The material of which the item is made.
 	Material string `json:"material,omitempty"`
@@ -14131,6 +14643,14 @@ type Product struct {
 	// Source: The source of the offer, that is, how the offer was created.
 	// Acceptable values are: - "api" - "crawl" - "feed"
 	Source string `json:"source,omitempty"`
+
+	// StructuredDescription: Structured description, for algorithmically
+	// (AI)-generated descriptions.
+	StructuredDescription *ProductStructuredDescription `json:"structuredDescription,omitempty"`
+
+	// StructuredTitle: Structured title, for algorithmically (AI)-generated
+	// titles.
+	StructuredTitle *ProductStructuredTitle `json:"structuredTitle,omitempty"`
 
 	// SubscriptionCost: Number of periods (months or years) and amount of
 	// payment per period for an item with an associated subscription
@@ -15076,6 +15596,77 @@ type ProductStatusItemLevelIssue struct {
 
 func (s *ProductStatusItemLevelIssue) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductStatusItemLevelIssue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductStructuredDescription: Structured description, for
+// algorithmically (AI)-generated descriptions. See description
+// (https://support.google.com/merchants/answer/6324468#When_to_use) for
+// more information.
+type ProductStructuredDescription struct {
+	// Content: Required. The description text. Maximum length is 5000
+	// characters.
+	Content string `json:"content,omitempty"`
+
+	// DigitalSourceType: Optional. The digital source type. Acceptable
+	// values are: - "trained_algorithmic_media" - "default"
+	DigitalSourceType string `json:"digitalSourceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductStructuredDescription) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductStructuredDescription
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ProductStructuredTitle: Structured title, for algorithmically
+// (AI)-generated titles. See title
+// (https://support.google.com/merchants/answer/6324415#Whentouse) for
+// more information.
+type ProductStructuredTitle struct {
+	// Content: Required. The title text. Maximum length is 150 characters.
+	Content string `json:"content,omitempty"`
+
+	// DigitalSourceType: Optional. The digital source type. Acceptable
+	// values are: - "trained_algorithmic_media" - "default"
+	DigitalSourceType string `json:"digitalSourceType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Content") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Content") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ProductStructuredTitle) MarshalJSON() ([]byte, error) {
+	type NoMethod ProductStructuredTitle
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -17103,6 +17694,25 @@ type RenderAccountIssuesRequestPayload struct {
 	// pre-rendered HTML text.
 	ContentOption string `json:"contentOption,omitempty"`
 
+	// UserInputActionOption: Optional. How actions with user input form
+	// should be handled. If not provided, actions will be returned as links
+	// that points merchant to Merchant Center where they can request the
+	// action.
+	//
+	// Possible values:
+	//   "USER_INPUT_ACTION_RENDERING_OPTION_UNSPECIFIED" - Default value.
+	// Will never be provided by the API.
+	//   "REDIRECT_TO_MERCHANT_CENTER" - Actions that require user input are
+	// represented only as links that points merchant to Merchant Center
+	// where they can request the action. Provides easier to implement
+	// alternative to `BUILT_IN_USER_INPUT_ACTIONS`.
+	//   "BUILT_IN_USER_INPUT_ACTIONS" - Returns content and input form
+	// definition for each complex action. Your application needs to display
+	// this content and input form to the merchant before they can request
+	// processing of the action. To start the action, your application needs
+	// to call the `triggeraction` method.
+	UserInputActionOption string `json:"userInputActionOption,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "ContentOption") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -17185,6 +17795,25 @@ type RenderProductIssuesRequestPayload struct {
 	//   "PRE_RENDERED_HTML" - Returns the detail of the issue as a
 	// pre-rendered HTML text.
 	ContentOption string `json:"contentOption,omitempty"`
+
+	// UserInputActionOption: Optional. How actions with user input form
+	// should be handled. If not provided, actions will be returned as links
+	// that points merchant to Merchant Center where they can request the
+	// action.
+	//
+	// Possible values:
+	//   "USER_INPUT_ACTION_RENDERING_OPTION_UNSPECIFIED" - Default value.
+	// Will never be provided by the API.
+	//   "REDIRECT_TO_MERCHANT_CENTER" - Actions that require user input are
+	// represented only as links that points merchant to Merchant Center
+	// where they can request the action. Provides easier to implement
+	// alternative to `BUILT_IN_USER_INPUT_ACTIONS`.
+	//   "BUILT_IN_USER_INPUT_ACTIONS" - Returns content and input form
+	// definition for each complex action. Your application needs to display
+	// this content and input form to the merchant before they can request
+	// processing of the action. To start the action, your application needs
+	// to call the `triggeraction` method.
+	UserInputActionOption string `json:"userInputActionOption,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ContentOption") to
 	// unconditionally include in API requests. By default, fields with
@@ -20370,6 +20999,51 @@ func (s *TestOrderPickupDetailsPickupPerson) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// TextWithTooltip: Block of text that may contain a tooltip with more
+// information.
+type TextWithTooltip struct {
+	// SimpleTooltipValue: Value of the tooltip as a simple text.
+	SimpleTooltipValue string `json:"simpleTooltipValue,omitempty"`
+
+	// SimpleValue: Value of the message as a simple text.
+	SimpleValue string `json:"simpleValue,omitempty"`
+
+	// TooltipIconStyle: The suggested type of an icon for tooltip, if a
+	// tooltip is present.
+	//
+	// Possible values:
+	//   "TOOLTIP_ICON_STYLE_UNSPECIFIED" - Default value. Will never be
+	// provided by the API.
+	//   "INFO" - Used when the tooltip adds additional information to the
+	// context, the 'i' can be used as an icon.
+	//   "QUESTION" - Used when the tooltip shows helpful information, the
+	// '?' can be used as an icon.
+	TooltipIconStyle string `json:"tooltipIconStyle,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "SimpleTooltipValue")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "SimpleTooltipValue") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TextWithTooltip) MarshalJSON() ([]byte, error) {
+	type NoMethod TextWithTooltip
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // TimePeriod: A message that represents a time period.
 type TimePeriod struct {
 	// EndTime: The ending timestamp.
@@ -20633,6 +21307,71 @@ type TransitTableTransitTimeRowTransitTimeValue struct {
 
 func (s *TransitTableTransitTimeRowTransitTimeValue) MarshalJSON() ([]byte, error) {
 	type NoMethod TransitTableTransitTimeRowTransitTimeValue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TriggerActionPayload: The payload for the triggered action.
+type TriggerActionPayload struct {
+	// ActionContext: Required. The context from the selected action. The
+	// value is obtained from rendered issues and needs to be sent back to
+	// identify the action that is being triggered.
+	ActionContext string `json:"actionContext,omitempty"`
+
+	// ActionInput: Required. Input provided by the merchant.
+	ActionInput *ActionInput `json:"actionInput,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ActionContext") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ActionContext") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TriggerActionPayload) MarshalJSON() ([]byte, error) {
+	type NoMethod TriggerActionPayload
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TriggerActionResponse: Response informing about the started action.
+type TriggerActionResponse struct {
+	// Message: The message for merchant.
+	Message string `json:"message,omitempty"`
+
+	// ServerResponse contains the HTTP response code and headers from the
+	// server.
+	googleapi.ServerResponse `json:"-"`
+
+	// ForceSendFields is a list of field names (e.g. "Message") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Message") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *TriggerActionResponse) MarshalJSON() ([]byte, error) {
+	type NoMethod TriggerActionResponse
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -33662,6 +34401,170 @@ func (c *MerchantsupportRenderproductissuesCall) Do(opts ...googleapi.CallOption
 	//   },
 	//   "response": {
 	//     "$ref": "RenderProductIssuesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/content"
+	//   ]
+	// }
+
+}
+
+// method id "content.merchantsupport.triggeraction":
+
+type MerchantsupportTriggeractionCall struct {
+	s                    *APIService
+	merchantId           int64
+	triggeractionpayload *TriggerActionPayload
+	urlParams_           gensupport.URLParams
+	ctx_                 context.Context
+	header_              http.Header
+}
+
+// Triggeraction: Start an action. The action can be requested by
+// merchants in third-party application. Before merchants can request
+// the action, the third-party application needs to show them action
+// specific content and display a user input form. The action can be
+// successfully started only once all `required` inputs are provided. If
+// any `required` input is missing, or invalid value was provided, the
+// service will return 400 error. Validation errors will contain Ids for
+// all problematic field together with translated, human readable error
+// messages that can be shown to the user.
+//
+// - merchantId: The ID of the merchant's account.
+func (r *MerchantsupportService) Triggeraction(merchantId int64, triggeractionpayload *TriggerActionPayload) *MerchantsupportTriggeractionCall {
+	c := &MerchantsupportTriggeractionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.merchantId = merchantId
+	c.triggeractionpayload = triggeractionpayload
+	return c
+}
+
+// LanguageCode sets the optional parameter "languageCode": Language
+// code IETF BCP 47 syntax (https://tools.ietf.org/html/bcp47) used to
+// localize the response. If not set, the result will be in default
+// language `en-US`.
+func (c *MerchantsupportTriggeractionCall) LanguageCode(languageCode string) *MerchantsupportTriggeractionCall {
+	c.urlParams_.Set("languageCode", languageCode)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *MerchantsupportTriggeractionCall) Fields(s ...googleapi.Field) *MerchantsupportTriggeractionCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *MerchantsupportTriggeractionCall) Context(ctx context.Context) *MerchantsupportTriggeractionCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *MerchantsupportTriggeractionCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *MerchantsupportTriggeractionCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.triggeractionpayload)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "{merchantId}/merchantsupport/triggeraction")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("POST", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"merchantId": strconv.FormatInt(c.merchantId, 10),
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "content.merchantsupport.triggeraction" call.
+// Exactly one of *TriggerActionResponse or error will be non-nil. Any
+// non-2xx status code is an error. Response headers are in either
+// *TriggerActionResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *MerchantsupportTriggeractionCall) Do(opts ...googleapi.CallOption) (*TriggerActionResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &TriggerActionResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Start an action. The action can be requested by merchants in third-party application. Before merchants can request the action, the third-party application needs to show them action specific content and display a user input form. The action can be successfully started only once all `required` inputs are provided. If any `required` input is missing, or invalid value was provided, the service will return 400 error. Validation errors will contain Ids for all problematic field together with translated, human readable error messages that can be shown to the user.",
+	//   "flatPath": "{merchantId}/merchantsupport/triggeraction",
+	//   "httpMethod": "POST",
+	//   "id": "content.merchantsupport.triggeraction",
+	//   "parameterOrder": [
+	//     "merchantId"
+	//   ],
+	//   "parameters": {
+	//     "languageCode": {
+	//       "description": "Optional. Language code [IETF BCP 47 syntax](https://tools.ietf.org/html/bcp47) used to localize the response. If not set, the result will be in default language `en-US`.",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "merchantId": {
+	//       "description": "Required. The ID of the merchant's account.",
+	//       "format": "int64",
+	//       "location": "path",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "{merchantId}/merchantsupport/triggeraction",
+	//   "request": {
+	//     "$ref": "TriggerActionPayload"
+	//   },
+	//   "response": {
+	//     "$ref": "TriggerActionResponse"
 	//   },
 	//   "scopes": [
 	//     "https://www.googleapis.com/auth/content"

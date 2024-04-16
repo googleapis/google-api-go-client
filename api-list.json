@@ -79,6 +79,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "addressvalidation:v1",
+      "name": "addressvalidation",
+      "version": "v1",
+      "title": "Address Validation API",
+      "description": "The Address Validation API allows developers to verify the accuracy of addresses. Given an address, it returns information about the correctness of the components of the parsed address, a geocode, and a verdict on the deliverability of the parsed address.",
+      "discoveryRestUrl": "https://addressvalidation.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://developers.google.com/maps/documentation/addressvalidation",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "adexchangebuyer2:v2beta1",
       "name": "adexchangebuyer2",
       "version": "v2beta1",
@@ -1866,6 +1881,21 @@
     },
     {
       "kind": "discovery#directoryItem",
+      "id": "config:v1",
+      "name": "config",
+      "version": "v1",
+      "title": "Infrastructure Manager API",
+      "description": "Creates and manages Google Cloud Platform resources and infrastructure.",
+      "discoveryRestUrl": "https://config.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/infrastructure-manager/docs",
+      "preferred": true
+    },
+    {
+      "kind": "discovery#directoryItem",
       "id": "connectors:v1",
       "name": "connectors",
       "version": "v1",
@@ -2537,6 +2567,21 @@
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
       },
       "documentationLink": "https://cloud.google.com/discovery-engine/docs",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "discoveryengine:v1",
+      "name": "discoveryengine",
+      "version": "v1",
+      "title": "Discovery Engine API",
+      "description": "Discovery Engine API.",
+      "discoveryRestUrl": "https://discoveryengine.googleapis.com/$discovery/rest?version=v1",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://cloud.google.com/discovery-engine/docs",
       "preferred": true
     },
     {
@@ -3104,6 +3149,21 @@
       "title": "Firebase ML API",
       "description": "Access custom machine learning models hosted via Firebase ML.",
       "discoveryRestUrl": "https://firebaseml.googleapis.com/$discovery/rest?version=v1beta2",
+      "icons": {
+        "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
+        "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"
+      },
+      "documentationLink": "https://firebase.google.com",
+      "preferred": false
+    },
+    {
+      "kind": "discovery#directoryItem",
+      "id": "firebaseml:v2beta",
+      "name": "firebaseml",
+      "version": "v2beta",
+      "title": "Firebase ML API",
+      "description": "Access custom machine learning models hosted via Firebase ML.",
+      "discoveryRestUrl": "https://firebaseml.googleapis.com/$discovery/rest?version=v2beta",
       "icons": {
         "x16": "https://www.gstatic.com/images/branding/product/1x/googleg_16dp.png",
         "x32": "https://www.gstatic.com/images/branding/product/1x/googleg_32dp.png"

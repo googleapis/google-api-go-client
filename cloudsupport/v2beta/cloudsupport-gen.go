@@ -553,26 +553,26 @@ func (s *CaseClassification) MarshalJSON() ([]byte, error) {
 type CloseCaseRequest struct {
 }
 
-// Comment: Case comments are the main way Google Support communicates
-// with a user who has opened a case. When a user responds to Google
-// Support, the user's responses also appear as comments.
+// Comment: A comment associated with a support case. Case comments are
+// the primary way for Google Support to communicate with a user who has
+// opened a case. When a user responds to Google Support, the user's
+// responses also appear as comments.
 type Comment struct {
-	// Body: The full comment body. Maximum of 12800 characters. This can
-	// contain rich text syntax.
+	// Body: The full comment body. Maximum of 12800 characters.
 	Body string `json:"body,omitempty"`
 
-	// CreateTime: Output only. The time when this comment was created.
+	// CreateTime: Output only. The time when the comment was created.
 	CreateTime string `json:"createTime,omitempty"`
 
-	// Creator: Output only. The user or Google Support agent created this
-	// comment.
+	// Creator: Output only. The user or Google Support agent who created
+	// the comment.
 	Creator *Actor `json:"creator,omitempty"`
 
-	// Name: Output only. The resource name for the comment.
+	// Name: Output only. Identifier. The resource name of the comment.
 	Name string `json:"name,omitempty"`
 
-	// PlainTextBody: Output only. DEPRECATED. An automatically generated
-	// plain text version of body with all rich text syntax stripped.
+	// PlainTextBody: Output only. DEPRECATED. DO NOT USE. A duplicate of
+	// the `body` field. This field is only present for legacy reasons.
 	PlainTextBody string `json:"plainTextBody,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

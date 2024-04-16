@@ -1506,11 +1506,13 @@ func (r *SubscriptionsService) Patch(name string, subscription *Subscription) *S
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// field to update. You can update one of the following fields in a
-// subscription: * `expire_time`: The timestamp when the subscription
-// expires. * `ttl`: The time-to-live (TTL) or duration of the
-// subscription.
+// UpdateMask sets the optional parameter "updateMask": The field to
+// update. If omitted, updates any fields included in the request. You
+// can update one of the following fields in a subscription: *
+// `expire_time`: The timestamp when the subscription expires. * `ttl`:
+// The time-to-live (TTL) or duration of the subscription. To fully
+// replace the subscription (the equivalent of `PUT`), use `*`. Any
+// omitted fields are updated with empty values.
 func (c *SubscriptionsPatchCall) UpdateMask(updateMask string) *SubscriptionsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -1631,7 +1633,7 @@ func (c *SubscriptionsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, e
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Optional. Required. The field to update. You can update one of the following fields in a subscription: * `expire_time`: The timestamp when the subscription expires. * `ttl`: The time-to-live (TTL) or duration of the subscription.",
+	//       "description": "Optional. The field to update. If omitted, updates any fields included in the request. You can update one of the following fields in a subscription: * `expire_time`: The timestamp when the subscription expires. * `ttl`: The time-to-live (TTL) or duration of the subscription. To fully replace the subscription (the equivalent of `PUT`), use `*`. Any omitted fields are updated with empty values.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

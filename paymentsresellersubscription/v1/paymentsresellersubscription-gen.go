@@ -1310,6 +1310,12 @@ type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
 	// be 'partners/{partner_id}/promotions/{promotion_id}'.
 	Promotions []string `json:"promotions,omitempty"`
 
+	// PurchaseTime: Optional. The timestamp when the user transaction was
+	// made with the Partner. Specify for the case of "bundle with choice",
+	// and it must be before the provision_time (when the user makes a
+	// selection).
+	PurchaseTime string `json:"purchaseTime,omitempty"`
+
 	// RedirectUri: Output only. The place where partners should redirect
 	// the end-user to after creation. This field might also be populated
 	// when creation failed. However, Partners should always prepare a

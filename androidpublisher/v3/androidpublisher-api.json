@@ -4731,7 +4731,7 @@
       }
     }
   },
-  "revision": "20240328",
+  "revision": "20240415",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -7465,7 +7465,7 @@
       "type": "object"
     },
     "OfferTag": {
-      "description": "Represents a custom tag specified for one-time products, purchase options, base plans and offers.",
+      "description": "Represents a custom tag specified for base plans and subscription offers.",
       "id": "OfferTag",
       "properties": {
         "tag": {
@@ -7705,7 +7705,7 @@
           "type": "string"
         },
         "purchaseType": {
-          "description": "The type of purchase of the inapp product. This field is only set if this purchase was not made using the standard in-app billing flow. Possible values are: 0. Test (i.e. purchased from a license testing account) 1. Promo (i.e. purchased using a promo code) 2. Rewarded (i.e. from watching a video ad instead of paying)",
+          "description": "The type of purchase of the inapp product. This field is only set if this purchase was not made using the standard in-app billing flow. Possible values are: 0. Test (i.e. purchased from a license testing account) 1. Promo (i.e. purchased using a promo code). Does not include Play Points purchases. 2. Rewarded (i.e. from watching a video ad instead of paying)",
           "format": "int32",
           "type": "integer"
         },
@@ -9015,11 +9015,31 @@
       "description": "Defines the scope of subscriptions which a targeting rule can match to target offers to users based on past or current entitlement.",
       "id": "TargetingRuleScope",
       "properties": {
+        "anySubscriptionInApp": {
+          "$ref": "TargetingRuleScopeAnySubscriptionInApp",
+          "description": "The scope of the current targeting rule is any subscription in the parent app."
+        },
         "specificSubscriptionInApp": {
           "description": "The scope of the current targeting rule is the subscription with the specified subscription ID. Must be a subscription within the same parent app.",
           "type": "string"
+        },
+        "thisSubscription": {
+          "$ref": "TargetingRuleScopeThisSubscription",
+          "description": "The scope of the current targeting rule is the subscription in which this offer is defined."
         }
       },
+      "type": "object"
+    },
+    "TargetingRuleScopeAnySubscriptionInApp": {
+      "description": "Represents the targeting rule scope corresponding to any subscription in the parent app.",
+      "id": "TargetingRuleScopeAnySubscriptionInApp",
+      "properties": {},
+      "type": "object"
+    },
+    "TargetingRuleScopeThisSubscription": {
+      "description": "Represents the targeting rule scope corresponding to the subscriptions in which this offer is defined.",
+      "id": "TargetingRuleScopeThisSubscription",
+      "properties": {},
       "type": "object"
     },
     "TargetingUpdate": {

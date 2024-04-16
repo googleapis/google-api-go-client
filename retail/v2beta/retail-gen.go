@@ -6944,9 +6944,9 @@ type GoogleCloudRetailV2betaProduct struct {
 	// "categories": [ "Shoes & Accessories > Shoes", "Sports & Fitness >
 	// Athletic Clothing > Shoes" ] Must be set for Type.PRIMARY Product
 	// otherwise an INVALID_ARGUMENT error is returned. At most 250 values
-	// are allowed per Product unless overridden via pantheon UI. Empty
-	// values are not allowed. Each value must be a UTF-8 encoded string
-	// with a length limit of 5,000 characters. Otherwise, an
+	// are allowed per Product unless overridden through the Google Cloud
+	// console. Empty values are not allowed. Each value must be a UTF-8
+	// encoded string with a length limit of 5,000 characters. Otherwise, an
 	// INVALID_ARGUMENT error is returned. Corresponding properties: Google
 	// Merchant Center property google_product_category. Schema.org property
 	// [Product.category] (https://schema.org/category).
@@ -9629,6 +9629,11 @@ type GoogleCloudRetailV2betaServingConfig struct {
 	// execute. - Order does not matter. - Maximum number of specifications
 	// is 100. Can only be set if solution_types is SOLUTION_TYPE_SEARCH.
 	IgnoreControlIds []string `json:"ignoreControlIds,omitempty"`
+
+	// IgnoreRecsDenylist: When the flag is enabled, the products in the
+	// denylist will not be filtered out in the recommendation filtering
+	// results.
+	IgnoreRecsDenylist bool `json:"ignoreRecsDenylist,omitempty"`
 
 	// ModelId: The id of the model in the same Catalog to use at serving
 	// time. Currently only RecommendationModels are supported:

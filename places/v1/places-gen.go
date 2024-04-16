@@ -661,7 +661,7 @@ type GoogleMapsPlacesV1AutocompletePlacesResponseSuggestionQueryPrediction struc
 
 	// Text: The predicted text. This text does not represent a Place, but
 	// rather a text query that could be used in a search endpoint (for
-	// example, TextSearch). `text` is recommended for developers who wish
+	// example, Text Search). `text` is recommended for developers who wish
 	// to show a single UI element. Developers who wish to show two
 	// separate, but related, UI elements may want to use
 	// `structured_format` instead. They are two different ways to represent

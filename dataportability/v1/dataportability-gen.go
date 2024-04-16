@@ -101,9 +101,6 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// Move a copy of the Google Alerts subscriptions you created.
-	DataportabilityAlertsSubscriptionsScope = "https://www.googleapis.com/auth/dataportability.alerts.subscriptions"
-
 	// Move a copy of messages between you and the businesses you have
 	// conversations with across Google services.
 	DataportabilityBusinessmessagingConversationsScope = "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations"
@@ -161,10 +158,6 @@ const (
 
 	// Move a copy of the photos and videos you posted on Maps.
 	DataportabilityMapsPhotosVideosScope = "https://www.googleapis.com/auth/dataportability.maps.photos_videos"
-
-	// Move a copy of feedback you gave after completing trips using Maps
-	// directions.
-	DataportabilityMapsPostTripFeedbackScope = "https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback"
 
 	// Move a copy of the questions and answers you posted on Maps.
 	DataportabilityMapsQuestionsAnswersScope = "https://www.googleapis.com/auth/dataportability.maps.questions_answers"
@@ -317,7 +310,6 @@ const (
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {
 	scopesOption := internaloption.WithDefaultScopes(
-		"https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 		"https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 		"https://www.googleapis.com/auth/dataportability.chrome.autofill",
 		"https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
@@ -336,7 +328,6 @@ func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, err
 		"https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
 		"https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
 		"https://www.googleapis.com/auth/dataportability.maps.photos_videos",
-		"https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback",
 		"https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 		"https://www.googleapis.com/auth/dataportability.maps.reviews",
 		"https://www.googleapis.com/auth/dataportability.maps.starred_places",
@@ -777,7 +768,6 @@ func (c *ArchiveJobsGetPortabilityArchiveStateCall) Do(opts ...googleapi.CallOpt
 	//     "$ref": "PortabilityArchiveState"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
@@ -796,7 +786,6 @@ func (c *ArchiveJobsGetPortabilityArchiveStateCall) Do(opts ...googleapi.CallOpt
 	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
-	//     "https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback",
 	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
@@ -985,7 +974,6 @@ func (c *ArchiveJobsRetryCall) Do(opts ...googleapi.CallOption) (*RetryPortabili
 	//     "$ref": "RetryPortabilityArchiveResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
@@ -1004,7 +992,6 @@ func (c *ArchiveJobsRetryCall) Do(opts ...googleapi.CallOption) (*RetryPortabili
 	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
-	//     "https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback",
 	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
@@ -1179,7 +1166,6 @@ func (c *AuthorizationResetCall) Do(opts ...googleapi.CallOption) (*Empty, error
 	//     "$ref": "Empty"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
@@ -1198,7 +1184,6 @@ func (c *AuthorizationResetCall) Do(opts ...googleapi.CallOption) (*Empty, error
 	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
-	//     "https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback",
 	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",
@@ -1369,7 +1354,6 @@ func (c *PortabilityArchiveInitiateCall) Do(opts ...googleapi.CallOption) (*Init
 	//     "$ref": "InitiatePortabilityArchiveResponse"
 	//   },
 	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dataportability.alerts.subscriptions",
 	//     "https://www.googleapis.com/auth/dataportability.businessmessaging.conversations",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.autofill",
 	//     "https://www.googleapis.com/auth/dataportability.chrome.bookmarks",
@@ -1388,7 +1372,6 @@ func (c *PortabilityArchiveInitiateCall) Do(opts ...googleapi.CallOption) (*Init
 	//     "https://www.googleapis.com/auth/dataportability.maps.factual_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.offering_contributions",
 	//     "https://www.googleapis.com/auth/dataportability.maps.photos_videos",
-	//     "https://www.googleapis.com/auth/dataportability.maps.post_trip_feedback",
 	//     "https://www.googleapis.com/auth/dataportability.maps.questions_answers",
 	//     "https://www.googleapis.com/auth/dataportability.maps.reviews",
 	//     "https://www.googleapis.com/auth/dataportability.maps.starred_places",

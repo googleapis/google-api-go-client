@@ -5238,8 +5238,8 @@ func (s *OfferDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// OfferTag: Represents a custom tag specified for one-time products,
-// purchase options, base plans and offers.
+// OfferTag: Represents a custom tag specified for base plans and
+// subscription offers.
 type OfferTag struct {
 	// Tag: Must conform with RFC-1034. That is, this string can only
 	// contain lower-case letters (a-z), numbers (0-9), and hyphens (-), and
@@ -5744,8 +5744,9 @@ type ProductPurchase struct {
 	// PurchaseType: The type of purchase of the inapp product. This field
 	// is only set if this purchase was not made using the standard in-app
 	// billing flow. Possible values are: 0. Test (i.e. purchased from a
-	// license testing account) 1. Promo (i.e. purchased using a promo code)
-	// 2. Rewarded (i.e. from watching a video ad instead of paying)
+	// license testing account) 1. Promo (i.e. purchased using a promo
+	// code). Does not include Play Points purchases. 2. Rewarded (i.e. from
+	// watching a video ad instead of paying)
 	PurchaseType *int64 `json:"purchaseType,omitempty"`
 
 	// Quantity: The quantity associated with the purchase of the inapp
@@ -8070,27 +8071,35 @@ func (s *TargetingInfo) MarshalJSON() ([]byte, error) {
 // targeting rule can match to target offers to users based on past or
 // current entitlement.
 type TargetingRuleScope struct {
+	// AnySubscriptionInApp: The scope of the current targeting rule is any
+	// subscription in the parent app.
+	AnySubscriptionInApp *TargetingRuleScopeAnySubscriptionInApp `json:"anySubscriptionInApp,omitempty"`
+
 	// SpecificSubscriptionInApp: The scope of the current targeting rule is
 	// the subscription with the specified subscription ID. Must be a
 	// subscription within the same parent app.
 	SpecificSubscriptionInApp string `json:"specificSubscriptionInApp,omitempty"`
 
+	// ThisSubscription: The scope of the current targeting rule is the
+	// subscription in which this offer is defined.
+	ThisSubscription *TargetingRuleScopeThisSubscription `json:"thisSubscription,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g.
-	// "SpecificSubscriptionInApp") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "AnySubscriptionInApp") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "SpecificSubscriptionInApp") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AnySubscriptionInApp") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -8098,6 +8107,17 @@ func (s *TargetingRuleScope) MarshalJSON() ([]byte, error) {
 	type NoMethod TargetingRuleScope
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// TargetingRuleScopeAnySubscriptionInApp: Represents the targeting rule
+// scope corresponding to any subscription in the parent app.
+type TargetingRuleScopeAnySubscriptionInApp struct {
+}
+
+// TargetingRuleScopeThisSubscription: Represents the targeting rule
+// scope corresponding to the subscriptions in which this offer is
+// defined.
+type TargetingRuleScopeThisSubscription struct {
 }
 
 // TargetingUpdate: Update type for targeting. Note it is always a

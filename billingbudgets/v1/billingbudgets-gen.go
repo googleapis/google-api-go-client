@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://billingbudgets.googleapis.com/"
 const basePathTemplate = "https://billingbudgets.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://billingbudgets.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

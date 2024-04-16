@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://tasks.googleapis.com/"
 const basePathTemplate = "https://tasks.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://tasks.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

@@ -97,7 +97,6 @@ const apiVersion = "v1alpha"
 const basePath = "https://marketingplatformadmin.googleapis.com/"
 const basePathTemplate = "https://marketingplatformadmin.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://marketingplatformadmin.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

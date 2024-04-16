@@ -92,7 +92,6 @@ const apiVersion = "v2"
 const basePath = "https://verifiedaccess.googleapis.com/"
 const basePathTemplate = "https://verifiedaccess.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://verifiedaccess.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

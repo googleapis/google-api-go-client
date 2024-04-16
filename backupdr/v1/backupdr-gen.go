@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://backupdr.googleapis.com/"
 const basePathTemplate = "https://backupdr.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://backupdr.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

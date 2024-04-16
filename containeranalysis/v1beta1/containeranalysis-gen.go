@@ -92,7 +92,6 @@ const apiVersion = "v1beta1"
 const basePath = "https://containeranalysis.googleapis.com/"
 const basePathTemplate = "https://containeranalysis.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://containeranalysis.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://kmsinventory.googleapis.com/"
 const basePathTemplate = "https://kmsinventory.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://kmsinventory.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

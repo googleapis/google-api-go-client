@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://classroom.googleapis.com/"
 const basePathTemplate = "https://classroom.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://classroom.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

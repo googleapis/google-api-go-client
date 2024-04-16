@@ -92,7 +92,6 @@ const apiVersion = "v1beta1"
 const basePath = "https://datacatalog.googleapis.com/"
 const basePathTemplate = "https://datacatalog.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://datacatalog.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

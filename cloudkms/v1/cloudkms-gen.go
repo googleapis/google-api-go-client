@@ -99,7 +99,6 @@ const apiVersion = "v1"
 const basePath = "https://cloudkms.googleapis.com/"
 const basePathTemplate = "https://cloudkms.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudkms.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

@@ -91,7 +91,6 @@ const apiName = "adsensehost"
 const apiVersion = "v4.1"
 const basePath = "https://www.googleapis.com/adsensehost/v4.1/"
 const basePathTemplate = "https://www.UNIVERSE_DOMAIN/adsensehost/v4.1/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

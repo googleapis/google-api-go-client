@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://realtimebidding.googleapis.com/"
 const basePathTemplate = "https://realtimebidding.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://realtimebidding.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

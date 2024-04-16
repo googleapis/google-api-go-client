@@ -96,7 +96,6 @@ const apiName = "analytics"
 const apiVersion = "v3"
 const basePath = "https://analytics.googleapis.com/analytics/v3/"
 const basePathTemplate = "https://analytics.UNIVERSE_DOMAIN/analytics/v3/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

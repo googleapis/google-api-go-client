@@ -92,7 +92,6 @@ const apiVersion = "v2alpha"
 const basePath = "https://retail.googleapis.com/"
 const basePathTemplate = "https://retail.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://retail.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

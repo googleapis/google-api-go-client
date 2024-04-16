@@ -97,7 +97,6 @@ const apiVersion = "v2"
 const basePath = "https://www.googleapis.com/drive/v2/"
 const basePathTemplate = "https://www.UNIVERSE_DOMAIN/drive/v2/"
 const mtlsBasePath = "https://www.mtls.googleapis.com/drive/v2/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

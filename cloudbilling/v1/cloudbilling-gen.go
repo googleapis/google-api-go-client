@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://cloudbilling.googleapis.com/"
 const basePathTemplate = "https://cloudbilling.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudbilling.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

@@ -92,7 +92,6 @@ const apiVersion = "v1alpha1"
 const basePath = "https://playgrouping.googleapis.com/"
 const basePathTemplate = "https://playgrouping.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://playgrouping.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {

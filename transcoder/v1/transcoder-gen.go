@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://transcoder.googleapis.com/"
 const basePathTemplate = "https://transcoder.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://transcoder.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

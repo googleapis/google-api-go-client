@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://cloudscheduler.googleapis.com/"
 const basePathTemplate = "https://cloudscheduler.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudscheduler.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

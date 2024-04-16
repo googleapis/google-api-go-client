@@ -92,7 +92,6 @@ const apiVersion = "v1configuration"
 const basePath = "https://gamesconfiguration.googleapis.com/"
 const basePathTemplate = "https://gamesconfiguration.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://gamesconfiguration.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

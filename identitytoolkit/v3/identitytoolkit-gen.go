@@ -96,7 +96,6 @@ const apiName = "identitytoolkit"
 const apiVersion = "v3"
 const basePath = "https://www.googleapis.com/identitytoolkit/v3/relyingparty/"
 const basePathTemplate = "https://www.UNIVERSE_DOMAIN/identitytoolkit/v3/relyingparty/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

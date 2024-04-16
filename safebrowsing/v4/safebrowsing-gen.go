@@ -92,7 +92,6 @@ const apiVersion = "v4"
 const basePath = "https://safebrowsing.googleapis.com/"
 const basePathTemplate = "https://safebrowsing.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://safebrowsing.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {

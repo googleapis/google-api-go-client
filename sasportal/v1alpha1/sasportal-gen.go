@@ -97,7 +97,6 @@ const apiVersion = "v1alpha1"
 const basePath = "https://sasportal.googleapis.com/"
 const basePathTemplate = "https://sasportal.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://sasportal.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

@@ -92,7 +92,6 @@ const apiVersion = "v2"
 const basePath = "https://baremetalsolution.googleapis.com/"
 const basePathTemplate = "https://baremetalsolution.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://baremetalsolution.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

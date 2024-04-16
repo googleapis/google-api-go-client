@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://cloudchannel.googleapis.com/"
 const basePathTemplate = "https://cloudchannel.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudchannel.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

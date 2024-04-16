@@ -97,7 +97,6 @@ const apiVersion = "v1beta1"
 const basePath = "https://artifactregistry.googleapis.com/"
 const basePathTemplate = "https://artifactregistry.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://artifactregistry.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

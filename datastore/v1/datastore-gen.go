@@ -99,7 +99,6 @@ const apiVersion = "v1"
 const basePath = "https://datastore.googleapis.com/"
 const basePathTemplate = "https://datastore.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://datastore.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

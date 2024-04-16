@@ -92,7 +92,6 @@ const apiVersion = "v1alpha1"
 const basePath = "https://factchecktools.googleapis.com/"
 const basePathTemplate = "https://factchecktools.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://factchecktools.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

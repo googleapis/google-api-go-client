@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://readerrevenuesubscriptionlinking.googleapis.com/"
 const basePathTemplate = "https://readerrevenuesubscriptionlinking.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://readerrevenuesubscriptionlinking.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {

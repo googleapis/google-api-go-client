@@ -97,7 +97,6 @@ const apiVersion = "v1beta"
 const basePath = "https://firebaseappcheck.googleapis.com/"
 const basePathTemplate = "https://firebaseappcheck.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://firebaseappcheck.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

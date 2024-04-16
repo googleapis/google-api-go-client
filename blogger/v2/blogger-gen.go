@@ -92,7 +92,6 @@ const apiVersion = "v2"
 const basePath = "https://blogger.googleapis.com/"
 const basePathTemplate = "https://blogger.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://blogger.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

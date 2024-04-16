@@ -92,7 +92,6 @@ const apiVersion = "v5"
 const basePath = "https://pagespeedonline.googleapis.com/"
 const basePathTemplate = "https://pagespeedonline.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://pagespeedonline.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

@@ -97,7 +97,6 @@ const apiVersion = "v2"
 const basePath = "https://bigtableadmin.googleapis.com/"
 const basePathTemplate = "https://bigtableadmin.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://bigtableadmin.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

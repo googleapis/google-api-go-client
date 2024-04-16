@@ -97,7 +97,6 @@ const apiVersion = "v2"
 const basePath = "https://apikeys.googleapis.com/"
 const basePathTemplate = "https://apikeys.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://apikeys.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

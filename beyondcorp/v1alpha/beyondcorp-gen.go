@@ -92,7 +92,6 @@ const apiVersion = "v1alpha"
 const basePath = "https://beyondcorp.googleapis.com/"
 const basePathTemplate = "https://beyondcorp.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://beyondcorp.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

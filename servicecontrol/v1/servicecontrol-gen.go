@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://servicecontrol.googleapis.com/"
 const basePathTemplate = "https://servicecontrol.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://servicecontrol.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

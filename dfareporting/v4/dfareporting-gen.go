@@ -97,7 +97,6 @@ const apiVersion = "v4"
 const basePath = "https://dfareporting.googleapis.com/dfareporting/v4/"
 const basePathTemplate = "https://dfareporting.UNIVERSE_DOMAIN/dfareporting/v4/"
 const mtlsBasePath = "https://dfareporting.mtls.googleapis.com/dfareporting/v4/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

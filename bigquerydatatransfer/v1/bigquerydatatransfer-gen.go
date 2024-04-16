@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://bigquerydatatransfer.googleapis.com/"
 const basePathTemplate = "https://bigquerydatatransfer.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://bigquerydatatransfer.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

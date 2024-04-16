@@ -92,7 +92,6 @@ const apiVersion = "v1beta1"
 const basePath = "https://secretmanager.googleapis.com/"
 const basePathTemplate = "https://secretmanager.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://secretmanager.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

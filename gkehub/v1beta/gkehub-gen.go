@@ -92,7 +92,6 @@ const apiVersion = "v1beta"
 const basePath = "https://gkehub.googleapis.com/"
 const basePathTemplate = "https://gkehub.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://gkehub.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

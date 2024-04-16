@@ -92,7 +92,6 @@ const apiVersion = "v3"
 const basePath = "https://indexing.googleapis.com/"
 const basePathTemplate = "https://indexing.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://indexing.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

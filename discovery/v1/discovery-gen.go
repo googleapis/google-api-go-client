@@ -91,7 +91,6 @@ const apiName = "discovery"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/discovery/v1/"
 const basePathTemplate = "https://www.UNIVERSE_DOMAIN/discovery/v1/"
-const defaultUniverseDomain = "googleapis.com"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {

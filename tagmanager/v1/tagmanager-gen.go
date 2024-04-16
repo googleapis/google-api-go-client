@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://tagmanager.googleapis.com/"
 const basePathTemplate = "https://tagmanager.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://tagmanager.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

@@ -97,7 +97,6 @@ const apiVersion = "alpha"
 const basePath = "https://deploymentmanager.googleapis.com/"
 const basePathTemplate = "https://deploymentmanager.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://deploymentmanager.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

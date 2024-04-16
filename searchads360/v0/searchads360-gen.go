@@ -92,7 +92,6 @@ const apiVersion = "v0"
 const basePath = "https://searchads360.googleapis.com/"
 const basePathTemplate = "https://searchads360.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://searchads360.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

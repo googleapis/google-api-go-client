@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://paymentsresellersubscription.googleapis.com/"
 const basePathTemplate = "https://paymentsresellersubscription.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://paymentsresellersubscription.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

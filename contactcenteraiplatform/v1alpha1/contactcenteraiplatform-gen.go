@@ -92,7 +92,6 @@ const apiVersion = "v1alpha1"
 const basePath = "https://contactcenteraiplatform.googleapis.com/"
 const basePathTemplate = "https://contactcenteraiplatform.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://contactcenteraiplatform.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

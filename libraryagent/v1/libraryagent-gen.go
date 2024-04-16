@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://libraryagent.googleapis.com/"
 const basePathTemplate = "https://libraryagent.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://libraryagent.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

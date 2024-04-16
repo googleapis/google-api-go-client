@@ -97,7 +97,6 @@ const apiVersion = "v2"
 const basePath = "https://displayvideo.googleapis.com/"
 const basePathTemplate = "https://displayvideo.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://displayvideo.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

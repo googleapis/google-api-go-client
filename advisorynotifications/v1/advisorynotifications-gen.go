@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://advisorynotifications.googleapis.com/"
 const basePathTemplate = "https://advisorynotifications.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://advisorynotifications.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

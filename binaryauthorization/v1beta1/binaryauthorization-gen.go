@@ -92,7 +92,6 @@ const apiVersion = "v1beta1"
 const basePath = "https://binaryauthorization.googleapis.com/"
 const basePathTemplate = "https://binaryauthorization.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://binaryauthorization.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

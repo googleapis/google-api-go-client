@@ -98,7 +98,6 @@ const apiName = "translate"
 const apiVersion = "v2"
 const basePath = "https://translation.googleapis.com/language/translate/"
 const basePathTemplate = "https://translation.UNIVERSE_DOMAIN/language/translate/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

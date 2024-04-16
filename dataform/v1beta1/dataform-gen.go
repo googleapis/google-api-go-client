@@ -92,7 +92,6 @@ const apiVersion = "v1beta1"
 const basePath = "https://dataform.googleapis.com/"
 const basePathTemplate = "https://dataform.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://dataform.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

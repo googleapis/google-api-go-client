@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://webrisk.googleapis.com/"
 const basePathTemplate = "https://webrisk.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://webrisk.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

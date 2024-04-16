@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://homegraph.googleapis.com/"
 const basePathTemplate = "https://homegraph.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://homegraph.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

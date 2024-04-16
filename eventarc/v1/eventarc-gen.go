@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://eventarc.googleapis.com/"
 const basePathTemplate = "https://eventarc.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://eventarc.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

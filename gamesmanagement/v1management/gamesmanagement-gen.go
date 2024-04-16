@@ -92,7 +92,6 @@ const apiVersion = "v1management"
 const basePath = "https://gamesmanagement.googleapis.com/"
 const basePathTemplate = "https://gamesmanagement.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://gamesmanagement.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

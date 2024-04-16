@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://fitness.googleapis.com/fitness/v1/users/"
 const basePathTemplate = "https://fitness.UNIVERSE_DOMAIN/fitness/v1/users/"
 const mtlsBasePath = "https://fitness.mtls.googleapis.com/fitness/v1/users/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

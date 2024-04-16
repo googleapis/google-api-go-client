@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://biglake.googleapis.com/"
 const basePathTemplate = "https://biglake.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://biglake.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

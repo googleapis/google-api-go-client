@@ -100,7 +100,6 @@ const apiVersion = "v1"
 const basePath = "https://storage.googleapis.com/storage/v1/"
 const basePathTemplate = "https://storage.UNIVERSE_DOMAIN/storage/v1/"
 const mtlsBasePath = "https://storage.mtls.googleapis.com/storage/v1/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

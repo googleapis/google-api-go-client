@@ -97,7 +97,6 @@ const apiVersion = "v1beta1"
 const basePath = "https://firebase.googleapis.com/"
 const basePathTemplate = "https://firebase.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://firebase.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

@@ -91,7 +91,6 @@ const apiName = "groupssettings"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/groups/v1/groups/"
 const basePathTemplate = "https://www.UNIVERSE_DOMAIN/groups/v1/groups/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

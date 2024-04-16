@@ -97,7 +97,6 @@ const apiVersion = "v1beta"
 const basePath = "https://firebasestorage.googleapis.com/"
 const basePathTemplate = "https://firebasestorage.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://firebasestorage.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

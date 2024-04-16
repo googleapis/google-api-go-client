@@ -92,7 +92,6 @@ const apiVersion = "v3"
 const basePath = "https://androidpublisher.googleapis.com/"
 const basePathTemplate = "https://androidpublisher.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://androidpublisher.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

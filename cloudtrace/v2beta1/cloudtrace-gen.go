@@ -97,7 +97,6 @@ const apiVersion = "v2beta1"
 const basePath = "https://cloudtrace.googleapis.com/"
 const basePathTemplate = "https://cloudtrace.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudtrace.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

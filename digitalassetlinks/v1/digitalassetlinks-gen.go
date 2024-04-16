@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://digitalassetlinks.googleapis.com/"
 const basePathTemplate = "https://digitalassetlinks.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://digitalassetlinks.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {

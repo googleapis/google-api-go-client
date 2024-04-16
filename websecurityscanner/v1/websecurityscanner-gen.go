@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://websecurityscanner.googleapis.com/"
 const basePathTemplate = "https://websecurityscanner.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://websecurityscanner.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

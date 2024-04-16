@@ -96,7 +96,6 @@ const apiName = "calendar"
 const apiVersion = "v3"
 const basePath = "https://www.googleapis.com/calendar/v3/"
 const basePathTemplate = "https://www.UNIVERSE_DOMAIN/calendar/v3/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

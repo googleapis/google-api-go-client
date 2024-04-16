@@ -97,7 +97,6 @@ const apiVersion = "v1beta1"
 const basePath = "https://cloudidentity.googleapis.com/"
 const basePathTemplate = "https://cloudidentity.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudidentity.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

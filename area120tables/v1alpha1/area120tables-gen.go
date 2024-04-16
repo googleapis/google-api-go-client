@@ -97,7 +97,6 @@ const apiVersion = "v1alpha1"
 const basePath = "https://area120tables.googleapis.com/"
 const basePathTemplate = "https://area120tables.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://area120tables.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

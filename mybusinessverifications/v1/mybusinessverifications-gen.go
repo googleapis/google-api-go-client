@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://mybusinessverifications.googleapis.com/"
 const basePathTemplate = "https://mybusinessverifications.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://mybusinessverifications.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {

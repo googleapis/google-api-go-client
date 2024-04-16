@@ -94,7 +94,6 @@ const apiVersion = "v1beta1"
 const basePath = "https://texttospeech.googleapis.com/"
 const basePathTemplate = "https://texttospeech.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://texttospeech.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

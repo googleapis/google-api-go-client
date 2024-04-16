@@ -92,7 +92,6 @@ const apiVersion = "v2"
 const basePath = "https://civicinfo.googleapis.com/"
 const basePathTemplate = "https://civicinfo.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://civicinfo.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // NewService creates a new Service.
 func NewService(ctx context.Context, opts ...option.ClientOption) (*Service, error) {

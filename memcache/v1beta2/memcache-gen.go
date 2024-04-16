@@ -92,7 +92,6 @@ const apiVersion = "v1beta2"
 const basePath = "https://memcache.googleapis.com/"
 const basePathTemplate = "https://memcache.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://memcache.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

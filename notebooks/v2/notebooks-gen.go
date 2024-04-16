@@ -92,7 +92,6 @@ const apiVersion = "v2"
 const basePath = "https://notebooks.googleapis.com/"
 const basePathTemplate = "https://notebooks.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://notebooks.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

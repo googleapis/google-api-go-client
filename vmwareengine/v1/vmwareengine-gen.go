@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://vmwareengine.googleapis.com/"
 const basePathTemplate = "https://vmwareengine.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://vmwareengine.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

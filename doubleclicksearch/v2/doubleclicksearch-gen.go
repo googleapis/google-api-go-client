@@ -92,7 +92,6 @@ const apiVersion = "v2"
 const basePath = "https://doubleclicksearch.googleapis.com/"
 const basePathTemplate = "https://doubleclicksearch.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://doubleclicksearch.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

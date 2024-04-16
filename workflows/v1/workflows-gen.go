@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://workflows.googleapis.com/"
 const basePathTemplate = "https://workflows.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://workflows.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

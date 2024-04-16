@@ -97,7 +97,6 @@ const apiVersion = "v1b3"
 const basePath = "https://dataflow.googleapis.com/"
 const basePathTemplate = "https://dataflow.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://dataflow.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

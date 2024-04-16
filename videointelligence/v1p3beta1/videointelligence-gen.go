@@ -94,7 +94,6 @@ const apiVersion = "v1p3beta1"
 const basePath = "https://videointelligence.googleapis.com/"
 const basePathTemplate = "https://videointelligence.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://videointelligence.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

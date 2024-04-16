@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://androidmanagement.googleapis.com/"
 const basePathTemplate = "https://androidmanagement.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://androidmanagement.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

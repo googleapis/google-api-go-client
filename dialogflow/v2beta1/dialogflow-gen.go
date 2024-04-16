@@ -99,7 +99,6 @@ const apiVersion = "v2beta1"
 const basePath = "https://dialogflow.googleapis.com/"
 const basePathTemplate = "https://dialogflow.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://dialogflow.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

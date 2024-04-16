@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://policysimulator.googleapis.com/"
 const basePathTemplate = "https://policysimulator.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://policysimulator.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

@@ -99,7 +99,6 @@ const apiVersion = "v1beta2"
 const basePath = "https://pubsub.googleapis.com/"
 const basePathTemplate = "https://pubsub.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://pubsub.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

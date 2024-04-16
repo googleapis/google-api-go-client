@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://solar.googleapis.com/"
 const basePathTemplate = "https://solar.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://solar.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

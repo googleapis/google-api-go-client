@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://cloudresourcemanager.googleapis.com/"
 const basePathTemplate = "https://cloudresourcemanager.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://cloudresourcemanager.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

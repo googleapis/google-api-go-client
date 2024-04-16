@@ -92,7 +92,6 @@ const apiVersion = "v1beta1"
 const basePath = "https://datalabeling.googleapis.com/"
 const basePathTemplate = "https://datalabeling.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://datalabeling.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

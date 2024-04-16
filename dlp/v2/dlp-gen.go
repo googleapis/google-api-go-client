@@ -94,7 +94,6 @@ const apiVersion = "v2"
 const basePath = "https://dlp.googleapis.com/"
 const basePathTemplate = "https://dlp.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://dlp.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

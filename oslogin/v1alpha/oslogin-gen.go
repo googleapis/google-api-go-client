@@ -99,7 +99,6 @@ const apiVersion = "v1alpha"
 const basePath = "https://oslogin.googleapis.com/"
 const basePathTemplate = "https://oslogin.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://oslogin.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

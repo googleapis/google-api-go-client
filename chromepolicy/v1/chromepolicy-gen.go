@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://chromepolicy.googleapis.com/"
 const basePathTemplate = "https://chromepolicy.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://chromepolicy.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

@@ -97,7 +97,6 @@ const apiVersion = "v3"
 const basePath = "https://youtube.googleapis.com/"
 const basePathTemplate = "https://youtube.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://youtube.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

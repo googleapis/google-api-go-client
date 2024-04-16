@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://recommender.googleapis.com/"
 const basePathTemplate = "https://recommender.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://recommender.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

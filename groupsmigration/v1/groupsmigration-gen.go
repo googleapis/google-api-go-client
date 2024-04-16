@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://groupsmigration.googleapis.com/"
 const basePathTemplate = "https://groupsmigration.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://groupsmigration.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

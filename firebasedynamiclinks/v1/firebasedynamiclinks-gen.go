@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://firebasedynamiclinks.googleapis.com/"
 const basePathTemplate = "https://firebasedynamiclinks.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://firebasedynamiclinks.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

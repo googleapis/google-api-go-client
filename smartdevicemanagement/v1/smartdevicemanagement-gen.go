@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://smartdevicemanagement.googleapis.com/"
 const basePathTemplate = "https://smartdevicemanagement.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://smartdevicemanagement.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

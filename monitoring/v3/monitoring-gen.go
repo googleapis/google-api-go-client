@@ -99,7 +99,6 @@ const apiVersion = "v3"
 const basePath = "https://monitoring.googleapis.com/"
 const basePathTemplate = "https://monitoring.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://monitoring.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

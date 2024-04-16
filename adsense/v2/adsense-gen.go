@@ -97,7 +97,6 @@ const apiVersion = "v2"
 const basePath = "https://adsense.googleapis.com/"
 const basePathTemplate = "https://adsense.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://adsense.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

@@ -99,7 +99,6 @@ const apiVersion = "v3beta1"
 const basePath = "https://translation.googleapis.com/"
 const basePathTemplate = "https://translation.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://translation.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

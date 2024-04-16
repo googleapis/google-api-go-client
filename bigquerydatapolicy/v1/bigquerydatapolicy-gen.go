@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://bigquerydatapolicy.googleapis.com/"
 const basePathTemplate = "https://bigquerydatapolicy.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://bigquerydatapolicy.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

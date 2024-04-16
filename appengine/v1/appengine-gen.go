@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://appengine.googleapis.com/"
 const basePathTemplate = "https://appengine.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://appengine.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

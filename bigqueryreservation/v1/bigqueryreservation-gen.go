@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://bigqueryreservation.googleapis.com/"
 const basePathTemplate = "https://bigqueryreservation.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://bigqueryreservation.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

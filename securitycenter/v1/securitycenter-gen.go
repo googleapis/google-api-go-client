@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://securitycenter.googleapis.com/"
 const basePathTemplate = "https://securitycenter.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://securitycenter.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

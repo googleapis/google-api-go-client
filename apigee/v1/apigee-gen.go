@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://apigee.googleapis.com/"
 const basePathTemplate = "https://apigee.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://apigee.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

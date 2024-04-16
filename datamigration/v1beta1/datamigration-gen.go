@@ -92,7 +92,6 @@ const apiVersion = "v1beta1"
 const basePath = "https://datamigration.googleapis.com/"
 const basePathTemplate = "https://datamigration.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://datamigration.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

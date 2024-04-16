@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://managedidentities.googleapis.com/"
 const basePathTemplate = "https://managedidentities.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://managedidentities.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

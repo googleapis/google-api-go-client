@@ -97,7 +97,6 @@ const apiVersion = "v4"
 const basePath = "https://sheets.googleapis.com/"
 const basePathTemplate = "https://sheets.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://sheets.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

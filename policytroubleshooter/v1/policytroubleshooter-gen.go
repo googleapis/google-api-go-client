@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://policytroubleshooter.googleapis.com/"
 const basePathTemplate = "https://policytroubleshooter.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://policytroubleshooter.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

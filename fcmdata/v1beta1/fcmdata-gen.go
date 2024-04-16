@@ -92,7 +92,6 @@ const apiVersion = "v1beta1"
 const basePath = "https://fcmdata.googleapis.com/"
 const basePathTemplate = "https://fcmdata.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://fcmdata.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

@@ -92,7 +92,6 @@ const apiVersion = "v1alpha1"
 const basePath = "https://migrationcenter.googleapis.com/"
 const basePathTemplate = "https://migrationcenter.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://migrationcenter.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

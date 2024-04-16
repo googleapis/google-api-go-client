@@ -96,7 +96,6 @@ const apiName = "siteVerification"
 const apiVersion = "v1"
 const basePath = "https://www.googleapis.com/siteVerification/v1/"
 const basePathTemplate = "https://www.UNIVERSE_DOMAIN/siteVerification/v1/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

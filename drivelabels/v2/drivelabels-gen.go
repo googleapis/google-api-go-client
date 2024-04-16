@@ -97,7 +97,6 @@ const apiVersion = "v2"
 const basePath = "https://drivelabels.googleapis.com/"
 const basePathTemplate = "https://drivelabels.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://drivelabels.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

@@ -92,7 +92,6 @@ const apiVersion = "v1beta1"
 const basePath = "https://ondemandscanning.googleapis.com/"
 const basePathTemplate = "https://ondemandscanning.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://ondemandscanning.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

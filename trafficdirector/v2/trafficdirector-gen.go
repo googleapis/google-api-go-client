@@ -92,7 +92,6 @@ const apiVersion = "v2"
 const basePath = "https://trafficdirector.googleapis.com/"
 const basePathTemplate = "https://trafficdirector.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://trafficdirector.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

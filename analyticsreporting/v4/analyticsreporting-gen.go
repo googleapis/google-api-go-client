@@ -97,7 +97,6 @@ const apiVersion = "v4"
 const basePath = "https://analyticsreporting.googleapis.com/"
 const basePathTemplate = "https://analyticsreporting.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://analyticsreporting.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

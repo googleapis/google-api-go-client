@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://storagetransfer.googleapis.com/"
 const basePathTemplate = "https://storagetransfer.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://storagetransfer.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

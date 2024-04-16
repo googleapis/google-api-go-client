@@ -92,7 +92,6 @@ const apiVersion = "v1beta1"
 const basePath = "https://recommendationengine.googleapis.com/"
 const basePathTemplate = "https://recommendationengine.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://recommendationengine.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

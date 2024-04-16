@@ -92,7 +92,6 @@ const apiVersion = "v2beta"
 const basePath = "https://lifesciences.googleapis.com/"
 const basePathTemplate = "https://lifesciences.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://lifesciences.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

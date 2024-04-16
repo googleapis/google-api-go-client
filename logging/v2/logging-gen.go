@@ -99,7 +99,6 @@ const apiVersion = "v2"
 const basePath = "https://logging.googleapis.com/"
 const basePathTemplate = "https://logging.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://logging.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

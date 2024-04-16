@@ -92,7 +92,6 @@ const apiVersion = "v1"
 const basePath = "https://gkebackup.googleapis.com/"
 const basePathTemplate = "https://gkebackup.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://gkebackup.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

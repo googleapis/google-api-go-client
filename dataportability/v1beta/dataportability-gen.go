@@ -97,7 +97,6 @@ const apiVersion = "v1beta"
 const basePath = "https://dataportability.googleapis.com/"
 const basePathTemplate = "https://dataportability.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://dataportability.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

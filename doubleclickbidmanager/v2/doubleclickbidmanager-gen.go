@@ -92,7 +92,6 @@ const apiVersion = "v2"
 const basePath = "https://doubleclickbidmanager.googleapis.com/v2/"
 const basePathTemplate = "https://doubleclickbidmanager.UNIVERSE_DOMAIN/v2/"
 const mtlsBasePath = "https://doubleclickbidmanager.mtls.googleapis.com/v2/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

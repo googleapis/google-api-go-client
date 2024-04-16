@@ -97,7 +97,6 @@ const apiVersion = "v1"
 const basePath = "https://chat.googleapis.com/"
 const basePathTemplate = "https://chat.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://chat.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

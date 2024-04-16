@@ -92,7 +92,6 @@ const apiVersion = "v2beta1"
 const basePath = "https://adexchangebuyer.googleapis.com/"
 const basePathTemplate = "https://adexchangebuyer.UNIVERSE_DOMAIN/"
 const mtlsBasePath = "https://adexchangebuyer.mtls.googleapis.com/"
-const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (

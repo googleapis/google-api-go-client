@@ -2132,6 +2132,17 @@ func (s *RequestInfo) MarshalJSON() ([]byte, error) {
 
 // ResourceInfo: Proto that contains resource information.
 type ResourceInfo struct {
+	// ChatAttachmentId: Chat attachment ID.
+	ChatAttachmentId string `json:"chatAttachmentId,omitempty"`
+
+	// ChatMessageId: Chat message ID.
+	ChatMessageId string `json:"chatMessageId,omitempty"`
+
+	// DeviceId: Id to identify a device. For example, for Android devices,
+	// this is the "Android Device Id" and for Chrome OS devices, it's the
+	// "Device Virtual Id".
+	DeviceId string `json:"deviceId,omitempty"`
+
 	// DocumentId: Drive file ID.
 	DocumentId string `json:"documentId,omitempty"`
 
@@ -2139,7 +2150,7 @@ type ResourceInfo struct {
 	// document title.
 	ResourceTitle string `json:"resourceTitle,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DocumentId") to
+	// ForceSendFields is a list of field names (e.g. "ChatAttachmentId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -2147,12 +2158,13 @@ type ResourceInfo struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DocumentId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ChatAttachmentId") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -2201,7 +2213,17 @@ type RuleViolationInfo struct {
 	// Possible values:
 	//   "DATA_SOURCE_UNSPECIFIED" - Data source is unspecified.
 	//   "DRIVE" - Drive data source.
+	//   "CHROME" - Chrome data source.
+	//   "CHAT" - Chat data source.
 	DataSource string `json:"dataSource,omitempty"`
+
+	// EventType: Event associated with this alert after applying the rule.
+	//
+	// Possible values:
+	//   "EVENT_TYPE_UNSPECIFIED" - Event type wasn't set.
+	//   "ACCESS_BLOCKED" - An access attempt was blocked.
+	//   "SHARING_BLOCKED" - A sharing attempt was blocked.
+	EventType string `json:"eventType,omitempty"`
 
 	// MatchInfo: List of matches that were found in the resource content.
 	MatchInfo []*MatchInfo `json:"matchInfo,omitempty"`
@@ -2228,7 +2250,26 @@ type RuleViolationInfo struct {
 	//   "DRIVE_BLOCK_EXTERNAL_SHARING" - Block sharing a file externally.
 	//   "DRIVE_WARN_ON_EXTERNAL_SHARING" - Show a warning message when
 	// sharing a file externally.
+	//   "DRIVE_RESTRICT_DOWNLOAD_PRINT_COPY" - Disable download, print, and
+	// copy for commenters and viewers in drive.
+	//   "DRIVE_APPLY_DRIVE_LABELS" - Apply customer specified Drive labels
+	// to the file.
+	//   "CHROME_BLOCK_FILE_DOWNLOAD" - Chrome actions. Block file download.
+	//   "CHROME_WARN_FILE_DOWNLOAD" - Warn user about downloaded file.
+	//   "CHROME_BLOCK_FILE_UPLOAD" - Block file upload.
+	//   "CHROME_WARN_FILE_UPLOAD" - Warn user about uploaded file.
+	//   "CHROME_BLOCK_WEB_CONTENT_UPLOAD" - Block web content upload.
+	//   "CHROME_WARN_WEB_CONTENT_UPLOAD" - Warn user about uploaded web
+	// content.
+	//   "CHROME_BLOCK_PAGE_PRINT" - Block page print.
+	//   "CHROME_WARN_PAGE_PRINT" - Warn user about printed page.
+	//   "CHROME_BLOCK_URL_VISITED" - Block Chrome URL visit.
+	//   "CHROME_WARN_URL_VISITED" - Warn user about Chrome URL visited.
+	//   "CHROME_STORE_CONTENT" - Store the content that violated the rule.
 	//   "DELETE_WEBPROTECT_EVIDENCE" - Delete web protect evidence file
+	//   "CHAT_BLOCK_CONTENT" - Chat actions. Block Chat content to be sent
+	// out.
+	//   "CHAT_WARN_USER" - Warn end user about Chat content.
 	//   "ALERT" - Send alert.
 	//   "RULE_ACTIVATE" - Activate Rule Action
 	//   "RULE_DEACTIVATE" - Deactivate Rule Action
@@ -2239,6 +2280,15 @@ type RuleViolationInfo struct {
 	// Possible values:
 	//   "TRIGGER_UNSPECIFIED" - Trigger is unspecified.
 	//   "DRIVE_SHARE" - A Drive file is shared.
+	//   "CHROME_FILE_DOWNLOAD" - A file being downloaded in a Chrome
+	// browser.
+	//   "CHROME_FILE_UPLOAD" - A file being uploaded from a Chrome browser.
+	//   "CHROME_WEB_CONTENT_UPLOAD" - Web content being uploaded from a
+	// Chrome browser.
+	//   "CHAT_MESSAGE_SENT" - A Chat message is sent.
+	//   "CHAT_ATTACHMENT_UPLOADED" - A Chat attachment is uploaded.
+	//   "CHROME_PAGE_PRINT" - A page is being printed by Chrome.
+	//   "CHROME_URL_VISITED" - A URL is visited within Chrome.
 	Trigger string `json:"trigger,omitempty"`
 
 	// TriggeredActionInfo: Metadata related to the triggered actions.
@@ -2252,7 +2302,26 @@ type RuleViolationInfo struct {
 	//   "DRIVE_BLOCK_EXTERNAL_SHARING" - Block sharing a file externally.
 	//   "DRIVE_WARN_ON_EXTERNAL_SHARING" - Show a warning message when
 	// sharing a file externally.
+	//   "DRIVE_RESTRICT_DOWNLOAD_PRINT_COPY" - Disable download, print, and
+	// copy for commenters and viewers in drive.
+	//   "DRIVE_APPLY_DRIVE_LABELS" - Apply customer specified Drive labels
+	// to the file.
+	//   "CHROME_BLOCK_FILE_DOWNLOAD" - Chrome actions. Block file download.
+	//   "CHROME_WARN_FILE_DOWNLOAD" - Warn user about downloaded file.
+	//   "CHROME_BLOCK_FILE_UPLOAD" - Block file upload.
+	//   "CHROME_WARN_FILE_UPLOAD" - Warn user about uploaded file.
+	//   "CHROME_BLOCK_WEB_CONTENT_UPLOAD" - Block web content upload.
+	//   "CHROME_WARN_WEB_CONTENT_UPLOAD" - Warn user about uploaded web
+	// content.
+	//   "CHROME_BLOCK_PAGE_PRINT" - Block page print.
+	//   "CHROME_WARN_PAGE_PRINT" - Warn user about printed page.
+	//   "CHROME_BLOCK_URL_VISITED" - Block Chrome URL visit.
+	//   "CHROME_WARN_URL_VISITED" - Warn user about Chrome URL visited.
+	//   "CHROME_STORE_CONTENT" - Store the content that violated the rule.
 	//   "DELETE_WEBPROTECT_EVIDENCE" - Delete web protect evidence file
+	//   "CHAT_BLOCK_CONTENT" - Chat actions. Block Chat content to be sent
+	// out.
+	//   "CHAT_WARN_USER" - Warn end user about Chat content.
 	//   "ALERT" - Send alert.
 	//   "RULE_ACTIVATE" - Activate Rule Action
 	//   "RULE_DEACTIVATE" - Deactivate Rule Action

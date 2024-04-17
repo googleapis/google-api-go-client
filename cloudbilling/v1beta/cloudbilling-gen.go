@@ -2229,9 +2229,8 @@ func (s *GoogleCloudBillingBillingaccountskugroupskusV1betaTaxonomyCategory) Mar
 
 // GoogleCloudBillingBillingaccountskusV1betaBillingAccountSku:
 // Encapsulates a stock keeping unit (SKU) visible to a billing account.
-// A SKU distinctly identifies a resource that you can purchase, such as
-// `Nvidia Tesla K80 GPU attached to Spot Preemptible VMs running in
-// Warsaw`.
+// A SKU distinctly identifies a resource that you can purchase. For a
+// list of available SKUs, see SKUs (https://cloud.google.com/skus).
 type GoogleCloudBillingBillingaccountskusV1betaBillingAccountSku struct {
 	// BillingAccountService: BillingAccountService that the
 	// BillingAccountSku belongs to.

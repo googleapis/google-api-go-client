@@ -700,8 +700,8 @@ func (s *GoogleFirebaseAppcheckV1betaBatchGetSafetyNetConfigsResponse) MarshalJS
 // Request message for the BatchUpdateResourcePolicies method.
 type GoogleFirebaseAppcheckV1betaBatchUpdateResourcePoliciesRequest struct {
 	// Requests: Required. The request messages specifying the
-	// ResourcePolicys to update. A maximum of 100 objects can be updated in
-	// a batch.
+	// ResourcePolicy objects to update. A maximum of 100 objects can be
+	// updated in a batch.
 	Requests []*GoogleFirebaseAppcheckV1betaUpdateResourcePolicyRequest `json:"requests,omitempty"`
 
 	// UpdateMask: Optional. A comma-separated list of names of fields in
@@ -1511,7 +1511,7 @@ type GoogleFirebaseAppcheckV1betaListResourcePoliciesResponse struct {
 	// should not be persisted.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ResourcePolicies: The ResourcePolicys retrieved.
+	// ResourcePolicies: The ResourcePolicy objects retrieved.
 	ResourcePolicies []*GoogleFirebaseAppcheckV1betaResourcePolicy `json:"resourcePolicies,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -1885,20 +1885,14 @@ func (s *GoogleFirebaseAppcheckV1betaRecaptchaV3Config) MarshalJSON() ([]byte, e
 type GoogleFirebaseAppcheckV1betaResourcePolicy struct {
 	// EnforcementMode: Required. The App Check enforcement mode for this
 	// resource. This will override the EnforcementMode setting on the
-	// service. For new resources that you are creating, you should consider
-	// setting an override and enable enforcement on the resource
-	// immediately, if there are no outdated clients that can use it.
+	// parent service.
 	//
 	// Possible values:
 	//   "OFF" - Firebase App Check is not enforced for the service, nor are
 	// App Check metrics collected. Though the service is not protected by
 	// App Check in this mode, other applicable protections, such as user
 	// authorization, are still enforced. An unconfigured service is in this
-	// mode by default. Note that resource policies behave slightly
-	// differently as an unconfigured resource policy means that the
-	// resource will inherit the EnforcementMode configured for the service
-	// it belongs to and will not be considered as being in OFF mode by
-	// default.
+	// mode by default.
 	//   "UNENFORCED" - Firebase App Check is not enforced for the service.
 	// App Check metrics are collected to help you decide when to turn on
 	// enforcement for the service. Though the service is not protected by
@@ -1935,7 +1929,7 @@ type GoogleFirebaseAppcheckV1betaResourcePolicy struct {
 	// Etag: This checksum is computed by the server based on the value of
 	// other fields, and may be sent on update and delete requests to ensure
 	// the client has an up-to-date value before proceeding. This etag is
-	// strongly validated.
+	// strongly validated as defined by RFC 7232.
 	Etag string `json:"etag,omitempty"`
 
 	// Name: Required. The relative name of the resource configuration
@@ -1951,14 +1945,16 @@ type GoogleFirebaseAppcheckV1betaResourcePolicy struct {
 	// TargetResource: Required. Service specific name of the resource
 	// object to which this policy applies, in the format: *
 	// `//oauth2.googleapis.com/projects/{project}/oauthClients/{oauth_client
-	// _id}` (Google Identity for iOS) NOTE that the resource must belong to
+	// _id}` (Google Identity for iOS) Note that the resource must belong to
 	// the service specified in the `name` and be from the same project as
-	// this policy, but it may or may not exist at the time of creation of
-	// the policy.
+	// this policy, but the resource is allowed to be missing at the time of
+	// creation of this policy; in that case, we make a best-effort attempt
+	// at respecting this policy, but it may not have any effect until the
+	// resource is fully created.
 	TargetResource string `json:"targetResource,omitempty"`
 
-	// UpdateTime: Output only. Timestamp when this service configuration
-	// object was most recently updated.
+	// UpdateTime: Output only. Timestamp when this resource policy
+	// configuration object was most recently updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
@@ -2046,11 +2042,7 @@ type GoogleFirebaseAppcheckV1betaService struct {
 	// App Check metrics collected. Though the service is not protected by
 	// App Check in this mode, other applicable protections, such as user
 	// authorization, are still enforced. An unconfigured service is in this
-	// mode by default. Note that resource policies behave slightly
-	// differently as an unconfigured resource policy means that the
-	// resource will inherit the EnforcementMode configured for the service
-	// it belongs to and will not be considered as being in OFF mode by
-	// default.
+	// mode by default.
 	//   "UNENFORCED" - Firebase App Check is not enforced for the service.
 	// App Check metrics are collected to help you decide when to turn on
 	// enforcement for the service. Though the service is not protected by
@@ -2142,13 +2134,9 @@ type GoogleFirebaseAppcheckV1betaUpdateResourcePolicyRequest struct {
 	// ResourcePolicy's `name` field is used to identify the ResourcePolicy
 	// to be updated, in the format: ```
 	// projects/{project_number}/services/{service_id}/resourcePolicies/{reso
-	// urce_name} ``` Note that the `service_id` element must be a supported
-	// service ID. Currently, the following service IDs are supported: *
-	// `oauth2.googleapis.com` (Google Identity for iOS) Only the top-level
-	// resources are supported for each of the services. The resources must
-	// belong to the service specified and `resource_name` should be
-	// formatted as: * `oauthClients/{oauth_client_id}` (Google Identity for
-	// iOS)
+	// urce_policy_id} ``` Note that the `service_id` element must be a
+	// supported service ID. Currently, the following service IDs are
+	// supported: * `oauth2.googleapis.com` (Google Identity for iOS)
 	ResourcePolicy *GoogleFirebaseAppcheckV1betaResourcePolicy `json:"resourcePolicy,omitempty"`
 
 	// UpdateMask: Required. A comma-separated list of names of fields in
@@ -5492,8 +5480,8 @@ func (r *ProjectsAppsAppAttestConfigService) Patch(name string, googlefirebaseap
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the AppAttestConfig Gets
-// to update. Example: `token_ttl`.
+// comma-separated list of names of fields in the AppAttestConfig to
+// update. Example: `token_ttl`.
 func (c *ProjectsAppsAppAttestConfigPatchCall) UpdateMask(updateMask string) *ProjectsAppsAppAttestConfigPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5608,7 +5596,7 @@ func (c *ProjectsAppsAppAttestConfigPatchCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the AppAttestConfig Gets to update. Example: `token_ttl`.",
+	//       "description": "Required. A comma-separated list of names of fields in the AppAttestConfig to update. Example: `token_ttl`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -6787,8 +6775,8 @@ func (r *ProjectsAppsDeviceCheckConfigService) Patch(name string, googlefirebase
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the DeviceCheckConfig Gets
-// to update. Example: `key_id,private_key`.
+// comma-separated list of names of fields in the DeviceCheckConfig to
+// update. Example: `key_id,private_key`.
 func (c *ProjectsAppsDeviceCheckConfigPatchCall) UpdateMask(updateMask string) *ProjectsAppsDeviceCheckConfigPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -6903,7 +6891,7 @@ func (c *ProjectsAppsDeviceCheckConfigPatchCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the DeviceCheckConfig Gets to update. Example: `key_id,private_key`.",
+	//       "description": "Required. A comma-separated list of names of fields in the DeviceCheckConfig to update. Example: `key_id,private_key`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7272,8 +7260,8 @@ func (r *ProjectsAppsPlayIntegrityConfigService) Patch(name string, googlefireba
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the PlayIntegrityConfig
-// Gets to update. Example: `token_ttl`.
+// comma-separated list of names of fields in the PlayIntegrityConfig to
+// update. Example: `token_ttl`.
 func (c *ProjectsAppsPlayIntegrityConfigPatchCall) UpdateMask(updateMask string) *ProjectsAppsPlayIntegrityConfigPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7390,7 +7378,7 @@ func (c *ProjectsAppsPlayIntegrityConfigPatchCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the PlayIntegrityConfig Gets to update. Example: `token_ttl`.",
+	//       "description": "Required. A comma-separated list of names of fields in the PlayIntegrityConfig to update. Example: `token_ttl`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -9221,8 +9209,8 @@ func (r *ProjectsAppsSafetyNetConfigService) Patch(name string, googlefirebaseap
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the SafetyNetConfig Gets
-// to update. Example: `token_ttl`.
+// comma-separated list of names of fields in the SafetyNetConfig to
+// update. Example: `token_ttl`.
 func (c *ProjectsAppsSafetyNetConfigPatchCall) UpdateMask(updateMask string) *ProjectsAppsSafetyNetConfigPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -9338,7 +9326,7 @@ func (c *ProjectsAppsSafetyNetConfigPatchCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the SafetyNetConfig Gets to update. Example: `token_ttl`.",
+	//       "description": "Required. A comma-separated list of names of fields in the SafetyNetConfig to update. Example: `token_ttl`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -10052,7 +10040,7 @@ type ProjectsServicesResourcePoliciesBatchUpdateCall struct {
 // BatchUpdate: Atomically updates the specified ResourcePolicy
 // configurations.
 //
-//   - parent: The parent project name and the service, in the format ```
+//   - parent: The parent service name, in the format ```
 //     projects/{project_number}/services/{service_id} ``` The parent
 //     collection in the `name` field of any resource being updated must
 //     match this field, or the entire batch fails.
@@ -10166,7 +10154,7 @@ func (c *ProjectsServicesResourcePoliciesBatchUpdateCall) Do(opts ...googleapi.C
 	//   ],
 	//   "parameters": {
 	//     "parent": {
-	//       "description": "Required. The parent project name and the service, in the format ``` projects/{project_number}/services/{service_id} ``` The parent collection in the `name` field of any resource being updated must match this field, or the entire batch fails.",
+	//       "description": "Required. The parent service name, in the format ``` projects/{project_number}/services/{service_id} ``` The parent collection in the `name` field of any resource being updated must match this field, or the entire batch fails.",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/services/[^/]+$",
 	//       "required": true,
@@ -10353,7 +10341,7 @@ type ProjectsServicesResourcePoliciesDeleteCall struct {
 //   - name: The relative resource name of the ResourcePolicy to delete,
 //     in the format: ```
 //     projects/{project_number}/services/{service_id}/resourcePolicies/{re
-//     source_name} ```.
+//     source_policy_id} ```.
 func (r *ProjectsServicesResourcePoliciesService) Delete(name string) *ProjectsServicesResourcePoliciesDeleteCall {
 	c := &ProjectsServicesResourcePoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -10362,9 +10350,12 @@ func (r *ProjectsServicesResourcePoliciesService) Delete(name string) *ProjectsS
 
 // Etag sets the optional parameter "etag": The checksum to be validated
 // against the current ResourcePolicy, to ensure the client has an
-// up-to-date value before proceeding. The user can obtain this from the
-// ResourcePolicy object that they last received. This etag is strongly
-// validated.
+// up-to-date value before proceeding. This checksum is computed by the
+// server based on the values of fields in the ResourcePolicy object,
+// and can be obtained from the ResourcePolicy object received from the
+// last CreateResourcePolicy, GetResourcePolicy, ListResourcePolicies,
+// UpdateResourcePolicy, or BatchUpdateResourcePolicies call. This etag
+// is strongly validated as defined by RFC 7232.
 func (c *ProjectsServicesResourcePoliciesDeleteCall) Etag(etag string) *ProjectsServicesResourcePoliciesDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
@@ -10465,12 +10456,12 @@ func (c *ProjectsServicesResourcePoliciesDeleteCall) Do(opts ...googleapi.CallOp
 	//   ],
 	//   "parameters": {
 	//     "etag": {
-	//       "description": "The checksum to be validated against the current ResourcePolicy, to ensure the client has an up-to-date value before proceeding. The user can obtain this from the ResourcePolicy object that they last received. This etag is strongly validated.",
+	//       "description": "The checksum to be validated against the current ResourcePolicy, to ensure the client has an up-to-date value before proceeding. This checksum is computed by the server based on the values of fields in the ResourcePolicy object, and can be obtained from the ResourcePolicy object received from the last CreateResourcePolicy, GetResourcePolicy, ListResourcePolicies, UpdateResourcePolicy, or BatchUpdateResourcePolicies call. This etag is strongly validated as defined by RFC 7232.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "name": {
-	//       "description": "Required. The relative resource name of the ResourcePolicy to delete, in the format: ``` projects/{project_number}/services/{service_id}/resourcePolicies/{resource_name} ```",
+	//       "description": "Required. The relative resource name of the ResourcePolicy to delete, in the format: ``` projects/{project_number}/services/{service_id}/resourcePolicies/{resource_policy_id} ```",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/services/[^/]+/resourcePolicies/[^/]+$",
 	//       "required": true,
@@ -10659,9 +10650,12 @@ type ProjectsServicesResourcePoliciesListCall struct {
 // List: Lists all ResourcePolicy configurations for the specified
 // project and service.
 //
-//   - parent: The relative resource name of the parent project and
-//     service for which to list each associated ResourcePolicy, in the
-//     format: ``` projects/{project_number}/services/{service_name} ```.
+//   - parent: The relative resource name of the parent service for which
+//     to list each associated ResourcePolicy, in the format: ```
+//     projects/{project_number}/services/{service_id} ``` Note that the
+//     `service_id` element must be a supported service ID. Currently, the
+//     following service IDs are supported: * `oauth2.googleapis.com`
+//     (Google Identity for iOS).
 func (r *ProjectsServicesResourcePoliciesService) List(parent string) *ProjectsServicesResourcePoliciesListCall {
 	c := &ProjectsServicesResourcePoliciesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10685,10 +10679,10 @@ func (c *ProjectsServicesResourcePoliciesListCall) Filter(filter string) *Projec
 }
 
 // PageSize sets the optional parameter "pageSize": The maximum number
-// of ResourcePolicys to return in the response. Only explicitly
-// configured policies are returned. The server may return fewer than
-// this at its own discretion. If no value is specified (or too large a
-// value is specified), the server will impose its own limit.
+// of ResourcePolicy objects to return in the response. The server may
+// return fewer than this at its own discretion. If no value is
+// specified (or too large a value is specified), the server will impose
+// its own limit.
 func (c *ProjectsServicesResourcePoliciesListCall) PageSize(pageSize int64) *ProjectsServicesResourcePoliciesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
@@ -10696,10 +10690,10 @@ func (c *ProjectsServicesResourcePoliciesListCall) PageSize(pageSize int64) *Pro
 
 // PageToken sets the optional parameter "pageToken": Token returned
 // from a previous call to ListResourcePolicies indicating where in the
-// set of ResourcePolicys to resume listing. Provide this to retrieve
-// the subsequent page. When paginating, all other parameters provided
-// to ListResourcePolicies must match the call that provided the page
-// token; if they do not match, the result is undefined.
+// set of ResourcePolicy objects to resume listing. Provide this to
+// retrieve the subsequent page. When paginating, all other parameters
+// provided to ListResourcePolicies must match the call that provided
+// the page token; if they do not match, the result is undefined.
 func (c *ProjectsServicesResourcePoliciesListCall) PageToken(pageToken string) *ProjectsServicesResourcePoliciesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -10821,18 +10815,18 @@ func (c *ProjectsServicesResourcePoliciesListCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "pageSize": {
-	//       "description": "The maximum number of ResourcePolicys to return in the response. Only explicitly configured policies are returned. The server may return fewer than this at its own discretion. If no value is specified (or too large a value is specified), the server will impose its own limit.",
+	//       "description": "The maximum number of ResourcePolicy objects to return in the response. The server may return fewer than this at its own discretion. If no value is specified (or too large a value is specified), the server will impose its own limit.",
 	//       "format": "int32",
 	//       "location": "query",
 	//       "type": "integer"
 	//     },
 	//     "pageToken": {
-	//       "description": "Token returned from a previous call to ListResourcePolicies indicating where in the set of ResourcePolicys to resume listing. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListResourcePolicies must match the call that provided the page token; if they do not match, the result is undefined.",
+	//       "description": "Token returned from a previous call to ListResourcePolicies indicating where in the set of ResourcePolicy objects to resume listing. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to ListResourcePolicies must match the call that provided the page token; if they do not match, the result is undefined.",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. The relative resource name of the parent project and service for which to list each associated ResourcePolicy, in the format: ``` projects/{project_number}/services/{service_name} ```",
+	//       "description": "Required. The relative resource name of the parent service for which to list each associated ResourcePolicy, in the format: ``` projects/{project_number}/services/{service_id} ``` Note that the `service_id` element must be a supported service ID. Currently, the following service IDs are supported: * `oauth2.googleapis.com` (Google Identity for iOS)",
 	//       "location": "path",
 	//       "pattern": "^projects/[^/]+/services/[^/]+$",
 	//       "required": true,

@@ -1,5 +1,18 @@
 # Changes
 
+## [0.174.0](https://github.com/googleapis/google-api-go-client/compare/v0.173.0...v0.174.0) (2024-04-17)
+
+
+### Features
+
+* Add hooks in for new auth library ([#2228](https://github.com/googleapis/google-api-go-client/issues/2228)) ([4054271](https://github.com/googleapis/google-api-go-client/commit/4054271be9fe8c99b21ab61ba367cf8cd9f17fff))
+* **all:** Auto-regenerate discovery clients ([#2524](https://github.com/googleapis/google-api-go-client/issues/2524)) ([f49960d](https://github.com/googleapis/google-api-go-client/commit/f49960dabd8a299f1908e2aaf0d87d415b318cef))
+
+
+### Bug Fixes
+
+* **internal:** Set scopes for new auth flow ([#2525](https://github.com/googleapis/google-api-go-client/issues/2525)) ([0f0a2f0](https://github.com/googleapis/google-api-go-client/commit/0f0a2f07eb7455c98dc29c8c711a666fa6e3a627)), refs [#2523](https://github.com/googleapis/google-api-go-client/issues/2523) [#2522](https://github.com/googleapis/google-api-go-client/issues/2522)
+
 ## [0.173.0](https://github.com/googleapis/google-api-go-client/compare/v0.172.0...v0.173.0) (2024-04-16)
 
 

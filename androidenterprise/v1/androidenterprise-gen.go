@@ -5673,7 +5673,7 @@ type EnterprisesCreateWebTokenCall struct {
 // CreateWebToken: Returns a unique token to access an embeddable UI. To
 // generate a web UI, pass the generated token into the managed Google
 // Play javascript API. Each token may only be used to start one UI
-// session. See the javascript API documentation for further
+// session. See the JavaScript API documentation for further
 // information.
 //
 // - enterpriseId: The ID of the enterprise.
@@ -5775,7 +5775,7 @@ func (c *EnterprisesCreateWebTokenCall) Do(opts ...googleapi.CallOption) (*Admin
 	}
 	return ret, nil
 	// {
-	//   "description": "Returns a unique token to access an embeddable UI. To generate a web UI, pass the generated token into the managed Google Play javascript API. Each token may only be used to start one UI session. See the javascript API documentation for further information.",
+	//   "description": "Returns a unique token to access an embeddable UI. To generate a web UI, pass the generated token into the managed Google Play javascript API. Each token may only be used to start one UI session. See the JavaScript API documentation for further information.",
 	//   "flatPath": "androidenterprise/v1/enterprises/{enterpriseId}/createWebToken",
 	//   "httpMethod": "POST",
 	//   "id": "androidenterprise.enterprises.createWebToken",

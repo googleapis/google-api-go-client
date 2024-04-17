@@ -1619,11 +1619,7 @@ type GoogleFirebaseAppcheckV1Service struct {
 	// App Check metrics collected. Though the service is not protected by
 	// App Check in this mode, other applicable protections, such as user
 	// authorization, are still enforced. An unconfigured service is in this
-	// mode by default. Note that resource policies behave slightly
-	// differently as an unconfigured resource policy means that the
-	// resource will inherit the EnforcementMode configured for the service
-	// it belongs to and will not be considered as being in OFF mode by
-	// default.
+	// mode by default.
 	//   "UNENFORCED" - Firebase App Check is not enforced for the service.
 	// App Check metrics are collected to help you decide when to turn on
 	// enforcement for the service. Though the service is not protected by
@@ -3913,8 +3909,8 @@ func (r *ProjectsAppsAppAttestConfigService) Patch(name string, googlefirebaseap
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the AppAttestConfig Gets
-// to update. Example: `token_ttl`.
+// comma-separated list of names of fields in the AppAttestConfig to
+// update. Example: `token_ttl`.
 func (c *ProjectsAppsAppAttestConfigPatchCall) UpdateMask(updateMask string) *ProjectsAppsAppAttestConfigPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -4028,7 +4024,7 @@ func (c *ProjectsAppsAppAttestConfigPatchCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the AppAttestConfig Gets to update. Example: `token_ttl`.",
+	//       "description": "Required. A comma-separated list of names of fields in the AppAttestConfig to update. Example: `token_ttl`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5209,8 +5205,8 @@ func (r *ProjectsAppsDeviceCheckConfigService) Patch(name string, googlefirebase
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the DeviceCheckConfig Gets
-// to update. Example: `key_id,private_key`.
+// comma-separated list of names of fields in the DeviceCheckConfig to
+// update. Example: `key_id,private_key`.
 func (c *ProjectsAppsDeviceCheckConfigPatchCall) UpdateMask(updateMask string) *ProjectsAppsDeviceCheckConfigPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5325,7 +5321,7 @@ func (c *ProjectsAppsDeviceCheckConfigPatchCall) Do(opts ...googleapi.CallOption
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the DeviceCheckConfig Gets to update. Example: `key_id,private_key`.",
+	//       "description": "Required. A comma-separated list of names of fields in the DeviceCheckConfig to update. Example: `key_id,private_key`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -5692,8 +5688,8 @@ func (r *ProjectsAppsPlayIntegrityConfigService) Patch(name string, googlefireba
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the PlayIntegrityConfig
-// Gets to update. Example: `token_ttl`.
+// comma-separated list of names of fields in the PlayIntegrityConfig to
+// update. Example: `token_ttl`.
 func (c *ProjectsAppsPlayIntegrityConfigPatchCall) UpdateMask(updateMask string) *ProjectsAppsPlayIntegrityConfigPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -5808,7 +5804,7 @@ func (c *ProjectsAppsPlayIntegrityConfigPatchCall) Do(opts ...googleapi.CallOpti
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the PlayIntegrityConfig Gets to update. Example: `token_ttl`.",
+	//       "description": "Required. A comma-separated list of names of fields in the PlayIntegrityConfig to update. Example: `token_ttl`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"
@@ -7149,8 +7145,8 @@ func (r *ProjectsAppsSafetyNetConfigService) Patch(name string, googlefirebaseap
 }
 
 // UpdateMask sets the optional parameter "updateMask": Required. A
-// comma-separated list of names of fields in the SafetyNetConfig Gets
-// to update. Example: `token_ttl`.
+// comma-separated list of names of fields in the SafetyNetConfig to
+// update. Example: `token_ttl`.
 func (c *ProjectsAppsSafetyNetConfigPatchCall) UpdateMask(updateMask string) *ProjectsAppsSafetyNetConfigPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
@@ -7265,7 +7261,7 @@ func (c *ProjectsAppsSafetyNetConfigPatchCall) Do(opts ...googleapi.CallOption) 
 	//       "type": "string"
 	//     },
 	//     "updateMask": {
-	//       "description": "Required. A comma-separated list of names of fields in the SafetyNetConfig Gets to update. Example: `token_ttl`.",
+	//       "description": "Required. A comma-separated list of names of fields in the SafetyNetConfig to update. Example: `token_ttl`.",
 	//       "format": "google-fieldmask",
 	//       "location": "query",
 	//       "type": "string"

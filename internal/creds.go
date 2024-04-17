@@ -64,12 +64,16 @@ func credsNewAuth(ctx context.Context, settings *DialSettings) (*google.Credenti
 		useSelfSignedJWT = true
 	}
 
+	if len(settings.Scopes) > 0 {
+		scopes = make([]string, len(settings.Scopes))
+		copy(scopes, settings.Scopes)
+	}
 	if len(settings.Audiences) > 0 {
 		aud = settings.Audiences[0]
 	}
 	// Only default scopes if user did not also set an audience.
 	if len(settings.Scopes) == 0 && aud == "" && len(settings.DefaultScopes) > 0 {
-		scopes = make([]string, len(scopes))
+		scopes = make([]string, len(settings.DefaultScopes))
 		copy(scopes, settings.DefaultScopes)
 	}
 	if len(scopes) == 0 && aud == "" {

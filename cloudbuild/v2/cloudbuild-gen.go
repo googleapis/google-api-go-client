@@ -2096,6 +2096,10 @@ type PipelineRun struct {
 	// PipelineSpec: PipelineSpec defines the desired state of Pipeline.
 	PipelineSpec *PipelineSpec `json:"pipelineSpec,omitempty"`
 
+	// PipelineSpecYaml: Output only. Inline pipelineSpec yaml string, used
+	// by workflow run requests.
+	PipelineSpecYaml string `json:"pipelineSpecYaml,omitempty"`
+
 	// Provenance: Optional. Provenance configuration.
 	Provenance *Provenance `json:"provenance,omitempty"`
 

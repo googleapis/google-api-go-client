@@ -219,11 +219,31 @@ type GoogleSecuritySafebrowsingV5FullHashFullHashDetail struct {
 	//   "THREAT_TYPE_UNSPECIFIED" - Unknown threat type. If this is
 	// returned by the server, the client shall disregard the enclosing
 	// `FullHashDetail` altogether.
-	//   "MALWARE" - Malware threat type.
-	//   "SOCIAL_ENGINEERING" - Social engineering threat type.
-	//   "UNWANTED_SOFTWARE" - Unwanted software threat type.
+	//   "MALWARE" - Malware threat type. Malware is any software or mobile
+	// application specifically designed to harm a computer, a mobile
+	// device, the software it's running, or its users. Malware exhibits
+	// malicious behavior that can include installing software without user
+	// consent and installing harmful software such as viruses. More
+	// information can be found
+	// [here](https://developers.google.com/search/docs/monitor-debug/securit
+	// y/malware).
+	//   "SOCIAL_ENGINEERING" - Social engineering threat type. Social
+	// engineering pages falsely purport to act on behalf of a third party
+	// with the intention of confusing viewers into performing an action
+	// with which the viewer would only trust a true agent of that third
+	// party. Phishing is a type of social engineering that tricks the
+	// viewer into performing the specific action of providing information,
+	// such as login credentials. More information can be found
+	// [here](https://developers.google.com/search/docs/monitor-debug/securit
+	// y/social-engineering).
+	//   "UNWANTED_SOFTWARE" - Unwanted software threat type. Unwanted
+	// software is any software that does not adhere to [Google's Software
+	// Principles](https://www.google.com/about/software-principles.html)
+	// but isn't malware.
 	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application
-	// threat type.
+	// threat type [as used by Google Play Protect for the Play
+	// Store](https://developers.google.com/android/play-protect/potentially-
+	// harmful-applications).
 	ThreatType string `json:"threatType,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
@@ -254,7 +274,7 @@ func (s *GoogleSecuritySafebrowsingV5FullHashFullHashDetail) MarshalJSON() ([]by
 // server will return an OK status (HTTP status code 200) with the
 // `full_hashes` field empty, rather than returning a NOT_FOUND status
 // (HTTP status code 404). **What's new in V5**: There is a separation
-// between FullHash and FullHashDetail. In the case when a hash
+// between `FullHash` and `FullHashDetail`. In the case when a hash
 // represents a site having multiple threats (e.g. both MALWARE and
 // SOCIAL_ENGINEERING), the full hash does not need to be sent twice as
 // in V4. Furthermore, the cache duration has been simplified into a

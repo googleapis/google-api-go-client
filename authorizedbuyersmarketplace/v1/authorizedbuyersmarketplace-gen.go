@@ -3398,6 +3398,16 @@ func (r *BuyersAuctionPackagesService) List(parent string) *BuyersAuctionPackage
 	return c
 }
 
+// Filter sets the optional parameter "filter": Optional query string
+// using the Cloud API list filtering syntax
+// (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
+// Only supported when parent is bidder. Supported columns for filtering
+// are: * displayName * createTime * updateTime * eligibleSeatIds
+func (c *BuyersAuctionPackagesListCall) Filter(filter string) *BuyersAuctionPackagesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
 // PageSize sets the optional parameter "pageSize": Requested page size.
 // The server may return fewer results than requested. Max allowed page
 // size is 500.
@@ -3520,6 +3530,11 @@ func (c *BuyersAuctionPackagesListCall) Do(opts ...googleapi.CallOption) (*ListA
 	//     "parent"
 	//   ],
 	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Only supported when parent is bidder. Supported columns for filtering are: * displayName * createTime * updateTime * eligibleSeatIds",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
 	//     "pageSize": {
 	//       "description": "Requested page size. The server may return fewer results than requested. Max allowed page size is 500.",
 	//       "format": "int32",

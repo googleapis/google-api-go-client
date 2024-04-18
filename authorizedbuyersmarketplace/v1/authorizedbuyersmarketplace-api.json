@@ -197,6 +197,11 @@
                 "parent"
               ],
               "parameters": {
+                "filter": {
+                  "description": "Optional. Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Only supported when parent is bidder. Supported columns for filtering are: * displayName * createTime * updateTime * eligibleSeatIds",
+                  "location": "query",
+                  "type": "string"
+                },
                 "pageSize": {
                   "description": "Requested page size. The server may return fewer results than requested. Max allowed page size is 500.",
                   "format": "int32",
@@ -1307,7 +1312,7 @@
       }
     }
   },
-  "revision": "20240304",
+  "revision": "20240417",
   "rootUrl": "https://authorizedbuyersmarketplace.googleapis.com/",
   "schemas": {
     "AcceptProposalRequest": {

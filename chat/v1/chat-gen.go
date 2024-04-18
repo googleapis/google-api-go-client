@@ -4370,9 +4370,8 @@ type Membership struct {
 	Name string `json:"name,omitempty"`
 
 	// Role: Optional. User's role within a Chat space, which determines
-	// their permitted actions in the space. Developer Preview
-	// (https://developers.google.com/workspace/preview): This field can
-	// only be used as input in `UpdateMembership`.
+	// their permitted actions in the space. This field can only be used as
+	// input in `UpdateMembership`.
 	//
 	// Possible values:
 	//   "MEMBERSHIP_ROLE_UNSPECIFIED" - Default value. For users: they
@@ -8454,8 +8453,9 @@ type SpacesMembersGetCall struct {
 // (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
 //
 //   - name: Resource name of the membership to retrieve. To get the app's
-//     own membership, you can optionally use
-//     `spaces/{space}/members/app`. Format:
+//     own membership by using user authentication
+//     (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
+//     you can optionally use `spaces/{space}/members/app`. Format:
 //     `spaces/{space}/members/{member}` or `spaces/{space}/members/app`
 //     When authenticated as a user
 //     (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user),
@@ -8576,7 +8576,7 @@ func (c *SpacesMembersGetCall) Do(opts ...googleapi.CallOption) (*Membership, er
 	//   ],
 	//   "parameters": {
 	//     "name": {
-	//       "description": "Required. Resource name of the membership to retrieve. To get the app's own membership, you can optionally use `spaces/{space}/members/app`. Format: `spaces/{space}/members/{member}` or `spaces/{space}/members/app` When [authenticated as a user](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user), you can use the user's email as an alias for `{member}`. For example, `spaces/{space}/members/example@gmail.com` where `example@gmail.com` is the email of the Google Chat user.",
+	//       "description": "Required. Resource name of the membership to retrieve. To get the app's own membership [by using user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user), you can optionally use `spaces/{space}/members/app`. Format: `spaces/{space}/members/{member}` or `spaces/{space}/members/app` When [authenticated as a user](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user), you can use the user's email as an alias for `{member}`. For example, `spaces/{space}/members/example@gmail.com` where `example@gmail.com` is the email of the Google Chat user.",
 	//       "location": "path",
 	//       "pattern": "^spaces/[^/]+/members/[^/]+$",
 	//       "required": true,
@@ -8867,6 +8867,166 @@ func (c *SpacesMembersListCall) Pages(ctx context.Context, f func(*ListMembershi
 		}
 		c.PageToken(x.NextPageToken)
 	}
+}
+
+// method id "chat.spaces.members.patch":
+
+type SpacesMembersPatchCall struct {
+	s          *Service
+	name       string
+	membership *Membership
+	urlParams_ gensupport.URLParams
+	ctx_       context.Context
+	header_    http.Header
+}
+
+// Patch: Updates a membership. Requires user authentication
+// (https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).
+//
+//   - name: Resource name of the membership, assigned by the server.
+//     Format: `spaces/{space}/members/{member}`.
+func (r *SpacesMembersService) Patch(name string, membership *Membership) *SpacesMembersPatchCall {
+	c := &SpacesMembersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.name = name
+	c.membership = membership
+	return c
+}
+
+// UpdateMask sets the optional parameter "updateMask": Required. The
+// field paths to update. Separate multiple values with commas or use
+// `*` to update all field paths. Currently supported field paths: -
+// `role`
+func (c *SpacesMembersPatchCall) UpdateMask(updateMask string) *SpacesMembersPatchCall {
+	c.urlParams_.Set("updateMask", updateMask)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *SpacesMembersPatchCall) Fields(s ...googleapi.Field) *SpacesMembersPatchCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *SpacesMembersPatchCall) Context(ctx context.Context) *SpacesMembersPatchCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *SpacesMembersPatchCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *SpacesMembersPatchCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	var body io.Reader = nil
+	body, err := googleapi.WithoutDataWrapper.JSONReader(c.membership)
+	if err != nil {
+		return nil, err
+	}
+	reqHeaders.Set("Content-Type", "application/json")
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("PATCH", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"name": c.name,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "chat.spaces.members.patch" call.
+// Exactly one of *Membership or error will be non-nil. Any non-2xx
+// status code is an error. Response headers are in either
+// *Membership.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
+// to check whether the returned error was because
+// http.StatusNotModified was returned.
+func (c *SpacesMembersPatchCall) Do(opts ...googleapi.CallOption) (*Membership, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &Membership{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "Updates a membership. Requires [user authentication](https://developers.google.com/workspace/chat/authenticate-authorize-chat-user).",
+	//   "flatPath": "v1/spaces/{spacesId}/members/{membersId}",
+	//   "httpMethod": "PATCH",
+	//   "id": "chat.spaces.members.patch",
+	//   "parameterOrder": [
+	//     "name"
+	//   ],
+	//   "parameters": {
+	//     "name": {
+	//       "description": "Resource name of the membership, assigned by the server. Format: `spaces/{space}/members/{member}`",
+	//       "location": "path",
+	//       "pattern": "^spaces/[^/]+/members/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     },
+	//     "updateMask": {
+	//       "description": "Required. The field paths to update. Separate multiple values with commas or use `*` to update all field paths. Currently supported field paths: - `role`",
+	//       "format": "google-fieldmask",
+	//       "location": "query",
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+name}",
+	//   "request": {
+	//     "$ref": "Membership"
+	//   },
+	//   "response": {
+	//     "$ref": "Membership"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/chat.import",
+	//     "https://www.googleapis.com/auth/chat.memberships"
+	//   ]
+	// }
+
 }
 
 // method id "chat.spaces.messages.create":

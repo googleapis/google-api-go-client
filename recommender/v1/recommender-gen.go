@@ -575,7 +575,7 @@ type GoogleCloudRecommenderV1Insight struct {
 	// insight.
 	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
 
-	// Name: Name of the insight.
+	// Name: Identifier. Name of the insight.
 	Name string `json:"name,omitempty"`
 
 	// ObservationPeriod: Observation period that led to the insight. The
@@ -1203,7 +1203,7 @@ type GoogleCloudRecommenderV1Recommendation struct {
 	// system that created it in the first place.
 	LastRefreshTime string `json:"lastRefreshTime,omitempty"`
 
-	// Name: Name of recommendation.
+	// Name: Identifier. Name of recommendation.
 	Name string `json:"name,omitempty"`
 
 	// PrimaryImpact: The primary impact that this recommendation can have

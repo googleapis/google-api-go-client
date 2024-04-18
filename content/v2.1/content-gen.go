@@ -6354,6 +6354,41 @@ func (s *FreeListingsProgramStatusReviewIneligibilityReasonDetails) MarshalJSON(
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// FreeShippingThreshold: Conditions to be met for a product to have
+// free shipping.
+type FreeShippingThreshold struct {
+	// Country: Required. The CLDR territory code
+	// (http://www.unicode.org/repos/cldr/tags/latest/common/main/en.xml) of
+	// the country to which an item will ship.
+	Country string `json:"country,omitempty"`
+
+	// PriceThreshold: Required. The minimum product price for the shipping
+	// cost to become free. Represented as a number.
+	PriceThreshold *Price `json:"priceThreshold,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Country") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Country") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *FreeShippingThreshold) MarshalJSON() ([]byte, error) {
+	type NoMethod FreeShippingThreshold
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // GenerateRecommendationsResponse: Response containing generated
 // recommendations.
 type GenerateRecommendationsResponse struct {
@@ -14434,6 +14469,10 @@ type Product struct {
 	// `feedLabel` is required. Must be less than or equal to 20 uppercase
 	// letters (A-Z), numbers (0-9), and dashes (-).
 	FeedLabel string `json:"feedLabel,omitempty"`
+
+	// FreeShippingThreshold: Optional. Conditions to be met for a product
+	// to have free shipping.
+	FreeShippingThreshold []*FreeShippingThreshold `json:"freeShippingThreshold,omitempty"`
 
 	// Gender: Target gender of the item.
 	Gender string `json:"gender,omitempty"`

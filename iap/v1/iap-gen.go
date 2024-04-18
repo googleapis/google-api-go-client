@@ -1380,15 +1380,16 @@ type Resource struct {
 	// requirements. * Talk to iam-conditions-eng@ about your use case.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// Name: Name of the resource on which conditions will be evaluated.
-	// Must use the Relative Resource Name of the resource, which is the URI
-	// path of the resource without the leading "/". Examples are
-	// "projects/_/buckets/[BUCKET-ID]" for storage buckets or
-	// "projects/[PROJECT-ID]/global/firewalls/[FIREWALL-ID]" for a
-	// firewall. This field is required for evaluating conditions with rules
-	// on resource names. For a `list` permission check, the resource.name
-	// value must be set to the parent resource. If the parent resource is a
-	// project, this field should be left unset.
+	// Name: The **relative** name of the resource, which is the URI path of
+	// the resource without the leading "/". See
+	// https://cloud.google.com/iam/docs/conditions-resource-attributes#resource-name
+	// for examples used by other GCP Services. This field is **required**
+	// for services integrated with resource-attribute-based IAM conditions
+	// and/or CustomOrgPolicy. This field requires special handling for
+	// parents-only permissions such as `create` and `list`. See the
+	// document linked below for further details. See
+	// go/iam-conditions-sig-g3#populate-resource-attributes for specific
+	// details on populating this field.
 	Name string `json:"name,omitempty"`
 
 	// Service: The name of the service this resource belongs to. It is
@@ -1397,16 +1398,26 @@ type Resource struct {
 	// example, the official_service_name of cloud resource manager service
 	// is set as 'cloudresourcemanager.googleapis.com' according to
 	// //configs/cloud/resourcetypes/google/cloud/resourcemanager/prod.yaml
+	// This field is **required** for services integrated with
+	// resource-attribute-based IAM conditions and/or CustomOrgPolicy. This
+	// field requires special handling for parents-only permissions such as
+	// `create` and `list`. See the document linked below for further
+	// details. See go/iam-conditions-sig-g3#populate-resource-attributes
+	// for specific details on populating this field.
 	Service string `json:"service,omitempty"`
 
-	// Type: The public resource type name of the resource on which
-	// conditions will be evaluated. It is configured using the
-	// official_name of the ResourceType as defined in service
+	// Type: The public resource type name of the resource. It is configured
+	// using the official_name of the ResourceType as defined in service
 	// configurations under //configs/cloud/resourcetypes. For example, the
 	// official_name for GCP projects is set as
 	// 'cloudresourcemanager.googleapis.com/Project' according to
 	// //configs/cloud/resourcetypes/google/cloud/resourcemanager/prod.yaml
-	// For details see go/iam-conditions-integration-guide.
+	// This field is **required** for services integrated with
+	// resource-attribute-based IAM conditions and/or CustomOrgPolicy. This
+	// field requires special handling for parents-only permissions such as
+	// `create` and `list`. See the document linked below for further
+	// details. See go/iam-conditions-sig-g3#populate-resource-attributes
+	// for specific details on populating this field.
 	Type string `json:"type,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "ExpectedNextState")

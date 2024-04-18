@@ -4046,24 +4046,37 @@ func (s *Job) MarshalJSON() ([]byte, error) {
 
 // JobSpec: JobSpec describes how the job will look.
 type JobSpec struct {
+	// RunExecutionToken: A unique string used as a suffix for creating a
+	// new execution. The Job will become ready when the execution is
+	// successfully completed. The sum of job name and token length must be
+	// fewer than 63 characters.
+	RunExecutionToken string `json:"runExecutionToken,omitempty"`
+
+	// StartExecutionToken: A unique string used as a suffix for creating a
+	// new execution. The Job will become ready when the execution is
+	// successfully started. The sum of job name and token length must be
+	// fewer than 63 characters.
+	StartExecutionToken string `json:"startExecutionToken,omitempty"`
+
 	// Template: Optional. Describes the execution that will be created when
 	// running a job.
 	Template *ExecutionTemplateSpec `json:"template,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Template") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "RunExecutionToken")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Template") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "RunExecutionToken") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

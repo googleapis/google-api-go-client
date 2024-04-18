@@ -4731,7 +4731,7 @@
       }
     }
   },
-  "revision": "20240415",
+  "revision": "20240417",
   "rootUrl": "https://androidpublisher.googleapis.com/",
   "schemas": {
     "Abi": {
@@ -7862,6 +7862,10 @@
           "$ref": "Money",
           "description": "The absolute amount of money subtracted from the base plan price prorated over the phase duration that the user pays for this offer phase. For example, if the base plan price for this region is $12 for a period of 1 year, then a $1 absolute discount for a phase of a duration of 3 months would correspond to a price of $2. The resulting price may not be smaller than the minimum price allowed for this region."
         },
+        "free": {
+          "$ref": "RegionalSubscriptionOfferPhaseFreePriceOverride",
+          "description": "Set to specify this offer is free to obtain."
+        },
         "price": {
           "$ref": "Money",
           "description": "The absolute price the user pays for this offer phase. The price must not be smaller than the minimum price allowed for this region."
@@ -7876,6 +7880,12 @@
           "type": "number"
         }
       },
+      "type": "object"
+    },
+    "RegionalSubscriptionOfferPhaseFreePriceOverride": {
+      "description": "Represents the free price override configuration for a single phase of a subscription offer",
+      "id": "RegionalSubscriptionOfferPhaseFreePriceOverride",
+      "properties": {},
       "type": "object"
     },
     "RegionalTaxRateInfo": {

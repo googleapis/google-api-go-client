@@ -2352,14 +2352,16 @@ type MethodSettings struct {
 	// annotations in google/longrunning/operations.proto. Example of a YAML
 	// configuration:: publishing: method_settings: - selector:
 	// google.cloud.speech.v2.Speech.BatchRecognize long_running:
-	// initial_poll_delay: seconds: 60 # 1 minute poll_delay_multiplier: 1.5
-	// max_poll_delay: seconds: 360 # 6 minutes total_poll_timeout: seconds:
-	// 54000 # 90 minutes
+	// initial_poll_delay: 60s # 1 minute poll_delay_multiplier: 1.5
+	// max_poll_delay: 360s # 6 minutes total_poll_timeout: 54000s # 90
+	// minutes
 	LongRunning *LongRunning `json:"longRunning,omitempty"`
 
 	// Selector: The fully qualified name of the method, for which the
 	// options below apply. This is used to find the method to apply the
-	// options.
+	// options. Example: publishing: method_settings: - selector:
+	// google.storage.control.v2.StorageControl.CreateFolder # method
+	// settings for CreateFolder...
 	Selector string `json:"selector,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AutoPopulatedFields")
@@ -4559,6 +4561,11 @@ type V1Beta1QuotaBucket struct {
 	// ancestor of the current consumer.
 	ProducerQuotaPolicy *V1Beta1ProducerQuotaPolicy `json:"producerQuotaPolicy,omitempty"`
 
+	// RolloutInfo: Rollout information of this quota bucket. This field is
+	// present only if the effective limit will change due to the ongoing
+	// rollout of the service config.
+	RolloutInfo *V1Beta1RolloutInfo `json:"rolloutInfo,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AdminOverride") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -4658,6 +4665,37 @@ func (s *V1Beta1QuotaOverride) MarshalJSON() ([]byte, error) {
 // `response` field of the returned Operation when that operation is
 // done.
 type V1Beta1RefreshConsumerResponse struct {
+}
+
+// V1Beta1RolloutInfo: [Output only] Rollout information of a quota.
+type V1Beta1RolloutInfo struct {
+	// DefaultLimitOngoingRollout: Whether there is an ongoing rollout for
+	// the default limit or not.
+	DefaultLimitOngoingRollout bool `json:"defaultLimitOngoingRollout,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultLimitOngoingRollout") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "DefaultLimitOngoingRollout") to include in API requests with the
+	// JSON null value. By default, fields with empty values are omitted
+	// from API requests. However, any field with an empty value appearing
+	// in NullFields will be sent to the server as null. It is an error if a
+	// field in this list has a non-empty value. This may be used to include
+	// null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *V1Beta1RolloutInfo) MarshalJSON() ([]byte, error) {
+	type NoMethod V1Beta1RolloutInfo
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // V1Beta1ServiceIdentity: A service identity in the Identity and Access

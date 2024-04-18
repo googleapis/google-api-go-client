@@ -251,18 +251,18 @@ type ProjectsLocationsServicesRevisionsService struct {
 // GoogleCloudRunV2BinaryAuthorization: Settings for Binary
 // Authorization feature.
 type GoogleCloudRunV2BinaryAuthorization struct {
-	// BreakglassJustification: If present, indicates to use Breakglass
-	// using this justification. If use_default is False, then it must be
-	// empty. For more information on breakglass, see
+	// BreakglassJustification: Optional. If present, indicates to use
+	// Breakglass using this justification. If use_default is False, then it
+	// must be empty. For more information on breakglass, see
 	// https://cloud.google.com/binary-authorization/docs/using-breakglass
 	BreakglassJustification string `json:"breakglassJustification,omitempty"`
 
-	// Policy: The path to a binary authorization policy. Format:
+	// Policy: Optional. The path to a binary authorization policy. Format:
 	// projects/{project}/platforms/cloudRun/{policy-name}
 	Policy string `json:"policy,omitempty"`
 
-	// UseDefault: If True, indicates to use the default project's binary
-	// authorization policy. If False, binary authorization will be
+	// UseDefault: Optional. If True, indicates to use the default project's
+	// binary authorization policy. If False, binary authorization will be
 	// disabled.
 	UseDefault bool `json:"useDefault,omitempty"`
 
@@ -363,7 +363,7 @@ func (s *GoogleCloudRunV2CloudSqlInstance) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudRunV2Condition: Defines a status condition for a resource.
 type GoogleCloudRunV2Condition struct {
-	// ExecutionReason: A reason for the execution condition.
+	// ExecutionReason: Output only. A reason for the execution condition.
 	//
 	// Possible values:
 	//   "EXECUTION_REASON_UNDEFINED" - Default value.
@@ -385,7 +385,8 @@ type GoogleCloudRunV2Condition struct {
 	// status.
 	Message string `json:"message,omitempty"`
 
-	// Reason: A common (service-level) reason for this condition.
+	// Reason: Output only. A common (service-level) reason for this
+	// condition.
 	//
 	// Possible values:
 	//   "COMMON_REASON_UNDEFINED" - Default value.
@@ -413,7 +414,7 @@ type GoogleCloudRunV2Condition struct {
 	// in the message.
 	Reason string `json:"reason,omitempty"`
 
-	// RevisionReason: A reason for the revision condition.
+	// RevisionReason: Output only. A reason for the revision condition.
 	//
 	// Possible values:
 	//   "REVISION_REASON_UNDEFINED" - Default value.
@@ -1224,13 +1225,14 @@ func (s *GoogleCloudRunV2GCSVolumeSource) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2GRPCAction: GRPCAction describes an action involving
 // a GRPC port.
 type GoogleCloudRunV2GRPCAction struct {
-	// Port: Port number of the gRPC service. Number must be in the range 1
-	// to 65535. If not specified, defaults to the exposed port of the
-	// container, which is the value of container.ports[0].containerPort.
+	// Port: Optional. Port number of the gRPC service. Number must be in
+	// the range 1 to 65535. If not specified, defaults to the exposed port
+	// of the container, which is the value of
+	// container.ports[0].containerPort.
 	Port int64 `json:"port,omitempty"`
 
-	// Service: Service is the name of the service to place in the gRPC
-	// HealthCheckRequest (see
+	// Service: Optional. Service is the name of the service to place in the
+	// gRPC HealthCheckRequest (see
 	// https://github.com/grpc/grpc/blob/master/doc/health-checking.md ). If
 	// this is not specified, the default behavior is defined by gRPC.
 	Service string `json:"service,omitempty"`
@@ -1261,16 +1263,17 @@ func (s *GoogleCloudRunV2GRPCAction) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2HTTPGetAction: HTTPGetAction describes an action
 // based on HTTP Get requests.
 type GoogleCloudRunV2HTTPGetAction struct {
-	// HttpHeaders: Custom headers to set in the request. HTTP allows
-	// repeated headers.
+	// HttpHeaders: Optional. Custom headers to set in the request. HTTP
+	// allows repeated headers.
 	HttpHeaders []*GoogleCloudRunV2HTTPHeader `json:"httpHeaders,omitempty"`
 
-	// Path: Path to access on the HTTP server. Defaults to '/'.
+	// Path: Optional. Path to access on the HTTP server. Defaults to '/'.
 	Path string `json:"path,omitempty"`
 
-	// Port: Port number to access on the container. Must be in the range 1
-	// to 65535. If not specified, defaults to the exposed port of the
-	// container, which is the value of container.ports[0].containerPort.
+	// Port: Optional. Port number to access on the container. Must be in
+	// the range 1 to 65535. If not specified, defaults to the exposed port
+	// of the container, which is the value of
+	// container.ports[0].containerPort.
 	Port int64 `json:"port,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "HttpHeaders") to
@@ -1302,7 +1305,7 @@ type GoogleCloudRunV2HTTPHeader struct {
 	// Name: Required. The header field name
 	Name string `json:"name,omitempty"`
 
-	// Value: The header field value
+	// Value: Optional. The header field value
 	Value string `json:"value,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Name") to
@@ -1526,6 +1529,12 @@ type GoogleCloudRunV2Job struct {
 
 	// SatisfiesPzs: Output only. Reserved for future use.
 	SatisfiesPzs bool `json:"satisfiesPzs,omitempty"`
+
+	// StartExecutionToken: A unique string used as a suffix creating a new
+	// execution. The Job will become ready when the execution is
+	// successfully started. The sum of job name and token length must be
+	// fewer than 63 characters.
+	StartExecutionToken string `json:"startExecutionToken,omitempty"`
 
 	// Template: Required. The template used to create executions for this
 	// Job.
@@ -1827,21 +1836,22 @@ func (s *GoogleCloudRunV2NFSVolumeSource) MarshalJSON() ([]byte, error) {
 
 // GoogleCloudRunV2NetworkInterface: Direct VPC egress settings.
 type GoogleCloudRunV2NetworkInterface struct {
-	// Network: The VPC network that the Cloud Run resource will be able to
-	// send traffic to. At least one of network or subnetwork must be
-	// specified. If both network and subnetwork are specified, the given
-	// VPC subnetwork must belong to the given VPC network. If network is
-	// not specified, it will be looked up from the subnetwork.
+	// Network: Optional. The VPC network that the Cloud Run resource will
+	// be able to send traffic to. At least one of network or subnetwork
+	// must be specified. If both network and subnetwork are specified, the
+	// given VPC subnetwork must belong to the given VPC network. If network
+	// is not specified, it will be looked up from the subnetwork.
 	Network string `json:"network,omitempty"`
 
-	// Subnetwork: The VPC subnetwork that the Cloud Run resource will get
-	// IPs from. At least one of network or subnetwork must be specified. If
-	// both network and subnetwork are specified, the given VPC subnetwork
-	// must belong to the given VPC network. If subnetwork is not specified,
-	// the subnetwork with the same name with the network will be used.
+	// Subnetwork: Optional. The VPC subnetwork that the Cloud Run resource
+	// will get IPs from. At least one of network or subnetwork must be
+	// specified. If both network and subnetwork are specified, the given
+	// VPC subnetwork must belong to the given VPC network. If subnetwork is
+	// not specified, the subnetwork with the same name with the network
+	// will be used.
 	Subnetwork string `json:"subnetwork,omitempty"`
 
-	// Tags: Network tags applied to this Cloud Run resource.
+	// Tags: Optional. Network tags applied to this Cloud Run resource.
 	Tags []string `json:"tags,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Network") to
@@ -1910,38 +1920,38 @@ func (s *GoogleCloudRunV2Overrides) MarshalJSON() ([]byte, error) {
 // against a container to determine whether it is alive or ready to
 // receive traffic.
 type GoogleCloudRunV2Probe struct {
-	// FailureThreshold: Minimum consecutive failures for the probe to be
-	// considered failed after having succeeded. Defaults to 3. Minimum
-	// value is 1.
+	// FailureThreshold: Optional. Minimum consecutive failures for the
+	// probe to be considered failed after having succeeded. Defaults to 3.
+	// Minimum value is 1.
 	FailureThreshold int64 `json:"failureThreshold,omitempty"`
 
-	// Grpc: GRPC specifies an action involving a gRPC port. Exactly one of
-	// httpGet, tcpSocket, or grpc must be specified.
+	// Grpc: Optional. GRPC specifies an action involving a gRPC port.
+	// Exactly one of httpGet, tcpSocket, or grpc must be specified.
 	Grpc *GoogleCloudRunV2GRPCAction `json:"grpc,omitempty"`
 
-	// HttpGet: HTTPGet specifies the http request to perform. Exactly one
-	// of httpGet, tcpSocket, or grpc must be specified.
+	// HttpGet: Optional. HTTPGet specifies the http request to perform.
+	// Exactly one of httpGet, tcpSocket, or grpc must be specified.
 	HttpGet *GoogleCloudRunV2HTTPGetAction `json:"httpGet,omitempty"`
 
-	// InitialDelaySeconds: Number of seconds after the container has
-	// started before the probe is initiated. Defaults to 0 seconds. Minimum
-	// value is 0. Maximum value for liveness probe is 3600. Maximum value
-	// for startup probe is 240.
+	// InitialDelaySeconds: Optional. Number of seconds after the container
+	// has started before the probe is initiated. Defaults to 0 seconds.
+	// Minimum value is 0. Maximum value for liveness probe is 3600. Maximum
+	// value for startup probe is 240.
 	InitialDelaySeconds int64 `json:"initialDelaySeconds,omitempty"`
 
-	// PeriodSeconds: How often (in seconds) to perform the probe. Default
-	// to 10 seconds. Minimum value is 1. Maximum value for liveness probe
-	// is 3600. Maximum value for startup probe is 240. Must be greater or
-	// equal than timeout_seconds.
+	// PeriodSeconds: Optional. How often (in seconds) to perform the probe.
+	// Default to 10 seconds. Minimum value is 1. Maximum value for liveness
+	// probe is 3600. Maximum value for startup probe is 240. Must be
+	// greater or equal than timeout_seconds.
 	PeriodSeconds int64 `json:"periodSeconds,omitempty"`
 
-	// TcpSocket: TCPSocket specifies an action involving a TCP port.
-	// Exactly one of httpGet, tcpSocket, or grpc must be specified.
+	// TcpSocket: Optional. TCPSocket specifies an action involving a TCP
+	// port. Exactly one of httpGet, tcpSocket, or grpc must be specified.
 	TcpSocket *GoogleCloudRunV2TCPSocketAction `json:"tcpSocket,omitempty"`
 
-	// TimeoutSeconds: Number of seconds after which the probe times out.
-	// Defaults to 1 second. Minimum value is 1. Maximum value is 3600. Must
-	// be smaller than period_seconds.
+	// TimeoutSeconds: Optional. Number of seconds after which the probe
+	// times out. Defaults to 1 second. Minimum value is 1. Maximum value is
+	// 3600. Must be smaller than period_seconds.
 	TimeoutSeconds int64 `json:"timeoutSeconds,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "FailureThreshold") to
@@ -2227,12 +2237,12 @@ func (s *GoogleCloudRunV2Revision) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2RevisionScaling: Settings for revision-level scaling
 // settings.
 type GoogleCloudRunV2RevisionScaling struct {
-	// MaxInstanceCount: Maximum number of serving instances that this
-	// resource should have.
+	// MaxInstanceCount: Optional. Maximum number of serving instances that
+	// this resource should have.
 	MaxInstanceCount int64 `json:"maxInstanceCount,omitempty"`
 
-	// MinInstanceCount: Minimum number of serving instances that this
-	// resource should have.
+	// MinInstanceCount: Optional. Minimum number of serving instances that
+	// this resource should have.
 	MinInstanceCount int64 `json:"minInstanceCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MaxInstanceCount") to
@@ -2294,10 +2304,10 @@ func (s *GoogleCloudRunV2RevisionScalingStatus) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2RevisionTemplate: RevisionTemplate describes the data
 // a revision should have when created from a template.
 type GoogleCloudRunV2RevisionTemplate struct {
-	// Annotations: Unstructured key value map that may be set by external
-	// tools to store and arbitrary metadata. They are not queryable and
-	// should be preserved when modifying objects. Cloud Run API v2 does not
-	// support annotations with `run.googleapis.com`,
+	// Annotations: Optional. Unstructured key value map that may be set by
+	// external tools to store and arbitrary metadata. They are not
+	// queryable and should be preserved when modifying objects. Cloud Run
+	// API v2 does not support annotations with `run.googleapis.com`,
 	// `cloud.googleapis.com`, `serving.knative.dev`, or
 	// `autoscaling.knative.dev` namespaces, and they will be rejected. All
 	// system annotations in v1 now have a corresponding field in v2
@@ -2314,7 +2324,8 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	// go to https://cloud.google.com/run/docs/securing/using-cmek
 	EncryptionKey string `json:"encryptionKey,omitempty"`
 
-	// ExecutionEnvironment: The sandbox environment to host this Revision.
+	// ExecutionEnvironment: Optional. The sandbox environment to host this
+	// Revision.
 	//
 	// Possible values:
 	//   "EXECUTION_ENVIRONMENT_UNSPECIFIED" - Unspecified
@@ -2327,10 +2338,10 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	// during deployment.
 	HealthCheckDisabled bool `json:"healthCheckDisabled,omitempty"`
 
-	// Labels: Unstructured key value map that can be used to organize and
-	// categorize objects. User-provided labels are shared with Google's
-	// billing system, so they can be used to filter, or break down billing
-	// charges by team, component, environment, state, etc. For more
+	// Labels: Optional. Unstructured key value map that can be used to
+	// organize and categorize objects. User-provided labels are shared with
+	// Google's billing system, so they can be used to filter, or break down
+	// billing charges by team, component, environment, state, etc. For more
 	// information, visit
 	// https://cloud.google.com/resource-manager/docs/creating-managing-labels
 	// or https://cloud.google.com/run/docs/configuring/labels. Cloud Run
@@ -2341,35 +2352,37 @@ type GoogleCloudRunV2RevisionTemplate struct {
 	// RevisionTemplate.
 	Labels map[string]string `json:"labels,omitempty"`
 
-	// MaxInstanceRequestConcurrency: Sets the maximum number of requests
-	// that each serving instance can receive.
+	// MaxInstanceRequestConcurrency: Optional. Sets the maximum number of
+	// requests that each serving instance can receive.
 	MaxInstanceRequestConcurrency int64 `json:"maxInstanceRequestConcurrency,omitempty"`
 
-	// Revision: The unique name for the revision. If this field is omitted,
-	// it will be automatically generated based on the Service name.
+	// Revision: Optional. The unique name for the revision. If this field
+	// is omitted, it will be automatically generated based on the Service
+	// name.
 	Revision string `json:"revision,omitempty"`
 
-	// Scaling: Scaling settings for this Revision.
+	// Scaling: Optional. Scaling settings for this Revision.
 	Scaling *GoogleCloudRunV2RevisionScaling `json:"scaling,omitempty"`
 
-	// ServiceAccount: Email address of the IAM service account associated
-	// with the revision of the service. The service account represents the
-	// identity of the running revision, and determines what permissions the
-	// revision has. If not provided, the revision will use the project's
-	// default service account.
+	// ServiceAccount: Optional. Email address of the IAM service account
+	// associated with the revision of the service. The service account
+	// represents the identity of the running revision, and determines what
+	// permissions the revision has. If not provided, the revision will use
+	// the project's default service account.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
 	// SessionAffinity: Optional. Enable session affinity.
 	SessionAffinity bool `json:"sessionAffinity,omitempty"`
 
-	// Timeout: Max allowed time for an instance to respond to a request.
+	// Timeout: Optional. Max allowed time for an instance to respond to a
+	// request.
 	Timeout string `json:"timeout,omitempty"`
 
-	// Volumes: A list of Volumes to make available to containers.
+	// Volumes: Optional. A list of Volumes to make available to containers.
 	Volumes []*GoogleCloudRunV2Volume `json:"volumes,omitempty"`
 
-	// VpcAccess: VPC Access configuration to use for this Revision. For
-	// more information, visit
+	// VpcAccess: Optional. VPC Access configuration to use for this
+	// Revision. For more information, visit
 	// https://cloud.google.com/run/docs/configuring/connecting-vpc.
 	VpcAccess *GoogleCloudRunV2VpcAccess `json:"vpcAccess,omitempty"`
 
@@ -2546,7 +2559,8 @@ type GoogleCloudRunV2Service struct {
 	// namespacing, limits, and rules.
 	Annotations map[string]string `json:"annotations,omitempty"`
 
-	// BinaryAuthorization: Settings for the Binary Authorization feature.
+	// BinaryAuthorization: Optional. Settings for the Binary Authorization
+	// feature.
 	BinaryAuthorization *GoogleCloudRunV2BinaryAuthorization `json:"binaryAuthorization,omitempty"`
 
 	// Client: Arbitrary identifier for the API client.
@@ -2601,8 +2615,8 @@ type GoogleCloudRunV2Service struct {
 	// representation will be a `string` instead of an `integer`.
 	Generation int64 `json:"generation,omitempty,string"`
 
-	// Ingress: Provides the ingress settings for this Service. On output,
-	// returns the currently observed ingress settings, or
+	// Ingress: Optional. Provides the ingress settings for this Service. On
+	// output, returns the currently observed ingress settings, or
 	// INGRESS_TRAFFIC_UNSPECIFIED if no revision is active.
 	//
 	// Possible values:
@@ -2641,11 +2655,12 @@ type GoogleCloudRunV2Service struct {
 	// information on reconciliation process in Cloud Run.
 	LatestReadyRevision string `json:"latestReadyRevision,omitempty"`
 
-	// LaunchStage: The launch stage as defined by Google Cloud Platform
-	// Launch Stages (https://cloud.google.com/terms/launch-stages). Cloud
-	// Run supports `ALPHA`, `BETA`, and `GA`. If no value is specified, GA
-	// is assumed. Set the launch stage to a preview stage on input to allow
-	// use of preview features in that stage. On read (or output), describes
+	// LaunchStage: Optional. The launch stage as defined by Google Cloud
+	// Platform Launch Stages
+	// (https://cloud.google.com/terms/launch-stages). Cloud Run supports
+	// `ALPHA`, `BETA`, and `GA`. If no value is specified, GA is assumed.
+	// Set the launch stage to a preview stage on input to allow use of
+	// preview features in that stage. On read (or output), describes
 	// whether the resource uses preview features. For example, if ALPHA is
 	// provided as input, but only BETA and GA-level features are used, this
 	// field will be BETA on output.
@@ -2736,9 +2751,10 @@ type GoogleCloudRunV2Service struct {
 	// for additional information on reconciliation process in Cloud Run.
 	TerminalCondition *GoogleCloudRunV2Condition `json:"terminalCondition,omitempty"`
 
-	// Traffic: Specifies how to distribute traffic over a collection of
-	// Revisions belonging to the Service. If traffic is empty or not
-	// provided, defaults to 100% traffic to the latest `Ready` Revision.
+	// Traffic: Optional. Specifies how to distribute traffic over a
+	// collection of Revisions belonging to the Service. If traffic is empty
+	// or not provided, defaults to 100% traffic to the latest `Ready`
+	// Revision.
 	Traffic []*GoogleCloudRunV2TrafficTarget `json:"traffic,omitempty"`
 
 	// TrafficStatuses: Output only. Detailed status information for
@@ -2788,9 +2804,9 @@ func (s *GoogleCloudRunV2Service) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2ServiceScaling: Scaling settings applied at the
 // service level rather than at the revision level.
 type GoogleCloudRunV2ServiceScaling struct {
-	// MinInstanceCount: total min instances for the service. This number of
-	// instances is divided among all revisions with specified traffic based
-	// on the percent of traffic they are receiving. (BETA)
+	// MinInstanceCount: Optional. total min instances for the service. This
+	// number of instances is divided among all revisions with specified
+	// traffic based on the percent of traffic they are receiving. (BETA)
 	MinInstanceCount int64 `json:"minInstanceCount,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "MinInstanceCount") to
@@ -2820,9 +2836,10 @@ func (s *GoogleCloudRunV2ServiceScaling) MarshalJSON() ([]byte, error) {
 // GoogleCloudRunV2TCPSocketAction: TCPSocketAction describes an action
 // based on opening a socket
 type GoogleCloudRunV2TCPSocketAction struct {
-	// Port: Port number to access on the container. Must be in the range 1
-	// to 65535. If not specified, defaults to the exposed port of the
-	// container, which is the value of container.ports[0].containerPort.
+	// Port: Optional. Port number to access on the container. Must be in
+	// the range 1 to 65535. If not specified, defaults to the exposed port
+	// of the container, which is the value of
+	// container.ports[0].containerPort.
 	Port int64 `json:"port,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Port") to
@@ -3073,8 +3090,8 @@ type GoogleCloudRunV2TaskTemplate struct {
 	// go to https://cloud.google.com/run/docs/securing/using-cmek
 	EncryptionKey string `json:"encryptionKey,omitempty"`
 
-	// ExecutionEnvironment: The execution environment being used to host
-	// this Task.
+	// ExecutionEnvironment: Optional. The execution environment being used
+	// to host this Task.
 	//
 	// Possible values:
 	//   "EXECUTION_ENVIRONMENT_UNSPECIFIED" - Unspecified
@@ -3087,24 +3104,24 @@ type GoogleCloudRunV2TaskTemplate struct {
 	// Task failed. Defaults to 3.
 	MaxRetries int64 `json:"maxRetries,omitempty"`
 
-	// ServiceAccount: Email address of the IAM service account associated
-	// with the Task of a Job. The service account represents the identity
-	// of the running task, and determines what permissions the task has. If
-	// not provided, the task will use the project's default service
-	// account.
+	// ServiceAccount: Optional. Email address of the IAM service account
+	// associated with the Task of a Job. The service account represents the
+	// identity of the running task, and determines what permissions the
+	// task has. If not provided, the task will use the project's default
+	// service account.
 	ServiceAccount string `json:"serviceAccount,omitempty"`
 
-	// Timeout: Max allowed time duration the Task may be active before the
-	// system will actively try to mark it failed and kill associated
-	// containers. This applies per attempt of a task, meaning each retry
-	// can run for the full timeout. Defaults to 600 seconds.
+	// Timeout: Optional. Max allowed time duration the Task may be active
+	// before the system will actively try to mark it failed and kill
+	// associated containers. This applies per attempt of a task, meaning
+	// each retry can run for the full timeout. Defaults to 600 seconds.
 	Timeout string `json:"timeout,omitempty"`
 
-	// Volumes: A list of Volumes to make available to containers.
+	// Volumes: Optional. A list of Volumes to make available to containers.
 	Volumes []*GoogleCloudRunV2Volume `json:"volumes,omitempty"`
 
-	// VpcAccess: VPC Access configuration to use for this Task. For more
-	// information, visit
+	// VpcAccess: Optional. VPC Access configuration to use for this Task.
+	// For more information, visit
 	// https://cloud.google.com/run/docs/configuring/connecting-vpc.
 	VpcAccess *GoogleCloudRunV2VpcAccess `json:"vpcAccess,omitempty"`
 
@@ -3375,8 +3392,8 @@ type GoogleCloudRunV2VpcAccess struct {
 	// https://cloud.google.com/run/docs/configuring/vpc-connectors.
 	Connector string `json:"connector,omitempty"`
 
-	// Egress: Traffic VPC egress settings. If not provided, it defaults to
-	// PRIVATE_RANGES_ONLY.
+	// Egress: Optional. Traffic VPC egress settings. If not provided, it
+	// defaults to PRIVATE_RANGES_ONLY.
 	//
 	// Possible values:
 	//   "VPC_EGRESS_UNSPECIFIED" - Unspecified
@@ -3386,8 +3403,8 @@ type GoogleCloudRunV2VpcAccess struct {
 	// the VPC connector.
 	Egress string `json:"egress,omitempty"`
 
-	// NetworkInterfaces: Direct VPC egress settings. Currently only single
-	// network interface is supported.
+	// NetworkInterfaces: Optional. Direct VPC egress settings. Currently
+	// only single network interface is supported.
 	NetworkInterfaces []*GoogleCloudRunV2NetworkInterface `json:"networkInterfaces,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Connector") to
@@ -7402,7 +7419,7 @@ func (c *ProjectsLocationsJobsPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 	//   ],
 	//   "parameters": {
 	//     "allowMissing": {
-	//       "description": "If set to true, and if the Job does not exist, it will create a new one. Caller must have both create and update permissions for this call if this is set to true.",
+	//       "description": "Optional. If set to true, and if the Job does not exist, it will create a new one. Caller must have both create and update permissions for this call if this is set to true.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -10716,7 +10733,7 @@ func (c *ProjectsLocationsServicesPatchCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "allowMissing": {
-	//       "description": "If set to true, and if the Service does not exist, it will create a new one. The caller must have 'run.services.create' permissions if this is set to true and the Service does not exist.",
+	//       "description": "Optional. If set to true, and if the Service does not exist, it will create a new one. The caller must have 'run.services.create' permissions if this is set to true and the Service does not exist.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

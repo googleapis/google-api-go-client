@@ -6061,6 +6061,9 @@ type RegionalSubscriptionOfferPhaseConfig struct {
 	// for this region.
 	AbsoluteDiscount *Money `json:"absoluteDiscount,omitempty"`
 
+	// Free: Set to specify this offer is free to obtain.
+	Free *RegionalSubscriptionOfferPhaseFreePriceOverride `json:"free,omitempty"`
+
 	// Price: The absolute price the user pays for this offer phase. The
 	// price must not be smaller than the minimum price allowed for this
 	// region.
@@ -6118,6 +6121,12 @@ func (s *RegionalSubscriptionOfferPhaseConfig) UnmarshalJSON(data []byte) error 
 	}
 	s.RelativeDiscount = float64(s1.RelativeDiscount)
 	return nil
+}
+
+// RegionalSubscriptionOfferPhaseFreePriceOverride: Represents the free
+// price override configuration for a single phase of a subscription
+// offer
+type RegionalSubscriptionOfferPhaseFreePriceOverride struct {
 }
 
 // RegionalTaxRateInfo: Specified details about taxation in a given

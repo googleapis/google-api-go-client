@@ -367,6 +367,10 @@ type BigQueryDatasetSource struct {
 	// `projects/myproject/datasets/123`
 	Dataset string `json:"dataset,omitempty"`
 
+	// RestrictedExportPolicy: Optional. If set, restricted export policy
+	// will be propagated and enforced on the linked dataset.
+	RestrictedExportPolicy *RestrictedExportPolicy `json:"restrictedExportPolicy,omitempty"`
+
 	// SelectedResources: Optional. Resources in this dataset that are
 	// selectively shared. If this field is empty, then the entire dataset
 	// (all resources) are shared. This field is only valid for data clean
@@ -1540,6 +1544,43 @@ func (s *RestrictedExportConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// RestrictedExportPolicy: Restricted export policy used to configure
+// restricted export on linked dataset.
+type RestrictedExportPolicy struct {
+	// Enabled: Optional. If true, enable restricted export.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// RestrictDirectTableAccess: Optional. If true, restrict direct table
+	// access (read api/tabledata.list) on linked table.
+	RestrictDirectTableAccess bool `json:"restrictDirectTableAccess,omitempty"`
+
+	// RestrictQueryResult: Optional. If true, restrict export of query
+	// result derived from restricted linked dataset table.
+	RestrictQueryResult bool `json:"restrictQueryResult,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *RestrictedExportPolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod RestrictedExportPolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // RevokeSubscriptionRequest: Message for revoking a subscription.
 type RevokeSubscriptionRequest struct {
 }
@@ -1769,8 +1810,8 @@ func (s *SubscribeDataExchangeResponse) MarshalJSON() ([]byte, error) {
 
 // SubscribeListingRequest: Message for subscribing to a listing.
 type SubscribeListingRequest struct {
-	// DestinationDataset: BigQuery destination dataset to create for the
-	// subscriber.
+	// DestinationDataset: Input only. BigQuery destination dataset to
+	// create for the subscriber.
 	DestinationDataset *DestinationDataset `json:"destinationDataset,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "DestinationDataset")
@@ -5806,8 +5847,16 @@ func (r *ProjectsLocationsSubscriptionsService) List(parent string) *ProjectsLoc
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filter expression
-// may be used to filter by Data Exchange or Listing.
+// Filter sets the optional parameter "filter": An expression for
+// filtering the results of the request. Eligible fields for filtering
+// are: + `listing` + `data_exchange` Alternatively, a literal wrapped
+// in double quotes may be provided. This will be checked for an exact
+// match against both fields above. In all cases, the full Data Exchange
+// or Listing resource name must be provided. Some example of using
+// filters: +
+// data_exchange="projects/myproject/locations/us/dataExchanges/123" +
+// listing="projects/123/locations/us/dataExchanges/456/listings/789" +
+// "projects/myproject/locations/us/dataExchanges/123"
 func (c *ProjectsLocationsSubscriptionsListCall) Filter(filter string) *ProjectsLocationsSubscriptionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -5935,7 +5984,7 @@ func (c *ProjectsLocationsSubscriptionsListCall) Do(opts ...googleapi.CallOption
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "The filter expression may be used to filter by Data Exchange or Listing.",
+	//       "description": "An expression for filtering the results of the request. Eligible fields for filtering are: + `listing` + `data_exchange` Alternatively, a literal wrapped in double quotes may be provided. This will be checked for an exact match against both fields above. In all cases, the full Data Exchange or Listing resource name must be provided. Some example of using filters: + data_exchange=\"projects/myproject/locations/us/dataExchanges/123\" + listing=\"projects/123/locations/us/dataExchanges/456/listings/789\" + \"projects/myproject/locations/us/dataExchanges/123\"",
 	//       "location": "query",
 	//       "type": "string"
 	//     },

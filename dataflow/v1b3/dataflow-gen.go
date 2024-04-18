@@ -7954,6 +7954,12 @@ func (s *TaskRunnerSettings) MarshalJSON() ([]byte, error) {
 
 // TemplateMetadata: Metadata describing a template.
 type TemplateMetadata struct {
+	// DefaultStreamingMode: Optional. Indicates the default streaming mode
+	// for a streaming template. Only valid if both supports_at_least_once
+	// and supports_exactly_once are true. Possible values: UNSPECIFIED,
+	// EXACTLY_ONCE and AT_LEAST_ONCE
+	DefaultStreamingMode string `json:"defaultStreamingMode,omitempty"`
+
 	// Description: Optional. A description of the template.
 	Description string `json:"description,omitempty"`
 
@@ -7974,20 +7980,22 @@ type TemplateMetadata struct {
 	// supports exactly once mode.
 	SupportsExactlyOnce bool `json:"supportsExactlyOnce,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g.
+	// "DefaultStreamingMode") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DefaultStreamingMode") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 

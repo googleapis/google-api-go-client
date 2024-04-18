@@ -6441,6 +6441,9 @@ type ProvisioningInfo struct {
 	// enterprises/{enterprise}.
 	Enterprise string `json:"enterprise,omitempty"`
 
+	// Imei: IMEI number of the GSM device. For example, A1000031212.
+	Imei string `json:"imei,omitempty"`
+
 	// ManagementMode: The management mode of the device or profile.
 	//
 	// Possible values:
@@ -6450,6 +6453,9 @@ type ProvisioningInfo struct {
 	//   "PROFILE_OWNER" - Profile owner. Android Device Policy has control
 	// over a managed profile on the device.
 	ManagementMode string `json:"managementMode,omitempty"`
+
+	// Meid: MEID number of the CDMA device. For example, A00000292788E1.
+	Meid string `json:"meid,omitempty"`
 
 	// Model: The model of the device. For example, Asus Nexus 7.
 	Model string `json:"model,omitempty"`
@@ -6465,6 +6471,9 @@ type ProvisioningInfo struct {
 	//   "COMPANY_OWNED" - Device is company-owned.
 	//   "PERSONALLY_OWNED" - Device is personally-owned.
 	Ownership string `json:"ownership,omitempty"`
+
+	// SerialNumber: The device serial number.
+	SerialNumber string `json:"serialNumber,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.

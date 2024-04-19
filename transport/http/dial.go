@@ -91,8 +91,8 @@ func newClientNewAuth(ctx context.Context, ds *internal.DialSettings) (*http.Cli
 	}
 
 	// Defaults for older clients that don't set this value yet
-	var defaultEndpointTemplate string
-	if ds.DefaultEndpointTemplate == "" {
+	defaultEndpointTemplate := ds.DefaultEndpointTemplate
+	if defaultEndpointTemplate == "" {
 		defaultEndpointTemplate = ds.DefaultEndpoint
 	}
 

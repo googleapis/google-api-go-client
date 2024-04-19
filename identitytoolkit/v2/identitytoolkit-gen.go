@@ -11947,7 +11947,7 @@ func (c *V2GetRecaptchaConfigCall) TenantId(tenantId string) *V2GetRecaptchaConf
 //
 // specified.
 //
-//	"RECAPTCHA_ENTERPRISE" - Use reCAPTCHA Enterprise.
+//	"RECAPTCHA_ENTERPRISE" - The reCAPTCHA enterprise.
 func (c *V2GetRecaptchaConfigCall) Version(version string) *V2GetRecaptchaConfigCall {
 	c.urlParams_.Set("version", version)
 	return c
@@ -12087,7 +12087,7 @@ func (c *V2GetRecaptchaConfigCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 	//       ],
 	//       "enumDescriptions": [
 	//         "The reCAPTCHA version is not specified.",
-	//         "Use reCAPTCHA Enterprise."
+	//         "The reCAPTCHA enterprise."
 	//       ],
 	//       "location": "query",
 	//       "type": "string"

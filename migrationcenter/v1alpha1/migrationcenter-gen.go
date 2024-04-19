@@ -365,8 +365,8 @@ type AggregateAssetsValuesRequest struct {
 	// can be defined.
 	Aggregations []*Aggregation `json:"aggregations,omitempty"`
 
-	// Filter: The aggregation will be performed on assets that match the
-	// provided filter.
+	// Filter: Optional. The aggregation will be performed on assets that
+	// match the provided filter.
 	Filter string `json:"filter,omitempty"`
 
 	// ShowHidden: Optional. When this value is set to 'true' the response
@@ -766,6 +766,14 @@ type Asset struct {
 	// CreateTime: Output only. The timestamp when the asset was created.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// DatabaseDeploymentDetails: Output only. Asset information specific
+	// for database deployments.
+	DatabaseDeploymentDetails *DatabaseDeploymentDetails `json:"databaseDeploymentDetails,omitempty"`
+
+	// DatabaseDetails: Output only. Asset information specific for logical
+	// databases.
+	DatabaseDetails *DatabaseDetails `json:"databaseDetails,omitempty"`
+
 	// Hidden: Optional. Indicates if the asset is hidden.
 	Hidden bool `json:"hidden,omitempty"`
 
@@ -792,6 +800,10 @@ type Asset struct {
 
 	// Sources: Output only. The list of sources contributing to the asset.
 	Sources []string `json:"sources,omitempty"`
+
+	// Title: Output only. Server generated human readable name of the
+	// asset.
+	Title string `json:"title,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the asset was last
 	// updated.
@@ -847,6 +859,13 @@ type AssetFrame struct {
 	//   "SOURCE_TYPE_CUSTOM" - Third-party owned sources.
 	//   "SOURCE_TYPE_DISCOVERY_CLIENT" - Discovery clients
 	CollectionType string `json:"collectionType,omitempty"`
+
+	// DatabaseDeploymentDetails: Asset information specific for database
+	// deployments.
+	DatabaseDeploymentDetails *DatabaseDeploymentDetails `json:"databaseDeploymentDetails,omitempty"`
+
+	// DatabaseDetails: Asset information specific for logical databases.
+	DatabaseDetails *DatabaseDetails `json:"databaseDetails,omitempty"`
 
 	// Labels: Labels as key value pairs.
 	Labels map[string]string `json:"labels,omitempty"`
@@ -1158,6 +1177,310 @@ func (s *BiosDetails) MarshalJSON() ([]byte, error) {
 type CancelOperationRequest struct {
 }
 
+// CloudDatabaseMigrationTarget: Cloud database migration target.
+type CloudDatabaseMigrationTarget struct {
+	// CloudSqlForMysqlShape: Cloud SQL for MySQL database shape.
+	CloudSqlForMysqlShape *CloudSqlForMySqlShape `json:"cloudSqlForMysqlShape,omitempty"`
+
+	// CloudSqlForPostgresqlShape: Cloud SQL for Postgres database shape.
+	CloudSqlForPostgresqlShape *CloudSqlForPostgreSqlShape `json:"cloudSqlForPostgresqlShape,omitempty"`
+
+	// CloudSqlShape: Cloud SQL for SQL Server database shape.
+	CloudSqlShape *CloudSqlForSqlServerShape `json:"cloudSqlShape,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "CloudSqlForMysqlShape") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CloudSqlForMysqlShape") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudDatabaseMigrationTarget) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudDatabaseMigrationTarget
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudSqlForMySqlShape: Cloud SQL for MySQL database shape.
+type CloudSqlForMySqlShape struct {
+	// BackupStorageGb: Output only. Predicted backup storage size in GiB.
+	BackupStorageGb int64 `json:"backupStorageGb,omitempty"`
+
+	// Edition: Output only. Cloud SQL edition.
+	//
+	// Possible values:
+	//   "CLOUD_SQL_EDITION_UNSPECIFIED" - An unspecified Cloud SQL edition.
+	//   "CLOUD_SQL_EDITION_ENTERPRISE" - Provides all core capabilities of
+	// Cloud SQL and is suitable for applications requiring a balance of
+	// performance, availability, and cost.
+	//   "CLOUD_SQL_EDITION_ENTERPRISE_PLUS" - Provides the best performance
+	// and availability to run applications requiring the highest level of
+	// availability and performance in addition to the capabilities of the
+	// Cloud SQL Enterprise edition. Note: SQL Server is not available in
+	// Enterprise Plus edition. For SQL Server, Enterprise will always be
+	// recommended.
+	Edition string `json:"edition,omitempty"`
+
+	// EgressGbPerMonth: Output only. Predicted Network Out traffic GiB per
+	// month.
+	EgressGbPerMonth int64 `json:"egressGbPerMonth,omitempty,string"`
+
+	// LogicalCoreCount: Output only. Number of logical cores.
+	LogicalCoreCount int64 `json:"logicalCoreCount,omitempty"`
+
+	// MemoryMb: Output only. Predicted amount of memory in MiB.
+	MemoryMb int64 `json:"memoryMb,omitempty"`
+
+	// Storage: Output only. Predicted storage shape.
+	Storage *ComputeStorageDescriptor `json:"storage,omitempty"`
+
+	// Version: Output only. MySQL version to be used on the Cloud SQL for
+	// MySQL instance.
+	//
+	// Possible values:
+	//   "MY_SQL_VERSION_UNSPECIFIED" - Unspecified MySQL version.
+	//   "MY_SQL_VERSION_5_6" - MySQL 5.6.
+	//   "MY_SQL_VERSION_5_7" - MySQL 5.7.
+	//   "MY_SQL_VERSION_8_0" - MySQL 8.0.
+	Version string `json:"version,omitempty"`
+
+	// ZoneAvailability: Output only. Cloud SQL zone availability.
+	//
+	// Possible values:
+	//   "CLOUD_SQL_ZONE_AVAILABILITY_UNSPECIFIED" - An unspecified Cloud
+	// SQL zone availability.
+	//   "CLOUD_SQL_ZONE_AVAILABILITY_ZONAL" - The instance serves data from
+	// only one zone. In case of outage, no failover. Not recommended for
+	// production.
+	//   "CLOUD_SQL_ZONE_AVAILABILITY_REGIONAL" - The instance can serve
+	// data from multiple zones in a region. Highly available. Automatic
+	// failover to another zone within your selected region. Recommended for
+	// production instances. Increases cost.
+	ZoneAvailability string `json:"zoneAvailability,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupStorageGb") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupStorageGb") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudSqlForMySqlShape) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSqlForMySqlShape
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudSqlForPostgreSqlShape: Cloud SQL for Postgres database shape.
+type CloudSqlForPostgreSqlShape struct {
+	// BackupStorageGb: Output only. Predicted backup storage size in GiB.
+	BackupStorageGb int64 `json:"backupStorageGb,omitempty"`
+
+	// Edition: Output only. Cloud SQL edition.
+	//
+	// Possible values:
+	//   "CLOUD_SQL_EDITION_UNSPECIFIED" - An unspecified Cloud SQL edition.
+	//   "CLOUD_SQL_EDITION_ENTERPRISE" - Provides all core capabilities of
+	// Cloud SQL and is suitable for applications requiring a balance of
+	// performance, availability, and cost.
+	//   "CLOUD_SQL_EDITION_ENTERPRISE_PLUS" - Provides the best performance
+	// and availability to run applications requiring the highest level of
+	// availability and performance in addition to the capabilities of the
+	// Cloud SQL Enterprise edition. Note: SQL Server is not available in
+	// Enterprise Plus edition. For SQL Server, Enterprise will always be
+	// recommended.
+	Edition string `json:"edition,omitempty"`
+
+	// EgressGbPerMonth: Output only. Predicted Network Out traffic GiB per
+	// month.
+	EgressGbPerMonth int64 `json:"egressGbPerMonth,omitempty,string"`
+
+	// LogicalCoreCount: Output only. Number of logical cores.
+	LogicalCoreCount int64 `json:"logicalCoreCount,omitempty"`
+
+	// MemoryMb: Output only. Predicted amount of memory in MiB.
+	MemoryMb int64 `json:"memoryMb,omitempty"`
+
+	// Storage: Output only. Predicted storage shape.
+	Storage *ComputeStorageDescriptor `json:"storage,omitempty"`
+
+	// Version: Output only. PostgreSql version to be used on the Cloud SQL
+	// for PostgreSql instance.
+	//
+	// Possible values:
+	//   "POSTGRESQL_VERSION_UNSPECIFIED" - Unspecified PostgreSQL version.
+	//   "POSTGRESQL_VERSION_9_6" - PostgreSQL 9.6.
+	//   "POSTGRESQL_VERSION_10" - PostgreSQL 10
+	//   "POSTGRESQL_VERSION_11" - PostgreSQL 11
+	//   "POSTGRESQL_VERSION_12" - PostgreSQL 12
+	//   "POSTGRESQL_VERSION_13" - PostgreSQL 13
+	//   "POSTGRESQL_VERSION_14" - PostgreSQL 14
+	//   "POSTGRESQL_VERSION_15" - PostgreSQL 15
+	Version string `json:"version,omitempty"`
+
+	// ZoneAvailability: Output only. Cloud SQL zone availability.
+	//
+	// Possible values:
+	//   "CLOUD_SQL_ZONE_AVAILABILITY_UNSPECIFIED" - An unspecified Cloud
+	// SQL zone availability.
+	//   "CLOUD_SQL_ZONE_AVAILABILITY_ZONAL" - The instance serves data from
+	// only one zone. In case of outage, no failover. Not recommended for
+	// production.
+	//   "CLOUD_SQL_ZONE_AVAILABILITY_REGIONAL" - The instance can serve
+	// data from multiple zones in a region. Highly available. Automatic
+	// failover to another zone within your selected region. Recommended for
+	// production instances. Increases cost.
+	ZoneAvailability string `json:"zoneAvailability,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupStorageGb") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupStorageGb") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudSqlForPostgreSqlShape) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSqlForPostgreSqlShape
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// CloudSqlForSqlServerShape: Cloud SQL for SQL Server database shape.
+type CloudSqlForSqlServerShape struct {
+	// BackupStorageGb: Output only. Predicted backup storage size in GiB.
+	BackupStorageGb int64 `json:"backupStorageGb,omitempty"`
+
+	// Edition: Output only. Cloud SQL edition.
+	//
+	// Possible values:
+	//   "CLOUD_SQL_EDITION_UNSPECIFIED" - An unspecified Cloud SQL edition.
+	//   "CLOUD_SQL_EDITION_ENTERPRISE" - Provides all core capabilities of
+	// Cloud SQL and is suitable for applications requiring a balance of
+	// performance, availability, and cost.
+	//   "CLOUD_SQL_EDITION_ENTERPRISE_PLUS" - Provides the best performance
+	// and availability to run applications requiring the highest level of
+	// availability and performance in addition to the capabilities of the
+	// Cloud SQL Enterprise edition. Note: SQL Server is not available in
+	// Enterprise Plus edition. For SQL Server, Enterprise will always be
+	// recommended.
+	Edition string `json:"edition,omitempty"`
+
+	// EgressGbPerMonth: Output only. Predicted Network Out traffic GiB per
+	// month.
+	EgressGbPerMonth int64 `json:"egressGbPerMonth,omitempty,string"`
+
+	// LogicalCoreCount: Output only. Number of logical cores.
+	LogicalCoreCount int64 `json:"logicalCoreCount,omitempty"`
+
+	// MemoryMb: Output only. Predicted amount of memory in MiB.
+	MemoryMb int64 `json:"memoryMb,omitempty"`
+
+	// Storage: Output only. Predicted storage shape.
+	Storage *ComputeStorageDescriptor `json:"storage,omitempty"`
+
+	// Version: Output only. Microsoft SQL Server version to be used on the
+	// Cloud SQL for SQL server instance.
+	//
+	// Possible values:
+	//   "SQL_SERVER_VERSION_UNSPECIFIED" - Unspecified SQL Server version.
+	//   "SQL_SERVER_VERSION_2017_EXPRESS" - The database version is SQL
+	// Server 2017 Express.
+	//   "SQL_SERVER_VERSION_2017_WEB" - The database version is SQL Server
+	// 2017 Web.
+	//   "SQL_SERVER_VERSION_2017_STANDARD" - The database version is SQL
+	// Server 2017 Standard.
+	//   "SQL_SERVER_VERSION_2017_ENTERPRISE" - The database version is SQL
+	// Server 2017 Enterprise.
+	//   "SQL_SERVER_VERSION_2019_EXPRESS" - The database version is SQL
+	// Server 2019 Express.
+	//   "SQL_SERVER_VERSION_2019_WEB" - The database version is SQL Server
+	// 2019 Web.
+	//   "SQL_SERVER_VERSION_2019_STANDARD" - The database version is SQL
+	// Server 2019 Standard.
+	//   "SQL_SERVER_VERSION_2019_ENTERPRISE" - The database version is SQL
+	// Server 2019 Enterprise.
+	//   "SQL_SERVER_VERSION_2022_EXPRESS" - The database version is SQL
+	// Server 2022 Express.
+	//   "SQL_SERVER_VERSION_2022_WEB" - The database version is SQL Server
+	// 2022 Web.
+	//   "SQL_SERVER_VERSION_2022_STANDARD" - The database version is SQL
+	// Server 2022 Standard.
+	//   "SQL_SERVER_VERSION_2022_ENTERPRISE" - The database version is SQL
+	// Server 2022 Enterprise.
+	Version string `json:"version,omitempty"`
+
+	// ZoneAvailability: Output only. Cloud SQL zone availability.
+	//
+	// Possible values:
+	//   "CLOUD_SQL_ZONE_AVAILABILITY_UNSPECIFIED" - An unspecified Cloud
+	// SQL zone availability.
+	//   "CLOUD_SQL_ZONE_AVAILABILITY_ZONAL" - The instance serves data from
+	// only one zone. In case of outage, no failover. Not recommended for
+	// production.
+	//   "CLOUD_SQL_ZONE_AVAILABILITY_REGIONAL" - The instance can serve
+	// data from multiple zones in a region. Highly available. Automatic
+	// failover to another zone within your selected region. Recommended for
+	// production instances. Increases cost.
+	ZoneAvailability string `json:"zoneAvailability,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupStorageGb") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupStorageGb") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *CloudSqlForSqlServerShape) MarshalJSON() ([]byte, error) {
+	type NoMethod CloudSqlForSqlServerShape
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ComputeEngineMigrationTarget: Compute engine migration target.
 type ComputeEngineMigrationTarget struct {
 	// Shape: Description of the suggested shape for the migration target.
@@ -1243,22 +1566,22 @@ func (s *ComputeEnginePreferences) MarshalJSON() ([]byte, error) {
 
 // ComputeEngineShapeDescriptor: Compute Engine target shape descriptor.
 type ComputeEngineShapeDescriptor struct {
-	// LogicalCoreCount: Number of logical cores.
+	// LogicalCoreCount: Output only. Number of logical cores.
 	LogicalCoreCount int64 `json:"logicalCoreCount,omitempty"`
 
-	// MachineType: Compute Engine machine type.
+	// MachineType: Output only. Compute Engine machine type.
 	MachineType string `json:"machineType,omitempty"`
 
-	// MemoryMb: Memory in mebibytes.
+	// MemoryMb: Output only. Memory in mebibytes.
 	MemoryMb int64 `json:"memoryMb,omitempty"`
 
-	// PhysicalCoreCount: Number of physical cores.
+	// PhysicalCoreCount: Output only. Number of physical cores.
 	PhysicalCoreCount int64 `json:"physicalCoreCount,omitempty"`
 
-	// Series: Compute Engine machine series.
+	// Series: Output only. Compute Engine machine series.
 	Series string `json:"series,omitempty"`
 
-	// Storage: Compute Engine storage. Never empty.
+	// Storage: Output only. Compute Engine storage. Never empty.
 	Storage []*ComputeStorageDescriptor `json:"storage,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "LogicalCoreCount") to
@@ -1452,6 +1775,12 @@ type DailyResourceUsageAggregationDisk struct {
 	// Iops: Disk I/O operations per second.
 	Iops *DailyResourceUsageAggregationStats `json:"iops,omitempty"`
 
+	// ReadIops: Disk read I/O operations per second.
+	ReadIops *DailyResourceUsageAggregationStats `json:"readIops,omitempty"`
+
+	// WriteIops: Disk write I/O operations per second.
+	WriteIops *DailyResourceUsageAggregationStats `json:"writeIops,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Iops") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -1594,6 +1923,655 @@ func (s *DailyResourceUsageAggregationStats) UnmarshalJSON(data []byte) error {
 	s.NinteyFifthPercentile = float64(s1.NinteyFifthPercentile)
 	s.Peak = float64(s1.Peak)
 	return nil
+}
+
+// DatabaseDeploymentDetails: The details of a database deployment
+// asset.
+type DatabaseDeploymentDetails struct {
+	// AggregatedStats: Output only. Aggregated stats for the database
+	// deployment.
+	AggregatedStats *DatabaseDeploymentDetailsAggregatedStats `json:"aggregatedStats,omitempty"`
+
+	// Edition: The database deployment edition.
+	Edition string `json:"edition,omitempty"`
+
+	// GeneratedId: The database deployment generated ID.
+	GeneratedId string `json:"generatedId,omitempty"`
+
+	// ManualUniqueId: A manual unique ID set by the user.
+	ManualUniqueId string `json:"manualUniqueId,omitempty"`
+
+	// Mysql: Details of a MYSQL database deployment.
+	Mysql *MysqlDatabaseDeployment `json:"mysql,omitempty"`
+
+	// Postgresql: Details of a PostgreSQL database deployment.
+	Postgresql *PostgreSqlDatabaseDeployment `json:"postgresql,omitempty"`
+
+	// SqlServer: Details of a Microsoft SQL Server database deployment.
+	SqlServer *SqlServerDatabaseDeployment `json:"sqlServer,omitempty"`
+
+	// Topology: Details of the database deployment topology.
+	Topology *DatabaseDeploymentTopology `json:"topology,omitempty"`
+
+	// Version: The database deployment version.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AggregatedStats") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AggregatedStats") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseDeploymentDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseDeploymentDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseDeploymentDetailsAggregatedStats: Aggregated stats for the
+// database deployment.
+type DatabaseDeploymentDetailsAggregatedStats struct {
+	// DatabaseCount: Output only. The number of databases in the
+	// deployment.
+	DatabaseCount int64 `json:"databaseCount,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "DatabaseCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "DatabaseCount") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseDeploymentDetailsAggregatedStats) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseDeploymentDetailsAggregatedStats
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseDeploymentTopology: Details of database deployment's
+// topology.
+type DatabaseDeploymentTopology struct {
+	// CoreCount: Optional. Number of total cores.
+	CoreCount int64 `json:"coreCount,omitempty"`
+
+	// CoreLimit: Optional. Number of total cores limited by db deployment.
+	CoreLimit int64 `json:"coreLimit,omitempty"`
+
+	// DiskAllocatedBytes: Optional. Disk allocated in bytes.
+	DiskAllocatedBytes int64 `json:"diskAllocatedBytes,omitempty,string"`
+
+	// DiskUsedBytes: Optional. Disk used in bytes.
+	DiskUsedBytes int64 `json:"diskUsedBytes,omitempty,string"`
+
+	// Instances: Optional. List of database instances.
+	Instances []*DatabaseInstance `json:"instances,omitempty"`
+
+	// MemoryBytes: Optional. Total memory in bytes.
+	MemoryBytes int64 `json:"memoryBytes,omitempty,string"`
+
+	// MemoryLimitBytes: Optional. Total memory in bytes limited by db
+	// deployment.
+	MemoryLimitBytes int64 `json:"memoryLimitBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "CoreCount") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CoreCount") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseDeploymentTopology) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseDeploymentTopology
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseDetails: Details of a logical database.
+type DatabaseDetails struct {
+	// AllocatedStorageBytes: The allocated storage for the database in
+	// bytes.
+	AllocatedStorageBytes int64 `json:"allocatedStorageBytes,omitempty,string"`
+
+	// DatabaseName: The name of the database.
+	DatabaseName string `json:"databaseName,omitempty"`
+
+	// ParentDatabaseDeployment: The parent database deployment that
+	// contains the logical database.
+	ParentDatabaseDeployment *DatabaseDetailsParentDatabaseDeployment `json:"parentDatabaseDeployment,omitempty"`
+
+	// Schemas: The database schemas.
+	Schemas []*DatabaseSchema `json:"schemas,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllocatedStorageBytes") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. However, any non-pointer, non-interface field appearing in
+	// ForceSendFields will be sent to the server regardless of whether the
+	// field is empty or not. This may be used to include empty fields in
+	// Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllocatedStorageBytes") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseDetailsParentDatabaseDeployment: The identifiers of the
+// parent database deployment.
+type DatabaseDetailsParentDatabaseDeployment struct {
+	// GeneratedId: The parent database deployment generated ID.
+	GeneratedId string `json:"generatedId,omitempty"`
+
+	// ManualUniqueId: The parent database deployment optional manual unique
+	// ID set by the user.
+	ManualUniqueId string `json:"manualUniqueId,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "GeneratedId") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "GeneratedId") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseDetailsParentDatabaseDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseDetailsParentDatabaseDeployment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseInstance: Details of a database instance.
+type DatabaseInstance struct {
+	// Hosts: Optional. The instance's hosts.
+	Hosts []*DatabaseInstanceHost `json:"hosts,omitempty"`
+
+	// InstanceName: The instance's name.
+	InstanceName string `json:"instanceName,omitempty"`
+
+	// Role: The instance role in the database engine.
+	//
+	// Possible values:
+	//   "ROLE_UNSPECIFIED" - Unspecified.
+	//   "PRIMARY" - Primary.
+	//   "SECONDARY" - Secondary.
+	//   "ARBITER" - Arbiter.
+	Role string `json:"role,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Hosts") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Hosts") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseInstance) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseInstance
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseInstanceHost: Details of a host of a database instance.
+type DatabaseInstanceHost struct {
+	// HostName: Optional. The host name of the host.
+	HostName string `json:"hostName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "HostName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "HostName") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseInstanceHost) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseInstanceHost
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseObjects: Details of a group of database objects.
+type DatabaseObjects struct {
+	// Category: The category of the objects.
+	//
+	// Possible values:
+	//   "CATEGORY_UNSPECIFIED" - Unspecified type.
+	//   "TABLE" - Table.
+	//   "INDEX" - Index.
+	//   "CONSTRAINTS" - Constraints.
+	//   "VIEWS" - Views.
+	//   "SOURCE_CODE" - Source code, e.g. procedures.
+	//   "OTHER" - Uncategorized objects.
+	Category string `json:"category,omitempty"`
+
+	// Count: The number of objects.
+	Count int64 `json:"count,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Category") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Category") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseObjects) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseObjects
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabasePreferences: DatabasePreferences enables you to create sets
+// of preferences for your migrated databases.
+type DatabasePreferences struct {
+	// MssqlToCloudSqlForSqlServerPreferences: Optional. Preferences for
+	// target SQL Server on Cloud SQL when migrating from source Microsoft
+	// SQL server.
+	MssqlToCloudSqlForSqlServerPreferences *DatabasePreferencesCloudSqlSqlServer `json:"mssqlToCloudSqlForSqlServerPreferences,omitempty"`
+
+	// MysqlToCloudSqlForMysqlPreferences: Optional. Preferences for target
+	// MySQL on Cloud SQL when migrating from source MySQL.
+	MysqlToCloudSqlForMysqlPreferences *DatabasePreferencesCloudSqlMySql `json:"mysqlToCloudSqlForMysqlPreferences,omitempty"`
+
+	// PostgresqlToCloudSqlForPostgresqlPreferences: Optional. Preferences
+	// for target PostgreSQL on Cloud SQL when migrating from source
+	// PostgreSQL.
+	PostgresqlToCloudSqlForPostgresqlPreferences *DatabasePreferencesCloudSqlPostgreSql `json:"postgresqlToCloudSqlForPostgresqlPreferences,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "MssqlToCloudSqlForSqlServerPreferences") to unconditionally include
+	// in API requests. By default, fields with empty or default values are
+	// omitted from API requests. However, any non-pointer, non-interface
+	// field appearing in ForceSendFields will be sent to the server
+	// regardless of whether the field is empty or not. This may be used to
+	// include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g.
+	// "MssqlToCloudSqlForSqlServerPreferences") to include in API requests
+	// with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. However, any field with an empty value
+	// appearing in NullFields will be sent to the server as null. It is an
+	// error if a field in this list has a non-empty value. This may be used
+	// to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabasePreferences) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabasePreferences
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabasePreferencesCloudSqlCommon: Preferences common to Cloud SQL
+// databases.
+type DatabasePreferencesCloudSqlCommon struct {
+	// Backup: Optional. Preferences for database backups.
+	Backup *DatabasePreferencesCloudSqlCommonBackup `json:"backup,omitempty"`
+
+	// CommitmentPlan: Optional. Commitment plan to consider when
+	// calculating costs. Only regular CUDs (not flexible) are currently
+	// available.
+	//
+	// Possible values:
+	//   "COMMITMENT_PLAN_UNSPECIFIED" - Unspecified commitment plan.
+	//   "COMMITMENT_PLAN_NONE" - No commitment plan.
+	//   "COMMITMENT_PLAN_ONE_YEAR" - 1-year regular committed use discount.
+	//   "COMMITMENT_PLAN_THREE_YEARS" - 3-year regular committed use
+	// discount.
+	CommitmentPlan string `json:"commitmentPlan,omitempty"`
+
+	// Edition: Optional. Cloud SQL edition. For SQL Server, only Enterprise
+	// is available.
+	//
+	// Possible values:
+	//   "CLOUD_SQL_EDITION_UNSPECIFIED" - An unspecified Cloud SQL edition.
+	//   "CLOUD_SQL_EDITION_ENTERPRISE" - Provides all core capabilities of
+	// Cloud SQL and is suitable for applications requiring a balance of
+	// performance, availability, and cost.
+	//   "CLOUD_SQL_EDITION_ENTERPRISE_PLUS" - Provides the best performance
+	// and availability to run applications requiring the highest level of
+	// availability and performance in addition to the capabilities of the
+	// Cloud SQL Enterprise edition. Note: SQL Server is not available in
+	// Enterprise Plus edition. For SQL Server, Enterprise will always be
+	// recommended.
+	Edition string `json:"edition,omitempty"`
+
+	// PersistentDiskType: Optional. Persistent disk type to use. If
+	// unspecified, a disk type is recommended based on available usage
+	// data. For SQL Server, only SSD is available. For MySQL and
+	// PostgreSQL, only STANDARD (HDD) and SSD types are available.
+	//
+	// Possible values:
+	//   "PERSISTENT_DISK_TYPE_UNSPECIFIED" - Unspecified (default value).
+	// Selecting this value allows the system to use any disk type according
+	// to reported usage. This a good value to start with.
+	//   "PERSISTENT_DISK_TYPE_STANDARD" - Standard HDD Persistent Disk.
+	//   "PERSISTENT_DISK_TYPE_BALANCED" - Balanced Persistent Disk.
+	//   "PERSISTENT_DISK_TYPE_SSD" - SSD Persistent Disk.
+	PersistentDiskType string `json:"persistentDiskType,omitempty"`
+
+	// SizingOptimizationStrategy: Optional. Sizing optimization strategy of
+	// the database. Currently supported for Cloud SQL are just two values:
+	// SIZING_OPTIMIZATION_STRATEGY_MODERATE and
+	// SIZING_OPTIMIZATION_STRATEGY_SAME_AS_SOURCE.
+	// SIZING_OPTIMIZATION_STRATEGY_UNSPECIFIED will behave like
+	// SIZING_OPTIMIZATION_STRATEGY_MODERATE.
+	//
+	// Possible values:
+	//   "SIZING_OPTIMIZATION_STRATEGY_UNSPECIFIED" - Unspecified (default
+	// value).
+	//   "SIZING_OPTIMIZATION_STRATEGY_SAME_AS_SOURCE" - No optimization
+	// applied. Virtual machine sizing matches as closely as possible the
+	// machine shape on the source site, not considering any actual
+	// performance data.
+	//   "SIZING_OPTIMIZATION_STRATEGY_MODERATE" - Virtual machine sizing
+	// will match the reported usage and shape, with some slack. This a good
+	// value to start with.
+	//   "SIZING_OPTIMIZATION_STRATEGY_AGGRESSIVE" - Virtual machine sizing
+	// will match the reported usage, with little slack. Using this option
+	// can help reduce costs.
+	//   "SIZING_OPTIMIZATION_STRATEGY_CUSTOM" - Virtual machine sizing will
+	// be determined by custom parameters. While not supported in the v1
+	// API, this value is converted to UNSPECIFIED in conversions to the v1
+	// API.
+	SizingOptimizationStrategy string `json:"sizingOptimizationStrategy,omitempty"`
+
+	// ZoneAvailability: Optional. Preferred zone availability.
+	//
+	// Possible values:
+	//   "CLOUD_SQL_ZONE_AVAILABILITY_UNSPECIFIED" - An unspecified Cloud
+	// SQL zone availability.
+	//   "CLOUD_SQL_ZONE_AVAILABILITY_ZONAL" - The instance serves data from
+	// only one zone. In case of outage, no failover. Not recommended for
+	// production.
+	//   "CLOUD_SQL_ZONE_AVAILABILITY_REGIONAL" - The instance can serve
+	// data from multiple zones in a region. Highly available. Automatic
+	// failover to another zone within your selected region. Recommended for
+	// production instances. Increases cost.
+	ZoneAvailability string `json:"zoneAvailability,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Backup") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Backup") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabasePreferencesCloudSqlCommon) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabasePreferencesCloudSqlCommon
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabasePreferencesCloudSqlCommonBackup: Preferences for database
+// backups.
+type DatabasePreferencesCloudSqlCommonBackup struct {
+	// BackupMode: Optional. Mode of automated backups.
+	//
+	// Possible values:
+	//   "BACKUP_MODE_UNSPECIFIED" - An unspecified database backup mode.
+	//   "BACKUP_MODE_DISABLED" - Automatic backups disabled, no additional
+	// charges for storage.
+	//   "BACKUP_MODE_ENABLED" - Automatic backups enabled, there will be
+	// additional charges for storage.
+	BackupMode string `json:"backupMode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "BackupMode") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "BackupMode") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabasePreferencesCloudSqlCommonBackup) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabasePreferencesCloudSqlCommonBackup
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabasePreferencesCloudSqlMySql: Preferences for MySQL on Cloud SQL.
+type DatabasePreferencesCloudSqlMySql struct {
+	// Common: Optional. Preferences to Cloud SQL databases.
+	Common *DatabasePreferencesCloudSqlCommon `json:"common,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Common") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Common") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabasePreferencesCloudSqlMySql) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabasePreferencesCloudSqlMySql
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabasePreferencesCloudSqlPostgreSql: Preferences for PostgreSQL on
+// Cloud SQL.
+type DatabasePreferencesCloudSqlPostgreSql struct {
+	// Common: Optional. Preferences to Cloud SQL databases.
+	Common *DatabasePreferencesCloudSqlCommon `json:"common,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Common") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Common") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabasePreferencesCloudSqlPostgreSql) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabasePreferencesCloudSqlPostgreSql
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabasePreferencesCloudSqlSqlServer: Preferences for SQL Server on
+// Cloud SQL.
+type DatabasePreferencesCloudSqlSqlServer struct {
+	// Common: Optional. Preferences to Cloud SQL databases.
+	Common *DatabasePreferencesCloudSqlCommon `json:"common,omitempty"`
+
+	// Multithreading: Optional. Preferences for multithreading support.
+	//
+	// Possible values:
+	//   "MULTITHREADING_UNSPECIFIED" - Same as MULTITHREADING_AUTO_SELECT.
+	//   "MULTITHREADING_DISABLED" - No multithreading support.
+	//   "MULTITHREADING_ENABLED" - Allow multithreading support.
+	//   "MULTITHREADING_AUTO_SELECT" - Choose to enable/disable
+	// multithreading according to which is lowest cost for your workload.
+	Multithreading string `json:"multithreading,omitempty"`
+
+	// VersionType: Optional. Edition of Microsoft SQL version that is used
+	// on a Cloud SQL for SQL server instance.
+	//
+	// Possible values:
+	//   "VERSION_TYPE_UNSPECIFIED" - Unspecified SQL Server version type.
+	//   "VERSION_TYPE_AUTO" - Version will be deduced from the source
+	// asset.
+	//   "VERSION_TYPE_EXPRESS" - Version will be one of "Express" versions.
+	//   "VERSION_TYPE_WEB" - Version will be one of "Web" versions.
+	//   "VERSION_TYPE_STANDARD" - Version will be one of "Standard"
+	// versions.
+	//   "VERSION_TYPE_ENTERPRISE" - Version will be one of "Enterprise"
+	// versions.
+	VersionType string `json:"versionType,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Common") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Common") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabasePreferencesCloudSqlSqlServer) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabasePreferencesCloudSqlSqlServer
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// DatabaseSchema: Details of a database schema.
+type DatabaseSchema struct {
+	// Objects: List of details of objects by category.
+	Objects []*DatabaseObjects `json:"objects,omitempty"`
+
+	// SchemaName: The name of the schema.
+	SchemaName string `json:"schemaName,omitempty"`
+
+	// TablesSizeBytes: The total size of tables in bytes.
+	TablesSizeBytes int64 `json:"tablesSizeBytes,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "Objects") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Objects") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *DatabaseSchema) MarshalJSON() ([]byte, error) {
+	type NoMethod DatabaseSchema
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
 // Date: Represents a whole or partial calendar date, such as a
@@ -2013,6 +2991,14 @@ type DiskUsageSample struct {
 	// them is positive. if both read and write are zero they are ignored.
 	AverageIops float64 `json:"averageIops,omitempty"`
 
+	// AverageReadIops: Average read IOPS sampled over a short window. Must
+	// be non-negative.
+	AverageReadIops float64 `json:"averageReadIops,omitempty"`
+
+	// AverageWriteIops: Average write IOPS sampled over a short window.
+	// Must be non-negative.
+	AverageWriteIops float64 `json:"averageWriteIops,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "AverageIops") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
@@ -2039,7 +3025,9 @@ func (s *DiskUsageSample) MarshalJSON() ([]byte, error) {
 func (s *DiskUsageSample) UnmarshalJSON(data []byte) error {
 	type NoMethod DiskUsageSample
 	var s1 struct {
-		AverageIops gensupport.JSONFloat64 `json:"averageIops"`
+		AverageIops      gensupport.JSONFloat64 `json:"averageIops"`
+		AverageReadIops  gensupport.JSONFloat64 `json:"averageReadIops"`
+		AverageWriteIops gensupport.JSONFloat64 `json:"averageWriteIops"`
 		*NoMethod
 	}
 	s1.NoMethod = (*NoMethod)(s)
@@ -2047,6 +3035,8 @@ func (s *DiskUsageSample) UnmarshalJSON(data []byte) error {
 		return err
 	}
 	s.AverageIops = float64(s1.AverageIops)
+	s.AverageReadIops = float64(s1.AverageReadIops)
+	s.AverageWriteIops = float64(s1.AverageWriteIops)
 	return nil
 }
 
@@ -2374,6 +3364,8 @@ type GCSPayloadInfo struct {
 	// more information, see [Manually create and upload data
 	// tables](https://cloud.google.com/migrate/stratozone/docs/import-data-p
 	// ortal).
+	//   "IMPORT_JOB_FORMAT_DATABASE_ZIP" - ZIP file with nested CSV files
+	// generated by a database collector.
 	Format string `json:"format,omitempty"`
 
 	// Path: The payload path in Google Cloud Storage.
@@ -2810,6 +3802,8 @@ type ImportDataFile struct {
 	// more information, see [Manually create and upload data
 	// tables](https://cloud.google.com/migrate/stratozone/docs/import-data-p
 	// ortal).
+	//   "IMPORT_JOB_FORMAT_DATABASE_ZIP" - ZIP file with nested CSV files
+	// generated by a database collector.
 	Format string `json:"format,omitempty"`
 
 	// Name: Output only. The name of the file.
@@ -2982,8 +3976,20 @@ func (s *ImportJob) MarshalJSON() ([]byte, error) {
 // ImportRowError: A resource that reports the import job errors at row
 // level.
 type ImportRowError struct {
+	// ArchiveError: Error details for an archive file.
+	ArchiveError *ImportRowErrorArchiveErrorDetails `json:"archiveError,omitempty"`
+
+	// AssetTitle: The asset title.
+	AssetTitle string `json:"assetTitle,omitempty"`
+
+	// CsvError: Error details for a CSV file.
+	CsvError *ImportRowErrorCsvErrorDetails `json:"csvError,omitempty"`
+
 	// Errors: The list of errors detected in the row.
 	Errors []*ImportError `json:"errors,omitempty"`
+
+	// JsonError: Error details for a JSON file.
+	JsonError *ImportRowErrorJsonErrorDetails `json:"jsonError,omitempty"`
 
 	// RowNumber: The row number where the error was detected.
 	RowNumber int64 `json:"rowNumber,omitempty"`
@@ -2994,7 +4000,10 @@ type ImportRowError struct {
 	// VmUuid: The VM UUID.
 	VmUuid string `json:"vmUuid,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Errors") to
+	// XlsxError: Error details for an XLSX file.
+	XlsxError *ImportRowErrorXlsxErrorDetails `json:"xlsxError,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ArchiveError") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -3002,10 +4011,10 @@ type ImportRowError struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Errors") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "ArchiveError") to include
+	// in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. However, any field with
+	// an empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -3013,6 +4022,101 @@ type ImportRowError struct {
 
 func (s *ImportRowError) MarshalJSON() ([]byte, error) {
 	type NoMethod ImportRowError
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImportRowErrorArchiveErrorDetails: Error details for an archive file.
+type ImportRowErrorArchiveErrorDetails struct {
+	// CsvError: Error details for a CSV file.
+	CsvError *ImportRowErrorCsvErrorDetails `json:"csvError,omitempty"`
+
+	// FilePath: The file path inside the archive where the error was
+	// detected.
+	FilePath string `json:"filePath,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CsvError") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CsvError") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportRowErrorArchiveErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportRowErrorArchiveErrorDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImportRowErrorCsvErrorDetails: Error details for a CSV file.
+type ImportRowErrorCsvErrorDetails struct {
+	// RowNumber: The row number where the error was detected.
+	RowNumber int64 `json:"rowNumber,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RowNumber") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RowNumber") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportRowErrorCsvErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportRowErrorCsvErrorDetails
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ImportRowErrorJsonErrorDetails: Error details for a JSON file.
+type ImportRowErrorJsonErrorDetails struct {
+}
+
+// ImportRowErrorXlsxErrorDetails: Error details for an XLSX file.
+type ImportRowErrorXlsxErrorDetails struct {
+	// RowNumber: The row number where the error was detected.
+	RowNumber int64 `json:"rowNumber,omitempty"`
+
+	// Sheet: The name of the sheet where the error was detected.
+	Sheet string `json:"sheet,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "RowNumber") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "RowNumber") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ImportRowErrorXlsxErrorDetails) MarshalJSON() ([]byte, error) {
+	type NoMethod ImportRowErrorXlsxErrorDetails
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3039,6 +4143,8 @@ type InlinePayloadInfo struct {
 	// more information, see [Manually create and upload data
 	// tables](https://cloud.google.com/migrate/stratozone/docs/import-data-p
 	// ortal).
+	//   "IMPORT_JOB_FORMAT_DATABASE_ZIP" - ZIP file with nested CSV files
+	// generated by a database collector.
 	Format string `json:"format,omitempty"`
 
 	// Payload: List of payload files.
@@ -3131,6 +4237,94 @@ type InsightList struct {
 
 func (s *InsightList) MarshalJSON() ([]byte, error) {
 	type NoMethod InsightList
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Issue: An issue associated with a migration.
+type Issue struct {
+	// CompatibilityIssue: Output only. Details about a compatibility issue.
+	CompatibilityIssue *IssueCompatibilityIssue `json:"compatibilityIssue,omitempty"`
+
+	// Description: Output only. English description of the issue.
+	Description string `json:"description,omitempty"`
+
+	// IssueCode: Output only. Unique identifier for this issue type.
+	IssueCode string `json:"issueCode,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "CompatibilityIssue")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "CompatibilityIssue") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *Issue) MarshalJSON() ([]byte, error) {
+	type NoMethod Issue
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// IssueCompatibilityIssue: Details about a compatibility issue.
+type IssueCompatibilityIssue struct {
+	// AssociatedObject: Output only. Name of the object associated with
+	// this compatibility issue relative to the relevant asset. Does not
+	// represent a fully qualified resource name and is not intended for
+	// programmatic use.
+	AssociatedObject string `json:"associatedObject,omitempty"`
+
+	// AssociatedObjectType: Output only. Type of object associated with
+	// this migration compatibility issue.
+	//
+	// Possible values:
+	//   "OBJECT_TYPE_UNSPECIFIED" - An unspecified object type.
+	//   "DATABASE_DEPLOYMENT" - A database deployment object type.
+	AssociatedObjectType string `json:"associatedObjectType,omitempty"`
+
+	// AssociatedValue: Output only. A string representation of actual value
+	// associated with this issue. Some values may contain aggregated
+	// information, such as a flag name and the actual value assigned to it.
+	AssociatedValue string `json:"associatedValue,omitempty"`
+
+	// Category: Output only. Category of this compatibility issue.
+	//
+	// Possible values:
+	//   "CATEGORY_UNSPECIFIED" - An unspecified compatibility category.
+	//   "DATABASE_FLAG" - Database flag compatibility category.
+	//   "DATABASE_FEATURE" - Database feature compatibility category.
+	Category string `json:"category,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AssociatedObject") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AssociatedObject") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *IssueCompatibilityIssue) MarshalJSON() ([]byte, error) {
+	type NoMethod IssueCompatibilityIssue
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -3691,11 +4885,14 @@ func (s *MachinePreferences) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MachineSeries: A Compute Engine machine series.
+// MachineSeries: A machine series, for a target product (e.g. Compute
+// Engine, Google Cloud VMware Engine).
 type MachineSeries struct {
-	// Code: Code to identify a Compute Engine machine series. Consult
+	// Code: Code to identify a machine series. Consult this for more
+	// details on the available series for Compute Engine:
 	// https://cloud.google.com/compute/docs/machine-resource#machine_type_comparison
-	// for more details on the available series.
+	// Consult this for more details on the available series for Google
+	// Cloud VMware Engine: https://cloud.google.com/vmware-engine/pricing
 	Code string `json:"code,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -3767,6 +4964,9 @@ func (s *MemoryUsageSample) UnmarshalJSON(data []byte) error {
 
 // MigrationInsight: An insight about potential migrations for an asset.
 type MigrationInsight struct {
+	// CloudDatabaseTarget: Output only. A Cloud database migration target.
+	CloudDatabaseTarget *CloudDatabaseMigrationTarget `json:"cloudDatabaseTarget,omitempty"`
+
 	// ComputeEngineSoleTenantTarget: Output only. A Google Compute Engine
 	// Sole Tenant target.
 	ComputeEngineSoleTenantTarget *ComputeEngineSoleTenantMigrationTarget `json:"computeEngineSoleTenantTarget,omitempty"`
@@ -3781,25 +4981,27 @@ type MigrationInsight struct {
 	// GkeTarget: Output only. A Google Kubernetes Engine target.
 	GkeTarget *GoogleKubernetesEngineMigrationTarget `json:"gkeTarget,omitempty"`
 
+	// Issues: Output only. Issues associated with this migration.
+	Issues []*Issue `json:"issues,omitempty"`
+
 	// VmwareEngineTarget: Output only. A VMWare Engine target.
 	VmwareEngineTarget *VmwareEngineMigrationTarget `json:"vmwareEngineTarget,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "ComputeEngineSoleTenantTarget") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CloudDatabaseTarget")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g.
-	// "ComputeEngineSoleTenantTarget") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CloudDatabaseTarget") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3845,6 +5047,69 @@ type Money struct {
 
 func (s *Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MysqlDatabaseDeployment: Specific details for a Mysql database
+// deployment.
+type MysqlDatabaseDeployment struct {
+	// Plugins: Optional. List of Mysql plugins.
+	Plugins []*MysqlPlugin `json:"plugins,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Plugins") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Plugins") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MysqlDatabaseDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod MysqlDatabaseDeployment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MysqlPlugin: Mysql plugin.
+type MysqlPlugin struct {
+	// Enabled: Required. The plugin is active.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// Plugin: Required. The plugin name.
+	Plugin string `json:"plugin,omitempty"`
+
+	// Version: Required. The plugin version.
+	Version string `json:"version,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MysqlPlugin) MarshalJSON() ([]byte, error) {
+	type NoMethod MysqlPlugin
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -4495,12 +5760,21 @@ func (s *PlatformDetails) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// PostgreSqlDatabaseDeployment: Specific details for a PostgreSQL
+// database deployment.
+type PostgreSqlDatabaseDeployment struct {
+}
+
 // PreferenceSet: The preferences that apply to all assets in a given
 // context.
 type PreferenceSet struct {
 	// CreateTime: Output only. The timestamp when the preference set was
 	// created.
 	CreateTime string `json:"createTime,omitempty"`
+
+	// DatabasePreferences: Optional. A set of preferences that applies to
+	// all databases in the context.
+	DatabasePreferences *DatabasePreferences `json:"databasePreferences,omitempty"`
 
 	// Description: A description of the preference set.
 	Description string `json:"description,omitempty"`
@@ -4511,6 +5785,12 @@ type PreferenceSet struct {
 
 	// Name: Output only. Name of the preference set.
 	Name string `json:"name,omitempty"`
+
+	// RegionPreferences: Optional. Region preferences for assets using this
+	// preference set. If you are unsure which value to set, the migration
+	// service API region is often a good value to start with. If
+	// unspecified, VirtualMachinePreferences.RegionPreferences is used.
+	RegionPreferences *RegionPreferences `json:"regionPreferences,omitempty"`
 
 	// UpdateTime: Output only. The timestamp when the preference set was
 	// last updated.
@@ -4794,8 +6074,16 @@ type ReportSummary struct {
 	// groups.
 	AllAssetsStats *ReportSummaryAssetAggregateStats `json:"allAssetsStats,omitempty"`
 
+	// DatabaseStats: Output only. Aggregate statistics for unique database
+	// assets across all the groups.
+	DatabaseStats *ReportSummaryAssetAggregateStats `json:"databaseStats,omitempty"`
+
 	// GroupFindings: Findings for each Group included in this report.
 	GroupFindings []*ReportSummaryGroupFinding `json:"groupFindings,omitempty"`
+
+	// VirtualMachineStats: Output only. Aggregate statistics for unique
+	// virtual machine assets across all the groups.
+	VirtualMachineStats *ReportSummaryAssetAggregateStats `json:"virtualMachineStats,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllAssetsStats") to
 	// unconditionally include in API requests. By default, fields with
@@ -4830,6 +6118,11 @@ type ReportSummaryAssetAggregateStats struct {
 	// CoreCountHistogram: Histogram showing a distribution of CPU core
 	// counts.
 	CoreCountHistogram *ReportSummaryHistogramChartData `json:"coreCountHistogram,omitempty"`
+
+	// DatabaseTypes: Output only. Count of assets grouped by database type.
+	// Keys here are taken from DatabaseType enum. Only present for
+	// databases.
+	DatabaseTypes *ReportSummaryChartData `json:"databaseTypes,omitempty"`
 
 	// MemoryBytesHistogram: Histogram showing a distribution of memory
 	// sizes.
@@ -4970,17 +6263,72 @@ func (s *ReportSummaryChartDataDataPoint) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
+// ReportSummaryDatabaseFinding: DatabaseFinding contains an aggregate
+// costs and shapes for a single database type.
+type ReportSummaryDatabaseFinding struct {
+	// AllocatedAssetCount: Output only. Number of database assets which
+	// were successfully assigned in this finding.
+	AllocatedAssetCount int64 `json:"allocatedAssetCount,omitempty,string"`
+
+	// TotalAssets: Output only. Number of database assets in this finding.
+	TotalAssets int64 `json:"totalAssets,omitempty,string"`
+
+	// ForceSendFields is a list of field names (e.g. "AllocatedAssetCount")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllocatedAssetCount") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ReportSummaryDatabaseFinding) MarshalJSON() ([]byte, error) {
+	type NoMethod ReportSummaryDatabaseFinding
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // ReportSummaryGroupFinding: Summary Findings for a specific Group.
 type ReportSummaryGroupFinding struct {
 	// AssetAggregateStats: Summary statistics for all the assets in this
 	// group.
 	AssetAggregateStats *ReportSummaryAssetAggregateStats `json:"assetAggregateStats,omitempty"`
 
+	// AssetType: Output only. Asset type for the group finding.
+	//
+	// Possible values:
+	//   "ASSET_TYPE_UNSPECIFIED" - Unknown asset type.
+	//   "VIRTUAL_MACHINE" - Virtual Machine asset type
+	//   "DATABASE" - Database asset type
+	AssetType string `json:"assetType,omitempty"`
+
+	// DatabaseType: Output only. Source asset database type for the group
+	// finding. Only present for databases.
+	//
+	// Possible values:
+	//   "DATABASE_TYPE_UNSPECIFIED" - Unknown database type.
+	//   "SQL_SERVER" - SQL Server database.
+	//   "MYSQL" - MySQL database.
+	//   "POSTGRES" - Postgres database.
+	DatabaseType string `json:"databaseType,omitempty"`
+
 	// Description: Description for this group finding.
 	Description string `json:"description,omitempty"`
 
 	// DisplayName: Display Name for this group finding.
 	DisplayName string `json:"displayName,omitempty"`
+
+	// Group: Output only. Full name of the group.
+	Group string `json:"group,omitempty"`
 
 	// OverlappingAssetCount: This field is deprecated, do not rely on it
 	// having a value.
@@ -5017,6 +6365,10 @@ func (s *ReportSummaryGroupFinding) MarshalJSON() ([]byte, error) {
 // ReportSummaryGroupPreferenceSetFinding: Summary Findings for a
 // specific Group/PreferenceSet combination.
 type ReportSummaryGroupPreferenceSetFinding struct {
+	// DatabaseFinding: Output only. Details about databases in this
+	// finding. Only present for databases.
+	DatabaseFinding *ReportSummaryDatabaseFinding `json:"databaseFinding,omitempty"`
+
 	// Description: Description for the Preference Set.
 	Description string `json:"description,omitempty"`
 
@@ -5034,6 +6386,15 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	// MonthlyCostCompute: Compute monthly cost for this preference set.
 	MonthlyCostCompute *Money `json:"monthlyCostCompute,omitempty"`
 
+	// MonthlyCostDatabaseBackup: Output only. Backup monthly cost for this
+	// preference set. Only present for databases.
+	MonthlyCostDatabaseBackup *Money `json:"monthlyCostDatabaseBackup,omitempty"`
+
+	// MonthlyCostDatabaseLicensing: Output only. Database licensing monthly
+	// cost for this preference set. For virtual machines denotes the cost
+	// of licenses for hosted databases.
+	MonthlyCostDatabaseLicensing *Money `json:"monthlyCostDatabaseLicensing,omitempty"`
+
 	// MonthlyCostNetworkEgress: Network Egress monthly cost for this
 	// preference set. Only present for virtual machines.
 	MonthlyCostNetworkEgress *Money `json:"monthlyCostNetworkEgress,omitempty"`
@@ -5050,6 +6411,10 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 
 	// MonthlyCostTotal: Total monthly cost for this preference set.
 	MonthlyCostTotal *Money `json:"monthlyCostTotal,omitempty"`
+
+	// PreferenceSet: Output only. A copy of the preference set used for
+	// this finding.
+	PreferenceSet *PreferenceSet `json:"preferenceSet,omitempty"`
 
 	// PreferredRegion: Target region for this Preference Set
 	PreferredRegion string `json:"preferredRegion,omitempty"`
@@ -5070,7 +6435,7 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	// machines in the input. Only present for virtual machines.
 	VmwareEngineFinding *ReportSummaryVMWareEngineFinding `json:"vmwareEngineFinding,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "Description") to
+	// ForceSendFields is a list of field names (e.g. "DatabaseFinding") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -5078,12 +6443,13 @@ type ReportSummaryGroupPreferenceSetFinding struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DatabaseFinding") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -5985,6 +7351,148 @@ type Source struct {
 
 func (s *Source) MarshalJSON() ([]byte, error) {
 	type NoMethod Source
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerDatabaseDeployment: Specific details for a Microsoft SQL
+// Server database deployment.
+type SqlServerDatabaseDeployment struct {
+	// Features: Optional. List of SQL Server features.
+	Features []*SqlServerFeature `json:"features,omitempty"`
+
+	// ServerFlags: Optional. List of SQL Server server flags.
+	ServerFlags []*SqlServerServerFlag `json:"serverFlags,omitempty"`
+
+	// TraceFlags: Optional. List of SQL Server trace flags.
+	TraceFlags []*SqlServerTraceFlag `json:"traceFlags,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Features") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Features") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerDatabaseDeployment) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerDatabaseDeployment
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerFeature: SQL Server feature details.
+type SqlServerFeature struct {
+	// Enabled: Required. Field enabled is set when a feature is used on the
+	// source deployment.
+	Enabled bool `json:"enabled,omitempty"`
+
+	// FeatureName: Required. The feature name.
+	FeatureName string `json:"featureName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Enabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Enabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerFeature) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerFeature
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerServerFlag: SQL Server server flag details.
+type SqlServerServerFlag struct {
+	// ServerFlagName: Required. The server flag name.
+	ServerFlagName string `json:"serverFlagName,omitempty"`
+
+	// Value: Required. The server flag value set by the user.
+	Value string `json:"value,omitempty"`
+
+	// ValueInUse: Required. The server flag actual value. If `value_in_use`
+	// is different from `value` it means that either the configuration
+	// change was not applied or it is an expected behavior. See SQL Server
+	// documentation for more details.
+	ValueInUse string `json:"valueInUse,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "ServerFlagName") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "ServerFlagName") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerServerFlag) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerServerFlag
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// SqlServerTraceFlag: SQL Server trace flag details.
+type SqlServerTraceFlag struct {
+	// Scope: Required. The trace flag scope.
+	//
+	// Possible values:
+	//   "SCOPE_UNSPECIFIED" - Unspecified.
+	//   "OFF" - Off.
+	//   "GLOBAL" - Global.
+	//   "SESSION" - Session.
+	Scope string `json:"scope,omitempty"`
+
+	// TraceFlagName: Required. The trace flag name.
+	TraceFlagName string `json:"traceFlagName,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Scope") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Scope") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *SqlServerTraceFlag) MarshalJSON() ([]byte, error) {
+	type NoMethod SqlServerTraceFlag
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

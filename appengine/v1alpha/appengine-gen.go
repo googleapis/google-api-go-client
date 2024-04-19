@@ -1299,8 +1299,12 @@ type ProjectEvent struct {
 	// value to dedup repeated calls. required
 	EventId string `json:"eventId,omitempty"`
 
+	// Phase: Phase indicates when in the container event propagation this
+	// event is being communicated. Events are sent before and after the
+	// per-resource events are propagated. required
+	//
 	// Possible values:
-	//   "UNKNOWN"
+	//   "CONTAINER_EVENT_PHASE_UNSPECIFIED"
 	//   "BEFORE_RESOURCE_HANDLING"
 	//   "AFTER_RESOURCE_HANDLING"
 	Phase string `json:"phase,omitempty"`
@@ -1308,7 +1312,7 @@ type ProjectEvent struct {
 	// ProjectMetadata: The projects metadata for this project. required
 	ProjectMetadata *ProjectsMetadata `json:"projectMetadata,omitempty"`
 
-	// State: The state of the project that led to this event.
+	// State: The state of the organization that led to this event.
 	State *ContainerState `json:"state,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "EventId") to

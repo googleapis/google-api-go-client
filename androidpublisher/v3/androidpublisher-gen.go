@@ -5301,6 +5301,11 @@ func (s *OneTimeExternalTransaction) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// OtherRecurringProduct: Details of a recurring external transaction
+// product which doesn't belong to any other more specific category.
+type OtherRecurringProduct struct {
+}
+
 // OtherRegionsBasePlanConfig: Pricing information for any new locations
 // Play may launch in.
 type OtherRegionsBasePlanConfig struct {
@@ -5385,6 +5390,9 @@ type OtherRegionsSubscriptionOfferPhaseConfig struct {
 	// for any new locations Play may launch in.
 	AbsoluteDiscounts *OtherRegionsSubscriptionOfferPhasePrices `json:"absoluteDiscounts,omitempty"`
 
+	// Free: Set to specify this offer is free to obtain.
+	Free *OtherRegionsSubscriptionOfferPhaseFreePriceOverride `json:"free,omitempty"`
+
 	// OtherRegionsPrices: The absolute price the user pays for this offer
 	// phase. The price must not be smaller than the minimum price allowed
 	// for any new locations Play may launch in.
@@ -5438,6 +5446,12 @@ func (s *OtherRegionsSubscriptionOfferPhaseConfig) UnmarshalJSON(data []byte) er
 	}
 	s.RelativeDiscount = float64(s1.RelativeDiscount)
 	return nil
+}
+
+// OtherRegionsSubscriptionOfferPhaseFreePriceOverride: Represents the
+// free price override configuration for any new locations Play may
+// launch for a single offer phase.
+type OtherRegionsSubscriptionOfferPhaseFreePriceOverride struct {
 }
 
 // OtherRegionsSubscriptionOfferPhasePrices: Pricing information for any
@@ -5852,6 +5866,10 @@ type RecurringExternalTransaction struct {
 	//   "ALTERNATIVE_BILLING_ONLY" - Alternative billing only, where users
 	// may only use developer-manager billing.
 	MigratedTransactionProgram string `json:"migratedTransactionProgram,omitempty"`
+
+	// OtherRecurringProduct: Details of a recurring external transaction
+	// product which doesn't belong to any other specific category.
+	OtherRecurringProduct *OtherRecurringProduct `json:"otherRecurringProduct,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g.
 	// "ExternalSubscription") to unconditionally include in API requests.

@@ -3713,6 +3713,7 @@ type BulkEditAdvertiserAssignedTargetingOptionsRequest struct {
 	// Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 	// `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`
+	// * `TARGETING_TYPE_KEYWORD`
 	CreateRequests []*CreateAssignedTargetingOptionsRequest `json:"createRequests,omitempty"`
 
 	// DeleteRequests: The assigned targeting options to delete in batch,
@@ -3720,6 +3721,7 @@ type BulkEditAdvertiserAssignedTargetingOptionsRequest struct {
 	// Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 	// `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 	// `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`
+	// * `TARGETING_TYPE_KEYWORD`
 	DeleteRequests []*DeleteAssignedTargetingOptionsRequest `json:"deleteRequests,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "CreateRequests") to
@@ -12507,6 +12509,11 @@ func (s *KeywordAssignedTargetingOptionDetails) MarshalJSON() ([]byte, error) {
 // Kpi: Settings that control the key performance indicator, or KPI, of
 // an insertion order.
 type Kpi struct {
+	// KpiAlgorithmId: Optional. Custom Bidding Algorithm ID associated with
+	// KPI_CUSTOM_IMPRESSION_VALUE_OVER_COST. This field is ignored if the
+	// proper KPI is not selected.
+	KpiAlgorithmId int64 `json:"kpiAlgorithmId,omitempty,string"`
+
 	// KpiAmountMicros: The goal amount, in micros of the advertiser's
 	// currency. Applicable when kpi_type is one of: * `KPI_TYPE_CPM` *
 	// `KPI_TYPE_CPC` * `KPI_TYPE_CPA` * `KPI_TYPE_CPIAVC` * `KPI_TYPE_VCPM`
@@ -12539,6 +12546,7 @@ type Kpi struct {
 	//   "KPI_TYPE_CPIAVC" - The KPI is CPIAVC (cost per impression audible
 	// and visible at completion).
 	//   "KPI_TYPE_CPE" - The KPI is CPE (cost per engagement).
+	//   "KPI_TYPE_CPV" - The KPI is set in CPV (cost per view).
 	//   "KPI_TYPE_CLICK_CVR" - The KPI is click conversion rate
 	// (conversions per click) percentage.
 	//   "KPI_TYPE_IMPRESSION_CVR" - The KPI is impression conversion rate
@@ -12551,10 +12559,21 @@ type Kpi struct {
 	// (complete audio listens per impression) percentage.
 	//   "KPI_TYPE_VIDEO_COMPLETION_RATE" - The KPI is video completion rate
 	// (complete video views per impression) percentage.
+	//   "KPI_TYPE_CPCL" - The KPI is set in CPCL (cost per complete audio
+	// listen).
+	//   "KPI_TYPE_CPCV" - The KPI is set in CPCV (cost per complete video
+	// view).
+	//   "KPI_TYPE_TOS10" - The KPI is set in rate of time on screen 10+
+	// seconds (Percentage of measurable, non-skippable impressions that
+	// were on the screen for at least 10 seconds).
+	//   "KPI_TYPE_MAXIMIZE_PACING" - The KPI is set to maximize brand
+	// impact while prioritizing spending the full budget.
+	//   "KPI_TYPE_CUSTOM_IMPRESSION_VALUE_OVER_COST" - The KPI is set in
+	// custom impression value divided by cost.
 	//   "KPI_TYPE_OTHER" - The KPI is some other value.
 	KpiType string `json:"kpiType,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "KpiAmountMicros") to
+	// ForceSendFields is a list of field names (e.g. "KpiAlgorithmId") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -12562,7 +12581,7 @@ type Kpi struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "KpiAmountMicros") to
+	// NullFields is a list of field names (e.g. "KpiAlgorithmId") to
 	// include in API requests with the JSON null value. By default, fields
 	// with empty values are omitted from API requests. However, any field
 	// with an empty value appearing in NullFields will be sent to the
@@ -36328,7 +36347,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall struct {
 //     option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 //     `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//     `TARGETING_TYPE_KEYWORD`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Create(advertiserId int64, targetingType string, assignedtargetingoption *AssignedTargetingOption) *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -36447,7 +36467,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsCreateCall) Do(opts ..
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",
@@ -36591,7 +36611,8 @@ type AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall struct {
 //     option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` *
 //     `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` *
 //     `TARGETING_TYPE_OMID` *
-//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`.
+//     `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` *
+//     `TARGETING_TYPE_KEYWORD`.
 func (r *AdvertisersTargetingTypesAssignedTargetingOptionsService) Delete(advertiserId int64, targetingType string, assignedTargetingOptionId string) *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall {
 	c := &AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.advertiserId = advertiserId
@@ -36714,7 +36735,7 @@ func (c *AdvertisersTargetingTypesAssignedTargetingOptionsDeleteCall) Do(opts ..
 	//       "type": "string"
 	//     },
 	//     "targetingType": {
-	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION`",
+	//       "description": "Required. Identifies the type of this assigned targeting option. Supported targeting types: * `TARGETING_TYPE_CHANNEL` * `TARGETING_TYPE_DIGITAL_CONTENT_LABEL_EXCLUSION` * `TARGETING_TYPE_OMID` * `TARGETING_TYPE_SENSITIVE_CATEGORY_EXCLUSION` * `TARGETING_TYPE_KEYWORD`",
 	//       "enum": [
 	//         "TARGETING_TYPE_UNSPECIFIED",
 	//         "TARGETING_TYPE_CHANNEL",

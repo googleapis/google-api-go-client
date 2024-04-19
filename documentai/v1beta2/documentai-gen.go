@@ -3962,16 +3962,20 @@ type GoogleCloudDocumentaiV1beta1DocumentPageTokenStyleInfo struct {
 	// _resolution_ ÷ `72.0`.
 	PixelFontSize float64 `json:"pixelFontSize,omitempty"`
 
-	// Smallcaps: Whether the text is in small caps.
+	// Smallcaps: Whether the text is in small caps. This feature is not
+	// supported yet.
 	Smallcaps bool `json:"smallcaps,omitempty"`
 
-	// Strikeout: Whether the text is strikethrough.
+	// Strikeout: Whether the text is strikethrough. This feature is not
+	// supported yet.
 	Strikeout bool `json:"strikeout,omitempty"`
 
-	// Subscript: Whether the text is a subscript.
+	// Subscript: Whether the text is a subscript. This feature is not
+	// supported yet.
 	Subscript bool `json:"subscript,omitempty"`
 
-	// Superscript: Whether the text is a superscript.
+	// Superscript: Whether the text is a superscript. This feature is not
+	// supported yet.
 	Superscript bool `json:"superscript,omitempty"`
 
 	// TextColor: Color of the text.
@@ -6298,16 +6302,20 @@ type GoogleCloudDocumentaiV1beta2DocumentPageTokenStyleInfo struct {
 	// _resolution_ ÷ `72.0`.
 	PixelFontSize float64 `json:"pixelFontSize,omitempty"`
 
-	// Smallcaps: Whether the text is in small caps.
+	// Smallcaps: Whether the text is in small caps. This feature is not
+	// supported yet.
 	Smallcaps bool `json:"smallcaps,omitempty"`
 
-	// Strikeout: Whether the text is strikethrough.
+	// Strikeout: Whether the text is strikethrough. This feature is not
+	// supported yet.
 	Strikeout bool `json:"strikeout,omitempty"`
 
-	// Subscript: Whether the text is a subscript.
+	// Subscript: Whether the text is a subscript. This feature is not
+	// supported yet.
 	Subscript bool `json:"subscript,omitempty"`
 
-	// Superscript: Whether the text is a superscript.
+	// Superscript: Whether the text is a superscript. This feature is not
+	// supported yet.
 	Superscript bool `json:"superscript,omitempty"`
 
 	// TextColor: Color of the text.

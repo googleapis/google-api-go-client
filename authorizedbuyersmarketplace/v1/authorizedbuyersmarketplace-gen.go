@@ -160,6 +160,7 @@ func (s *Service) userAgent() string {
 
 func NewBiddersService(s *Service) *BiddersService {
 	rs := &BiddersService{s: s}
+	rs.AuctionPackages = NewBiddersAuctionPackagesService(s)
 	rs.FinalizedDeals = NewBiddersFinalizedDealsService(s)
 	return rs
 }
@@ -167,7 +168,18 @@ func NewBiddersService(s *Service) *BiddersService {
 type BiddersService struct {
 	s *Service
 
+	AuctionPackages *BiddersAuctionPackagesService
+
 	FinalizedDeals *BiddersFinalizedDealsService
+}
+
+func NewBiddersAuctionPackagesService(s *Service) *BiddersAuctionPackagesService {
+	rs := &BiddersAuctionPackagesService{s: s}
+	return rs
+}
+
+type BiddersAuctionPackagesService struct {
+	s *Service
 }
 
 func NewBiddersFinalizedDealsService(s *Service) *BiddersFinalizedDealsService {
@@ -433,16 +445,33 @@ type AuctionPackage struct {
 	// DisplayName: The display_name assigned to the auction package.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// EligibleSeatIds: Output only. If set, this field contains the list of
+	// DSP specific seat ids set by media planners that are eligible to
+	// transact on this deal. The seat ID is in the calling DSP's namespace.
+	EligibleSeatIds []string `json:"eligibleSeatIds,omitempty"`
+
 	// Name: Immutable. The unique identifier for the auction package.
 	// Format: `buyers/{accountId}/auctionPackages/{auctionPackageId}` The
 	// auction_package_id part of name is sent in the BidRequest to all RTB
 	// bidders and is returned as deal_id by the bidder in the BidResponse.
 	Name string `json:"name,omitempty"`
 
-	// SubscribedClients: Output only. The list of clients of the current
-	// buyer that are subscribed to the AuctionPackage. Format:
-	// `buyers/{buyerAccountId}/clients/{clientAccountId}`
+	// SubscribedBuyers: Output only. The list of buyers that are subscribed
+	// to the AuctionPackage. This field is only populated when calling as a
+	// bidder. Format: `buyers/{buyerAccountId}`
+	SubscribedBuyers []string `json:"subscribedBuyers,omitempty"`
+
+	// SubscribedClients: Output only. When calling as a buyer, the list of
+	// clients of the current buyer that are subscribed to the
+	// AuctionPackage. When calling as a bidder, the list of clients that
+	// are subscribed to the AuctionPackage owned by the bidder or its
+	// buyers. Format: `buyers/{buyerAccountId}/clients/{clientAccountId}`
 	SubscribedClients []string `json:"subscribedClients,omitempty"`
+
+	// SubscribedMediaPlanners: Output only. The list of media planners that
+	// are subscribed to the AuctionPackage. This field is only populated
+	// when calling as a bidder.
+	SubscribedMediaPlanners []*MediaPlanner `json:"subscribedMediaPlanners,omitempty"`
 
 	// UpdateTime: Output only. Time the auction package was last updated.
 	// This value is only increased when this auction package is updated but
@@ -2990,6 +3019,223 @@ func (s *VideoTargeting) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// method id "authorizedbuyersmarketplace.bidders.auctionPackages.list":
+
+type BiddersAuctionPackagesListCall struct {
+	s            *Service
+	parent       string
+	urlParams_   gensupport.URLParams
+	ifNoneMatch_ string
+	ctx_         context.Context
+	header_      http.Header
+}
+
+// List: List the auction packages. Buyers can use the URL path
+// "/v1/buyers/{accountId}/auctionPackages" to list auction packages for
+// the current buyer and its clients. Bidders can use the URL path
+// "/v1/bidders/{accountId}/auctionPackages" to list auction packages
+// for the bidder, its media planners, its buyers, and all their
+// clients.
+//
+//   - parent: Name of the parent buyer that can access the auction
+//     package. Format: `buyers/{accountId}`. When used with a bidder
+//     account, the auction packages that the bidder, its media planners,
+//     its buyers and clients are subscribed to will be listed, in the
+//     format `bidders/{accountId}`.
+func (r *BiddersAuctionPackagesService) List(parent string) *BiddersAuctionPackagesListCall {
+	c := &BiddersAuctionPackagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
+	c.parent = parent
+	return c
+}
+
+// Filter sets the optional parameter "filter": Optional query string
+// using the Cloud API list filtering syntax
+// (/authorized-buyers/apis/guides/list-filters). Only supported when
+// parent is bidder. Supported columns for filtering are: * displayName
+// * createTime * updateTime * eligibleSeatIds
+func (c *BiddersAuctionPackagesListCall) Filter(filter string) *BiddersAuctionPackagesListCall {
+	c.urlParams_.Set("filter", filter)
+	return c
+}
+
+// PageSize sets the optional parameter "pageSize": Requested page size.
+// The server may return fewer results than requested. Max allowed page
+// size is 500.
+func (c *BiddersAuctionPackagesListCall) PageSize(pageSize int64) *BiddersAuctionPackagesListCall {
+	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
+	return c
+}
+
+// PageToken sets the optional parameter "pageToken": The page token as
+// returned. ListAuctionPackagesResponse.nextPageToken
+func (c *BiddersAuctionPackagesListCall) PageToken(pageToken string) *BiddersAuctionPackagesListCall {
+	c.urlParams_.Set("pageToken", pageToken)
+	return c
+}
+
+// Fields allows partial responses to be retrieved. See
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
+// for more information.
+func (c *BiddersAuctionPackagesListCall) Fields(s ...googleapi.Field) *BiddersAuctionPackagesListCall {
+	c.urlParams_.Set("fields", googleapi.CombineFields(s))
+	return c
+}
+
+// IfNoneMatch sets the optional parameter which makes the operation
+// fail if the object's ETag matches the given value. This is useful for
+// getting updates only after the object has changed since the last
+// request. Use googleapi.IsNotModified to check whether the response
+// error from Do is the result of In-None-Match.
+func (c *BiddersAuctionPackagesListCall) IfNoneMatch(entityTag string) *BiddersAuctionPackagesListCall {
+	c.ifNoneMatch_ = entityTag
+	return c
+}
+
+// Context sets the context to be used in this call's Do method. Any
+// pending HTTP request will be aborted if the provided context is
+// canceled.
+func (c *BiddersAuctionPackagesListCall) Context(ctx context.Context) *BiddersAuctionPackagesListCall {
+	c.ctx_ = ctx
+	return c
+}
+
+// Header returns an http.Header that can be modified by the caller to
+// add HTTP headers to the request.
+func (c *BiddersAuctionPackagesListCall) Header() http.Header {
+	if c.header_ == nil {
+		c.header_ = make(http.Header)
+	}
+	return c.header_
+}
+
+func (c *BiddersAuctionPackagesListCall) doRequest(alt string) (*http.Response, error) {
+	reqHeaders := make(http.Header)
+	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
+	for k, v := range c.header_ {
+		reqHeaders[k] = v
+	}
+	reqHeaders.Set("User-Agent", c.s.userAgent())
+	if c.ifNoneMatch_ != "" {
+		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
+	}
+	var body io.Reader = nil
+	c.urlParams_.Set("alt", alt)
+	c.urlParams_.Set("prettyPrint", "false")
+	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/auctionPackages")
+	urls += "?" + c.urlParams_.Encode()
+	req, err := http.NewRequest("GET", urls, body)
+	if err != nil {
+		return nil, err
+	}
+	req.Header = reqHeaders
+	googleapi.Expand(req.URL, map[string]string{
+		"parent": c.parent,
+	})
+	return gensupport.SendRequest(c.ctx_, c.s.client, req)
+}
+
+// Do executes the "authorizedbuyersmarketplace.bidders.auctionPackages.list" call.
+// Exactly one of *ListAuctionPackagesResponse or error will be non-nil.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAuctionPackagesResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was
+// because http.StatusNotModified was returned.
+func (c *BiddersAuctionPackagesListCall) Do(opts ...googleapi.CallOption) (*ListAuctionPackagesResponse, error) {
+	gensupport.SetOptions(c.urlParams_, opts...)
+	res, err := c.doRequest("json")
+	if res != nil && res.StatusCode == http.StatusNotModified {
+		if res.Body != nil {
+			res.Body.Close()
+		}
+		return nil, gensupport.WrapError(&googleapi.Error{
+			Code:   res.StatusCode,
+			Header: res.Header,
+		})
+	}
+	if err != nil {
+		return nil, err
+	}
+	defer googleapi.CloseBody(res)
+	if err := googleapi.CheckResponse(res); err != nil {
+		return nil, gensupport.WrapError(err)
+	}
+	ret := &ListAuctionPackagesResponse{
+		ServerResponse: googleapi.ServerResponse{
+			Header:         res.Header,
+			HTTPStatusCode: res.StatusCode,
+		},
+	}
+	target := &ret
+	if err := gensupport.DecodeResponse(target, res); err != nil {
+		return nil, err
+	}
+	return ret, nil
+	// {
+	//   "description": "List the auction packages. Buyers can use the URL path \"/v1/buyers/{accountId}/auctionPackages\" to list auction packages for the current buyer and its clients. Bidders can use the URL path \"/v1/bidders/{accountId}/auctionPackages\" to list auction packages for the bidder, its media planners, its buyers, and all their clients.",
+	//   "flatPath": "v1/bidders/{biddersId}/auctionPackages",
+	//   "httpMethod": "GET",
+	//   "id": "authorizedbuyersmarketplace.bidders.auctionPackages.list",
+	//   "parameterOrder": [
+	//     "parent"
+	//   ],
+	//   "parameters": {
+	//     "filter": {
+	//       "description": "Optional. Optional query string using the [Cloud API list filtering syntax](/authorized-buyers/apis/guides/list-filters). Only supported when parent is bidder. Supported columns for filtering are: * displayName * createTime * updateTime * eligibleSeatIds",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "pageSize": {
+	//       "description": "Requested page size. The server may return fewer results than requested. Max allowed page size is 500.",
+	//       "format": "int32",
+	//       "location": "query",
+	//       "type": "integer"
+	//     },
+	//     "pageToken": {
+	//       "description": "The page token as returned. ListAuctionPackagesResponse.nextPageToken",
+	//       "location": "query",
+	//       "type": "string"
+	//     },
+	//     "parent": {
+	//       "description": "Required. Name of the parent buyer that can access the auction package. Format: `buyers/{accountId}`. When used with a bidder account, the auction packages that the bidder, its media planners, its buyers and clients are subscribed to will be listed, in the format `bidders/{accountId}`.",
+	//       "location": "path",
+	//       "pattern": "^bidders/[^/]+$",
+	//       "required": true,
+	//       "type": "string"
+	//     }
+	//   },
+	//   "path": "v1/{+parent}/auctionPackages",
+	//   "response": {
+	//     "$ref": "ListAuctionPackagesResponse"
+	//   },
+	//   "scopes": [
+	//     "https://www.googleapis.com/auth/authorized-buyers-marketplace"
+	//   ]
+	// }
+
+}
+
+// Pages invokes f for each page of results.
+// A non-nil error returned from f will halt the iteration.
+// The provided context supersedes any context provided to the Context method.
+func (c *BiddersAuctionPackagesListCall) Pages(ctx context.Context, f func(*ListAuctionPackagesResponse) error) error {
+	c.ctx_ = ctx
+	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	for {
+		x, err := c.Do()
+		if err != nil {
+			return err
+		}
+		if err := f(x); err != nil {
+			return err
+		}
+		if x.NextPageToken == "" {
+			return nil
+		}
+		c.PageToken(x.NextPageToken)
+	}
+}
+
 // method id "authorizedbuyersmarketplace.bidders.finalizedDeals.list":
 
 type BiddersFinalizedDealsListCall struct {
@@ -3387,11 +3633,18 @@ type BuyersAuctionPackagesListCall struct {
 	header_      http.Header
 }
 
-// List: List the auction packages subscribed by a buyer and its
+// List: List the auction packages. Buyers can use the URL path
+// "/v1/buyers/{accountId}/auctionPackages" to list auction packages for
+// the current buyer and its clients. Bidders can use the URL path
+// "/v1/bidders/{accountId}/auctionPackages" to list auction packages
+// for the bidder, its media planners, its buyers, and all their
 // clients.
 //
 //   - parent: Name of the parent buyer that can access the auction
-//     package. Format: `buyers/{accountId}`.
+//     package. Format: `buyers/{accountId}`. When used with a bidder
+//     account, the auction packages that the bidder, its media planners,
+//     its buyers and clients are subscribed to will be listed, in the
+//     format `bidders/{accountId}`.
 func (r *BuyersAuctionPackagesService) List(parent string) *BuyersAuctionPackagesListCall {
 	c := &BuyersAuctionPackagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3400,9 +3653,9 @@ func (r *BuyersAuctionPackagesService) List(parent string) *BuyersAuctionPackage
 
 // Filter sets the optional parameter "filter": Optional query string
 // using the Cloud API list filtering syntax
-// (https://developers.google.com/authorized-buyers/apis/guides/list-filters)
-// Only supported when parent is bidder. Supported columns for filtering
-// are: * displayName * createTime * updateTime * eligibleSeatIds
+// (/authorized-buyers/apis/guides/list-filters). Only supported when
+// parent is bidder. Supported columns for filtering are: * displayName
+// * createTime * updateTime * eligibleSeatIds
 func (c *BuyersAuctionPackagesListCall) Filter(filter string) *BuyersAuctionPackagesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
@@ -3522,7 +3775,7 @@ func (c *BuyersAuctionPackagesListCall) Do(opts ...googleapi.CallOption) (*ListA
 	}
 	return ret, nil
 	// {
-	//   "description": "List the auction packages subscribed by a buyer and its clients.",
+	//   "description": "List the auction packages. Buyers can use the URL path \"/v1/buyers/{accountId}/auctionPackages\" to list auction packages for the current buyer and its clients. Bidders can use the URL path \"/v1/bidders/{accountId}/auctionPackages\" to list auction packages for the bidder, its media planners, its buyers, and all their clients.",
 	//   "flatPath": "v1/buyers/{buyersId}/auctionPackages",
 	//   "httpMethod": "GET",
 	//   "id": "authorizedbuyersmarketplace.buyers.auctionPackages.list",
@@ -3531,7 +3784,7 @@ func (c *BuyersAuctionPackagesListCall) Do(opts ...googleapi.CallOption) (*ListA
 	//   ],
 	//   "parameters": {
 	//     "filter": {
-	//       "description": "Optional. Optional query string using the [Cloud API list filtering syntax](https://developers.google.com/authorized-buyers/apis/guides/list-filters) Only supported when parent is bidder. Supported columns for filtering are: * displayName * createTime * updateTime * eligibleSeatIds",
+	//       "description": "Optional. Optional query string using the [Cloud API list filtering syntax](/authorized-buyers/apis/guides/list-filters). Only supported when parent is bidder. Supported columns for filtering are: * displayName * createTime * updateTime * eligibleSeatIds",
 	//       "location": "query",
 	//       "type": "string"
 	//     },
@@ -3547,7 +3800,7 @@ func (c *BuyersAuctionPackagesListCall) Do(opts ...googleapi.CallOption) (*ListA
 	//       "type": "string"
 	//     },
 	//     "parent": {
-	//       "description": "Required. Name of the parent buyer that can access the auction package. Format: `buyers/{accountId}`",
+	//       "description": "Required. Name of the parent buyer that can access the auction package. Format: `buyers/{accountId}`. When used with a bidder account, the auction packages that the bidder, its media planners, its buyers and clients are subscribed to will be listed, in the format `bidders/{accountId}`.",
 	//       "location": "path",
 	//       "pattern": "^buyers/[^/]+$",
 	//       "required": true,

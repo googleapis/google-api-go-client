@@ -2970,7 +2970,7 @@
       }
     }
   },
-  "revision": "20240320",
+  "revision": "20240410",
   "rootUrl": "https://spanner.googleapis.com/",
   "schemas": {
     "AutoscalingConfig": {
@@ -3289,7 +3289,7 @@
       "id": "CommitRequest",
       "properties": {
         "maxCommitDelay": {
-          "description": "Optional. The amount of latency this request is willing to incur in order to improve throughput. If this field is not set, Spanner assumes requests are relatively latency sensitive and automatically determines an appropriate delay time. You can specify a batching delay value between 0 and 500 ms.",
+          "description": "Optional. The amount of latency this request is configured to incur in order to improve throughput. If this field is not set, Spanner assumes requests are relatively latency sensitive and automatically determines an appropriate delay time. You can specify a commit delay value between 0 and 500 ms.",
           "format": "google-duration",
           "type": "string"
         },

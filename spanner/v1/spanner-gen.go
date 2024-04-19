@@ -1029,10 +1029,10 @@ func (s *ChildLink) MarshalJSON() ([]byte, error) {
 // CommitRequest: The request for Commit.
 type CommitRequest struct {
 	// MaxCommitDelay: Optional. The amount of latency this request is
-	// willing to incur in order to improve throughput. If this field is not
-	// set, Spanner assumes requests are relatively latency sensitive and
-	// automatically determines an appropriate delay time. You can specify a
-	// batching delay value between 0 and 500 ms.
+	// configured to incur in order to improve throughput. If this field is
+	// not set, Spanner assumes requests are relatively latency sensitive
+	// and automatically determines an appropriate delay time. You can
+	// specify a commit delay value between 0 and 500 ms.
 	MaxCommitDelay string `json:"maxCommitDelay,omitempty"`
 
 	// Mutations: The mutations to be executed when this transaction

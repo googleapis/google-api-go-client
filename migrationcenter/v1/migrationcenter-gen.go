@@ -365,8 +365,8 @@ type AggregateAssetsValuesRequest struct {
 	// can be defined.
 	Aggregations []*Aggregation `json:"aggregations,omitempty"`
 
-	// Filter: The aggregation will be performed on assets that match the
-	// provided filter.
+	// Filter: Optional. The aggregation will be performed on assets that
+	// match the provided filter.
 	Filter string `json:"filter,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Aggregations") to
@@ -3666,11 +3666,14 @@ func (s *MachinePreferences) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// MachineSeries: A Compute Engine machine series.
+// MachineSeries: A machine series, for a target product (e.g. Compute
+// Engine, Google Cloud VMware Engine).
 type MachineSeries struct {
-	// Code: Code to identify a Compute Engine machine series. Consult
+	// Code: Code to identify a machine series. Consult this for more
+	// details on the available series for Compute Engine:
 	// https://cloud.google.com/compute/docs/machine-resource#machine_type_comparison
-	// for more details on the available series.
+	// Consult this for more details on the available series for Google
+	// Cloud VMware Engine: https://cloud.google.com/vmware-engine/pricing
 	Code string `json:"code,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "Code") to
@@ -4456,8 +4459,8 @@ type PreferenceSet struct {
 	// last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// VirtualMachinePreferences: A set of preferences that applies to all
-	// virtual machines in the context.
+	// VirtualMachinePreferences: Optional. A set of preferences that
+	// applies to all virtual machines in the context.
 	VirtualMachinePreferences *VirtualMachinePreferences `json:"virtualMachinePreferences,omitempty"`
 
 	// ServerResponse contains the HTTP response code and headers from the

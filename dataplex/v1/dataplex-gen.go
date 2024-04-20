@@ -4972,10 +4972,12 @@ func (s *GoogleCloudDataplexV1EntityCompatibilityStatusCompatibility) MarshalJSO
 // GoogleCloudDataplexV1Entry: An entry is a representation of a data
 // asset which can be described by various metadata.
 type GoogleCloudDataplexV1Entry struct {
-	// Aspects: Optional. The Aspects attached to the Entry. The key is
-	// either the resource name of the aspect type (if the aspect is
-	// attached directly to the entry) or "aspectType@path" if the aspect is
-	// attached to an entry's path.
+	// Aspects: Optional. The Aspects attached to the Entry. The format for
+	// the key can be one of the following: 1.
+	// {projectId}.{locationId}.{aspectTypeId} (if the aspect is attached
+	// directly to the entry) 2.
+	// {projectId}.{locationId}.{aspectTypeId}@{path} (if the aspect is
+	// attached to an entry's path)
 	Aspects map[string]GoogleCloudDataplexV1Aspect `json:"aspects,omitempty"`
 
 	// CreateTime: Output only. The time when the Entry was created.
@@ -7431,29 +7433,8 @@ type GoogleCloudDataplexV1SearchEntriesResult struct {
 	// DataplexEntry: Entry format of the result.
 	DataplexEntry *GoogleCloudDataplexV1Entry `json:"dataplexEntry,omitempty"`
 
-	// Description: Entry description.
-	Description string `json:"description,omitempty"`
-
-	// DisplayName: Display name.
-	DisplayName string `json:"displayName,omitempty"`
-
-	// Entry: Resource name of the entry.
-	Entry string `json:"entry,omitempty"`
-
-	// EntryType: The entry type.
-	EntryType string `json:"entryType,omitempty"`
-
-	// FullyQualifiedName: Fully qualified name.
-	FullyQualifiedName string `json:"fullyQualifiedName,omitempty"`
-
 	// LinkedResource: Linked resource name.
 	LinkedResource string `json:"linkedResource,omitempty"`
-
-	// ModifyTime: The last modification timestamp.
-	ModifyTime string `json:"modifyTime,omitempty"`
-
-	// RelativeResource: Relative resource name.
-	RelativeResource string `json:"relativeResource,omitempty"`
 
 	// Snippets: Snippets.
 	Snippets *GoogleCloudDataplexV1SearchEntriesResultSnippets `json:"snippets,omitempty"`

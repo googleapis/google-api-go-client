@@ -4693,7 +4693,7 @@ type ProjectsLocationsGlobalConnectivityTestsPatchCall struct {
 // the reachability result returns a value of UNKNOWN. If the endpoint
 // specifications in `ConnectivityTest` are incomplete, the reachability
 // result returns a value of `AMBIGUOUS`. See the documentation in
-// `ConnectivityTest` for for more details.
+// `ConnectivityTest` for more details.
 //
 //   - name: Unique name of the resource using the form:
 //     `projects/{project_id}/locations/global/connectivityTests/{test_id}`.
@@ -4803,7 +4803,7 @@ func (c *ProjectsLocationsGlobalConnectivityTestsPatchCall) Do(opts ...googleapi
 	}
 	return ret, nil
 	// {
-	//   "description": "Updates the configuration of an existing `ConnectivityTest`. After you update a test, the reachability analysis is performed as part of the long running operation, which completes when the analysis completes. The Reachability state in the test resource is updated with the new result. If the endpoint specifications in `ConnectivityTest` are invalid (for example, they contain non-existent resources in the network, or the user does not have read permissions to the network configurations of listed projects), then the reachability result returns a value of UNKNOWN. If the endpoint specifications in `ConnectivityTest` are incomplete, the reachability result returns a value of `AMBIGUOUS`. See the documentation in `ConnectivityTest` for for more details.",
+	//   "description": "Updates the configuration of an existing `ConnectivityTest`. After you update a test, the reachability analysis is performed as part of the long running operation, which completes when the analysis completes. The Reachability state in the test resource is updated with the new result. If the endpoint specifications in `ConnectivityTest` are invalid (for example, they contain non-existent resources in the network, or the user does not have read permissions to the network configurations of listed projects), then the reachability result returns a value of UNKNOWN. If the endpoint specifications in `ConnectivityTest` are incomplete, the reachability result returns a value of `AMBIGUOUS`. See the documentation in `ConnectivityTest` for more details.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/global/connectivityTests/{connectivityTestsId}",
 	//   "httpMethod": "PATCH",
 	//   "id": "networkmanagement.projects.locations.global.connectivityTests.patch",

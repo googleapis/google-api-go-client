@@ -1766,6 +1766,18 @@ type Reservation struct {
 
 	Standard *Standard `json:"standard,omitempty"`
 
+	// State: Output only. The state of the Reservation.
+	//
+	// Possible values:
+	//   "STATE_UNSPECIFIED" - The Reservation state is unspecified.
+	//   "APPROVED" - The Reservation has been approved.
+	//   "PROVISIONING" - The Reservation is being provisioned.
+	//   "ACTIVE" - The Reservation is active.
+	//   "DEPROVISIONING" - The Reservation is being deprovisioned.
+	//   "EXPIRED" - The Reservation is past its end date.
+	//   "FAILED" - The Reservation encountered a failure during mutation.
+	State string `json:"state,omitempty"`
+
 	// ForceSendFields is a list of field names (e.g. "Name") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any

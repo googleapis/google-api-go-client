@@ -6504,6 +6504,8 @@ type ServiceMeshCondition struct {
 	//   "CNI_POD_UNSCHEDULABLE" - CNI pod unschedulable error code
 	//   "UNSUPPORTED_MULTIPLE_CONTROL_PLANES" - Multiple control planes
 	// unsupported error code
+	//   "VPCSC_GA_SUPPORTED" - VPC-SC GA is supported for this control
+	// plane.
 	Code string `json:"code,omitempty"`
 
 	// Details: A short summary about the issue.
@@ -6692,8 +6694,8 @@ func (s *ServiceMeshMembershipSpec) MarshalJSON() ([]byte, error) {
 // ServiceMeshMembershipState: **Service Mesh**: State for a single
 // Membership, as analyzed by the Service Mesh Hub Controller.
 type ServiceMeshMembershipState struct {
-	// Conditions: Output only. List of condition reporting membership
-	// statues
+	// Conditions: Output only. List of conditions reported for this
+	// membership.
 	Conditions []*ServiceMeshCondition `json:"conditions,omitempty"`
 
 	// ControlPlaneManagement: Output only. Status of control plane

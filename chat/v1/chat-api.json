@@ -1109,7 +1109,7 @@
       }
     }
   },
-  "revision": "20240414",
+  "revision": "20240416",
   "rootUrl": "https://chat.googleapis.com/",
   "schemas": {
     "AccessoryWidget": {
@@ -1887,7 +1887,7 @@
       "id": "GoogleAppsCardV1Action",
       "properties": {
         "function": {
-          "description": "A custom function to invoke when the containing element is clicked or othrwise activated. For example usage, see [Read form data](https://developers.google.com/workspace/chat/read-form-data).",
+          "description": "A custom function to invoke when the containing element is clicked or otherwise activated. For example usage, see [Read form data](https://developers.google.com/workspace/chat/read-form-data).",
           "type": "string"
         },
         "interaction": {

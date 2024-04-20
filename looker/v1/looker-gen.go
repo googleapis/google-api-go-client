@@ -875,7 +875,7 @@ func (s *ImportInstanceRequest) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Instance: A Looker instance.
+// Instance: A Looker instance. LINT.IfChange
 type Instance struct {
 	// AdminSettings: Looker Instance Admin settings.
 	AdminSettings *AdminSettings `json:"adminSettings,omitempty"`

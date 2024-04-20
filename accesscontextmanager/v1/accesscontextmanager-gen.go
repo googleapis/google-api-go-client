@@ -1006,9 +1006,13 @@ func (s *DevicePolicy) MarshalJSON() ([]byte, error) {
 // an IngressPolicy which allows access in order for this request to
 // succeed.
 type EgressFrom struct {
-	// Identities: A list of identities that are allowed access through this
-	// [EgressPolicy], in the format of `user:{email_id}` or
-	// `serviceAccount:{email_id}`.
+	// Identities: A list of identities that are allowed access through
+	// [EgressPolicy]. Identities can be an individual user, service
+	// account, Google group, or third-party identity. The `v1` identities
+	// that have the prefix `user`, `group`, `serviceAccount`, `principal`,
+	// and `principalSet` in
+	// https://cloud.google.com/iam/docs/principal-identifiers#v1 are
+	// supported.
 	Identities []string `json:"identities,omitempty"`
 
 	// IdentityType: Specifies the type of identities that are allowed
@@ -1164,8 +1168,8 @@ func (s *EgressSource) MarshalJSON() ([]byte, error) {
 type EgressTo struct {
 	// ExternalResources: A list of external resources that are allowed to
 	// be accessed. Only AWS and Azure resources are supported. For Amazon
-	// S3, the supported format is s3://BUCKET_NAME. For Azure Storage, the
-	// supported format is
+	// S3, the supported formats are s3://BUCKET_NAME, s3a://BUCKET_NAME,
+	// and s3n://BUCKET_NAME. For Azure Storage, the supported format is
 	// azure://myaccount.blob.core.windows.net/CONTAINER_NAME. A request
 	// matches if it contains an external resource in this list (Example:
 	// s3://bucket/path). Currently '*' is not allowed.
@@ -1419,9 +1423,13 @@ func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 // source of the request. The request must satisfy what is defined in
 // `sources` AND identity related fields in order to match.
 type IngressFrom struct {
-	// Identities: A list of identities that are allowed access through this
-	// ingress policy, in the format of `user:{email_id}` or
-	// `serviceAccount:{email_id}`.
+	// Identities: A list of identities that are allowed access through
+	// [IngressPolicy]. Identities can be an individual user, service
+	// account, Google group, or third-party identity. The `v1` identities
+	// that have the prefix `user`, `group`, `serviceAccount`, `principal`,
+	// and `principalSet` in
+	// https://cloud.google.com/iam/docs/principal-identifiers#v1 are
+	// supported.
 	Identities []string `json:"identities,omitempty"`
 
 	// IdentityType: Specifies the type of identities that are allowed

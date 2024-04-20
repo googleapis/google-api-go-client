@@ -688,6 +688,10 @@ type Cluster struct {
 	// Labels: Labels as key value pairs
 	Labels map[string]string `json:"labels,omitempty"`
 
+	// MaintenanceUpdatePolicy: Optional. The maintenance update policy
+	// determines when to allow or deny updates.
+	MaintenanceUpdatePolicy *MaintenanceUpdatePolicy `json:"maintenanceUpdatePolicy,omitempty"`
+
 	// MigrationSource: Output only. Cluster created via DMS migration.
 	MigrationSource *MigrationSource `json:"migrationSource,omitempty"`
 
@@ -712,6 +716,10 @@ type Cluster struct {
 	// PrimaryConfig: Output only. Cross Region replication config specific
 	// to PRIMARY cluster.
 	PrimaryConfig *PrimaryConfig `json:"primaryConfig,omitempty"`
+
+	// PscConfig: Optional. The configuration for Private Service Connect
+	// (PSC) for the cluster.
+	PscConfig *PscConfig `json:"pscConfig,omitempty"`
 
 	// Reconciling: Output only. Reconciling
 	// (https://google.aip.dev/128#reconciliation). Set to true if the
@@ -1389,6 +1397,10 @@ type Instance struct {
 	// including the standby for a PRIMARY instance.
 	Nodes []*Node `json:"nodes,omitempty"`
 
+	// PscInstanceConfig: Optional. The configuration for Private Service
+	// Connect (PSC) for the instance.
+	PscInstanceConfig *PscInstanceConfig `json:"pscInstanceConfig,omitempty"`
+
 	// PublicIpAddress: Output only. The public IP addresses for the
 	// Instance. This is available ONLY when enable_public_ip is set. This
 	// is the connection endpoint for an end-user application.
@@ -1797,6 +1809,81 @@ func (s *MachineConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// MaintenanceUpdatePolicy: MaintenanceUpdatePolicy defines the policy
+// for system updates.
+type MaintenanceUpdatePolicy struct {
+	// MaintenanceWindows: Preferred windows to perform maintenance.
+	// Currently limited to 1.
+	MaintenanceWindows []*MaintenanceWindow `json:"maintenanceWindows,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaintenanceWindows")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaintenanceWindows") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenanceUpdatePolicy) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenanceUpdatePolicy
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// MaintenanceWindow: MaintenanceWindow specifies a preferred day and
+// time for maintenance.
+type MaintenanceWindow struct {
+	// Day: Preferred day of the week for maintenance, e.g. MONDAY, TUESDAY,
+	// etc.
+	//
+	// Possible values:
+	//   "DAY_OF_WEEK_UNSPECIFIED" - The day of the week is unspecified.
+	//   "MONDAY" - Monday
+	//   "TUESDAY" - Tuesday
+	//   "WEDNESDAY" - Wednesday
+	//   "THURSDAY" - Thursday
+	//   "FRIDAY" - Friday
+	//   "SATURDAY" - Saturday
+	//   "SUNDAY" - Sunday
+	Day string `json:"day,omitempty"`
+
+	// StartTime: Preferred time to start the maintenance operation on the
+	// specified day. Maintenance will start within 1 hour of this time.
+	StartTime *GoogleTypeTimeOfDay `json:"startTime,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Day") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Day") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
+	type NoMethod MaintenanceWindow
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
 // MigrationSource: Subset of the source instance configuration that is
 // available when reading the cluster resource.
 type MigrationSource struct {
@@ -2116,6 +2203,79 @@ type PromoteClusterRequest struct {
 
 func (s *PromoteClusterRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod PromoteClusterRequest
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PscConfig: PscConfig contains PSC related configuration at a cluster
+// level.
+type PscConfig struct {
+	// PscEnabled: Optional. Create an instance that allows connections from
+	// Private Service Connect endpoints to the instance.
+	PscEnabled bool `json:"pscEnabled,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "PscEnabled") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "PscEnabled") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PscConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// PscInstanceConfig: PscInstanceConfig contains PSC related
+// configuration at an instance level.
+type PscInstanceConfig struct {
+	// AllowedConsumerProjects: Optional. List of consumer projects that are
+	// allowed to create PSC endpoints to service-attachments to this
+	// instance.
+	AllowedConsumerProjects []string `json:"allowedConsumerProjects,omitempty"`
+
+	// PscDnsName: Output only. The DNS name of the instance for PSC
+	// connectivity. Name convention: ...alloydb-psc.goog
+	PscDnsName string `json:"pscDnsName,omitempty"`
+
+	// ServiceAttachmentLink: Output only. The service attachment created
+	// when Private Service Connect (PSC) is enabled for the instance. The
+	// name of the resource will be in the format of
+	// `projects//regions//serviceAttachments/`
+	ServiceAttachmentLink string `json:"serviceAttachmentLink,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g.
+	// "AllowedConsumerProjects") to unconditionally include in API
+	// requests. By default, fields with empty or default values are omitted
+	// from API requests. However, any non-pointer, non-interface field
+	// appearing in ForceSendFields will be sent to the server regardless of
+	// whether the field is empty or not. This may be used to include empty
+	// fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AllowedConsumerProjects")
+	// to include in API requests with the JSON null value. By default,
+	// fields with empty values are omitted from API requests. However, any
+	// field with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *PscInstanceConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod PscInstanceConfig
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

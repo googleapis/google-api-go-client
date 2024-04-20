@@ -459,6 +459,10 @@ type Cluster struct {
 	// creation request.
 	CreateTime string `json:"createTime,omitempty"`
 
+	// DeletionProtectionEnabled: Optional. The delete operation will fail
+	// when the value is set to true.
+	DeletionProtectionEnabled bool `json:"deletionProtectionEnabled,omitempty"`
+
 	// DiscoveryEndpoints: Output only. Endpoints created on each given
 	// network, for Redis clients to connect to the cluster. Currently only
 	// one discovery endpoint is supported.

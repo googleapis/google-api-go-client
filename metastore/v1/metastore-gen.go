@@ -6838,7 +6838,7 @@ type ProjectsLocationsServicesQueryMetadataCall struct {
 	header_              http.Header
 }
 
-// QueryMetadata: Query DPMS metadata.
+// QueryMetadata: Query Dataproc Metastore metadata.
 //
 //   - service: The relative resource name of the metastore service to
 //     query metadata, in the following
@@ -6942,7 +6942,7 @@ func (c *ProjectsLocationsServicesQueryMetadataCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Query DPMS metadata.",
+	//   "description": "Query Dataproc Metastore metadata.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:queryMetadata",
 	//   "httpMethod": "POST",
 	//   "id": "metastore.projects.locations.services.queryMetadata",

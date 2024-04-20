@@ -1744,7 +1744,7 @@ func (s *FormAction) MarshalJSON() ([]byte, error) {
 // (https://developers.google.com/workspace/extend):
 type GoogleAppsCardV1Action struct {
 	// Function: A custom function to invoke when the containing element is
-	// clicked or othrwise activated. For example usage, see Read form data
+	// clicked or otherwise activated. For example usage, see Read form data
 	// (https://developers.google.com/workspace/chat/read-form-data).
 	Function string `json:"function,omitempty"`
 

@@ -549,6 +549,21 @@ type AuthorizationInfo struct {
 	// Permission: The required IAM permission.
 	Permission string `json:"permission,omitempty"`
 
+	// PermissionType: The type of the permission that was checked. For data
+	// access audit logs this corresponds with the permission type that must
+	// be enabled in the project/folder/organization IAM policy in order for
+	// the log to be written.
+	//
+	// Possible values:
+	//   "PERMISSION_TYPE_UNSPECIFIED" - Default. Should not be used.
+	//   "ADMIN_READ" - Permissions that gate reading resource configuration
+	// or metadata.
+	//   "ADMIN_WRITE" - Permissions that gate modification of resource
+	// configuration or metadata.
+	//   "DATA_READ" - Permissions that gate reading user-provided data.
+	//   "DATA_WRITE" - Permissions that gate writing user-provided data.
+	PermissionType string `json:"permissionType,omitempty"`
+
 	// Resource: The resource being accessed, as a REST-style or cloud
 	// resource string. For example:
 	// bigquery.googleapis.com/projects/PROJECTID/datasets/DATASETID or

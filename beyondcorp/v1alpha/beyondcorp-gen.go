@@ -3472,42 +3472,6 @@ func (s *GoogleCloudBeyondcorpSecuritygatewaysV1alphaListSecurityGatewaysRespons
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudBeyondcorpSecuritygatewaysV1alphaRegionConfig: Message
-// contains the configuration for each supported region for the
-// securityGateway instance.
-type GoogleCloudBeyondcorpSecuritygatewaysV1alphaRegionConfig struct {
-	// EgressIpAddresses: Output only. External IP addresses that will be
-	// used for establishing connection to the egress endpoints.
-	EgressIpAddresses []string `json:"egressIpAddresses,omitempty"`
-
-	// Region: Required. The region where the egress connectivity is
-	// required.
-	Region string `json:"region,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EgressIpAddresses")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EgressIpAddresses") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleCloudBeyondcorpSecuritygatewaysV1alphaRegionConfig) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleCloudBeyondcorpSecuritygatewaysV1alphaRegionConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway:
 // Information about a BeyoncCorp SecurityGateway resource.
 type GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway struct {
@@ -3518,12 +3482,12 @@ type GoogleCloudBeyondcorpSecuritygatewaysV1alphaSecurityGateway struct {
 	// SecurityGateway. Cannot exceed 64 characters.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// ExternalIps: Output only. IP addresses that will be used for
+	// establishing connection to the endpoints.
+	ExternalIps []string `json:"externalIps,omitempty"`
+
 	// Name: Identifier. Name of the resource.
 	Name string `json:"name,omitempty"`
-
-	// RegionConfigs: Optional. List of regions where the egress
-	// connectivity is required.
-	RegionConfigs []*GoogleCloudBeyondcorpSecuritygatewaysV1alphaRegionConfig `json:"regionConfigs,omitempty"`
 
 	// State: Output only. The operational state of the SecurityGateway.
 	//

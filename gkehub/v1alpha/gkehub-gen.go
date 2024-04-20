@@ -7325,6 +7325,8 @@ type ServiceMeshCondition struct {
 	//   "CNI_POD_UNSCHEDULABLE" - CNI pod unschedulable error code
 	//   "UNSUPPORTED_MULTIPLE_CONTROL_PLANES" - Multiple control planes
 	// unsupported error code
+	//   "VPCSC_GA_SUPPORTED" - VPC-SC GA is supported for this control
+	// plane.
 	Code string `json:"code,omitempty"`
 
 	// Details: A short summary about the issue.
@@ -7572,8 +7574,8 @@ type ServiceMeshMembershipState struct {
 	// analyzers.
 	AnalysisMessages []*ServiceMeshAnalysisMessage `json:"analysisMessages,omitempty"`
 
-	// Conditions: Output only. List of condition reporting membership
-	// statues
+	// Conditions: Output only. List of conditions reported for this
+	// membership.
 	Conditions []*ServiceMeshCondition `json:"conditions,omitempty"`
 
 	// ConfigApiVersion: The API version (i.e. Istio CRD version) for

@@ -1001,49 +1001,6 @@ func (s *ContinuousBackupSource) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// DenyMaintenancePeriod: DenyMaintenancePeriod definition. Excepting
-// emergencies, maintenance will not be scheduled to start within this
-// deny period. The start_date must be less than the end_date.
-type DenyMaintenancePeriod struct {
-	// EndDate: Deny period end date. This can be: * A full date, with
-	// non-zero year, month and day values. * A month and day value, with a
-	// zero year for recurring. Date matching this period will have to be
-	// before the end.
-	EndDate *GoogleTypeDate `json:"endDate,omitempty"`
-
-	// StartDate: Deny period start date. This can be: * A full date, with
-	// non-zero year, month and day values. * A month and day value, with a
-	// zero year for recurring. Date matching this period will have to be
-	// the same or after the start.
-	StartDate *GoogleTypeDate `json:"startDate,omitempty"`
-
-	// Time: Time in UTC when the deny period starts on start_date and ends
-	// on end_date. This can be: * Full time. * All zeros for 00:00:00 UTC
-	Time *GoogleTypeTimeOfDay `json:"time,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndDate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndDate") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *DenyMaintenancePeriod) MarshalJSON() ([]byte, error) {
-	type NoMethod DenyMaintenancePeriod
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
 // Empty: A generic empty message that you can re-use to avoid defining
 // duplicated empty messages in your APIs. A typical example is to use
 // it as the request or the response type of an API method. For
@@ -1329,53 +1286,6 @@ type GoogleCloudLocationLocation struct {
 
 func (s *GoogleCloudLocationLocation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudLocationLocation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
-}
-
-// GoogleTypeDate: Represents a whole or partial calendar date, such as
-// a birthday. The time of day and time zone are either specified
-// elsewhere or are insignificant. The date is relative to the Gregorian
-// Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values. * A month and day, with a
-// zero year (for example, an anniversary). * A year on its own, with a
-// zero month and a zero day. * A year and month, with a zero day (for
-// example, a credit card expiration date). Related types: *
-// google.type.TimeOfDay * google.type.DateTime *
-// google.protobuf.Timestamp
-type GoogleTypeDate struct {
-	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
-	// month, or 0 to specify a year by itself or a year and month where the
-	// day isn't significant.
-	Day int64 `json:"day,omitempty"`
-
-	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
-	// without a month and day.
-	Month int64 `json:"month,omitempty"`
-
-	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
-	// date without a year.
-	Year int64 `json:"year,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Day") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
-	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Day") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
-	NullFields []string `json:"-"`
-}
-
-func (s *GoogleTypeDate) MarshalJSON() ([]byte, error) {
-	type NoMethod GoogleTypeDate
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
@@ -2045,27 +1955,22 @@ func (s *MaintenanceSchedule) MarshalJSON() ([]byte, error) {
 // MaintenanceUpdatePolicy: MaintenanceUpdatePolicy defines the policy
 // for system updates.
 type MaintenanceUpdatePolicy struct {
-	// DenyMaintenancePeriods: Periods to deny maintenance. Currently
-	// limited to 1.
-	DenyMaintenancePeriods []*DenyMaintenancePeriod `json:"denyMaintenancePeriods,omitempty"`
-
 	// MaintenanceWindows: Preferred windows to perform maintenance.
 	// Currently limited to 1.
 	MaintenanceWindows []*MaintenanceWindow `json:"maintenanceWindows,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g.
-	// "DenyMaintenancePeriods") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "MaintenanceWindows")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DenyMaintenancePeriods")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
+	// NullFields is a list of field names (e.g. "MaintenanceWindows") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
 	// server as null. It is an error if a field in this list has a
 	// non-empty value. This may be used to include null fields in Patch
 	// requests.

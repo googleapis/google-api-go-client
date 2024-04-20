@@ -1963,11 +1963,11 @@ type LocationPolicy struct {
 	// region or multiple zones in one region is supported now. For example,
 	// ["regions/us-central1"] allow VMs in any zones in region us-central1.
 	// ["zones/us-central1-a", "zones/us-central1-c"] only allow VMs in
-	// zones us-central1-a and us-central1-c. All locations end up in
+	// zones us-central1-a and us-central1-c. Mixing locations from
 	// different regions would cause errors. For example,
 	// ["regions/us-central1", "zones/us-central1-a", "zones/us-central1-b",
-	// "zones/us-west1-a"] contains 2 regions "us-central1" and "us-west1".
-	// An error is expected in this case.
+	// "zones/us-west1-a"] contains locations from two distinct regions:
+	// us-central1 and us-west1. This combination will trigger an error.
 	AllowedLocations []string `json:"allowedLocations,omitempty"`
 
 	// ForceSendFields is a list of field names (e.g. "AllowedLocations") to

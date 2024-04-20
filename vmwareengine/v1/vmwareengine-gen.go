@@ -2173,6 +2173,9 @@ type LoggingServer struct {
 	// is the default value.
 	//   "UDP" - UDP
 	//   "TCP" - TCP
+	//   "TLS" - TLS
+	//   "SSL" - SSL
+	//   "RELP" - RELP
 	Protocol string `json:"protocol,omitempty"`
 
 	// SourceType: Required. The type of component that produces logs that

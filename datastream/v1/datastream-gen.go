@@ -248,6 +248,11 @@ type ProjectsLocationsStreamsObjectsService struct {
 	s *Service
 }
 
+// AppendOnly: AppendOnly mode defines that all changes to a table will
+// be written to the destination table.
+type AppendOnly struct {
+}
+
 // AvroFileFormat: AVRO file format configuration.
 type AvroFileFormat struct {
 }
@@ -363,6 +368,9 @@ type BackfillNoneStrategy struct {
 
 // BigQueryDestinationConfig: BigQuery destination configuration
 type BigQueryDestinationConfig struct {
+	// AppendOnly: Append only mode
+	AppendOnly *AppendOnly `json:"appendOnly,omitempty"`
+
 	// DataFreshness: The guaranteed data freshness (in seconds) when
 	// querying tables created by the stream. Editing this field will only
 	// affect new tables created in the future, but existing tables will not
@@ -370,13 +378,16 @@ type BigQueryDestinationConfig struct {
 	// but may result in higher cost.
 	DataFreshness string `json:"dataFreshness,omitempty"`
 
+	// Merge: The standard mode
+	Merge *Merge `json:"merge,omitempty"`
+
 	// SingleTargetDataset: Single destination dataset.
 	SingleTargetDataset *SingleTargetDataset `json:"singleTargetDataset,omitempty"`
 
 	// SourceHierarchyDatasets: Source hierarchy datasets.
 	SourceHierarchyDatasets *SourceHierarchyDatasets `json:"sourceHierarchyDatasets,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "DataFreshness") to
+	// ForceSendFields is a list of field names (e.g. "AppendOnly") to
 	// unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
@@ -384,10 +395,10 @@ type BigQueryDestinationConfig struct {
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "DataFreshness") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
+	// NullFields is a list of field names (e.g. "AppendOnly") to include in
+	// API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
 	// null. It is an error if a field in this list has a non-empty value.
 	// This may be used to include null fields in Patch requests.
 	NullFields []string `json:"-"`
@@ -1300,6 +1311,11 @@ func (s *LookupStreamObjectRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod LookupStreamObjectRequest
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Merge: Merge mode defines that all changes to a table will be merged
+// at the destination table.
+type Merge struct {
 }
 
 // MostRecentStartPosition: CDC strategy to start replicating from the

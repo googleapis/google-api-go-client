@@ -2093,8 +2093,7 @@ type DiskImageTargetDetails struct {
 	// Description: Optional. An optional description of the image.
 	Description string `json:"description,omitempty"`
 
-	// Encryption: Optional. Immutable. The encryption to apply to the
-	// image.
+	// Encryption: Immutable. The encryption to apply to the image.
 	Encryption *Encryption `json:"encryption,omitempty"`
 
 	// FamilyName: Optional. The name of the image family to which the new

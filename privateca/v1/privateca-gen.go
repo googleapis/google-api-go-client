@@ -969,8 +969,9 @@ type CertificateConfig struct {
 
 	// SubjectKeyId: Optional. When specified this provides a custom SKI to
 	// be used in the certificate. This should only be used to maintain a
-	// SKI of an existing CA originally created outside CAS, which was not
-	// generated using method (1) described in RFC 5280 section 4.2.1.2.
+	// SKI of an existing CA originally created outside CA service, which
+	// was not generated using method (1) described in RFC 5280 section
+	// 4.2.1.2.
 	SubjectKeyId *CertificateConfigKeyId `json:"subjectKeyId,omitempty"`
 
 	// X509Config: Required. Describes how some of the technical X.509
@@ -1330,7 +1331,7 @@ type CertificateTemplate struct {
 	Labels map[string]string `json:"labels,omitempty"`
 
 	// MaximumLifetime: Optional. The maximum lifetime allowed for issued
-	// Certificates that use this template. If the issuing CaPool's
+	// Certificates that use this template. If the issuing CaPool resource's
 	// IssuancePolicy specifies a maximum_lifetime the minimum of the two
 	// durations will be the maximum lifetime for issued Certificates. Note
 	// that if the issuing CertificateAuthority expires before a
@@ -1400,7 +1401,7 @@ type DisableCertificateAuthorityRequest struct {
 	// IgnoreDependentResources: Optional. This field allows this CA to be
 	// disabled even if it's being depended on by another resource. However,
 	// doing so may result in unintended and unrecoverable effects on any
-	// dependent resource(s) since the CA will no longer be able to issue
+	// dependent resources since the CA will no longer be able to issue
 	// certificates.
 	IgnoreDependentResources bool `json:"ignoreDependentResources,omitempty"`
 
@@ -1693,8 +1694,8 @@ func (s *FetchCaCertsRequest) MarshalJSON() ([]byte, error) {
 // FetchCaCertsResponse: Response message for
 // CertificateAuthorityService.FetchCaCerts.
 type FetchCaCertsResponse struct {
-	// CaCerts: The PEM encoded CA certificate chains of all Certificate
-	// Authorities in this CaPool in the ENABLED, DISABLED, or STAGED
+	// CaCerts: The PEM encoded CA certificate chains of all certificate
+	// authorities in this CaPool in the ENABLED, DISABLED, or STAGED
 	// states.
 	CaCerts []*CertChain `json:"caCerts,omitempty"`
 
@@ -1824,8 +1825,8 @@ type IssuancePolicy struct {
 
 	// MaximumLifetime: Optional. The maximum lifetime allowed for issued
 	// Certificates. Note that if the issuing CertificateAuthority expires
-	// before a Certificate's requested maximum_lifetime, the effective
-	// lifetime will be explicitly truncated to match it.
+	// before a Certificate resource's requested maximum_lifetime, the
+	// effective lifetime will be explicitly truncated to match it.
 	MaximumLifetime string `json:"maximumLifetime,omitempty"`
 
 	// PassthroughExtensions: Optional. Describes the set of X.509
@@ -2770,8 +2771,8 @@ func (s *PublicKey) MarshalJSON() ([]byte, error) {
 // certificates issued by any CertificateAuthority in the CaPool.
 type PublishingOptions struct {
 	// EncodingFormat: Optional. Specifies the encoding format of each
-	// CertificateAuthority's CA certificate and CRLs. If this is omitted,
-	// CA certificates and CRLs will be published in PEM.
+	// CertificateAuthority resource's CA certificate and CRLs. If this is
+	// omitted, CA certificates and CRLs will be published in PEM.
 	//
 	// Possible values:
 	//   "ENCODING_FORMAT_UNSPECIFIED" - Not specified. By default, PEM
@@ -4163,7 +4164,7 @@ func (r *ProjectsLocationsCaPoolsService) Delete(name string) *ProjectsLocations
 // "ignoreDependentResources": This field allows this pool to be deleted
 // even if it's being depended on by another resource. However, doing so
 // may result in unintended and unrecoverable effects on any dependent
-// resource(s) since the pool will no longer be able to issue
+// resources since the pool will no longer be able to issue
 // certificates.
 func (c *ProjectsLocationsCaPoolsDeleteCall) IgnoreDependentResources(ignoreDependentResources bool) *ProjectsLocationsCaPoolsDeleteCall {
 	c.urlParams_.Set("ignoreDependentResources", fmt.Sprint(ignoreDependentResources))
@@ -4282,7 +4283,7 @@ func (c *ProjectsLocationsCaPoolsDeleteCall) Do(opts ...googleapi.CallOption) (*
 	//   ],
 	//   "parameters": {
 	//     "ignoreDependentResources": {
-	//       "description": "Optional. This field allows this pool to be deleted even if it's being depended on by another resource. However, doing so may result in unintended and unrecoverable effects on any dependent resource(s) since the pool will no longer be able to issue certificates.",
+	//       "description": "Optional. This field allows this pool to be deleted even if it's being depended on by another resource. However, doing so may result in unintended and unrecoverable effects on any dependent resources since the pool will no longer be able to issue certificates.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },
@@ -4322,8 +4323,8 @@ type ProjectsLocationsCaPoolsFetchCaCertsCall struct {
 }
 
 // FetchCaCerts: FetchCaCerts returns the current trust anchor for the
-// CaPool. This will include CA certificate chains for all Certificate
-// Authorities in the ENABLED, DISABLED, or STAGED states.
+// CaPool. This will include CA certificate chains for all certificate
+// authorities in the ENABLED, DISABLED, or STAGED states.
 //
 //   - caPool: The resource name for the CaPool in the format
 //     `projects/*/locations/*/caPools/*`.
@@ -4425,7 +4426,7 @@ func (c *ProjectsLocationsCaPoolsFetchCaCertsCall) Do(opts ...googleapi.CallOpti
 	}
 	return ret, nil
 	// {
-	//   "description": "FetchCaCerts returns the current trust anchor for the CaPool. This will include CA certificate chains for all Certificate Authorities in the ENABLED, DISABLED, or STAGED states.",
+	//   "description": "FetchCaCerts returns the current trust anchor for the CaPool. This will include CA certificate chains for all certificate authorities in the ENABLED, DISABLED, or STAGED states.",
 	//   "flatPath": "v1/projects/{projectsId}/locations/{locationsId}/caPools/{caPoolsId}:fetchCaCerts",
 	//   "httpMethod": "POST",
 	//   "id": "privateca.projects.locations.caPools.fetchCaCerts",
@@ -5828,11 +5829,10 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall) IgnoreActiveC
 }
 
 // IgnoreDependentResources sets the optional parameter
-// "ignoreDependentResources": This field allows this ca to be deleted
+// "ignoreDependentResources": This field allows this CA to be deleted
 // even if it's being depended on by another resource. However, doing so
 // may result in unintended and unrecoverable effects on any dependent
-// resource(s) since the CA will no longer be able to issue
-// certificates.
+// resources since the CA will no longer be able to issue certificates.
 func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall) IgnoreDependentResources(ignoreDependentResources bool) *ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall {
 	c.urlParams_.Set("ignoreDependentResources", fmt.Sprint(ignoreDependentResources))
 	return c
@@ -5965,7 +5965,7 @@ func (c *ProjectsLocationsCaPoolsCertificateAuthoritiesDeleteCall) Do(opts ...go
 	//       "type": "boolean"
 	//     },
 	//     "ignoreDependentResources": {
-	//       "description": "Optional. This field allows this ca to be deleted even if it's being depended on by another resource. However, doing so may result in unintended and unrecoverable effects on any dependent resource(s) since the CA will no longer be able to issue certificates.",
+	//       "description": "Optional. This field allows this CA to be deleted even if it's being depended on by another resource. However, doing so may result in unintended and unrecoverable effects on any dependent resources since the CA will no longer be able to issue certificates.",
 	//       "location": "query",
 	//       "type": "boolean"
 	//     },

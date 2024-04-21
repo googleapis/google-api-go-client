@@ -1878,8 +1878,8 @@ func (s *DistributionCut) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
-// Documentation: A content string and a MIME type that describes the
-// content string's format.
+// Documentation: Documentation that is included in the notifications
+// and incidents pertaining to this policy.
 type Documentation struct {
 	// Content: The body of the documentation, interpreted according to
 	// mime_type. The content may not exceed 8,192 Unicode characters and
@@ -2659,7 +2659,8 @@ type HttpCheck struct {
 	AcceptedResponseStatusCodes []*ResponseStatusCode `json:"acceptedResponseStatusCodes,omitempty"`
 
 	// AuthInfo: The authentication information. Optional when creating an
-	// HTTP check; defaults to empty.
+	// HTTP check; defaults to empty. Do not set both auth_method and
+	// auth_info.
 	AuthInfo *BasicAuthentication `json:"authInfo,omitempty"`
 
 	// Body: The request body associated with the HTTP POST request. If
@@ -2740,6 +2741,11 @@ type HttpCheck struct {
 	//   "GET" - GET request.
 	//   "POST" - POST request.
 	RequestMethod string `json:"requestMethod,omitempty"`
+
+	// ServiceAgentAuthentication: If specified, Uptime will generate and
+	// attach an OIDC JWT token for the Monitoring service agent service
+	// account as an Authorization header in the HTTP request when probing.
+	ServiceAgentAuthentication *ServiceAgentAuthentication `json:"serviceAgentAuthentication,omitempty"`
 
 	// UseSsl: If true, use HTTPS instead of HTTP to run the check.
 	UseSsl bool `json:"useSsl,omitempty"`
@@ -5560,6 +5566,43 @@ type MService struct {
 
 func (s *MService) MarshalJSON() ([]byte, error) {
 	type NoMethod MService
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// ServiceAgentAuthentication: Contains information needed for
+// generating an OpenID Connect token
+// (https://developers.google.com/identity/protocols/OpenIDConnect). The
+// OIDC token will be generated for the Monitoring service agent service
+// account.
+type ServiceAgentAuthentication struct {
+	// Type: Type of authentication.
+	//
+	// Possible values:
+	//   "SERVICE_AGENT_AUTHENTICATION_TYPE_UNSPECIFIED" - Default value,
+	// will result in OIDC Authentication.
+	//   "OIDC_TOKEN" - OIDC Authentication
+	Type string `json:"type,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "Type") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "Type") to include in API
+	// requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. However, any field with an
+	// empty value appearing in NullFields will be sent to the server as
+	// null. It is an error if a field in this list has a non-empty value.
+	// This may be used to include null fields in Patch requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *ServiceAgentAuthentication) MarshalJSON() ([]byte, error) {
+	type NoMethod ServiceAgentAuthentication
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }

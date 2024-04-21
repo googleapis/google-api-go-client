@@ -258,6 +258,9 @@ type ContactCenter struct {
 	// DisplayName: Required. A user friendly name for the ContactCenter.
 	DisplayName string `json:"displayName,omitempty"`
 
+	// Early: Optional. Early release channel.
+	Early *Early `json:"early,omitempty"`
+
 	// InstanceConfig: The configuration of this instance, it is currently
 	// immutable once created.
 	InstanceConfig *InstanceConfig `json:"instanceConfig,omitempty"`
@@ -271,6 +274,9 @@ type ContactCenter struct {
 
 	// Name: name of resource
 	Name string `json:"name,omitempty"`
+
+	// Normal: Optional. Normal release channel.
+	Normal *Normal `json:"normal,omitempty"`
 
 	// PrivateComponents: Output only. A list of UJET components that should
 	// be privately accessed. This field is set by reading settings from the
@@ -373,6 +379,11 @@ func (s *ContactCenterQuota) MarshalJSON() ([]byte, error) {
 	type NoMethod ContactCenterQuota
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Early: First Channel to receive the updates. Meant to dev/test
+// instances
+type Early struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
@@ -640,6 +651,11 @@ func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
 	raw := NoMethod(*s)
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+// Normal: Instances in this Channel will receive updates after all
+// instances in `Early` were updated + 2 days.
+type Normal struct {
 }
 
 // Operation: This resource represents a long-running operation that is

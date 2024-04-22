@@ -583,6 +583,15 @@ type EntityType struct {
 	// Name: The name of the entity type.
 	Name string `json:"name,omitempty"`
 
+	// Possible values:
+	//   "OPERATION_UNSPECIFIED" - Operation unspecified.
+	//   "LIST" - This operation means entity type supports LIST method.
+	//   "GET" - This operation means entity type supports GET method.
+	//   "CREATE" - This operation means entity type supports CREATE method.
+	//   "UPDATE" - This operation means entity type supports UPDATE method.
+	//   "DELETE" - This operation means entity type supports DELETE method.
+	Operations []string `json:"operations,omitempty"`
+
 	// ServerResponse contains the HTTP response code and headers from the
 	// server.
 	googleapi.ServerResponse `json:"-"`

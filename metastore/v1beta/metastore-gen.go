@@ -457,6 +457,58 @@ func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// AutoscalingConfig: Represents the autoscaling configuration of a
+// metastore service.
+type AutoscalingConfig struct {
+	// AutoscalingEnabled: Optional. Whether or not autoscaling is enabled
+	// for this service.
+	AutoscalingEnabled bool `json:"autoscalingEnabled,omitempty"`
+
+	// AutoscalingFactor: Output only. The scaling factor of a service with
+	// autoscaling enabled.
+	AutoscalingFactor float64 `json:"autoscalingFactor,omitempty"`
+
+	// LimitConfig: Optional. The LimitConfig of the service.
+	LimitConfig *LimitConfig `json:"limitConfig,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "AutoscalingEnabled")
+	// to unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "AutoscalingEnabled") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *AutoscalingConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod AutoscalingConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *AutoscalingConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod AutoscalingConfig
+	var s1 struct {
+		AutoscalingFactor gensupport.JSONFloat64 `json:"autoscalingFactor"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.AutoscalingFactor = float64(s1.AutoscalingFactor)
+	return nil
+}
+
 // AuxiliaryVersionConfig: Configuration information for the auxiliary
 // service versions.
 type AuxiliaryVersionConfig struct {
@@ -895,8 +947,8 @@ func (s *CloudSQLConnectionConfig) MarshalJSON() ([]byte, error) {
 }
 
 // CloudSQLMigrationConfig: Configuration information for migrating from
-// self-managed hive metastore on GCP using Cloud SQL as the backend
-// database to DPMS.
+// self-managed hive metastore on Google Cloud using Cloud SQL as the
+// backend database to Dataproc Metastore.
 type CloudSQLMigrationConfig struct {
 	// CdcConfig: Required. Configuration information to start the Change
 	// Data Capture (CDC) streams from customer database to backend database
@@ -1617,6 +1669,57 @@ func (s *LatestBackup) MarshalJSON() ([]byte, error) {
 	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
 }
 
+// LimitConfig: Represents the autoscaling limit configuration of a
+// metastore service.
+type LimitConfig struct {
+	// MaxScalingFactor: Optional. The highest scaling factor that the
+	// service should be autoscaled to.
+	MaxScalingFactor float64 `json:"maxScalingFactor,omitempty"`
+
+	// MinScalingFactor: Optional. The lowest scaling factor that the
+	// service should be autoscaled to.
+	MinScalingFactor float64 `json:"minScalingFactor,omitempty"`
+
+	// ForceSendFields is a list of field names (e.g. "MaxScalingFactor") to
+	// unconditionally include in API requests. By default, fields with
+	// empty or default values are omitted from API requests. However, any
+	// non-pointer, non-interface field appearing in ForceSendFields will be
+	// sent to the server regardless of whether the field is empty or not.
+	// This may be used to include empty fields in Patch requests.
+	ForceSendFields []string `json:"-"`
+
+	// NullFields is a list of field names (e.g. "MaxScalingFactor") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
+	NullFields []string `json:"-"`
+}
+
+func (s *LimitConfig) MarshalJSON() ([]byte, error) {
+	type NoMethod LimitConfig
+	raw := NoMethod(*s)
+	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+}
+
+func (s *LimitConfig) UnmarshalJSON(data []byte) error {
+	type NoMethod LimitConfig
+	var s1 struct {
+		MaxScalingFactor gensupport.JSONFloat64 `json:"maxScalingFactor"`
+		MinScalingFactor gensupport.JSONFloat64 `json:"minScalingFactor"`
+		*NoMethod
+	}
+	s1.NoMethod = (*NoMethod)(s)
+	if err := json.Unmarshal(data, &s1); err != nil {
+		return err
+	}
+	s.MaxScalingFactor = float64(s1.MaxScalingFactor)
+	s.MinScalingFactor = float64(s1.MinScalingFactor)
+	return nil
+}
+
 // ListBackupsResponse: Response message for
 // DataprocMetastore.ListBackups.
 type ListBackupsResponse struct {
@@ -2211,8 +2314,8 @@ func (s *MetadataManagementActivity) MarshalJSON() ([]byte, error) {
 // MigrationExecution: The details of a migration execution resource.
 type MigrationExecution struct {
 	// CloudSqlMigrationConfig: Configuration information specific to
-	// migrating from self-managed hive metastore on GCP using Cloud SQL as
-	// the backend database to DPMS.
+	// migrating from self-managed hive metastore on Google Cloud using
+	// Cloud SQL as the backend database to Dataproc Metastore.
 	CloudSqlMigrationConfig *CloudSQLMigrationConfig `json:"cloudSqlMigrationConfig,omitempty"`
 
 	// CreateTime: Output only. The time when the migration execution was
@@ -2241,7 +2344,8 @@ type MigrationExecution struct {
 	//   "CUTOVER" - Cutover phase refers to the migration phase when
 	// Dataproc Metastore switches to using its own backend database.
 	// Migration enters this phase when customer is done migrating all their
-	// clusters/workloads to DPMS and triggers CompleteMigration.
+	// clusters/workloads to Dataproc Metastore and triggers
+	// CompleteMigration.
 	Phase string `json:"phase,omitempty"`
 
 	// State: Output only. The current state of the migration execution.
@@ -2874,6 +2978,9 @@ func (s *RestoreServiceRequest) MarshalJSON() ([]byte, error) {
 // ScalingConfig: Represents the scaling configuration of a metastore
 // service.
 type ScalingConfig struct {
+	// AutoscalingConfig: Optional. The autoscaling configuration.
+	AutoscalingConfig *AutoscalingConfig `json:"autoscalingConfig,omitempty"`
+
 	// InstanceSize: An enum of readable instance sizes, with each instance
 	// size mapping to a float value (e.g. InstanceSize.EXTRA_SMALL =
 	// scaling_factor(0.1))
@@ -2893,20 +3000,21 @@ type ScalingConfig struct {
 	// 1.0, and increments of 1.0 for values greater than 1.0.
 	ScalingFactor float64 `json:"scalingFactor,omitempty"`
 
-	// ForceSendFields is a list of field names (e.g. "InstanceSize") to
-	// unconditionally include in API requests. By default, fields with
+	// ForceSendFields is a list of field names (e.g. "AutoscalingConfig")
+	// to unconditionally include in API requests. By default, fields with
 	// empty or default values are omitted from API requests. However, any
 	// non-pointer, non-interface field appearing in ForceSendFields will be
 	// sent to the server regardless of whether the field is empty or not.
 	// This may be used to include empty fields in Patch requests.
 	ForceSendFields []string `json:"-"`
 
-	// NullFields is a list of field names (e.g. "InstanceSize") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AutoscalingConfig") to
+	// include in API requests with the JSON null value. By default, fields
+	// with empty values are omitted from API requests. However, any field
+	// with an empty value appearing in NullFields will be sent to the
+	// server as null. It is an error if a field in this list has a
+	// non-empty value. This may be used to include null fields in Patch
+	// requests.
 	NullFields []string `json:"-"`
 }
 
@@ -3127,6 +3235,8 @@ type Service struct {
 	// cannot be used.
 	//   "ERROR" - The metastore service has encountered an error and cannot
 	// be used. The metastore service should be deleted.
+	//   "MIGRATING" - The metastore service is processing a managed
+	// migration.
 	State string `json:"state,omitempty"`
 
 	// StateMessage: Output only. Additional information about the current
@@ -7720,7 +7830,7 @@ type ProjectsLocationsServicesQueryMetadataCall struct {
 	header_              http.Header
 }
 
-// QueryMetadata: Query DPMS metadata.
+// QueryMetadata: Query Dataproc Metastore metadata.
 //
 //   - service: The relative resource name of the metastore service to
 //     query metadata, in the following
@@ -7824,7 +7934,7 @@ func (c *ProjectsLocationsServicesQueryMetadataCall) Do(opts ...googleapi.CallOp
 	}
 	return ret, nil
 	// {
-	//   "description": "Query DPMS metadata.",
+	//   "description": "Query Dataproc Metastore metadata.",
 	//   "flatPath": "v1beta/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:queryMetadata",
 	//   "httpMethod": "POST",
 	//   "id": "metastore.projects.locations.services.queryMetadata",

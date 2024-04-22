@@ -1,5 +1,19 @@
 # Changes
 
+## [0.176.0](https://github.com/googleapis/google-api-go-client/compare/v0.175.0...v0.176.0) (2024-04-22)
+
+
+### Features
+
+* **all:** Auto-regenerate discovery clients ([#2537](https://github.com/googleapis/google-api-go-client/issues/2537)) ([773fe01](https://github.com/googleapis/google-api-go-client/commit/773fe012944f639f6aabb2b2b523b043f8d2f519))
+* **all:** Auto-regenerate discovery clients ([#2538](https://github.com/googleapis/google-api-go-client/issues/2538)) ([30d8c87](https://github.com/googleapis/google-api-go-client/commit/30d8c8795c0a43b8e227c03b2a8bb5f7bfd0da74))
+* **all:** Auto-regenerate discovery clients ([#2540](https://github.com/googleapis/google-api-go-client/issues/2540)) ([6825bb8](https://github.com/googleapis/google-api-go-client/commit/6825bb8fc9b9cc4ab189b6f00406f797cde1cccc))
+
+
+### Bug Fixes
+
+* Default defaultEndpointTemplate ([#2535](https://github.com/googleapis/google-api-go-client/issues/2535)) ([5a78abe](https://github.com/googleapis/google-api-go-client/commit/5a78abe30a64cceaddfe9eb6f1c6a6c59be7cb1c))
+
 ## [0.175.0](https://github.com/googleapis/google-api-go-client/compare/v0.174.0...v0.175.0) (2024-04-19)
 
 

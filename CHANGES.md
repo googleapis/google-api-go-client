@@ -1,5 +1,12 @@
 # Changes
 
+## [0.176.1](https://github.com/googleapis/google-api-go-client/compare/v0.176.0...v0.176.1) (2024-04-23)
+
+
+### Bug Fixes
+
+* **transport/http:** Pass through base transport ([#2541](https://github.com/googleapis/google-api-go-client/issues/2541)) ([8d0b2b5](https://github.com/googleapis/google-api-go-client/commit/8d0b2b5bc50e98e2865818bee89911d3348b43dc))
+
 ## [0.176.0](https://github.com/googleapis/google-api-go-client/compare/v0.175.0...v0.176.0) (2024-04-22)
 
 

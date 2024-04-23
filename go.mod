@@ -3,8 +3,8 @@ module google.golang.org/api
 go 1.19
 
 require (
-	cloud.google.com/go/auth v0.2.2
-	cloud.google.com/go/auth/oauth2adapt v0.2.1
+	cloud.google.com/go/auth v0.3.0
+	cloud.google.com/go/auth/oauth2adapt v0.2.2
 	cloud.google.com/go/compute/metadata v0.3.0
 	github.com/google/go-cmp v0.6.0
 	github.com/google/s2a-go v0.1.7
@@ -16,7 +16,7 @@ require (
 	go.opentelemetry.io/contrib/instrumentation/net/http/otelhttp v0.49.0
 	golang.org/x/net v0.24.0
 	golang.org/x/oauth2 v0.19.0
-	golang.org/x/sync v0.6.0
+	golang.org/x/sync v0.7.0
 	golang.org/x/time v0.5.0
 	google.golang.org/genproto/googleapis/bytestream v0.0.0-20240325203815-454cdb8f5daa
 	google.golang.org/genproto/googleapis/rpc v0.0.0-20240415180920-8c6c420018be

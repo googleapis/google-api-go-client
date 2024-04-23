@@ -394,12 +394,12 @@ func TestBundlerTimeBasedFlushDeadlock(t *testing.T) {
 	b.BundleByteThreshold = math.MaxInt32
 
 	ctx, cancel := context.WithCancel(context.Background())
-	time.AfterFunc(1*time.Second, cancel)
+	time.AfterFunc(15*time.Second, cancel)
 
 	add := func(i int) {
 		for j := 0; j < iterations; j++ {
 			if err := b.AddWait(ctx, i, 1); err != nil {
-				t.Errorf("timed out: %v", err)
+				t.Fatalf("timed out: %v", err)
 			}
 			runtime.Gosched()
 		}

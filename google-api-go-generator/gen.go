@@ -70,6 +70,7 @@ var (
 // skipAPIGeneration is a set of APIs to not generate when generating all clients.
 var skipAPIGeneration = map[string]bool{
 	"integrations:v1alpha": true,
+	"integrations:v1":      true,
 	"sql:v1beta4":          true,
 	"datalineage:v1":       true,
 }
@@ -1418,10 +1419,7 @@ func (s *Schema) writeSchemaStruct(api *API) {
 	}
 
 	firstFieldName := "" // used to store a struct field name for use in documentation.
-	for i, p := range s.properties() {
-		if i > 0 {
-			s.api.p("\n")
-		}
+	for _, p := range s.properties() {
 		pname := np.Get(p.GoName())
 		if pname[0] == '@' {
 			// HACK(cbro): ignore JSON-LD special fields until we can figure out
@@ -1473,25 +1471,20 @@ func (s *Schema) writeSchemaStruct(api *API) {
 
 	commentFmtStr := "%s is a list of field names (e.g. %q) to " +
 		"unconditionally include in API requests. By default, fields " +
-		"with empty or default values are omitted from API requests. However, " +
-		"any non-pointer, non-interface field appearing in %s will " +
-		"be sent to the server regardless of whether the field is " +
-		"empty or not. This may be used to include empty fields in " +
-		"Patch requests."
-	comment := fmt.Sprintf(commentFmtStr, forceSendName, firstFieldName, forceSendName)
-	s.api.p("\n")
+		"with empty or default values are omitted from API requests. See " +
+		"https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for " +
+		"more details."
+	comment := fmt.Sprintf(commentFmtStr, forceSendName, firstFieldName)
 	s.api.p("%s", asComment("\t", comment))
 
 	s.api.pn("\t%s []string `json:\"-\"`", forceSendName)
 
 	commentFmtStr = "%s is a list of field names (e.g. %q) to " +
 		"include in API requests with the JSON null value. " +
-		"By default, fields with empty values are omitted from API requests. However, " +
-		"any field with an empty value appearing in %s will be sent to the server as null. " +
-		"It is an error if a field in this list has a non-empty value. This may be used to " +
-		"include null fields in Patch requests."
-	comment = fmt.Sprintf(commentFmtStr, nullFieldsName, firstFieldName, nullFieldsName)
-	s.api.p("\n")
+		"By default, fields with empty values are omitted from API requests. " +
+		"See https://pkg.go.dev/google.golang.org/api#hdr-NullFields for " +
+		"more details."
+	comment = fmt.Sprintf(commentFmtStr, nullFieldsName, firstFieldName)
 	s.api.p("%s", asComment("\t", comment))
 
 	s.api.pn("\t%s []string `json:\"-\"`", nullFieldsName)
@@ -1509,8 +1502,7 @@ func (s *Schema) writeSchemaMarshal(forceSendFieldName, nullFieldsName string) {
 	s.api.pn("func (s *%s) MarshalJSON() ([]byte, error) {", s.GoName())
 	s.api.pn("\ttype NoMethod %s", s.GoName())
 	// pass schema as methodless type to prevent subsequent calls to MarshalJSON from recursing indefinitely.
-	s.api.pn("\traw := NoMethod(*s)")
-	s.api.pn("\treturn gensupport.MarshalJSON(raw, s.%s, s.%s)", forceSendFieldName, nullFieldsName)
+	s.api.pn("\treturn gensupport.MarshalJSON(NoMethod(*s), s.%s, s.%s)", forceSendFieldName, nullFieldsName)
 	s.api.pn("}")
 }
 
@@ -1862,8 +1854,6 @@ func (meth *Method) generateCode() {
 	a := meth.api
 	p, pn := a.p, a.pn
 
-	pn("\n// method id %q:", meth.Id())
-
 	retType := responseType(a, meth.m)
 	if meth.IsRawResponse() {
 		retType = "*http.Response"
@@ -2076,9 +2066,9 @@ func (meth *Method) generateCode() {
 		pn("}")
 	}
 
-	comment := "Fields allows partial responses to be retrieved. " +
-		"See https://developers.google.com/gdata/docs/2.0/basics#PartialResponse " +
-		"for more information."
+	comment := "Fields allows partial responses to be retrieved. See " +
+		"https://developers.google.com/gdata/docs/2.0/basics#PartialResponse " +
+		"for more details."
 	p("\n%s", asComment("", comment))
 	pn("func (c *%s) Fields(s ...googleapi.Field) *%s {", callName, callName)
 	pn(`c.urlParams_.Set("fields", googleapi.CombineFields(s))`)
@@ -2087,11 +2077,9 @@ func (meth *Method) generateCode() {
 	if httpMethod == "GET" {
 		// Note that non-GET responses are excluded from supporting If-None-Match.
 		// See https://github.com/google/google-api-go-client/issues/107 for more info.
-		comment := "IfNoneMatch sets the optional parameter which makes the operation fail if " +
+		comment := "IfNoneMatch sets an optional parameter which makes the operation fail if " +
 			"the object's ETag matches the given value. This is useful for getting updates " +
-			"only after the object has changed since the last request. " +
-			"Use googleapi.IsNotModified to check whether the response error from Do " +
-			"is the result of In-None-Match."
+			"only after the object has changed since the last request."
 		p("\n%s", asComment("", comment))
 		pn("func (c *%s) IfNoneMatch(entityTag string) *%s {", callName, callName)
 		pn(" c.ifNoneMatch_ = entityTag")
@@ -2103,8 +2091,7 @@ func (meth *Method) generateCode() {
 	if meth.supportsMediaDownload() {
 		doMethod = "Do and Download methods"
 	}
-	commentFmtStr := "Context sets the context to be used in this call's %s. " +
-		"Any pending HTTP request will be aborted if the provided context is canceled."
+	commentFmtStr := "Context sets the context to be used in this call's %s."
 	comment = fmt.Sprintf(commentFmtStr, doMethod)
 	p("\n%s", asComment("", comment))
 	if meth.supportsMediaUpload() {
@@ -2117,8 +2104,8 @@ func (meth *Method) generateCode() {
 	pn("return c")
 	pn("}")
 
-	comment = "Header returns an http.Header that can be modified by the caller to add " +
-		"HTTP headers to the request."
+	comment = "Header returns a http.Header that can be modified by the " +
+		"caller to add headers to the request."
 	p("\n%s", asComment("", comment))
 	pn("func (c *%s) Header() http.Header {", callName)
 	pn(" if c.header_ == nil {")
@@ -2128,12 +2115,11 @@ func (meth *Method) generateCode() {
 	pn("}")
 
 	pn("\nfunc (c *%s) doRequest(alt string) (*http.Response, error) {", callName)
-	pn(`reqHeaders := make(http.Header)`)
-	pn(`reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)`)
-	pn("for k, v := range c.header_ {")
-	pn(" reqHeaders[k] = v")
-	pn("}")
-	pn(`reqHeaders.Set("User-Agent",c.s.userAgent())`)
+	var contentType = `""`
+	if !meth.IsRawRequest() && args.bodyArg() != nil && httpMethod != "GET" {
+		contentType = `"application/json"`
+	}
+	pn(`reqHeaders := gensupport.SetHeaders(c.s.userAgent(), %s, c.header_ )`, contentType)
 	if httpMethod == "GET" {
 		pn(`if c.ifNoneMatch_ != "" {`)
 		pn(` reqHeaders.Set("If-None-Match",  c.ifNoneMatch_)`)
@@ -2156,8 +2142,6 @@ func (meth *Method) generateCode() {
 				pn("body, err := googleapi.%s.JSONReader(c.%s)", style, ba.goname)
 				pn("if err != nil { return nil, err }")
 			}
-
-			pn(`reqHeaders.Set("Content-Type", "application/json")`)
 		}
 		pn(`c.urlParams_.Set("alt", alt)`)
 		pn(`c.urlParams_.Set("prettyPrint", "false")`)
@@ -2228,13 +2212,12 @@ func (meth *Method) generateCode() {
 	mapRetType := strings.HasPrefix(retTypeComma, "map[")
 	pn("\n// Do executes the %q call.", meth.m.ID)
 	if retTypeComma != "" && !mapRetType && !meth.IsRawResponse() {
-		commentFmtStr := "Exactly one of %v or error will be non-nil. " +
-			"Any non-2xx status code is an error. " +
+		commentFmtStr := "Any non-2xx status code is an error. " +
 			"Response headers are in either %v.ServerResponse.Header " +
 			"or (if a response was returned at all) in error.(*googleapi.Error).Header. " +
 			"Use googleapi.IsNotModified to check whether the returned error was because " +
 			"http.StatusNotModified was returned."
-		comment := fmt.Sprintf(commentFmtStr, retType, retType)
+		comment := fmt.Sprintf(commentFmtStr, retType)
 		p("%s", asComment("", comment))
 	}
 	pn("func (c *%s) Do(opts ...googleapi.CallOption) (%serror) {", callName, retTypeComma)
@@ -2312,12 +2295,6 @@ func (meth *Method) generateCode() {
 			pn("return ret, nil")
 		}
 	}
-
-	bs, err := json.MarshalIndent(meth.m.JSONMap, "\t// ", "  ")
-	if err != nil {
-		panic(err)
-	}
-	pn("// %s\n", string(bs))
 	pn("}")
 
 	if ptg, rname, ok := meth.supportsPaging(); ok {
@@ -2328,7 +2305,8 @@ func (meth *Method) generateCode() {
 		pn("// The provided context supersedes any context provided to the Context method.")
 		pn("func (c *%s) Pages(ctx context.Context, f func(%s) error) error {", callName, retType)
 		pn(" c.ctx_ = ctx")
-		pn(` defer %s  // reset paging to original point`, ptg.genDeferBody())
+		// reset paging to original point
+		pn(` defer %s`, ptg.genDeferBody())
 		pn(" for {")
 		pn("  x, err := c.Do()")
 		pn("  if err != nil { return err }")
@@ -2600,7 +2578,7 @@ func asComment(pfx, c string) string {
 
 func asFuncParmeterComment(pfx, c string, addPadding bool) string {
 	var buf bytes.Buffer
-	var maxLen = 70
+	var maxLen = 77
 	var padding string
 	r := strings.NewReplacer(
 		"\n", "\n"+pfx+"// ",
@@ -2612,7 +2590,7 @@ func asFuncParmeterComment(pfx, c string, addPadding bool) string {
 		// Adjust padding for the second line if needed.
 		if addPadding && lineNum == 1 {
 			padding = "  "
-			maxLen = 68
+			maxLen = 75
 		}
 		line := c
 		if len(line) < maxLen {

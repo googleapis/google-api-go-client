@@ -152,92 +152,79 @@ type AccountsService struct {
 	s *Service
 }
 
-// NotificationSetting: A Google Pub/Sub topic where notifications can
-// be published when a location is updated or has a new review. There
-// will be only one notification setting resource per-account.
+// NotificationSetting: A Google Pub/Sub topic where notifications can be
+// published when a location is updated or has a new review. There will be only
+// one notification setting resource per-account.
 type NotificationSetting struct {
-	// Name: Required. The resource name this setting is for. This is of the
-	// form `accounts/{account_id}/notificationSetting`.
+	// Name: Required. The resource name this setting is for. This is of the form
+	// `accounts/{account_id}/notificationSetting`.
 	Name string `json:"name,omitempty"`
-
-	// NotificationTypes: The types of notifications that will be sent to
-	// the Pub/Sub topic. To stop receiving notifications entirely, use
+	// NotificationTypes: The types of notifications that will be sent to the
+	// Pub/Sub topic. To stop receiving notifications entirely, use
 	// NotificationSettings.UpdateNotificationSetting with an empty
 	// notification_types or set the pubsub_topic to an empty string.
 	//
 	// Possible values:
-	//   "NOTIFICATION_TYPE_UNSPECIFIED" - No notification type. Will not
-	// match any notifications.
+	//   "NOTIFICATION_TYPE_UNSPECIFIED" - No notification type. Will not match any
+	// notifications.
 	//   "GOOGLE_UPDATE" - The location has Google updates for review. The
-	// location_name field on the notification will provide the resource
-	// name of the location with Google updates.
+	// location_name field on the notification will provide the resource name of
+	// the location with Google updates.
 	//   "NEW_REVIEW" - A new review has been added to the location. The
-	// review_name field on the notification will provide the resource name
-	// of the review that was added, and location_name will have the
-	// location's resource name.
+	// review_name field on the notification will provide the resource name of the
+	// review that was added, and location_name will have the location's resource
+	// name.
 	//   "UPDATED_REVIEW" - A review on the location has been updated. The
-	// review_name field on the notification will provide the resource name
-	// of the review that was added, and location_name will have the
-	// location's resource name.
-	//   "NEW_CUSTOMER_MEDIA" - A new media item has been added to the
-	// location by a Google Maps user. The notification will provide the
-	// resource name of the new media item.
-	//   "NEW_QUESTION" - A new question is added to the location. The
-	// notification will provide the resource name of question.
+	// review_name field on the notification will provide the resource name of the
+	// review that was added, and location_name will have the location's resource
+	// name.
+	//   "NEW_CUSTOMER_MEDIA" - A new media item has been added to the location by
+	// a Google Maps user. The notification will provide the resource name of the
+	// new media item.
+	//   "NEW_QUESTION" - A new question is added to the location. The notification
+	// will provide the resource name of question.
 	//   "UPDATED_QUESTION" - A question of the location is updated. The
 	// notification will provide the resource name of question.
-	//   "NEW_ANSWER" - A new answer is added to the location. The
-	// notification will provide the resource name of question and answer.
-	//   "UPDATED_ANSWER" - An answer of the location is updated. The
-	// notification will provide the resource name of question and answer.
-	//   "DUPLICATE_LOCATION" - Indicates whether there is a change in
-	// location metadata's duplicate location field.
-	//   "LOSS_OF_VOICE_OF_MERCHANT" - Deprecated: Migrate the existing
-	// usages of this value to the more expanded
-	// "VOICE_OF_MERCHANT_UPDATED".
-	//   "VOICE_OF_MERCHANT_UPDATED" - Indicates whether the location has an
-	// update in Voice of Merchant (VOM) status. VOM dictates whether the
-	// location is in good standing and the merchant has control over the
-	// business on Google. Any edits made to the location will propagate to
-	// Maps after passing the review phase. Call GetVoiceOfMerchantState rpc
-	// for more details.
+	//   "NEW_ANSWER" - A new answer is added to the location. The notification
+	// will provide the resource name of question and answer.
+	//   "UPDATED_ANSWER" - An answer of the location is updated. The notification
+	// will provide the resource name of question and answer.
+	//   "DUPLICATE_LOCATION" - Indicates whether there is a change in location
+	// metadata's duplicate location field.
+	//   "LOSS_OF_VOICE_OF_MERCHANT" - Deprecated: Migrate the existing usages of
+	// this value to the more expanded "VOICE_OF_MERCHANT_UPDATED".
+	//   "VOICE_OF_MERCHANT_UPDATED" - Indicates whether the location has an update
+	// in Voice of Merchant (VOM) status. VOM dictates whether the location is in
+	// good standing and the merchant has control over the business on Google. Any
+	// edits made to the location will propagate to Maps after passing the review
+	// phase. Call GetVoiceOfMerchantState rpc for more details.
 	NotificationTypes []string `json:"notificationTypes,omitempty"`
-
 	// PubsubTopic: Optional. The Google Pub/Sub topic that will receive
-	// notifications when locations managed by this account are updated. If
-	// unset, no notifications will be posted. The account
-	// mybusiness-api-pubsub@system.gserviceaccount.com must have at least
-	// Publish permissions on the Pub/Sub topic.
+	// notifications when locations managed by this account are updated. If unset,
+	// no notifications will be posted. The account
+	// mybusiness-api-pubsub@system.gserviceaccount.com must have at least Publish
+	// permissions on the Pub/Sub topic.
 	PubsubTopic string `json:"pubsubTopic,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *NotificationSetting) MarshalJSON() ([]byte, error) {
 	type NoMethod NotificationSetting
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "mybusinessnotifications.accounts.getNotificationSetting":
 
 type AccountsGetNotificationSettingCall struct {
 	s            *Service
@@ -248,11 +235,11 @@ type AccountsGetNotificationSettingCall struct {
 	header_      http.Header
 }
 
-// GetNotificationSetting: Returns the pubsub notification settings for
-// the account.
+// GetNotificationSetting: Returns the pubsub notification settings for the
+// account.
 //
-//   - name: The resource name of the notification setting we are trying
-//     to fetch.
+//   - name: The resource name of the notification setting we are trying to
+//     fetch.
 func (r *AccountsService) GetNotificationSetting(name string) *AccountsGetNotificationSettingCall {
 	c := &AccountsGetNotificationSettingCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -260,33 +247,29 @@ func (r *AccountsService) GetNotificationSetting(name string) *AccountsGetNotifi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsGetNotificationSettingCall) Fields(s ...googleapi.Field) *AccountsGetNotificationSettingCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsGetNotificationSettingCall) IfNoneMatch(entityTag string) *AccountsGetNotificationSettingCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsGetNotificationSettingCall) Context(ctx context.Context) *AccountsGetNotificationSettingCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsGetNotificationSettingCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -295,12 +278,7 @@ func (c *AccountsGetNotificationSettingCall) Header() http.Header {
 }
 
 func (c *AccountsGetNotificationSettingCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -321,12 +299,11 @@ func (c *AccountsGetNotificationSettingCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "mybusinessnotifications.accounts.getNotificationSetting" call.
-// Exactly one of *NotificationSetting or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *NotificationSetting.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *NotificationSetting.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsGetNotificationSettingCall) Do(opts ...googleapi.CallOption) (*NotificationSetting, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -357,32 +334,7 @@ func (c *AccountsGetNotificationSettingCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the pubsub notification settings for the account.",
-	//   "flatPath": "v1/accounts/{accountsId}/notificationSetting",
-	//   "httpMethod": "GET",
-	//   "id": "mybusinessnotifications.accounts.getNotificationSetting",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the notification setting we are trying to fetch.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/notificationSetting$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "NotificationSetting"
-	//   }
-	// }
-
 }
-
-// method id "mybusinessnotifications.accounts.updateNotificationSetting":
 
 type AccountsUpdateNotificationSettingCall struct {
 	s                   *Service
@@ -393,13 +345,12 @@ type AccountsUpdateNotificationSettingCall struct {
 	header_             http.Header
 }
 
-// UpdateNotificationSetting: Sets the pubsub notification setting for
-// the account informing Google which topic to send pubsub notifications
-// for. Use the notification_types field within notification_setting to
-// manipulate the events an account wants to subscribe to. An account
-// will only have one notification setting resource, and only one pubsub
-// topic can be set. To delete the setting, update with an empty
-// notification_types
+// UpdateNotificationSetting: Sets the pubsub notification setting for the
+// account informing Google which topic to send pubsub notifications for. Use
+// the notification_types field within notification_setting to manipulate the
+// events an account wants to subscribe to. An account will only have one
+// notification setting resource, and only one pubsub topic can be set. To
+// delete the setting, update with an empty notification_types
 //
 //   - name: The resource name this setting is for. This is of the form
 //     `accounts/{account_id}/notificationSetting`.
@@ -410,8 +361,8 @@ func (r *AccountsService) UpdateNotificationSetting(name string, notificationset
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. The
-// specific fields that should be updated. The only editable field is
+// UpdateMask sets the optional parameter "updateMask": Required. The specific
+// fields that should be updated. The only editable field is
 // notification_setting.
 func (c *AccountsUpdateNotificationSettingCall) UpdateMask(updateMask string) *AccountsUpdateNotificationSettingCall {
 	c.urlParams_.Set("updateMask", updateMask)
@@ -419,23 +370,21 @@ func (c *AccountsUpdateNotificationSettingCall) UpdateMask(updateMask string) *A
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsUpdateNotificationSettingCall) Fields(s ...googleapi.Field) *AccountsUpdateNotificationSettingCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsUpdateNotificationSettingCall) Context(ctx context.Context) *AccountsUpdateNotificationSettingCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsUpdateNotificationSettingCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -444,18 +393,12 @@ func (c *AccountsUpdateNotificationSettingCall) Header() http.Header {
 }
 
 func (c *AccountsUpdateNotificationSettingCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.notificationsetting)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -472,12 +415,11 @@ func (c *AccountsUpdateNotificationSettingCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "mybusinessnotifications.accounts.updateNotificationSetting" call.
-// Exactly one of *NotificationSetting or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *NotificationSetting.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *NotificationSetting.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsUpdateNotificationSettingCall) Do(opts ...googleapi.CallOption) (*NotificationSetting, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -508,36 +450,4 @@ func (c *AccountsUpdateNotificationSettingCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Sets the pubsub notification setting for the account informing Google which topic to send pubsub notifications for. Use the notification_types field within notification_setting to manipulate the events an account wants to subscribe to. An account will only have one notification setting resource, and only one pubsub topic can be set. To delete the setting, update with an empty notification_types",
-	//   "flatPath": "v1/accounts/{accountsId}/notificationSetting",
-	//   "httpMethod": "PATCH",
-	//   "id": "mybusinessnotifications.accounts.updateNotificationSetting",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name this setting is for. This is of the form `accounts/{account_id}/notificationSetting`.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/notificationSetting$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. The specific fields that should be updated. The only editable field is notification_setting.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "NotificationSetting"
-	//   },
-	//   "response": {
-	//     "$ref": "NotificationSetting"
-	//   }
-	// }
-
 }

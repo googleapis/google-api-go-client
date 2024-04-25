@@ -104,8 +104,7 @@ const (
 	// See, edit, download, and permanently delete your contacts
 	ContactsScope = "https://www.googleapis.com/auth/contacts"
 
-	// See and download contact info automatically saved in your "Other
-	// contacts"
+	// See and download contact info automatically saved in your "Other contacts"
 	ContactsOtherReadonlyScope = "https://www.googleapis.com/auth/contacts.other.readonly"
 
 	// See and download your contacts
@@ -135,8 +134,8 @@ const (
 	// See your primary Google Account email address
 	UserinfoEmailScope = "https://www.googleapis.com/auth/userinfo.email"
 
-	// See your personal info, including any personal info you've made
-	// publicly available
+	// See your personal info, including any personal info you've made publicly
+	// available
 	UserinfoProfileScope = "https://www.googleapis.com/auth/userinfo.profile"
 )
 
@@ -262,75 +261,54 @@ type PeopleConnectionsService struct {
 	s *Service
 }
 
-// Address: A person's physical address. May be a P.O. box or street
-// address. All fields are optional.
+// Address: A person's physical address. May be a P.O. box or street address.
+// All fields are optional.
 type Address struct {
 	// City: The city of the address.
 	City string `json:"city,omitempty"`
-
 	// Country: The country of the address.
 	Country string `json:"country,omitempty"`
-
 	// CountryCode: The ISO 3166-1 alpha-2
-	// (http://www.iso.org/iso/country_codes.htm) country code of the
-	// address.
+	// (http://www.iso.org/iso/country_codes.htm) country code of the address.
 	CountryCode string `json:"countryCode,omitempty"`
-
-	// ExtendedAddress: The extended address of the address; for example,
-	// the apartment number.
+	// ExtendedAddress: The extended address of the address; for example, the
+	// apartment number.
 	ExtendedAddress string `json:"extendedAddress,omitempty"`
-
-	// FormattedType: Output only. The type of the address translated and
-	// formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// FormattedType: Output only. The type of the address translated and formatted
+	// in the viewer's account locale or the `Accept-Language` HTTP header locale.
 	FormattedType string `json:"formattedType,omitempty"`
-
-	// FormattedValue: The unstructured value of the address. If this is not
-	// set by the user it will be automatically constructed from structured
-	// values.
+	// FormattedValue: The unstructured value of the address. If this is not set by
+	// the user it will be automatically constructed from structured values.
 	FormattedValue string `json:"formattedValue,omitempty"`
-
 	// Metadata: Metadata about the address.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// PoBox: The P.O. box of the address.
 	PoBox string `json:"poBox,omitempty"`
-
 	// PostalCode: The postal code of the address.
 	PostalCode string `json:"postalCode,omitempty"`
-
-	// Region: The region of the address; for example, the state or
-	// province.
+	// Region: The region of the address; for example, the state or province.
 	Region string `json:"region,omitempty"`
-
 	// StreetAddress: The street address.
 	StreetAddress string `json:"streetAddress,omitempty"`
-
 	// Type: The type of the address. The type can be custom or one of these
 	// predefined values: * `home` * `work` * `other`
 	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "City") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "City") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "City") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "City") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Address) MarshalJSON() ([]byte, error) {
 	type NoMethod Address
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AgeRangeType: A person's age range.
@@ -343,187 +321,147 @@ type AgeRangeType struct {
 	//   "EIGHTEEN_TO_TWENTY" - Between eighteen and twenty.
 	//   "TWENTY_ONE_OR_OLDER" - Twenty-one and older.
 	AgeRange string `json:"ageRange,omitempty"`
-
 	// Metadata: Metadata about the age range.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AgeRange") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AgeRange") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AgeRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AgeRangeType) MarshalJSON() ([]byte, error) {
 	type NoMethod AgeRangeType
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchCreateContactsRequest: A request to create a batch of contacts.
 type BatchCreateContactsRequest struct {
-	// Contacts: Required. The contact to create. Allows up to 200 contacts
-	// in a single request.
+	// Contacts: Required. The contact to create. Allows up to 200 contacts in a
+	// single request.
 	Contacts []*ContactToCreate `json:"contacts,omitempty"`
-
-	// ReadMask: Required. A field mask to restrict which fields on each
-	// person are returned in the response. Multiple fields can be specified
-	// by separating them with commas. If read mask is left empty, the
-	// post-mutate-get is skipped and no data will be returned in the
-	// response. Valid values are: * addresses * ageRanges * biographies *
-	// birthdays * calendarUrls * clientData * coverPhotos * emailAddresses
-	// * events * externalIds * genders * imClients * interests * locales *
-	// locations * memberships * metadata * miscKeywords * names * nicknames
-	// * occupations * organizations * phoneNumbers * photos * relations *
-	// sipAddresses * skills * urls * userDefined
+	// ReadMask: Required. A field mask to restrict which fields on each person are
+	// returned in the response. Multiple fields can be specified by separating
+	// them with commas. If read mask is left empty, the post-mutate-get is skipped
+	// and no data will be returned in the response. Valid values are: * addresses
+	// * ageRanges * biographies * birthdays * calendarUrls * clientData *
+	// coverPhotos * emailAddresses * events * externalIds * genders * imClients *
+	// interests * locales * locations * memberships * metadata * miscKeywords *
+	// names * nicknames * occupations * organizations * phoneNumbers * photos *
+	// relations * sipAddresses * skills * urls * userDefined
 	ReadMask string `json:"readMask,omitempty"`
-
-	// Sources: Optional. A mask of what source types to return in the post
-	// mutate read. Defaults to READ_SOURCE_TYPE_CONTACT and
-	// READ_SOURCE_TYPE_PROFILE if not set.
+	// Sources: Optional. A mask of what source types to return in the post mutate
+	// read. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if
+	// not set.
 	//
 	// Possible values:
 	//   "READ_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
 	//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
 	// SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
 	//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
-	// SourceType.DOMAIN_CONTACT.
-	//   "READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-	// SourceType.OTHER_CONTACT.
+	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns SourceType.DOMAIN_CONTACT.
+	//   "READ_SOURCE_TYPE_OTHER_CONTACT" - Returns SourceType.OTHER_CONTACT.
 	Sources []string `json:"sources,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Contacts") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Contacts") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Contacts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchCreateContactsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateContactsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchCreateContactsResponse: If not successful, returns
-// BatchCreateContactsErrorDetails which contains a list of errors for
-// each invalid contact. The response to a request to create a batch of
-// contacts.
+// BatchCreateContactsErrorDetails which contains a list of errors for each
+// invalid contact. The response to a request to create a batch of contacts.
 type BatchCreateContactsResponse struct {
 	// CreatedPeople: The contacts that were created, unless the request
 	// `read_mask` is empty.
 	CreatedPeople []*PersonResponse `json:"createdPeople,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreatedPeople") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreatedPeople") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreatedPeople") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchCreateContactsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateContactsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchDeleteContactsRequest: A request to delete a batch of existing
 // contacts.
 type BatchDeleteContactsRequest struct {
-	// ResourceNames: Required. The resource names of the contact to delete.
-	// It's repeatable. Allows up to 500 resource names in a single request.
+	// ResourceNames: Required. The resource names of the contact to delete. It's
+	// repeatable. Allows up to 500 resource names in a single request.
 	ResourceNames []string `json:"resourceNames,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ResourceNames") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ResourceNames") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ResourceNames") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchDeleteContactsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchDeleteContactsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// BatchGetContactGroupsResponse: The response to a batch get contact
-// groups request.
+// BatchGetContactGroupsResponse: The response to a batch get contact groups
+// request.
 type BatchGetContactGroupsResponse struct {
-	// Responses: The list of responses for each requested contact group
-	// resource.
+	// Responses: The list of responses for each requested contact group resource.
 	Responses []*ContactGroupResponse `json:"responses,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Responses") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Responses") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Responses") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchGetContactGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchGetContactGroupsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateContactsRequest: A request to update a batch of contacts.
@@ -531,19 +469,16 @@ type BatchUpdateContactsRequest struct {
 	// Contacts: Required. A map of resource names to the person data to be
 	// updated. Allows up to 200 contacts in a single request.
 	Contacts map[string]Person `json:"contacts,omitempty"`
-
-	// ReadMask: Required. A field mask to restrict which fields on each
-	// person are returned. Multiple fields can be specified by separating
-	// them with commas. If read mask is left empty, the post-mutate-get is
-	// skipped and no data will be returned in the response. Valid values
-	// are: * addresses * ageRanges * biographies * birthdays * calendarUrls
-	// * clientData * coverPhotos * emailAddresses * events * externalIds *
-	// genders * imClients * interests * locales * locations * memberships *
-	// metadata * miscKeywords * names * nicknames * occupations *
-	// organizations * phoneNumbers * photos * relations * sipAddresses *
-	// skills * urls * userDefined
+	// ReadMask: Required. A field mask to restrict which fields on each person are
+	// returned. Multiple fields can be specified by separating them with commas.
+	// If read mask is left empty, the post-mutate-get is skipped and no data will
+	// be returned in the response. Valid values are: * addresses * ageRanges *
+	// biographies * birthdays * calendarUrls * clientData * coverPhotos *
+	// emailAddresses * events * externalIds * genders * imClients * interests *
+	// locales * locations * memberships * metadata * miscKeywords * names *
+	// nicknames * occupations * organizations * phoneNumbers * photos * relations
+	// * sipAddresses * skills * urls * userDefined
 	ReadMask string `json:"readMask,omitempty"`
-
 	// Sources: Optional. A mask of what source types to return. Defaults to
 	// READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.
 	//
@@ -552,80 +487,62 @@ type BatchUpdateContactsRequest struct {
 	//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
 	// SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
 	//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
-	// SourceType.DOMAIN_CONTACT.
-	//   "READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-	// SourceType.OTHER_CONTACT.
+	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns SourceType.DOMAIN_CONTACT.
+	//   "READ_SOURCE_TYPE_OTHER_CONTACT" - Returns SourceType.OTHER_CONTACT.
 	Sources []string `json:"sources,omitempty"`
-
-	// UpdateMask: Required. A field mask to restrict which fields on the
-	// person are updated. Multiple fields can be specified by separating
-	// them with commas. All specified fields will be replaced, or cleared
-	// if left empty for each person. Valid values are: * addresses *
-	// biographies * birthdays * calendarUrls * clientData * emailAddresses
-	// * events * externalIds * genders * imClients * interests * locales *
-	// locations * memberships * miscKeywords * names * nicknames *
-	// occupations * organizations * phoneNumbers * relations * sipAddresses
-	// * urls * userDefined
+	// UpdateMask: Required. A field mask to restrict which fields on the person
+	// are updated. Multiple fields can be specified by separating them with
+	// commas. All specified fields will be replaced, or cleared if left empty for
+	// each person. Valid values are: * addresses * biographies * birthdays *
+	// calendarUrls * clientData * emailAddresses * events * externalIds * genders
+	// * imClients * interests * locales * locations * memberships * miscKeywords *
+	// names * nicknames * occupations * organizations * phoneNumbers * relations *
+	// sipAddresses * urls * userDefined
 	UpdateMask string `json:"updateMask,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Contacts") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Contacts") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Contacts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchUpdateContactsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateContactsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BatchUpdateContactsResponse: If not successful, returns
-// BatchUpdateContactsErrorDetails, a list of errors corresponding to
-// each contact. The response to a request to update a batch of
-// contacts.
+// BatchUpdateContactsErrorDetails, a list of errors corresponding to each
+// contact. The response to a request to update a batch of contacts.
 type BatchUpdateContactsResponse struct {
-	// UpdateResult: A map of resource names to the contacts that were
-	// updated, unless the request `read_mask` is empty.
+	// UpdateResult: A map of resource names to the contacts that were updated,
+	// unless the request `read_mask` is empty.
 	UpdateResult map[string]PersonResponse `json:"updateResult,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "UpdateResult") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UpdateResult") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "UpdateResult") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchUpdateContactsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchUpdateContactsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Biography: A person's short biography.
@@ -637,196 +554,152 @@ type Biography struct {
 	//   "TEXT_PLAIN" - Plain text.
 	//   "TEXT_HTML" - HTML text.
 	ContentType string `json:"contentType,omitempty"`
-
 	// Metadata: Metadata about the biography.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Value: The short biography.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ContentType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContentType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Biography) MarshalJSON() ([]byte, error) {
 	type NoMethod Biography
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Birthday: A person's birthday. At least one of the `date` and `text`
-// fields are specified. The `date` and `text` fields typically
-// represent the same date, but are not guaranteed to. Clients should
-// always set the `date` field when mutating birthdays.
+// Birthday: A person's birthday. At least one of the `date` and `text` fields
+// are specified. The `date` and `text` fields typically represent the same
+// date, but are not guaranteed to. Clients should always set the `date` field
+// when mutating birthdays.
 type Birthday struct {
 	// Date: The structured date of the birthday.
 	Date *Date `json:"date,omitempty"`
-
 	// Metadata: Metadata about the birthday.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
-	// Text: Prefer to use the `date` field if set. A free-form string
-	// representing the user's birthday. This value is not validated.
+	// Text: Prefer to use the `date` field if set. A free-form string representing
+	// the user's birthday. This value is not validated.
 	Text string `json:"text,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Date") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Date") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Date") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Date") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Birthday) MarshalJSON() ([]byte, error) {
 	type NoMethod Birthday
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// BraggingRights: **DEPRECATED**: No data will be returned A person's
-// bragging rights.
+// BraggingRights: **DEPRECATED**: No data will be returned A person's bragging
+// rights.
 type BraggingRights struct {
 	// Metadata: Metadata about the bragging rights.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Value: The bragging rights; for example, `climbed mount everest`.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Metadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Metadata") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BraggingRights) MarshalJSON() ([]byte, error) {
 	type NoMethod BraggingRights
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CalendarUrl: A person's calendar URL.
 type CalendarUrl struct {
-	// FormattedType: Output only. The type of the calendar URL translated
-	// and formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// FormattedType: Output only. The type of the calendar URL translated and
+	// formatted in the viewer's account locale or the `Accept-Language` HTTP
+	// header locale.
 	FormattedType string `json:"formattedType,omitempty"`
-
 	// Metadata: Metadata about the calendar URL.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
-	// Type: The type of the calendar URL. The type can be custom or one of
-	// these predefined values: * `home` * `freeBusy` * `work`
+	// Type: The type of the calendar URL. The type can be custom or one of these
+	// predefined values: * `home` * `freeBusy` * `work`
 	Type string `json:"type,omitempty"`
-
 	// Url: The calendar URL.
 	Url string `json:"url,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FormattedType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FormattedType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FormattedType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CalendarUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod CalendarUrl
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ClientData: Arbitrary client data that is populated by clients.
-// Duplicate keys and values are allowed.
+// ClientData: Arbitrary client data that is populated by clients. Duplicate
+// keys and values are allowed.
 type ClientData struct {
 	// Key: The client specified key of the client data.
 	Key string `json:"key,omitempty"`
-
 	// Metadata: Metadata about the client data.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Value: The client specified value of the client data.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ClientData) MarshalJSON() ([]byte, error) {
 	type NoMethod ClientData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ContactGroup: A contact group.
 type ContactGroup struct {
 	// ClientData: The group's client data.
 	ClientData []*GroupClientData `json:"clientData,omitempty"`
-
-	// Etag: The HTTP entity tag (https://en.wikipedia.org/wiki/HTTP_ETag)
-	// of the resource. Used for web cache validation.
+	// Etag: The HTTP entity tag (https://en.wikipedia.org/wiki/HTTP_ETag) of the
+	// resource. Used for web cache validation.
 	Etag string `json:"etag,omitempty"`
-
 	// FormattedName: Output only. The name translated and formatted in the
-	// viewer's account locale or the `Accept-Language` HTTP header locale
-	// for system groups names. Group names set by the owner are the same as
-	// name.
+	// viewer's account locale or the `Accept-Language` HTTP header locale for
+	// system groups names. Group names set by the owner are the same as name.
 	FormattedName string `json:"formattedName,omitempty"`
-
 	// GroupType: Output only. The contact group type.
 	//
 	// Possible values:
@@ -834,217 +707,169 @@ type ContactGroup struct {
 	//   "USER_CONTACT_GROUP" - User defined contact group.
 	//   "SYSTEM_CONTACT_GROUP" - System defined contact group.
 	GroupType string `json:"groupType,omitempty"`
-
 	// MemberCount: Output only. The total number of contacts in the group
 	// irrespective of max members in specified in the request.
 	MemberCount int64 `json:"memberCount,omitempty"`
-
-	// MemberResourceNames: Output only. The list of contact person resource
-	// names that are members of the contact group. The field is only
-	// populated for GET requests and will only return as many members as
-	// `maxMembers` in the get request.
+	// MemberResourceNames: Output only. The list of contact person resource names
+	// that are members of the contact group. The field is only populated for GET
+	// requests and will only return as many members as `maxMembers` in the get
+	// request.
 	MemberResourceNames []string `json:"memberResourceNames,omitempty"`
-
 	// Metadata: Output only. Metadata about the contact group.
 	Metadata *ContactGroupMetadata `json:"metadata,omitempty"`
-
-	// Name: The contact group name set by the group owner or a system
-	// provided name for system groups. For `contactGroups.create`
+	// Name: The contact group name set by the group owner or a system provided
+	// name for system groups. For `contactGroups.create`
 	// (/people/api/rest/v1/contactGroups/create) or `contactGroups.update`
-	// (/people/api/rest/v1/contactGroups/update) the name must be unique to
-	// the users contact groups. Attempting to create a group with a
-	// duplicate name will return a HTTP 409 error.
+	// (/people/api/rest/v1/contactGroups/update) the name must be unique to the
+	// users contact groups. Attempting to create a group with a duplicate name
+	// will return a HTTP 409 error.
 	Name string `json:"name,omitempty"`
-
-	// ResourceName: The resource name for the contact group, assigned by
-	// the server. An ASCII string, in the form of
-	// `contactGroups/{contact_group_id}`.
+	// ResourceName: The resource name for the contact group, assigned by the
+	// server. An ASCII string, in the form of `contactGroups/{contact_group_id}`.
 	ResourceName string `json:"resourceName,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ClientData") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClientData") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClientData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ContactGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod ContactGroup
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ContactGroupMembership: A Google contact group membership.
 type ContactGroupMembership struct {
-	// ContactGroupId: Output only. The contact group ID for the contact
-	// group membership.
+	// ContactGroupId: Output only. The contact group ID for the contact group
+	// membership.
 	ContactGroupId string `json:"contactGroupId,omitempty"`
-
-	// ContactGroupResourceName: The resource name for the contact group,
-	// assigned by the server. An ASCII string, in the form of
-	// `contactGroups/{contact_group_id}`. Only contact_group_resource_name
-	// can be used for modifying memberships. Any contact group membership
-	// can be removed, but only user group or "myContacts" or "starred"
-	// system groups memberships can be added. A contact must always have at
-	// least one contact group membership.
+	// ContactGroupResourceName: The resource name for the contact group, assigned
+	// by the server. An ASCII string, in the form of
+	// `contactGroups/{contact_group_id}`. Only contact_group_resource_name can be
+	// used for modifying memberships. Any contact group membership can be removed,
+	// but only user group or "myContacts" or "starred" system groups memberships
+	// can be added. A contact must always have at least one contact group
+	// membership.
 	ContactGroupResourceName string `json:"contactGroupResourceName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ContactGroupId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContactGroupId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ContactGroupId") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ContactGroupMembership) MarshalJSON() ([]byte, error) {
 	type NoMethod ContactGroupMembership
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ContactGroupMetadata: The metadata about a contact group.
 type ContactGroupMetadata struct {
-	// Deleted: Output only. True if the contact group resource has been
-	// deleted. Populated only for `ListContactGroups`
-	// (/people/api/rest/v1/contactgroups/list) requests that include a sync
-	// token.
+	// Deleted: Output only. True if the contact group resource has been deleted.
+	// Populated only for `ListContactGroups`
+	// (/people/api/rest/v1/contactgroups/list) requests that include a sync token.
 	Deleted bool `json:"deleted,omitempty"`
-
 	// UpdateTime: Output only. The time the group was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Deleted") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Deleted") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Deleted") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Deleted") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ContactGroupMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ContactGroupMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ContactGroupResponse: The response for a specific contact group.
 type ContactGroupResponse struct {
 	// ContactGroup: The contact group.
 	ContactGroup *ContactGroup `json:"contactGroup,omitempty"`
-
 	// RequestedResourceName: The original requested resource name.
 	RequestedResourceName string `json:"requestedResourceName,omitempty"`
-
 	// Status: The status of the response.
 	Status *Status `json:"status,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ContactGroup") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContactGroup") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContactGroup") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ContactGroupResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ContactGroupResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ContactToCreate: A wrapper that contains the person data to populate
-// a newly created source.
+// ContactToCreate: A wrapper that contains the person data to populate a newly
+// created source.
 type ContactToCreate struct {
-	// ContactPerson: Required. The person data to populate a newly created
-	// source.
+	// ContactPerson: Required. The person data to populate a newly created source.
 	ContactPerson *Person `json:"contactPerson,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ContactPerson") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContactPerson") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContactPerson") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ContactToCreate) MarshalJSON() ([]byte, error) {
 	type NoMethod ContactToCreate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CopyOtherContactToMyContactsGroupRequest: A request to copy an "Other
 // contact" to my contacts group.
 type CopyOtherContactToMyContactsGroupRequest struct {
-	// CopyMask: Required. A field mask to restrict which fields are copied
-	// into the new contact. Valid values are: * emailAddresses * names *
-	// phoneNumbers
+	// CopyMask: Required. A field mask to restrict which fields are copied into
+	// the new contact. Valid values are: * emailAddresses * names * phoneNumbers
 	CopyMask string `json:"copyMask,omitempty"`
-
-	// ReadMask: Optional. A field mask to restrict which fields on the
-	// person are returned. Multiple fields can be specified by separating
-	// them with commas. Defaults to the copy mask with metadata and
-	// membership fields if not set. Valid values are: * addresses *
-	// ageRanges * biographies * birthdays * calendarUrls * clientData *
-	// coverPhotos * emailAddresses * events * externalIds * genders *
-	// imClients * interests * locales * locations * memberships * metadata
-	// * miscKeywords * names * nicknames * occupations * organizations *
-	// phoneNumbers * photos * relations * sipAddresses * skills * urls *
-	// userDefined
+	// ReadMask: Optional. A field mask to restrict which fields on the person are
+	// returned. Multiple fields can be specified by separating them with commas.
+	// Defaults to the copy mask with metadata and membership fields if not set.
+	// Valid values are: * addresses * ageRanges * biographies * birthdays *
+	// calendarUrls * clientData * coverPhotos * emailAddresses * events *
+	// externalIds * genders * imClients * interests * locales * locations *
+	// memberships * metadata * miscKeywords * names * nicknames * occupations *
+	// organizations * phoneNumbers * photos * relations * sipAddresses * skills *
+	// urls * userDefined
 	ReadMask string `json:"readMask,omitempty"`
-
 	// Sources: Optional. A mask of what source types to return. Defaults to
 	// READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.
 	//
@@ -1053,268 +878,208 @@ type CopyOtherContactToMyContactsGroupRequest struct {
 	//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
 	// SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
 	//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
-	// SourceType.DOMAIN_CONTACT.
-	//   "READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-	// SourceType.OTHER_CONTACT.
+	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns SourceType.DOMAIN_CONTACT.
+	//   "READ_SOURCE_TYPE_OTHER_CONTACT" - Returns SourceType.OTHER_CONTACT.
 	Sources []string `json:"sources,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CopyMask") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CopyMask") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CopyMask") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CopyOtherContactToMyContactsGroupRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CopyOtherContactToMyContactsGroupRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CoverPhoto: A person's cover photo. A large image shown on the
-// person's profile page that represents who they are or what they care
-// about.
+// CoverPhoto: A person's cover photo. A large image shown on the person's
+// profile page that represents who they are or what they care about.
 type CoverPhoto struct {
-	// Default: True if the cover photo is the default cover photo; false if
-	// the cover photo is a user-provided cover photo.
+	// Default: True if the cover photo is the default cover photo; false if the
+	// cover photo is a user-provided cover photo.
 	Default bool `json:"default,omitempty"`
-
 	// Metadata: Metadata about the cover photo.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Url: The URL of the cover photo.
 	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Default") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Default") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Default") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Default") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CoverPhoto) MarshalJSON() ([]byte, error) {
 	type NoMethod CoverPhoto
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateContactGroupRequest: A request to create a new contact group.
 type CreateContactGroupRequest struct {
 	// ContactGroup: Required. The contact group to create.
 	ContactGroup *ContactGroup `json:"contactGroup,omitempty"`
-
-	// ReadGroupFields: Optional. A field mask to restrict which fields on
-	// the group are returned. Defaults to `metadata`, `groupType`, and
-	// `name` if not set or set to empty. Valid fields are: * clientData *
-	// groupType * metadata * name
+	// ReadGroupFields: Optional. A field mask to restrict which fields on the
+	// group are returned. Defaults to `metadata`, `groupType`, and `name` if not
+	// set or set to empty. Valid fields are: * clientData * groupType * metadata *
+	// name
 	ReadGroupFields string `json:"readGroupFields,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ContactGroup") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContactGroup") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContactGroup") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CreateContactGroupRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateContactGroupRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Date: Represents a whole or partial calendar date, such as a
-// birthday. The time of day and time zone are either specified
-// elsewhere or are insignificant. The date is relative to the Gregorian
-// Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values. * A month and day, with a
-// zero year (for example, an anniversary). * A year on its own, with a
-// zero month and a zero day. * A year and month, with a zero day (for
-// example, a credit card expiration date). Related types: *
-// google.type.TimeOfDay * google.type.DateTime *
+// Date: Represents a whole or partial calendar date, such as a birthday. The
+// time of day and time zone are either specified elsewhere or are
+// insignificant. The date is relative to the Gregorian Calendar. This can
+// represent one of the following: * A full date, with non-zero year, month,
+// and day values. * A month and day, with a zero year (for example, an
+// anniversary). * A year on its own, with a zero month and a zero day. * A
+// year and month, with a zero day (for example, a credit card expiration
+// date). Related types: * google.type.TimeOfDay * google.type.DateTime *
 // google.protobuf.Timestamp
 type Date struct {
-	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
-	// month, or 0 to specify a year by itself or a year and month where the
-	// day isn't significant.
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and month,
+	// or 0 to specify a year by itself or a year and month where the day isn't
+	// significant.
 	Day int64 `json:"day,omitempty"`
-
-	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
-	// without a month and day.
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year without
+	// a month and day.
 	Month int64 `json:"month,omitempty"`
-
-	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
-	// date without a year.
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a date
+	// without a year.
 	Year int64 `json:"year,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Day") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Day") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DeleteContactPhotoResponse: The response for deleting a contact's
-// photo.
+// DeleteContactPhotoResponse: The response for deleting a contact's photo.
 type DeleteContactPhotoResponse struct {
 	// Person: The updated person, if person_fields is set in the
 	// DeleteContactPhotoRequest; otherwise this will be unset.
 	Person *Person `json:"person,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Person") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Person") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Person") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DeleteContactPhotoResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod DeleteContactPhotoResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DomainMembership: A Google Workspace Domain membership.
 type DomainMembership struct {
-	// InViewerDomain: True if the person is in the viewer's Google
-	// Workspace domain.
+	// InViewerDomain: True if the person is in the viewer's Google Workspace
+	// domain.
 	InViewerDomain bool `json:"inViewerDomain,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "InViewerDomain") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "InViewerDomain") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "InViewerDomain") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DomainMembership) MarshalJSON() ([]byte, error) {
 	type NoMethod DomainMembership
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // EmailAddress: A person's email address.
 type EmailAddress struct {
 	// DisplayName: The display name of the email.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// FormattedType: Output only. The type of the email address translated
-	// and formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// FormattedType: Output only. The type of the email address translated and
+	// formatted in the viewer's account locale or the `Accept-Language` HTTP
+	// header locale.
 	FormattedType string `json:"formattedType,omitempty"`
-
 	// Metadata: Metadata about the email address.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
-	// Type: The type of the email address. The type can be custom or one of
-	// these predefined values: * `home` * `work` * `other`
+	// Type: The type of the email address. The type can be custom or one of these
+	// predefined values: * `home` * `work` * `other`
 	Type string `json:"type,omitempty"`
-
 	// Value: The email address.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *EmailAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod EmailAddress
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
@@ -1322,157 +1087,118 @@ type Empty struct {
 type Event struct {
 	// Date: The date of the event.
 	Date *Date `json:"date,omitempty"`
-
-	// FormattedType: Output only. The type of the event translated and
-	// formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// FormattedType: Output only. The type of the event translated and formatted
+	// in the viewer's account locale or the `Accept-Language` HTTP header locale.
 	FormattedType string `json:"formattedType,omitempty"`
-
 	// Metadata: Metadata about the event.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Type: The type of the event. The type can be custom or one of these
 	// predefined values: * `anniversary` * `other`
 	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Date") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Date") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Date") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Date") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Event) MarshalJSON() ([]byte, error) {
 	type NoMethod Event
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ExternalId: An identifier from an external entity related to the
-// person.
+// ExternalId: An identifier from an external entity related to the person.
 type ExternalId struct {
-	// FormattedType: Output only. The type of the event translated and
-	// formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// FormattedType: Output only. The type of the event translated and formatted
+	// in the viewer's account locale or the `Accept-Language` HTTP header locale.
 	FormattedType string `json:"formattedType,omitempty"`
-
 	// Metadata: Metadata about the external ID.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
-	// Type: The type of the external ID. The type can be custom or one of
-	// these predefined values: * `account` * `customer` * `loginId` *
-	// `network` * `organization`
+	// Type: The type of the external ID. The type can be custom or one of these
+	// predefined values: * `account` * `customer` * `loginId` * `network` *
+	// `organization`
 	Type string `json:"type,omitempty"`
-
 	// Value: The value of the external ID.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FormattedType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FormattedType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FormattedType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ExternalId) MarshalJSON() ([]byte, error) {
 	type NoMethod ExternalId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // FieldMetadata: Metadata about a field.
 type FieldMetadata struct {
-	// Primary: Output only. True if the field is the primary field for all
-	// sources in the person. Each person will have at most one field with
-	// `primary` set to true.
+	// Primary: Output only. True if the field is the primary field for all sources
+	// in the person. Each person will have at most one field with `primary` set to
+	// true.
 	Primary bool `json:"primary,omitempty"`
-
 	// Source: The source of the field.
 	Source *Source `json:"source,omitempty"`
-
-	// SourcePrimary: True if the field is the primary field for the source.
-	// Each source must have at most one field with `source_primary` set to
-	// true.
+	// SourcePrimary: True if the field is the primary field for the source. Each
+	// source must have at most one field with `source_primary` set to true.
 	SourcePrimary bool `json:"sourcePrimary,omitempty"`
-
-	// Verified: Output only. True if the field is verified; false if the
-	// field is unverified. A verified field is typically a name, email
-	// address, phone number, or website that has been confirmed to be owned
-	// by the person.
+	// Verified: Output only. True if the field is verified; false if the field is
+	// unverified. A verified field is typically a name, email address, phone
+	// number, or website that has been confirmed to be owned by the person.
 	Verified bool `json:"verified,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Primary") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Primary") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Primary") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Primary") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *FieldMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod FieldMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // FileAs: The name that should be used to sort the person in a list.
 type FileAs struct {
 	// Metadata: Metadata about the file-as.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Value: The file-as value
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Metadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Metadata") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *FileAs) MarshalJSON() ([]byte, error) {
 	type NoMethod FileAs
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Gender: A person's gender.
@@ -1481,73 +1207,57 @@ type Gender struct {
 	// address the person. Common values are: * `he`/`him` * `she`/`her` *
 	// `they`/`them`
 	AddressMeAs string `json:"addressMeAs,omitempty"`
-
 	// FormattedValue: Output only. The value of the gender translated and
-	// formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale. Unspecified or custom value are not localized.
+	// formatted in the viewer's account locale or the `Accept-Language` HTTP
+	// header locale. Unspecified or custom value are not localized.
 	FormattedValue string `json:"formattedValue,omitempty"`
-
 	// Metadata: Metadata about the gender.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
-	// Value: The gender for the person. The gender can be custom or one of
-	// these predefined values: * `male` * `female` * `unspecified`
+	// Value: The gender for the person. The gender can be custom or one of these
+	// predefined values: * `male` * `female` * `unspecified`
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AddressMeAs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AddressMeAs") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AddressMeAs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Gender) MarshalJSON() ([]byte, error) {
 	type NoMethod Gender
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GetPeopleResponse: The response to a get request for a list of people
-// by resource name.
+// GetPeopleResponse: The response to a get request for a list of people by
+// resource name.
 type GetPeopleResponse struct {
 	// Responses: The response for each requested resource name.
 	Responses []*PersonResponse `json:"responses,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Responses") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Responses") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Responses") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GetPeopleResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPeopleResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GroupClientData: Arbitrary client data that is populated by clients.
@@ -1555,439 +1265,334 @@ func (s *GetPeopleResponse) MarshalJSON() ([]byte, error) {
 type GroupClientData struct {
 	// Key: The client specified key of the client data.
 	Key string `json:"key,omitempty"`
-
 	// Value: The client specified value of the client data.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GroupClientData) MarshalJSON() ([]byte, error) {
 	type NoMethod GroupClientData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ImClient: A person's instant messaging client.
 type ImClient struct {
-	// FormattedProtocol: Output only. The protocol of the IM client
-	// formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// FormattedProtocol: Output only. The protocol of the IM client formatted in
+	// the viewer's account locale or the `Accept-Language` HTTP header locale.
 	FormattedProtocol string `json:"formattedProtocol,omitempty"`
-
 	// FormattedType: Output only. The type of the IM client translated and
-	// formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// formatted in the viewer's account locale or the `Accept-Language` HTTP
+	// header locale.
 	FormattedType string `json:"formattedType,omitempty"`
-
 	// Metadata: Metadata about the IM client.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
-	// Protocol: The protocol of the IM client. The protocol can be custom
-	// or one of these predefined values: * `aim` * `msn` * `yahoo` *
-	// `skype` * `qq` * `googleTalk` * `icq` * `jabber` * `netMeeting`
+	// Protocol: The protocol of the IM client. The protocol can be custom or one
+	// of these predefined values: * `aim` * `msn` * `yahoo` * `skype` * `qq` *
+	// `googleTalk` * `icq` * `jabber` * `netMeeting`
 	Protocol string `json:"protocol,omitempty"`
-
-	// Type: The type of the IM client. The type can be custom or one of
-	// these predefined values: * `home` * `work` * `other`
+	// Type: The type of the IM client. The type can be custom or one of these
+	// predefined values: * `home` * `work` * `other`
 	Type string `json:"type,omitempty"`
-
 	// Username: The user name used in the IM client.
 	Username string `json:"username,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "FormattedProtocol")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "FormattedProtocol") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FormattedProtocol") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "FormattedProtocol") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ImClient) MarshalJSON() ([]byte, error) {
 	type NoMethod ImClient
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Interest: One of the person's interests.
 type Interest struct {
 	// Metadata: Metadata about the interest.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Value: The interest; for example, `stargazing`.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Metadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Metadata") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Interest) MarshalJSON() ([]byte, error) {
 	type NoMethod Interest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListConnectionsResponse: The response to a request for the
-// authenticated user's connections.
+// ListConnectionsResponse: The response to a request for the authenticated
+// user's connections.
 type ListConnectionsResponse struct {
 	// Connections: The list of people that the requestor is connected to.
 	Connections []*Person `json:"connections,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// NextSyncToken: A token, which can be sent as `sync_token` to retrieve
-	// changes since the last request. Request must set `request_sync_token`
-	// to return the sync token. When the response is paginated, only the
-	// last page will contain `nextSyncToken`.
+	// changes since the last request. Request must set `request_sync_token` to
+	// return the sync token. When the response is paginated, only the last page
+	// will contain `nextSyncToken`.
 	NextSyncToken string `json:"nextSyncToken,omitempty"`
-
 	// TotalItems: The total number of items in the list without pagination.
 	TotalItems int64 `json:"totalItems,omitempty"`
-
-	// TotalPeople: **DEPRECATED** (Please use totalItems) The total number
-	// of people in the list without pagination.
+	// TotalPeople: **DEPRECATED** (Please use totalItems) The total number of
+	// people in the list without pagination.
 	TotalPeople int64 `json:"totalPeople,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Connections") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Connections") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Connections") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListConnectionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListConnectionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListContactGroupsResponse: The response to a list contact groups
-// request.
+// ListContactGroupsResponse: The response to a list contact groups request.
 type ListContactGroupsResponse struct {
-	// ContactGroups: The list of contact groups. Members of the contact
-	// groups are not populated.
+	// ContactGroups: The list of contact groups. Members of the contact groups are
+	// not populated.
 	ContactGroups []*ContactGroup `json:"contactGroups,omitempty"`
-
-	// NextPageToken: The token that can be used to retrieve the next page
-	// of results.
+	// NextPageToken: The token that can be used to retrieve the next page of
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// NextSyncToken: The token that can be used to retrieve changes since
-	// the last request.
+	// NextSyncToken: The token that can be used to retrieve changes since the last
+	// request.
 	NextSyncToken string `json:"nextSyncToken,omitempty"`
-
 	// TotalItems: The total number of items in the list without pagination.
 	TotalItems int64 `json:"totalItems,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ContactGroups") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContactGroups") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContactGroups") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListContactGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListContactGroupsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListDirectoryPeopleResponse: The response to a request for the
-// authenticated user's domain directory.
+// ListDirectoryPeopleResponse: The response to a request for the authenticated
+// user's domain directory.
 type ListDirectoryPeopleResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// NextSyncToken: A token, which can be sent as `sync_token` to retrieve
-	// changes since the last request. Request must set `request_sync_token`
-	// to return the sync token.
+	// changes since the last request. Request must set `request_sync_token` to
+	// return the sync token.
 	NextSyncToken string `json:"nextSyncToken,omitempty"`
-
 	// People: The list of people in the domain directory.
 	People []*Person `json:"people,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListDirectoryPeopleResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDirectoryPeopleResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListOtherContactsResponse: The response to a request for the
-// authenticated user's "Other contacts".
+// ListOtherContactsResponse: The response to a request for the authenticated
+// user's "Other contacts".
 type ListOtherContactsResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// NextSyncToken: A token, which can be sent as `sync_token` to retrieve
-	// changes since the last request. Request must set `request_sync_token`
-	// to return the sync token.
+	// changes since the last request. Request must set `request_sync_token` to
+	// return the sync token.
 	NextSyncToken string `json:"nextSyncToken,omitempty"`
-
-	// OtherContacts: The list of "Other contacts" returned as Person
-	// resources. "Other contacts" support a limited subset of fields. See
+	// OtherContacts: The list of "Other contacts" returned as Person resources.
+	// "Other contacts" support a limited subset of fields. See
 	// ListOtherContactsRequest.request_mask for more detailed information.
 	OtherContacts []*Person `json:"otherContacts,omitempty"`
-
 	// TotalSize: The total number of other contacts in the list without
 	// pagination.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListOtherContactsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOtherContactsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Locale: A person's locale preference.
 type Locale struct {
 	// Metadata: Metadata about the locale.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
-	// Value: The well-formed IETF BCP 47
-	// (https://tools.ietf.org/html/bcp47) language tag representing the
-	// locale.
+	// Value: The well-formed IETF BCP 47 (https://tools.ietf.org/html/bcp47)
+	// language tag representing the locale.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Metadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Metadata") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Locale) MarshalJSON() ([]byte, error) {
 	type NoMethod Locale
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A person's location.
 type Location struct {
 	// BuildingId: The building identifier.
 	BuildingId string `json:"buildingId,omitempty"`
-
 	// Current: Whether the location is the current location.
 	Current bool `json:"current,omitempty"`
-
 	// DeskCode: The individual desk location.
 	DeskCode string `json:"deskCode,omitempty"`
-
 	// Floor: The floor name or number.
 	Floor string `json:"floor,omitempty"`
-
 	// FloorSection: The floor section in `floor_name`.
 	FloorSection string `json:"floorSection,omitempty"`
-
 	// Metadata: Metadata about the location.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
-	// Type: The type of the location. The type can be custom or one of
-	// these predefined values: * `desk` * `grewUp`
+	// Type: The type of the location. The type can be custom or one of these
+	// predefined values: * `desk` * `grewUp`
 	Type string `json:"type,omitempty"`
-
 	// Value: The free-form value of the location.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BuildingId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BuildingId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BuildingId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Membership: A person's membership in a group. Only contact group
-// memberships can be modified.
+// Membership: A person's membership in a group. Only contact group memberships
+// can be modified.
 type Membership struct {
 	// ContactGroupMembership: The contact group membership.
 	ContactGroupMembership *ContactGroupMembership `json:"contactGroupMembership,omitempty"`
-
 	// DomainMembership: Output only. The domain membership.
 	DomainMembership *DomainMembership `json:"domainMembership,omitempty"`
-
 	// Metadata: Metadata about the membership.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ContactGroupMembership") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ContactGroupMembership") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContactGroupMembership")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ContactGroupMembership") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Membership) MarshalJSON() ([]byte, error) {
 	type NoMethod Membership
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MiscKeyword: A person's miscellaneous keyword.
 type MiscKeyword struct {
-	// FormattedType: Output only. The type of the miscellaneous keyword
-	// translated and formatted in the viewer's account locale or the
-	// `Accept-Language` HTTP header locale.
+	// FormattedType: Output only. The type of the miscellaneous keyword translated
+	// and formatted in the viewer's account locale or the `Accept-Language` HTTP
+	// header locale.
 	FormattedType string `json:"formattedType,omitempty"`
-
 	// Metadata: Metadata about the miscellaneous keyword.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Type: The miscellaneous keyword type.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Unspecified.
-	//   "OUTLOOK_BILLING_INFORMATION" - Outlook field for billing
-	// information.
+	//   "OUTLOOK_BILLING_INFORMATION" - Outlook field for billing information.
 	//   "OUTLOOK_DIRECTORY_SERVER" - Outlook field for directory server.
 	//   "OUTLOOK_KEYWORD" - Outlook field for keyword.
 	//   "OUTLOOK_MILEAGE" - Outlook field for mileage.
@@ -1999,358 +1604,272 @@ type MiscKeyword struct {
 	//   "WORK" - Work.
 	//   "OTHER" - Other.
 	Type string `json:"type,omitempty"`
-
 	// Value: The value of the miscellaneous keyword.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FormattedType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FormattedType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FormattedType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MiscKeyword) MarshalJSON() ([]byte, error) {
 	type NoMethod MiscKeyword
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ModifyContactGroupMembersRequest: A request to modify an existing
-// contact group's members. Contacts can be removed from any group but
-// they can only be added to a user group or "myContacts" or "starred"
-// system groups.
+// ModifyContactGroupMembersRequest: A request to modify an existing contact
+// group's members. Contacts can be removed from any group but they can only be
+// added to a user group or "myContacts" or "starred" system groups.
 type ModifyContactGroupMembersRequest struct {
-	// ResourceNamesToAdd: Optional. The resource names of the contact
-	// people to add in the form of `people/{person_id}`. The total number
-	// of resource names in `resource_names_to_add` and
-	// `resource_names_to_remove` must be less than or equal to 1000.
+	// ResourceNamesToAdd: Optional. The resource names of the contact people to
+	// add in the form of `people/{person_id}`. The total number of resource names
+	// in `resource_names_to_add` and `resource_names_to_remove` must be less than
+	// or equal to 1000.
 	ResourceNamesToAdd []string `json:"resourceNamesToAdd,omitempty"`
-
-	// ResourceNamesToRemove: Optional. The resource names of the contact
-	// people to remove in the form of `people/{person_id}`. The total
-	// number of resource names in `resource_names_to_add` and
-	// `resource_names_to_remove` must be less than or equal to 1000.
+	// ResourceNamesToRemove: Optional. The resource names of the contact people to
+	// remove in the form of `people/{person_id}`. The total number of resource
+	// names in `resource_names_to_add` and `resource_names_to_remove` must be less
+	// than or equal to 1000.
 	ResourceNamesToRemove []string `json:"resourceNamesToRemove,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ResourceNamesToAdd")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ResourceNamesToAdd") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ResourceNamesToAdd") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ResourceNamesToAdd") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ModifyContactGroupMembersRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyContactGroupMembersRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ModifyContactGroupMembersResponse: The response to a modify contact
-// group members request.
+// ModifyContactGroupMembersResponse: The response to a modify contact group
+// members request.
 type ModifyContactGroupMembersResponse struct {
-	// CanNotRemoveLastContactGroupResourceNames: The contact people
-	// resource names that cannot be removed from their last contact group.
+	// CanNotRemoveLastContactGroupResourceNames: The contact people resource names
+	// that cannot be removed from their last contact group.
 	CanNotRemoveLastContactGroupResourceNames []string `json:"canNotRemoveLastContactGroupResourceNames,omitempty"`
-
-	// NotFoundResourceNames: The contact people resource names that were
-	// not found.
+	// NotFoundResourceNames: The contact people resource names that were not
+	// found.
 	NotFoundResourceNames []string `json:"notFoundResourceNames,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "CanNotRemoveLastContactGroupResourceNames") to unconditionally
-	// include in API requests. By default, fields with empty or default
-	// values are omitted from API requests. However, any non-pointer,
-	// non-interface field appearing in ForceSendFields will be sent to the
-	// server regardless of whether the field is empty or not. This may be
-	// used to include empty fields in Patch requests.
+	// "CanNotRemoveLastContactGroupResourceNames") to unconditionally include in
+	// API requests. By default, fields with empty or default values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g.
-	// "CanNotRemoveLastContactGroupResourceNames") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// "CanNotRemoveLastContactGroupResourceNames") to include in API requests with
+	// the JSON null value. By default, fields with empty values are omitted from
+	// API requests. See https://pkg.go.dev/google.golang.org/api#hdr-NullFields
+	// for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ModifyContactGroupMembersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ModifyContactGroupMembersResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Name: A person's name. If the name is a mononym, the family name is
-// empty.
+// Name: A person's name. If the name is a mononym, the family name is empty.
 type Name struct {
-	// DisplayName: Output only. The display name formatted according to the
-	// locale specified by the viewer's account or the `Accept-Language`
-	// HTTP header.
+	// DisplayName: Output only. The display name formatted according to the locale
+	// specified by the viewer's account or the `Accept-Language` HTTP header.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// DisplayNameLastFirst: Output only. The display name with the last
-	// name first formatted according to the locale specified by the
-	// viewer's account or the `Accept-Language` HTTP header.
+	// DisplayNameLastFirst: Output only. The display name with the last name first
+	// formatted according to the locale specified by the viewer's account or the
+	// `Accept-Language` HTTP header.
 	DisplayNameLastFirst string `json:"displayNameLastFirst,omitempty"`
-
 	// FamilyName: The family name.
 	FamilyName string `json:"familyName,omitempty"`
-
 	// GivenName: The given name.
 	GivenName string `json:"givenName,omitempty"`
-
 	// HonorificPrefix: The honorific prefixes, such as `Mrs.` or `Dr.`
 	HonorificPrefix string `json:"honorificPrefix,omitempty"`
-
 	// HonorificSuffix: The honorific suffixes, such as `Jr.`
 	HonorificSuffix string `json:"honorificSuffix,omitempty"`
-
 	// Metadata: Metadata about the name.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// MiddleName: The middle name(s).
 	MiddleName string `json:"middleName,omitempty"`
-
 	// PhoneticFamilyName: The family name spelled as it sounds.
 	PhoneticFamilyName string `json:"phoneticFamilyName,omitempty"`
-
 	// PhoneticFullName: The full name spelled as it sounds.
 	PhoneticFullName string `json:"phoneticFullName,omitempty"`
-
 	// PhoneticGivenName: The given name spelled as it sounds.
 	PhoneticGivenName string `json:"phoneticGivenName,omitempty"`
-
-	// PhoneticHonorificPrefix: The honorific prefixes spelled as they
-	// sound.
+	// PhoneticHonorificPrefix: The honorific prefixes spelled as they sound.
 	PhoneticHonorificPrefix string `json:"phoneticHonorificPrefix,omitempty"`
-
-	// PhoneticHonorificSuffix: The honorific suffixes spelled as they
-	// sound.
+	// PhoneticHonorificSuffix: The honorific suffixes spelled as they sound.
 	PhoneticHonorificSuffix string `json:"phoneticHonorificSuffix,omitempty"`
-
 	// PhoneticMiddleName: The middle name(s) spelled as they sound.
 	PhoneticMiddleName string `json:"phoneticMiddleName,omitempty"`
-
 	// UnstructuredName: The free form name value.
 	UnstructuredName string `json:"unstructuredName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Name) MarshalJSON() ([]byte, error) {
 	type NoMethod Name
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Nickname: A person's nickname.
 type Nickname struct {
 	// Metadata: Metadata about the nickname.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Type: The type of the nickname.
 	//
 	// Possible values:
 	//   "DEFAULT" - Generic nickname.
-	//   "MAIDEN_NAME" - Maiden name or birth family name. Used when the
-	// person's family name has changed as a result of marriage.
+	//   "MAIDEN_NAME" - Maiden name or birth family name. Used when the person's
+	// family name has changed as a result of marriage.
 	//   "INITIALS" - Initials.
 	//   "GPLUS" - Google+ profile nickname.
-	//   "OTHER_NAME" - A professional affiliation or other name; for
-	// example, `Dr. Smith.`
+	//   "OTHER_NAME" - A professional affiliation or other name; for example, `Dr.
+	// Smith.`
 	//   "ALTERNATE_NAME" - Alternate name person is known by.
 	//   "SHORT_NAME" - A shorter version of the person's name.
 	Type string `json:"type,omitempty"`
-
 	// Value: The nickname.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Metadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Metadata") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Nickname) MarshalJSON() ([]byte, error) {
 	type NoMethod Nickname
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Occupation: A person's occupation.
 type Occupation struct {
 	// Metadata: Metadata about the occupation.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Value: The occupation; for example, `carpenter`.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Metadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Metadata") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Occupation) MarshalJSON() ([]byte, error) {
 	type NoMethod Occupation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Organization: A person's past or current organization. Overlapping
-// date ranges are permitted.
+// Organization: A person's past or current organization. Overlapping date
+// ranges are permitted.
 type Organization struct {
 	// CostCenter: The person's cost center at the organization.
 	CostCenter string `json:"costCenter,omitempty"`
-
-	// Current: True if the organization is the person's current
-	// organization; false if the organization is a past organization.
+	// Current: True if the organization is the person's current organization;
+	// false if the organization is a past organization.
 	Current bool `json:"current,omitempty"`
-
 	// Department: The person's department at the organization.
 	Department string `json:"department,omitempty"`
-
-	// Domain: The domain name associated with the organization; for
-	// example, `google.com`.
+	// Domain: The domain name associated with the organization; for example,
+	// `google.com`.
 	Domain string `json:"domain,omitempty"`
-
 	// EndDate: The end date when the person left the organization.
 	EndDate *Date `json:"endDate,omitempty"`
-
-	// FormattedType: Output only. The type of the organization translated
-	// and formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// FormattedType: Output only. The type of the organization translated and
+	// formatted in the viewer's account locale or the `Accept-Language` HTTP
+	// header locale.
 	FormattedType string `json:"formattedType,omitempty"`
-
 	// FullTimeEquivalentMillipercent: The person's full-time equivalent
 	// millipercent within the organization (100000 = 100%).
 	FullTimeEquivalentMillipercent int64 `json:"fullTimeEquivalentMillipercent,omitempty"`
-
 	// JobDescription: The person's job description at the organization.
 	JobDescription string `json:"jobDescription,omitempty"`
-
-	// Location: The location of the organization office the person works
-	// at.
+	// Location: The location of the organization office the person works at.
 	Location string `json:"location,omitempty"`
-
 	// Metadata: Metadata about the organization.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Name: The name of the organization.
 	Name string `json:"name,omitempty"`
-
 	// PhoneticName: The phonetic name of the organization.
 	PhoneticName string `json:"phoneticName,omitempty"`
-
 	// StartDate: The start date when the person joined the organization.
 	StartDate *Date `json:"startDate,omitempty"`
-
-	// Symbol: The symbol associated with the organization; for example, a
-	// stock ticker symbol, abbreviation, or acronym.
+	// Symbol: The symbol associated with the organization; for example, a stock
+	// ticker symbol, abbreviation, or acronym.
 	Symbol string `json:"symbol,omitempty"`
-
 	// Title: The person's job title at the organization.
 	Title string `json:"title,omitempty"`
-
-	// Type: The type of the organization. The type can be custom or one of
-	// these predefined values: * `work` * `school`
+	// Type: The type of the organization. The type can be custom or one of these
+	// predefined values: * `work` * `school`
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CostCenter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CostCenter") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CostCenter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Organization) MarshalJSON() ([]byte, error) {
 	type NoMethod Organization
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Person: Information about a person merged from various data sources
-// such as the authenticated user's contacts and profile data. Most
-// fields can have multiple items. The items in a field have no
-// guaranteed order, but each non-empty field is guaranteed to have
-// exactly one field with `metadata.primary` set to true.
+// Person: Information about a person merged from various data sources such as
+// the authenticated user's contacts and profile data. Most fields can have
+// multiple items. The items in a field have no guaranteed order, but each
+// non-empty field is guaranteed to have exactly one field with
+// `metadata.primary` set to true.
 type Person struct {
 	// Addresses: The person's street addresses.
 	Addresses []*Address `json:"addresses,omitempty"`
-
 	// AgeRange: Output only. **DEPRECATED** (Please use `person.ageRanges`
 	// instead) The person's age range.
 	//
@@ -2360,342 +1879,257 @@ type Person struct {
 	//   "EIGHTEEN_TO_TWENTY" - Between eighteen and twenty.
 	//   "TWENTY_ONE_OR_OLDER" - Twenty-one and older.
 	AgeRange string `json:"ageRange,omitempty"`
-
 	// AgeRanges: Output only. The person's age ranges.
 	AgeRanges []*AgeRangeType `json:"ageRanges,omitempty"`
-
-	// Biographies: The person's biographies. This field is a singleton for
-	// contact sources.
+	// Biographies: The person's biographies. This field is a singleton for contact
+	// sources.
 	Biographies []*Biography `json:"biographies,omitempty"`
-
-	// Birthdays: The person's birthdays. This field is a singleton for
-	// contact sources.
+	// Birthdays: The person's birthdays. This field is a singleton for contact
+	// sources.
 	Birthdays []*Birthday `json:"birthdays,omitempty"`
-
 	// BraggingRights: **DEPRECATED**: No data will be returned The person's
 	// bragging rights.
 	BraggingRights []*BraggingRights `json:"braggingRights,omitempty"`
-
 	// CalendarUrls: The person's calendar URLs.
 	CalendarUrls []*CalendarUrl `json:"calendarUrls,omitempty"`
-
 	// ClientData: The person's client data.
 	ClientData []*ClientData `json:"clientData,omitempty"`
-
 	// CoverPhotos: Output only. The person's cover photos.
 	CoverPhotos []*CoverPhoto `json:"coverPhotos,omitempty"`
-
-	// EmailAddresses: The person's email addresses. For
-	// `people.connections.list` and `otherContacts.list` the number of
-	// email addresses is limited to 100. If a Person has more email
-	// addresses the entire set can be obtained by calling GetPeople.
+	// EmailAddresses: The person's email addresses. For `people.connections.list`
+	// and `otherContacts.list` the number of email addresses is limited to 100. If
+	// a Person has more email addresses the entire set can be obtained by calling
+	// GetPeople.
 	EmailAddresses []*EmailAddress `json:"emailAddresses,omitempty"`
-
-	// Etag: The HTTP entity tag (https://en.wikipedia.org/wiki/HTTP_ETag)
-	// of the resource. Used for web cache validation.
+	// Etag: The HTTP entity tag (https://en.wikipedia.org/wiki/HTTP_ETag) of the
+	// resource. Used for web cache validation.
 	Etag string `json:"etag,omitempty"`
-
 	// Events: The person's events.
 	Events []*Event `json:"events,omitempty"`
-
 	// ExternalIds: The person's external IDs.
 	ExternalIds []*ExternalId `json:"externalIds,omitempty"`
-
 	// FileAses: The person's file-ases.
 	FileAses []*FileAs `json:"fileAses,omitempty"`
-
 	// Genders: The person's genders. This field is a singleton for contact
 	// sources.
 	Genders []*Gender `json:"genders,omitempty"`
-
 	// ImClients: The person's instant messaging clients.
 	ImClients []*ImClient `json:"imClients,omitempty"`
-
 	// Interests: The person's interests.
 	Interests []*Interest `json:"interests,omitempty"`
-
 	// Locales: The person's locale preferences.
 	Locales []*Locale `json:"locales,omitempty"`
-
 	// Locations: The person's locations.
 	Locations []*Location `json:"locations,omitempty"`
-
 	// Memberships: The person's group memberships.
 	Memberships []*Membership `json:"memberships,omitempty"`
-
 	// Metadata: Output only. Metadata about the person.
 	Metadata *PersonMetadata `json:"metadata,omitempty"`
-
 	// MiscKeywords: The person's miscellaneous keywords.
 	MiscKeywords []*MiscKeyword `json:"miscKeywords,omitempty"`
-
-	// Names: The person's names. This field is a singleton for contact
-	// sources.
+	// Names: The person's names. This field is a singleton for contact sources.
 	Names []*Name `json:"names,omitempty"`
-
 	// Nicknames: The person's nicknames.
 	Nicknames []*Nickname `json:"nicknames,omitempty"`
-
 	// Occupations: The person's occupations.
 	Occupations []*Occupation `json:"occupations,omitempty"`
-
 	// Organizations: The person's past or current organizations.
 	Organizations []*Organization `json:"organizations,omitempty"`
-
-	// PhoneNumbers: The person's phone numbers. For
-	// `people.connections.list` and `otherContacts.list` the number of
-	// phone numbers is limited to 100. If a Person has more phone numbers
-	// the entire set can be obtained by calling GetPeople.
+	// PhoneNumbers: The person's phone numbers. For `people.connections.list` and
+	// `otherContacts.list` the number of phone numbers is limited to 100. If a
+	// Person has more phone numbers the entire set can be obtained by calling
+	// GetPeople.
 	PhoneNumbers []*PhoneNumber `json:"phoneNumbers,omitempty"`
-
 	// Photos: Output only. The person's photos.
 	Photos []*Photo `json:"photos,omitempty"`
-
 	// Relations: The person's relations.
 	Relations []*Relation `json:"relations,omitempty"`
-
-	// RelationshipInterests: Output only. **DEPRECATED**: No data will be
-	// returned The person's relationship interests.
+	// RelationshipInterests: Output only. **DEPRECATED**: No data will be returned
+	// The person's relationship interests.
 	RelationshipInterests []*RelationshipInterest `json:"relationshipInterests,omitempty"`
-
-	// RelationshipStatuses: Output only. **DEPRECATED**: No data will be
-	// returned The person's relationship statuses.
+	// RelationshipStatuses: Output only. **DEPRECATED**: No data will be returned
+	// The person's relationship statuses.
 	RelationshipStatuses []*RelationshipStatus `json:"relationshipStatuses,omitempty"`
-
-	// Residences: **DEPRECATED**: (Please use `person.locations` instead)
-	// The person's residences.
+	// Residences: **DEPRECATED**: (Please use `person.locations` instead) The
+	// person's residences.
 	Residences []*Residence `json:"residences,omitempty"`
-
-	// ResourceName: The resource name for the person, assigned by the
-	// server. An ASCII string in the form of `people/{person_id}`.
+	// ResourceName: The resource name for the person, assigned by the server. An
+	// ASCII string in the form of `people/{person_id}`.
 	ResourceName string `json:"resourceName,omitempty"`
-
 	// SipAddresses: The person's SIP addresses.
 	SipAddresses []*SipAddress `json:"sipAddresses,omitempty"`
-
 	// Skills: The person's skills.
 	Skills []*Skill `json:"skills,omitempty"`
-
-	// Taglines: Output only. **DEPRECATED**: No data will be returned The
-	// person's taglines.
+	// Taglines: Output only. **DEPRECATED**: No data will be returned The person's
+	// taglines.
 	Taglines []*Tagline `json:"taglines,omitempty"`
-
 	// Urls: The person's associated URLs.
 	Urls []*Url `json:"urls,omitempty"`
-
 	// UserDefined: The person's user defined data.
 	UserDefined []*UserDefined `json:"userDefined,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Addresses") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Addresses") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Addresses") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Person) MarshalJSON() ([]byte, error) {
 	type NoMethod Person
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PersonMetadata: The metadata about a person.
 type PersonMetadata struct {
 	// Deleted: Output only. True if the person resource has been deleted.
-	// Populated only for `people.connections.list` and `otherContacts.list`
-	// sync requests.
+	// Populated only for `people.connections.list` and `otherContacts.list` sync
+	// requests.
 	Deleted bool `json:"deleted,omitempty"`
-
-	// LinkedPeopleResourceNames: Output only. Resource names of people
-	// linked to this resource.
+	// LinkedPeopleResourceNames: Output only. Resource names of people linked to
+	// this resource.
 	LinkedPeopleResourceNames []string `json:"linkedPeopleResourceNames,omitempty"`
-
 	// ObjectType: Output only. **DEPRECATED** (Please use
-	// `person.metadata.sources.profileMetadata.objectType` instead) The
-	// type of the person object.
+	// `person.metadata.sources.profileMetadata.objectType` instead) The type of
+	// the person object.
 	//
 	// Possible values:
 	//   "OBJECT_TYPE_UNSPECIFIED" - Unspecified.
 	//   "PERSON" - Person.
-	//   "PAGE" - [Currents
-	// Page.](https://workspace.google.com/products/currents/)
+	//   "PAGE" - [Currents Page.](https://workspace.google.com/products/currents/)
 	ObjectType string `json:"objectType,omitempty"`
-
-	// PreviousResourceNames: Output only. Any former resource names this
-	// person has had. Populated only for `people.connections.list` requests
-	// that include a sync token. The resource name may change when adding
-	// or removing fields that link a contact and profile such as a verified
-	// email, verified phone number, or profile URL.
+	// PreviousResourceNames: Output only. Any former resource names this person
+	// has had. Populated only for `people.connections.list` requests that include
+	// a sync token. The resource name may change when adding or removing fields
+	// that link a contact and profile such as a verified email, verified phone
+	// number, or profile URL.
 	PreviousResourceNames []string `json:"previousResourceNames,omitempty"`
-
 	// Sources: The sources of data for the person.
 	Sources []*Source `json:"sources,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Deleted") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Deleted") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Deleted") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Deleted") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PersonMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod PersonMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PersonResponse: The response for a single person
 type PersonResponse struct {
-	// HttpStatusCode: **DEPRECATED** (Please use status instead) [HTTP 1.1
-	// status code]
-	// (http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html).
+	// HttpStatusCode: **DEPRECATED** (Please use status instead) [HTTP 1.1 status
+	// code] (http://www.w3.org/Protocols/rfc2616/rfc2616-sec10.html).
 	HttpStatusCode int64 `json:"httpStatusCode,omitempty"`
-
 	// Person: The person.
 	Person *Person `json:"person,omitempty"`
-
 	// RequestedResourceName: The original requested resource name. May be
-	// different than the resource name on the returned person. The resource
-	// name can change when adding or removing fields that link a contact
-	// and profile such as a verified email, verified phone number, or a
-	// profile URL.
+	// different than the resource name on the returned person. The resource name
+	// can change when adding or removing fields that link a contact and profile
+	// such as a verified email, verified phone number, or a profile URL.
 	RequestedResourceName string `json:"requestedResourceName,omitempty"`
-
 	// Status: The status of the response.
 	Status *Status `json:"status,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "HttpStatusCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HttpStatusCode") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "HttpStatusCode") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PersonResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PersonResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PhoneNumber: A person's phone number.
 type PhoneNumber struct {
 	// CanonicalForm: Output only. The canonicalized ITU-T E.164
-	// (https://law.resource.org/pub/us/cfr/ibr/004/itu-t.E.164.1.2008.pdf)
-	// form of the phone number.
+	// (https://law.resource.org/pub/us/cfr/ibr/004/itu-t.E.164.1.2008.pdf) form of
+	// the phone number.
 	CanonicalForm string `json:"canonicalForm,omitempty"`
-
-	// FormattedType: Output only. The type of the phone number translated
-	// and formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// FormattedType: Output only. The type of the phone number translated and
+	// formatted in the viewer's account locale or the `Accept-Language` HTTP
+	// header locale.
 	FormattedType string `json:"formattedType,omitempty"`
-
 	// Metadata: Metadata about the phone number.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
-	// Type: The type of the phone number. The type can be custom or one of
-	// these predefined values: * `home` * `work` * `mobile` * `homeFax` *
-	// `workFax` * `otherFax` * `pager` * `workMobile` * `workPager` *
-	// `main` * `googleVoice` * `other`
+	// Type: The type of the phone number. The type can be custom or one of these
+	// predefined values: * `home` * `work` * `mobile` * `homeFax` * `workFax` *
+	// `otherFax` * `pager` * `workMobile` * `workPager` * `main` * `googleVoice` *
+	// `other`
 	Type string `json:"type,omitempty"`
-
 	// Value: The phone number.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CanonicalForm") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CanonicalForm") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CanonicalForm") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PhoneNumber) MarshalJSON() ([]byte, error) {
 	type NoMethod PhoneNumber
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Photo: A person's photo. A picture shown next to the person's name to
-// help others recognize the person.
+// Photo: A person's photo. A picture shown next to the person's name to help
+// others recognize the person.
 type Photo struct {
-	// Default: True if the photo is a default photo; false if the photo is
-	// a user-provided photo.
+	// Default: True if the photo is a default photo; false if the photo is a
+	// user-provided photo.
 	Default bool `json:"default,omitempty"`
-
 	// Metadata: Metadata about the photo.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
-	// Url: The URL of the photo. You can change the desired size by
-	// appending a query parameter `sz={size}` at the end of the url, where
-	// {size} is the size in pixels. Example:
+	// Url: The URL of the photo. You can change the desired size by appending a
+	// query parameter `sz={size}` at the end of the url, where {size} is the size
+	// in pixels. Example:
 	// https://lh3.googleusercontent.com/-T_wVWLlmg7w/AAAAAAAAAAI/AAAAAAAABa8/00gzXvDBYqw/s100/photo.jpg?sz=50
 	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Default") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Default") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Default") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Default") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Photo) MarshalJSON() ([]byte, error) {
 	type NoMethod Photo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ProfileMetadata: The metadata about a profile.
@@ -2705,10 +2139,8 @@ type ProfileMetadata struct {
 	// Possible values:
 	//   "OBJECT_TYPE_UNSPECIFIED" - Unspecified.
 	//   "PERSON" - Person.
-	//   "PAGE" - [Currents
-	// Page.](https://workspace.google.com/products/currents/)
+	//   "PAGE" - [Currents Page.](https://workspace.google.com/products/currents/)
 	ObjectType string `json:"objectType,omitempty"`
-
 	// UserTypes: Output only. The user types.
 	//
 	// Possible values:
@@ -2717,473 +2149,368 @@ type ProfileMetadata struct {
 	//   "GPLUS_USER" - The user is a Currents user.
 	//   "GOOGLE_APPS_USER" - The user is a Google Workspace user.
 	UserTypes []string `json:"userTypes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ObjectType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ObjectType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ObjectType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ProfileMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod ProfileMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Relation: A person's relation to another person.
 type Relation struct {
 	// FormattedType: Output only. The type of the relation translated and
-	// formatted in the viewer's account locale or the locale specified in
-	// the Accept-Language HTTP header.
+	// formatted in the viewer's account locale or the locale specified in the
+	// Accept-Language HTTP header.
 	FormattedType string `json:"formattedType,omitempty"`
-
 	// Metadata: Metadata about the relation.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Person: The name of the other person this relation refers to.
 	Person string `json:"person,omitempty"`
-
-	// Type: The person's relation to the other person. The type can be
-	// custom or one of these predefined values: * `spouse` * `child` *
-	// `mother` * `father` * `parent` * `brother` * `sister` * `friend` *
-	// `relative` * `domesticPartner` * `manager` * `assistant` *
-	// `referredBy` * `partner`
+	// Type: The person's relation to the other person. The type can be custom or
+	// one of these predefined values: * `spouse` * `child` * `mother` * `father` *
+	// `parent` * `brother` * `sister` * `friend` * `relative` * `domesticPartner`
+	// * `manager` * `assistant` * `referredBy` * `partner`
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FormattedType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FormattedType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FormattedType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Relation) MarshalJSON() ([]byte, error) {
 	type NoMethod Relation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// RelationshipInterest: **DEPRECATED**: No data will be returned A
-// person's relationship interest .
+// RelationshipInterest: **DEPRECATED**: No data will be returned A person's
+// relationship interest .
 type RelationshipInterest struct {
 	// FormattedValue: Output only. The value of the relationship interest
 	// translated and formatted in the viewer's account locale or the locale
 	// specified in the Accept-Language HTTP header.
 	FormattedValue string `json:"formattedValue,omitempty"`
-
 	// Metadata: Metadata about the relationship interest.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
-	// Value: The kind of relationship the person is looking for. The value
-	// can be custom or one of these predefined values: * `friend` * `date`
-	// * `relationship` * `networking`
+	// Value: The kind of relationship the person is looking for. The value can be
+	// custom or one of these predefined values: * `friend` * `date` *
+	// `relationship` * `networking`
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FormattedValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FormattedValue") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "FormattedValue") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RelationshipInterest) MarshalJSON() ([]byte, error) {
 	type NoMethod RelationshipInterest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// RelationshipStatus: **DEPRECATED**: No data will be returned A
-// person's relationship status.
+// RelationshipStatus: **DEPRECATED**: No data will be returned A person's
+// relationship status.
 type RelationshipStatus struct {
-	// FormattedValue: Output only. The value of the relationship status
-	// translated and formatted in the viewer's account locale or the
-	// `Accept-Language` HTTP header locale.
+	// FormattedValue: Output only. The value of the relationship status translated
+	// and formatted in the viewer's account locale or the `Accept-Language` HTTP
+	// header locale.
 	FormattedValue string `json:"formattedValue,omitempty"`
-
 	// Metadata: Metadata about the relationship status.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
-	// Value: The relationship status. The value can be custom or one of
-	// these predefined values: * `single` * `inARelationship` * `engaged` *
-	// `married` * `itsComplicated` * `openRelationship` * `widowed` *
-	// `inDomesticPartnership` * `inCivilUnion`
+	// Value: The relationship status. The value can be custom or one of these
+	// predefined values: * `single` * `inARelationship` * `engaged` * `married` *
+	// `itsComplicated` * `openRelationship` * `widowed` * `inDomesticPartnership`
+	// * `inCivilUnion`
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FormattedValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FormattedValue") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "FormattedValue") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RelationshipStatus) MarshalJSON() ([]byte, error) {
 	type NoMethod RelationshipStatus
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Residence: **DEPRECATED**: Please use `person.locations` instead. A
-// person's past or current residence.
+// Residence: **DEPRECATED**: Please use `person.locations` instead. A person's
+// past or current residence.
 type Residence struct {
-	// Current: True if the residence is the person's current residence;
-	// false if the residence is a past residence.
+	// Current: True if the residence is the person's current residence; false if
+	// the residence is a past residence.
 	Current bool `json:"current,omitempty"`
-
 	// Metadata: Metadata about the residence.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Value: The address of the residence.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Current") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Current") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Current") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Current") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Residence) MarshalJSON() ([]byte, error) {
 	type NoMethod Residence
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SearchDirectoryPeopleResponse: The response to a request for people
-// in the authenticated user's domain directory that match the specified
-// query.
+// SearchDirectoryPeopleResponse: The response to a request for people in the
+// authenticated user's domain directory that match the specified query.
 type SearchDirectoryPeopleResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// People: The list of people in the domain directory that match the
-	// query.
+	// People: The list of people in the domain directory that match the query.
 	People []*Person `json:"people,omitempty"`
-
 	// TotalSize: The total number of items in the list without pagination.
 	TotalSize int64 `json:"totalSize,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SearchDirectoryPeopleResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchDirectoryPeopleResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SearchResponse: The response to a search request for the
-// authenticated user, given a query.
+// SearchResponse: The response to a search request for the authenticated user,
+// given a query.
 type SearchResponse struct {
 	// Results: The results of the request.
 	Results []*SearchResult `json:"results,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Results") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Results") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Results") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Results") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SearchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SearchResult: A result of a search query.
 type SearchResult struct {
 	// Person: The matched Person.
 	Person *Person `json:"person,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Person") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Person") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Person") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SearchResult) MarshalJSON() ([]byte, error) {
 	type NoMethod SearchResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SipAddress: A person's SIP address. Session Initial Protocol
-// addresses are used for VoIP communications to make voice or video
-// calls over the internet.
+// SipAddress: A person's SIP address. Session Initial Protocol addresses are
+// used for VoIP communications to make voice or video calls over the internet.
 type SipAddress struct {
-	// FormattedType: Output only. The type of the SIP address translated
-	// and formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// FormattedType: Output only. The type of the SIP address translated and
+	// formatted in the viewer's account locale or the `Accept-Language` HTTP
+	// header locale.
 	FormattedType string `json:"formattedType,omitempty"`
-
 	// Metadata: Metadata about the SIP address.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
-	// Type: The type of the SIP address. The type can be custom or or one
-	// of these predefined values: * `home` * `work` * `mobile` * `other`
+	// Type: The type of the SIP address. The type can be custom or or one of these
+	// predefined values: * `home` * `work` * `mobile` * `other`
 	Type string `json:"type,omitempty"`
-
 	// Value: The SIP address in the RFC 3261 19.1
 	// (https://tools.ietf.org/html/rfc3261#section-19.1) SIP URI format.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FormattedType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FormattedType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FormattedType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SipAddress) MarshalJSON() ([]byte, error) {
 	type NoMethod SipAddress
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Skill: A skill that the person has.
 type Skill struct {
 	// Metadata: Metadata about the skill.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Value: The skill; for example, `underwater basket weaving`.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Metadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Metadata") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Skill) MarshalJSON() ([]byte, error) {
 	type NoMethod Skill
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Source: The source of a field.
 type Source struct {
-	// Etag: **Only populated in `person.metadata.sources`.** The HTTP
-	// entity tag (https://en.wikipedia.org/wiki/HTTP_ETag) of the source.
-	// Used for web cache validation.
+	// Etag: **Only populated in `person.metadata.sources`.** The HTTP entity tag
+	// (https://en.wikipedia.org/wiki/HTTP_ETag) of the source. Used for web cache
+	// validation.
 	Etag string `json:"etag,omitempty"`
-
-	// Id: The unique identifier within the source type generated by the
-	// server.
+	// Id: The unique identifier within the source type generated by the server.
 	Id string `json:"id,omitempty"`
-
 	// ProfileMetadata: Output only. **Only populated in
 	// `person.metadata.sources`.** Metadata about a source of type PROFILE.
 	ProfileMetadata *ProfileMetadata `json:"profileMetadata,omitempty"`
-
 	// Type: The source type.
 	//
 	// Possible values:
 	//   "SOURCE_TYPE_UNSPECIFIED" - Unspecified.
 	//   "ACCOUNT" - [Google Account](https://accounts.google.com).
-	//   "PROFILE" - [Google profile](https://profiles.google.com). You can
-	// view the profile at
-	// [https://profiles.google.com/](https://profiles.google.com/){id},
-	// where {id} is the source id.
+	//   "PROFILE" - [Google profile](https://profiles.google.com). You can view
+	// the profile at
+	// [https://profiles.google.com/](https://profiles.google.com/){id}, where {id}
+	// is the source id.
 	//   "DOMAIN_PROFILE" - [Google Workspace domain
 	// profile](https://support.google.com/a/answer/1628008).
-	//   "CONTACT" - [Google contact](https://contacts.google.com). You can
-	// view the contact at
-	// [https://contact.google.com/](https://contact.google.com/){id}, where
-	// {id} is the source id.
+	//   "CONTACT" - [Google contact](https://contacts.google.com). You can view
+	// the contact at
+	// [https://contact.google.com/](https://contact.google.com/){id}, where {id}
+	// is the source id.
 	//   "OTHER_CONTACT" - [Google "Other
 	// contact"](https://contacts.google.com/other).
 	//   "DOMAIN_CONTACT" - [Google Workspace domain shared
 	// contact](https://support.google.com/a/answer/9281635).
 	Type string `json:"type,omitempty"`
-
-	// UpdateTime: Output only. **Only populated in
-	// `person.metadata.sources`.** Last update timestamp of this source.
+	// UpdateTime: Output only. **Only populated in `person.metadata.sources`.**
+	// Last update timestamp of this source.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Source) MarshalJSON() ([]byte, error) {
 	type NoMethod Source
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Status: The `Status` type defines a logical error model that is
-// suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the API Design Guide
-// (https://cloud.google.com/apis/design/errors).
+// Status: The `Status` type defines a logical error model that is suitable for
+// different programming environments, including REST APIs and RPC APIs. It is
+// used by gRPC (https://github.com/grpc). Each `Status` message contains three
+// pieces of data: error code, error message, and error details. You can find
+// out more about this error model and how to work with it in the API Design
+// Guide (https://cloud.google.com/apis/design/errors).
 type Status struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Tagline: **DEPRECATED**: No data will be returned A brief one-line
@@ -3191,92 +2518,74 @@ func (s *Status) MarshalJSON() ([]byte, error) {
 type Tagline struct {
 	// Metadata: Metadata about the tagline.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Value: The tagline.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Metadata") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Metadata") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Metadata") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Tagline) MarshalJSON() ([]byte, error) {
 	type NoMethod Tagline
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// UpdateContactGroupRequest: A request to update an existing user
-// contact group. All updated fields will be replaced.
+// UpdateContactGroupRequest: A request to update an existing user contact
+// group. All updated fields will be replaced.
 type UpdateContactGroupRequest struct {
 	// ContactGroup: Required. The contact group to update.
 	ContactGroup *ContactGroup `json:"contactGroup,omitempty"`
-
-	// ReadGroupFields: Optional. A field mask to restrict which fields on
-	// the group are returned. Defaults to `metadata`, `groupType`, and
-	// `name` if not set or set to empty. Valid fields are: * clientData *
-	// groupType * memberCount * metadata * name
+	// ReadGroupFields: Optional. A field mask to restrict which fields on the
+	// group are returned. Defaults to `metadata`, `groupType`, and `name` if not
+	// set or set to empty. Valid fields are: * clientData * groupType *
+	// memberCount * metadata * name
 	ReadGroupFields string `json:"readGroupFields,omitempty"`
-
-	// UpdateGroupFields: Optional. A field mask to restrict which fields on
-	// the group are updated. Multiple fields can be specified by separating
-	// them with commas. Defaults to `name` if not set or set to empty.
-	// Updated fields are replaced. Valid values are: * clientData * name
+	// UpdateGroupFields: Optional. A field mask to restrict which fields on the
+	// group are updated. Multiple fields can be specified by separating them with
+	// commas. Defaults to `name` if not set or set to empty. Updated fields are
+	// replaced. Valid values are: * clientData * name
 	UpdateGroupFields string `json:"updateGroupFields,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ContactGroup") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContactGroup") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContactGroup") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UpdateContactGroupRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateContactGroupRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// UpdateContactPhotoRequest: A request to update an existing contact's
-// photo. All requests must have a valid photo format: JPEG or PNG.
+// UpdateContactPhotoRequest: A request to update an existing contact's photo.
+// All requests must have a valid photo format: JPEG or PNG.
 type UpdateContactPhotoRequest struct {
-	// PersonFields: Optional. A field mask to restrict which fields on the
-	// person are returned. Multiple fields can be specified by separating
-	// them with commas. Defaults to empty if not set, which will skip the
-	// post mutate get. Valid values are: * addresses * ageRanges *
-	// biographies * birthdays * calendarUrls * clientData * coverPhotos *
-	// emailAddresses * events * externalIds * genders * imClients *
-	// interests * locales * locations * memberships * metadata *
-	// miscKeywords * names * nicknames * occupations * organizations *
-	// phoneNumbers * photos * relations * sipAddresses * skills * urls *
-	// userDefined
+	// PersonFields: Optional. A field mask to restrict which fields on the person
+	// are returned. Multiple fields can be specified by separating them with
+	// commas. Defaults to empty if not set, which will skip the post mutate get.
+	// Valid values are: * addresses * ageRanges * biographies * birthdays *
+	// calendarUrls * clientData * coverPhotos * emailAddresses * events *
+	// externalIds * genders * imClients * interests * locales * locations *
+	// memberships * metadata * miscKeywords * names * nicknames * occupations *
+	// organizations * phoneNumbers * photos * relations * sipAddresses * skills *
+	// urls * userDefined
 	PersonFields string `json:"personFields,omitempty"`
-
 	// PhotoBytes: Required. Raw photo bytes
 	PhotoBytes string `json:"photoBytes,omitempty"`
-
 	// Sources: Optional. A mask of what source types to return. Defaults to
 	// READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.
 	//
@@ -3285,146 +2594,110 @@ type UpdateContactPhotoRequest struct {
 	//   "READ_SOURCE_TYPE_PROFILE" - Returns SourceType.ACCOUNT,
 	// SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
 	//   "READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
-	// SourceType.DOMAIN_CONTACT.
-	//   "READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-	// SourceType.OTHER_CONTACT.
+	//   "READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns SourceType.DOMAIN_CONTACT.
+	//   "READ_SOURCE_TYPE_OTHER_CONTACT" - Returns SourceType.OTHER_CONTACT.
 	Sources []string `json:"sources,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PersonFields") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PersonFields") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PersonFields") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UpdateContactPhotoRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateContactPhotoRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// UpdateContactPhotoResponse: The response for updating a contact's
-// photo.
+// UpdateContactPhotoResponse: The response for updating a contact's photo.
 type UpdateContactPhotoResponse struct {
 	// Person: The updated person, if person_fields is set in the
 	// UpdateContactPhotoRequest; otherwise this will be unset.
 	Person *Person `json:"person,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Person") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Person") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Person") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UpdateContactPhotoResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateContactPhotoResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Url: A person's associated URLs.
 type Url struct {
-	// FormattedType: Output only. The type of the URL translated and
-	// formatted in the viewer's account locale or the `Accept-Language`
-	// HTTP header locale.
+	// FormattedType: Output only. The type of the URL translated and formatted in
+	// the viewer's account locale or the `Accept-Language` HTTP header locale.
 	FormattedType string `json:"formattedType,omitempty"`
-
 	// Metadata: Metadata about the URL.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
-	// Type: The type of the URL. The type can be custom or one of these
-	// predefined values: * `home` * `work` * `blog` * `profile` *
-	// `homePage` * `ftp` * `reservations` * `appInstallPage`: website for a
-	// Currents application. * `other`
+	// Type: The type of the URL. The type can be custom or one of these predefined
+	// values: * `home` * `work` * `blog` * `profile` * `homePage` * `ftp` *
+	// `reservations` * `appInstallPage`: website for a Currents application. *
+	// `other`
 	Type string `json:"type,omitempty"`
-
 	// Value: The URL.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FormattedType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FormattedType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FormattedType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Url) MarshalJSON() ([]byte, error) {
 	type NoMethod Url
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // UserDefined: Arbitrary user data that is populated by the end users.
 type UserDefined struct {
 	// Key: The end user specified key of the user defined data.
 	Key string `json:"key,omitempty"`
-
 	// Metadata: Metadata about the user defined data.
 	Metadata *FieldMetadata `json:"metadata,omitempty"`
-
 	// Value: The end user specified value of the user defined data.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UserDefined) MarshalJSON() ([]byte, error) {
 	type NoMethod UserDefined
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "people.contactGroups.batchGet":
 
 type ContactGroupsBatchGetCall struct {
 	s            *Service
@@ -3434,67 +2707,62 @@ type ContactGroupsBatchGetCall struct {
 	header_      http.Header
 }
 
-// BatchGet: Get a list of contact groups owned by the authenticated
-// user by specifying a list of contact group resource names.
+// BatchGet: Get a list of contact groups owned by the authenticated user by
+// specifying a list of contact group resource names.
 func (r *ContactGroupsService) BatchGet() *ContactGroupsBatchGetCall {
 	c := &ContactGroupsBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// GroupFields sets the optional parameter "groupFields": A field mask
-// to restrict which fields on the group are returned. Defaults to
-// `metadata`, `groupType`, `memberCount`, and `name` if not set or set
-// to empty. Valid fields are: * clientData * groupType * memberCount *
-// metadata * name
+// GroupFields sets the optional parameter "groupFields": A field mask to
+// restrict which fields on the group are returned. Defaults to `metadata`,
+// `groupType`, `memberCount`, and `name` if not set or set to empty. Valid
+// fields are: * clientData * groupType * memberCount * metadata * name
 func (c *ContactGroupsBatchGetCall) GroupFields(groupFields string) *ContactGroupsBatchGetCall {
 	c.urlParams_.Set("groupFields", groupFields)
 	return c
 }
 
-// MaxMembers sets the optional parameter "maxMembers": Specifies the
-// maximum number of members to return for each group. Defaults to 0 if
-// not set, which will return zero members.
+// MaxMembers sets the optional parameter "maxMembers": Specifies the maximum
+// number of members to return for each group. Defaults to 0 if not set, which
+// will return zero members.
 func (c *ContactGroupsBatchGetCall) MaxMembers(maxMembers int64) *ContactGroupsBatchGetCall {
 	c.urlParams_.Set("maxMembers", fmt.Sprint(maxMembers))
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": Required.
-// The resource names of the contact groups to get. There is a maximum
-// of 200 resource names.
+// ResourceNames sets the optional parameter "resourceNames": Required. The
+// resource names of the contact groups to get. There is a maximum of 200
+// resource names.
 func (c *ContactGroupsBatchGetCall) ResourceNames(resourceNames ...string) *ContactGroupsBatchGetCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ContactGroupsBatchGetCall) Fields(s ...googleapi.Field) *ContactGroupsBatchGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ContactGroupsBatchGetCall) IfNoneMatch(entityTag string) *ContactGroupsBatchGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ContactGroupsBatchGetCall) Context(ctx context.Context) *ContactGroupsBatchGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ContactGroupsBatchGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3503,12 +2771,7 @@ func (c *ContactGroupsBatchGetCall) Header() http.Header {
 }
 
 func (c *ContactGroupsBatchGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3526,12 +2789,11 @@ func (c *ContactGroupsBatchGetCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "people.contactGroups.batchGet" call.
-// Exactly one of *BatchGetContactGroupsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *BatchGetContactGroupsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchGetContactGroupsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ContactGroupsBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetContactGroupsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3562,45 +2824,7 @@ func (c *ContactGroupsBatchGetCall) Do(opts ...googleapi.CallOption) (*BatchGetC
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get a list of contact groups owned by the authenticated user by specifying a list of contact group resource names.",
-	//   "flatPath": "v1/contactGroups:batchGet",
-	//   "httpMethod": "GET",
-	//   "id": "people.contactGroups.batchGet",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "groupFields": {
-	//       "description": "Optional. A field mask to restrict which fields on the group are returned. Defaults to `metadata`, `groupType`, `memberCount`, and `name` if not set or set to empty. Valid fields are: * clientData * groupType * memberCount * metadata * name",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "maxMembers": {
-	//       "description": "Optional. Specifies the maximum number of members to return for each group. Defaults to 0 if not set, which will return zero members.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "resourceNames": {
-	//       "description": "Required. The resource names of the contact groups to get. There is a maximum of 200 resource names.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/contactGroups:batchGet",
-	//   "response": {
-	//     "$ref": "BatchGetContactGroupsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts",
-	//     "https://www.googleapis.com/auth/contacts.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "people.contactGroups.create":
 
 type ContactGroupsCreateCall struct {
 	s                         *Service
@@ -3610,11 +2834,11 @@ type ContactGroupsCreateCall struct {
 	header_                   http.Header
 }
 
-// Create: Create a new contact group owned by the authenticated user.
-// Created contact group names must be unique to the users contact
-// groups. Attempting to create a group with a duplicate name will
-// return a HTTP 409 error. Mutate requests for the same user should be
-// sent sequentially to avoid increased latency and failures.
+// Create: Create a new contact group owned by the authenticated user. Created
+// contact group names must be unique to the users contact groups. Attempting
+// to create a group with a duplicate name will return a HTTP 409 error. Mutate
+// requests for the same user should be sent sequentially to avoid increased
+// latency and failures.
 func (r *ContactGroupsService) Create(createcontactgrouprequest *CreateContactGroupRequest) *ContactGroupsCreateCall {
 	c := &ContactGroupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.createcontactgrouprequest = createcontactgrouprequest
@@ -3622,23 +2846,21 @@ func (r *ContactGroupsService) Create(createcontactgrouprequest *CreateContactGr
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ContactGroupsCreateCall) Fields(s ...googleapi.Field) *ContactGroupsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ContactGroupsCreateCall) Context(ctx context.Context) *ContactGroupsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ContactGroupsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3647,18 +2869,12 @@ func (c *ContactGroupsCreateCall) Header() http.Header {
 }
 
 func (c *ContactGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createcontactgrouprequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/contactGroups")
@@ -3672,12 +2888,10 @@ func (c *ContactGroupsCreateCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "people.contactGroups.create" call.
-// Exactly one of *ContactGroup or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *ContactGroup.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ContactGroup.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ContactGroupsCreateCall) Do(opts ...googleapi.CallOption) (*ContactGroup, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3708,28 +2922,7 @@ func (c *ContactGroupsCreateCall) Do(opts ...googleapi.CallOption) (*ContactGrou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create a new contact group owned by the authenticated user. Created contact group names must be unique to the users contact groups. Attempting to create a group with a duplicate name will return a HTTP 409 error. Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
-	//   "flatPath": "v1/contactGroups",
-	//   "httpMethod": "POST",
-	//   "id": "people.contactGroups.create",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/contactGroups",
-	//   "request": {
-	//     "$ref": "CreateContactGroupRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "ContactGroup"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts"
-	//   ]
-	// }
-
 }
-
-// method id "people.contactGroups.delete":
 
 type ContactGroupsDeleteCall struct {
 	s            *Service
@@ -3739,10 +2932,9 @@ type ContactGroupsDeleteCall struct {
 	header_      http.Header
 }
 
-// Delete: Delete an existing contact group owned by the authenticated
-// user by specifying a contact group resource name. Mutate requests for
-// the same user should be sent sequentially to avoid increased latency
-// and failures.
+// Delete: Delete an existing contact group owned by the authenticated user by
+// specifying a contact group resource name. Mutate requests for the same user
+// should be sent sequentially to avoid increased latency and failures.
 //
 // - resourceName: The resource name of the contact group to delete.
 func (r *ContactGroupsService) Delete(resourceName string) *ContactGroupsDeleteCall {
@@ -3751,31 +2943,29 @@ func (r *ContactGroupsService) Delete(resourceName string) *ContactGroupsDeleteC
 	return c
 }
 
-// DeleteContacts sets the optional parameter "deleteContacts": Set to
-// true to also delete the contacts in the specified group.
+// DeleteContacts sets the optional parameter "deleteContacts": Set to true to
+// also delete the contacts in the specified group.
 func (c *ContactGroupsDeleteCall) DeleteContacts(deleteContacts bool) *ContactGroupsDeleteCall {
 	c.urlParams_.Set("deleteContacts", fmt.Sprint(deleteContacts))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ContactGroupsDeleteCall) Fields(s ...googleapi.Field) *ContactGroupsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ContactGroupsDeleteCall) Context(ctx context.Context) *ContactGroupsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ContactGroupsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3784,12 +2974,7 @@ func (c *ContactGroupsDeleteCall) Header() http.Header {
 }
 
 func (c *ContactGroupsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3807,12 +2992,10 @@ func (c *ContactGroupsDeleteCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "people.contactGroups.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ContactGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3843,40 +3026,7 @@ func (c *ContactGroupsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete an existing contact group owned by the authenticated user by specifying a contact group resource name. Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
-	//   "flatPath": "v1/contactGroups/{contactGroupsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "people.contactGroups.delete",
-	//   "parameterOrder": [
-	//     "resourceName"
-	//   ],
-	//   "parameters": {
-	//     "deleteContacts": {
-	//       "description": "Optional. Set to true to also delete the contacts in the specified group.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "resourceName": {
-	//       "description": "Required. The resource name of the contact group to delete.",
-	//       "location": "path",
-	//       "pattern": "^contactGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resourceName}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts"
-	//   ]
-	// }
-
 }
-
-// method id "people.contactGroups.get":
 
 type ContactGroupsGetCall struct {
 	s            *Service
@@ -3897,52 +3047,47 @@ func (r *ContactGroupsService) Get(resourceName string) *ContactGroupsGetCall {
 	return c
 }
 
-// GroupFields sets the optional parameter "groupFields": A field mask
-// to restrict which fields on the group are returned. Defaults to
-// `metadata`, `groupType`, `memberCount`, and `name` if not set or set
-// to empty. Valid fields are: * clientData * groupType * memberCount *
-// metadata * name
+// GroupFields sets the optional parameter "groupFields": A field mask to
+// restrict which fields on the group are returned. Defaults to `metadata`,
+// `groupType`, `memberCount`, and `name` if not set or set to empty. Valid
+// fields are: * clientData * groupType * memberCount * metadata * name
 func (c *ContactGroupsGetCall) GroupFields(groupFields string) *ContactGroupsGetCall {
 	c.urlParams_.Set("groupFields", groupFields)
 	return c
 }
 
-// MaxMembers sets the optional parameter "maxMembers": Specifies the
-// maximum number of members to return. Defaults to 0 if not set, which
-// will return zero members.
+// MaxMembers sets the optional parameter "maxMembers": Specifies the maximum
+// number of members to return. Defaults to 0 if not set, which will return
+// zero members.
 func (c *ContactGroupsGetCall) MaxMembers(maxMembers int64) *ContactGroupsGetCall {
 	c.urlParams_.Set("maxMembers", fmt.Sprint(maxMembers))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ContactGroupsGetCall) Fields(s ...googleapi.Field) *ContactGroupsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ContactGroupsGetCall) IfNoneMatch(entityTag string) *ContactGroupsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ContactGroupsGetCall) Context(ctx context.Context) *ContactGroupsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ContactGroupsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3951,12 +3096,7 @@ func (c *ContactGroupsGetCall) Header() http.Header {
 }
 
 func (c *ContactGroupsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3977,12 +3117,10 @@ func (c *ContactGroupsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "people.contactGroups.get" call.
-// Exactly one of *ContactGroup or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *ContactGroup.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ContactGroup.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ContactGroupsGetCall) Do(opts ...googleapi.CallOption) (*ContactGroup, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4013,48 +3151,7 @@ func (c *ContactGroupsGetCall) Do(opts ...googleapi.CallOption) (*ContactGroup, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get a specific contact group owned by the authenticated user by specifying a contact group resource name.",
-	//   "flatPath": "v1/contactGroups/{contactGroupsId}",
-	//   "httpMethod": "GET",
-	//   "id": "people.contactGroups.get",
-	//   "parameterOrder": [
-	//     "resourceName"
-	//   ],
-	//   "parameters": {
-	//     "groupFields": {
-	//       "description": "Optional. A field mask to restrict which fields on the group are returned. Defaults to `metadata`, `groupType`, `memberCount`, and `name` if not set or set to empty. Valid fields are: * clientData * groupType * memberCount * metadata * name",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "maxMembers": {
-	//       "description": "Optional. Specifies the maximum number of members to return. Defaults to 0 if not set, which will return zero members.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "resourceName": {
-	//       "description": "Required. The resource name of the contact group to get.",
-	//       "location": "path",
-	//       "pattern": "^contactGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resourceName}",
-	//   "response": {
-	//     "$ref": "ContactGroup"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts",
-	//     "https://www.googleapis.com/auth/contacts.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "people.contactGroups.list":
 
 type ContactGroupsListCall struct {
 	s            *Service
@@ -4064,76 +3161,71 @@ type ContactGroupsListCall struct {
 	header_      http.Header
 }
 
-// List: List all contact groups owned by the authenticated user.
-// Members of the contact groups are not populated.
+// List: List all contact groups owned by the authenticated user. Members of
+// the contact groups are not populated.
 func (r *ContactGroupsService) List() *ContactGroupsListCall {
 	c := &ContactGroupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// GroupFields sets the optional parameter "groupFields": A field mask
-// to restrict which fields on the group are returned. Defaults to
-// `metadata`, `groupType`, `memberCount`, and `name` if not set or set
-// to empty. Valid fields are: * clientData * groupType * memberCount *
-// metadata * name
+// GroupFields sets the optional parameter "groupFields": A field mask to
+// restrict which fields on the group are returned. Defaults to `metadata`,
+// `groupType`, `memberCount`, and `name` if not set or set to empty. Valid
+// fields are: * clientData * groupType * memberCount * metadata * name
 func (c *ContactGroupsListCall) GroupFields(groupFields string) *ContactGroupsListCall {
 	c.urlParams_.Set("groupFields", groupFields)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of resources to return. Valid values are between 1 and 1000,
-// inclusive. Defaults to 30 if not set or set to 0.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// resources to return. Valid values are between 1 and 1000, inclusive.
+// Defaults to 30 if not set or set to 0.
 func (c *ContactGroupsListCall) PageSize(pageSize int64) *ContactGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous call to
-// ListContactGroups (/people/api/rest/v1/contactgroups/list). Requests
-// the next page of resources.
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous call to ListContactGroups
+// (/people/api/rest/v1/contactgroups/list). Requests the next page of
+// resources.
 func (c *ContactGroupsListCall) PageToken(pageToken string) *ContactGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// SyncToken sets the optional parameter "syncToken": A sync token,
-// returned by a previous call to `contactgroups.list`. Only resources
-// changed since the sync token was created will be returned.
+// SyncToken sets the optional parameter "syncToken": A sync token, returned by
+// a previous call to `contactgroups.list`. Only resources changed since the
+// sync token was created will be returned.
 func (c *ContactGroupsListCall) SyncToken(syncToken string) *ContactGroupsListCall {
 	c.urlParams_.Set("syncToken", syncToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ContactGroupsListCall) Fields(s ...googleapi.Field) *ContactGroupsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ContactGroupsListCall) IfNoneMatch(entityTag string) *ContactGroupsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ContactGroupsListCall) Context(ctx context.Context) *ContactGroupsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ContactGroupsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4142,12 +3234,7 @@ func (c *ContactGroupsListCall) Header() http.Header {
 }
 
 func (c *ContactGroupsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4165,12 +3252,11 @@ func (c *ContactGroupsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "people.contactGroups.list" call.
-// Exactly one of *ListContactGroupsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListContactGroupsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListContactGroupsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ContactGroupsListCall) Do(opts ...googleapi.CallOption) (*ListContactGroupsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4201,46 +3287,6 @@ func (c *ContactGroupsListCall) Do(opts ...googleapi.CallOption) (*ListContactGr
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all contact groups owned by the authenticated user. Members of the contact groups are not populated.",
-	//   "flatPath": "v1/contactGroups",
-	//   "httpMethod": "GET",
-	//   "id": "people.contactGroups.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "groupFields": {
-	//       "description": "Optional. A field mask to restrict which fields on the group are returned. Defaults to `metadata`, `groupType`, `memberCount`, and `name` if not set or set to empty. Valid fields are: * clientData * groupType * memberCount * metadata * name",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of resources to return. Valid values are between 1 and 1000, inclusive. Defaults to 30 if not set or set to 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. The next_page_token value returned from a previous call to [ListContactGroups](/people/api/rest/v1/contactgroups/list). Requests the next page of resources.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "syncToken": {
-	//       "description": "Optional. A sync token, returned by a previous call to `contactgroups.list`. Only resources changed since the sync token was created will be returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/contactGroups",
-	//   "response": {
-	//     "$ref": "ListContactGroupsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts",
-	//     "https://www.googleapis.com/auth/contacts.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4248,7 +3294,7 @@ func (c *ContactGroupsListCall) Do(opts ...googleapi.CallOption) (*ListContactGr
 // The provided context supersedes any context provided to the Context method.
 func (c *ContactGroupsListCall) Pages(ctx context.Context, f func(*ListContactGroupsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4264,8 +3310,6 @@ func (c *ContactGroupsListCall) Pages(ctx context.Context, f func(*ListContactGr
 	}
 }
 
-// method id "people.contactGroups.update":
-
 type ContactGroupsUpdateCall struct {
 	s                         *Service
 	resourceName              string
@@ -4276,13 +3320,13 @@ type ContactGroupsUpdateCall struct {
 }
 
 // Update: Update the name of an existing contact group owned by the
-// authenticated user. Updated contact group names must be unique to the
-// users contact groups. Attempting to create a group with a duplicate
-// name will return a HTTP 409 error. Mutate requests for the same user
-// should be sent sequentially to avoid increased latency and failures.
+// authenticated user. Updated contact group names must be unique to the users
+// contact groups. Attempting to create a group with a duplicate name will
+// return a HTTP 409 error. Mutate requests for the same user should be sent
+// sequentially to avoid increased latency and failures.
 //
-//   - resourceName: The resource name for the contact group, assigned by
-//     the server. An ASCII string, in the form of
+//   - resourceName: The resource name for the contact group, assigned by the
+//     server. An ASCII string, in the form of
 //     `contactGroups/{contact_group_id}`.
 func (r *ContactGroupsService) Update(resourceName string, updatecontactgrouprequest *UpdateContactGroupRequest) *ContactGroupsUpdateCall {
 	c := &ContactGroupsUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -4292,23 +3336,21 @@ func (r *ContactGroupsService) Update(resourceName string, updatecontactgroupreq
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ContactGroupsUpdateCall) Fields(s ...googleapi.Field) *ContactGroupsUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ContactGroupsUpdateCall) Context(ctx context.Context) *ContactGroupsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ContactGroupsUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4317,18 +3359,12 @@ func (c *ContactGroupsUpdateCall) Header() http.Header {
 }
 
 func (c *ContactGroupsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updatecontactgrouprequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resourceName}")
@@ -4345,12 +3381,10 @@ func (c *ContactGroupsUpdateCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "people.contactGroups.update" call.
-// Exactly one of *ContactGroup or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *ContactGroup.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ContactGroup.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ContactGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*ContactGroup, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4381,38 +3415,7 @@ func (c *ContactGroupsUpdateCall) Do(opts ...googleapi.CallOption) (*ContactGrou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update the name of an existing contact group owned by the authenticated user. Updated contact group names must be unique to the users contact groups. Attempting to create a group with a duplicate name will return a HTTP 409 error. Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
-	//   "flatPath": "v1/contactGroups/{contactGroupsId}",
-	//   "httpMethod": "PUT",
-	//   "id": "people.contactGroups.update",
-	//   "parameterOrder": [
-	//     "resourceName"
-	//   ],
-	//   "parameters": {
-	//     "resourceName": {
-	//       "description": "The resource name for the contact group, assigned by the server. An ASCII string, in the form of `contactGroups/{contact_group_id}`.",
-	//       "location": "path",
-	//       "pattern": "^contactGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resourceName}",
-	//   "request": {
-	//     "$ref": "UpdateContactGroupRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "ContactGroup"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts"
-	//   ]
-	// }
-
 }
-
-// method id "people.contactGroups.members.modify":
 
 type ContactGroupsMembersModifyCall struct {
 	s                                *Service
@@ -4423,11 +3426,10 @@ type ContactGroupsMembersModifyCall struct {
 	header_                          http.Header
 }
 
-// Modify: Modify the members of a contact group owned by the
-// authenticated user. The only system contact groups that can have
-// members added are `contactGroups/myContacts` and
-// `contactGroups/starred`. Other system contact groups are deprecated
-// and can only have contacts removed.
+// Modify: Modify the members of a contact group owned by the authenticated
+// user. The only system contact groups that can have members added are
+// `contactGroups/myContacts` and `contactGroups/starred`. Other system contact
+// groups are deprecated and can only have contacts removed.
 //
 // - resourceName: The resource name of the contact group to modify.
 func (r *ContactGroupsMembersService) Modify(resourceName string, modifycontactgroupmembersrequest *ModifyContactGroupMembersRequest) *ContactGroupsMembersModifyCall {
@@ -4438,23 +3440,21 @@ func (r *ContactGroupsMembersService) Modify(resourceName string, modifycontactg
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ContactGroupsMembersModifyCall) Fields(s ...googleapi.Field) *ContactGroupsMembersModifyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ContactGroupsMembersModifyCall) Context(ctx context.Context) *ContactGroupsMembersModifyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ContactGroupsMembersModifyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4463,18 +3463,12 @@ func (c *ContactGroupsMembersModifyCall) Header() http.Header {
 }
 
 func (c *ContactGroupsMembersModifyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.modifycontactgroupmembersrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resourceName}/members:modify")
@@ -4491,13 +3485,11 @@ func (c *ContactGroupsMembersModifyCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "people.contactGroups.members.modify" call.
-// Exactly one of *ModifyContactGroupMembersResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ModifyContactGroupMembersResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ModifyContactGroupMembersResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ContactGroupsMembersModifyCall) Do(opts ...googleapi.CallOption) (*ModifyContactGroupMembersResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4528,38 +3520,7 @@ func (c *ContactGroupsMembersModifyCall) Do(opts ...googleapi.CallOption) (*Modi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Modify the members of a contact group owned by the authenticated user. The only system contact groups that can have members added are `contactGroups/myContacts` and `contactGroups/starred`. Other system contact groups are deprecated and can only have contacts removed.",
-	//   "flatPath": "v1/contactGroups/{contactGroupsId}/members:modify",
-	//   "httpMethod": "POST",
-	//   "id": "people.contactGroups.members.modify",
-	//   "parameterOrder": [
-	//     "resourceName"
-	//   ],
-	//   "parameters": {
-	//     "resourceName": {
-	//       "description": "Required. The resource name of the contact group to modify.",
-	//       "location": "path",
-	//       "pattern": "^contactGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resourceName}/members:modify",
-	//   "request": {
-	//     "$ref": "ModifyContactGroupMembersRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "ModifyContactGroupMembersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts"
-	//   ]
-	// }
-
 }
-
-// method id "people.otherContacts.copyOtherContactToMyContactsGroup":
 
 type OtherContactsCopyOtherContactToMyContactsGroupCall struct {
 	s                                        *Service
@@ -4571,9 +3532,8 @@ type OtherContactsCopyOtherContactToMyContactsGroupCall struct {
 }
 
 // CopyOtherContactToMyContactsGroup: Copies an "Other contact" to a new
-// contact in the user's "myContacts" group Mutate requests for the same
-// user should be sent sequentially to avoid increased latency and
-// failures.
+// contact in the user's "myContacts" group Mutate requests for the same user
+// should be sent sequentially to avoid increased latency and failures.
 //
 // - resourceName: The resource name of the "Other contact" to copy.
 func (r *OtherContactsService) CopyOtherContactToMyContactsGroup(resourceName string, copyothercontacttomycontactsgrouprequest *CopyOtherContactToMyContactsGroupRequest) *OtherContactsCopyOtherContactToMyContactsGroupCall {
@@ -4584,23 +3544,21 @@ func (r *OtherContactsService) CopyOtherContactToMyContactsGroup(resourceName st
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Fields(s ...googleapi.Field) *OtherContactsCopyOtherContactToMyContactsGroupCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Context(ctx context.Context) *OtherContactsCopyOtherContactToMyContactsGroupCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4609,18 +3567,12 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Header() http.Heade
 }
 
 func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.copyothercontacttomycontactsgrouprequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resourceName}:copyOtherContactToMyContactsGroup")
@@ -4637,12 +3589,10 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) doRequest(alt strin
 }
 
 // Do executes the "people.otherContacts.copyOtherContactToMyContactsGroup" call.
-// Exactly one of *Person or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Person.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Person.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4673,39 +3623,7 @@ func (c *OtherContactsCopyOtherContactToMyContactsGroupCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Copies an \"Other contact\" to a new contact in the user's \"myContacts\" group Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
-	//   "flatPath": "v1/otherContacts/{otherContactsId}:copyOtherContactToMyContactsGroup",
-	//   "httpMethod": "POST",
-	//   "id": "people.otherContacts.copyOtherContactToMyContactsGroup",
-	//   "parameterOrder": [
-	//     "resourceName"
-	//   ],
-	//   "parameters": {
-	//     "resourceName": {
-	//       "description": "Required. The resource name of the \"Other contact\" to copy.",
-	//       "location": "path",
-	//       "pattern": "^otherContacts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resourceName}:copyOtherContactToMyContactsGroup",
-	//   "request": {
-	//     "$ref": "CopyOtherContactToMyContactsGroupRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Person"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts",
-	//     "https://www.googleapis.com/auth/contacts.other.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "people.otherContacts.list":
 
 type OtherContactsListCall struct {
 	s            *Service
@@ -4715,83 +3633,77 @@ type OtherContactsListCall struct {
 	header_      http.Header
 }
 
-// List: List all "Other contacts", that is contacts that are not in a
-// contact group. "Other contacts" are typically auto created contacts
-// from interactions. Sync tokens expire 7 days after the full sync. A
-// request with an expired sync token will get an error with an
-// google.rpc.ErrorInfo
+// List: List all "Other contacts", that is contacts that are not in a contact
+// group. "Other contacts" are typically auto created contacts from
+// interactions. Sync tokens expire 7 days after the full sync. A request with
+// an expired sync token will get an error with an google.rpc.ErrorInfo
 // (https://cloud.google.com/apis/design/errors#error_info) with reason
-// "EXPIRED_SYNC_TOKEN". In the case of such an error clients should
-// make a full sync request without a `sync_token`. The first page of a
-// full sync request has an additional quota. If the quota is exceeded,
-// a 429 error will be returned. This quota is fixed and can not be
-// increased. When the `sync_token` is specified, resources deleted
-// since the last sync will be returned as a person with
-// `PersonMetadata.deleted` set to true. When the `page_token` or
-// `sync_token` is specified, all other request parameters must match
-// the first call. Writes may have a propagation delay of several
-// minutes for sync requests. Incremental syncs are not intended for
-// read-after-write use cases. See example usage at List the user's
-// other contacts that have changed
-// (/people/v1/other-contacts#list_the_users_other_contacts_that_have_cha
-// nged).
+// "EXPIRED_SYNC_TOKEN". In the case of such an error clients should make a
+// full sync request without a `sync_token`. The first page of a full sync
+// request has an additional quota. If the quota is exceeded, a 429 error will
+// be returned. This quota is fixed and can not be increased. When the
+// `sync_token` is specified, resources deleted since the last sync will be
+// returned as a person with `PersonMetadata.deleted` set to true. When the
+// `page_token` or `sync_token` is specified, all other request parameters must
+// match the first call. Writes may have a propagation delay of several minutes
+// for sync requests. Incremental syncs are not intended for read-after-write
+// use cases. See example usage at List the user's other contacts that have
+// changed
+// (/people/v1/other-contacts#list_the_users_other_contacts_that_have_changed).
 func (r *OtherContactsService) List() *OtherContactsListCall {
 	c := &OtherContactsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // PageSize sets the optional parameter "pageSize": The number of "Other
-// contacts" to include in the response. Valid values are between 1 and
-// 1000, inclusive. Defaults to 100 if not set or set to 0.
+// contacts" to include in the response. Valid values are between 1 and 1000,
+// inclusive. Defaults to 100 if not set or set to 0.
 func (c *OtherContactsListCall) PageSize(pageSize int64) *OtherContactsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous response `next_page_token`. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `otherContacts.list` must match the first call that
-// provided the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous response `next_page_token`. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `otherContacts.list` must match the first call that provided the page token.
 func (c *OtherContactsListCall) PageToken(pageToken string) *OtherContactsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ReadMask sets the optional parameter "readMask": Required. A field
-// mask to restrict which fields on each person are returned. Multiple
-// fields can be specified by separating them with commas. What values
-// are valid depend on what ReadSourceType is used. If
-// READ_SOURCE_TYPE_CONTACT is used, valid values are: * emailAddresses
-// * metadata * names * phoneNumbers * photos If
-// READ_SOURCE_TYPE_PROFILE is used, valid values are: * addresses *
-// ageRanges * biographies * birthdays * calendarUrls * clientData *
-// coverPhotos * emailAddresses * events * externalIds * genders *
-// imClients * interests * locales * locations * memberships * metadata
-// * miscKeywords * names * nicknames * occupations * organizations *
-// phoneNumbers * photos * relations * sipAddresses * skills * urls *
-// userDefined
+// ReadMask sets the optional parameter "readMask": Required. A field mask to
+// restrict which fields on each person are returned. Multiple fields can be
+// specified by separating them with commas. What values are valid depend on
+// what ReadSourceType is used. If READ_SOURCE_TYPE_CONTACT is used, valid
+// values are: * emailAddresses * metadata * names * phoneNumbers * photos If
+// READ_SOURCE_TYPE_PROFILE is used, valid values are: * addresses * ageRanges
+// * biographies * birthdays * calendarUrls * clientData * coverPhotos *
+// emailAddresses * events * externalIds * genders * imClients * interests *
+// locales * locations * memberships * metadata * miscKeywords * names *
+// nicknames * occupations * organizations * phoneNumbers * photos * relations
+// * sipAddresses * skills * urls * userDefined
 func (c *OtherContactsListCall) ReadMask(readMask string) *OtherContactsListCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
 }
 
-// RequestSyncToken sets the optional parameter "requestSyncToken":
-// Whether the response should return `next_sync_token` on the last page
-// of results. It can be used to get incremental changes since the last
-// request by setting it on the request `sync_token`. More details about
-// sync behavior at `otherContacts.list`.
+// RequestSyncToken sets the optional parameter "requestSyncToken": Whether the
+// response should return `next_sync_token` on the last page of results. It can
+// be used to get incremental changes since the last request by setting it on
+// the request `sync_token`. More details about sync behavior at
+// `otherContacts.list`.
 func (c *OtherContactsListCall) RequestSyncToken(requestSyncToken bool) *OtherContactsListCall {
 	c.urlParams_.Set("requestSyncToken", fmt.Sprint(requestSyncToken))
 	return c
 }
 
-// Sources sets the optional parameter "sources": A mask of what source
-// types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.
-// Possible values for this field are: * READ_SOURCE_TYPE_CONTACT *
+// Sources sets the optional parameter "sources": A mask of what source types
+// to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set. Possible values
+// for this field are: * READ_SOURCE_TYPE_CONTACT *
 // READ_SOURCE_TYPE_CONTACT,READ_SOURCE_TYPE_PROFILE Specifying
-// READ_SOURCE_TYPE_PROFILE without specifying READ_SOURCE_TYPE_CONTACT
-// is not permitted.
+// READ_SOURCE_TYPE_PROFILE without specifying READ_SOURCE_TYPE_CONTACT is not
+// permitted.
 //
 // Possible values:
 //
@@ -4801,57 +3713,47 @@ func (c *OtherContactsListCall) RequestSyncToken(requestSyncToken bool) *OtherCo
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
 //
 //	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
-//
-// SourceType.DOMAIN_CONTACT.
-//
-//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-//
-// SourceType.OTHER_CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns SourceType.DOMAIN_CONTACT.
+//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns SourceType.OTHER_CONTACT.
 func (c *OtherContactsListCall) Sources(sources ...string) *OtherContactsListCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
 }
 
-// SyncToken sets the optional parameter "syncToken": A sync token,
-// received from a previous response `next_sync_token` Provide this to
-// retrieve only the resources changed since the last request. When
-// syncing, all other parameters provided to `otherContacts.list` must
-// match the first call that provided the sync token. More details about
-// sync behavior at `otherContacts.list`.
+// SyncToken sets the optional parameter "syncToken": A sync token, received
+// from a previous response `next_sync_token` Provide this to retrieve only the
+// resources changed since the last request. When syncing, all other parameters
+// provided to `otherContacts.list` must match the first call that provided the
+// sync token. More details about sync behavior at `otherContacts.list`.
 func (c *OtherContactsListCall) SyncToken(syncToken string) *OtherContactsListCall {
 	c.urlParams_.Set("syncToken", syncToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OtherContactsListCall) Fields(s ...googleapi.Field) *OtherContactsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OtherContactsListCall) IfNoneMatch(entityTag string) *OtherContactsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OtherContactsListCall) Context(ctx context.Context) *OtherContactsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OtherContactsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4860,12 +3762,7 @@ func (c *OtherContactsListCall) Header() http.Header {
 }
 
 func (c *OtherContactsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4883,12 +3780,11 @@ func (c *OtherContactsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "people.otherContacts.list" call.
-// Exactly one of *ListOtherContactsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListOtherContactsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListOtherContactsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OtherContactsListCall) Do(opts ...googleapi.CallOption) (*ListOtherContactsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4919,70 +3815,6 @@ func (c *OtherContactsListCall) Do(opts ...googleapi.CallOption) (*ListOtherCont
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all \"Other contacts\", that is contacts that are not in a contact group. \"Other contacts\" are typically auto created contacts from interactions. Sync tokens expire 7 days after the full sync. A request with an expired sync token will get an error with an [google.rpc.ErrorInfo](https://cloud.google.com/apis/design/errors#error_info) with reason \"EXPIRED_SYNC_TOKEN\". In the case of such an error clients should make a full sync request without a `sync_token`. The first page of a full sync request has an additional quota. If the quota is exceeded, a 429 error will be returned. This quota is fixed and can not be increased. When the `sync_token` is specified, resources deleted since the last sync will be returned as a person with `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request parameters must match the first call. Writes may have a propagation delay of several minutes for sync requests. Incremental syncs are not intended for read-after-write use cases. See example usage at [List the user's other contacts that have changed](/people/v1/other-contacts#list_the_users_other_contacts_that_have_changed).",
-	//   "flatPath": "v1/otherContacts",
-	//   "httpMethod": "GET",
-	//   "id": "people.otherContacts.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. The number of \"Other contacts\" to include in the response. Valid values are between 1 and 1000, inclusive. Defaults to 100 if not set or set to 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous response `next_page_token`. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `otherContacts.list` must match the first call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "readMask": {
-	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. What values are valid depend on what ReadSourceType is used. If READ_SOURCE_TYPE_CONTACT is used, valid values are: * emailAddresses * metadata * names * phoneNumbers * photos If READ_SOURCE_TYPE_PROFILE is used, valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "requestSyncToken": {
-	//       "description": "Optional. Whether the response should return `next_sync_token` on the last page of results. It can be used to get incremental changes since the last request by setting it on the request `sync_token`. More details about sync behavior at `otherContacts.list`.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set. Possible values for this field are: * READ_SOURCE_TYPE_CONTACT * READ_SOURCE_TYPE_CONTACT,READ_SOURCE_TYPE_PROFILE Specifying READ_SOURCE_TYPE_PROFILE without specifying READ_SOURCE_TYPE_CONTACT is not permitted.",
-	//       "enum": [
-	//         "READ_SOURCE_TYPE_UNSPECIFIED",
-	//         "READ_SOURCE_TYPE_PROFILE",
-	//         "READ_SOURCE_TYPE_CONTACT",
-	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT",
-	//         "READ_SOURCE_TYPE_OTHER_CONTACT"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unspecified.",
-	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
-	//         "Returns SourceType.CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.OTHER_CONTACT."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "syncToken": {
-	//       "description": "Optional. A sync token, received from a previous response `next_sync_token` Provide this to retrieve only the resources changed since the last request. When syncing, all other parameters provided to `otherContacts.list` must match the first call that provided the sync token. More details about sync behavior at `otherContacts.list`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/otherContacts",
-	//   "response": {
-	//     "$ref": "ListOtherContactsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts.other.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4990,7 +3822,7 @@ func (c *OtherContactsListCall) Do(opts ...googleapi.CallOption) (*ListOtherCont
 // The provided context supersedes any context provided to the Context method.
 func (c *OtherContactsListCall) Pages(ctx context.Context, f func(*ListOtherContactsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5006,8 +3838,6 @@ func (c *OtherContactsListCall) Pages(ctx context.Context, f func(*ListOtherCont
 	}
 }
 
-// method id "people.otherContacts.search":
-
 type OtherContactsSearchCall struct {
 	s            *Service
 	urlParams_   gensupport.URLParams
@@ -5017,72 +3847,66 @@ type OtherContactsSearchCall struct {
 }
 
 // Search: Provides a list of contacts in the authenticated user's other
-// contacts that matches the search query. The query matches on a
-// contact's `names`, `emailAddresses`, and `phoneNumbers` fields that
-// are from the OTHER_CONTACT source. **IMPORTANT**: Before searching,
-// clients should send a warmup request with an empty query to update
-// the cache. See
+// contacts that matches the search query. The query matches on a contact's
+// `names`, `emailAddresses`, and `phoneNumbers` fields that are from the
+// OTHER_CONTACT source. **IMPORTANT**: Before searching, clients should send a
+// warmup request with an empty query to update the cache. See
 // https://developers.google.com/people/v1/other-contacts#search_the_users_other_contacts
 func (r *OtherContactsService) Search() *OtherContactsSearchCall {
 	c := &OtherContactsSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The number of
-// results to return. Defaults to 10 if field is not set, or set to 0.
-// Values greater than 30 will be capped to 30.
+// PageSize sets the optional parameter "pageSize": The number of results to
+// return. Defaults to 10 if field is not set, or set to 0. Values greater than
+// 30 will be capped to 30.
 func (c *OtherContactsSearchCall) PageSize(pageSize int64) *OtherContactsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// Query sets the optional parameter "query": Required. The plain-text
-// query for the request. The query is used to match prefix phrases of
-// the fields on a person. For example, a person with name "foo name"
-// matches queries such as "f", "fo", "foo", "foo n", "nam", etc., but
-// not "oo n".
+// Query sets the optional parameter "query": Required. The plain-text query
+// for the request. The query is used to match prefix phrases of the fields on
+// a person. For example, a person with name "foo name" matches queries such as
+// "f", "fo", "foo", "foo n", "nam", etc., but not "oo n".
 func (c *OtherContactsSearchCall) Query(query string) *OtherContactsSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
 }
 
-// ReadMask sets the optional parameter "readMask": Required. A field
-// mask to restrict which fields on each person are returned. Multiple
-// fields can be specified by separating them with commas. Valid values
-// are: * emailAddresses * metadata * names * phoneNumbers
+// ReadMask sets the optional parameter "readMask": Required. A field mask to
+// restrict which fields on each person are returned. Multiple fields can be
+// specified by separating them with commas. Valid values are: * emailAddresses
+// * metadata * names * phoneNumbers
 func (c *OtherContactsSearchCall) ReadMask(readMask string) *OtherContactsSearchCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OtherContactsSearchCall) Fields(s ...googleapi.Field) *OtherContactsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OtherContactsSearchCall) IfNoneMatch(entityTag string) *OtherContactsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OtherContactsSearchCall) Context(ctx context.Context) *OtherContactsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OtherContactsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5091,12 +3915,7 @@ func (c *OtherContactsSearchCall) Header() http.Header {
 }
 
 func (c *OtherContactsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5114,12 +3933,10 @@ func (c *OtherContactsSearchCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "people.otherContacts.search" call.
-// Exactly one of *SearchResponse or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *SearchResponse.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchResponse.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *OtherContactsSearchCall) Do(opts ...googleapi.CallOption) (*SearchResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5150,43 +3967,7 @@ func (c *OtherContactsSearchCall) Do(opts ...googleapi.CallOption) (*SearchRespo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Provides a list of contacts in the authenticated user's other contacts that matches the search query. The query matches on a contact's `names`, `emailAddresses`, and `phoneNumbers` fields that are from the OTHER_CONTACT source. **IMPORTANT**: Before searching, clients should send a warmup request with an empty query to update the cache. See https://developers.google.com/people/v1/other-contacts#search_the_users_other_contacts",
-	//   "flatPath": "v1/otherContacts:search",
-	//   "httpMethod": "GET",
-	//   "id": "people.otherContacts.search",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. The number of results to return. Defaults to 10 if field is not set, or set to 0. Values greater than 30 will be capped to 30.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "query": {
-	//       "description": "Required. The plain-text query for the request. The query is used to match prefix phrases of the fields on a person. For example, a person with name \"foo name\" matches queries such as \"f\", \"fo\", \"foo\", \"foo n\", \"nam\", etc., but not \"oo n\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "readMask": {
-	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * emailAddresses * metadata * names * phoneNumbers",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/otherContacts:search",
-	//   "response": {
-	//     "$ref": "SearchResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts.other.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "people.people.batchCreateContacts":
 
 type PeopleBatchCreateContactsCall struct {
 	s                          *Service
@@ -5197,8 +3978,8 @@ type PeopleBatchCreateContactsCall struct {
 }
 
 // BatchCreateContacts: Create a batch of new contacts and return the
-// PersonResponses for the newly Mutate requests for the same user
-// should be sent sequentially to avoid increased latency and failures.
+// PersonResponses for the newly Mutate requests for the same user should be
+// sent sequentially to avoid increased latency and failures.
 func (r *PeopleService) BatchCreateContacts(batchcreatecontactsrequest *BatchCreateContactsRequest) *PeopleBatchCreateContactsCall {
 	c := &PeopleBatchCreateContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.batchcreatecontactsrequest = batchcreatecontactsrequest
@@ -5206,23 +3987,21 @@ func (r *PeopleService) BatchCreateContacts(batchcreatecontactsrequest *BatchCre
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PeopleBatchCreateContactsCall) Fields(s ...googleapi.Field) *PeopleBatchCreateContactsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PeopleBatchCreateContactsCall) Context(ctx context.Context) *PeopleBatchCreateContactsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PeopleBatchCreateContactsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5231,18 +4010,12 @@ func (c *PeopleBatchCreateContactsCall) Header() http.Header {
 }
 
 func (c *PeopleBatchCreateContactsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchcreatecontactsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/people:batchCreateContacts")
@@ -5256,12 +4029,11 @@ func (c *PeopleBatchCreateContactsCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "people.people.batchCreateContacts" call.
-// Exactly one of *BatchCreateContactsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *BatchCreateContactsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *BatchCreateContactsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PeopleBatchCreateContactsCall) Do(opts ...googleapi.CallOption) (*BatchCreateContactsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5292,28 +4064,7 @@ func (c *PeopleBatchCreateContactsCall) Do(opts ...googleapi.CallOption) (*Batch
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create a batch of new contacts and return the PersonResponses for the newly Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
-	//   "flatPath": "v1/people:batchCreateContacts",
-	//   "httpMethod": "POST",
-	//   "id": "people.people.batchCreateContacts",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/people:batchCreateContacts",
-	//   "request": {
-	//     "$ref": "BatchCreateContactsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "BatchCreateContactsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts"
-	//   ]
-	// }
-
 }
-
-// method id "people.people.batchDeleteContacts":
 
 type PeopleBatchDeleteContactsCall struct {
 	s                          *Service
@@ -5323,8 +4074,8 @@ type PeopleBatchDeleteContactsCall struct {
 	header_                    http.Header
 }
 
-// BatchDeleteContacts: Delete a batch of contacts. Any non-contact data
-// will not be deleted. Mutate requests for the same user should be sent
+// BatchDeleteContacts: Delete a batch of contacts. Any non-contact data will
+// not be deleted. Mutate requests for the same user should be sent
 // sequentially to avoid increased latency and failures.
 func (r *PeopleService) BatchDeleteContacts(batchdeletecontactsrequest *BatchDeleteContactsRequest) *PeopleBatchDeleteContactsCall {
 	c := &PeopleBatchDeleteContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -5333,23 +4084,21 @@ func (r *PeopleService) BatchDeleteContacts(batchdeletecontactsrequest *BatchDel
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PeopleBatchDeleteContactsCall) Fields(s ...googleapi.Field) *PeopleBatchDeleteContactsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PeopleBatchDeleteContactsCall) Context(ctx context.Context) *PeopleBatchDeleteContactsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PeopleBatchDeleteContactsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5358,18 +4107,12 @@ func (c *PeopleBatchDeleteContactsCall) Header() http.Header {
 }
 
 func (c *PeopleBatchDeleteContactsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchdeletecontactsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/people:batchDeleteContacts")
@@ -5383,12 +4126,10 @@ func (c *PeopleBatchDeleteContactsCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "people.people.batchDeleteContacts" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PeopleBatchDeleteContactsCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5419,28 +4160,7 @@ func (c *PeopleBatchDeleteContactsCall) Do(opts ...googleapi.CallOption) (*Empty
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete a batch of contacts. Any non-contact data will not be deleted. Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
-	//   "flatPath": "v1/people:batchDeleteContacts",
-	//   "httpMethod": "POST",
-	//   "id": "people.people.batchDeleteContacts",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/people:batchDeleteContacts",
-	//   "request": {
-	//     "$ref": "BatchDeleteContactsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts"
-	//   ]
-	// }
-
 }
-
-// method id "people.people.batchUpdateContacts":
 
 type PeopleBatchUpdateContactsCall struct {
 	s                          *Service
@@ -5450,10 +4170,10 @@ type PeopleBatchUpdateContactsCall struct {
 	header_                    http.Header
 }
 
-// BatchUpdateContacts: Update a batch of contacts and return a map of
-// resource names to PersonResponses for the updated contacts. Mutate
-// requests for the same user should be sent sequentially to avoid
-// increased latency and failures.
+// BatchUpdateContacts: Update a batch of contacts and return a map of resource
+// names to PersonResponses for the updated contacts. Mutate requests for the
+// same user should be sent sequentially to avoid increased latency and
+// failures.
 func (r *PeopleService) BatchUpdateContacts(batchupdatecontactsrequest *BatchUpdateContactsRequest) *PeopleBatchUpdateContactsCall {
 	c := &PeopleBatchUpdateContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.batchupdatecontactsrequest = batchupdatecontactsrequest
@@ -5461,23 +4181,21 @@ func (r *PeopleService) BatchUpdateContacts(batchupdatecontactsrequest *BatchUpd
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PeopleBatchUpdateContactsCall) Fields(s ...googleapi.Field) *PeopleBatchUpdateContactsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PeopleBatchUpdateContactsCall) Context(ctx context.Context) *PeopleBatchUpdateContactsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PeopleBatchUpdateContactsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5486,18 +4204,12 @@ func (c *PeopleBatchUpdateContactsCall) Header() http.Header {
 }
 
 func (c *PeopleBatchUpdateContactsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchupdatecontactsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/people:batchUpdateContacts")
@@ -5511,12 +4223,11 @@ func (c *PeopleBatchUpdateContactsCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "people.people.batchUpdateContacts" call.
-// Exactly one of *BatchUpdateContactsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *BatchUpdateContactsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *BatchUpdateContactsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PeopleBatchUpdateContactsCall) Do(opts ...googleapi.CallOption) (*BatchUpdateContactsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5547,28 +4258,7 @@ func (c *PeopleBatchUpdateContactsCall) Do(opts ...googleapi.CallOption) (*Batch
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update a batch of contacts and return a map of resource names to PersonResponses for the updated contacts. Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
-	//   "flatPath": "v1/people:batchUpdateContacts",
-	//   "httpMethod": "POST",
-	//   "id": "people.people.batchUpdateContacts",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1/people:batchUpdateContacts",
-	//   "request": {
-	//     "$ref": "BatchUpdateContactsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "BatchUpdateContactsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts"
-	//   ]
-	// }
-
 }
-
-// method id "people.people.createContact":
 
 type PeopleCreateContactCall struct {
 	s          *Service
@@ -5578,36 +4268,34 @@ type PeopleCreateContactCall struct {
 	header_    http.Header
 }
 
-// CreateContact: Create a new contact and return the person resource
-// for that contact. The request returns a 400 error if more than one
-// field is specified on a field that is a singleton for contact
-// sources: * biographies * birthdays * genders * names Mutate requests
-// for the same user should be sent sequentially to avoid increased
-// latency and failures.
+// CreateContact: Create a new contact and return the person resource for that
+// contact. The request returns a 400 error if more than one field is specified
+// on a field that is a singleton for contact sources: * biographies *
+// birthdays * genders * names Mutate requests for the same user should be sent
+// sequentially to avoid increased latency and failures.
 func (r *PeopleService) CreateContact(person *Person) *PeopleCreateContactCall {
 	c := &PeopleCreateContactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.person = person
 	return c
 }
 
-// PersonFields sets the optional parameter "personFields": Required. A
-// field mask to restrict which fields on each person are returned.
-// Multiple fields can be specified by separating them with commas.
-// Defaults to all fields if not set. Valid values are: * addresses *
-// ageRanges * biographies * birthdays * calendarUrls * clientData *
-// coverPhotos * emailAddresses * events * externalIds * genders *
-// imClients * interests * locales * locations * memberships * metadata
-// * miscKeywords * names * nicknames * occupations * organizations *
-// phoneNumbers * photos * relations * sipAddresses * skills * urls *
-// userDefined
+// PersonFields sets the optional parameter "personFields": Required. A field
+// mask to restrict which fields on each person are returned. Multiple fields
+// can be specified by separating them with commas. Defaults to all fields if
+// not set. Valid values are: * addresses * ageRanges * biographies * birthdays
+// * calendarUrls * clientData * coverPhotos * emailAddresses * events *
+// externalIds * genders * imClients * interests * locales * locations *
+// memberships * metadata * miscKeywords * names * nicknames * occupations *
+// organizations * phoneNumbers * photos * relations * sipAddresses * skills *
+// urls * userDefined
 func (c *PeopleCreateContactCall) PersonFields(personFields string) *PeopleCreateContactCall {
 	c.urlParams_.Set("personFields", personFields)
 	return c
 }
 
-// Sources sets the optional parameter "sources": A mask of what source
-// types to return. Defaults to READ_SOURCE_TYPE_CONTACT and
-// READ_SOURCE_TYPE_PROFILE if not set.
+// Sources sets the optional parameter "sources": A mask of what source types
+// to return. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE
+// if not set.
 //
 // Possible values:
 //
@@ -5617,36 +4305,29 @@ func (c *PeopleCreateContactCall) PersonFields(personFields string) *PeopleCreat
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
 //
 //	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
-//
-// SourceType.DOMAIN_CONTACT.
-//
-//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-//
-// SourceType.OTHER_CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns SourceType.DOMAIN_CONTACT.
+//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns SourceType.OTHER_CONTACT.
 func (c *PeopleCreateContactCall) Sources(sources ...string) *PeopleCreateContactCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PeopleCreateContactCall) Fields(s ...googleapi.Field) *PeopleCreateContactCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PeopleCreateContactCall) Context(ctx context.Context) *PeopleCreateContactCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PeopleCreateContactCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5655,18 +4336,12 @@ func (c *PeopleCreateContactCall) Header() http.Header {
 }
 
 func (c *PeopleCreateContactCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.person)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/people:createContact")
@@ -5680,12 +4355,10 @@ func (c *PeopleCreateContactCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "people.people.createContact" call.
-// Exactly one of *Person or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Person.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Person.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PeopleCreateContactCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5716,55 +4389,7 @@ func (c *PeopleCreateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create a new contact and return the person resource for that contact. The request returns a 400 error if more than one field is specified on a field that is a singleton for contact sources: * biographies * birthdays * genders * names Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
-	//   "flatPath": "v1/people:createContact",
-	//   "httpMethod": "POST",
-	//   "id": "people.people.createContact",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "personFields": {
-	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Defaults to all fields if not set. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.",
-	//       "enum": [
-	//         "READ_SOURCE_TYPE_UNSPECIFIED",
-	//         "READ_SOURCE_TYPE_PROFILE",
-	//         "READ_SOURCE_TYPE_CONTACT",
-	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT",
-	//         "READ_SOURCE_TYPE_OTHER_CONTACT"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unspecified.",
-	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
-	//         "Returns SourceType.CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.OTHER_CONTACT."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/people:createContact",
-	//   "request": {
-	//     "$ref": "Person"
-	//   },
-	//   "response": {
-	//     "$ref": "Person"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts"
-	//   ]
-	// }
-
 }
-
-// method id "people.people.deleteContact":
 
 type PeopleDeleteContactCall struct {
 	s            *Service
@@ -5774,9 +4399,9 @@ type PeopleDeleteContactCall struct {
 	header_      http.Header
 }
 
-// DeleteContact: Delete a contact person. Any non-contact data will not
-// be deleted. Mutate requests for the same user should be sent
-// sequentially to avoid increased latency and failures.
+// DeleteContact: Delete a contact person. Any non-contact data will not be
+// deleted. Mutate requests for the same user should be sent sequentially to
+// avoid increased latency and failures.
 //
 // - resourceName: The resource name of the contact to delete.
 func (r *PeopleService) DeleteContact(resourceName string) *PeopleDeleteContactCall {
@@ -5786,23 +4411,21 @@ func (r *PeopleService) DeleteContact(resourceName string) *PeopleDeleteContactC
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PeopleDeleteContactCall) Fields(s ...googleapi.Field) *PeopleDeleteContactCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PeopleDeleteContactCall) Context(ctx context.Context) *PeopleDeleteContactCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PeopleDeleteContactCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5811,12 +4434,7 @@ func (c *PeopleDeleteContactCall) Header() http.Header {
 }
 
 func (c *PeopleDeleteContactCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -5834,12 +4452,10 @@ func (c *PeopleDeleteContactCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "people.people.deleteContact" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PeopleDeleteContactCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5870,35 +4486,7 @@ func (c *PeopleDeleteContactCall) Do(opts ...googleapi.CallOption) (*Empty, erro
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete a contact person. Any non-contact data will not be deleted. Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
-	//   "flatPath": "v1/people/{peopleId}:deleteContact",
-	//   "httpMethod": "DELETE",
-	//   "id": "people.people.deleteContact",
-	//   "parameterOrder": [
-	//     "resourceName"
-	//   ],
-	//   "parameters": {
-	//     "resourceName": {
-	//       "description": "Required. The resource name of the contact to delete.",
-	//       "location": "path",
-	//       "pattern": "^people/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resourceName}:deleteContact",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts"
-	//   ]
-	// }
-
 }
-
-// method id "people.people.deleteContactPhoto":
 
 type PeopleDeleteContactPhotoCall struct {
 	s            *Service
@@ -5908,8 +4496,8 @@ type PeopleDeleteContactPhotoCall struct {
 	header_      http.Header
 }
 
-// DeleteContactPhoto: Delete a contact's photo. Mutate requests for the
-// same user should be done sequentially to avoid // lock contention.
+// DeleteContactPhoto: Delete a contact's photo. Mutate requests for the same
+// user should be done sequentially to avoid // lock contention.
 //
 //   - resourceName: The resource name of the contact whose photo will be
 //     deleted.
@@ -5919,24 +4507,23 @@ func (r *PeopleService) DeleteContactPhoto(resourceName string) *PeopleDeleteCon
 	return c
 }
 
-// PersonFields sets the optional parameter "personFields": A field mask
-// to restrict which fields on the person are returned. Multiple fields
-// can be specified by separating them with commas. Defaults to empty if
-// not set, which will skip the post mutate get. Valid values are: *
-// addresses * ageRanges * biographies * birthdays * calendarUrls *
-// clientData * coverPhotos * emailAddresses * events * externalIds *
-// genders * imClients * interests * locales * locations * memberships *
-// metadata * miscKeywords * names * nicknames * occupations *
-// organizations * phoneNumbers * photos * relations * sipAddresses *
-// skills * urls * userDefined
+// PersonFields sets the optional parameter "personFields": A field mask to
+// restrict which fields on the person are returned. Multiple fields can be
+// specified by separating them with commas. Defaults to empty if not set,
+// which will skip the post mutate get. Valid values are: * addresses *
+// ageRanges * biographies * birthdays * calendarUrls * clientData *
+// coverPhotos * emailAddresses * events * externalIds * genders * imClients *
+// interests * locales * locations * memberships * metadata * miscKeywords *
+// names * nicknames * occupations * organizations * phoneNumbers * photos *
+// relations * sipAddresses * skills * urls * userDefined
 func (c *PeopleDeleteContactPhotoCall) PersonFields(personFields string) *PeopleDeleteContactPhotoCall {
 	c.urlParams_.Set("personFields", personFields)
 	return c
 }
 
-// Sources sets the optional parameter "sources": A mask of what source
-// types to return. Defaults to READ_SOURCE_TYPE_CONTACT and
-// READ_SOURCE_TYPE_PROFILE if not set.
+// Sources sets the optional parameter "sources": A mask of what source types
+// to return. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE
+// if not set.
 //
 // Possible values:
 //
@@ -5946,36 +4533,29 @@ func (c *PeopleDeleteContactPhotoCall) PersonFields(personFields string) *People
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
 //
 //	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
-//
-// SourceType.DOMAIN_CONTACT.
-//
-//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-//
-// SourceType.OTHER_CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns SourceType.DOMAIN_CONTACT.
+//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns SourceType.OTHER_CONTACT.
 func (c *PeopleDeleteContactPhotoCall) Sources(sources ...string) *PeopleDeleteContactPhotoCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PeopleDeleteContactPhotoCall) Fields(s ...googleapi.Field) *PeopleDeleteContactPhotoCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PeopleDeleteContactPhotoCall) Context(ctx context.Context) *PeopleDeleteContactPhotoCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PeopleDeleteContactPhotoCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5984,12 +4564,7 @@ func (c *PeopleDeleteContactPhotoCall) Header() http.Header {
 }
 
 func (c *PeopleDeleteContactPhotoCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -6007,12 +4582,11 @@ func (c *PeopleDeleteContactPhotoCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "people.people.deleteContactPhoto" call.
-// Exactly one of *DeleteContactPhotoResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *DeleteContactPhotoResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *DeleteContactPhotoResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PeopleDeleteContactPhotoCall) Do(opts ...googleapi.CallOption) (*DeleteContactPhotoResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6043,61 +4617,7 @@ func (c *PeopleDeleteContactPhotoCall) Do(opts ...googleapi.CallOption) (*Delete
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete a contact's photo. Mutate requests for the same user should be done sequentially to avoid // lock contention.",
-	//   "flatPath": "v1/people/{peopleId}:deleteContactPhoto",
-	//   "httpMethod": "DELETE",
-	//   "id": "people.people.deleteContactPhoto",
-	//   "parameterOrder": [
-	//     "resourceName"
-	//   ],
-	//   "parameters": {
-	//     "personFields": {
-	//       "description": "Optional. A field mask to restrict which fields on the person are returned. Multiple fields can be specified by separating them with commas. Defaults to empty if not set, which will skip the post mutate get. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "Required. The resource name of the contact whose photo will be deleted.",
-	//       "location": "path",
-	//       "pattern": "^people/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.",
-	//       "enum": [
-	//         "READ_SOURCE_TYPE_UNSPECIFIED",
-	//         "READ_SOURCE_TYPE_PROFILE",
-	//         "READ_SOURCE_TYPE_CONTACT",
-	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT",
-	//         "READ_SOURCE_TYPE_OTHER_CONTACT"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unspecified.",
-	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
-	//         "Returns SourceType.CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.OTHER_CONTACT."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resourceName}:deleteContactPhoto",
-	//   "response": {
-	//     "$ref": "DeleteContactPhotoResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts"
-	//   ]
-	// }
-
 }
-
-// method id "people.people.get":
 
 type PeopleGetCall struct {
 	s            *Service
@@ -6108,48 +4628,47 @@ type PeopleGetCall struct {
 	header_      http.Header
 }
 
-// Get: Provides information about a person by specifying a resource
-// name. Use `people/me` to indicate the authenticated user. The request
-// returns a 400 error if 'personFields' is not specified.
+// Get: Provides information about a person by specifying a resource name. Use
+// `people/me` to indicate the authenticated user. The request returns a 400
+// error if 'personFields' is not specified.
 //
-//   - resourceName: The resource name of the person to provide
-//     information about. - To get information about the authenticated
-//     user, specify `people/me`. - To get information about a google
-//     account, specify `people/{account_id}`. - To get information about
-//     a contact, specify the resource name that identifies the contact as
-//     returned by `people.connections.list`.
+//   - resourceName: The resource name of the person to provide information
+//     about. - To get information about the authenticated user, specify
+//     `people/me`. - To get information about a google account, specify
+//     `people/{account_id}`. - To get information about a contact, specify the
+//     resource name that identifies the contact as returned by
+//     `people.connections.list`.
 func (r *PeopleService) Get(resourceName string) *PeopleGetCall {
 	c := &PeopleGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
 	return c
 }
 
-// PersonFields sets the optional parameter "personFields": Required. A
-// field mask to restrict which fields on the person are returned.
-// Multiple fields can be specified by separating them with commas.
-// Valid values are: * addresses * ageRanges * biographies * birthdays *
-// calendarUrls * clientData * coverPhotos * emailAddresses * events *
-// externalIds * genders * imClients * interests * locales * locations *
-// memberships * metadata * miscKeywords * names * nicknames *
-// occupations * organizations * phoneNumbers * photos * relations *
-// sipAddresses * skills * urls * userDefined
+// PersonFields sets the optional parameter "personFields": Required. A field
+// mask to restrict which fields on the person are returned. Multiple fields
+// can be specified by separating them with commas. Valid values are: *
+// addresses * ageRanges * biographies * birthdays * calendarUrls * clientData
+// * coverPhotos * emailAddresses * events * externalIds * genders * imClients
+// * interests * locales * locations * memberships * metadata * miscKeywords *
+// names * nicknames * occupations * organizations * phoneNumbers * photos *
+// relations * sipAddresses * skills * urls * userDefined
 func (c *PeopleGetCall) PersonFields(personFields string) *PeopleGetCall {
 	c.urlParams_.Set("personFields", personFields)
 	return c
 }
 
 // RequestMaskIncludeField sets the optional parameter
-// "requestMask.includeField": Required. Comma-separated list of person
-// fields to be included in the response. Each path should start with
-// `person.`: for example, `person.names` or `person.photos`.
+// "requestMask.includeField": Required. Comma-separated list of person fields
+// to be included in the response. Each path should start with `person.`: for
+// example, `person.names` or `person.photos`.
 func (c *PeopleGetCall) RequestMaskIncludeField(requestMaskIncludeField string) *PeopleGetCall {
 	c.urlParams_.Set("requestMask.includeField", requestMaskIncludeField)
 	return c
 }
 
-// Sources sets the optional parameter "sources": A mask of what source
-// types to return. Defaults to READ_SOURCE_TYPE_PROFILE and
-// READ_SOURCE_TYPE_CONTACT if not set.
+// Sources sets the optional parameter "sources": A mask of what source types
+// to return. Defaults to READ_SOURCE_TYPE_PROFILE and READ_SOURCE_TYPE_CONTACT
+// if not set.
 //
 // Possible values:
 //
@@ -6159,46 +4678,37 @@ func (c *PeopleGetCall) RequestMaskIncludeField(requestMaskIncludeField string) 
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
 //
 //	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
-//
-// SourceType.DOMAIN_CONTACT.
-//
-//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-//
-// SourceType.OTHER_CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns SourceType.DOMAIN_CONTACT.
+//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns SourceType.OTHER_CONTACT.
 func (c *PeopleGetCall) Sources(sources ...string) *PeopleGetCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PeopleGetCall) Fields(s ...googleapi.Field) *PeopleGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PeopleGetCall) IfNoneMatch(entityTag string) *PeopleGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PeopleGetCall) Context(ctx context.Context) *PeopleGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PeopleGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6207,12 +4717,7 @@ func (c *PeopleGetCall) Header() http.Header {
 }
 
 func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6233,12 +4738,10 @@ func (c *PeopleGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "people.people.get" call.
-// Exactly one of *Person or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Person.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Person.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PeopleGetCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6269,78 +4772,7 @@ func (c *PeopleGetCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Provides information about a person by specifying a resource name. Use `people/me` to indicate the authenticated user. The request returns a 400 error if 'personFields' is not specified.",
-	//   "flatPath": "v1/people/{peopleId}",
-	//   "httpMethod": "GET",
-	//   "id": "people.people.get",
-	//   "parameterOrder": [
-	//     "resourceName"
-	//   ],
-	//   "parameters": {
-	//     "personFields": {
-	//       "description": "Required. A field mask to restrict which fields on the person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "requestMask.includeField": {
-	//       "description": "Required. Comma-separated list of person fields to be included in the response. Each path should start with `person.`: for example, `person.names` or `person.photos`.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "Required. The resource name of the person to provide information about. - To get information about the authenticated user, specify `people/me`. - To get information about a google account, specify `people/{account_id}`. - To get information about a contact, specify the resource name that identifies the contact as returned by `people.connections.list`.",
-	//       "location": "path",
-	//       "pattern": "^people/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_PROFILE and READ_SOURCE_TYPE_CONTACT if not set.",
-	//       "enum": [
-	//         "READ_SOURCE_TYPE_UNSPECIFIED",
-	//         "READ_SOURCE_TYPE_PROFILE",
-	//         "READ_SOURCE_TYPE_CONTACT",
-	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT",
-	//         "READ_SOURCE_TYPE_OTHER_CONTACT"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unspecified.",
-	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
-	//         "Returns SourceType.CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.OTHER_CONTACT."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resourceName}",
-	//   "response": {
-	//     "$ref": "Person"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts",
-	//     "https://www.googleapis.com/auth/contacts.other.readonly",
-	//     "https://www.googleapis.com/auth/contacts.readonly",
-	//     "https://www.googleapis.com/auth/directory.readonly",
-	//     "https://www.googleapis.com/auth/user.addresses.read",
-	//     "https://www.googleapis.com/auth/user.birthday.read",
-	//     "https://www.googleapis.com/auth/user.emails.read",
-	//     "https://www.googleapis.com/auth/user.gender.read",
-	//     "https://www.googleapis.com/auth/user.organization.read",
-	//     "https://www.googleapis.com/auth/user.phonenumbers.read",
-	//     "https://www.googleapis.com/auth/userinfo.email",
-	//     "https://www.googleapis.com/auth/userinfo.profile"
-	//   ]
-	// }
-
 }
-
-// method id "people.people.getBatchGet":
 
 type PeopleGetBatchGetCall struct {
 	s            *Service
@@ -6351,54 +4783,52 @@ type PeopleGetBatchGetCall struct {
 }
 
 // GetBatchGet: Provides information about a list of specific people by
-// specifying a list of requested resource names. Use `people/me` to
-// indicate the authenticated user. The request returns a 400 error if
-// 'personFields' is not specified.
+// specifying a list of requested resource names. Use `people/me` to indicate
+// the authenticated user. The request returns a 400 error if 'personFields' is
+// not specified.
 func (r *PeopleService) GetBatchGet() *PeopleGetBatchGetCall {
 	c := &PeopleGetBatchGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// PersonFields sets the optional parameter "personFields": Required. A
-// field mask to restrict which fields on each person are returned.
-// Multiple fields can be specified by separating them with commas.
-// Valid values are: * addresses * ageRanges * biographies * birthdays *
-// calendarUrls * clientData * coverPhotos * emailAddresses * events *
-// externalIds * genders * imClients * interests * locales * locations *
-// memberships * metadata * miscKeywords * names * nicknames *
-// occupations * organizations * phoneNumbers * photos * relations *
-// sipAddresses * skills * urls * userDefined
+// PersonFields sets the optional parameter "personFields": Required. A field
+// mask to restrict which fields on each person are returned. Multiple fields
+// can be specified by separating them with commas. Valid values are: *
+// addresses * ageRanges * biographies * birthdays * calendarUrls * clientData
+// * coverPhotos * emailAddresses * events * externalIds * genders * imClients
+// * interests * locales * locations * memberships * metadata * miscKeywords *
+// names * nicknames * occupations * organizations * phoneNumbers * photos *
+// relations * sipAddresses * skills * urls * userDefined
 func (c *PeopleGetBatchGetCall) PersonFields(personFields string) *PeopleGetBatchGetCall {
 	c.urlParams_.Set("personFields", personFields)
 	return c
 }
 
 // RequestMaskIncludeField sets the optional parameter
-// "requestMask.includeField": Required. Comma-separated list of person
-// fields to be included in the response. Each path should start with
-// `person.`: for example, `person.names` or `person.photos`.
+// "requestMask.includeField": Required. Comma-separated list of person fields
+// to be included in the response. Each path should start with `person.`: for
+// example, `person.names` or `person.photos`.
 func (c *PeopleGetBatchGetCall) RequestMaskIncludeField(requestMaskIncludeField string) *PeopleGetBatchGetCall {
 	c.urlParams_.Set("requestMask.includeField", requestMaskIncludeField)
 	return c
 }
 
-// ResourceNames sets the optional parameter "resourceNames": Required.
-// The resource names of the people to provide information about. It's
-// repeatable. The URL query parameter should be
-// resourceNames=<name1>&resourceNames=<name2>&... - To get information
-// about the authenticated user, specify `people/me`. - To get
-// information about a google account, specify `people/{account_id}`. -
-// To get information about a contact, specify the resource name that
-// identifies the contact as returned by `people.connections.list`.
-// There is a maximum of 200 resource names.
+// ResourceNames sets the optional parameter "resourceNames": Required. The
+// resource names of the people to provide information about. It's repeatable.
+// The URL query parameter should be
+// resourceNames=<name1>&resourceNames=<name2>&... - To get information about
+// the authenticated user, specify `people/me`. - To get information about a
+// google account, specify `people/{account_id}`. - To get information about a
+// contact, specify the resource name that identifies the contact as returned
+// by `people.connections.list`. There is a maximum of 200 resource names.
 func (c *PeopleGetBatchGetCall) ResourceNames(resourceNames ...string) *PeopleGetBatchGetCall {
 	c.urlParams_.SetMulti("resourceNames", append([]string{}, resourceNames...))
 	return c
 }
 
-// Sources sets the optional parameter "sources": A mask of what source
-// types to return. Defaults to READ_SOURCE_TYPE_CONTACT and
-// READ_SOURCE_TYPE_PROFILE if not set.
+// Sources sets the optional parameter "sources": A mask of what source types
+// to return. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE
+// if not set.
 //
 // Possible values:
 //
@@ -6408,46 +4838,37 @@ func (c *PeopleGetBatchGetCall) ResourceNames(resourceNames ...string) *PeopleGe
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
 //
 //	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
-//
-// SourceType.DOMAIN_CONTACT.
-//
-//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-//
-// SourceType.OTHER_CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns SourceType.DOMAIN_CONTACT.
+//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns SourceType.OTHER_CONTACT.
 func (c *PeopleGetBatchGetCall) Sources(sources ...string) *PeopleGetBatchGetCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PeopleGetBatchGetCall) Fields(s ...googleapi.Field) *PeopleGetBatchGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PeopleGetBatchGetCall) IfNoneMatch(entityTag string) *PeopleGetBatchGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PeopleGetBatchGetCall) Context(ctx context.Context) *PeopleGetBatchGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PeopleGetBatchGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6456,12 +4877,7 @@ func (c *PeopleGetBatchGetCall) Header() http.Header {
 }
 
 func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6479,12 +4895,11 @@ func (c *PeopleGetBatchGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "people.people.getBatchGet" call.
-// Exactly one of *GetPeopleResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GetPeopleResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GetPeopleResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PeopleGetBatchGetCall) Do(opts ...googleapi.CallOption) (*GetPeopleResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6515,75 +4930,7 @@ func (c *PeopleGetBatchGetCall) Do(opts ...googleapi.CallOption) (*GetPeopleResp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Provides information about a list of specific people by specifying a list of requested resource names. Use `people/me` to indicate the authenticated user. The request returns a 400 error if 'personFields' is not specified.",
-	//   "flatPath": "v1/people:batchGet",
-	//   "httpMethod": "GET",
-	//   "id": "people.people.getBatchGet",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "personFields": {
-	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "requestMask.includeField": {
-	//       "description": "Required. Comma-separated list of person fields to be included in the response. Each path should start with `person.`: for example, `person.names` or `person.photos`.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resourceNames": {
-	//       "description": "Required. The resource names of the people to provide information about. It's repeatable. The URL query parameter should be resourceNames=\u003cname1\u003e\u0026resourceNames=\u003cname2\u003e\u0026... - To get information about the authenticated user, specify `people/me`. - To get information about a google account, specify `people/{account_id}`. - To get information about a contact, specify the resource name that identifies the contact as returned by `people.connections.list`. There is a maximum of 200 resource names.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.",
-	//       "enum": [
-	//         "READ_SOURCE_TYPE_UNSPECIFIED",
-	//         "READ_SOURCE_TYPE_PROFILE",
-	//         "READ_SOURCE_TYPE_CONTACT",
-	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT",
-	//         "READ_SOURCE_TYPE_OTHER_CONTACT"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unspecified.",
-	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
-	//         "Returns SourceType.CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.OTHER_CONTACT."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/people:batchGet",
-	//   "response": {
-	//     "$ref": "GetPeopleResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts",
-	//     "https://www.googleapis.com/auth/contacts.other.readonly",
-	//     "https://www.googleapis.com/auth/contacts.readonly",
-	//     "https://www.googleapis.com/auth/directory.readonly",
-	//     "https://www.googleapis.com/auth/user.addresses.read",
-	//     "https://www.googleapis.com/auth/user.birthday.read",
-	//     "https://www.googleapis.com/auth/user.emails.read",
-	//     "https://www.googleapis.com/auth/user.gender.read",
-	//     "https://www.googleapis.com/auth/user.organization.read",
-	//     "https://www.googleapis.com/auth/user.phonenumbers.read",
-	//     "https://www.googleapis.com/auth/userinfo.email",
-	//     "https://www.googleapis.com/auth/userinfo.profile"
-	//   ]
-	// }
-
 }
-
-// method id "people.people.listDirectoryPeople":
 
 type PeopleListDirectoryPeopleCall struct {
 	s            *Service
@@ -6593,24 +4940,23 @@ type PeopleListDirectoryPeopleCall struct {
 	header_      http.Header
 }
 
-// ListDirectoryPeople: Provides a list of domain profiles and domain
-// contacts in the authenticated user's domain directory. When the
-// `sync_token` is specified, resources deleted since the last sync will
-// be returned as a person with `PersonMetadata.deleted` set to true.
-// When the `page_token` or `sync_token` is specified, all other request
-// parameters must match the first call. Writes may have a propagation
-// delay of several minutes for sync requests. Incremental syncs are not
-// intended for read-after-write use cases. See example usage at List
-// the directory people that have changed
+// ListDirectoryPeople: Provides a list of domain profiles and domain contacts
+// in the authenticated user's domain directory. When the `sync_token` is
+// specified, resources deleted since the last sync will be returned as a
+// person with `PersonMetadata.deleted` set to true. When the `page_token` or
+// `sync_token` is specified, all other request parameters must match the first
+// call. Writes may have a propagation delay of several minutes for sync
+// requests. Incremental syncs are not intended for read-after-write use cases.
+// See example usage at List the directory people that have changed
 // (/people/v1/directory#list_the_directory_people_that_have_changed).
 func (r *PeopleService) ListDirectoryPeople() *PeopleListDirectoryPeopleCall {
 	c := &PeopleListDirectoryPeopleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// MergeSources sets the optional parameter "mergeSources": Additional
-// data to merge into the directory sources if they are connected
-// through verified join keys such as email addresses or phone numbers.
+// MergeSources sets the optional parameter "mergeSources": Additional data to
+// merge into the directory sources if they are connected through verified join
+// keys such as email addresses or phone numbers.
 //
 // Possible values:
 //
@@ -6621,72 +4967,67 @@ func (c *PeopleListDirectoryPeopleCall) MergeSources(mergeSources ...string) *Pe
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The number of people
-// to include in the response. Valid values are between 1 and 1000,
-// inclusive. Defaults to 100 if not set or set to 0.
+// PageSize sets the optional parameter "pageSize": The number of people to
+// include in the response. Valid values are between 1 and 1000, inclusive.
+// Defaults to 100 if not set or set to 0.
 func (c *PeopleListDirectoryPeopleCall) PageSize(pageSize int64) *PeopleListDirectoryPeopleCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous response `next_page_token`. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `people.listDirectoryPeople` must match the first call
-// that provided the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous response `next_page_token`. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `people.listDirectoryPeople` must match the first call that provided the
+// page token.
 func (c *PeopleListDirectoryPeopleCall) PageToken(pageToken string) *PeopleListDirectoryPeopleCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ReadMask sets the optional parameter "readMask": Required. A field
-// mask to restrict which fields on each person are returned. Multiple
-// fields can be specified by separating them with commas. Valid values
-// are: * addresses * ageRanges * biographies * birthdays * calendarUrls
-// * clientData * coverPhotos * emailAddresses * events * externalIds *
-// genders * imClients * interests * locales * locations * memberships *
-// metadata * miscKeywords * names * nicknames * occupations *
-// organizations * phoneNumbers * photos * relations * sipAddresses *
-// skills * urls * userDefined
+// ReadMask sets the optional parameter "readMask": Required. A field mask to
+// restrict which fields on each person are returned. Multiple fields can be
+// specified by separating them with commas. Valid values are: * addresses *
+// ageRanges * biographies * birthdays * calendarUrls * clientData *
+// coverPhotos * emailAddresses * events * externalIds * genders * imClients *
+// interests * locales * locations * memberships * metadata * miscKeywords *
+// names * nicknames * occupations * organizations * phoneNumbers * photos *
+// relations * sipAddresses * skills * urls * userDefined
 func (c *PeopleListDirectoryPeopleCall) ReadMask(readMask string) *PeopleListDirectoryPeopleCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
 }
 
-// RequestSyncToken sets the optional parameter "requestSyncToken":
-// Whether the response should return `next_sync_token`. It can be used
-// to get incremental changes since the last request by setting it on
-// the request `sync_token`. More details about sync behavior at
-// `people.listDirectoryPeople`.
+// RequestSyncToken sets the optional parameter "requestSyncToken": Whether the
+// response should return `next_sync_token`. It can be used to get incremental
+// changes since the last request by setting it on the request `sync_token`.
+// More details about sync behavior at `people.listDirectoryPeople`.
 func (c *PeopleListDirectoryPeopleCall) RequestSyncToken(requestSyncToken bool) *PeopleListDirectoryPeopleCall {
 	c.urlParams_.Set("requestSyncToken", fmt.Sprint(requestSyncToken))
 	return c
 }
 
-// Sources sets the optional parameter "sources": Required. Directory
-// sources to return.
+// Sources sets the optional parameter "sources": Required. Directory sources
+// to return.
 //
 // Possible values:
 //
 //	"DIRECTORY_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
-//	"DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT" - Google Workspace domain
+//	"DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT" - Google Workspace domain shared
 //
-// shared contact.
+// contact.
 //
-//	"DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE" - Google Workspace domain
-//
-// profile.
+//	"DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE" - Google Workspace domain profile.
 func (c *PeopleListDirectoryPeopleCall) Sources(sources ...string) *PeopleListDirectoryPeopleCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
 }
 
-// SyncToken sets the optional parameter "syncToken": A sync token,
-// received from a previous response `next_sync_token` Provide this to
-// retrieve only the resources changed since the last request. When
-// syncing, all other parameters provided to
-// `people.listDirectoryPeople` must match the first call that provided
-// the sync token. More details about sync behavior at
+// SyncToken sets the optional parameter "syncToken": A sync token, received
+// from a previous response `next_sync_token` Provide this to retrieve only the
+// resources changed since the last request. When syncing, all other parameters
+// provided to `people.listDirectoryPeople` must match the first call that
+// provided the sync token. More details about sync behavior at
 // `people.listDirectoryPeople`.
 func (c *PeopleListDirectoryPeopleCall) SyncToken(syncToken string) *PeopleListDirectoryPeopleCall {
 	c.urlParams_.Set("syncToken", syncToken)
@@ -6694,33 +5035,29 @@ func (c *PeopleListDirectoryPeopleCall) SyncToken(syncToken string) *PeopleListD
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PeopleListDirectoryPeopleCall) Fields(s ...googleapi.Field) *PeopleListDirectoryPeopleCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PeopleListDirectoryPeopleCall) IfNoneMatch(entityTag string) *PeopleListDirectoryPeopleCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PeopleListDirectoryPeopleCall) Context(ctx context.Context) *PeopleListDirectoryPeopleCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PeopleListDirectoryPeopleCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6729,12 +5066,7 @@ func (c *PeopleListDirectoryPeopleCall) Header() http.Header {
 }
 
 func (c *PeopleListDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6752,12 +5084,11 @@ func (c *PeopleListDirectoryPeopleCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "people.people.listDirectoryPeople" call.
-// Exactly one of *ListDirectoryPeopleResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListDirectoryPeopleResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListDirectoryPeopleResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PeopleListDirectoryPeopleCall) Do(opts ...googleapi.CallOption) (*ListDirectoryPeopleResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6788,80 +5119,6 @@ func (c *PeopleListDirectoryPeopleCall) Do(opts ...googleapi.CallOption) (*ListD
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Provides a list of domain profiles and domain contacts in the authenticated user's domain directory. When the `sync_token` is specified, resources deleted since the last sync will be returned as a person with `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request parameters must match the first call. Writes may have a propagation delay of several minutes for sync requests. Incremental syncs are not intended for read-after-write use cases. See example usage at [List the directory people that have changed](/people/v1/directory#list_the_directory_people_that_have_changed).",
-	//   "flatPath": "v1/people:listDirectoryPeople",
-	//   "httpMethod": "GET",
-	//   "id": "people.people.listDirectoryPeople",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "mergeSources": {
-	//       "description": "Optional. Additional data to merge into the directory sources if they are connected through verified join keys such as email addresses or phone numbers.",
-	//       "enum": [
-	//         "DIRECTORY_MERGE_SOURCE_TYPE_UNSPECIFIED",
-	//         "DIRECTORY_MERGE_SOURCE_TYPE_CONTACT"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unspecified.",
-	//         "User owned contact."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The number of people to include in the response. Valid values are between 1 and 1000, inclusive. Defaults to 100 if not set or set to 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous response `next_page_token`. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `people.listDirectoryPeople` must match the first call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "readMask": {
-	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "requestSyncToken": {
-	//       "description": "Optional. Whether the response should return `next_sync_token`. It can be used to get incremental changes since the last request by setting it on the request `sync_token`. More details about sync behavior at `people.listDirectoryPeople`.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "sources": {
-	//       "description": "Required. Directory sources to return.",
-	//       "enum": [
-	//         "DIRECTORY_SOURCE_TYPE_UNSPECIFIED",
-	//         "DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT",
-	//         "DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unspecified.",
-	//         "Google Workspace domain shared contact.",
-	//         "Google Workspace domain profile."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "syncToken": {
-	//       "description": "Optional. A sync token, received from a previous response `next_sync_token` Provide this to retrieve only the resources changed since the last request. When syncing, all other parameters provided to `people.listDirectoryPeople` must match the first call that provided the sync token. More details about sync behavior at `people.listDirectoryPeople`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/people:listDirectoryPeople",
-	//   "response": {
-	//     "$ref": "ListDirectoryPeopleResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/directory.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -6869,7 +5126,7 @@ func (c *PeopleListDirectoryPeopleCall) Do(opts ...googleapi.CallOption) (*ListD
 // The provided context supersedes any context provided to the Context method.
 func (c *PeopleListDirectoryPeopleCall) Pages(ctx context.Context, f func(*ListDirectoryPeopleResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -6885,8 +5142,6 @@ func (c *PeopleListDirectoryPeopleCall) Pages(ctx context.Context, f func(*ListD
 	}
 }
 
-// method id "people.people.searchContacts":
-
 type PeopleSearchContactsCall struct {
 	s            *Service
 	urlParams_   gensupport.URLParams
@@ -6895,52 +5150,50 @@ type PeopleSearchContactsCall struct {
 	header_      http.Header
 }
 
-// SearchContacts: Provides a list of contacts in the authenticated
-// user's grouped contacts that matches the search query. The query
-// matches on a contact's `names`, `nickNames`, `emailAddresses`,
-// `phoneNumbers`, and `organizations` fields that are from the CONTACT
-// source. **IMPORTANT**: Before searching, clients should send a warmup
-// request with an empty query to update the cache. See
+// SearchContacts: Provides a list of contacts in the authenticated user's
+// grouped contacts that matches the search query. The query matches on a
+// contact's `names`, `nickNames`, `emailAddresses`, `phoneNumbers`, and
+// `organizations` fields that are from the CONTACT source. **IMPORTANT**:
+// Before searching, clients should send a warmup request with an empty query
+// to update the cache. See
 // https://developers.google.com/people/v1/contacts#search_the_users_contacts
 func (r *PeopleService) SearchContacts() *PeopleSearchContactsCall {
 	c := &PeopleSearchContactsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The number of
-// results to return. Defaults to 10 if field is not set, or set to 0.
-// Values greater than 30 will be capped to 30.
+// PageSize sets the optional parameter "pageSize": The number of results to
+// return. Defaults to 10 if field is not set, or set to 0. Values greater than
+// 30 will be capped to 30.
 func (c *PeopleSearchContactsCall) PageSize(pageSize int64) *PeopleSearchContactsCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// Query sets the optional parameter "query": Required. The plain-text
-// query for the request. The query is used to match prefix phrases of
-// the fields on a person. For example, a person with name "foo name"
-// matches queries such as "f", "fo", "foo", "foo n", "nam", etc., but
-// not "oo n".
+// Query sets the optional parameter "query": Required. The plain-text query
+// for the request. The query is used to match prefix phrases of the fields on
+// a person. For example, a person with name "foo name" matches queries such as
+// "f", "fo", "foo", "foo n", "nam", etc., but not "oo n".
 func (c *PeopleSearchContactsCall) Query(query string) *PeopleSearchContactsCall {
 	c.urlParams_.Set("query", query)
 	return c
 }
 
-// ReadMask sets the optional parameter "readMask": Required. A field
-// mask to restrict which fields on each person are returned. Multiple
-// fields can be specified by separating them with commas. Valid values
-// are: * addresses * ageRanges * biographies * birthdays * calendarUrls
-// * clientData * coverPhotos * emailAddresses * events * externalIds *
-// genders * imClients * interests * locales * locations * memberships *
-// metadata * miscKeywords * names * nicknames * occupations *
-// organizations * phoneNumbers * photos * relations * sipAddresses *
-// skills * urls * userDefined
+// ReadMask sets the optional parameter "readMask": Required. A field mask to
+// restrict which fields on each person are returned. Multiple fields can be
+// specified by separating them with commas. Valid values are: * addresses *
+// ageRanges * biographies * birthdays * calendarUrls * clientData *
+// coverPhotos * emailAddresses * events * externalIds * genders * imClients *
+// interests * locales * locations * memberships * metadata * miscKeywords *
+// names * nicknames * occupations * organizations * phoneNumbers * photos *
+// relations * sipAddresses * skills * urls * userDefined
 func (c *PeopleSearchContactsCall) ReadMask(readMask string) *PeopleSearchContactsCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
 }
 
-// Sources sets the optional parameter "sources": A mask of what source
-// types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.
+// Sources sets the optional parameter "sources": A mask of what source types
+// to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.
 //
 // Possible values:
 //
@@ -6950,46 +5203,37 @@ func (c *PeopleSearchContactsCall) ReadMask(readMask string) *PeopleSearchContac
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
 //
 //	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
-//
-// SourceType.DOMAIN_CONTACT.
-//
-//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-//
-// SourceType.OTHER_CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns SourceType.DOMAIN_CONTACT.
+//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns SourceType.OTHER_CONTACT.
 func (c *PeopleSearchContactsCall) Sources(sources ...string) *PeopleSearchContactsCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PeopleSearchContactsCall) Fields(s ...googleapi.Field) *PeopleSearchContactsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PeopleSearchContactsCall) IfNoneMatch(entityTag string) *PeopleSearchContactsCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PeopleSearchContactsCall) Context(ctx context.Context) *PeopleSearchContactsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PeopleSearchContactsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6998,12 +5242,7 @@ func (c *PeopleSearchContactsCall) Header() http.Header {
 }
 
 func (c *PeopleSearchContactsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7021,12 +5260,10 @@ func (c *PeopleSearchContactsCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "people.people.searchContacts" call.
-// Exactly one of *SearchResponse or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *SearchResponse.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchResponse.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PeopleSearchContactsCall) Do(opts ...googleapi.CallOption) (*SearchResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7057,64 +5294,7 @@ func (c *PeopleSearchContactsCall) Do(opts ...googleapi.CallOption) (*SearchResp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Provides a list of contacts in the authenticated user's grouped contacts that matches the search query. The query matches on a contact's `names`, `nickNames`, `emailAddresses`, `phoneNumbers`, and `organizations` fields that are from the CONTACT source. **IMPORTANT**: Before searching, clients should send a warmup request with an empty query to update the cache. See https://developers.google.com/people/v1/contacts#search_the_users_contacts",
-	//   "flatPath": "v1/people:searchContacts",
-	//   "httpMethod": "GET",
-	//   "id": "people.people.searchContacts",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. The number of results to return. Defaults to 10 if field is not set, or set to 0. Values greater than 30 will be capped to 30.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "query": {
-	//       "description": "Required. The plain-text query for the request. The query is used to match prefix phrases of the fields on a person. For example, a person with name \"foo name\" matches queries such as \"f\", \"fo\", \"foo\", \"foo n\", \"nam\", etc., but not \"oo n\".",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "readMask": {
-	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT if not set.",
-	//       "enum": [
-	//         "READ_SOURCE_TYPE_UNSPECIFIED",
-	//         "READ_SOURCE_TYPE_PROFILE",
-	//         "READ_SOURCE_TYPE_CONTACT",
-	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT",
-	//         "READ_SOURCE_TYPE_OTHER_CONTACT"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unspecified.",
-	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
-	//         "Returns SourceType.CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.OTHER_CONTACT."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/people:searchContacts",
-	//   "response": {
-	//     "$ref": "SearchResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts",
-	//     "https://www.googleapis.com/auth/contacts.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "people.people.searchDirectoryPeople":
 
 type PeopleSearchDirectoryPeopleCall struct {
 	s            *Service
@@ -7125,16 +5305,16 @@ type PeopleSearchDirectoryPeopleCall struct {
 }
 
 // SearchDirectoryPeople: Provides a list of domain profiles and domain
-// contacts in the authenticated user's domain directory that match the
-// search query.
+// contacts in the authenticated user's domain directory that match the search
+// query.
 func (r *PeopleService) SearchDirectoryPeople() *PeopleSearchDirectoryPeopleCall {
 	c := &PeopleSearchDirectoryPeopleCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// MergeSources sets the optional parameter "mergeSources": Additional
-// data to merge into the directory sources if they are connected
-// through verified join keys such as email addresses or phone numbers.
+// MergeSources sets the optional parameter "mergeSources": Additional data to
+// merge into the directory sources if they are connected through verified join
+// keys such as email addresses or phone numbers.
 //
 // Possible values:
 //
@@ -7145,92 +5325,85 @@ func (c *PeopleSearchDirectoryPeopleCall) MergeSources(mergeSources ...string) *
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The number of people
-// to include in the response. Valid values are between 1 and 500,
-// inclusive. Defaults to 100 if not set or set to 0.
+// PageSize sets the optional parameter "pageSize": The number of people to
+// include in the response. Valid values are between 1 and 500, inclusive.
+// Defaults to 100 if not set or set to 0.
 func (c *PeopleSearchDirectoryPeopleCall) PageSize(pageSize int64) *PeopleSearchDirectoryPeopleCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous response `next_page_token`. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `SearchDirectoryPeople` must match the first call that
-// provided the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous response `next_page_token`. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `SearchDirectoryPeople` must match the first call that provided the page
+// token.
 func (c *PeopleSearchDirectoryPeopleCall) PageToken(pageToken string) *PeopleSearchDirectoryPeopleCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Query sets the optional parameter "query": Required. Prefix query
-// that matches fields in the person. Does NOT use the read_mask for
-// determining what fields to match.
+// Query sets the optional parameter "query": Required. Prefix query that
+// matches fields in the person. Does NOT use the read_mask for determining
+// what fields to match.
 func (c *PeopleSearchDirectoryPeopleCall) Query(query string) *PeopleSearchDirectoryPeopleCall {
 	c.urlParams_.Set("query", query)
 	return c
 }
 
-// ReadMask sets the optional parameter "readMask": Required. A field
-// mask to restrict which fields on each person are returned. Multiple
-// fields can be specified by separating them with commas. Valid values
-// are: * addresses * ageRanges * biographies * birthdays * calendarUrls
-// * clientData * coverPhotos * emailAddresses * events * externalIds *
-// genders * imClients * interests * locales * locations * memberships *
-// metadata * miscKeywords * names * nicknames * occupations *
-// organizations * phoneNumbers * photos * relations * sipAddresses *
-// skills * urls * userDefined
+// ReadMask sets the optional parameter "readMask": Required. A field mask to
+// restrict which fields on each person are returned. Multiple fields can be
+// specified by separating them with commas. Valid values are: * addresses *
+// ageRanges * biographies * birthdays * calendarUrls * clientData *
+// coverPhotos * emailAddresses * events * externalIds * genders * imClients *
+// interests * locales * locations * memberships * metadata * miscKeywords *
+// names * nicknames * occupations * organizations * phoneNumbers * photos *
+// relations * sipAddresses * skills * urls * userDefined
 func (c *PeopleSearchDirectoryPeopleCall) ReadMask(readMask string) *PeopleSearchDirectoryPeopleCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
 }
 
-// Sources sets the optional parameter "sources": Required. Directory
-// sources to return.
+// Sources sets the optional parameter "sources": Required. Directory sources
+// to return.
 //
 // Possible values:
 //
 //	"DIRECTORY_SOURCE_TYPE_UNSPECIFIED" - Unspecified.
-//	"DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT" - Google Workspace domain
+//	"DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT" - Google Workspace domain shared
 //
-// shared contact.
+// contact.
 //
-//	"DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE" - Google Workspace domain
-//
-// profile.
+//	"DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE" - Google Workspace domain profile.
 func (c *PeopleSearchDirectoryPeopleCall) Sources(sources ...string) *PeopleSearchDirectoryPeopleCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PeopleSearchDirectoryPeopleCall) Fields(s ...googleapi.Field) *PeopleSearchDirectoryPeopleCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PeopleSearchDirectoryPeopleCall) IfNoneMatch(entityTag string) *PeopleSearchDirectoryPeopleCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PeopleSearchDirectoryPeopleCall) Context(ctx context.Context) *PeopleSearchDirectoryPeopleCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PeopleSearchDirectoryPeopleCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7239,12 +5412,7 @@ func (c *PeopleSearchDirectoryPeopleCall) Header() http.Header {
 }
 
 func (c *PeopleSearchDirectoryPeopleCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7262,12 +5430,11 @@ func (c *PeopleSearchDirectoryPeopleCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "people.people.searchDirectoryPeople" call.
-// Exactly one of *SearchDirectoryPeopleResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *SearchDirectoryPeopleResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SearchDirectoryPeopleResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PeopleSearchDirectoryPeopleCall) Do(opts ...googleapi.CallOption) (*SearchDirectoryPeopleResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7298,75 +5465,6 @@ func (c *PeopleSearchDirectoryPeopleCall) Do(opts ...googleapi.CallOption) (*Sea
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Provides a list of domain profiles and domain contacts in the authenticated user's domain directory that match the search query.",
-	//   "flatPath": "v1/people:searchDirectoryPeople",
-	//   "httpMethod": "GET",
-	//   "id": "people.people.searchDirectoryPeople",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "mergeSources": {
-	//       "description": "Optional. Additional data to merge into the directory sources if they are connected through verified join keys such as email addresses or phone numbers.",
-	//       "enum": [
-	//         "DIRECTORY_MERGE_SOURCE_TYPE_UNSPECIFIED",
-	//         "DIRECTORY_MERGE_SOURCE_TYPE_CONTACT"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unspecified.",
-	//         "User owned contact."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The number of people to include in the response. Valid values are between 1 and 500, inclusive. Defaults to 100 if not set or set to 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous response `next_page_token`. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `SearchDirectoryPeople` must match the first call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "Required. Prefix query that matches fields in the person. Does NOT use the read_mask for determining what fields to match.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "readMask": {
-	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "sources": {
-	//       "description": "Required. Directory sources to return.",
-	//       "enum": [
-	//         "DIRECTORY_SOURCE_TYPE_UNSPECIFIED",
-	//         "DIRECTORY_SOURCE_TYPE_DOMAIN_CONTACT",
-	//         "DIRECTORY_SOURCE_TYPE_DOMAIN_PROFILE"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unspecified.",
-	//         "Google Workspace domain shared contact.",
-	//         "Google Workspace domain profile."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/people:searchDirectoryPeople",
-	//   "response": {
-	//     "$ref": "SearchDirectoryPeopleResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/directory.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -7374,7 +5472,7 @@ func (c *PeopleSearchDirectoryPeopleCall) Do(opts ...googleapi.CallOption) (*Sea
 // The provided context supersedes any context provided to the Context method.
 func (c *PeopleSearchDirectoryPeopleCall) Pages(ctx context.Context, f func(*SearchDirectoryPeopleResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -7390,8 +5488,6 @@ func (c *PeopleSearchDirectoryPeopleCall) Pages(ctx context.Context, f func(*Sea
 	}
 }
 
-// method id "people.people.updateContact":
-
 type PeopleUpdateContactCall struct {
 	s            *Service
 	resourceName string
@@ -7401,26 +5497,24 @@ type PeopleUpdateContactCall struct {
 	header_      http.Header
 }
 
-// UpdateContact: Update contact data for an existing contact person.
-// Any non-contact data will not be modified. Any non-contact data in
-// the person to update will be ignored. All fields specified in the
-// `update_mask` will be replaced. The server returns a 400 error if
-// `person.metadata.sources` is not specified for the contact to be
-// updated or if there is no contact source. The server returns a 400
-// error with reason "failedPrecondition" if
-// `person.metadata.sources.etag` is different than the contact's etag,
-// which indicates the contact has changed since its data was read.
-// Clients should get the latest person and merge their updates into the
-// latest person. The server returns a 400 error if `memberships` are
-// being updated and there are no contact group memberships specified on
-// the person. The server returns a 400 error if more than one field is
-// specified on a field that is a singleton for contact sources: *
-// biographies * birthdays * genders * names Mutate requests for the
-// same user should be sent sequentially to avoid increased latency and
-// failures.
+// UpdateContact: Update contact data for an existing contact person. Any
+// non-contact data will not be modified. Any non-contact data in the person to
+// update will be ignored. All fields specified in the `update_mask` will be
+// replaced. The server returns a 400 error if `person.metadata.sources` is not
+// specified for the contact to be updated or if there is no contact source.
+// The server returns a 400 error with reason "failedPrecondition" if
+// `person.metadata.sources.etag` is different than the contact's etag, which
+// indicates the contact has changed since its data was read. Clients should
+// get the latest person and merge their updates into the latest person. The
+// server returns a 400 error if `memberships` are being updated and there are
+// no contact group memberships specified on the person. The server returns a
+// 400 error if more than one field is specified on a field that is a singleton
+// for contact sources: * biographies * birthdays * genders * names Mutate
+// requests for the same user should be sent sequentially to avoid increased
+// latency and failures.
 //
-//   - resourceName: The resource name for the person, assigned by the
-//     server. An ASCII string in the form of `people/{person_id}`.
+//   - resourceName: The resource name for the person, assigned by the server. An
+//     ASCII string in the form of `people/{person_id}`.
 func (r *PeopleService) UpdateContact(resourceName string, person *Person) *PeopleUpdateContactCall {
 	c := &PeopleUpdateContactCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resourceName = resourceName
@@ -7428,24 +5522,23 @@ func (r *PeopleService) UpdateContact(resourceName string, person *Person) *Peop
 	return c
 }
 
-// PersonFields sets the optional parameter "personFields": A field mask
-// to restrict which fields on each person are returned. Multiple fields
-// can be specified by separating them with commas. Defaults to all
-// fields if not set. Valid values are: * addresses * ageRanges *
-// biographies * birthdays * calendarUrls * clientData * coverPhotos *
-// emailAddresses * events * externalIds * genders * imClients *
-// interests * locales * locations * memberships * metadata *
-// miscKeywords * names * nicknames * occupations * organizations *
-// phoneNumbers * photos * relations * sipAddresses * skills * urls *
-// userDefined
+// PersonFields sets the optional parameter "personFields": A field mask to
+// restrict which fields on each person are returned. Multiple fields can be
+// specified by separating them with commas. Defaults to all fields if not set.
+// Valid values are: * addresses * ageRanges * biographies * birthdays *
+// calendarUrls * clientData * coverPhotos * emailAddresses * events *
+// externalIds * genders * imClients * interests * locales * locations *
+// memberships * metadata * miscKeywords * names * nicknames * occupations *
+// organizations * phoneNumbers * photos * relations * sipAddresses * skills *
+// urls * userDefined
 func (c *PeopleUpdateContactCall) PersonFields(personFields string) *PeopleUpdateContactCall {
 	c.urlParams_.Set("personFields", personFields)
 	return c
 }
 
-// Sources sets the optional parameter "sources": A mask of what source
-// types to return. Defaults to READ_SOURCE_TYPE_CONTACT and
-// READ_SOURCE_TYPE_PROFILE if not set.
+// Sources sets the optional parameter "sources": A mask of what source types
+// to return. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE
+// if not set.
 //
 // Possible values:
 //
@@ -7455,50 +5548,42 @@ func (c *PeopleUpdateContactCall) PersonFields(personFields string) *PeopleUpdat
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
 //
 //	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
-//
-// SourceType.DOMAIN_CONTACT.
-//
-//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-//
-// SourceType.OTHER_CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns SourceType.DOMAIN_CONTACT.
+//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns SourceType.OTHER_CONTACT.
 func (c *PeopleUpdateContactCall) Sources(sources ...string) *PeopleUpdateContactCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
 }
 
 // UpdatePersonFields sets the optional parameter "updatePersonFields":
-// Required. A field mask to restrict which fields on the person are
-// updated. Multiple fields can be specified by separating them with
-// commas. All updated fields will be replaced. Valid values are: *
-// addresses * biographies * birthdays * calendarUrls * clientData *
-// emailAddresses * events * externalIds * genders * imClients *
-// interests * locales * locations * memberships * miscKeywords * names
-// * nicknames * occupations * organizations * phoneNumbers * relations
-// * sipAddresses * urls * userDefined
+// Required. A field mask to restrict which fields on the person are updated.
+// Multiple fields can be specified by separating them with commas. All updated
+// fields will be replaced. Valid values are: * addresses * biographies *
+// birthdays * calendarUrls * clientData * emailAddresses * events *
+// externalIds * genders * imClients * interests * locales * locations *
+// memberships * miscKeywords * names * nicknames * occupations * organizations
+// * phoneNumbers * relations * sipAddresses * urls * userDefined
 func (c *PeopleUpdateContactCall) UpdatePersonFields(updatePersonFields string) *PeopleUpdateContactCall {
 	c.urlParams_.Set("updatePersonFields", updatePersonFields)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PeopleUpdateContactCall) Fields(s ...googleapi.Field) *PeopleUpdateContactCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PeopleUpdateContactCall) Context(ctx context.Context) *PeopleUpdateContactCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PeopleUpdateContactCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7507,18 +5592,12 @@ func (c *PeopleUpdateContactCall) Header() http.Header {
 }
 
 func (c *PeopleUpdateContactCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.person)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resourceName}:updateContact")
@@ -7535,12 +5614,10 @@ func (c *PeopleUpdateContactCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "people.people.updateContact" call.
-// Exactly one of *Person or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Person.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Person.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PeopleUpdateContactCall) Do(opts ...googleapi.CallOption) (*Person, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7571,70 +5648,7 @@ func (c *PeopleUpdateContactCall) Do(opts ...googleapi.CallOption) (*Person, err
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update contact data for an existing contact person. Any non-contact data will not be modified. Any non-contact data in the person to update will be ignored. All fields specified in the `update_mask` will be replaced. The server returns a 400 error if `person.metadata.sources` is not specified for the contact to be updated or if there is no contact source. The server returns a 400 error with reason `\"failedPrecondition\"` if `person.metadata.sources.etag` is different than the contact's etag, which indicates the contact has changed since its data was read. Clients should get the latest person and merge their updates into the latest person. The server returns a 400 error if `memberships` are being updated and there are no contact group memberships specified on the person. The server returns a 400 error if more than one field is specified on a field that is a singleton for contact sources: * biographies * birthdays * genders * names Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
-	//   "flatPath": "v1/people/{peopleId}:updateContact",
-	//   "httpMethod": "PATCH",
-	//   "id": "people.people.updateContact",
-	//   "parameterOrder": [
-	//     "resourceName"
-	//   ],
-	//   "parameters": {
-	//     "personFields": {
-	//       "description": "Optional. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Defaults to all fields if not set. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "resourceName": {
-	//       "description": "The resource name for the person, assigned by the server. An ASCII string in the form of `people/{person_id}`.",
-	//       "location": "path",
-	//       "pattern": "^people/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.",
-	//       "enum": [
-	//         "READ_SOURCE_TYPE_UNSPECIFIED",
-	//         "READ_SOURCE_TYPE_PROFILE",
-	//         "READ_SOURCE_TYPE_CONTACT",
-	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT",
-	//         "READ_SOURCE_TYPE_OTHER_CONTACT"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unspecified.",
-	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
-	//         "Returns SourceType.CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.OTHER_CONTACT."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "updatePersonFields": {
-	//       "description": "Required. A field mask to restrict which fields on the person are updated. Multiple fields can be specified by separating them with commas. All updated fields will be replaced. Valid values are: * addresses * biographies * birthdays * calendarUrls * clientData * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * relations * sipAddresses * urls * userDefined",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resourceName}:updateContact",
-	//   "request": {
-	//     "$ref": "Person"
-	//   },
-	//   "response": {
-	//     "$ref": "Person"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts"
-	//   ]
-	// }
-
 }
-
-// method id "people.people.updateContactPhoto":
 
 type PeopleUpdateContactPhotoCall struct {
 	s                         *Service
@@ -7645,9 +5659,8 @@ type PeopleUpdateContactPhotoCall struct {
 	header_                   http.Header
 }
 
-// UpdateContactPhoto: Update a contact's photo. Mutate requests for the
-// same user should be sent sequentially to avoid increased latency and
-// failures.
+// UpdateContactPhoto: Update a contact's photo. Mutate requests for the same
+// user should be sent sequentially to avoid increased latency and failures.
 //
 // - resourceName: Person resource name.
 func (r *PeopleService) UpdateContactPhoto(resourceName string, updatecontactphotorequest *UpdateContactPhotoRequest) *PeopleUpdateContactPhotoCall {
@@ -7658,23 +5671,21 @@ func (r *PeopleService) UpdateContactPhoto(resourceName string, updatecontactpho
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PeopleUpdateContactPhotoCall) Fields(s ...googleapi.Field) *PeopleUpdateContactPhotoCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PeopleUpdateContactPhotoCall) Context(ctx context.Context) *PeopleUpdateContactPhotoCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PeopleUpdateContactPhotoCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7683,18 +5694,12 @@ func (c *PeopleUpdateContactPhotoCall) Header() http.Header {
 }
 
 func (c *PeopleUpdateContactPhotoCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updatecontactphotorequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resourceName}:updateContactPhoto")
@@ -7711,12 +5716,11 @@ func (c *PeopleUpdateContactPhotoCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "people.people.updateContactPhoto" call.
-// Exactly one of *UpdateContactPhotoResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *UpdateContactPhotoResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *UpdateContactPhotoResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PeopleUpdateContactPhotoCall) Do(opts ...googleapi.CallOption) (*UpdateContactPhotoResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7747,38 +5751,7 @@ func (c *PeopleUpdateContactPhotoCall) Do(opts ...googleapi.CallOption) (*Update
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update a contact's photo. Mutate requests for the same user should be sent sequentially to avoid increased latency and failures.",
-	//   "flatPath": "v1/people/{peopleId}:updateContactPhoto",
-	//   "httpMethod": "PATCH",
-	//   "id": "people.people.updateContactPhoto",
-	//   "parameterOrder": [
-	//     "resourceName"
-	//   ],
-	//   "parameters": {
-	//     "resourceName": {
-	//       "description": "Required. Person resource name",
-	//       "location": "path",
-	//       "pattern": "^people/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resourceName}:updateContactPhoto",
-	//   "request": {
-	//     "$ref": "UpdateContactPhotoRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "UpdateContactPhotoResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts"
-	//   ]
-	// }
-
 }
-
-// method id "people.people.connections.list":
 
 type PeopleConnectionsListCall struct {
 	s            *Service
@@ -7789,22 +5762,20 @@ type PeopleConnectionsListCall struct {
 	header_      http.Header
 }
 
-// List: Provides a list of the authenticated user's contacts. Sync
-// tokens expire 7 days after the full sync. A request with an expired
-// sync token will get an error with an google.rpc.ErrorInfo
+// List: Provides a list of the authenticated user's contacts. Sync tokens
+// expire 7 days after the full sync. A request with an expired sync token will
+// get an error with an google.rpc.ErrorInfo
 // (https://cloud.google.com/apis/design/errors#error_info) with reason
-// "EXPIRED_SYNC_TOKEN". In the case of such an error clients should
-// make a full sync request without a `sync_token`. The first page of a
-// full sync request has an additional quota. If the quota is exceeded,
-// a 429 error will be returned. This quota is fixed and can not be
-// increased. When the `sync_token` is specified, resources deleted
-// since the last sync will be returned as a person with
-// `PersonMetadata.deleted` set to true. When the `page_token` or
-// `sync_token` is specified, all other request parameters must match
-// the first call. Writes may have a propagation delay of several
-// minutes for sync requests. Incremental syncs are not intended for
-// read-after-write use cases. See example usage at List the user's
-// contacts that have changed
+// "EXPIRED_SYNC_TOKEN". In the case of such an error clients should make a
+// full sync request without a `sync_token`. The first page of a full sync
+// request has an additional quota. If the quota is exceeded, a 429 error will
+// be returned. This quota is fixed and can not be increased. When the
+// `sync_token` is specified, resources deleted since the last sync will be
+// returned as a person with `PersonMetadata.deleted` set to true. When the
+// `page_token` or `sync_token` is specified, all other request parameters must
+// match the first call. Writes may have a propagation delay of several minutes
+// for sync requests. Incremental syncs are not intended for read-after-write
+// use cases. See example usage at List the user's contacts that have changed
 // (/people/v1/contacts#list_the_users_contacts_that_have_changed).
 //
 //   - resourceName: The resource name to return connections for. Only
@@ -7815,70 +5786,68 @@ func (r *PeopleConnectionsService) List(resourceName string) *PeopleConnectionsL
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The number of
-// connections to include in the response. Valid values are between 1
-// and 1000, inclusive. Defaults to 100 if not set or set to 0.
+// PageSize sets the optional parameter "pageSize": The number of connections
+// to include in the response. Valid values are between 1 and 1000, inclusive.
+// Defaults to 100 if not set or set to 0.
 func (c *PeopleConnectionsListCall) PageSize(pageSize int64) *PeopleConnectionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous response `next_page_token`. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `people.connections.list` must match the first call that
-// provided the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous response `next_page_token`. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `people.connections.list` must match the first call that provided the page
+// token.
 func (c *PeopleConnectionsListCall) PageToken(pageToken string) *PeopleConnectionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// PersonFields sets the optional parameter "personFields": Required. A
-// field mask to restrict which fields on each person are returned.
-// Multiple fields can be specified by separating them with commas.
-// Valid values are: * addresses * ageRanges * biographies * birthdays *
-// calendarUrls * clientData * coverPhotos * emailAddresses * events *
-// externalIds * genders * imClients * interests * locales * locations *
-// memberships * metadata * miscKeywords * names * nicknames *
-// occupations * organizations * phoneNumbers * photos * relations *
-// sipAddresses * skills * urls * userDefined
+// PersonFields sets the optional parameter "personFields": Required. A field
+// mask to restrict which fields on each person are returned. Multiple fields
+// can be specified by separating them with commas. Valid values are: *
+// addresses * ageRanges * biographies * birthdays * calendarUrls * clientData
+// * coverPhotos * emailAddresses * events * externalIds * genders * imClients
+// * interests * locales * locations * memberships * metadata * miscKeywords *
+// names * nicknames * occupations * organizations * phoneNumbers * photos *
+// relations * sipAddresses * skills * urls * userDefined
 func (c *PeopleConnectionsListCall) PersonFields(personFields string) *PeopleConnectionsListCall {
 	c.urlParams_.Set("personFields", personFields)
 	return c
 }
 
 // RequestMaskIncludeField sets the optional parameter
-// "requestMask.includeField": Required. Comma-separated list of person
-// fields to be included in the response. Each path should start with
-// `person.`: for example, `person.names` or `person.photos`.
+// "requestMask.includeField": Required. Comma-separated list of person fields
+// to be included in the response. Each path should start with `person.`: for
+// example, `person.names` or `person.photos`.
 func (c *PeopleConnectionsListCall) RequestMaskIncludeField(requestMaskIncludeField string) *PeopleConnectionsListCall {
 	c.urlParams_.Set("requestMask.includeField", requestMaskIncludeField)
 	return c
 }
 
-// RequestSyncToken sets the optional parameter "requestSyncToken":
-// Whether the response should return `next_sync_token` on the last page
-// of results. It can be used to get incremental changes since the last
-// request by setting it on the request `sync_token`. More details about
-// sync behavior at `people.connections.list`.
+// RequestSyncToken sets the optional parameter "requestSyncToken": Whether the
+// response should return `next_sync_token` on the last page of results. It can
+// be used to get incremental changes since the last request by setting it on
+// the request `sync_token`. More details about sync behavior at
+// `people.connections.list`.
 func (c *PeopleConnectionsListCall) RequestSyncToken(requestSyncToken bool) *PeopleConnectionsListCall {
 	c.urlParams_.Set("requestSyncToken", fmt.Sprint(requestSyncToken))
 	return c
 }
 
-// SortOrder sets the optional parameter "sortOrder": The order in which
-// the connections should be sorted. Defaults to
-// `LAST_MODIFIED_ASCENDING`.
+// SortOrder sets the optional parameter "sortOrder": The order in which the
+// connections should be sorted. Defaults to `LAST_MODIFIED_ASCENDING`.
 //
 // Possible values:
 //
-//	"LAST_MODIFIED_ASCENDING" - Sort people by when they were changed;
+//	"LAST_MODIFIED_ASCENDING" - Sort people by when they were changed; older
 //
-// older entries first.
+// entries first.
 //
-//	"LAST_MODIFIED_DESCENDING" - Sort people by when they were changed;
+//	"LAST_MODIFIED_DESCENDING" - Sort people by when they were changed; newer
 //
-// newer entries first.
+// entries first.
 //
 //	"FIRST_NAME_ASCENDING" - Sort people by first name.
 //	"LAST_NAME_ASCENDING" - Sort people by last name.
@@ -7887,9 +5856,9 @@ func (c *PeopleConnectionsListCall) SortOrder(sortOrder string) *PeopleConnectio
 	return c
 }
 
-// Sources sets the optional parameter "sources": A mask of what source
-// types to return. Defaults to READ_SOURCE_TYPE_CONTACT and
-// READ_SOURCE_TYPE_PROFILE if not set.
+// Sources sets the optional parameter "sources": A mask of what source types
+// to return. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE
+// if not set.
 //
 // Possible values:
 //
@@ -7899,57 +5868,48 @@ func (c *PeopleConnectionsListCall) SortOrder(sortOrder string) *PeopleConnectio
 // SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.
 //
 //	"READ_SOURCE_TYPE_CONTACT" - Returns SourceType.CONTACT.
-//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns
-//
-// SourceType.DOMAIN_CONTACT.
-//
-//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns
-//
-// SourceType.OTHER_CONTACT.
+//	"READ_SOURCE_TYPE_DOMAIN_CONTACT" - Returns SourceType.DOMAIN_CONTACT.
+//	"READ_SOURCE_TYPE_OTHER_CONTACT" - Returns SourceType.OTHER_CONTACT.
 func (c *PeopleConnectionsListCall) Sources(sources ...string) *PeopleConnectionsListCall {
 	c.urlParams_.SetMulti("sources", append([]string{}, sources...))
 	return c
 }
 
-// SyncToken sets the optional parameter "syncToken": A sync token,
-// received from a previous response `next_sync_token` Provide this to
-// retrieve only the resources changed since the last request. When
-// syncing, all other parameters provided to `people.connections.list`
-// must match the first call that provided the sync token. More details
-// about sync behavior at `people.connections.list`.
+// SyncToken sets the optional parameter "syncToken": A sync token, received
+// from a previous response `next_sync_token` Provide this to retrieve only the
+// resources changed since the last request. When syncing, all other parameters
+// provided to `people.connections.list` must match the first call that
+// provided the sync token. More details about sync behavior at
+// `people.connections.list`.
 func (c *PeopleConnectionsListCall) SyncToken(syncToken string) *PeopleConnectionsListCall {
 	c.urlParams_.Set("syncToken", syncToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PeopleConnectionsListCall) Fields(s ...googleapi.Field) *PeopleConnectionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PeopleConnectionsListCall) IfNoneMatch(entityTag string) *PeopleConnectionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PeopleConnectionsListCall) Context(ctx context.Context) *PeopleConnectionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PeopleConnectionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7958,12 +5918,7 @@ func (c *PeopleConnectionsListCall) Header() http.Header {
 }
 
 func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7984,12 +5939,11 @@ func (c *PeopleConnectionsListCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "people.people.connections.list" call.
-// Exactly one of *ListConnectionsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *ListConnectionsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConnectionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8020,103 +5974,6 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Provides a list of the authenticated user's contacts. Sync tokens expire 7 days after the full sync. A request with an expired sync token will get an error with an [google.rpc.ErrorInfo](https://cloud.google.com/apis/design/errors#error_info) with reason \"EXPIRED_SYNC_TOKEN\". In the case of such an error clients should make a full sync request without a `sync_token`. The first page of a full sync request has an additional quota. If the quota is exceeded, a 429 error will be returned. This quota is fixed and can not be increased. When the `sync_token` is specified, resources deleted since the last sync will be returned as a person with `PersonMetadata.deleted` set to true. When the `page_token` or `sync_token` is specified, all other request parameters must match the first call. Writes may have a propagation delay of several minutes for sync requests. Incremental syncs are not intended for read-after-write use cases. See example usage at [List the user's contacts that have changed](/people/v1/contacts#list_the_users_contacts_that_have_changed).",
-	//   "flatPath": "v1/people/{peopleId}/connections",
-	//   "httpMethod": "GET",
-	//   "id": "people.people.connections.list",
-	//   "parameterOrder": [
-	//     "resourceName"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. The number of connections to include in the response. Valid values are between 1 and 1000, inclusive. Defaults to 100 if not set or set to 0.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous response `next_page_token`. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `people.connections.list` must match the first call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "personFields": {
-	//       "description": "Required. A field mask to restrict which fields on each person are returned. Multiple fields can be specified by separating them with commas. Valid values are: * addresses * ageRanges * biographies * birthdays * calendarUrls * clientData * coverPhotos * emailAddresses * events * externalIds * genders * imClients * interests * locales * locations * memberships * metadata * miscKeywords * names * nicknames * occupations * organizations * phoneNumbers * photos * relations * sipAddresses * skills * urls * userDefined",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "requestMask.includeField": {
-	//       "description": "Required. Comma-separated list of person fields to be included in the response. Each path should start with `person.`: for example, `person.names` or `person.photos`.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "requestSyncToken": {
-	//       "description": "Optional. Whether the response should return `next_sync_token` on the last page of results. It can be used to get incremental changes since the last request by setting it on the request `sync_token`. More details about sync behavior at `people.connections.list`.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "resourceName": {
-	//       "description": "Required. The resource name to return connections for. Only `people/me` is valid.",
-	//       "location": "path",
-	//       "pattern": "^people/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "sortOrder": {
-	//       "description": "Optional. The order in which the connections should be sorted. Defaults to `LAST_MODIFIED_ASCENDING`.",
-	//       "enum": [
-	//         "LAST_MODIFIED_ASCENDING",
-	//         "LAST_MODIFIED_DESCENDING",
-	//         "FIRST_NAME_ASCENDING",
-	//         "LAST_NAME_ASCENDING"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Sort people by when they were changed; older entries first.",
-	//         "Sort people by when they were changed; newer entries first.",
-	//         "Sort people by first name.",
-	//         "Sort people by last name."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "sources": {
-	//       "description": "Optional. A mask of what source types to return. Defaults to READ_SOURCE_TYPE_CONTACT and READ_SOURCE_TYPE_PROFILE if not set.",
-	//       "enum": [
-	//         "READ_SOURCE_TYPE_UNSPECIFIED",
-	//         "READ_SOURCE_TYPE_PROFILE",
-	//         "READ_SOURCE_TYPE_CONTACT",
-	//         "READ_SOURCE_TYPE_DOMAIN_CONTACT",
-	//         "READ_SOURCE_TYPE_OTHER_CONTACT"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unspecified.",
-	//         "Returns SourceType.ACCOUNT, SourceType.DOMAIN_PROFILE, and SourceType.PROFILE.",
-	//         "Returns SourceType.CONTACT.",
-	//         "Returns SourceType.DOMAIN_CONTACT.",
-	//         "Returns SourceType.OTHER_CONTACT."
-	//       ],
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "syncToken": {
-	//       "description": "Optional. A sync token, received from a previous response `next_sync_token` Provide this to retrieve only the resources changed since the last request. When syncing, all other parameters provided to `people.connections.list` must match the first call that provided the sync token. More details about sync behavior at `people.connections.list`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resourceName}/connections",
-	//   "response": {
-	//     "$ref": "ListConnectionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/contacts",
-	//     "https://www.googleapis.com/auth/contacts.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -8124,7 +5981,7 @@ func (c *PeopleConnectionsListCall) Do(opts ...googleapi.CallOption) (*ListConne
 // The provided context supersedes any context provided to the Context method.
 func (c *PeopleConnectionsListCall) Pages(ctx context.Context, f func(*ListConnectionsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

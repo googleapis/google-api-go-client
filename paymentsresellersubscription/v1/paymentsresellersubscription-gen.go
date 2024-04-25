@@ -199,51 +199,41 @@ type PartnersSubscriptionsService struct {
 	s *Service
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Amount: Describes the amount
-// unit including the currency code.
+// GoogleCloudPaymentsResellerSubscriptionV1Amount: Describes the amount unit
+// including the currency code.
 type GoogleCloudPaymentsResellerSubscriptionV1Amount struct {
-	// AmountMicros: Required. Amount in micros (1_000_000 micros = 1
-	// currency unit)
+	// AmountMicros: Required. Amount in micros (1_000_000 micros = 1 currency
+	// unit)
 	AmountMicros int64 `json:"amountMicros,omitempty,string"`
-
-	// CurrencyCode: Required. Currency codes in accordance with [ISO-4217
-	// Currency Codes] (https://en.wikipedia.org/wiki/ISO_4217). For
-	// example, USD.
+	// CurrencyCode: Required. Currency codes in accordance with [ISO-4217 Currency
+	// Codes] (https://en.wikipedia.org/wiki/ISO_4217). For example, USD.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AmountMicros") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AmountMicros") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AmountMicros") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1Amount) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Amount
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest:
-// Request to cancel a subscription.
+// GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest: Request
+// to cancel a subscription.
 type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
-	// CancelImmediately: Optional. If true, Google will cancel the
-	// subscription immediately, and may or may not (based on the contract)
-	// issue a prorated refund for the remainder of the billing cycle.
-	// Otherwise, Google defers the cancelation at renewal_time, and will
-	// not issue a refund.
+	// CancelImmediately: Optional. If true, Google will cancel the subscription
+	// immediately, and may or may not (based on the contract) issue a prorated
+	// refund for the remainder of the billing cycle. Otherwise, Google defers the
+	// cancelation at renewal_time, and will not issue a refund.
 	CancelImmediately bool `json:"cancelImmediately,omitempty"`
-
 	// CancellationReason: Specifies the reason for the cancellation.
 	//
 	// Possible values:
@@ -252,44 +242,35 @@ type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest struct {
 	//   "CANCELLATION_REASON_REMORSE" - Buyer's remorse.
 	//   "CANCELLATION_REASON_ACCIDENTAL_PURCHASE" - Accidential purchase.
 	//   "CANCELLATION_REASON_PAST_DUE" - Payment is past due.
-	//   "CANCELLATION_REASON_ACCOUNT_CLOSED" - Used for notification only,
-	// do not use in Cancel API. User account closed.
-	//   "CANCELLATION_REASON_UPGRADE_DOWNGRADE" - Used for notification
-	// only, do not use in Cancel API. Cancellation due to upgrade or
-	// downgrade.
+	//   "CANCELLATION_REASON_ACCOUNT_CLOSED" - Used for notification only, do not
+	// use in Cancel API. User account closed.
+	//   "CANCELLATION_REASON_UPGRADE_DOWNGRADE" - Used for notification only, do
+	// not use in Cancel API. Cancellation due to upgrade or downgrade.
 	//   "CANCELLATION_REASON_USER_DELINQUENCY" - Cancellation due to user
 	// delinquency
-	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Used for notification only, do
-	// not use in Cancel API. Cancellation due to an unrecoverable system
-	// error.
-	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Used for notification only,
-	// do not use in Cancel API. The subscription is cancelled by Google
-	// automatically since it is no longer valid.
+	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Used for notification only, do not
+	// use in Cancel API. Cancellation due to an unrecoverable system error.
+	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Used for notification only, do not
+	// use in Cancel API. The subscription is cancelled by Google automatically
+	// since it is no longer valid.
 	//   "CANCELLATION_REASON_OTHER" - Other reason.
 	CancellationReason string `json:"cancellationReason,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CancelImmediately")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CancelImmediately") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CancelImmediately") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CancelImmediately") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse:
@@ -298,39 +279,31 @@ type GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse struct 
 	// Subscription: The cancelled subscription resource.
 	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Subscription") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Subscription") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Subscription") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Duration: Describes the
-// length of a period of a time.
+// GoogleCloudPaymentsResellerSubscriptionV1Duration: Describes the length of a
+// period of a time.
 type GoogleCloudPaymentsResellerSubscriptionV1Duration struct {
 	// Count: number of duration units to be included.
 	Count int64 `json:"count,omitempty"`
-
 	// Unit: The unit used for the duration
 	//
 	// Possible values:
@@ -340,98 +313,75 @@ type GoogleCloudPaymentsResellerSubscriptionV1Duration struct {
 	//   "DAY" - Unit of a day.
 	//   "HOUR" - Unit of an hour. It is used for testing.
 	Unit string `json:"unit,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Count") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Count") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1Duration) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Duration
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest:
-// Partner request for entitling the previously provisioned subscription
-// to an end user. The end user identity is inferred from the request
-// OAuth context.
+// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest: Partner
+// request for entitling the previously provisioned subscription to an end
+// user. The end user identity is inferred from the request OAuth context.
 type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest struct {
-	// LineItemEntitlementDetails: Optional. The line items to be entitled.
-	// If unspecified, all line items will be entitled.
+	// LineItemEntitlementDetails: Optional. The line items to be entitled. If
+	// unspecified, all line items will be entitled.
 	LineItemEntitlementDetails []*GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEntitlementDetails `json:"lineItemEntitlementDetails,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "LineItemEntitlementDetails") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "LineItemEntitlementDetails")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "LineItemEntitlementDetails") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LineItemEntitlementDetails") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLin
-// eItemEntitlementDetails: The details of the line item to be entitled.
+// GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEn
+// titlementDetails: The details of the line item to be entitled.
 type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEntitlementDetails struct {
 	// LineItemIndex: Required. The index of the line item to be entitled.
 	LineItemIndex int64 `json:"lineItemIndex,omitempty"`
-
-	// Products: Optional. Only applicable if the line item corresponds to a
-	// hard bundle. Product resource names that identify the bundle elements
-	// to be entitled in the line item. If unspecified, all bundle elements
-	// will be entitled. The format is
-	// 'partners/{partner_id}/products/{product_id}'.
+	// Products: Optional. Only applicable if the line item corresponds to a hard
+	// bundle. Product resource names that identify the bundle elements to be
+	// entitled in the line item. If unspecified, all bundle elements will be
+	// entitled. The format is 'partners/{partner_id}/products/{product_id}'.
 	Products []string `json:"products,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LineItemIndex") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LineItemIndex") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LineItemIndex") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEntitlementDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequestLineItemEntitlementDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse:
@@ -440,305 +390,245 @@ type GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse struct
 	// Subscription: The subscription that has user linked to it.
 	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Subscription") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Subscription") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Subscription") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest:
-// Request message for extending a Subscription resource. A new
-// recurrence will be made based on the subscription schedule defined by
-// the original product.
+// GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest: Request
+// message for extending a Subscription resource. A new recurrence will be made
+// based on the subscription schedule defined by the original product.
 type GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest struct {
-	// Extension: Required. Specifies details of the extension. Currently,
-	// the duration of the extension must be exactly one billing cycle of
-	// the original subscription.
+	// Extension: Required. Specifies details of the extension. Currently, the
+	// duration of the extension must be exactly one billing cycle of the original
+	// subscription.
 	Extension *GoogleCloudPaymentsResellerSubscriptionV1Extension `json:"extension,omitempty"`
-
-	// RequestId: Required. Restricted to 36 ASCII characters. A random UUID
-	// is recommended. The idempotency key for the request. The ID
-	// generation logic is controlled by the partner. request_id should be
-	// the same as on retries of the same request. A different request_id
-	// must be used for a extension of a different cycle.
+	// RequestId: Required. Restricted to 36 ASCII characters. A random UUID is
+	// recommended. The idempotency key for the request. The ID generation logic is
+	// controlled by the partner. request_id should be the same as on retries of
+	// the same request. A different request_id must be used for a extension of a
+	// different cycle.
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Extension") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Extension") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Extension") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse:
 // Response that contains the timestamps after the extension.
 type GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse struct {
-	// CycleEndTime: The time at which the subscription is expected to be
-	// extended, in ISO 8061 format. UTC timezone. Example,
+	// CycleEndTime: The time at which the subscription is expected to be extended,
+	// in ISO 8061 format. UTC timezone. Example,
 	// "cycleEndTime":"2019-08-31T17:28:54.564Z"
 	CycleEndTime string `json:"cycleEndTime,omitempty"`
-
-	// FreeTrialEndTime: End of the free trial period, in ISO 8061 format.
-	// UTC timezone. Example, "freeTrialEndTime":"2019-08-31T17:28:54.564Z"
-	// This time will be set the same as initial subscription creation time
-	// if no free trial period is offered to the partner.
+	// FreeTrialEndTime: End of the free trial period, in ISO 8061 format. UTC
+	// timezone. Example, "freeTrialEndTime":"2019-08-31T17:28:54.564Z" This time
+	// will be set the same as initial subscription creation time if no free trial
+	// period is offered to the partner.
 	FreeTrialEndTime string `json:"freeTrialEndTime,omitempty"`
-
-	// RenewalTime: Output only. The time at which the subscription is
-	// expected to be renewed by Google - a new charge will be incurred and
-	// the service entitlement will be renewed. A non-immediate cancellation
-	// will take place at this time too, before which, the service
-	// entitlement for the end user will remain valid. UTC timezone in ISO
-	// 8061 format. For example: "2019-08-31T17:28:54.564Z"
+	// RenewalTime: Output only. The time at which the subscription is expected to
+	// be renewed by Google - a new charge will be incurred and the service
+	// entitlement will be renewed. A non-immediate cancellation will take place at
+	// this time too, before which, the service entitlement for the end user will
+	// remain valid. UTC timezone in ISO 8061 format. For example:
+	// "2019-08-31T17:28:54.564Z"
 	RenewalTime string `json:"renewalTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CycleEndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CycleEndTime") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CycleEndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Extension: Describes the
-// details of an extension request.
+// GoogleCloudPaymentsResellerSubscriptionV1Extension: Describes the details of
+// an extension request.
 type GoogleCloudPaymentsResellerSubscriptionV1Extension struct {
-	// Duration: Required. Specifies the period of access the subscription
-	// should grant.
+	// Duration: Required. Specifies the period of access the subscription should
+	// grant.
 	Duration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"duration,omitempty"`
-
 	// PartnerUserToken: Required. Identifier of the end-user in partner’s
 	// system.
 	PartnerUserToken string `json:"partnerUserToken,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Duration") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Duration") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Duration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1Extension) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Extension
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest
-// : Request to find eligible promotions for the current user.
+// GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest:
+// Request to find eligible promotions for the current user.
 type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest struct {
-	// Filter: Optional. Specifies the filters for the promotion results.
-	// The syntax is defined in https://google.aip.dev/160 with the
-	// following caveats: 1. Only the following features are supported: -
-	// Logical operator `AND` - Comparison operator `=` (no wildcards `*`) -
-	// Traversal operator `.` - Has operator `:` (no wildcards `*`) 2. Only
-	// the following fields are supported: - `applicableProducts` -
-	// `regionCodes` - `youtubePayload.partnerEligibilityId` -
-	// `youtubePayload.postalCode` 3. Unless explicitly mentioned above,
-	// other features are not supported. Example:
-	// `applicableProducts:partners/partner1/products/product1 AND
+	// Filter: Optional. Specifies the filters for the promotion results. The
+	// syntax is defined in https://google.aip.dev/160 with the following caveats:
+	// 1. Only the following features are supported: - Logical operator `AND` -
+	// Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has
+	// operator `:` (no wildcards `*`) 2. Only the following fields are supported:
+	// - `applicableProducts` - `regionCodes` -
+	// `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` 3.
+	// Unless explicitly mentioned above, other features are not supported.
+	// Example: `applicableProducts:partners/partner1/products/product1 AND
 	// regionCodes:US AND youtubePayload.postalCode=94043 AND
 	// youtubePayload.partnerEligibilityId=eligibility-id`
 	Filter string `json:"filter,omitempty"`
-
-	// PageSize: Optional. The maximum number of promotions to return. The
-	// service may return fewer than this value. If unspecified, at most 50
-	// products will be returned. The maximum value is 1000; values above
-	// 1000 will be coerced to 1000.
+	// PageSize: Optional. The maximum number of promotions to return. The service
+	// may return fewer than this value. If unspecified, at most 50 products will
+	// be returned. The maximum value is 1000; values above 1000 will be coerced to
+	// 1000.
 	PageSize int64 `json:"pageSize,omitempty"`
-
-	// PageToken: Optional. A page token, received from a previous
-	// `ListPromotions` call. Provide this to retrieve the subsequent page.
-	// When paginating, all other parameters provided to `ListPromotions`
-	// must match the call that provided the page token.
+	// PageToken: Optional. A page token, received from a previous `ListPromotions`
+	// call. Provide this to retrieve the subsequent page. When paginating, all
+	// other parameters provided to `ListPromotions` must match the call that
+	// provided the page token.
 	PageToken string `json:"pageToken,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Filter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Filter") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Filter") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRespons
-// e: Response containing the found promotions for the current user.
+// GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse:
+// Response containing the found promotions for the current user.
 type GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is empty, there are no subsequent pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is empty, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Promotions: The promotions for the current user.
 	Promotions []*GoogleCloudPaymentsResellerSubscriptionV1Promotion `json:"promotions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails:
-// Details for a subscriptiin line item with finite billing cycles.
+// GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails: Details
+// for a subscriptiin line item with finite billing cycles.
 type GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails struct {
-	// BillingCycleCountLimit: Required. The number of a subscription line
-	// item billing cycles after which billing will stop automatically.
+	// BillingCycleCountLimit: Required. The number of a subscription line item
+	// billing cycles after which billing will stop automatically.
 	BillingCycleCountLimit int64 `json:"billingCycleCountLimit,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "BillingCycleCountLimit") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BillingCycleCountLimit") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BillingCycleCountLimit")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BillingCycleCountLimit") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload: Payload
-// specific to Google One products.
+// GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload: Payload specific
+// to Google One products.
 type GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload struct {
 	// Campaigns: Campaign attributed to sales of this subscription.
 	Campaigns []string `json:"campaigns,omitempty"`
-
-	// Offering: The type of offering the subscription was sold by the
-	// partner. e.g. VAS.
+	// Offering: The type of offering the subscription was sold by the partner.
+	// e.g. VAS.
 	//
 	// Possible values:
-	//   "OFFERING_UNSPECIFIED" - The type of partner offering is
-	// unspecified.
-	//   "OFFERING_VAS_BUNDLE" - Google One product purchased as a Value
-	// added service in addition to existing partner's products. Customer
-	// pays additional amount for Google One product.
-	//   "OFFERING_VAS_STANDALONE" - Google One product purchased by itself
-	// by customer as a value add service. Customer pays additional amount
-	// for Google One product.
-	//   "OFFERING_HARD_BUNDLE" - Product purchased as part of a hard bundle
-	// where Google One was included with the bundle. Google One pricing is
-	// included in the bundle.
-	//   "OFFERING_SOFT_BUNDLE" - Purchased as part of a bundle where Google
-	// One was provided as an option. Google One pricing is included in the
-	// bundle.
+	//   "OFFERING_UNSPECIFIED" - The type of partner offering is unspecified.
+	//   "OFFERING_VAS_BUNDLE" - Google One product purchased as a Value added
+	// service in addition to existing partner's products. Customer pays additional
+	// amount for Google One product.
+	//   "OFFERING_VAS_STANDALONE" - Google One product purchased by itself by
+	// customer as a value add service. Customer pays additional amount for Google
+	// One product.
+	//   "OFFERING_HARD_BUNDLE" - Product purchased as part of a hard bundle where
+	// Google One was included with the bundle. Google One pricing is included in
+	// the bundle.
+	//   "OFFERING_SOFT_BUNDLE" - Purchased as part of a bundle where Google One
+	// was provided as an option. Google One pricing is included in the bundle.
 	Offering string `json:"offering,omitempty"`
-
-	// SalesChannel: The type of sales channel through which the
-	// subscription was sold.
+	// SalesChannel: The type of sales channel through which the subscription was
+	// sold.
 	//
 	// Possible values:
 	//   "CHANNEL_UNSPECIFIED" - The channel type is unspecified.
@@ -747,332 +637,259 @@ type GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload struct {
 	//   "CHANNEL_ONLINE_ANDROID_APP" - Sold through partner android app.
 	//   "CHANNEL_ONLINE_IOS_APP" - Sold through partner iOS app.
 	SalesChannel string `json:"salesChannel,omitempty"`
-
-	// StoreId: The identifier for the partner store where the subscription
-	// was sold.
+	// StoreId: The identifier for the partner store where the subscription was
+	// sold.
 	StoreId string `json:"storeId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Campaigns") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Campaigns") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Campaigns") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse:
-// Response that contains the products.
+// GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse: Response that
+// contains the products.
 type GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is empty, there are no subsequent pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is empty, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Products: The products for the specified partner.
 	Products []*GoogleCloudPaymentsResellerSubscriptionV1Product `json:"products,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse:
-// Response that contains the promotions.
+// GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse: Response
+// that contains the promotions.
 type GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is empty, there are no subsequent pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is empty, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Promotions: The promotions for the specified partner.
 	Promotions []*GoogleCloudPaymentsResellerSubscriptionV1Promotion `json:"promotions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Location: Describes a
-// location of an end user.
+// GoogleCloudPaymentsResellerSubscriptionV1Location: Describes a location of
+// an end user.
 type GoogleCloudPaymentsResellerSubscriptionV1Location struct {
 	// PostalCode: The postal code this location refers to. Ex. "94043"
 	PostalCode string `json:"postalCode,omitempty"`
-
 	// RegionCode: 2-letter ISO region code for current content region. Ex.
 	// “US” Please refers to: https://en.wikipedia.org/wiki/ISO_3166-1
 	RegionCode string `json:"regionCode,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PostalCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PostalCode") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PostalCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1Location) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Location
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Product: A Product resource
-// that defines a subscription service that can be resold.
+// GoogleCloudPaymentsResellerSubscriptionV1Product: A Product resource that
+// defines a subscription service that can be resold.
 type GoogleCloudPaymentsResellerSubscriptionV1Product struct {
-	// BundleDetails: Output only. Output Only. Specifies the details for a
-	// bundle product.
-	BundleDetails *ProductBundleDetails `json:"bundleDetails,omitempty"`
-
-	// FiniteBillingCycleDetails: Optional. Details for a subscription line
-	// item with finite billing cycles. If unset, the line item will be
-	// charged indefinitely.
-	FiniteBillingCycleDetails *GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails `json:"finiteBillingCycleDetails,omitempty"`
-
-	// Name: Identifier. Response only. Resource name of the product. It
-	// will have the format of "partners/{partner_id}/products/{product_id}"
-	Name string `json:"name,omitempty"`
-
-	// PriceConfigs: Output only. Price configs for the product in the
-	// available regions.
-	PriceConfigs []*GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig `json:"priceConfigs,omitempty"`
-
-	// ProductType: Output only. Output Only. Specifies the type of the
+	// BundleDetails: Output only. Output Only. Specifies the details for a bundle
 	// product.
+	BundleDetails *ProductBundleDetails `json:"bundleDetails,omitempty"`
+	// FiniteBillingCycleDetails: Optional. Details for a subscription line item
+	// with finite billing cycles. If unset, the line item will be charged
+	// indefinitely.
+	FiniteBillingCycleDetails *GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails `json:"finiteBillingCycleDetails,omitempty"`
+	// Name: Identifier. Response only. Resource name of the product. It will have
+	// the format of "partners/{partner_id}/products/{product_id}"
+	Name string `json:"name,omitempty"`
+	// PriceConfigs: Output only. Price configs for the product in the available
+	// regions.
+	PriceConfigs []*GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig `json:"priceConfigs,omitempty"`
+	// ProductType: Output only. Output Only. Specifies the type of the product.
 	//
 	// Possible values:
-	//   "PRODUCT_TYPE_UNSPECIFIED" - Unspecified. It's reserved as an
-	// unexpected value, should not be used.
+	//   "PRODUCT_TYPE_UNSPECIFIED" - Unspecified. It's reserved as an unexpected
+	// value, should not be used.
 	//   "PRODUCT_TYPE_SUBSCRIPTION" - The product is a subscription.
-	//   "PRODUCT_TYPE_BUNDLE_SUBSCRIPTION" - The product is a bundled
-	// subscription plan, which includes multiple subscription elements.
+	//   "PRODUCT_TYPE_BUNDLE_SUBSCRIPTION" - The product is a bundled subscription
+	// plan, which includes multiple subscription elements.
 	ProductType string `json:"productType,omitempty"`
-
-	// RegionCodes: Output only. 2-letter ISO region code where the product
-	// is available in. Ex. "US" Please refers to:
+	// RegionCodes: Output only. 2-letter ISO region code where the product is
+	// available in. Ex. "US" Please refers to:
 	// https://en.wikipedia.org/wiki/ISO_3166-1
 	RegionCodes []string `json:"regionCodes,omitempty"`
-
-	// SubscriptionBillingCycleDuration: Output only. Specifies the length
-	// of the billing cycle of the subscription.
+	// SubscriptionBillingCycleDuration: Output only. Specifies the length of the
+	// billing cycle of the subscription.
 	SubscriptionBillingCycleDuration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"subscriptionBillingCycleDuration,omitempty"`
-
 	// Titles: Output only. Localized human readable name of the product.
 	Titles []*GoogleTypeLocalizedText `json:"titles,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BundleDetails") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BundleDetails") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BundleDetails") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1Product) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Product
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleEle
-// ment: The individual product that is included in the bundle.
+// GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement:
+// The individual product that is included in the bundle.
 type GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement struct {
-	// Product: Required. Output only. Product resource name that identifies
-	// the bundle element. The format is
-	// 'partners/{partner_id}/products/{product_id}'.
+	// Product: Required. Output only. Product resource name that identifies the
+	// bundle element. The format is 'partners/{partner_id}/products/{product_id}'.
 	Product string `json:"product,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Product") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Product") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Product") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Product") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ProductPayload: Specifies
-// product specific payload.
+// GoogleCloudPaymentsResellerSubscriptionV1ProductPayload: Specifies product
+// specific payload.
 type GoogleCloudPaymentsResellerSubscriptionV1ProductPayload struct {
-	// GoogleOnePayload: Product-specific payloads. Payload specific to
-	// Google One products.
+	// GoogleOnePayload: Product-specific payloads. Payload specific to Google One
+	// products.
 	GoogleOnePayload *GoogleCloudPaymentsResellerSubscriptionV1GoogleOnePayload `json:"googleOnePayload,omitempty"`
-
 	// YoutubePayload: Payload specific to Youtube products.
 	YoutubePayload *GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload `json:"youtubePayload,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "GoogleOnePayload") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "GoogleOnePayload") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "GoogleOnePayload") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1ProductPayload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ProductPayload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig: Configs
-// the prices in an available region.
+// GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig: Configs the
+// prices in an available region.
 type GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig struct {
 	// Amount: Output only. The price in the region.
 	Amount *GoogleCloudPaymentsResellerSubscriptionV1Amount `json:"amount,omitempty"`
-
-	// RegionCode: Output only. 2-letter ISO region code where the product
-	// is available in. Ex. "US".
+	// RegionCode: Output only. 2-letter ISO region code where the product is
+	// available in. Ex. "US".
 	RegionCode string `json:"regionCode,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Amount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Amount") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Amount") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ProductPriceConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Promotion: A Promotion
-// resource that defines a promotion for a subscription that can be
-// resold.
+// GoogleCloudPaymentsResellerSubscriptionV1Promotion: A Promotion resource
+// that defines a promotion for a subscription that can be resold.
 type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
-	// ApplicableProducts: Output only. The product ids this promotion can
-	// be applied to.
+	// ApplicableProducts: Output only. The product ids this promotion can be
+	// applied to.
 	ApplicableProducts []string `json:"applicableProducts,omitempty"`
-
-	// EndTime: Optional. Specifies the end time (exclusive) of the period
-	// that the promotion is available in. If unset, the promotion is
-	// available indefinitely.
+	// EndTime: Optional. Specifies the end time (exclusive) of the period that the
+	// promotion is available in. If unset, the promotion is available
+	// indefinitely.
 	EndTime string `json:"endTime,omitempty"`
-
-	// FreeTrialDuration: Optional. Specifies the duration of the free trial
-	// of the subscription when promotion_type is PROMOTION_TYPE_FREE_TRIAL
+	// FreeTrialDuration: Optional. Specifies the duration of the free trial of the
+	// subscription when promotion_type is PROMOTION_TYPE_FREE_TRIAL
 	FreeTrialDuration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"freeTrialDuration,omitempty"`
-
-	// IntroductoryPricingDetails: Optional. Specifies the introductory
-	// pricing details when the promotion_type is
-	// PROMOTION_TYPE_INTRODUCTORY_PRICING.
+	// IntroductoryPricingDetails: Optional. Specifies the introductory pricing
+	// details when the promotion_type is PROMOTION_TYPE_INTRODUCTORY_PRICING.
 	IntroductoryPricingDetails *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails `json:"introductoryPricingDetails,omitempty"`
-
 	// Name: Identifier. Response only. Resource name of the subscription
 	// promotion. It will have the format of
 	// "partners/{partner_id}/promotion/{promotion_id}"
 	Name string `json:"name,omitempty"`
-
 	// PromotionType: Output only. Output Only. Specifies the type of the
 	// promotion.
 	//
@@ -1082,320 +899,248 @@ type GoogleCloudPaymentsResellerSubscriptionV1Promotion struct {
 	//   "PROMOTION_TYPE_INTRODUCTORY_PRICING" - The promotion is a reduced
 	// introductory pricing.
 	PromotionType string `json:"promotionType,omitempty"`
-
-	// RegionCodes: Output only. 2-letter ISO region code where the
-	// promotion is available in. Ex. "US" Please refers to:
+	// RegionCodes: Output only. 2-letter ISO region code where the promotion is
+	// available in. Ex. "US" Please refers to:
 	// https://en.wikipedia.org/wiki/ISO_3166-1
 	RegionCodes []string `json:"regionCodes,omitempty"`
-
-	// StartTime: Optional. Specifies the start time (inclusive) of the
-	// period that the promotion is available in.
+	// StartTime: Optional. Specifies the start time (inclusive) of the period that
+	// the promotion is available in.
 	StartTime string `json:"startTime,omitempty"`
-
 	// Titles: Output only. Localized human readable name of the promotion.
 	Titles []*GoogleTypeLocalizedText `json:"titles,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ApplicableProducts")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ApplicableProducts") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApplicableProducts") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ApplicableProducts") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1Promotion) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Promotion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingD
-// etails: The details of a introductory pricing promotion.
+// GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails:
+//
+//	The details of a introductory pricing promotion.
 type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails struct {
-	// IntroductoryPricingSpecs: Output only. Specifies the introductory
-	// pricing periods.
+	// IntroductoryPricingSpecs: Output only. Specifies the introductory pricing
+	// periods.
 	IntroductoryPricingSpecs []*GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec `json:"introductoryPricingSpecs,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "IntroductoryPricingSpecs") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "IntroductoryPricingSpecs")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IntroductoryPricingSpecs")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "IntroductoryPricingSpecs") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingD
-// etailsIntroductoryPricingSpec: The duration of an introductory
-// pricing promotion.
+// GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsI
+// ntroductoryPricingSpec: The duration of an introductory pricing promotion.
 type GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec struct {
-	// DiscountAmount: Output only. The discount amount. The value is
-	// positive.
+	// DiscountAmount: Output only. The discount amount. The value is positive.
 	DiscountAmount *GoogleCloudPaymentsResellerSubscriptionV1Amount `json:"discountAmount,omitempty"`
-
-	// DiscountRatioMicros: Output only. The discount percentage in micros.
-	// For example, 50,000 represents 5%.
+	// DiscountRatioMicros: Output only. The discount percentage in micros. For
+	// example, 50,000 represents 5%.
 	DiscountRatioMicros int64 `json:"discountRatioMicros,omitempty,string"`
-
-	// RecurrenceCount: Output only. Output Only. The duration of an
-	// introductory offer in billing cycles.
+	// RecurrenceCount: Output only. Output Only. The duration of an introductory
+	// offer in billing cycles.
 	RecurrenceCount int64 `json:"recurrenceCount,omitempty"`
-
-	// RegionCode: Output only. 2-letter ISO region code where the product
-	// is available in. Ex. "US".
+	// RegionCode: Output only. 2-letter ISO region code where the product is
+	// available in. Ex. "US".
 	RegionCode string `json:"regionCode,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DiscountAmount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DiscountAmount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DiscountAmount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetailsIntroductoryPricingSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod: A description
-// of what time period or moment in time the product or service is being
-// delivered over.
+// GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod: A description of
+// what time period or moment in time the product or service is being delivered
+// over.
 type GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod struct {
-	// EndTime: Optional. The end time of the service period. Time is
-	// exclusive.
+	// EndTime: Optional. The end time of the service period. Time is exclusive.
 	EndTime string `json:"endTime,omitempty"`
-
 	// StartTime: Required. The start time of the service period. Time is
 	// inclusive.
 	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1Subscription: A subscription
-// serves as a central billing entity between an external partner and
-// Google. The underlying Google services rely on the subscription state
-// to grant or revoke the user's service entitlement. It's important to
-// note that the subscription state may not always perfectly align with
-// the user's service entitlement. For example, some Google services may
-// continue providing access to the user until the current billing cycle
-// ends, even if the subscription has been immediately canceled.
-// However, other services may not do the same. To fully understand the
-// specific details, please consult the relevant contract or product
-// policy.
+// GoogleCloudPaymentsResellerSubscriptionV1Subscription: A subscription serves
+// as a central billing entity between an external partner and Google. The
+// underlying Google services rely on the subscription state to grant or revoke
+// the user's service entitlement. It's important to note that the subscription
+// state may not always perfectly align with the user's service entitlement.
+// For example, some Google services may continue providing access to the user
+// until the current billing cycle ends, even if the subscription has been
+// immediately canceled. However, other services may not do the same. To fully
+// understand the specific details, please consult the relevant contract or
+// product policy.
 type GoogleCloudPaymentsResellerSubscriptionV1Subscription struct {
-	// CancellationDetails: Output only. Describes the details of a
-	// cancelled subscription. Only applicable to subscription of state
-	// `STATE_CANCELLED`.
+	// CancellationDetails: Output only. Describes the details of a cancelled
+	// subscription. Only applicable to subscription of state `STATE_CANCELLED`.
 	CancellationDetails *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails `json:"cancellationDetails,omitempty"`
-
-	// CreateTime: Output only. System generated timestamp when the
-	// subscription is created. UTC timezone.
+	// CreateTime: Output only. System generated timestamp when the subscription is
+	// created. UTC timezone.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// CycleEndTime: Output only. The time at which the subscription is
-	// expected to be extended, in ISO 8061 format. UTC timezone. For
-	// example: "2019-08-31T17:28:54.564Z"
+	// CycleEndTime: Output only. The time at which the subscription is expected to
+	// be extended, in ISO 8061 format. UTC timezone. For example:
+	// "2019-08-31T17:28:54.564Z"
 	CycleEndTime string `json:"cycleEndTime,omitempty"`
-
-	// EndUserEntitled: Output only. Indicates if the subscription is
-	// entitled to the end user.
+	// EndUserEntitled: Output only. Indicates if the subscription is entitled to
+	// the end user.
 	EndUserEntitled bool `json:"endUserEntitled,omitempty"`
-
-	// FreeTrialEndTime: Output only. End of the free trial period, in ISO
-	// 8061 format. For example, "2019-08-31T17:28:54.564Z". It will be set
-	// the same as createTime if no free trial promotion is specified.
+	// FreeTrialEndTime: Output only. End of the free trial period, in ISO 8061
+	// format. For example, "2019-08-31T17:28:54.564Z". It will be set the same as
+	// createTime if no free trial promotion is specified.
 	FreeTrialEndTime string `json:"freeTrialEndTime,omitempty"`
-
 	// LineItems: Required. The line items of the subscription.
 	LineItems []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem `json:"lineItems,omitempty"`
-
-	// Name: Identifier. Resource name of the subscription. It will have the
-	// format of "partners/{partner_id}/subscriptions/{subscription_id}".
-	// This is available for authorizeAddon, but otherwise is response only.
+	// Name: Identifier. Resource name of the subscription. It will have the format
+	// of "partners/{partner_id}/subscriptions/{subscription_id}". This is
+	// available for authorizeAddon, but otherwise is response only.
 	Name string `json:"name,omitempty"`
-
 	// PartnerUserToken: Required. Identifier of the end-user in partner’s
-	// system. The value is restricted to 63 ASCII characters at the
-	// maximum.
+	// system. The value is restricted to 63 ASCII characters at the maximum.
 	PartnerUserToken string `json:"partnerUserToken,omitempty"`
-
 	// ProcessingState: Output only. Describes the processing state of the
 	// subscription. See more details at the lifecycle of a subscription
-	// (/payments/reseller/subscription/reference/index/Receive.Notifications
-	// #payments-subscription-lifecycle).
+	// (/payments/reseller/subscription/reference/index/Receive.Notifications#paymen
+	// ts-subscription-lifecycle).
 	//
 	// Possible values:
-	//   "PROCESSING_STATE_UNSPECIFIED" - The processing state is
-	// unspecified.
-	//   "PROCESSING_STATE_CANCELLING" - The subscription is being
-	// cancelled.
+	//   "PROCESSING_STATE_UNSPECIFIED" - The processing state is unspecified.
+	//   "PROCESSING_STATE_CANCELLING" - The subscription is being cancelled.
 	//   "PROCESSING_STATE_RECURRING" - The subscription is recurring.
 	ProcessingState string `json:"processingState,omitempty"`
-
-	// Products: Optional. Deprecated: consider using `line_items` as the
-	// input. Required. Resource name that identifies the purchased
-	// products. The format will be
-	// 'partners/{partner_id}/products/{product_id}'.
+	// Products: Optional. Deprecated: consider using `line_items` as the input.
+	// Required. Resource name that identifies the purchased products. The format
+	// will be 'partners/{partner_id}/products/{product_id}'.
 	Products []string `json:"products,omitempty"`
-
-	// PromotionSpecs: Optional. Subscription-level promotions. Only free
-	// trial is supported on this level. It determines the first renewal
-	// time of the subscription to be the end of the free trial period.
-	// Specify the promotion resource name only when used as input.
+	// PromotionSpecs: Optional. Subscription-level promotions. Only free trial is
+	// supported on this level. It determines the first renewal time of the
+	// subscription to be the end of the free trial period. Specify the promotion
+	// resource name only when used as input.
 	PromotionSpecs []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec `json:"promotionSpecs,omitempty"`
-
 	// Promotions: Optional. Deprecated: consider using the top-level
-	// `promotion_specs` as the input. Optional. Resource name that
-	// identifies one or more promotions that can be applied on the product.
-	// A typical promotion for a subscription is Free trial. The format will
-	// be 'partners/{partner_id}/promotions/{promotion_id}'.
+	// `promotion_specs` as the input. Optional. Resource name that identifies one
+	// or more promotions that can be applied on the product. A typical promotion
+	// for a subscription is Free trial. The format will be
+	// 'partners/{partner_id}/promotions/{promotion_id}'.
 	Promotions []string `json:"promotions,omitempty"`
-
-	// PurchaseTime: Optional. The timestamp when the user transaction was
-	// made with the Partner. Specify for the case of "bundle with choice",
-	// and it must be before the provision_time (when the user makes a
-	// selection).
+	// PurchaseTime: Optional. The timestamp when the user transaction was made
+	// with the Partner. Specify for the case of "bundle with choice", and it must
+	// be before the provision_time (when the user makes a selection).
 	PurchaseTime string `json:"purchaseTime,omitempty"`
-
-	// RedirectUri: Output only. The place where partners should redirect
-	// the end-user to after creation. This field might also be populated
-	// when creation failed. However, Partners should always prepare a
-	// default URL to redirect the user in case this field is empty.
+	// RedirectUri: Output only. The place where partners should redirect the
+	// end-user to after creation. This field might also be populated when creation
+	// failed. However, Partners should always prepare a default URL to redirect
+	// the user in case this field is empty.
 	RedirectUri string `json:"redirectUri,omitempty"`
-
-	// RenewalTime: Output only. The time at which the subscription is
-	// expected to be renewed by Google - a new charge will be incurred and
-	// the service entitlement will be renewed. A non-immediate cancellation
-	// will take place at this time too, before which, the service
-	// entitlement for the end user will remain valid. UTC timezone in ISO
-	// 8061 format. For example: "2019-08-31T17:28:54.564Z"
+	// RenewalTime: Output only. The time at which the subscription is expected to
+	// be renewed by Google - a new charge will be incurred and the service
+	// entitlement will be renewed. A non-immediate cancellation will take place at
+	// this time too, before which, the service entitlement for the end user will
+	// remain valid. UTC timezone in ISO 8061 format. For example:
+	// "2019-08-31T17:28:54.564Z"
 	RenewalTime string `json:"renewalTime,omitempty"`
-
-	// ServiceLocation: Required. The location that the service is provided
-	// as indicated by the partner.
+	// ServiceLocation: Required. The location that the service is provided as
+	// indicated by the partner.
 	ServiceLocation *GoogleCloudPaymentsResellerSubscriptionV1Location `json:"serviceLocation,omitempty"`
-
 	// State: Output only. Describes the state of the subscription. See more
 	// details at the lifecycle of a subscription
-	// (/payments/reseller/subscription/reference/index/Receive.Notifications
-	// #payments-subscription-lifecycle).
+	// (/payments/reseller/subscription/reference/index/Receive.Notifications#paymen
+	// ts-subscription-lifecycle).
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The state is unspecified.
-	//   "STATE_CREATED" - The subscription is created, a state before it is
-	// moved to STATE_ACTIVE.
+	//   "STATE_CREATED" - The subscription is created, a state before it is moved
+	// to STATE_ACTIVE.
 	//   "STATE_ACTIVE" - The subscription is active.
-	//   "STATE_CANCELLED" - The subscription is cancelled. This is the
-	// final state of the subscription, as it can no longer be modified or
-	// reactivated.
-	//   "STATE_IN_GRACE_PERIOD" - The subscription is in grace period. It
-	// can happen: 1) in manual extend mode, the subscription is not
-	// extended by the partner at the end of current cycle. 2) for outbound
-	// authorization enabled partners, a renewal purchase order is rejected.
+	//   "STATE_CANCELLED" - The subscription is cancelled. This is the final state
+	// of the subscription, as it can no longer be modified or reactivated.
+	//   "STATE_IN_GRACE_PERIOD" - The subscription is in grace period. It can
+	// happen: 1) in manual extend mode, the subscription is not extended by the
+	// partner at the end of current cycle. 2) for outbound authorization enabled
+	// partners, a renewal purchase order is rejected.
 	//   "STATE_CANCEL_AT_END_OF_CYCLE" - The subscription is waiting to be
 	// cancelled by the next recurrence cycle.
 	//   "STATE_SUSPENDED" - The subscription is suspended.
 	State string `json:"state,omitempty"`
-
-	// UpdateTime: Output only. System generated timestamp when the
-	// subscription is most recently updated. UTC timezone.
+	// UpdateTime: Output only. System generated timestamp when the subscription is
+	// most recently updated. UTC timezone.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// UpgradeDowngradeDetails: Optional. Details about the previous
-	// subscription that this new subscription upgrades/downgrades from.
-	// Only populated if this subscription is an upgrade/downgrade from
-	// another subscription.
+	// UpgradeDowngradeDetails: Optional. Details about the previous subscription
+	// that this new subscription upgrades/downgrades from. Only populated if this
+	// subscription is an upgrade/downgrade from another subscription.
 	UpgradeDowngradeDetails *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails `json:"upgradeDowngradeDetails,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "CancellationDetails")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CancellationDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CancellationDetails") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CancellationDetails") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1Subscription
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetai
-// ls: Describes the details of a cancelled or cancelling subscription.
+// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails:
+// Describes the details of a cancelled or cancelling subscription.
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails struct {
 	// Reason: Output only. The reason of the cancellation.
 	//
@@ -1405,216 +1150,170 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails st
 	//   "CANCELLATION_REASON_REMORSE" - Buyer's remorse.
 	//   "CANCELLATION_REASON_ACCIDENTAL_PURCHASE" - Accidential purchase.
 	//   "CANCELLATION_REASON_PAST_DUE" - Payment is past due.
-	//   "CANCELLATION_REASON_ACCOUNT_CLOSED" - Used for notification only,
-	// do not use in Cancel API. User account closed.
-	//   "CANCELLATION_REASON_UPGRADE_DOWNGRADE" - Used for notification
-	// only, do not use in Cancel API. Cancellation due to upgrade or
-	// downgrade.
+	//   "CANCELLATION_REASON_ACCOUNT_CLOSED" - Used for notification only, do not
+	// use in Cancel API. User account closed.
+	//   "CANCELLATION_REASON_UPGRADE_DOWNGRADE" - Used for notification only, do
+	// not use in Cancel API. Cancellation due to upgrade or downgrade.
 	//   "CANCELLATION_REASON_USER_DELINQUENCY" - Cancellation due to user
 	// delinquency
-	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Used for notification only, do
-	// not use in Cancel API. Cancellation due to an unrecoverable system
-	// error.
-	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Used for notification only,
-	// do not use in Cancel API. The subscription is cancelled by Google
-	// automatically since it is no longer valid.
+	//   "CANCELLATION_REASON_SYSTEM_ERROR" - Used for notification only, do not
+	// use in Cancel API. Cancellation due to an unrecoverable system error.
+	//   "CANCELLATION_REASON_SYSTEM_CANCEL" - Used for notification only, do not
+	// use in Cancel API. The subscription is cancelled by Google automatically
+	// since it is no longer valid.
 	//   "CANCELLATION_REASON_OTHER" - Other reason.
 	Reason string `json:"reason,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Reason") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Reason") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Reason") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionCancellationDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem:
-// Individual line item definition of a subscription.
+// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem: Individual
+// line item definition of a subscription.
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem struct {
-	// Amount: Output only. The price of the product/service in this line
-	// item. The amount could be the wholesale price, or it can include a
-	// cost of sale based on the contract.
+	// Amount: Output only. The price of the product/service in this line item. The
+	// amount could be the wholesale price, or it can include a cost of sale based
+	// on the contract.
 	Amount *GoogleCloudPaymentsResellerSubscriptionV1Amount `json:"amount,omitempty"`
-
-	// BundleDetails: Output only. The bundle details for the line item.
-	// Only populated if the line item corresponds to a hard bundle.
+	// BundleDetails: Output only. The bundle details for the line item. Only
+	// populated if the line item corresponds to a hard bundle.
 	BundleDetails *SubscriptionLineItemBundleDetails `json:"bundleDetails,omitempty"`
-
 	// Description: Output only. Description of this line item.
 	Description string `json:"description,omitempty"`
-
-	// FiniteBillingCycleDetails: Optional. Details for a subscription line
-	// item with finite billing cycles. If unset, the line item will be
-	// charged indefinitely. Used only with
-	// LINE_ITEM_RECURRENCE_TYPE_PERIODIC.
+	// FiniteBillingCycleDetails: Optional. Details for a subscription line item
+	// with finite billing cycles. If unset, the line item will be charged
+	// indefinitely. Used only with LINE_ITEM_RECURRENCE_TYPE_PERIODIC.
 	FiniteBillingCycleDetails *GoogleCloudPaymentsResellerSubscriptionV1FiniteBillingCycleDetails `json:"finiteBillingCycleDetails,omitempty"`
-
-	// LineItemFreeTrialEndTime: Output only. The free trial end time will
-	// be populated after the line item is successfully processed. End time
-	// of the line item free trial period, in ISO 8061 format. For example,
-	// "2019-08-31T17:28:54.564Z". It will be set the same as createTime if
-	// no free trial promotion is specified.
+	// LineItemFreeTrialEndTime: Output only. The free trial end time will be
+	// populated after the line item is successfully processed. End time of the
+	// line item free trial period, in ISO 8061 format. For example,
+	// "2019-08-31T17:28:54.564Z". It will be set the same as createTime if no free
+	// trial promotion is specified.
 	LineItemFreeTrialEndTime string `json:"lineItemFreeTrialEndTime,omitempty"`
-
-	// LineItemIndex: Output only. A unique index of the subscription line
-	// item.
+	// LineItemIndex: Output only. A unique index of the subscription line item.
 	LineItemIndex int64 `json:"lineItemIndex,omitempty"`
-
-	// LineItemPromotionSpecs: Optional. The promotions applied on the line
-	// item. It can be: - an introductory pricing promotion. - a free trial
-	// promotion. This feature is not enabled. If used, the request will be
-	// rejected. When used as input in Create or Provision API, specify its
-	// resource name only.
+	// LineItemPromotionSpecs: Optional. The promotions applied on the line item.
+	// It can be: - an introductory pricing promotion. - a free trial promotion.
+	// This feature is not enabled. If used, the request will be rejected. When
+	// used as input in Create or Provision API, specify its resource name only.
 	LineItemPromotionSpecs []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec `json:"lineItemPromotionSpecs,omitempty"`
-
-	// OneTimeRecurrenceDetails: Output only. Details only set for a
-	// ONE_TIME recurrence line item.
+	// OneTimeRecurrenceDetails: Output only. Details only set for a ONE_TIME
+	// recurrence line item.
 	OneTimeRecurrenceDetails *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails `json:"oneTimeRecurrenceDetails,omitempty"`
-
-	// Product: Required. Product resource name that identifies one the line
-	// item The format is 'partners/{partner_id}/products/{product_id}'.
+	// Product: Required. Product resource name that identifies one the line item
+	// The format is 'partners/{partner_id}/products/{product_id}'.
 	Product string `json:"product,omitempty"`
-
-	// ProductPayload: Optional. Product specific payload for this line
-	// item.
+	// ProductPayload: Optional. Product specific payload for this line item.
 	ProductPayload *GoogleCloudPaymentsResellerSubscriptionV1ProductPayload `json:"productPayload,omitempty"`
-
 	// RecurrenceType: Output only. The recurrence type of the line item.
 	//
 	// Possible values:
-	//   "LINE_ITEM_RECURRENCE_TYPE_UNSPECIFIED" - The line item recurrence
-	// type is unspecified.
-	//   "LINE_ITEM_RECURRENCE_TYPE_PERIODIC" - The line item recurs
-	// periodically.
-	//   "LINE_ITEM_RECURRENCE_TYPE_ONE_TIME" - The line item does not recur
-	// in the future.
+	//   "LINE_ITEM_RECURRENCE_TYPE_UNSPECIFIED" - The line item recurrence type is
+	// unspecified.
+	//   "LINE_ITEM_RECURRENCE_TYPE_PERIODIC" - The line item recurs periodically.
+	//   "LINE_ITEM_RECURRENCE_TYPE_ONE_TIME" - The line item does not recur in the
+	// future.
 	RecurrenceType string `json:"recurrenceType,omitempty"`
-
 	// State: Output only. The state of the line item.
 	//
 	// Possible values:
 	//   "LINE_ITEM_STATE_UNSPECIFIED" - Unspecified state.
 	//   "LINE_ITEM_STATE_ACTIVE" - The line item is in ACTIVE state. If the
-	// subscription is cancelled or suspended, the line item will not be
-	// charged even if the line item is active.
+	// subscription is cancelled or suspended, the line item will not be charged
+	// even if the line item is active.
 	//   "LINE_ITEM_STATE_INACTIVE" - The line item is in INACTIVE state.
-	//   "LINE_ITEM_STATE_NEW" - The line item is new, and is not activated
-	// or charged yet.
-	//   "LINE_ITEM_STATE_ACTIVATING" - The line item is being activated in
-	// order to be charged. If a free trial applies to the line item, the
-	// line item is pending a prorated charge at the end of the free trial
-	// period, as indicated by `line_item_free_trial_end_time`.
-	//   "LINE_ITEM_STATE_DEACTIVATING" - The line item is being
-	// deactivated, and a prorated refund in being processed.
-	//   "LINE_ITEM_STATE_WAITING_TO_DEACTIVATE" - The line item is
-	// scheduled to be deactivated at the end of the current cycle.
+	//   "LINE_ITEM_STATE_NEW" - The line item is new, and is not activated or
+	// charged yet.
+	//   "LINE_ITEM_STATE_ACTIVATING" - The line item is being activated in order
+	// to be charged. If a free trial applies to the line item, the line item is
+	// pending a prorated charge at the end of the free trial period, as indicated
+	// by `line_item_free_trial_end_time`.
+	//   "LINE_ITEM_STATE_DEACTIVATING" - The line item is being deactivated, and a
+	// prorated refund in being processed.
+	//   "LINE_ITEM_STATE_WAITING_TO_DEACTIVATE" - The line item is scheduled to be
+	// deactivated at the end of the current cycle.
 	//   "LINE_ITEM_STATE_OFF_CYCLE_CHARGING" - Line item is being charged
 	// off-cycle.
 	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Amount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Amount") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Amount") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItem
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDet
-// ailsBundleElementDetails: The details for an element in the hard
-// bundle.
+// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBun
+// dleElementDetails: The details for an element in the hard bundle.
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails struct {
-	// Product: Output only. Product resource name that identifies the
-	// bundle element. The format is
-	// 'partners/{partner_id}/products/{product_id}'.
+	// Product: Output only. Product resource name that identifies the bundle
+	// element. The format is 'partners/{partner_id}/products/{product_id}'.
 	Product string `json:"product,omitempty"`
-
-	// UserAccountLinkedTime: Output only. The time when this product is
-	// linked to an end user.
+	// UserAccountLinkedTime: Output only. The time when this product is linked to
+	// an end user.
 	UserAccountLinkedTime string `json:"userAccountLinkedTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Product") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Product") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Product") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Product") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRe
-// currenceDetails: Details for a ONE_TIME recurrence line item.
+// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenc
+// eDetails: Details for a ONE_TIME recurrence line item.
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails struct {
-	// ServicePeriod: Output only. The service period of the ONE_TIME line
-	// item.
+	// ServicePeriod: Output only. The service period of the ONE_TIME line item.
 	ServicePeriod *GoogleCloudPaymentsResellerSubscriptionV1ServicePeriod `json:"servicePeriod,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ServicePeriod") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ServicePeriod") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ServicePeriod") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemOneTimeRecurrenceDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec:
@@ -1623,17 +1322,12 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec struct {
 	// FreeTrialDuration: Output only. The duration of the free trial if the
 	// promotion is of type FREE_TRIAL.
 	FreeTrialDuration *GoogleCloudPaymentsResellerSubscriptionV1Duration `json:"freeTrialDuration,omitempty"`
-
-	// IntroductoryPricingDetails: Output only. The details of the
-	// introductory pricing spec if the promotion is of type
-	// INTRODUCTORY_PRICING.
+	// IntroductoryPricingDetails: Output only. The details of the introductory
+	// pricing spec if the promotion is of type INTRODUCTORY_PRICING.
 	IntroductoryPricingDetails *GoogleCloudPaymentsResellerSubscriptionV1PromotionIntroductoryPricingDetails `json:"introductoryPricingDetails,omitempty"`
-
-	// Promotion: Required. Promotion resource name that identifies a
-	// promotion. The format is
-	// 'partners/{partner_id}/promotions/{promotion_id}'.
+	// Promotion: Required. Promotion resource name that identifies a promotion.
+	// The format is 'partners/{partner_id}/promotions/{promotion_id}'.
 	Promotion string `json:"promotion,omitempty"`
-
 	// Type: Output only. The type of the promotion for the spec.
 	//
 	// Possible values:
@@ -1642,273 +1336,216 @@ type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec struct {
 	//   "PROMOTION_TYPE_INTRODUCTORY_PRICING" - The promotion is a reduced
 	// introductory pricing.
 	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "FreeTrialDuration")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "FreeTrialDuration") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FreeTrialDuration") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "FreeTrialDuration") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionPromotionSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeD
-// etails: Details about the previous subscription that this new
-// subscription upgrades/downgrades from.
+// GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails:
+//
+//	Details about the previous subscription that this new subscription
+//
+// upgrades/downgrades from.
 type GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails struct {
-	// BillingCycleSpec: Required. Specifies the billing cycle spec for the
-	// new upgraded/downgraded subscription.
+	// BillingCycleSpec: Required. Specifies the billing cycle spec for the new
+	// upgraded/downgraded subscription.
 	//
 	// Possible values:
-	//   "BILLING_CYCLE_SPEC_UNSPECIFIED" - Billing cycle spec is not
-	// specified.
-	//   "BILLING_CYCLE_SPEC_ALIGN_WITH_PREVIOUS_SUBSCRIPTION" - The billing
-	// cycle of the new subscription aligns with the previous subscription
-	// it upgrades or downgrades from.
-	//   "BILLING_CYCLE_SPEC_START_IMMEDIATELY" - The billing cycle of the
-	// new subscription starts immediately.
+	//   "BILLING_CYCLE_SPEC_UNSPECIFIED" - Billing cycle spec is not specified.
+	//   "BILLING_CYCLE_SPEC_ALIGN_WITH_PREVIOUS_SUBSCRIPTION" - The billing cycle
+	// of the new subscription aligns with the previous subscription it upgrades or
+	// downgrades from.
+	//   "BILLING_CYCLE_SPEC_START_IMMEDIATELY" - The billing cycle of the new
+	// subscription starts immediately.
 	BillingCycleSpec string `json:"billingCycleSpec,omitempty"`
-
 	// PreviousSubscriptionId: Required. The previous subscription id to be
 	// replaced. This is not the full resource name, use the subscription_id
 	// segment only.
 	PreviousSubscriptionId string `json:"previousSubscriptionId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BillingCycleSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BillingCycleSpec") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BillingCycleSpec") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1SubscriptionUpgradeDowngradeDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionRequest
-// : Request to revoke a cancellation request.
+// GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionRequest:
+// Request to revoke a cancellation request.
 type GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionRequest struct {
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionRespons
-// e: Response that contains the updated subscription resource.
+// GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse:
+// Response that contains the updated subscription resource.
 type GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse struct {
 	// Subscription: The updated subscription resource.
 	Subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription `json:"subscription,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Subscription") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Subscription") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Subscription") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload: Payload
-// specific to Youtube products.
+// GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload: Payload specific to
+// Youtube products.
 type GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload struct {
-	// AccessEndTime: Output only. The access expiration time for this line
-	// item.
+	// AccessEndTime: Output only. The access expiration time for this line item.
 	AccessEndTime string `json:"accessEndTime,omitempty"`
-
-	// PartnerEligibilityIds: The list of eligibility_ids which are
-	// applicable for the line item.
+	// PartnerEligibilityIds: The list of eligibility_ids which are applicable for
+	// the line item.
 	PartnerEligibilityIds []string `json:"partnerEligibilityIds,omitempty"`
-
-	// PartnerPlanType: Optional. Specifies the plan type offered to the end
-	// user by the partner.
+	// PartnerPlanType: Optional. Specifies the plan type offered to the end user
+	// by the partner.
 	//
 	// Possible values:
-	//   "PARTNER_PLAN_TYPE_UNSPECIFIED" - Unspecified. Should not use,
-	// reserved as an invalid value.
-	//   "PARTNER_PLAN_TYPE_STANDALONE" - This item is offered as a
-	// standalone product to the user.
+	//   "PARTNER_PLAN_TYPE_UNSPECIFIED" - Unspecified. Should not use, reserved as
+	// an invalid value.
+	//   "PARTNER_PLAN_TYPE_STANDALONE" - This item is offered as a standalone
+	// product to the user.
 	//   "PARTNER_PLAN_TYPE_HARD_BUNDLE" - This item is bundled with another
 	// partner offering, the item is provisioned at purchase time.
 	//   "PARTNER_PLAN_TYPE_SOFT_BUNDLE" - This item is bundled with another
-	// partner offering, the item is provisioned after puchase, when the
-	// user opts in this Google service.
+	// partner offering, the item is provisioned after puchase, when the user opts
+	// in this Google service.
 	PartnerPlanType string `json:"partnerPlanType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AccessEndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccessEndTime") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccessEndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudPaymentsResellerSubscriptionV1YoutubePayload
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleTypeLocalizedText: Localized variant of a text in a particular
 // language.
 type GoogleTypeLocalizedText struct {
-	// LanguageCode: The text's BCP-47 language code, such as "en-US" or
-	// "sr-Latn". For more information, see
+	// LanguageCode: The text's BCP-47 language code, such as "en-US" or "sr-Latn".
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#Unicode_locale_identifier.
 	LanguageCode string `json:"languageCode,omitempty"`
-
-	// Text: Localized string in the language corresponding to language_code
-	// below.
+	// Text: Localized string in the language corresponding to language_code below.
 	Text string `json:"text,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LanguageCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LanguageCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleTypeLocalizedText) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeLocalizedText
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ProductBundleDetails: Details for a bundle product.
 type ProductBundleDetails struct {
-	// BundleElements: The individual products that are included in the
-	// bundle.
+	// BundleElements: The individual products that are included in the bundle.
 	BundleElements []*GoogleCloudPaymentsResellerSubscriptionV1ProductBundleDetailsBundleElement `json:"bundleElements,omitempty"`
-
 	// EntitlementMode: The entitlement mode of the bundle product.
 	//
 	// Possible values:
 	//   "ENTITLEMENT_MODE_UNSPECIFIED" - Unspecified. It's reserved as an
 	// unexpected value, should not be used.
-	//   "ENTITLEMENT_MODE_FULL" - All the bundle elements must be fully
-	// activated in a single request.
+	//   "ENTITLEMENT_MODE_FULL" - All the bundle elements must be fully activated
+	// in a single request.
 	//   "ENTITLEMENT_MODE_INCREMENTAL" - The bundle elements could be
 	// incrementally activated.
 	EntitlementMode string `json:"entitlementMode,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BundleElements") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BundleElements") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BundleElements") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ProductBundleDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ProductBundleDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionLineItemBundleDetails: The bundle details for a line item
 // corresponding to a hard bundle.
 type SubscriptionLineItemBundleDetails struct {
-	// BundleElementDetails: Output only. The details for each element in
-	// the hard bundle.
+	// BundleElementDetails: Output only. The details for each element in the hard
+	// bundle.
 	BundleElementDetails []*GoogleCloudPaymentsResellerSubscriptionV1SubscriptionLineItemBundleDetailsBundleElementDetails `json:"bundleElementDetails,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "BundleElementDetails") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BundleElementDetails") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BundleElementDetails") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BundleElementDetails") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SubscriptionLineItemBundleDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionLineItemBundleDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "paymentsresellersubscription.partners.products.list":
 
 type PartnersProductsListCall struct {
 	s            *Service
@@ -1919,8 +1556,8 @@ type PartnersProductsListCall struct {
 	header_      http.Header
 }
 
-// List: To retrieve the products that can be resold by the partner. It
-// should be autenticated with a service account.
+// List: To retrieve the products that can be resold by the partner. It should
+// be autenticated with a service account.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.
@@ -1930,69 +1567,63 @@ func (r *PartnersProductsService) List(parent string) *PartnersProductsListCall 
 	return c
 }
 
-// Filter sets the optional parameter "filter": Specifies the filters
-// for the product results. The syntax is defined in
-// https://google.aip.dev/160 with the following caveats: 1. Only the
-// following features are supported: - Logical operator `AND` -
-// Comparison operator `=` (no wildcards `*`) - Traversal operator `.` -
-// Has operator `:` (no wildcards `*`) 2. Only the following fields are
-// supported: - `regionCodes` - `youtubePayload.partnerEligibilityId` -
-// `youtubePayload.postalCode` 3. Unless explicitly mentioned above,
-// other features are not supported. Example: `regionCodes:US AND
-// youtubePayload.postalCode=94043 AND
+// Filter sets the optional parameter "filter": Specifies the filters for the
+// product results. The syntax is defined in https://google.aip.dev/160 with
+// the following caveats: 1. Only the following features are supported: -
+// Logical operator `AND` - Comparison operator `=` (no wildcards `*`) -
+// Traversal operator `.` - Has operator `:` (no wildcards `*`) 2. Only the
+// following fields are supported: - `regionCodes` -
+// `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` 3.
+// Unless explicitly mentioned above, other features are not supported.
+// Example: `regionCodes:US AND youtubePayload.postalCode=94043 AND
 // youtubePayload.partnerEligibilityId=eligibility-id`
 func (c *PartnersProductsListCall) Filter(filter string) *PartnersProductsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of products to return. The service may return fewer than this value.
-// If unspecified, at most 50 products will be returned. The maximum
-// value is 1000; values above 1000 will be coerced to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// products to return. The service may return fewer than this value. If
+// unspecified, at most 50 products will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
 func (c *PartnersProductsListCall) PageSize(pageSize int64) *PartnersProductsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListProducts` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListProducts` must match the call that provided the page
-// token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListProducts` call. Provide this to retrieve the subsequent
+// page. When paginating, all other parameters provided to `ListProducts` must
+// match the call that provided the page token.
 func (c *PartnersProductsListCall) PageToken(pageToken string) *PartnersProductsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PartnersProductsListCall) Fields(s ...googleapi.Field) *PartnersProductsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PartnersProductsListCall) IfNoneMatch(entityTag string) *PartnersProductsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PartnersProductsListCall) Context(ctx context.Context) *PartnersProductsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PartnersProductsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2001,12 +1632,7 @@ func (c *PartnersProductsListCall) Header() http.Header {
 }
 
 func (c *PartnersProductsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2027,15 +1653,11 @@ func (c *PartnersProductsListCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "paymentsresellersubscription.partners.products.list" call.
-// Exactly one of
-// *GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse.ServerR
-// esponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse.ServerResponse
+// .Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2066,48 +1688,6 @@ func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "To retrieve the products that can be resold by the partner. It should be autenticated with a service account.",
-	//   "flatPath": "v1/partners/{partnersId}/products",
-	//   "httpMethod": "GET",
-	//   "id": "paymentsresellersubscription.partners.products.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Specifies the filters for the product results. The syntax is defined in https://google.aip.dev/160 with the following caveats: 1. Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) 2. Only the following fields are supported: - `regionCodes` - `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` 3. Unless explicitly mentioned above, other features are not supported. Example: `regionCodes:US AND youtubePayload.postalCode=94043 AND youtubePayload.partnerEligibilityId=eligibility-id`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of products to return. The service may return fewer than this value. If unspecified, at most 50 products will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous `ListProducts` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListProducts` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent, the partner that can resell. Format: partners/{partner}",
-	//       "location": "path",
-	//       "pattern": "^partners/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/products",
-	//   "response": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse"
-	//   },
-	//   "scopes": [
-	//     "openid"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2115,7 +1695,7 @@ func (c *PartnersProductsListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 // The provided context supersedes any context provided to the Context method.
 func (c *PartnersProductsListCall) Pages(ctx context.Context, f func(*GoogleCloudPaymentsResellerSubscriptionV1ListProductsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2131,8 +1711,6 @@ func (c *PartnersProductsListCall) Pages(ctx context.Context, f func(*GoogleClou
 	}
 }
 
-// method id "paymentsresellersubscription.partners.promotions.findEligible":
-
 type PartnersPromotionsFindEligibleCall struct {
 	s                                                                      *Service
 	parent                                                                 string
@@ -2142,9 +1720,9 @@ type PartnersPromotionsFindEligibleCall struct {
 	header_                                                                http.Header
 }
 
-// FindEligible: To find eligible promotions for the current user. The
-// API requires user authorization via OAuth. The bare minimum oauth
-// scope `openid` is sufficient, which will skip the consent screen.
+// FindEligible: To find eligible promotions for the current user. The API
+// requires user authorization via OAuth. The bare minimum oauth scope `openid`
+// is sufficient, which will skip the consent screen.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.
@@ -2156,23 +1734,21 @@ func (r *PartnersPromotionsService) FindEligible(parent string, googlecloudpayme
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PartnersPromotionsFindEligibleCall) Fields(s ...googleapi.Field) *PartnersPromotionsFindEligibleCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PartnersPromotionsFindEligibleCall) Context(ctx context.Context) *PartnersPromotionsFindEligibleCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PartnersPromotionsFindEligibleCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2181,18 +1757,12 @@ func (c *PartnersPromotionsFindEligibleCall) Header() http.Header {
 }
 
 func (c *PartnersPromotionsFindEligibleCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/promotions:findEligible")
@@ -2209,15 +1779,11 @@ func (c *PartnersPromotionsFindEligibleCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "paymentsresellersubscription.partners.promotions.findEligible" call.
-// Exactly one of
-// *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRespon
-// se or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRespon
-// se.ServerResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse.Serv
+// erResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PartnersPromotionsFindEligibleCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2248,35 +1814,6 @@ func (c *PartnersPromotionsFindEligibleCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "To find eligible promotions for the current user. The API requires user authorization via OAuth. The bare minimum oauth scope `openid` is sufficient, which will skip the consent screen.",
-	//   "flatPath": "v1/partners/{partnersId}/promotions:findEligible",
-	//   "httpMethod": "POST",
-	//   "id": "paymentsresellersubscription.partners.promotions.findEligible",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent, the partner that can resell. Format: partners/{partner}",
-	//       "location": "path",
-	//       "pattern": "^partners/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/promotions:findEligible",
-	//   "request": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1FindEligiblePromotionsResponse"
-	//   },
-	//   "scopes": [
-	//     "openid"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2286,7 +1823,7 @@ func (c *PartnersPromotionsFindEligibleCall) Pages(ctx context.Context, f func(*
 	c.ctx_ = ctx
 	defer func(pt string) {
 		c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest.PageToken = pt
-	}(c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest.PageToken) // reset paging to original point
+	}(c.googlecloudpaymentsresellersubscriptionv1findeligiblepromotionsrequest.PageToken)
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2302,8 +1839,6 @@ func (c *PartnersPromotionsFindEligibleCall) Pages(ctx context.Context, f func(*
 	}
 }
 
-// method id "paymentsresellersubscription.partners.promotions.list":
-
 type PartnersPromotionsListCall struct {
 	s            *Service
 	parent       string
@@ -2313,9 +1848,8 @@ type PartnersPromotionsListCall struct {
 	header_      http.Header
 }
 
-// List: To retrieve the promotions, such as free trial, that can be
-// used by the partner. It should be autenticated with a service
-// account.
+// List: To retrieve the promotions, such as free trial, that can be used by
+// the partner. It should be autenticated with a service account.
 //
 //   - parent: The parent, the partner that can resell. Format:
 //     partners/{partner}.
@@ -2325,17 +1859,15 @@ func (r *PartnersPromotionsService) List(parent string) *PartnersPromotionsListC
 	return c
 }
 
-// Filter sets the optional parameter "filter": Specifies the filters
-// for the promotion results. The syntax is defined in
-// https://google.aip.dev/160 with the following caveats: 1. Only the
-// following features are supported: - Logical operator `AND` -
-// Comparison operator `=` (no wildcards `*`) - Traversal operator `.` -
-// Has operator `:` (no wildcards `*`) 2. Only the following fields are
-// supported: - `applicableProducts` - `regionCodes` -
-// `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode`
-// 3. Unless explicitly mentioned above, other features are not
-// supported. Example:
-// `applicableProducts:partners/partner1/products/product1 AND
+// Filter sets the optional parameter "filter": Specifies the filters for the
+// promotion results. The syntax is defined in https://google.aip.dev/160 with
+// the following caveats: 1. Only the following features are supported: -
+// Logical operator `AND` - Comparison operator `=` (no wildcards `*`) -
+// Traversal operator `.` - Has operator `:` (no wildcards `*`) 2. Only the
+// following fields are supported: - `applicableProducts` - `regionCodes` -
+// `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` 3.
+// Unless explicitly mentioned above, other features are not supported.
+// Example: `applicableProducts:partners/partner1/products/product1 AND
 // regionCodes:US AND youtubePayload.postalCode=94043 AND
 // youtubePayload.partnerEligibilityId=eligibility-id`
 func (c *PartnersPromotionsListCall) Filter(filter string) *PartnersPromotionsListCall {
@@ -2343,53 +1875,48 @@ func (c *PartnersPromotionsListCall) Filter(filter string) *PartnersPromotionsLi
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of promotions to return. The service may return fewer than this
-// value. If unspecified, at most 50 products will be returned. The
-// maximum value is 1000; values above 1000 will be coerced to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// promotions to return. The service may return fewer than this value. If
+// unspecified, at most 50 products will be returned. The maximum value is
+// 1000; values above 1000 will be coerced to 1000.
 func (c *PartnersPromotionsListCall) PageSize(pageSize int64) *PartnersPromotionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListPromotions` call. Provide this to
-// retrieve the subsequent page. When paginating, all other parameters
-// provided to `ListPromotions` must match the call that provided the
-// page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListPromotions` call. Provide this to retrieve the
+// subsequent page. When paginating, all other parameters provided to
+// `ListPromotions` must match the call that provided the page token.
 func (c *PartnersPromotionsListCall) PageToken(pageToken string) *PartnersPromotionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PartnersPromotionsListCall) Fields(s ...googleapi.Field) *PartnersPromotionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PartnersPromotionsListCall) IfNoneMatch(entityTag string) *PartnersPromotionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PartnersPromotionsListCall) Context(ctx context.Context) *PartnersPromotionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PartnersPromotionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2398,12 +1925,7 @@ func (c *PartnersPromotionsListCall) Header() http.Header {
 }
 
 func (c *PartnersPromotionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2424,15 +1946,11 @@ func (c *PartnersPromotionsListCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "paymentsresellersubscription.partners.promotions.list" call.
-// Exactly one of
-// *GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse.Serve
-// rResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse.ServerRespon
+// se.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2463,48 +1981,6 @@ func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "To retrieve the promotions, such as free trial, that can be used by the partner. It should be autenticated with a service account.",
-	//   "flatPath": "v1/partners/{partnersId}/promotions",
-	//   "httpMethod": "GET",
-	//   "id": "paymentsresellersubscription.partners.promotions.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Specifies the filters for the promotion results. The syntax is defined in https://google.aip.dev/160 with the following caveats: 1. Only the following features are supported: - Logical operator `AND` - Comparison operator `=` (no wildcards `*`) - Traversal operator `.` - Has operator `:` (no wildcards `*`) 2. Only the following fields are supported: - `applicableProducts` - `regionCodes` - `youtubePayload.partnerEligibilityId` - `youtubePayload.postalCode` 3. Unless explicitly mentioned above, other features are not supported. Example: `applicableProducts:partners/partner1/products/product1 AND regionCodes:US AND youtubePayload.postalCode=94043 AND youtubePayload.partnerEligibilityId=eligibility-id`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of promotions to return. The service may return fewer than this value. If unspecified, at most 50 products will be returned. The maximum value is 1000; values above 1000 will be coerced to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous `ListPromotions` call. Provide this to retrieve the subsequent page. When paginating, all other parameters provided to `ListPromotions` must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent, the partner that can resell. Format: partners/{partner}",
-	//       "location": "path",
-	//       "pattern": "^partners/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/promotions",
-	//   "response": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse"
-	//   },
-	//   "scopes": [
-	//     "openid"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2512,7 +1988,7 @@ func (c *PartnersPromotionsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 // The provided context supersedes any context provided to the Context method.
 func (c *PartnersPromotionsListCall) Pages(ctx context.Context, f func(*GoogleCloudPaymentsResellerSubscriptionV1ListPromotionsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2528,8 +2004,6 @@ func (c *PartnersPromotionsListCall) Pages(ctx context.Context, f func(*GoogleCl
 	}
 }
 
-// method id "paymentsresellersubscription.partners.subscriptions.cancel":
-
 type PartnersSubscriptionsCancelCall struct {
 	s                                                                  *Service
 	name                                                               string
@@ -2539,14 +2013,12 @@ type PartnersSubscriptionsCancelCall struct {
 	header_                                                            http.Header
 }
 
-// Cancel: Used by partners to cancel a subscription service either
-// immediately or by the end of the current billing cycle for their
-// customers. It should be called directly by the partner using service
-// accounts.
+// Cancel: Used by partners to cancel a subscription service either immediately
+// or by the end of the current billing cycle for their customers. It should be
+// called directly by the partner using service accounts.
 //
-//   - name: The name of the subscription resource to be cancelled. It
-//     will have the format of
-//     "partners/{partner_id}/subscriptions/{subscription_id}".
+//   - name: The name of the subscription resource to be cancelled. It will have
+//     the format of "partners/{partner_id}/subscriptions/{subscription_id}".
 func (r *PartnersSubscriptionsService) Cancel(name string, googlecloudpaymentsresellersubscriptionv1cancelsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest) *PartnersSubscriptionsCancelCall {
 	c := &PartnersSubscriptionsCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2555,23 +2027,21 @@ func (r *PartnersSubscriptionsService) Cancel(name string, googlecloudpaymentsre
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PartnersSubscriptionsCancelCall) Fields(s ...googleapi.Field) *PartnersSubscriptionsCancelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PartnersSubscriptionsCancelCall) Context(ctx context.Context) *PartnersSubscriptionsCancelCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PartnersSubscriptionsCancelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2580,18 +2050,12 @@ func (c *PartnersSubscriptionsCancelCall) Header() http.Header {
 }
 
 func (c *PartnersSubscriptionsCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1cancelsubscriptionrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:cancel")
@@ -2608,15 +2072,11 @@ func (c *PartnersSubscriptionsCancelCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.cancel" call.
-// Exactly one of
-// *GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse.S
-// erverResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse.ServerRe
+// sponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PartnersSubscriptionsCancelCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2647,38 +2107,7 @@ func (c *PartnersSubscriptionsCancelCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Used by partners to cancel a subscription service either immediately or by the end of the current billing cycle for their customers. It should be called directly by the partner using service accounts.",
-	//   "flatPath": "v1/partners/{partnersId}/subscriptions/{subscriptionsId}:cancel",
-	//   "httpMethod": "POST",
-	//   "id": "paymentsresellersubscription.partners.subscriptions.cancel",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the subscription resource to be cancelled. It will have the format of \"partners/{partner_id}/subscriptions/{subscription_id}\"",
-	//       "location": "path",
-	//       "pattern": "^partners/[^/]+/subscriptions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:cancel",
-	//   "request": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1CancelSubscriptionResponse"
-	//   },
-	//   "scopes": [
-	//     "openid"
-	//   ]
-	// }
-
 }
-
-// method id "paymentsresellersubscription.partners.subscriptions.create":
 
 type PartnersSubscriptionsCreateCall struct {
 	s                                                     *Service
@@ -2689,13 +2118,12 @@ type PartnersSubscriptionsCreateCall struct {
 	header_                                               http.Header
 }
 
-// Create: Used by partners to create a subscription for their
-// customers. The created subscription is associated with the end user
-// inferred from the end user credentials. This API must be authorized
-// by the end user using OAuth.
+// Create: Used by partners to create a subscription for their customers. The
+// created subscription is associated with the end user inferred from the end
+// user credentials. This API must be authorized by the end user using OAuth.
 //
-//   - parent: The parent resource name, which is the identifier of the
-//     partner. It will have the format of "partners/{partner_id}".
+//   - parent: The parent resource name, which is the identifier of the partner.
+//     It will have the format of "partners/{partner_id}".
 func (r *PartnersSubscriptionsService) Create(parentid string, googlecloudpaymentsresellersubscriptionv1subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription) *PartnersSubscriptionsCreateCall {
 	c := &PartnersSubscriptionsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -2703,34 +2131,32 @@ func (r *PartnersSubscriptionsService) Create(parentid string, googlecloudpaymen
 	return c
 }
 
-// SubscriptionId sets the optional parameter "subscriptionId":
-// Required. Identifies the subscription resource on the Partner side.
-// The value is restricted to 63 ASCII characters at the maximum. If a
-// subscription was previously created with the same subscription_id, we
-// will directly return that one.
+// SubscriptionId sets the optional parameter "subscriptionId": Required.
+// Identifies the subscription resource on the Partner side. The value is
+// restricted to 63 ASCII characters at the maximum. If a subscription was
+// previously created with the same subscription_id, we will directly return
+// that one.
 func (c *PartnersSubscriptionsCreateCall) SubscriptionId(subscriptionId string) *PartnersSubscriptionsCreateCall {
 	c.urlParams_.Set("subscriptionId", subscriptionId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PartnersSubscriptionsCreateCall) Fields(s ...googleapi.Field) *PartnersSubscriptionsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PartnersSubscriptionsCreateCall) Context(ctx context.Context) *PartnersSubscriptionsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PartnersSubscriptionsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2739,18 +2165,12 @@ func (c *PartnersSubscriptionsCreateCall) Header() http.Header {
 }
 
 func (c *PartnersSubscriptionsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1subscription)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/subscriptions")
@@ -2767,14 +2187,11 @@ func (c *PartnersSubscriptionsCreateCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.create" call.
-// Exactly one of *GoogleCloudPaymentsResellerSubscriptionV1Subscription
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1Subscription.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPaymentsResellerSubscriptionV1Subscription.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PartnersSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2805,43 +2222,7 @@ func (c *PartnersSubscriptionsCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Used by partners to create a subscription for their customers. The created subscription is associated with the end user inferred from the end user credentials. This API must be authorized by the end user using OAuth.",
-	//   "flatPath": "v1/partners/{partnersId}/subscriptions",
-	//   "httpMethod": "POST",
-	//   "id": "paymentsresellersubscription.partners.subscriptions.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource name, which is the identifier of the partner. It will have the format of \"partners/{partner_id}\".",
-	//       "location": "path",
-	//       "pattern": "^partners/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "subscriptionId": {
-	//       "description": "Required. Identifies the subscription resource on the Partner side. The value is restricted to 63 ASCII characters at the maximum. If a subscription was previously created with the same subscription_id, we will directly return that one.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/subscriptions",
-	//   "request": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1Subscription"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1Subscription"
-	//   },
-	//   "scopes": [
-	//     "openid"
-	//   ]
-	// }
-
 }
-
-// method id "paymentsresellersubscription.partners.subscriptions.entitle":
 
 type PartnersSubscriptionsEntitleCall struct {
 	s                                                                   *Service
@@ -2852,10 +2233,10 @@ type PartnersSubscriptionsEntitleCall struct {
 	header_                                                             http.Header
 }
 
-// Entitle: Used by partners to entitle a previously provisioned
-// subscription to the current end user. The end user identity is
-// inferred from the authorized credential of the request. This API must
-// be authorized by the end user using OAuth.
+// Entitle: Used by partners to entitle a previously provisioned subscription
+// to the current end user. The end user identity is inferred from the
+// authorized credential of the request. This API must be authorized by the end
+// user using OAuth.
 //
 //   - name: The name of the subscription resource that is entitled to the
 //     current end user. It will have the format of
@@ -2868,23 +2249,21 @@ func (r *PartnersSubscriptionsService) Entitle(name string, googlecloudpaymentsr
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PartnersSubscriptionsEntitleCall) Fields(s ...googleapi.Field) *PartnersSubscriptionsEntitleCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PartnersSubscriptionsEntitleCall) Context(ctx context.Context) *PartnersSubscriptionsEntitleCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PartnersSubscriptionsEntitleCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2893,18 +2272,12 @@ func (c *PartnersSubscriptionsEntitleCall) Header() http.Header {
 }
 
 func (c *PartnersSubscriptionsEntitleCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1entitlesubscriptionrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:entitle")
@@ -2921,15 +2294,11 @@ func (c *PartnersSubscriptionsEntitleCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.entitle" call.
-// Exactly one of
-// *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse.
-// ServerResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse.ServerR
+// esponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PartnersSubscriptionsEntitleCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2960,38 +2329,7 @@ func (c *PartnersSubscriptionsEntitleCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Used by partners to entitle a previously provisioned subscription to the current end user. The end user identity is inferred from the authorized credential of the request. This API must be authorized by the end user using OAuth.",
-	//   "flatPath": "v1/partners/{partnersId}/subscriptions/{subscriptionsId}:entitle",
-	//   "httpMethod": "POST",
-	//   "id": "paymentsresellersubscription.partners.subscriptions.entitle",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the subscription resource that is entitled to the current end user. It will have the format of \"partners/{partner_id}/subscriptions/{subscription_id}\"",
-	//       "location": "path",
-	//       "pattern": "^partners/[^/]+/subscriptions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:entitle",
-	//   "request": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1EntitleSubscriptionResponse"
-	//   },
-	//   "scopes": [
-	//     "openid"
-	//   ]
-	// }
-
 }
-
-// method id "paymentsresellersubscription.partners.subscriptions.extend":
 
 type PartnersSubscriptionsExtendCall struct {
 	s                                                                  *Service
@@ -3002,15 +2340,13 @@ type PartnersSubscriptionsExtendCall struct {
 	header_                                                            http.Header
 }
 
-// Extend: [Opt-in only] Most partners should be on auto-extend by
-// default. Used by partners to extend a subscription service for their
-// customers on an ongoing basis for the subscription to remain active
-// and renewable. It should be called directly by the partner using
-// service accounts.
+// Extend: [Opt-in only] Most partners should be on auto-extend by default.
+// Used by partners to extend a subscription service for their customers on an
+// ongoing basis for the subscription to remain active and renewable. It should
+// be called directly by the partner using service accounts.
 //
-//   - name: The name of the subscription resource to be extended. It will
-//     have the format of
-//     "partners/{partner_id}/subscriptions/{subscription_id}".
+//   - name: The name of the subscription resource to be extended. It will have
+//     the format of "partners/{partner_id}/subscriptions/{subscription_id}".
 func (r *PartnersSubscriptionsService) Extend(name string, googlecloudpaymentsresellersubscriptionv1extendsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest) *PartnersSubscriptionsExtendCall {
 	c := &PartnersSubscriptionsExtendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3019,23 +2355,21 @@ func (r *PartnersSubscriptionsService) Extend(name string, googlecloudpaymentsre
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PartnersSubscriptionsExtendCall) Fields(s ...googleapi.Field) *PartnersSubscriptionsExtendCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PartnersSubscriptionsExtendCall) Context(ctx context.Context) *PartnersSubscriptionsExtendCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PartnersSubscriptionsExtendCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3044,18 +2378,12 @@ func (c *PartnersSubscriptionsExtendCall) Header() http.Header {
 }
 
 func (c *PartnersSubscriptionsExtendCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1extendsubscriptionrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:extend")
@@ -3072,15 +2400,11 @@ func (c *PartnersSubscriptionsExtendCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.extend" call.
-// Exactly one of
-// *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse.S
-// erverResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse.ServerRe
+// sponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PartnersSubscriptionsExtendCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3111,38 +2435,7 @@ func (c *PartnersSubscriptionsExtendCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "[Opt-in only] Most partners should be on auto-extend by default. Used by partners to extend a subscription service for their customers on an ongoing basis for the subscription to remain active and renewable. It should be called directly by the partner using service accounts.",
-	//   "flatPath": "v1/partners/{partnersId}/subscriptions/{subscriptionsId}:extend",
-	//   "httpMethod": "POST",
-	//   "id": "paymentsresellersubscription.partners.subscriptions.extend",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the subscription resource to be extended. It will have the format of \"partners/{partner_id}/subscriptions/{subscription_id}\".",
-	//       "location": "path",
-	//       "pattern": "^partners/[^/]+/subscriptions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:extend",
-	//   "request": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1ExtendSubscriptionResponse"
-	//   },
-	//   "scopes": [
-	//     "openid"
-	//   ]
-	// }
-
 }
-
-// method id "paymentsresellersubscription.partners.subscriptions.get":
 
 type PartnersSubscriptionsGetCall struct {
 	s            *Service
@@ -3153,12 +2446,11 @@ type PartnersSubscriptionsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Used by partners to get a subscription by id. It should be
-// called directly by the partner using service accounts.
+// Get: Used by partners to get a subscription by id. It should be called
+// directly by the partner using service accounts.
 //
-//   - name: The name of the subscription resource to retrieve. It will
-//     have the format of
-//     "partners/{partner_id}/subscriptions/{subscription_id}".
+//   - name: The name of the subscription resource to retrieve. It will have the
+//     format of "partners/{partner_id}/subscriptions/{subscription_id}".
 func (r *PartnersSubscriptionsService) Get(name string) *PartnersSubscriptionsGetCall {
 	c := &PartnersSubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3166,33 +2458,29 @@ func (r *PartnersSubscriptionsService) Get(name string) *PartnersSubscriptionsGe
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PartnersSubscriptionsGetCall) Fields(s ...googleapi.Field) *PartnersSubscriptionsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PartnersSubscriptionsGetCall) IfNoneMatch(entityTag string) *PartnersSubscriptionsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PartnersSubscriptionsGetCall) Context(ctx context.Context) *PartnersSubscriptionsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PartnersSubscriptionsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3201,12 +2489,7 @@ func (c *PartnersSubscriptionsGetCall) Header() http.Header {
 }
 
 func (c *PartnersSubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3227,14 +2510,11 @@ func (c *PartnersSubscriptionsGetCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.get" call.
-// Exactly one of *GoogleCloudPaymentsResellerSubscriptionV1Subscription
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1Subscription.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPaymentsResellerSubscriptionV1Subscription.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PartnersSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3265,35 +2545,7 @@ func (c *PartnersSubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Used by partners to get a subscription by id. It should be called directly by the partner using service accounts.",
-	//   "flatPath": "v1/partners/{partnersId}/subscriptions/{subscriptionsId}",
-	//   "httpMethod": "GET",
-	//   "id": "paymentsresellersubscription.partners.subscriptions.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the subscription resource to retrieve. It will have the format of \"partners/{partner_id}/subscriptions/{subscription_id}\"",
-	//       "location": "path",
-	//       "pattern": "^partners/[^/]+/subscriptions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1Subscription"
-	//   },
-	//   "scopes": [
-	//     "openid"
-	//   ]
-	// }
-
 }
-
-// method id "paymentsresellersubscription.partners.subscriptions.provision":
 
 type PartnersSubscriptionsProvisionCall struct {
 	s                                                     *Service
@@ -3304,15 +2556,14 @@ type PartnersSubscriptionsProvisionCall struct {
 	header_                                               http.Header
 }
 
-// Provision: Used by partners to provision a subscription for their
-// customers. This creates a subscription without associating it with
-// the end user account. EntitleSubscription must be called separately
-// using OAuth in order for the end user account to be associated with
-// the subscription. It should be called directly by the partner using
-// service accounts.
+// Provision: Used by partners to provision a subscription for their customers.
+// This creates a subscription without associating it with the end user
+// account. EntitleSubscription must be called separately using OAuth in order
+// for the end user account to be associated with the subscription. It should
+// be called directly by the partner using service accounts.
 //
-//   - parent: The parent resource name, which is the identifier of the
-//     partner. It will have the format of "partners/{partner_id}".
+//   - parent: The parent resource name, which is the identifier of the partner.
+//     It will have the format of "partners/{partner_id}".
 func (r *PartnersSubscriptionsService) Provision(parentid string, googlecloudpaymentsresellersubscriptionv1subscription *GoogleCloudPaymentsResellerSubscriptionV1Subscription) *PartnersSubscriptionsProvisionCall {
 	c := &PartnersSubscriptionsProvisionCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parentid = parentid
@@ -3320,34 +2571,32 @@ func (r *PartnersSubscriptionsService) Provision(parentid string, googlecloudpay
 	return c
 }
 
-// SubscriptionId sets the optional parameter "subscriptionId":
-// Required. Identifies the subscription resource on the Partner side.
-// The value is restricted to 63 ASCII characters at the maximum. If a
-// subscription was previously created with the same subscription_id, we
-// will directly return that one.
+// SubscriptionId sets the optional parameter "subscriptionId": Required.
+// Identifies the subscription resource on the Partner side. The value is
+// restricted to 63 ASCII characters at the maximum. If a subscription was
+// previously created with the same subscription_id, we will directly return
+// that one.
 func (c *PartnersSubscriptionsProvisionCall) SubscriptionId(subscriptionId string) *PartnersSubscriptionsProvisionCall {
 	c.urlParams_.Set("subscriptionId", subscriptionId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PartnersSubscriptionsProvisionCall) Fields(s ...googleapi.Field) *PartnersSubscriptionsProvisionCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PartnersSubscriptionsProvisionCall) Context(ctx context.Context) *PartnersSubscriptionsProvisionCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PartnersSubscriptionsProvisionCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3356,18 +2605,12 @@ func (c *PartnersSubscriptionsProvisionCall) Header() http.Header {
 }
 
 func (c *PartnersSubscriptionsProvisionCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1subscription)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/subscriptions:provision")
@@ -3384,14 +2627,11 @@ func (c *PartnersSubscriptionsProvisionCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.provision" call.
-// Exactly one of *GoogleCloudPaymentsResellerSubscriptionV1Subscription
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1Subscription.ServerResponse.
-// Header or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPaymentsResellerSubscriptionV1Subscription.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *PartnersSubscriptionsProvisionCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3422,43 +2662,7 @@ func (c *PartnersSubscriptionsProvisionCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Used by partners to provision a subscription for their customers. This creates a subscription without associating it with the end user account. EntitleSubscription must be called separately using OAuth in order for the end user account to be associated with the subscription. It should be called directly by the partner using service accounts.",
-	//   "flatPath": "v1/partners/{partnersId}/subscriptions:provision",
-	//   "httpMethod": "POST",
-	//   "id": "paymentsresellersubscription.partners.subscriptions.provision",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent resource name, which is the identifier of the partner. It will have the format of \"partners/{partner_id}\".",
-	//       "location": "path",
-	//       "pattern": "^partners/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "subscriptionId": {
-	//       "description": "Required. Identifies the subscription resource on the Partner side. The value is restricted to 63 ASCII characters at the maximum. If a subscription was previously created with the same subscription_id, we will directly return that one.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/subscriptions:provision",
-	//   "request": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1Subscription"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1Subscription"
-	//   },
-	//   "scopes": [
-	//     "openid"
-	//   ]
-	// }
-
 }
-
-// method id "paymentsresellersubscription.partners.subscriptions.undoCancel":
 
 type PartnersSubscriptionsUndoCancelCall struct {
 	s                                                                      *Service
@@ -3470,13 +2674,12 @@ type PartnersSubscriptionsUndoCancelCall struct {
 }
 
 // UndoCancel: Used by partners to revoke the pending cancellation of a
-// subscription, which is currently in `STATE_CANCEL_AT_END_OF_CYCLE`
-// state. If the subscription is already cancelled, the request will
-// fail. It should be called directly by the partner using service
-// accounts.
+// subscription, which is currently in `STATE_CANCEL_AT_END_OF_CYCLE` state. If
+// the subscription is already cancelled, the request will fail. It should be
+// called directly by the partner using service accounts.
 //
-//   - name: The name of the subscription resource whose pending
-//     cancellation needs to be undone. It will have the format of
+//   - name: The name of the subscription resource whose pending cancellation
+//     needs to be undone. It will have the format of
 //     "partners/{partner_id}/subscriptions/{subscription_id}".
 func (r *PartnersSubscriptionsService) UndoCancel(name string, googlecloudpaymentsresellersubscriptionv1undocancelsubscriptionrequest *GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionRequest) *PartnersSubscriptionsUndoCancelCall {
 	c := &PartnersSubscriptionsUndoCancelCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3486,23 +2689,21 @@ func (r *PartnersSubscriptionsService) UndoCancel(name string, googlecloudpaymen
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PartnersSubscriptionsUndoCancelCall) Fields(s ...googleapi.Field) *PartnersSubscriptionsUndoCancelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PartnersSubscriptionsUndoCancelCall) Context(ctx context.Context) *PartnersSubscriptionsUndoCancelCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PartnersSubscriptionsUndoCancelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3511,18 +2712,12 @@ func (c *PartnersSubscriptionsUndoCancelCall) Header() http.Header {
 }
 
 func (c *PartnersSubscriptionsUndoCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudpaymentsresellersubscriptionv1undocancelsubscriptionrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:undoCancel")
@@ -3539,15 +2734,11 @@ func (c *PartnersSubscriptionsUndoCancelCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "paymentsresellersubscription.partners.subscriptions.undoCancel" call.
-// Exactly one of
-// *GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionRespon
-// se or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionRespon
-// se.ServerResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse.Serv
+// erResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PartnersSubscriptionsUndoCancelCall) Do(opts ...googleapi.CallOption) (*GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3578,33 +2769,4 @@ func (c *PartnersSubscriptionsUndoCancelCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Used by partners to revoke the pending cancellation of a subscription, which is currently in `STATE_CANCEL_AT_END_OF_CYCLE` state. If the subscription is already cancelled, the request will fail. It should be called directly by the partner using service accounts.",
-	//   "flatPath": "v1/partners/{partnersId}/subscriptions/{subscriptionsId}:undoCancel",
-	//   "httpMethod": "POST",
-	//   "id": "paymentsresellersubscription.partners.subscriptions.undoCancel",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the subscription resource whose pending cancellation needs to be undone. It will have the format of \"partners/{partner_id}/subscriptions/{subscription_id}\"",
-	//       "location": "path",
-	//       "pattern": "^partners/[^/]+/subscriptions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:undoCancel",
-	//   "request": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudPaymentsResellerSubscriptionV1UndoCancelSubscriptionResponse"
-	//   },
-	//   "scopes": [
-	//     "openid"
-	//   ]
-	// }
-
 }

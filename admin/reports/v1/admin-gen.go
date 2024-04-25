@@ -224,711 +224,535 @@ type UserUsageReportService struct {
 type Activities struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
-
 	// Items: Each activity record in the response.
 	Items []*Activity `json:"items,omitempty"`
-
 	// Kind: The type of API resource. For an activity report, the value is
 	// `reports#activities`.
 	Kind string `json:"kind,omitempty"`
-
-	// NextPageToken: Token for retrieving the follow-on next page of the
-	// report. The `nextPageToken` value is used in the request's
-	// `pageToken` query string.
+	// NextPageToken: Token for retrieving the follow-on next page of the report.
+	// The `nextPageToken` value is used in the request's `pageToken` query string.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Activities) MarshalJSON() ([]byte, error) {
 	type NoMethod Activities
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Activity: JSON template for the activity resource.
 type Activity struct {
 	// Actor: User doing the action.
 	Actor *ActivityActor `json:"actor,omitempty"`
-
 	// Etag: ETag of the entry.
 	Etag string `json:"etag,omitempty"`
-
 	// Events: Activity events in the report.
 	Events []*ActivityEvents `json:"events,omitempty"`
-
 	// Id: Unique identifier for each activity record.
 	Id *ActivityId `json:"id,omitempty"`
-
-	// IpAddress: IP address of the user doing the action. This is the
-	// Internet Protocol (IP) address of the user when logging into Google
-	// Workspace, which may or may not reflect the user's physical location.
-	// For example, the IP address can be the user's proxy server's address
-	// or a virtual private network (VPN) address. The API supports IPv4 and
-	// IPv6.
+	// IpAddress: IP address of the user doing the action. This is the Internet
+	// Protocol (IP) address of the user when logging into Google Workspace, which
+	// may or may not reflect the user's physical location. For example, the IP
+	// address can be the user's proxy server's address or a virtual private
+	// network (VPN) address. The API supports IPv4 and IPv6.
 	IpAddress string `json:"ipAddress,omitempty"`
-
 	// Kind: The type of API resource. For an activity report, the value is
 	// `audit#activity`.
 	Kind string `json:"kind,omitempty"`
-
-	// OwnerDomain: This is the domain that is affected by the report's
-	// event. For example domain of Admin console or the Drive application's
-	// document owner.
+	// OwnerDomain: This is the domain that is affected by the report's event. For
+	// example domain of Admin console or the Drive application's document owner.
 	OwnerDomain string `json:"ownerDomain,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Actor") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Actor") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Actor") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Activity) MarshalJSON() ([]byte, error) {
 	type NoMethod Activity
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityActor: User doing the action.
 type ActivityActor struct {
 	// CallerType: The type of actor.
 	CallerType string `json:"callerType,omitempty"`
-
-	// Email: The primary email address of the actor. May be absent if there
-	// is no email address associated with the actor.
+	// Email: The primary email address of the actor. May be absent if there is no
+	// email address associated with the actor.
 	Email string `json:"email,omitempty"`
-
-	// Key: Only present when `callerType` is `KEY`. Can be the
-	// `consumer_key` of the requestor for OAuth 2LO API requests or an
-	// identifier for robot accounts.
+	// Key: Only present when `callerType` is `KEY`. Can be the `consumer_key` of
+	// the requestor for OAuth 2LO API requests or an identifier for robot
+	// accounts.
 	Key string `json:"key,omitempty"`
-
-	// ProfileId: The unique Google Workspace profile ID of the actor. This
-	// value might be absent if the actor is not a Google Workspace user, or
-	// may be the number 105250506097979753968 which acts as a placeholder
-	// ID.
+	// ProfileId: The unique Google Workspace profile ID of the actor. This value
+	// might be absent if the actor is not a Google Workspace user, or may be the
+	// number 105250506097979753968 which acts as a placeholder ID.
 	ProfileId string `json:"profileId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CallerType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CallerType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CallerType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ActivityActor) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityActor
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type ActivityEvents struct {
-	// Name: Name of the event. This is the specific name of the activity
-	// reported by the API. And each `eventName` is related to a specific
-	// Google Workspace service or feature which the API organizes into
-	// types of events. For `eventName` request parameters in general: - If
-	// no `eventName` is given, the report returns all possible instances of
-	// an `eventName`. - When you request an `eventName`, the API's response
-	// returns all activities which contain that `eventName`. For more
-	// information about `eventName` properties, see the list of event names
-	// for various applications above in `applicationName`.
+	// Name: Name of the event. This is the specific name of the activity reported
+	// by the API. And each `eventName` is related to a specific Google Workspace
+	// service or feature which the API organizes into types of events. For
+	// `eventName` request parameters in general: - If no `eventName` is given, the
+	// report returns all possible instances of an `eventName`. - When you request
+	// an `eventName`, the API's response returns all activities which contain that
+	// `eventName`. For more information about `eventName` properties, see the list
+	// of event names for various applications above in `applicationName`.
 	Name string `json:"name,omitempty"`
-
 	// Parameters: Parameter value pairs for various applications. For more
-	// information about `eventName` parameters, see the list of event names
-	// for various applications above in `applicationName`.
-	Parameters []*ActivityEventsParameters `json:"parameters,omitempty"`
-
-	// Type: Type of event. The Google Workspace service or feature that an
-	// administrator changes is identified in the `type` property which
-	// identifies an event using the `eventName` property. For a full list
-	// of the API's `type` categories, see the list of event names for
+	// information about `eventName` parameters, see the list of event names for
 	// various applications above in `applicationName`.
+	Parameters []*ActivityEventsParameters `json:"parameters,omitempty"`
+	// Type: Type of event. The Google Workspace service or feature that an
+	// administrator changes is identified in the `type` property which identifies
+	// an event using the `eventName` property. For a full list of the API's `type`
+	// categories, see the list of event names for various applications above in
+	// `applicationName`.
 	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ActivityEvents) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityEvents
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type ActivityEventsParameters struct {
 	// BoolValue: Boolean value of the parameter.
 	BoolValue bool `json:"boolValue,omitempty"`
-
 	// IntValue: Integer value of the parameter.
 	IntValue int64 `json:"intValue,omitempty,string"`
-
-	// MessageValue: Nested parameter value pairs associated with this
-	// parameter. Complex value type for a parameter are returned as a list
-	// of parameter values. For example, the address parameter may have a
-	// value as `[{parameter: [{name: city, value: abc}]}]`
+	// MessageValue: Nested parameter value pairs associated with this parameter.
+	// Complex value type for a parameter are returned as a list of parameter
+	// values. For example, the address parameter may have a value as `[{parameter:
+	// [{name: city, value: abc}]}]`
 	MessageValue *ActivityEventsParametersMessageValue `json:"messageValue,omitempty"`
-
 	// MultiIntValue: Integer values of the parameter.
 	MultiIntValue googleapi.Int64s `json:"multiIntValue,omitempty"`
-
 	// MultiMessageValue: List of `messageValue` objects.
 	MultiMessageValue []*ActivityEventsParametersMultiMessageValue `json:"multiMessageValue,omitempty"`
-
 	// MultiValue: String values of the parameter.
 	MultiValue []string `json:"multiValue,omitempty"`
-
 	// Name: The name of the parameter.
 	Name string `json:"name,omitempty"`
-
 	// Value: String value of the parameter.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BoolValue") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ActivityEventsParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityEventsParameters
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityEventsParametersMessageValue: Nested parameter value pairs
-// associated with this parameter. Complex value type for a parameter
-// are returned as a list of parameter values. For example, the address
-// parameter may have a value as `[{parameter: [{name: city, value:
-// abc}]}]`
+// associated with this parameter. Complex value type for a parameter are
+// returned as a list of parameter values. For example, the address parameter
+// may have a value as `[{parameter: [{name: city, value: abc}]}]`
 type ActivityEventsParametersMessageValue struct {
 	// Parameter: Parameter values
 	Parameter []*NestedParameter `json:"parameter,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Parameter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Parameter") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Parameter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ActivityEventsParametersMessageValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityEventsParametersMessageValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type ActivityEventsParametersMultiMessageValue struct {
 	// Parameter: Parameter values
 	Parameter []*NestedParameter `json:"parameter,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Parameter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Parameter") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Parameter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ActivityEventsParametersMultiMessageValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityEventsParametersMultiMessageValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ActivityId: Unique identifier for each activity record.
 type ActivityId struct {
-	// ApplicationName: Application name to which the event belongs. For
-	// possible values see the list of applications above in
-	// `applicationName`.
+	// ApplicationName: Application name to which the event belongs. For possible
+	// values see the list of applications above in `applicationName`.
 	ApplicationName string `json:"applicationName,omitempty"`
-
 	// CustomerId: The unique identifier for a Google Workspace account.
 	CustomerId string `json:"customerId,omitempty"`
-
-	// Time: Time of occurrence of the activity. This is in UNIX epoch time
-	// in seconds.
+	// Time: Time of occurrence of the activity. This is in UNIX epoch time in
+	// seconds.
 	Time string `json:"time,omitempty"`
-
-	// UniqueQualifier: Unique qualifier if multiple events have the same
-	// time.
+	// UniqueQualifier: Unique qualifier if multiple events have the same time.
 	UniqueQualifier int64 `json:"uniqueQualifier,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "ApplicationName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApplicationName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ApplicationName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ActivityId) MarshalJSON() ([]byte, error) {
 	type NoMethod ActivityId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Channel: A notification channel used to watch for resource changes.
 type Channel struct {
-	// Address: The address where notifications are delivered for this
-	// channel.
+	// Address: The address where notifications are delivered for this channel.
 	Address string `json:"address,omitempty"`
-
-	// Expiration: Date and time of notification channel expiration,
-	// expressed as a Unix timestamp, in milliseconds. Optional.
+	// Expiration: Date and time of notification channel expiration, expressed as a
+	// Unix timestamp, in milliseconds. Optional.
 	Expiration int64 `json:"expiration,omitempty,string"`
-
 	// Id: A UUID or similar unique string that identifies this channel.
 	Id string `json:"id,omitempty"`
-
-	// Kind: Identifies this as a notification channel used to watch for
-	// changes to a resource, which is "api#channel".
+	// Kind: Identifies this as a notification channel used to watch for changes to
+	// a resource, which is "api#channel".
 	Kind string `json:"kind,omitempty"`
-
 	// Params: Additional parameters controlling delivery channel behavior.
 	// Optional.
 	Params map[string]string `json:"params,omitempty"`
-
-	// Payload: A Boolean value to indicate whether payload is wanted. A
-	// payload is data that is sent in the body of an HTTP POST, PUT, or
-	// PATCH message and contains important information about the request.
-	// Optional.
+	// Payload: A Boolean value to indicate whether payload is wanted. A payload is
+	// data that is sent in the body of an HTTP POST, PUT, or PATCH message and
+	// contains important information about the request. Optional.
 	Payload bool `json:"payload,omitempty"`
-
-	// ResourceId: An opaque ID that identifies the resource being watched
-	// on this channel. Stable across different API versions.
+	// ResourceId: An opaque ID that identifies the resource being watched on this
+	// channel. Stable across different API versions.
 	ResourceId string `json:"resourceId,omitempty"`
-
 	// ResourceUri: A version-specific identifier for the watched resource.
 	ResourceUri string `json:"resourceUri,omitempty"`
-
 	// Token: An arbitrary string delivered to the target address with each
 	// notification delivered over this channel. Optional.
 	Token string `json:"token,omitempty"`
-
-	// Type: The type of delivery mechanism used for this channel. The value
-	// should be set to "web_hook".
+	// Type: The type of delivery mechanism used for this channel. The value should
+	// be set to "web_hook".
 	Type string `json:"type,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Address") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Address") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Address") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Address") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Channel) MarshalJSON() ([]byte, error) {
 	type NoMethod Channel
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// NestedParameter: JSON template for a parameter used in various
-// reports.
+// NestedParameter: JSON template for a parameter used in various reports.
 type NestedParameter struct {
 	// BoolValue: Boolean value of the parameter.
 	BoolValue bool `json:"boolValue,omitempty"`
-
 	// IntValue: Integer value of the parameter.
 	IntValue int64 `json:"intValue,omitempty,string"`
-
 	// MultiBoolValue: Multiple boolean values of the parameter.
 	MultiBoolValue []bool `json:"multiBoolValue,omitempty"`
-
 	// MultiIntValue: Multiple integer values of the parameter.
 	MultiIntValue googleapi.Int64s `json:"multiIntValue,omitempty"`
-
 	// MultiValue: Multiple string values of the parameter.
 	MultiValue []string `json:"multiValue,omitempty"`
-
 	// Name: The name of the parameter.
 	Name string `json:"name,omitempty"`
-
 	// Value: String value of the parameter.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BoolValue") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *NestedParameter) MarshalJSON() ([]byte, error) {
 	type NoMethod NestedParameter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // UsageReport: JSON template for a usage report.
 type UsageReport struct {
 	// Date: Output only. The date of the report request.
 	Date string `json:"date,omitempty"`
-
 	// Entity: Output only. Information about the type of the item.
 	Entity *UsageReportEntity `json:"entity,omitempty"`
-
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
-
 	// Kind: The type of API resource. For a usage report, the value is
 	// `admin#reports#usageReport`.
 	Kind string `json:"kind,omitempty"`
-
-	// Parameters: Output only. Parameter value pairs for various
-	// applications. For the Entity Usage Report parameters and values, see
-	// the Entity Usage parameters reference
+	// Parameters: Output only. Parameter value pairs for various applications. For
+	// the Entity Usage Report parameters and values, see the Entity Usage
+	// parameters reference
 	// (/admin-sdk/reports/v1/reference/usage-ref-appendix-a/entities).
 	Parameters []*UsageReportParameters `json:"parameters,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Date") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Date") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Date") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Date") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UsageReport) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageReport
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// UsageReportEntity: Output only. Information about the type of the
-// item.
+// UsageReportEntity: Output only. Information about the type of the item.
 type UsageReportEntity struct {
-	// CustomerId: Output only. The unique identifier of the customer's
-	// account.
+	// CustomerId: Output only. The unique identifier of the customer's account.
 	CustomerId string `json:"customerId,omitempty"`
-
-	// EntityId: Output only. Object key. Only relevant if entity.type =
-	// "OBJECT" Note: external-facing name of report is "Entities" rather
-	// than "Objects".
+	// EntityId: Output only. Object key. Only relevant if entity.type = "OBJECT"
+	// Note: external-facing name of report is "Entities" rather than "Objects".
 	EntityId string `json:"entityId,omitempty"`
-
 	// ProfileId: Output only. The user's immutable Google Workspace profile
 	// identifier.
 	ProfileId string `json:"profileId,omitempty"`
-
 	// Type: Output only. The type of item. The value is `user`.
 	Type string `json:"type,omitempty"`
-
 	// UserEmail: Output only. The user's email address. Only relevant if
 	// entity.type = "USER"
 	UserEmail string `json:"userEmail,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CustomerId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomerId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CustomerId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UsageReportEntity) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageReportEntity
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type UsageReportParameters struct {
 	// BoolValue: Output only. Boolean value of the parameter.
 	BoolValue bool `json:"boolValue,omitempty"`
-
-	// DatetimeValue: The RFC 3339 formatted value of the parameter, for
-	// example 2010-10-28T10:26:35.000Z.
+	// DatetimeValue: The RFC 3339 formatted value of the parameter, for example
+	// 2010-10-28T10:26:35.000Z.
 	DatetimeValue string `json:"datetimeValue,omitempty"`
-
 	// IntValue: Output only. Integer value of the parameter.
 	IntValue int64 `json:"intValue,omitempty,string"`
-
 	// MsgValue: Output only. Nested message value of the parameter.
 	MsgValue []googleapi.RawMessage `json:"msgValue,omitempty"`
-
-	// Name: The name of the parameter. For the User Usage Report parameter
-	// names, see the User Usage parameters reference.
+	// Name: The name of the parameter. For the User Usage Report parameter names,
+	// see the User Usage parameters reference.
 	Name string `json:"name,omitempty"`
-
 	// StringValue: Output only. String value of the parameter.
 	StringValue string `json:"stringValue,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BoolValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BoolValue") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BoolValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UsageReportParameters) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageReportParameters
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type UsageReports struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
-
 	// Kind: The type of API resource. For a usage report, the value is
 	// `admin#reports#usageReports`.
 	Kind string `json:"kind,omitempty"`
-
-	// NextPageToken: Token to specify next page. A report with multiple
-	// pages has a `nextPageToken` property in the response. For your
-	// follow-on requests getting all of the report's pages, enter the
-	// `nextPageToken` value in the `pageToken` query string.
+	// NextPageToken: Token to specify next page. A report with multiple pages has
+	// a `nextPageToken` property in the response. For your follow-on requests
+	// getting all of the report's pages, enter the `nextPageToken` value in the
+	// `pageToken` query string.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// UsageReports: Various application parameter records.
 	UsageReports []*UsageReport `json:"usageReports,omitempty"`
-
 	// Warnings: Warnings, if any.
 	Warnings []*UsageReportsWarnings `json:"warnings,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UsageReports) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageReports
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type UsageReportsWarnings struct {
-	// Code: Machine readable code or warning type. The warning code value
-	// is `200`.
+	// Code: Machine readable code or warning type. The warning code value is
+	// `200`.
 	Code string `json:"code,omitempty"`
-
 	// Data: Key-value pairs to give detailed information on the warning.
 	Data []*UsageReportsWarningsData `json:"data,omitempty"`
-
 	// Message: The human readable messages for a warning are: - Data is not
 	// available warning - Sorry, data for date yyyy-mm-dd for application
-	// "application name" is not available. - Partial data is available
-	// warning - Data for date yyyy-mm-dd for application "application
-	// name" is not available right now, please try again after a few
-	// hours.
+	// "application name" is not available. - Partial data is available warning -
+	// Data for date yyyy-mm-dd for application "application name" is not
+	// available right now, please try again after a few hours.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UsageReportsWarnings) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageReportsWarnings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type UsageReportsWarningsData struct {
-	// Key: Key associated with a key-value pair to give detailed
-	// information on the warning.
+	// Key: Key associated with a key-value pair to give detailed information on
+	// the warning.
 	Key string `json:"key,omitempty"`
-
-	// Value: Value associated with a key-value pair to give detailed
-	// information on the warning.
+	// Value: Value associated with a key-value pair to give detailed information
+	// on the warning.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UsageReportsWarningsData) MarshalJSON() ([]byte, error) {
 	type NoMethod UsageReportsWarningsData
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "reports.activities.list":
 
 type ActivitiesListCall struct {
 	s               *Service
@@ -940,21 +764,20 @@ type ActivitiesListCall struct {
 	header_         http.Header
 }
 
-// List: Retrieves a list of activities for a specific customer's
-// account and application such as the Admin console application or the
-// Google Drive application. For more information, see the guides for
-// administrator and Google Drive activity reports. For more information
-// about the activity report's parameters, see the activity parameters
-// reference guides.
+// List: Retrieves a list of activities for a specific customer's account and
+// application such as the Admin console application or the Google Drive
+// application. For more information, see the guides for administrator and
+// Google Drive activity reports. For more information about the activity
+// report's parameters, see the activity parameters reference guides.
 //
 //   - applicationName: Application name for which the events are to be
 //     retrieved.
-//   - userKey: Represents the profile ID or the user email for which the
-//     data should be filtered. Can be `all` for all information, or
-//     `userKey` for a user's unique Google Workspace profile ID or their
-//     primary email address. Must not be a deleted user. For a deleted
-//     user, call `users.list` in Directory API with `showDeleted=true`,
-//     then use the returned `ID` as the `userKey`.
+//   - userKey: Represents the profile ID or the user email for which the data
+//     should be filtered. Can be `all` for all information, or `userKey` for a
+//     user's unique Google Workspace profile ID or their primary email address.
+//     Must not be a deleted user. For a deleted user, call `users.list` in
+//     Directory API with `showDeleted=true`, then use the returned `ID` as the
+//     `userKey`.
 func (r *ActivitiesService) List(userKey string, applicationName string) *ActivitiesListCall {
 	c := &ActivitiesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -962,92 +785,87 @@ func (r *ActivitiesService) List(userKey string, applicationName string) *Activi
 	return c
 }
 
-// ActorIpAddress sets the optional parameter "actorIpAddress": The
-// Internet Protocol (IP) Address of host where the event was performed.
-// This is an additional way to filter a report's summary using the IP
-// address of the user whose activity is being reported. This IP address
-// may or may not reflect the user's physical location. For example, the
-// IP address can be the user's proxy server's address or a virtual
-// private network (VPN) address. This parameter supports both IPv4 and
-// IPv6 address versions.
+// ActorIpAddress sets the optional parameter "actorIpAddress": The Internet
+// Protocol (IP) Address of host where the event was performed. This is an
+// additional way to filter a report's summary using the IP address of the user
+// whose activity is being reported. This IP address may or may not reflect the
+// user's physical location. For example, the IP address can be the user's
+// proxy server's address or a virtual private network (VPN) address. This
+// parameter supports both IPv4 and IPv6 address versions.
 func (c *ActivitiesListCall) ActorIpAddress(actorIpAddress string) *ActivitiesListCall {
 	c.urlParams_.Set("actorIpAddress", actorIpAddress)
 	return c
 }
 
-// CustomerId sets the optional parameter "customerId": The unique ID of
-// the customer to retrieve data for.
+// CustomerId sets the optional parameter "customerId": The unique ID of the
+// customer to retrieve data for.
 func (c *ActivitiesListCall) CustomerId(customerId string) *ActivitiesListCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
 }
 
-// EndTime sets the optional parameter "endTime": Sets the end of the
-// range of time shown in the report. The date is in the RFC 3339
-// format, for example 2010-10-28T10:26:35.000Z. The default value is
-// the approximate time of the API request. An API report has three
-// basic time concepts: - *Date of the API's request for a report*: When
-// the API created and retrieved the report. - *Report's start time*:
-// The beginning of the timespan shown in the report. The `startTime`
-// must be before the `endTime` (if specified) and the current time when
-// the request is made, or the API returns an error. - *Report's end
+// EndTime sets the optional parameter "endTime": Sets the end of the range of
+// time shown in the report. The date is in the RFC 3339 format, for example
+// 2010-10-28T10:26:35.000Z. The default value is the approximate time of the
+// API request. An API report has three basic time concepts: - *Date of the
+// API's request for a report*: When the API created and retrieved the report.
+// - *Report's start time*: The beginning of the timespan shown in the report.
+// The `startTime` must be before the `endTime` (if specified) and the current
+// time when the request is made, or the API returns an error. - *Report's end
 // time*: The end of the timespan shown in the report. For example, the
-// timespan of events summarized in a report can start in April and end
-// in May. The report itself can be requested in August. If the
-// `endTime` is not specified, the report returns all activities from
-// the `startTime` until the current time or the most recent 180 days if
-// the `startTime` is more than 180 days in the past.
+// timespan of events summarized in a report can start in April and end in May.
+// The report itself can be requested in August. If the `endTime` is not
+// specified, the report returns all activities from the `startTime` until the
+// current time or the most recent 180 days if the `startTime` is more than 180
+// days in the past.
 func (c *ActivitiesListCall) EndTime(endTime string) *ActivitiesListCall {
 	c.urlParams_.Set("endTime", endTime)
 	return c
 }
 
-// EventName sets the optional parameter "eventName": The name of the
-// event being queried by the API. Each `eventName` is related to a
-// specific Google Workspace service or feature which the API organizes
-// into types of events. An example is the Google Calendar events in the
-// Admin console application's reports. The Calendar Settings `type`
-// structure has all of the Calendar `eventName` activities reported by
-// the API. When an administrator changes a Calendar setting, the API
-// reports this activity in the Calendar Settings `type` and `eventName`
-// parameters. For more information about `eventName` query strings and
-// parameters, see the list of event names for various applications
-// above in `applicationName`.
+// EventName sets the optional parameter "eventName": The name of the event
+// being queried by the API. Each `eventName` is related to a specific Google
+// Workspace service or feature which the API organizes into types of events.
+// An example is the Google Calendar events in the Admin console application's
+// reports. The Calendar Settings `type` structure has all of the Calendar
+// `eventName` activities reported by the API. When an administrator changes a
+// Calendar setting, the API reports this activity in the Calendar Settings
+// `type` and `eventName` parameters. For more information about `eventName`
+// query strings and parameters, see the list of event names for various
+// applications above in `applicationName`.
 func (c *ActivitiesListCall) EventName(eventName string) *ActivitiesListCall {
 	c.urlParams_.Set("eventName", eventName)
 	return c
 }
 
-// Filters sets the optional parameter "filters": The `filters` query
-// string is a comma-separated list composed of event parameters
-// manipulated by relational operators. Event parameters are in the form
-// `{parameter1 name}{relational operator}{parameter1 value},{parameter2
-// name}{relational operator}{parameter2 value},...` These event
-// parameters are associated with a specific `eventName`. An empty
-// report is returned if the request's parameter doesn't belong to the
-// `eventName`. For more information about the available `eventName`
-// fields for each application and their associated parameters, go to
-// the ApplicationName (#applicationname) table, then click through to
-// the Activity Events page in the Appendix for the application you
-// want. In the following Drive activity examples, the returned list
-// consists of all `edit` events where the `doc_id` parameter value
-// matches the conditions defined by the relational operator. In the
-// first example, the request returns all edited documents with a
-// `doc_id` value equal to `12345`. In the second example, the report
-// returns any edited documents where the `doc_id` value is not equal to
-// `98765`. The `<>` operator is URL-encoded in the request's query
-// string (`%3C%3E`): ``` GET...&eventName=edit&filters=doc_id==12345
+// Filters sets the optional parameter "filters": The `filters` query string is
+// a comma-separated list composed of event parameters manipulated by
+// relational operators. Event parameters are in the form `{parameter1
+// name}{relational operator}{parameter1 value},{parameter2 name}{relational
+// operator}{parameter2 value},...` These event parameters are associated with
+// a specific `eventName`. An empty report is returned if the request's
+// parameter doesn't belong to the `eventName`. For more information about the
+// available `eventName` fields for each application and their associated
+// parameters, go to the ApplicationName (#applicationname) table, then click
+// through to the Activity Events page in the Appendix for the application you
+// want. In the following Drive activity examples, the returned list consists
+// of all `edit` events where the `doc_id` parameter value matches the
+// conditions defined by the relational operator. In the first example, the
+// request returns all edited documents with a `doc_id` value equal to `12345`.
+// In the second example, the report returns any edited documents where the
+// `doc_id` value is not equal to `98765`. The `<>` operator is URL-encoded in
+// the request's query string (`%3C%3E`): ```
+// GET...&eventName=edit&filters=doc_id==12345
 // GET...&eventName=edit&filters=doc_id%3C%3E98765 ``` A `filters` query
-// supports these relational operators: * `==`—'equal to'. *
-// `<>`—'not equal to'. Must be URL-encoded (%3C%3E). * `<`—'less
-// than'. Must be URL-encoded (%3C). * `<=`—'less than or equal to'.
-// Must be URL-encoded (%3C=). * `>`—'greater than'. Must be
-// URL-encoded (%3E). * `>=`—'greater than or equal to'. Must be
-// URL-encoded (%3E=). **Note:** The API doesn't accept multiple values
-// of the same parameter. If a parameter is supplied more than once in
-// the API request, the API only accepts the last value of that
-// parameter. In addition, if an invalid parameter is supplied in the
-// API request, the API ignores that parameter and returns the response
+// supports these relational operators: * `==`—'equal to'. * `<>`—'not
+// equal to'. Must be URL-encoded (%3C%3E). * `<`—'less than'. Must be
+// URL-encoded (%3C). * `<=`—'less than or equal to'. Must be URL-encoded
+// (%3C=). * `>`—'greater than'. Must be URL-encoded (%3E). * `>=`—'greater
+// than or equal to'. Must be URL-encoded (%3E=). **Note:** The API doesn't
+// accept multiple values of the same parameter. If a parameter is supplied
+// more than once in the API request, the API only accepts the last value of
+// that parameter. In addition, if an invalid parameter is supplied in the API
+// request, the API ignores that parameter and returns the response
 // corresponding to the remaining valid parameters. If no parameters are
 // requested, all parameters are returned.
 func (c *ActivitiesListCall) Filters(filters string) *ActivitiesListCall {
@@ -1055,85 +873,79 @@ func (c *ActivitiesListCall) Filters(filters string) *ActivitiesListCall {
 	return c
 }
 
-// GroupIdFilter sets the optional parameter "groupIdFilter": Comma
-// separated group ids (obfuscated) on which user activities are
-// filtered, i.e. the response will contain activities for only those
-// users that are a part of at least one of the group ids mentioned
-// here. Format: "id:abc123,id:xyz456"
+// GroupIdFilter sets the optional parameter "groupIdFilter": Comma separated
+// group ids (obfuscated) on which user activities are filtered, i.e. the
+// response will contain activities for only those users that are a part of at
+// least one of the group ids mentioned here. Format: "id:abc123,id:xyz456"
 func (c *ActivitiesListCall) GroupIdFilter(groupIdFilter string) *ActivitiesListCall {
 	c.urlParams_.Set("groupIdFilter", groupIdFilter)
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Determines how
-// many activity records are shown on each response page. For example,
-// if the request sets `maxResults=1` and the report has two activities,
-// the report has two pages. The response's `nextPageToken` property has
-// the token to the second page. The `maxResults` query string is
-// optional in the request. The default value is 1000.
+// MaxResults sets the optional parameter "maxResults": Determines how many
+// activity records are shown on each response page. For example, if the
+// request sets `maxResults=1` and the report has two activities, the report
+// has two pages. The response's `nextPageToken` property has the token to the
+// second page. The `maxResults` query string is optional in the request. The
+// default value is 1000.
 func (c *ActivitiesListCall) MaxResults(maxResults int64) *ActivitiesListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
-// OrgUnitID sets the optional parameter "orgUnitID": ID of the
-// organizational unit to report on. Activity records will be shown only
-// for users who belong to the specified organizational unit. Data
-// before Dec 17, 2018 doesn't appear in the filtered results.
+// OrgUnitID sets the optional parameter "orgUnitID": ID of the organizational
+// unit to report on. Activity records will be shown only for users who belong
+// to the specified organizational unit. Data before Dec 17, 2018 doesn't
+// appear in the filtered results.
 func (c *ActivitiesListCall) OrgUnitID(orgUnitID string) *ActivitiesListCall {
 	c.urlParams_.Set("orgUnitID", orgUnitID)
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The token to
-// specify next page. A report with multiple pages has a `nextPageToken`
-// property in the response. In your follow-on request getting the next
-// page of the report, enter the `nextPageToken` value in the
-// `pageToken` query string.
+// PageToken sets the optional parameter "pageToken": The token to specify next
+// page. A report with multiple pages has a `nextPageToken` property in the
+// response. In your follow-on request getting the next page of the report,
+// enter the `nextPageToken` value in the `pageToken` query string.
 func (c *ActivitiesListCall) PageToken(pageToken string) *ActivitiesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// StartTime sets the optional parameter "startTime": Sets the beginning
-// of the range of time shown in the report. The date is in the RFC 3339
-// format, for example 2010-10-28T10:26:35.000Z. The report returns all
-// activities from `startTime` until `endTime`. The `startTime` must be
-// before the `endTime` (if specified) and the current time when the
-// request is made, or the API returns an error.
+// StartTime sets the optional parameter "startTime": Sets the beginning of the
+// range of time shown in the report. The date is in the RFC 3339 format, for
+// example 2010-10-28T10:26:35.000Z. The report returns all activities from
+// `startTime` until `endTime`. The `startTime` must be before the `endTime`
+// (if specified) and the current time when the request is made, or the API
+// returns an error.
 func (c *ActivitiesListCall) StartTime(startTime string) *ActivitiesListCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ActivitiesListCall) Fields(s ...googleapi.Field) *ActivitiesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ActivitiesListCall) IfNoneMatch(entityTag string) *ActivitiesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ActivitiesListCall) Context(ctx context.Context) *ActivitiesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ActivitiesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1142,12 +954,7 @@ func (c *ActivitiesListCall) Header() http.Header {
 }
 
 func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1169,12 +976,10 @@ func (c *ActivitiesListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "reports.activities.list" call.
-// Exactly one of *Activities or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Activities.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Activities.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1205,148 +1010,6 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a list of activities for a specific customer's account and application such as the Admin console application or the Google Drive application. For more information, see the guides for administrator and Google Drive activity reports. For more information about the activity report's parameters, see the activity parameters reference guides. ",
-	//   "flatPath": "admin/reports/v1/activity/users/{userKey}/applications/{applicationName}",
-	//   "httpMethod": "GET",
-	//   "id": "reports.activities.list",
-	//   "parameterOrder": [
-	//     "userKey",
-	//     "applicationName"
-	//   ],
-	//   "parameters": {
-	//     "actorIpAddress": {
-	//       "description": "The Internet Protocol (IP) Address of host where the event was performed. This is an additional way to filter a report's summary using the IP address of the user whose activity is being reported. This IP address may or may not reflect the user's physical location. For example, the IP address can be the user's proxy server's address or a virtual private network (VPN) address. This parameter supports both IPv4 and IPv6 address versions.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "applicationName": {
-	//       "description": "Application name for which the events are to be retrieved.",
-	//       "enum": [
-	//         "access_transparency",
-	//         "admin",
-	//         "calendar",
-	//         "chat",
-	//         "drive",
-	//         "gcp",
-	//         "gplus",
-	//         "groups",
-	//         "groups_enterprise",
-	//         "jamboard",
-	//         "login",
-	//         "meet",
-	//         "mobile",
-	//         "rules",
-	//         "saml",
-	//         "token",
-	//         "user_accounts",
-	//         "context_aware_access",
-	//         "chrome",
-	//         "data_studio",
-	//         "keep",
-	//         "vault"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The Google Workspace Access Transparency activity reports return information about different types of Access Transparency activity events.",
-	//         "The Admin console application's activity reports return account information about different types of administrator activity events.",
-	//         "The Google Calendar application's activity reports return information about various Calendar activity events.",
-	//         "The Chat activity reports return information about various Chat activity events.",
-	//         "The Google Drive application's activity reports return information about various Google Drive activity events. The Drive activity report is only available for Google Workspace Business and Enterprise customers.",
-	//         "The Google Cloud Platform application's activity reports return information about various GCP activity events.",
-	//         "The Google+ application's activity reports return information about various Google+ activity events.",
-	//         "The Google Groups application's activity reports return information about various Groups activity events.",
-	//         "The Enterprise Groups activity reports return information about various Enterprise group activity events.",
-	//         "The Jamboard activity reports return information about various Jamboard activity events.",
-	//         "The Login application's activity reports return account information about different types of Login activity events.",
-	//         "The Meet Audit activity report returns information about different types of Meet Audit activity events.",
-	//         "The Device Audit activity report returns information about different types of Device Audit activity events.",
-	//         "The Rules activity report returns information about different types of Rules activity events.",
-	//         "The SAML activity report returns information about different types of SAML activity events.",
-	//         "The Token application's activity reports return account information about different types of Token activity events.",
-	//         "The User Accounts application's activity reports return account information about different types of User Accounts activity events.",
-	//         "The Context-aware access activity reports return information about users' access denied events due to Context-aware access rules.",
-	//         "The Chrome activity reports return information about Chrome browser and Chrome OS events.",
-	//         "The Data Studio activity reports return information about various types of Data Studio activity events.",
-	//         "The Keep application's activity reports return information about various Google Keep activity events. The Keep activity report is only available for Google Workspace Business and Enterprise customers.",
-	//         "The Vault activity reports return information about various types of Vault activity events."
-	//       ],
-	//       "location": "path",
-	//       "pattern": "(access_transparency)|(admin)|(calendar)|(chat)|(chrome)|(context_aware_access)|(data_studio)|(drive)|(gcp)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(keep)|(login)|(meet)|(mobile)|(rules)|(saml)|(token)|(user_accounts)|(vault)",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "customerId": {
-	//       "description": "The unique ID of the customer to retrieve data for.",
-	//       "location": "query",
-	//       "pattern": "C.+|my_customer",
-	//       "type": "string"
-	//     },
-	//     "endTime": {
-	//       "description": "Sets the end of the range of time shown in the report. The date is in the RFC 3339 format, for example 2010-10-28T10:26:35.000Z. The default value is the approximate time of the API request. An API report has three basic time concepts: - *Date of the API's request for a report*: When the API created and retrieved the report. - *Report's start time*: The beginning of the timespan shown in the report. The `startTime` must be before the `endTime` (if specified) and the current time when the request is made, or the API returns an error. - *Report's end time*: The end of the timespan shown in the report. For example, the timespan of events summarized in a report can start in April and end in May. The report itself can be requested in August. If the `endTime` is not specified, the report returns all activities from the `startTime` until the current time or the most recent 180 days if the `startTime` is more than 180 days in the past.",
-	//       "location": "query",
-	//       "pattern": "(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)(?:\\.(\\d+))?(?:(Z)|([-+])(\\d\\d):(\\d\\d))",
-	//       "type": "string"
-	//     },
-	//     "eventName": {
-	//       "description": "The name of the event being queried by the API. Each `eventName` is related to a specific Google Workspace service or feature which the API organizes into types of events. An example is the Google Calendar events in the Admin console application's reports. The Calendar Settings `type` structure has all of the Calendar `eventName` activities reported by the API. When an administrator changes a Calendar setting, the API reports this activity in the Calendar Settings `type` and `eventName` parameters. For more information about `eventName` query strings and parameters, see the list of event names for various applications above in `applicationName`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "filters": {
-	//       "description": "The `filters` query string is a comma-separated list composed of event parameters manipulated by relational operators. Event parameters are in the form `{parameter1 name}{relational operator}{parameter1 value},{parameter2 name}{relational operator}{parameter2 value},...` These event parameters are associated with a specific `eventName`. An empty report is returned if the request's parameter doesn't belong to the `eventName`. For more information about the available `eventName` fields for each application and their associated parameters, go to the [ApplicationName](#applicationname) table, then click through to the Activity Events page in the Appendix for the application you want. In the following Drive activity examples, the returned list consists of all `edit` events where the `doc_id` parameter value matches the conditions defined by the relational operator. In the first example, the request returns all edited documents with a `doc_id` value equal to `12345`. In the second example, the report returns any edited documents where the `doc_id` value is not equal to `98765`. The `\u003c\u003e` operator is URL-encoded in the request's query string (`%3C%3E`): ``` GET...\u0026eventName=edit\u0026filters=doc_id==12345 GET...\u0026eventName=edit\u0026filters=doc_id%3C%3E98765 ``` A `filters` query supports these relational operators: * `==`—'equal to'. * `\u003c\u003e`—'not equal to'. Must be URL-encoded (%3C%3E). * `\u003c`—'less than'. Must be URL-encoded (%3C). * `\u003c=`—'less than or equal to'. Must be URL-encoded (%3C=). * `\u003e`—'greater than'. Must be URL-encoded (%3E). * `\u003e=`—'greater than or equal to'. Must be URL-encoded (%3E=). **Note:** The API doesn't accept multiple values of the same parameter. If a parameter is supplied more than once in the API request, the API only accepts the last value of that parameter. In addition, if an invalid parameter is supplied in the API request, the API ignores that parameter and returns the response corresponding to the remaining valid parameters. If no parameters are requested, all parameters are returned.",
-	//       "location": "query",
-	//       "pattern": "(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+,)*(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+)",
-	//       "type": "string"
-	//     },
-	//     "groupIdFilter": {
-	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e. the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
-	//       "location": "query",
-	//       "pattern": "(id:[a-z0-9]+(,id:[a-z0-9]+)*)",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "default": "1000",
-	//       "description": "Determines how many activity records are shown on each response page. For example, if the request sets `maxResults=1` and the report has two activities, the report has two pages. The response's `nextPageToken` property has the token to the second page. The `maxResults` query string is optional in the request. The default value is 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "maximum": "1000",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "orgUnitID": {
-	//       "default": "",
-	//       "description": "ID of the organizational unit to report on. Activity records will be shown only for users who belong to the specified organizational unit. Data before Dec 17, 2018 doesn't appear in the filtered results.",
-	//       "location": "query",
-	//       "pattern": "(id:[a-z0-9]+)",
-	//       "type": "string"
-	//     },
-	//     "pageToken": {
-	//       "description": "The token to specify next page. A report with multiple pages has a `nextPageToken` property in the response. In your follow-on request getting the next page of the report, enter the `nextPageToken` value in the `pageToken` query string.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "startTime": {
-	//       "description": "Sets the beginning of the range of time shown in the report. The date is in the RFC 3339 format, for example 2010-10-28T10:26:35.000Z. The report returns all activities from `startTime` until `endTime`. The `startTime` must be before the `endTime` (if specified) and the current time when the request is made, or the API returns an error.",
-	//       "location": "query",
-	//       "pattern": "(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)(?:\\.(\\d+))?(?:(Z)|([-+])(\\d\\d):(\\d\\d))",
-	//       "type": "string"
-	//     },
-	//     "userKey": {
-	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique Google Workspace profile ID or their primary email address. Must not be a deleted user. For a deleted user, call `users.list` in Directory API with `showDeleted=true`, then use the returned `ID` as the `userKey`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "admin/reports/v1/activity/users/{userKey}/applications/{applicationName}",
-	//   "response": {
-	//     "$ref": "Activities"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admin.reports.audit.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1354,7 +1017,7 @@ func (c *ActivitiesListCall) Do(opts ...googleapi.CallOption) (*Activities, erro
 // The provided context supersedes any context provided to the Context method.
 func (c *ActivitiesListCall) Pages(ctx context.Context, f func(*Activities) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1369,8 +1032,6 @@ func (c *ActivitiesListCall) Pages(ctx context.Context, f func(*Activities) erro
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "reports.activities.watch":
 
 type ActivitiesWatchCall struct {
 	s               *Service
@@ -1387,12 +1048,12 @@ type ActivitiesWatchCall struct {
 //
 //   - applicationName: Application name for which the events are to be
 //     retrieved.
-//   - userKey: Represents the profile ID or the user email for which the
-//     data should be filtered. Can be `all` for all information, or
-//     `userKey` for a user's unique Google Workspace profile ID or their
-//     primary email address. Must not be a deleted user. For a deleted
-//     user, call `users.list` in Directory API with `showDeleted=true`,
-//     then use the returned `ID` as the `userKey`.
+//   - userKey: Represents the profile ID or the user email for which the data
+//     should be filtered. Can be `all` for all information, or `userKey` for a
+//     user's unique Google Workspace profile ID or their primary email address.
+//     Must not be a deleted user. For a deleted user, call `users.list` in
+//     Directory API with `showDeleted=true`, then use the returned `ID` as the
+//     `userKey`.
 func (r *ActivitiesService) Watch(userKey string, applicationName string, channel *Channel) *ActivitiesWatchCall {
 	c := &ActivitiesWatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -1401,92 +1062,87 @@ func (r *ActivitiesService) Watch(userKey string, applicationName string, channe
 	return c
 }
 
-// ActorIpAddress sets the optional parameter "actorIpAddress": The
-// Internet Protocol (IP) Address of host where the event was performed.
-// This is an additional way to filter a report's summary using the IP
-// address of the user whose activity is being reported. This IP address
-// may or may not reflect the user's physical location. For example, the
-// IP address can be the user's proxy server's address or a virtual
-// private network (VPN) address. This parameter supports both IPv4 and
-// IPv6 address versions.
+// ActorIpAddress sets the optional parameter "actorIpAddress": The Internet
+// Protocol (IP) Address of host where the event was performed. This is an
+// additional way to filter a report's summary using the IP address of the user
+// whose activity is being reported. This IP address may or may not reflect the
+// user's physical location. For example, the IP address can be the user's
+// proxy server's address or a virtual private network (VPN) address. This
+// parameter supports both IPv4 and IPv6 address versions.
 func (c *ActivitiesWatchCall) ActorIpAddress(actorIpAddress string) *ActivitiesWatchCall {
 	c.urlParams_.Set("actorIpAddress", actorIpAddress)
 	return c
 }
 
-// CustomerId sets the optional parameter "customerId": The unique ID of
-// the customer to retrieve data for.
+// CustomerId sets the optional parameter "customerId": The unique ID of the
+// customer to retrieve data for.
 func (c *ActivitiesWatchCall) CustomerId(customerId string) *ActivitiesWatchCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
 }
 
-// EndTime sets the optional parameter "endTime": Sets the end of the
-// range of time shown in the report. The date is in the RFC 3339
-// format, for example 2010-10-28T10:26:35.000Z. The default value is
-// the approximate time of the API request. An API report has three
-// basic time concepts: - *Date of the API's request for a report*: When
-// the API created and retrieved the report. - *Report's start time*:
-// The beginning of the timespan shown in the report. The `startTime`
-// must be before the `endTime` (if specified) and the current time when
-// the request is made, or the API returns an error. - *Report's end
+// EndTime sets the optional parameter "endTime": Sets the end of the range of
+// time shown in the report. The date is in the RFC 3339 format, for example
+// 2010-10-28T10:26:35.000Z. The default value is the approximate time of the
+// API request. An API report has three basic time concepts: - *Date of the
+// API's request for a report*: When the API created and retrieved the report.
+// - *Report's start time*: The beginning of the timespan shown in the report.
+// The `startTime` must be before the `endTime` (if specified) and the current
+// time when the request is made, or the API returns an error. - *Report's end
 // time*: The end of the timespan shown in the report. For example, the
-// timespan of events summarized in a report can start in April and end
-// in May. The report itself can be requested in August. If the
-// `endTime` is not specified, the report returns all activities from
-// the `startTime` until the current time or the most recent 180 days if
-// the `startTime` is more than 180 days in the past.
+// timespan of events summarized in a report can start in April and end in May.
+// The report itself can be requested in August. If the `endTime` is not
+// specified, the report returns all activities from the `startTime` until the
+// current time or the most recent 180 days if the `startTime` is more than 180
+// days in the past.
 func (c *ActivitiesWatchCall) EndTime(endTime string) *ActivitiesWatchCall {
 	c.urlParams_.Set("endTime", endTime)
 	return c
 }
 
-// EventName sets the optional parameter "eventName": The name of the
-// event being queried by the API. Each `eventName` is related to a
-// specific Google Workspace service or feature which the API organizes
-// into types of events. An example is the Google Calendar events in the
-// Admin console application's reports. The Calendar Settings `type`
-// structure has all of the Calendar `eventName` activities reported by
-// the API. When an administrator changes a Calendar setting, the API
-// reports this activity in the Calendar Settings `type` and `eventName`
-// parameters. For more information about `eventName` query strings and
-// parameters, see the list of event names for various applications
-// above in `applicationName`.
+// EventName sets the optional parameter "eventName": The name of the event
+// being queried by the API. Each `eventName` is related to a specific Google
+// Workspace service or feature which the API organizes into types of events.
+// An example is the Google Calendar events in the Admin console application's
+// reports. The Calendar Settings `type` structure has all of the Calendar
+// `eventName` activities reported by the API. When an administrator changes a
+// Calendar setting, the API reports this activity in the Calendar Settings
+// `type` and `eventName` parameters. For more information about `eventName`
+// query strings and parameters, see the list of event names for various
+// applications above in `applicationName`.
 func (c *ActivitiesWatchCall) EventName(eventName string) *ActivitiesWatchCall {
 	c.urlParams_.Set("eventName", eventName)
 	return c
 }
 
-// Filters sets the optional parameter "filters": The `filters` query
-// string is a comma-separated list composed of event parameters
-// manipulated by relational operators. Event parameters are in the form
-// `{parameter1 name}{relational operator}{parameter1 value},{parameter2
-// name}{relational operator}{parameter2 value},...` These event
-// parameters are associated with a specific `eventName`. An empty
-// report is returned if the request's parameter doesn't belong to the
-// `eventName`. For more information about the available `eventName`
-// fields for each application and their associated parameters, go to
-// the ApplicationName (#applicationname) table, then click through to
-// the Activity Events page in the Appendix for the application you
-// want. In the following Drive activity examples, the returned list
-// consists of all `edit` events where the `doc_id` parameter value
-// matches the conditions defined by the relational operator. In the
-// first example, the request returns all edited documents with a
-// `doc_id` value equal to `12345`. In the second example, the report
-// returns any edited documents where the `doc_id` value is not equal to
-// `98765`. The `<>` operator is URL-encoded in the request's query
-// string (`%3C%3E`): ``` GET...&eventName=edit&filters=doc_id==12345
+// Filters sets the optional parameter "filters": The `filters` query string is
+// a comma-separated list composed of event parameters manipulated by
+// relational operators. Event parameters are in the form `{parameter1
+// name}{relational operator}{parameter1 value},{parameter2 name}{relational
+// operator}{parameter2 value},...` These event parameters are associated with
+// a specific `eventName`. An empty report is returned if the request's
+// parameter doesn't belong to the `eventName`. For more information about the
+// available `eventName` fields for each application and their associated
+// parameters, go to the ApplicationName (#applicationname) table, then click
+// through to the Activity Events page in the Appendix for the application you
+// want. In the following Drive activity examples, the returned list consists
+// of all `edit` events where the `doc_id` parameter value matches the
+// conditions defined by the relational operator. In the first example, the
+// request returns all edited documents with a `doc_id` value equal to `12345`.
+// In the second example, the report returns any edited documents where the
+// `doc_id` value is not equal to `98765`. The `<>` operator is URL-encoded in
+// the request's query string (`%3C%3E`): ```
+// GET...&eventName=edit&filters=doc_id==12345
 // GET...&eventName=edit&filters=doc_id%3C%3E98765 ``` A `filters` query
-// supports these relational operators: * `==`—'equal to'. *
-// `<>`—'not equal to'. Must be URL-encoded (%3C%3E). * `<`—'less
-// than'. Must be URL-encoded (%3C). * `<=`—'less than or equal to'.
-// Must be URL-encoded (%3C=). * `>`—'greater than'. Must be
-// URL-encoded (%3E). * `>=`—'greater than or equal to'. Must be
-// URL-encoded (%3E=). **Note:** The API doesn't accept multiple values
-// of the same parameter. If a parameter is supplied more than once in
-// the API request, the API only accepts the last value of that
-// parameter. In addition, if an invalid parameter is supplied in the
-// API request, the API ignores that parameter and returns the response
+// supports these relational operators: * `==`—'equal to'. * `<>`—'not
+// equal to'. Must be URL-encoded (%3C%3E). * `<`—'less than'. Must be
+// URL-encoded (%3C). * `<=`—'less than or equal to'. Must be URL-encoded
+// (%3C=). * `>`—'greater than'. Must be URL-encoded (%3E). * `>=`—'greater
+// than or equal to'. Must be URL-encoded (%3E=). **Note:** The API doesn't
+// accept multiple values of the same parameter. If a parameter is supplied
+// more than once in the API request, the API only accepts the last value of
+// that parameter. In addition, if an invalid parameter is supplied in the API
+// request, the API ignores that parameter and returns the response
 // corresponding to the remaining valid parameters. If no parameters are
 // requested, all parameters are returned.
 func (c *ActivitiesWatchCall) Filters(filters string) *ActivitiesWatchCall {
@@ -1494,76 +1150,72 @@ func (c *ActivitiesWatchCall) Filters(filters string) *ActivitiesWatchCall {
 	return c
 }
 
-// GroupIdFilter sets the optional parameter "groupIdFilter": Comma
-// separated group ids (obfuscated) on which user activities are
-// filtered, i.e. the response will contain activities for only those
-// users that are a part of at least one of the group ids mentioned
-// here. Format: "id:abc123,id:xyz456"
+// GroupIdFilter sets the optional parameter "groupIdFilter": Comma separated
+// group ids (obfuscated) on which user activities are filtered, i.e. the
+// response will contain activities for only those users that are a part of at
+// least one of the group ids mentioned here. Format: "id:abc123,id:xyz456"
 func (c *ActivitiesWatchCall) GroupIdFilter(groupIdFilter string) *ActivitiesWatchCall {
 	c.urlParams_.Set("groupIdFilter", groupIdFilter)
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Determines how
-// many activity records are shown on each response page. For example,
-// if the request sets `maxResults=1` and the report has two activities,
-// the report has two pages. The response's `nextPageToken` property has
-// the token to the second page. The `maxResults` query string is
-// optional in the request. The default value is 1000.
+// MaxResults sets the optional parameter "maxResults": Determines how many
+// activity records are shown on each response page. For example, if the
+// request sets `maxResults=1` and the report has two activities, the report
+// has two pages. The response's `nextPageToken` property has the token to the
+// second page. The `maxResults` query string is optional in the request. The
+// default value is 1000.
 func (c *ActivitiesWatchCall) MaxResults(maxResults int64) *ActivitiesWatchCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
-// OrgUnitID sets the optional parameter "orgUnitID": `Deprecated`. This
-// field is deprecated and is no longer supported. ID of the
-// organizational unit to report on. Activity records will be shown only
-// for users who belong to the specified organizational unit. Data
-// before Dec 17, 2018 doesn't appear in the filtered results.
+// OrgUnitID sets the optional parameter "orgUnitID": `Deprecated`. This field
+// is deprecated and is no longer supported. ID of the organizational unit to
+// report on. Activity records will be shown only for users who belong to the
+// specified organizational unit. Data before Dec 17, 2018 doesn't appear in
+// the filtered results.
 func (c *ActivitiesWatchCall) OrgUnitID(orgUnitID string) *ActivitiesWatchCall {
 	c.urlParams_.Set("orgUnitID", orgUnitID)
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The token to
-// specify next page. A report with multiple pages has a `nextPageToken`
-// property in the response. In your follow-on request getting the next
-// page of the report, enter the `nextPageToken` value in the
-// `pageToken` query string.
+// PageToken sets the optional parameter "pageToken": The token to specify next
+// page. A report with multiple pages has a `nextPageToken` property in the
+// response. In your follow-on request getting the next page of the report,
+// enter the `nextPageToken` value in the `pageToken` query string.
 func (c *ActivitiesWatchCall) PageToken(pageToken string) *ActivitiesWatchCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// StartTime sets the optional parameter "startTime": Sets the beginning
-// of the range of time shown in the report. The date is in the RFC 3339
-// format, for example 2010-10-28T10:26:35.000Z. The report returns all
-// activities from `startTime` until `endTime`. The `startTime` must be
-// before the `endTime` (if specified) and the current time when the
-// request is made, or the API returns an error.
+// StartTime sets the optional parameter "startTime": Sets the beginning of the
+// range of time shown in the report. The date is in the RFC 3339 format, for
+// example 2010-10-28T10:26:35.000Z. The report returns all activities from
+// `startTime` until `endTime`. The `startTime` must be before the `endTime`
+// (if specified) and the current time when the request is made, or the API
+// returns an error.
 func (c *ActivitiesWatchCall) StartTime(startTime string) *ActivitiesWatchCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ActivitiesWatchCall) Fields(s ...googleapi.Field) *ActivitiesWatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ActivitiesWatchCall) Context(ctx context.Context) *ActivitiesWatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ActivitiesWatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1572,18 +1224,12 @@ func (c *ActivitiesWatchCall) Header() http.Header {
 }
 
 func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/reports/v1/activity/users/{userKey}/applications/{applicationName}/watch")
@@ -1601,12 +1247,10 @@ func (c *ActivitiesWatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "reports.activities.watch" call.
-// Exactly one of *Channel or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Channel.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Channel.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1637,153 +1281,7 @@ func (c *ActivitiesWatchCall) Do(opts ...googleapi.CallOption) (*Channel, error)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Start receiving notifications for account activities. For more information, see Receiving Push Notifications.",
-	//   "flatPath": "admin/reports/v1/activity/users/{userKey}/applications/{applicationName}/watch",
-	//   "httpMethod": "POST",
-	//   "id": "reports.activities.watch",
-	//   "parameterOrder": [
-	//     "userKey",
-	//     "applicationName"
-	//   ],
-	//   "parameters": {
-	//     "actorIpAddress": {
-	//       "description": "The Internet Protocol (IP) Address of host where the event was performed. This is an additional way to filter a report's summary using the IP address of the user whose activity is being reported. This IP address may or may not reflect the user's physical location. For example, the IP address can be the user's proxy server's address or a virtual private network (VPN) address. This parameter supports both IPv4 and IPv6 address versions.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "applicationName": {
-	//       "description": "Application name for which the events are to be retrieved.",
-	//       "enum": [
-	//         "access_transparency",
-	//         "admin",
-	//         "calendar",
-	//         "chat",
-	//         "drive",
-	//         "gcp",
-	//         "gplus",
-	//         "groups",
-	//         "groups_enterprise",
-	//         "jamboard",
-	//         "login",
-	//         "meet",
-	//         "mobile",
-	//         "rules",
-	//         "saml",
-	//         "token",
-	//         "user_accounts",
-	//         "context_aware_access",
-	//         "chrome",
-	//         "data_studio",
-	//         "keep"
-	//       ],
-	//       "enumDescriptions": [
-	//         "The Google Workspace Access Transparency activity reports return information about different types of Access Transparency activity events.",
-	//         "The Admin console application's activity reports return account information about different types of administrator activity events.",
-	//         "The Google Calendar application's activity reports return information about various Calendar activity events.",
-	//         "The Chat activity reports return information about various Chat activity events.",
-	//         "The Google Drive application's activity reports return information about various Google Drive activity events. The Drive activity report is only available for Google Workspace Business and Google Workspace Enterprise customers.",
-	//         "The Google Cloud Platform application's activity reports return information about various GCP activity events.",
-	//         "The Google+ application's activity reports return information about various Google+ activity events.",
-	//         "The Google Groups application's activity reports return information about various Groups activity events.",
-	//         "The Enterprise Groups activity reports return information about various Enterprise group activity events.",
-	//         "The Jamboard activity reports return information about various Jamboard activity events.",
-	//         "The Login application's activity reports return account information about different types of Login activity events.",
-	//         "The Meet Audit activity report returns information about different types of Meet Audit activity events.",
-	//         "The Device Audit activity report returns information about different types of Device Audit activity events.",
-	//         "The Rules activity report returns information about different types of Rules activity events.",
-	//         "The SAML activity report returns information about different types of SAML activity events.",
-	//         "The Token application's activity reports return account information about different types of Token activity events.",
-	//         "The User Accounts application's activity reports return account information about different types of User Accounts activity events.",
-	//         "The Context-aware access activity reports return information about users' access denied events due to Context-aware access rules.",
-	//         "The Chrome activity reports return information about Chrome browser and Chrome OS events.",
-	//         "The Data Studio activity reports return information about various types of Data Studio activity events.",
-	//         "The Keep application's activity reports return information about various Google Keep activity events. The Keep activity report is only available for Google Workspace Business and Enterprise customers."
-	//       ],
-	//       "location": "path",
-	//       "pattern": "(access_transparency)|(admin)|(calendar)|(chat)|(chrome)|(context_aware_access)|(data_studio)|(drive)|(gcp)|(gplus)|(groups)|(groups_enterprise)|(jamboard)|(keep)|(login)|(meet)|(mobile)|(rules)|(saml)|(token)|(user_accounts)",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "customerId": {
-	//       "description": "The unique ID of the customer to retrieve data for.",
-	//       "location": "query",
-	//       "pattern": "C.+|my_customer",
-	//       "type": "string"
-	//     },
-	//     "endTime": {
-	//       "description": "Sets the end of the range of time shown in the report. The date is in the RFC 3339 format, for example 2010-10-28T10:26:35.000Z. The default value is the approximate time of the API request. An API report has three basic time concepts: - *Date of the API's request for a report*: When the API created and retrieved the report. - *Report's start time*: The beginning of the timespan shown in the report. The `startTime` must be before the `endTime` (if specified) and the current time when the request is made, or the API returns an error. - *Report's end time*: The end of the timespan shown in the report. For example, the timespan of events summarized in a report can start in April and end in May. The report itself can be requested in August. If the `endTime` is not specified, the report returns all activities from the `startTime` until the current time or the most recent 180 days if the `startTime` is more than 180 days in the past.",
-	//       "location": "query",
-	//       "pattern": "(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)(?:\\.(\\d+))?(?:(Z)|([-+])(\\d\\d):(\\d\\d))",
-	//       "type": "string"
-	//     },
-	//     "eventName": {
-	//       "description": "The name of the event being queried by the API. Each `eventName` is related to a specific Google Workspace service or feature which the API organizes into types of events. An example is the Google Calendar events in the Admin console application's reports. The Calendar Settings `type` structure has all of the Calendar `eventName` activities reported by the API. When an administrator changes a Calendar setting, the API reports this activity in the Calendar Settings `type` and `eventName` parameters. For more information about `eventName` query strings and parameters, see the list of event names for various applications above in `applicationName`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "filters": {
-	//       "description": "The `filters` query string is a comma-separated list composed of event parameters manipulated by relational operators. Event parameters are in the form `{parameter1 name}{relational operator}{parameter1 value},{parameter2 name}{relational operator}{parameter2 value},...` These event parameters are associated with a specific `eventName`. An empty report is returned if the request's parameter doesn't belong to the `eventName`. For more information about the available `eventName` fields for each application and their associated parameters, go to the [ApplicationName](#applicationname) table, then click through to the Activity Events page in the Appendix for the application you want. In the following Drive activity examples, the returned list consists of all `edit` events where the `doc_id` parameter value matches the conditions defined by the relational operator. In the first example, the request returns all edited documents with a `doc_id` value equal to `12345`. In the second example, the report returns any edited documents where the `doc_id` value is not equal to `98765`. The `\u003c\u003e` operator is URL-encoded in the request's query string (`%3C%3E`): ``` GET...\u0026eventName=edit\u0026filters=doc_id==12345 GET...\u0026eventName=edit\u0026filters=doc_id%3C%3E98765 ``` A `filters` query supports these relational operators: * `==`—'equal to'. * `\u003c\u003e`—'not equal to'. Must be URL-encoded (%3C%3E). * `\u003c`—'less than'. Must be URL-encoded (%3C). * `\u003c=`—'less than or equal to'. Must be URL-encoded (%3C=). * `\u003e`—'greater than'. Must be URL-encoded (%3E). * `\u003e=`—'greater than or equal to'. Must be URL-encoded (%3E=). **Note:** The API doesn't accept multiple values of the same parameter. If a parameter is supplied more than once in the API request, the API only accepts the last value of that parameter. In addition, if an invalid parameter is supplied in the API request, the API ignores that parameter and returns the response corresponding to the remaining valid parameters. If no parameters are requested, all parameters are returned.",
-	//       "location": "query",
-	//       "pattern": "(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+,)*(.+[\u003c,\u003c=,==,\u003e=,\u003e,\u003c\u003e].+)",
-	//       "type": "string"
-	//     },
-	//     "groupIdFilter": {
-	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e. the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
-	//       "location": "query",
-	//       "pattern": "(id:[a-z0-9]+(,id:[a-z0-9]+)*)",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "default": "1000",
-	//       "description": "Determines how many activity records are shown on each response page. For example, if the request sets `maxResults=1` and the report has two activities, the report has two pages. The response's `nextPageToken` property has the token to the second page. The `maxResults` query string is optional in the request. The default value is 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "maximum": "1000",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "orgUnitID": {
-	//       "default": "",
-	//       "deprecated": true,
-	//       "description": "`Deprecated`. This field is deprecated and is no longer supported. ID of the organizational unit to report on. Activity records will be shown only for users who belong to the specified organizational unit. Data before Dec 17, 2018 doesn't appear in the filtered results.",
-	//       "location": "query",
-	//       "pattern": "(id:[a-z0-9]+)",
-	//       "type": "string"
-	//     },
-	//     "pageToken": {
-	//       "description": "The token to specify next page. A report with multiple pages has a `nextPageToken` property in the response. In your follow-on request getting the next page of the report, enter the `nextPageToken` value in the `pageToken` query string.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "startTime": {
-	//       "description": "Sets the beginning of the range of time shown in the report. The date is in the RFC 3339 format, for example 2010-10-28T10:26:35.000Z. The report returns all activities from `startTime` until `endTime`. The `startTime` must be before the `endTime` (if specified) and the current time when the request is made, or the API returns an error.",
-	//       "location": "query",
-	//       "pattern": "(\\d\\d\\d\\d)-(\\d\\d)-(\\d\\d)T(\\d\\d):(\\d\\d):(\\d\\d)(?:\\.(\\d+))?(?:(Z)|([-+])(\\d\\d):(\\d\\d))",
-	//       "type": "string"
-	//     },
-	//     "userKey": {
-	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique Google Workspace profile ID or their primary email address. Must not be a deleted user. For a deleted user, call `users.list` in Directory API with `showDeleted=true`, then use the returned `ID` as the `userKey`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "admin/reports/v1/activity/users/{userKey}/applications/{applicationName}/watch",
-	//   "request": {
-	//     "$ref": "Channel"
-	//   },
-	//   "response": {
-	//     "$ref": "Channel"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admin.reports.audit.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "admin.channels.stop":
 
 type ChannelsStopCall struct {
 	s          *Service
@@ -1801,23 +1299,21 @@ func (r *ChannelsService) Stop(channel *Channel) *ChannelsStopCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ChannelsStopCall) Fields(s ...googleapi.Field) *ChannelsStopCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ChannelsStopCall) Context(ctx context.Context) *ChannelsStopCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ChannelsStopCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1826,18 +1322,12 @@ func (c *ChannelsStopCall) Header() http.Header {
 }
 
 func (c *ChannelsStopCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.channel)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "admin/reports_v1/channels/stop")
@@ -1862,25 +1352,7 @@ func (c *ChannelsStopCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Stop watching resources through this channel.",
-	//   "flatPath": "admin/reports_v1/channels/stop",
-	//   "httpMethod": "POST",
-	//   "id": "admin.channels.stop",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "admin/reports_v1/channels/stop",
-	//   "request": {
-	//     "$ref": "Channel"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admin.reports.audit.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "reports.customerUsageReports.get":
 
 type CustomerUsageReportsGetCall struct {
 	s            *Service
@@ -1891,14 +1363,13 @@ type CustomerUsageReportsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a report which is a collection of properties and
-// statistics for a specific customer's account. For more information,
-// see the Customers Usage Report guide. For more information about the
-// customer report's parameters, see the Customers Usage parameters
-// reference guides.
+// Get: Retrieves a report which is a collection of properties and statistics
+// for a specific customer's account. For more information, see the Customers
+// Usage Report guide. For more information about the customer report's
+// parameters, see the Customers Usage parameters reference guides.
 //
-//   - date: Represents the date the usage occurred, based on UTC-8:00
-//     (Pacific Standard Time). The timestamp is in the ISO 8601 format
+//   - date: Represents the date the usage occurred, based on UTC-8:00 (Pacific
+//     Standard Time). The timestamp is in the ISO 8601 format
 //     (https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.
 func (r *CustomerUsageReportsService) Get(date string) *CustomerUsageReportsGetCall {
 	c := &CustomerUsageReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1906,38 +1377,36 @@ func (r *CustomerUsageReportsService) Get(date string) *CustomerUsageReportsGetC
 	return c
 }
 
-// CustomerId sets the optional parameter "customerId": The unique ID of
-// the customer to retrieve data for.
+// CustomerId sets the optional parameter "customerId": The unique ID of the
+// customer to retrieve data for.
 func (c *CustomerUsageReportsGetCall) CustomerId(customerId string) *CustomerUsageReportsGetCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token to specify
-// next page. A report with multiple pages has a `nextPageToken`
-// property in the response. For your follow-on requests getting all of
-// the report's pages, enter the `nextPageToken` value in the
-// `pageToken` query string.
+// PageToken sets the optional parameter "pageToken": Token to specify next
+// page. A report with multiple pages has a `nextPageToken` property in the
+// response. For your follow-on requests getting all of the report's pages,
+// enter the `nextPageToken` value in the `pageToken` query string.
 func (c *CustomerUsageReportsGetCall) PageToken(pageToken string) *CustomerUsageReportsGetCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Parameters sets the optional parameter "parameters": The `parameters`
-// query string is a comma-separated list of event parameters that
-// refine a report's results. The parameter is associated with a
-// specific application. The application values for the Customers usage
-// report include `accounts`, `app_maker`, `apps_scripts`, `calendar`,
-// `classroom`, `cros`, `docs`, `gmail`, `gplus`, `device_management`,
-// `meet`, and `sites`. A `parameters` query string is in the CSV form
-// of `app_name1:param_name1, app_name2:param_name2`. *Note:* The API
-// doesn't accept multiple values of a parameter. If a particular
-// parameter is supplied more than once in the API request, the API only
-// accepts the last value of that request parameter. In addition, if an
-// invalid request parameter is supplied in the API request, the API
-// ignores that request parameter and returns the response corresponding
-// to the remaining valid request parameters. An example of an invalid
-// request parameter is one that does not belong to the application. If
+// Parameters sets the optional parameter "parameters": The `parameters` query
+// string is a comma-separated list of event parameters that refine a report's
+// results. The parameter is associated with a specific application. The
+// application values for the Customers usage report include `accounts`,
+// `app_maker`, `apps_scripts`, `calendar`, `classroom`, `cros`, `docs`,
+// `gmail`, `gplus`, `device_management`, `meet`, and `sites`. A `parameters`
+// query string is in the CSV form of `app_name1:param_name1,
+// app_name2:param_name2`. *Note:* The API doesn't accept multiple values of a
+// parameter. If a particular parameter is supplied more than once in the API
+// request, the API only accepts the last value of that request parameter. In
+// addition, if an invalid request parameter is supplied in the API request,
+// the API ignores that request parameter and returns the response
+// corresponding to the remaining valid request parameters. An example of an
+// invalid request parameter is one that does not belong to the application. If
 // no parameters are requested, all parameters are returned.
 func (c *CustomerUsageReportsGetCall) Parameters(parameters string) *CustomerUsageReportsGetCall {
 	c.urlParams_.Set("parameters", parameters)
@@ -1945,33 +1414,29 @@ func (c *CustomerUsageReportsGetCall) Parameters(parameters string) *CustomerUsa
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomerUsageReportsGetCall) Fields(s ...googleapi.Field) *CustomerUsageReportsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CustomerUsageReportsGetCall) IfNoneMatch(entityTag string) *CustomerUsageReportsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomerUsageReportsGetCall) Context(ctx context.Context) *CustomerUsageReportsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomerUsageReportsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1980,12 +1445,7 @@ func (c *CustomerUsageReportsGetCall) Header() http.Header {
 }
 
 func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2006,12 +1466,10 @@ func (c *CustomerUsageReportsGetCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "reports.customerUsageReports.get" call.
-// Exactly one of *UsageReports or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *UsageReports.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *UsageReports.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CustomerUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageReports, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2042,49 +1500,6 @@ func (c *CustomerUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageRe
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a report which is a collection of properties and statistics for a specific customer's account. For more information, see the Customers Usage Report guide. For more information about the customer report's parameters, see the Customers Usage parameters reference guides. ",
-	//   "flatPath": "admin/reports/v1/usage/dates/{date}",
-	//   "httpMethod": "GET",
-	//   "id": "reports.customerUsageReports.get",
-	//   "parameterOrder": [
-	//     "date"
-	//   ],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "The unique ID of the customer to retrieve data for.",
-	//       "location": "query",
-	//       "pattern": "C.+|my_customer",
-	//       "type": "string"
-	//     },
-	//     "date": {
-	//       "description": "Represents the date the usage occurred, based on UTC-8:00 (Pacific Standard Time). The timestamp is in the [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.",
-	//       "location": "path",
-	//       "pattern": "(\\d){4}-(\\d){2}-(\\d){2}",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageToken": {
-	//       "description": "Token to specify next page. A report with multiple pages has a `nextPageToken` property in the response. For your follow-on requests getting all of the report's pages, enter the `nextPageToken` value in the `pageToken` query string.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parameters": {
-	//       "description": "The `parameters` query string is a comma-separated list of event parameters that refine a report's results. The parameter is associated with a specific application. The application values for the Customers usage report include `accounts`, `app_maker`, `apps_scripts`, `calendar`, `classroom`, `cros`, `docs`, `gmail`, `gplus`, `device_management`, `meet`, and `sites`. A `parameters` query string is in the CSV form of `app_name1:param_name1, app_name2:param_name2`. *Note:* The API doesn't accept multiple values of a parameter. If a particular parameter is supplied more than once in the API request, the API only accepts the last value of that request parameter. In addition, if an invalid request parameter is supplied in the API request, the API ignores that request parameter and returns the response corresponding to the remaining valid request parameters. An example of an invalid request parameter is one that does not belong to the application. If no parameters are requested, all parameters are returned. ",
-	//       "location": "query",
-	//       "pattern": "(((accounts)|(app_maker)|(apps_scripts)|(classroom)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)|(device_management)|(drive)|(meet)):[^,]+,)*(((accounts)|(app_maker)|(apps_scripts)|(classroom)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)|(device_management)|(drive)|(meet)):[^,]+)",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "admin/reports/v1/usage/dates/{date}",
-	//   "response": {
-	//     "$ref": "UsageReports"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admin.reports.usage.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2092,7 +1507,7 @@ func (c *CustomerUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageRe
 // The provided context supersedes any context provided to the Context method.
 func (c *CustomerUsageReportsGetCall) Pages(ctx context.Context, f func(*UsageReports) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2108,8 +1523,6 @@ func (c *CustomerUsageReportsGetCall) Pages(ctx context.Context, f func(*UsageRe
 	}
 }
 
-// method id "reports.entityUsageReports.get":
-
 type EntityUsageReportsGetCall struct {
 	s            *Service
 	entityType   string
@@ -2121,21 +1534,19 @@ type EntityUsageReportsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a report which is a collection of properties and
-// statistics for entities used by users within the account. For more
-// information, see the Entities Usage Report guide. For more
-// information about the entities report's parameters, see the Entities
-// Usage parameters reference guides.
+// Get: Retrieves a report which is a collection of properties and statistics
+// for entities used by users within the account. For more information, see the
+// Entities Usage Report guide. For more information about the entities
+// report's parameters, see the Entities Usage parameters reference guides.
 //
-//   - date: Represents the date the usage occurred, based on UTC-8:00
-//     (Pacific Standard Time). The timestamp is in the ISO 8601 format
+//   - date: Represents the date the usage occurred, based on UTC-8:00 (Pacific
+//     Standard Time). The timestamp is in the ISO 8601 format
 //     (https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.
-//   - entityKey: Represents the key of the object to filter the data
-//     with. It is a string which can take the value `all` to get activity
-//     events for all users, or any other value for an app-specific
-//     entity. For details on how to obtain the `entityKey` for a
-//     particular `entityType`, see the Entities Usage parameters
-//     reference guides.
+//   - entityKey: Represents the key of the object to filter the data with. It is
+//     a string which can take the value `all` to get activity events for all
+//     users, or any other value for an app-specific entity. For details on how
+//     to obtain the `entityKey` for a particular `entityType`, see the Entities
+//     Usage parameters reference guides.
 //   - entityType: Represents the type of entity for the report.
 func (r *EntityUsageReportsService) Get(entityType string, entityKey string, date string) *EntityUsageReportsGetCall {
 	c := &EntityUsageReportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -2145,104 +1556,96 @@ func (r *EntityUsageReportsService) Get(entityType string, entityKey string, dat
 	return c
 }
 
-// CustomerId sets the optional parameter "customerId": The unique ID of
-// the customer to retrieve data for.
+// CustomerId sets the optional parameter "customerId": The unique ID of the
+// customer to retrieve data for.
 func (c *EntityUsageReportsGetCall) CustomerId(customerId string) *EntityUsageReportsGetCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
 }
 
-// Filters sets the optional parameter "filters": The `filters` query
-// string is a comma-separated list of an application's event parameters
-// where the parameter's value is manipulated by a relational operator.
-// The `filters` query string includes the name of the application whose
-// usage is returned in the report. The application values for the
-// Entities usage report include `accounts`, `docs`, and `gmail`.
-// Filters are in the form `[application name]:parameter name[parameter
-// value],...`. In this example, the `<>` 'not equal to' operator is
-// URL-encoded in the request's query string (%3C%3E): GET
+// Filters sets the optional parameter "filters": The `filters` query string is
+// a comma-separated list of an application's event parameters where the
+// parameter's value is manipulated by a relational operator. The `filters`
+// query string includes the name of the application whose usage is returned in
+// the report. The application values for the Entities usage report include
+// `accounts`, `docs`, and `gmail`. Filters are in the form `[application
+// name]:parameter name[parameter value],...`. In this example, the `<>` 'not
+// equal to' operator is URL-encoded in the request's query string (%3C%3E):
+// GET
 // https://www.googleapis.com/admin/reports/v1/usage/gplus_communities/all/dates/2017-12-01
 // ?parameters=gplus:community_name,gplus:num_total_members
-// &filters=gplus:num_total_members%3C%3E0 The relational operators
-// include: - `==` - 'equal to'. - `<>` - 'not equal to'. It is
-// URL-encoded (%3C%3E). - `<` - 'less than'. It is URL-encoded (%3C). -
-// `<=` - 'less than or equal to'. It is URL-encoded (%3C=). - `>` -
-// 'greater than'. It is URL-encoded (%3E). - `>=` - 'greater than or
-// equal to'. It is URL-encoded (%3E=). Filters can only be applied to
-// numeric parameters.
+// &filters=gplus:num_total_members%3C%3E0 The relational operators include: -
+// `==` - 'equal to'. - `<>` - 'not equal to'. It is URL-encoded (%3C%3E). -
+// `<` - 'less than'. It is URL-encoded (%3C). - `<=` - 'less than or equal
+// to'. It is URL-encoded (%3C=). - `>` - 'greater than'. It is URL-encoded
+// (%3E). - `>=` - 'greater than or equal to'. It is URL-encoded (%3E=).
+// Filters can only be applied to numeric parameters.
 func (c *EntityUsageReportsGetCall) Filters(filters string) *EntityUsageReportsGetCall {
 	c.urlParams_.Set("filters", filters)
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Determines how
-// many activity records are shown on each response page. For example,
-// if the request sets `maxResults=1` and the report has two activities,
-// the report has two pages. The response's `nextPageToken` property has
-// the token to the second page.
+// MaxResults sets the optional parameter "maxResults": Determines how many
+// activity records are shown on each response page. For example, if the
+// request sets `maxResults=1` and the report has two activities, the report
+// has two pages. The response's `nextPageToken` property has the token to the
+// second page.
 func (c *EntityUsageReportsGetCall) MaxResults(maxResults int64) *EntityUsageReportsGetCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token to specify
-// next page. A report with multiple pages has a `nextPageToken`
-// property in the response. In your follow-on request getting the next
-// page of the report, enter the `nextPageToken` value in the
-// `pageToken` query string.
+// PageToken sets the optional parameter "pageToken": Token to specify next
+// page. A report with multiple pages has a `nextPageToken` property in the
+// response. In your follow-on request getting the next page of the report,
+// enter the `nextPageToken` value in the `pageToken` query string.
 func (c *EntityUsageReportsGetCall) PageToken(pageToken string) *EntityUsageReportsGetCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Parameters sets the optional parameter "parameters": The `parameters`
-// query string is a comma-separated list of event parameters that
-// refine a report's results. The parameter is associated with a
-// specific application. The application values for the Entities usage
-// report are only `gplus`. A `parameter` query string is in the CSV
-// form of `[app_name1:param_name1], [app_name2:param_name2]...`.
-// *Note:* The API doesn't accept multiple values of a parameter. If a
-// particular parameter is supplied more than once in the API request,
-// the API only accepts the last value of that request parameter. In
-// addition, if an invalid request parameter is supplied in the API
-// request, the API ignores that request parameter and returns the
-// response corresponding to the remaining valid request parameters. An
-// example of an invalid request parameter is one that does not belong
-// to the application. If no parameters are requested, all parameters
-// are returned.
+// Parameters sets the optional parameter "parameters": The `parameters` query
+// string is a comma-separated list of event parameters that refine a report's
+// results. The parameter is associated with a specific application. The
+// application values for the Entities usage report are only `gplus`. A
+// `parameter` query string is in the CSV form of `[app_name1:param_name1],
+// [app_name2:param_name2]...`. *Note:* The API doesn't accept multiple values
+// of a parameter. If a particular parameter is supplied more than once in the
+// API request, the API only accepts the last value of that request parameter.
+// In addition, if an invalid request parameter is supplied in the API request,
+// the API ignores that request parameter and returns the response
+// corresponding to the remaining valid request parameters. An example of an
+// invalid request parameter is one that does not belong to the application. If
+// no parameters are requested, all parameters are returned.
 func (c *EntityUsageReportsGetCall) Parameters(parameters string) *EntityUsageReportsGetCall {
 	c.urlParams_.Set("parameters", parameters)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *EntityUsageReportsGetCall) Fields(s ...googleapi.Field) *EntityUsageReportsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *EntityUsageReportsGetCall) IfNoneMatch(entityTag string) *EntityUsageReportsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *EntityUsageReportsGetCall) Context(ctx context.Context) *EntityUsageReportsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *EntityUsageReportsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2251,12 +1654,7 @@ func (c *EntityUsageReportsGetCall) Header() http.Header {
 }
 
 func (c *EntityUsageReportsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2279,12 +1677,10 @@ func (c *EntityUsageReportsGetCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "reports.entityUsageReports.get" call.
-// Exactly one of *UsageReports or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *UsageReports.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *UsageReports.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *EntityUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageReports, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2315,85 +1711,6 @@ func (c *EntityUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageRepo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a report which is a collection of properties and statistics for entities used by users within the account. For more information, see the Entities Usage Report guide. For more information about the entities report's parameters, see the Entities Usage parameters reference guides.",
-	//   "flatPath": "admin/reports/v1/usage/{entityType}/{entityKey}/dates/{date}",
-	//   "httpMethod": "GET",
-	//   "id": "reports.entityUsageReports.get",
-	//   "parameterOrder": [
-	//     "entityType",
-	//     "entityKey",
-	//     "date"
-	//   ],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "The unique ID of the customer to retrieve data for.",
-	//       "location": "query",
-	//       "pattern": "C.+|my_customer",
-	//       "type": "string"
-	//     },
-	//     "date": {
-	//       "description": "Represents the date the usage occurred, based on UTC-8:00 (Pacific Standard Time). The timestamp is in the [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.",
-	//       "location": "path",
-	//       "pattern": "(\\d){4}-(\\d){2}-(\\d){2}",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "entityKey": {
-	//       "description": "Represents the key of the object to filter the data with. It is a string which can take the value `all` to get activity events for all users, or any other value for an app-specific entity. For details on how to obtain the `entityKey` for a particular `entityType`, see the Entities Usage parameters reference guides.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "entityType": {
-	//       "description": "Represents the type of entity for the report.",
-	//       "enum": [
-	//         "gplus_communities"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Returns a report on Google+ communities."
-	//       ],
-	//       "location": "path",
-	//       "pattern": "(gplus_communities)",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "filters": {
-	//       "description": "The `filters` query string is a comma-separated list of an application's event parameters where the parameter's value is manipulated by a relational operator. The `filters` query string includes the name of the application whose usage is returned in the report. The application values for the Entities usage report include `accounts`, `docs`, and `gmail`. Filters are in the form `[application name]:parameter name[parameter value],...`. In this example, the `\u003c\u003e` 'not equal to' operator is URL-encoded in the request's query string (%3C%3E): GET https://www.googleapis.com/admin/reports/v1/usage/gplus_communities/all/dates/2017-12-01 ?parameters=gplus:community_name,gplus:num_total_members \u0026filters=gplus:num_total_members%3C%3E0 The relational operators include: - `==` - 'equal to'. - `\u003c\u003e` - 'not equal to'. It is URL-encoded (%3C%3E). - `\u003c` - 'less than'. It is URL-encoded (%3C). - `\u003c=` - 'less than or equal to'. It is URL-encoded (%3C=). - `\u003e` - 'greater than'. It is URL-encoded (%3E). - `\u003e=` - 'greater than or equal to'. It is URL-encoded (%3E=). Filters can only be applied to numeric parameters.",
-	//       "location": "query",
-	//       "pattern": "(((gplus)):[a-z0-9_]+[\u003c,\u003c=,==,\u003e=,\u003e,!=][^,]+,)*(((gplus)):[a-z0-9_]+[\u003c,\u003c=,==,\u003e=,\u003e,!=][^,]+)",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "default": "1000",
-	//       "description": "Determines how many activity records are shown on each response page. For example, if the request sets `maxResults=1` and the report has two activities, the report has two pages. The response's `nextPageToken` property has the token to the second page.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "1000",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Token to specify next page. A report with multiple pages has a `nextPageToken` property in the response. In your follow-on request getting the next page of the report, enter the `nextPageToken` value in the `pageToken` query string.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parameters": {
-	//       "description": "The `parameters` query string is a comma-separated list of event parameters that refine a report's results. The parameter is associated with a specific application. The application values for the Entities usage report are only `gplus`. A `parameter` query string is in the CSV form of `[app_name1:param_name1], [app_name2:param_name2]...`. *Note:* The API doesn't accept multiple values of a parameter. If a particular parameter is supplied more than once in the API request, the API only accepts the last value of that request parameter. In addition, if an invalid request parameter is supplied in the API request, the API ignores that request parameter and returns the response corresponding to the remaining valid request parameters. An example of an invalid request parameter is one that does not belong to the application. If no parameters are requested, all parameters are returned. ",
-	//       "location": "query",
-	//       "pattern": "(((gplus)):[^,]+,)*(((gplus)):[^,]+)",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "admin/reports/v1/usage/{entityType}/{entityKey}/dates/{date}",
-	//   "response": {
-	//     "$ref": "UsageReports"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admin.reports.usage.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2401,7 +1718,7 @@ func (c *EntityUsageReportsGetCall) Do(opts ...googleapi.CallOption) (*UsageRepo
 // The provided context supersedes any context provided to the Context method.
 func (c *EntityUsageReportsGetCall) Pages(ctx context.Context, f func(*UsageReports) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2417,8 +1734,6 @@ func (c *EntityUsageReportsGetCall) Pages(ctx context.Context, f func(*UsageRepo
 	}
 }
 
-// method id "reports.userUsageReport.get":
-
 type UserUsageReportGetCall struct {
 	s            *Service
 	userKey      string
@@ -2429,20 +1744,20 @@ type UserUsageReportGetCall struct {
 	header_      http.Header
 }
 
-// Get: Retrieves a report which is a collection of properties and
-// statistics for a set of users with the account. For more information,
-// see the User Usage Report guide. For more information about the user
-// report's parameters, see the Users Usage parameters reference guides.
+// Get: Retrieves a report which is a collection of properties and statistics
+// for a set of users with the account. For more information, see the User
+// Usage Report guide. For more information about the user report's parameters,
+// see the Users Usage parameters reference guides.
 //
-//   - date: Represents the date the usage occurred, based on UTC-8:00
-//     (Pacific Standard Time). The timestamp is in the ISO 8601 format
+//   - date: Represents the date the usage occurred, based on UTC-8:00 (Pacific
+//     Standard Time). The timestamp is in the ISO 8601 format
 //     (https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.
-//   - userKey: Represents the profile ID or the user email for which the
-//     data should be filtered. Can be `all` for all information, or
-//     `userKey` for a user's unique Google Workspace profile ID or their
-//     primary email address. Must not be a deleted user. For a deleted
-//     user, call `users.list` in Directory API with `showDeleted=true`,
-//     then use the returned `ID` as the `userKey`.
+//   - userKey: Represents the profile ID or the user email for which the data
+//     should be filtered. Can be `all` for all information, or `userKey` for a
+//     user's unique Google Workspace profile ID or their primary email address.
+//     Must not be a deleted user. For a deleted user, call `users.list` in
+//     Directory API with `showDeleted=true`, then use the returned `ID` as the
+//     `userKey`.
 func (r *UserUsageReportService) Get(userKey string, date string) *UserUsageReportGetCall {
 	c := &UserUsageReportGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.userKey = userKey
@@ -2450,90 +1765,86 @@ func (r *UserUsageReportService) Get(userKey string, date string) *UserUsageRepo
 	return c
 }
 
-// CustomerId sets the optional parameter "customerId": The unique ID of
-// the customer to retrieve data for.
+// CustomerId sets the optional parameter "customerId": The unique ID of the
+// customer to retrieve data for.
 func (c *UserUsageReportGetCall) CustomerId(customerId string) *UserUsageReportGetCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
 }
 
-// Filters sets the optional parameter "filters": The `filters` query
-// string is a comma-separated list of an application's event parameters
-// where the parameter's value is manipulated by a relational operator.
-// The `filters` query string includes the name of the application whose
-// usage is returned in the report. The application values for the Users
-// Usage Report include `accounts`, `docs`, and `gmail`. Filters are in
-// the form `[application name]:parameter name[parameter value],...`. In
-// this example, the `<>` 'not equal to' operator is URL-encoded in the
-// request's query string (%3C%3E): GET
+// Filters sets the optional parameter "filters": The `filters` query string is
+// a comma-separated list of an application's event parameters where the
+// parameter's value is manipulated by a relational operator. The `filters`
+// query string includes the name of the application whose usage is returned in
+// the report. The application values for the Users Usage Report include
+// `accounts`, `docs`, and `gmail`. Filters are in the form `[application
+// name]:parameter name[parameter value],...`. In this example, the `<>` 'not
+// equal to' operator is URL-encoded in the request's query string (%3C%3E):
+// GET
 // https://www.googleapis.com/admin/reports/v1/usage/users/all/dates/2013-03-03
 // ?parameters=accounts:last_login_time
 // &filters=accounts:last_login_time%3C%3E2010-10-28T10:26:35.000Z The
-// relational operators include: - `==` - 'equal to'. - `<>` - 'not
-// equal to'. It is URL-encoded (%3C%3E). - `<` - 'less than'. It is
-// URL-encoded (%3C). - `<=` - 'less than or equal to'. It is
-// URL-encoded (%3C=). - `>` - 'greater than'. It is URL-encoded (%3E).
-// - `>=` - 'greater than or equal to'. It is URL-encoded (%3E=).
+// relational operators include: - `==` - 'equal to'. - `<>` - 'not equal to'.
+// It is URL-encoded (%3C%3E). - `<` - 'less than'. It is URL-encoded (%3C). -
+// `<=` - 'less than or equal to'. It is URL-encoded (%3C=). - `>` - 'greater
+// than'. It is URL-encoded (%3E). - `>=` - 'greater than or equal to'. It is
+// URL-encoded (%3E=).
 func (c *UserUsageReportGetCall) Filters(filters string) *UserUsageReportGetCall {
 	c.urlParams_.Set("filters", filters)
 	return c
 }
 
-// GroupIdFilter sets the optional parameter "groupIdFilter": Comma
-// separated group ids (obfuscated) on which user activities are
-// filtered, i.e. the response will contain activities for only those
-// users that are a part of at least one of the group ids mentioned
-// here. Format: "id:abc123,id:xyz456"
+// GroupIdFilter sets the optional parameter "groupIdFilter": Comma separated
+// group ids (obfuscated) on which user activities are filtered, i.e. the
+// response will contain activities for only those users that are a part of at
+// least one of the group ids mentioned here. Format: "id:abc123,id:xyz456"
 func (c *UserUsageReportGetCall) GroupIdFilter(groupIdFilter string) *UserUsageReportGetCall {
 	c.urlParams_.Set("groupIdFilter", groupIdFilter)
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Determines how
-// many activity records are shown on each response page. For example,
-// if the request sets `maxResults=1` and the report has two activities,
-// the report has two pages. The response's `nextPageToken` property has
-// the token to the second page. The `maxResults` query string is
-// optional.
+// MaxResults sets the optional parameter "maxResults": Determines how many
+// activity records are shown on each response page. For example, if the
+// request sets `maxResults=1` and the report has two activities, the report
+// has two pages. The response's `nextPageToken` property has the token to the
+// second page. The `maxResults` query string is optional.
 func (c *UserUsageReportGetCall) MaxResults(maxResults int64) *UserUsageReportGetCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
-// OrgUnitID sets the optional parameter "orgUnitID": ID of the
-// organizational unit to report on. User activity will be shown only
-// for users who belong to the specified organizational unit. Data
-// before Dec 17, 2018 doesn't appear in the filtered results.
+// OrgUnitID sets the optional parameter "orgUnitID": ID of the organizational
+// unit to report on. User activity will be shown only for users who belong to
+// the specified organizational unit. Data before Dec 17, 2018 doesn't appear
+// in the filtered results.
 func (c *UserUsageReportGetCall) OrgUnitID(orgUnitID string) *UserUsageReportGetCall {
 	c.urlParams_.Set("orgUnitID", orgUnitID)
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token to specify
-// next page. A report with multiple pages has a `nextPageToken`
-// property in the response. In your follow-on request getting the next
-// page of the report, enter the `nextPageToken` value in the
-// `pageToken` query string.
+// PageToken sets the optional parameter "pageToken": Token to specify next
+// page. A report with multiple pages has a `nextPageToken` property in the
+// response. In your follow-on request getting the next page of the report,
+// enter the `nextPageToken` value in the `pageToken` query string.
 func (c *UserUsageReportGetCall) PageToken(pageToken string) *UserUsageReportGetCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Parameters sets the optional parameter "parameters": The `parameters`
-// query string is a comma-separated list of event parameters that
-// refine a report's results. The parameter is associated with a
-// specific application. The application values for the Customers Usage
-// report include `accounts`, `app_maker`, `apps_scripts`, `calendar`,
-// `classroom`, `cros`, `docs`, `gmail`, `gplus`, `device_management`,
-// `meet`, and `sites`. A `parameters` query string is in the CSV form
-// of `app_name1:param_name1, app_name2:param_name2`. *Note:* The API
-// doesn't accept multiple values of a parameter. If a particular
-// parameter is supplied more than once in the API request, the API only
-// accepts the last value of that request parameter. In addition, if an
-// invalid request parameter is supplied in the API request, the API
-// ignores that request parameter and returns the response corresponding
-// to the remaining valid request parameters. An example of an invalid
-// request parameter is one that does not belong to the application. If
+// Parameters sets the optional parameter "parameters": The `parameters` query
+// string is a comma-separated list of event parameters that refine a report's
+// results. The parameter is associated with a specific application. The
+// application values for the Customers Usage report include `accounts`,
+// `app_maker`, `apps_scripts`, `calendar`, `classroom`, `cros`, `docs`,
+// `gmail`, `gplus`, `device_management`, `meet`, and `sites`. A `parameters`
+// query string is in the CSV form of `app_name1:param_name1,
+// app_name2:param_name2`. *Note:* The API doesn't accept multiple values of a
+// parameter. If a particular parameter is supplied more than once in the API
+// request, the API only accepts the last value of that request parameter. In
+// addition, if an invalid request parameter is supplied in the API request,
+// the API ignores that request parameter and returns the response
+// corresponding to the remaining valid request parameters. An example of an
+// invalid request parameter is one that does not belong to the application. If
 // no parameters are requested, all parameters are returned.
 func (c *UserUsageReportGetCall) Parameters(parameters string) *UserUsageReportGetCall {
 	c.urlParams_.Set("parameters", parameters)
@@ -2541,33 +1852,29 @@ func (c *UserUsageReportGetCall) Parameters(parameters string) *UserUsageReportG
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *UserUsageReportGetCall) Fields(s ...googleapi.Field) *UserUsageReportGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *UserUsageReportGetCall) IfNoneMatch(entityTag string) *UserUsageReportGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *UserUsageReportGetCall) Context(ctx context.Context) *UserUsageReportGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *UserUsageReportGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2576,12 +1883,7 @@ func (c *UserUsageReportGetCall) Header() http.Header {
 }
 
 func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2603,12 +1905,10 @@ func (c *UserUsageReportGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "reports.userUsageReport.get" call.
-// Exactly one of *UsageReports or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *UsageReports.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *UsageReports.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *UserUsageReportGetCall) Do(opts ...googleapi.CallOption) (*UsageReports, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2639,84 +1939,6 @@ func (c *UserUsageReportGetCall) Do(opts ...googleapi.CallOption) (*UsageReports
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves a report which is a collection of properties and statistics for a set of users with the account. For more information, see the User Usage Report guide. For more information about the user report's parameters, see the Users Usage parameters reference guides.",
-	//   "flatPath": "admin/reports/v1/usage/users/{userKey}/dates/{date}",
-	//   "httpMethod": "GET",
-	//   "id": "reports.userUsageReport.get",
-	//   "parameterOrder": [
-	//     "userKey",
-	//     "date"
-	//   ],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "The unique ID of the customer to retrieve data for.",
-	//       "location": "query",
-	//       "pattern": "C.+|my_customer",
-	//       "type": "string"
-	//     },
-	//     "date": {
-	//       "description": "Represents the date the usage occurred, based on UTC-8:00 (Pacific Standard Time). The timestamp is in the [ISO 8601 format](https://en.wikipedia.org/wiki/ISO_8601), `yyyy-mm-dd`.",
-	//       "location": "path",
-	//       "pattern": "(\\d){4}-(\\d){2}-(\\d){2}",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "filters": {
-	//       "description": "The `filters` query string is a comma-separated list of an application's event parameters where the parameter's value is manipulated by a relational operator. The `filters` query string includes the name of the application whose usage is returned in the report. The application values for the Users Usage Report include `accounts`, `docs`, and `gmail`. Filters are in the form `[application name]:parameter name[parameter value],...`. In this example, the `\u003c\u003e` 'not equal to' operator is URL-encoded in the request's query string (%3C%3E): GET https://www.googleapis.com/admin/reports/v1/usage/users/all/dates/2013-03-03 ?parameters=accounts:last_login_time \u0026filters=accounts:last_login_time%3C%3E2010-10-28T10:26:35.000Z The relational operators include: - `==` - 'equal to'. - `\u003c\u003e` - 'not equal to'. It is URL-encoded (%3C%3E). - `\u003c` - 'less than'. It is URL-encoded (%3C). - `\u003c=` - 'less than or equal to'. It is URL-encoded (%3C=). - `\u003e` - 'greater than'. It is URL-encoded (%3E). - `\u003e=` - 'greater than or equal to'. It is URL-encoded (%3E=). ",
-	//       "location": "query",
-	//       "pattern": "(((accounts)|(classroom)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)|(device_management)|(drive)):[a-z0-9_]+[\u003c,\u003c=,==,\u003e=,\u003e,!=][^,]+,)*(((accounts)|(classroom)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)|(device_management)|(drive)):[a-z0-9_]+[\u003c,\u003c=,==,\u003e=,\u003e,!=][^,]+)",
-	//       "type": "string"
-	//     },
-	//     "groupIdFilter": {
-	//       "description": "Comma separated group ids (obfuscated) on which user activities are filtered, i.e. the response will contain activities for only those users that are a part of at least one of the group ids mentioned here. Format: \"id:abc123,id:xyz456\"",
-	//       "location": "query",
-	//       "pattern": "(id:[a-z0-9]+(,id:[a-z0-9]+)*)",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "default": "1000",
-	//       "description": "Determines how many activity records are shown on each response page. For example, if the request sets `maxResults=1` and the report has two activities, the report has two pages. The response's `nextPageToken` property has the token to the second page. The `maxResults` query string is optional.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "1000",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "orgUnitID": {
-	//       "default": "",
-	//       "description": "ID of the organizational unit to report on. User activity will be shown only for users who belong to the specified organizational unit. Data before Dec 17, 2018 doesn't appear in the filtered results.",
-	//       "location": "query",
-	//       "pattern": "(id:[a-z0-9]+)",
-	//       "type": "string"
-	//     },
-	//     "pageToken": {
-	//       "description": "Token to specify next page. A report with multiple pages has a `nextPageToken` property in the response. In your follow-on request getting the next page of the report, enter the `nextPageToken` value in the `pageToken` query string.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parameters": {
-	//       "description": "The `parameters` query string is a comma-separated list of event parameters that refine a report's results. The parameter is associated with a specific application. The application values for the Customers Usage report include `accounts`, `app_maker`, `apps_scripts`, `calendar`, `classroom`, `cros`, `docs`, `gmail`, `gplus`, `device_management`, `meet`, and `sites`. A `parameters` query string is in the CSV form of `app_name1:param_name1, app_name2:param_name2`. *Note:* The API doesn't accept multiple values of a parameter. If a particular parameter is supplied more than once in the API request, the API only accepts the last value of that request parameter. In addition, if an invalid request parameter is supplied in the API request, the API ignores that request parameter and returns the response corresponding to the remaining valid request parameters. An example of an invalid request parameter is one that does not belong to the application. If no parameters are requested, all parameters are returned. ",
-	//       "location": "query",
-	//       "pattern": "(((accounts)|(classroom)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)|(device_management)|(drive)):[^,]+,)*(((accounts)|(classroom)|(cros)|(gmail)|(calendar)|(docs)|(gplus)|(sites)|(device_management)|(drive)):[^,]+)",
-	//       "type": "string"
-	//     },
-	//     "userKey": {
-	//       "description": "Represents the profile ID or the user email for which the data should be filtered. Can be `all` for all information, or `userKey` for a user's unique Google Workspace profile ID or their primary email address. Must not be a deleted user. For a deleted user, call `users.list` in Directory API with `showDeleted=true`, then use the returned `ID` as the `userKey`.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "admin/reports/v1/usage/users/{userKey}/dates/{date}",
-	//   "response": {
-	//     "$ref": "UsageReports"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admin.reports.usage.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2724,7 +1946,7 @@ func (c *UserUsageReportGetCall) Do(opts ...googleapi.CallOption) (*UsageReports
 // The provided context supersedes any context provided to the Context method.
 func (c *UserUsageReportGetCall) Pages(ctx context.Context, f func(*UsageReports) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

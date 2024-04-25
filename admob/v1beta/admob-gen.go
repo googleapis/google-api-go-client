@@ -308,134 +308,104 @@ type AccountsNetworkReportService struct {
 type AdSource struct {
 	// AdSourceId: ID of this ad source.
 	AdSourceId string `json:"adSourceId,omitempty"`
-
 	// Name: Resource name of this ad source. Format is:
 	// accounts/{publisher_id}/adSources/{ad_source_id}
 	Name string `json:"name,omitempty"`
-
 	// Title: Display name of this ad source.
 	Title string `json:"title,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AdSourceId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdSourceId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdSourceId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AdSource) MarshalJSON() ([]byte, error) {
 	type NoMethod AdSource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AdUnit: Describes an AdMob ad unit.
 type AdUnit struct {
 	// AdFormat: AdFormat of the ad unit. Possible values are as follows:
 	// "APP_OPEN" - App Open ad format. "BANNER" - Banner ad format.
-	// "BANNER_INTERSTITIAL" - Legacy format that can be used as either
-	// banner or interstitial. This format can no longer be created but can
-	// be targeted by mediation groups. "INTERSTITIAL" - A full screen ad.
-	// Supported ad types are "RICH_MEDIA" and "VIDEO". "NATIVE" - Native ad
-	// format. "REWARDED" - An ad that, once viewed, gets a callback
-	// verifying the view so that a reward can be given to the user.
-	// Supported ad types are "RICH_MEDIA" (interactive) and video where
-	// video can not be excluded. "REWARDED_INTERSTITIAL" - Rewarded
+	// "BANNER_INTERSTITIAL" - Legacy format that can be used as either banner or
+	// interstitial. This format can no longer be created but can be targeted by
+	// mediation groups. "INTERSTITIAL" - A full screen ad. Supported ad types are
+	// "RICH_MEDIA" and "VIDEO". "NATIVE" - Native ad format. "REWARDED" - An ad
+	// that, once viewed, gets a callback verifying the view so that a reward can
+	// be given to the user. Supported ad types are "RICH_MEDIA" (interactive) and
+	// video where video can not be excluded. "REWARDED_INTERSTITIAL" - Rewarded
 	// Interstitial ad format. Only supports video ad type. See
 	// https://support.google.com/admob/answer/9884467.
 	AdFormat string `json:"adFormat,omitempty"`
-
 	// AdTypes: Ad media type supported by this ad unit. Possible values as
-	// follows: "RICH_MEDIA" - Text, image, and other non-video media.
-	// "VIDEO" - Video media.
+	// follows: "RICH_MEDIA" - Text, image, and other non-video media. "VIDEO" -
+	// Video media.
 	AdTypes []string `json:"adTypes,omitempty"`
-
-	// AdUnitId: The externally visible ID of the ad unit which can be used
-	// to integrate with the AdMob SDK. This is a read only property.
-	// Example: ca-app-pub-9876543210987654/0123456789
+	// AdUnitId: The externally visible ID of the ad unit which can be used to
+	// integrate with the AdMob SDK. This is a read only property. Example:
+	// ca-app-pub-9876543210987654/0123456789
 	AdUnitId string `json:"adUnitId,omitempty"`
-
-	// AppId: The externally visible ID of the app this ad unit is
-	// associated with. Example: ca-app-pub-9876543210987654~0123456789
+	// AppId: The externally visible ID of the app this ad unit is associated with.
+	// Example: ca-app-pub-9876543210987654~0123456789
 	AppId string `json:"appId,omitempty"`
-
-	// DisplayName: The display name of the ad unit as shown in the AdMob
-	// UI, which is provided by the user. The maximum length allowed is 80
-	// characters.
+	// DisplayName: The display name of the ad unit as shown in the AdMob UI, which
+	// is provided by the user. The maximum length allowed is 80 characters.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Name: Resource name for this ad unit. Format is
 	// accounts/{publisher_id}/adUnits/{ad_unit_id_fragment} Example:
 	// accounts/pub-9876543210987654/adUnits/0123456789
 	Name string `json:"name,omitempty"`
-
-	// RewardSettings: Optional. Settings for a rewarded ad unit. This can
-	// be set or unset only when the ad_format is "REWARDED".
+	// RewardSettings: Optional. Settings for a rewarded ad unit. This can be set
+	// or unset only when the ad_format is "REWARDED".
 	RewardSettings *AdUnitRewardSettings `json:"rewardSettings,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AdFormat") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdFormat") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdFormat") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AdUnit) MarshalJSON() ([]byte, error) {
 	type NoMethod AdUnit
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// AdUnitMapping: Settings to map an AdMob ad unit to a 3rd party ad
-// unit.
+// AdUnitMapping: Settings to map an AdMob ad unit to a 3rd party ad unit.
 type AdUnitMapping struct {
-	// AdUnitConfigurations: Settings for the specified ad unit to make an
-	// ad request to 3rd party ad network. Key-value pairs with values set
-	// by the user for the keys requested by the ad network. Please see
+	// AdUnitConfigurations: Settings for the specified ad unit to make an ad
+	// request to 3rd party ad network. Key-value pairs with values set by the user
+	// for the keys requested by the ad network. Please see
 	// https://support.google.com/admob/answer/3245073 for details on how to
 	// configure the network settings.
 	AdUnitConfigurations map[string]string `json:"adUnitConfigurations,omitempty"`
-
 	// AdapterId: The ID of mediation ad source adapter used by this ad unit
 	// mapping. The adapter determines the information needed in the
 	// ad_network_settings.
 	AdapterId int64 `json:"adapterId,omitempty,string"`
-
-	// DisplayName: Optional. The display name of this ad unit mapping
-	// instance.
+	// DisplayName: Optional. The display name of this ad unit mapping instance.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Name: Resource name of this ad unit mapping. Format is:
-	// accounts/{publisher_id}/adUnits/{ad_unit_id_fragment}/adUnitMappings/{
-	// ad_unit_mapping_id} Example:
-	// accounts/pub-1234567890123456/adUnits/0123456789/adUnitMappings/987654
-	// 321
+	// accounts/{publisher_id}/adUnits/{ad_unit_id_fragment}/adUnitMappings/{ad_unit
+	// _mapping_id} Example:
+	// accounts/pub-1234567890123456/adUnits/0123456789/adUnitMappings/987654321
 	Name string `json:"name,omitempty"`
-
 	// State: Output only. The status of this ad unit mapping.
 	//
 	// Possible values:
@@ -444,249 +414,190 @@ type AdUnitMapping struct {
 	// collecting stats.
 	State string `json:"state,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AdUnitConfigurations") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdUnitConfigurations") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdUnitConfigurations") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdUnitConfigurations") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AdUnitMapping) MarshalJSON() ([]byte, error) {
 	type NoMethod AdUnitMapping
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AdUnitRewardSettings: Settings for a rewarded ad unit.
 type AdUnitRewardSettings struct {
 	// UnitAmount: Reward amount for this ad unit.
 	UnitAmount int64 `json:"unitAmount,omitempty,string"`
-
 	// UnitType: Reward item for this ad unit.
 	UnitType string `json:"unitType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "UnitAmount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UnitAmount") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "UnitAmount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AdUnitRewardSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod AdUnitRewardSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Adapter: Describes adapters supported by each mediation ad source.
-// Adapters correspond to a specific SDK implementation of the ad
-// source, and are each associated with a single platform and a list of
-// supported ad unit formats. Adapters may also require setting some
-// configurations to perform ad requests. Configurations can be
-// specified in the AdUnitMapping by setting the ad_unit_configurations
-// (#AdUnitMapping.ad_unit_configurations) key/value pairs. For example,
-// the ad_unit_configurations can be used to pass various IDs to the
-// adapter's third-party SDK.
+// Adapter: Describes adapters supported by each mediation ad source. Adapters
+// correspond to a specific SDK implementation of the ad source, and are each
+// associated with a single platform and a list of supported ad unit formats.
+// Adapters may also require setting some configurations to perform ad
+// requests. Configurations can be specified in the AdUnitMapping by setting
+// the ad_unit_configurations (#AdUnitMapping.ad_unit_configurations) key/value
+// pairs. For example, the ad_unit_configurations can be used to pass various
+// IDs to the adapter's third-party SDK.
 type Adapter struct {
-	// AdapterConfigMetadata: Output only. Configuration metadata associated
-	// with this adapter.
+	// AdapterConfigMetadata: Output only. Configuration metadata associated with
+	// this adapter.
 	AdapterConfigMetadata []*AdapterAdapterConfigMetadata `json:"adapterConfigMetadata,omitempty"`
-
-	// AdapterId: Output only. ID of this adapter. It is used to set
-	// adapter_id (#AdUnitMapping.adapter_id).
+	// AdapterId: Output only. ID of this adapter. It is used to set adapter_id
+	// (#AdUnitMapping.adapter_id).
 	AdapterId string `json:"adapterId,omitempty"`
-
-	// Formats: Output only. Indicates the formats of the ad units supported
-	// by this adapter.
+	// Formats: Output only. Indicates the formats of the ad units supported by
+	// this adapter.
 	Formats []string `json:"formats,omitempty"`
-
 	// Name: Output only. Resource name of the adapter. Format is:
-	// accounts/{publisher_id}/adSources/{ad_source_id}/adapters/{adapter_id}
-	// .
+	// accounts/{publisher_id}/adSources/{ad_source_id}/adapters/{adapter_id}.
 	Name string `json:"name,omitempty"`
-
 	// Platform: Output only. Mobile application platform supported by this
 	// adapter. Supported values are: IOS, ANDROID, WINDOWS_PHONE
 	Platform string `json:"platform,omitempty"`
-
 	// Title: Output only. The display name of this adapter.
 	Title string `json:"title,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AdapterConfigMetadata") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdapterConfigMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "AdapterConfigMetadata") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Adapter) MarshalJSON() ([]byte, error) {
 	type NoMethod Adapter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// AdapterAdapterConfigMetadata: Configuration metadata associated with
-// this adapter. They are used to define the ad_unit_configurations
-// associated with AdUnitMappings for the this adapter.
+// AdapterAdapterConfigMetadata: Configuration metadata associated with this
+// adapter. They are used to define the ad_unit_configurations associated with
+// AdUnitMappings for the this adapter.
 type AdapterAdapterConfigMetadata struct {
 	// AdapterConfigMetadataId: This is used to fill the key of the
 	// ad_unit_configurations (#AdUnitMapping.ad_unit_configurations).
 	AdapterConfigMetadataId string `json:"adapterConfigMetadataId,omitempty"`
-
-	// AdapterConfigMetadataLabel: Name of the adapter configuration
-	// metadata.
+	// AdapterConfigMetadataLabel: Name of the adapter configuration metadata.
 	AdapterConfigMetadataLabel string `json:"adapterConfigMetadataLabel,omitempty"`
-
 	// IsRequired: Whether this metadata is required for configuring the
 	// AdUnitMappings.
 	IsRequired bool `json:"isRequired,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AdapterConfigMetadataId") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdapterConfigMetadataId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdapterConfigMetadataId")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdapterConfigMetadataId") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AdapterAdapterConfigMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod AdapterAdapterConfigMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// App: Describes an AdMob app for a specific platform (For example:
-// Android or iOS).
+// App: Describes an AdMob app for a specific platform (For example: Android or
+// iOS).
 type App struct {
-	// AppApprovalState: Output only. The approval state for the app. The
-	// field is read-only.
+	// AppApprovalState: Output only. The approval state for the app. The field is
+	// read-only.
 	//
 	// Possible values:
-	//   "APP_APPROVAL_STATE_UNSPECIFIED" - Default value for an unset
-	// field. Do not use.
+	//   "APP_APPROVAL_STATE_UNSPECIFIED" - Default value for an unset field. Do
+	// not use.
 	//   "ACTION_REQUIRED" - The app requires additional user action to be
-	// approved. Please refer to
-	// https://support.google.com/admob/answer/10564477 for details and next
-	// steps.
+	// approved. Please refer to https://support.google.com/admob/answer/10564477
+	// for details and next steps.
 	//   "IN_REVIEW" - The app is pending review.
 	//   "APPROVED" - The app is approved and can serve ads.
 	AppApprovalState string `json:"appApprovalState,omitempty"`
-
-	// AppId: The externally visible ID of the app which can be used to
-	// integrate with the AdMob SDK. This is a read only property. Example:
+	// AppId: The externally visible ID of the app which can be used to integrate
+	// with the AdMob SDK. This is a read only property. Example:
 	// ca-app-pub-9876543210987654~0123456789
 	AppId string `json:"appId,omitempty"`
-
-	// LinkedAppInfo: Immutable. The information for an app that is linked
-	// to an app store. This field is present if and only if the app is
-	// linked to an app store.
+	// LinkedAppInfo: Immutable. The information for an app that is linked to an
+	// app store. This field is present if and only if the app is linked to an app
+	// store.
 	LinkedAppInfo *AppLinkedAppInfo `json:"linkedAppInfo,omitempty"`
-
-	// ManualAppInfo: The information for an app that is not linked to any
-	// app store. After an app is linked, this information is still
-	// retrivable. If no name is provided for the app upon creation, a
-	// placeholder name will be used.
+	// ManualAppInfo: The information for an app that is not linked to any app
+	// store. After an app is linked, this information is still retrivable. If no
+	// name is provided for the app upon creation, a placeholder name will be used.
 	ManualAppInfo *AppManualAppInfo `json:"manualAppInfo,omitempty"`
-
 	// Name: Resource name for this app. Format is
 	// accounts/{publisher_id}/apps/{app_id_fragment} Example:
 	// accounts/pub-9876543210987654/apps/0123456789
 	Name string `json:"name,omitempty"`
-
-	// Platform: Describes the platform of the app. Limited to "IOS" and
-	// "ANDROID".
+	// Platform: Describes the platform of the app. Limited to "IOS" and "ANDROID".
 	Platform string `json:"platform,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AppApprovalState") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppApprovalState") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AppApprovalState") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *App) MarshalJSON() ([]byte, error) {
 	type NoMethod App
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// AppLinkedAppInfo: Information from the app store if the app is linked
-// to an app store.
+// AppLinkedAppInfo: Information from the app store if the app is linked to an
+// app store.
 type AppLinkedAppInfo struct {
-	// AndroidAppStores: Optional. The app store information for published
-	// Android apps. This field is only used for apps on the Android
-	// platform and will be ignored if the PLATFORM is set to iOS. The
-	// default value is the Google Play App store. This field can be updated
-	// after app is created. If the app is not published, this field will
-	// not be included in the response.
+	// AndroidAppStores: Optional. The app store information for published Android
+	// apps. This field is only used for apps on the Android platform and will be
+	// ignored if the PLATFORM is set to iOS. The default value is the Google Play
+	// App store. This field can be updated after app is created. If the app is not
+	// published, this field will not be included in the response.
 	//
 	// Possible values:
-	//   "ANDROID_APP_STORE_UNSPECIFIED" - Default value for an unset field.
-	// Do not use.
+	//   "ANDROID_APP_STORE_UNSPECIFIED" - Default value for an unset field. Do not
+	// use.
 	//   "GOOGLE_PLAY_APP_STORE" - Google Play Store.
 	//   "AMAZON_APP_STORE" - Amazon Appstore.
 	//   "OPPO_APP_STORE" - Oppo App Market.
@@ -694,891 +605,696 @@ type AppLinkedAppInfo struct {
 	//   "VIVO_APP_STORE" - VIVO App Store.
 	//   "XIAOMI_APP_STORE" - Xiaomi GetApps.
 	AndroidAppStores []string `json:"androidAppStores,omitempty"`
-
-	// AppStoreId: The app store ID of the app; present if and only if the
-	// app is linked to an app store. If the app is added to the Google Play
-	// store, it will be the application ID of the app. For example:
-	// "com.example.myapp". See
-	// https://developer.android.com/studio/build/application-id. If the app
-	// is added to the Apple App Store, it will be app store ID. For example
+	// AppStoreId: The app store ID of the app; present if and only if the app is
+	// linked to an app store. If the app is added to the Google Play store, it
+	// will be the application ID of the app. For example: "com.example.myapp". See
+	// https://developer.android.com/studio/build/application-id. If the app is
+	// added to the Apple App Store, it will be app store ID. For example
 	// "105169111". Note that setting the app store id is considered an
 	// irreversible action. Once an app is linked, it cannot be unlinked.
 	AppStoreId string `json:"appStoreId,omitempty"`
-
-	// DisplayName: Output only. Display name of the app as it appears in
-	// the app store. This is an output-only field, and may be empty if the
-	// app cannot be found in the store.
+	// DisplayName: Output only. Display name of the app as it appears in the app
+	// store. This is an output-only field, and may be empty if the app cannot be
+	// found in the store.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AndroidAppStores") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AndroidAppStores") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AndroidAppStores") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AppLinkedAppInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AppLinkedAppInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// AppManualAppInfo: Information provided for manual apps which are not
-// linked to an application store (Example: Google Play, App Store).
+// AppManualAppInfo: Information provided for manual apps which are not linked
+// to an application store (Example: Google Play, App Store).
 type AppManualAppInfo struct {
-	// DisplayName: The display name of the app as shown in the AdMob UI,
-	// which is provided by the user. The maximum length allowed is 80
-	// characters.
+	// DisplayName: The display name of the app as shown in the AdMob UI, which is
+	// provided by the user. The maximum length allowed is 80 characters.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AppManualAppInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AppManualAppInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// BatchCreateAdUnitMappingsRequest: Request to create a batch of ad
-// unit mappings under the specific AdMob account.
+// BatchCreateAdUnitMappingsRequest: Request to create a batch of ad unit
+// mappings under the specific AdMob account.
 type BatchCreateAdUnitMappingsRequest struct {
-	// Requests: Required. The request message specifying the ad unit
-	// mappings to create. A maximum of 100 ad unit mappings can be created
-	// in a batch. If the number of ad unit mappings in the batch request
-	// exceed 100, the entire request will be rejected and no ad unit
-	// mappings will be created.
+	// Requests: Required. The request message specifying the ad unit mappings to
+	// create. A maximum of 100 ad unit mappings can be created in a batch. If the
+	// number of ad unit mappings in the batch request exceed 100, the entire
+	// request will be rejected and no ad unit mappings will be created.
 	Requests []*CreateAdUnitMappingRequest `json:"requests,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Requests") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Requests") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Requests") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchCreateAdUnitMappingsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateAdUnitMappingsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// BatchCreateAdUnitMappingsResponse: Response containing a batch of
-// created ad unit mappings.
+// BatchCreateAdUnitMappingsResponse: Response containing a batch of created ad
+// unit mappings.
 type BatchCreateAdUnitMappingsResponse struct {
-	// AdUnitMappings: The Ad units mappings created under the requested
-	// account.
+	// AdUnitMappings: The Ad units mappings created under the requested account.
 	AdUnitMappings []*AdUnitMapping `json:"adUnitMappings,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AdUnitMappings") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdUnitMappings") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdUnitMappings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BatchCreateAdUnitMappingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BatchCreateAdUnitMappingsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CampaignReportSpec: The specification for generating a Campaign
-// report. For example, the specification to get IMPRESSIONS and CLICKS
-// sliced by CAMPAIGN_ID can look like the following example: {
-// "date_range": { "start_date": {"year": 2021, "month": 12, "day": 1},
-// "end_date": {"year": 2021, "month": 12, "day": 30} }, "dimensions":
-// ["CAMPAIGN_ID"], "metrics": ["IMPRESSIONS", "CLICKS"], }
+// CampaignReportSpec: The specification for generating a Campaign report. For
+// example, the specification to get IMPRESSIONS and CLICKS sliced by
+// CAMPAIGN_ID can look like the following example: { "date_range": {
+// "start_date": {"year": 2021, "month": 12, "day": 1}, "end_date": {"year":
+// 2021, "month": 12, "day": 30} }, "dimensions": ["CAMPAIGN_ID"], "metrics":
+// ["IMPRESSIONS", "CLICKS"], }
 type CampaignReportSpec struct {
-	// DateRange: The date range for which the report is generated. The max
-	// range is 30 days.
+	// DateRange: The date range for which the report is generated. The max range
+	// is 30 days.
 	DateRange *DateRange `json:"dateRange,omitempty"`
-
-	// Dimensions: List of dimensions of the report. The value combination
-	// of these dimensions determines the row of the report. If no
-	// dimensions are specified, the report returns a single row of
-	// requested metrics for the entire account.
+	// Dimensions: List of dimensions of the report. The value combination of these
+	// dimensions determines the row of the report. If no dimensions are specified,
+	// the report returns a single row of requested metrics for the entire account.
 	//
 	// Possible values:
-	//   "DIMENSION_UNSPECIFIED" - Default value of an unspecified
-	// dimension. Do not use.
+	//   "DIMENSION_UNSPECIFIED" - Default value of an unspecified dimension. Do
+	// not use.
 	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
-	//   "CAMPAIGN_ID" - The unique ID of the campaign, for example
-	// "123456789", which is consistent with the campaign id from campaign
-	// list api.
+	//   "CAMPAIGN_ID" - The unique ID of the campaign, for example "123456789",
+	// which is consistent with the campaign id from campaign list api.
 	//   "CAMPAIGN_NAME" - The name of the campaign.
 	//   "AD_ID" - The unique ID of the ad, for example "123456789".
 	//   "AD_NAME" - The name of the ad, which may not be unique.
-	//   "PLACEMENT_ID" - The vendor-specific unique ID of the app where the
-	// ad is placed. For example, com.goog.bar for Android and 123456789 for
-	// iOS apps.
+	//   "PLACEMENT_ID" - The vendor-specific unique ID of the app where the ad is
+	// placed. For example, com.goog.bar for Android and 123456789 for iOS apps.
 	//   "PLACEMENT_NAME" - The name of the app where the ad is placed.
-	//   "PLACEMENT_PLATFORM" - The platform of the app where the ad is
-	// placed.
+	//   "PLACEMENT_PLATFORM" - The platform of the app where the ad is placed.
 	//   "COUNTRY" - The name of the targeted country.
-	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
-	// an ad delivery dimension.
+	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"), an ad
+	// delivery dimension.
 	Dimensions []string `json:"dimensions,omitempty"`
-
 	// LanguageCode: Language used for any localized text, such as certain
-	// applicable dimension values. The language tag is defined in the IETF
-	// BCP47. Defaults to 'en-US' if unspecified or invalid.
+	// applicable dimension values. The language tag is defined in the IETF BCP47.
+	// Defaults to 'en-US' if unspecified or invalid.
 	LanguageCode string `json:"languageCode,omitempty"`
-
-	// Metrics: List of metrics of the report. A report must specify at
-	// least one metric.
+	// Metrics: List of metrics of the report. A report must specify at least one
+	// metric.
 	//
 	// Possible values:
-	//   "METRIC_UNSPECIFIED" - Default value for an unset field. Do not
-	// use.
+	//   "METRIC_UNSPECIFIED" - Default value for an unset field. Do not use.
 	//   "IMPRESSIONS" - The number of times an ad is shown to the user.
 	//   "CLICKS" - The number of times a user clicks an ad.
-	//   "CLICK_THROUGH_RATE" - The number of clicks an ad receives divided
-	// by the number of times the ad is shown.
+	//   "CLICK_THROUGH_RATE" - The number of clicks an ad receives divided by the
+	// number of times the ad is shown.
 	//   "INSTALLS" - The number of times apps were downloaded to devices.
-	//   "ESTIMATED_COST" - The estimated cost of serving a campaign ad
-	// instead of an ad that earns revenue. The currency is the reporting
+	//   "ESTIMATED_COST" - The estimated cost of serving a campaign ad instead of
+	// an ad that earns revenue. The currency is the reporting currency for
+	// campaigns.
+	//   "AVERAGE_CPI" - The average cost per install. This means the average
+	// amount that was spent to acquire a new user. The currency is the reporting
 	// currency for campaigns.
-	//   "AVERAGE_CPI" - The average cost per install. This means the
-	// average amount that was spent to acquire a new user. The currency is
-	// the reporting currency for campaigns.
-	//   "INTERACTIONS" - The number of times a user interacts with an ad.
-	// This consists of clicks and engagements.
+	//   "INTERACTIONS" - The number of times a user interacts with an ad. This
+	// consists of clicks and engagements.
 	Metrics []string `json:"metrics,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DateRange") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DateRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CampaignReportSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod CampaignReportSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CreateAdUnitMappingRequest: Request to create an ad unit mapping
-// under the specific AdMob account and ad unit.
+// CreateAdUnitMappingRequest: Request to create an ad unit mapping under the
+// specific AdMob account and ad unit.
 type CreateAdUnitMappingRequest struct {
 	// AdUnitMapping: Required. The ad unit mapping to create.
 	AdUnitMapping *AdUnitMapping `json:"adUnitMapping,omitempty"`
-
 	// Parent: Required. The parent which owns the ad unit mapping. Format:
 	// accounts/{publisher_id}/adUnits/{ad_unit_id}
 	Parent string `json:"parent,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AdUnitMapping") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdUnitMapping") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdUnitMapping") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CreateAdUnitMappingRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateAdUnitMappingRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Date: Represents a whole or partial calendar date, such as a
-// birthday. The time of day and time zone are either specified
-// elsewhere or are insignificant. The date is relative to the Gregorian
-// Calendar. This can represent one of the following: * A full date,
-// with non-zero year, month, and day values. * A month and day, with a
-// zero year (for example, an anniversary). * A year on its own, with a
-// zero month and a zero day. * A year and month, with a zero day (for
-// example, a credit card expiration date). Related types: *
-// google.type.TimeOfDay * google.type.DateTime *
+// Date: Represents a whole or partial calendar date, such as a birthday. The
+// time of day and time zone are either specified elsewhere or are
+// insignificant. The date is relative to the Gregorian Calendar. This can
+// represent one of the following: * A full date, with non-zero year, month,
+// and day values. * A month and day, with a zero year (for example, an
+// anniversary). * A year on its own, with a zero month and a zero day. * A
+// year and month, with a zero day (for example, a credit card expiration
+// date). Related types: * google.type.TimeOfDay * google.type.DateTime *
 // google.protobuf.Timestamp
 type Date struct {
-	// Day: Day of a month. Must be from 1 to 31 and valid for the year and
-	// month, or 0 to specify a year by itself or a year and month where the
-	// day isn't significant.
+	// Day: Day of a month. Must be from 1 to 31 and valid for the year and month,
+	// or 0 to specify a year by itself or a year and month where the day isn't
+	// significant.
 	Day int64 `json:"day,omitempty"`
-
-	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year
-	// without a month and day.
+	// Month: Month of a year. Must be from 1 to 12, or 0 to specify a year without
+	// a month and day.
 	Month int64 `json:"month,omitempty"`
-
-	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a
-	// date without a year.
+	// Year: Year of the date. Must be from 1 to 9999, or 0 to specify a date
+	// without a year.
 	Year int64 `json:"year,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Day") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Day") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Day") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Day") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Date) MarshalJSON() ([]byte, error) {
 	type NoMethod Date
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DateRange: Specification of a single date range. Both dates are
-// inclusive.
+// DateRange: Specification of a single date range. Both dates are inclusive.
 type DateRange struct {
-	// EndDate: End date of the date range, inclusive. Must be greater than
-	// or equal to the start date.
+	// EndDate: End date of the date range, inclusive. Must be greater than or
+	// equal to the start date.
 	EndDate *Date `json:"endDate,omitempty"`
-
-	// StartDate: Start date of the date range, inclusive. Must be less than
-	// or equal to the end date.
+	// StartDate: Start date of the date range, inclusive. Must be less than or
+	// equal to the end date.
 	StartDate *Date `json:"startDate,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndDate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndDate") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndDate") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndDate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DateRange) MarshalJSON() ([]byte, error) {
 	type NoMethod DateRange
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GenerateCampaignReportRequest: Request to generate campaign report.
 type GenerateCampaignReportRequest struct {
 	// ReportSpec: Campaign report specification.
 	ReportSpec *CampaignReportSpec `json:"reportSpec,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ReportSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ReportSpec") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ReportSpec") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GenerateCampaignReportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateCampaignReportRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GenerateCampaignReportResponse: Campaign Report API response.
 type GenerateCampaignReportResponse struct {
-	// Rows: The campaign report data from the specified publisher. At most
-	// 100000 rows will be returned from the API.
+	// Rows: The campaign report data from the specified publisher. At most 100000
+	// rows will be returned from the API.
 	Rows []*ReportRow `json:"rows,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Rows") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Rows") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Rows") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Rows") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GenerateCampaignReportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateCampaignReportResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GenerateMediationReportRequest: Request to generate an AdMob
-// mediation report.
+// GenerateMediationReportRequest: Request to generate an AdMob mediation
+// report.
 type GenerateMediationReportRequest struct {
 	// ReportSpec: Network report specification.
 	ReportSpec *MediationReportSpec `json:"reportSpec,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ReportSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ReportSpec") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ReportSpec") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GenerateMediationReportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateMediationReportRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GenerateMediationReportResponse: The streaming response for the AdMob
-// mediation report where the first response contains the report header,
-// then a stream of row responses, and finally a footer as the last
-// response message. For example: [{ "header": { "date_range": {
-// "start_date": {"year": 2018, "month": 9, "day": 1}, "end_date":
-// {"year": 2018, "month": 9, "day": 1} }, "localization_settings": {
-// "currency_code": "USD", "language_code": "en-US" } } }, { "row": {
-// "dimension_values": { "DATE": {"value": "20180918"}, "APP": {
-// "value": "ca-app-pub-8123415297019784~1001342552", "display_label":
+// mediation report where the first response contains the report header, then a
+// stream of row responses, and finally a footer as the last response message.
+// For example: [{ "header": { "date_range": { "start_date": {"year": 2018,
+// "month": 9, "day": 1}, "end_date": {"year": 2018, "month": 9, "day": 1} },
+// "localization_settings": { "currency_code": "USD", "language_code": "en-US"
+// } } }, { "row": { "dimension_values": { "DATE": {"value": "20180918"},
+// "APP": { "value": "ca-app-pub-8123415297019784~1001342552", "display_label":
 // "My app name!" } }, "metric_values": { "ESTIMATED_EARNINGS":
-// {"decimal_value": "1324746"} } } }, { "footer":
-// {"matching_row_count": 1} }]
+// {"decimal_value": "1324746"} } } }, { "footer": {"matching_row_count": 1} }]
 type GenerateMediationReportResponse struct {
-	// Footer: Additional information about the generated report, such as
-	// warnings about the data.
+	// Footer: Additional information about the generated report, such as warnings
+	// about the data.
 	Footer *ReportFooter `json:"footer,omitempty"`
-
-	// Header: Report generation settings that describes the report
-	// contents, such as the report date range and localization settings.
+	// Header: Report generation settings that describes the report contents, such
+	// as the report date range and localization settings.
 	Header *ReportHeader `json:"header,omitempty"`
-
 	// Row: Actual report data.
 	Row *ReportRow `json:"row,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Footer") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Footer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Footer") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GenerateMediationReportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateMediationReportResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GenerateNetworkReportRequest: Request to generate an AdMob Network
-// report.
+// GenerateNetworkReportRequest: Request to generate an AdMob Network report.
 type GenerateNetworkReportRequest struct {
 	// ReportSpec: Network report specification.
 	ReportSpec *NetworkReportSpec `json:"reportSpec,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ReportSpec") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ReportSpec") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ReportSpec") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GenerateNetworkReportRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateNetworkReportRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GenerateNetworkReportResponse: The streaming response for the AdMob
-// Network report where the first response contains the report header,
-// then a stream of row responses, and finally a footer as the last
-// response message. For example: [{ "header": { "dateRange": {
-// "startDate": {"year": 2018, "month": 9, "day": 1}, "endDate":
-// {"year": 2018, "month": 9, "day": 1} }, "localizationSettings": {
-// "currencyCode": "USD", "languageCode": "en-US" } } }, { "row": {
-// "dimensionValues": { "DATE": {"value": "20180918"}, "APP": { "value":
-// "ca-app-pub-8123415297019784~1001342552", displayLabel: "My app
-// name!" } }, "metricValues": { "ESTIMATED_EARNINGS": {"microsValue":
-// 6500000} } } }, { "footer": {"matchingRowCount": 1} }]
+// GenerateNetworkReportResponse: The streaming response for the AdMob Network
+// report where the first response contains the report header, then a stream of
+// row responses, and finally a footer as the last response message. For
+// example: [{ "header": { "dateRange": { "startDate": {"year": 2018, "month":
+// 9, "day": 1}, "endDate": {"year": 2018, "month": 9, "day": 1} },
+// "localizationSettings": { "currencyCode": "USD", "languageCode": "en-US" } }
+// }, { "row": { "dimensionValues": { "DATE": {"value": "20180918"}, "APP": {
+// "value": "ca-app-pub-8123415297019784~1001342552", displayLabel: "My app
+// name!" } }, "metricValues": { "ESTIMATED_EARNINGS": {"microsValue": 6500000}
+// } } }, { "footer": {"matchingRowCount": 1} }]
 type GenerateNetworkReportResponse struct {
-	// Footer: Additional information about the generated report, such as
-	// warnings about the data.
+	// Footer: Additional information about the generated report, such as warnings
+	// about the data.
 	Footer *ReportFooter `json:"footer,omitempty"`
-
-	// Header: Report generation settings that describes the report
-	// contents, such as the report date range and localization settings.
+	// Header: Report generation settings that describes the report contents, such
+	// as the report date range and localization settings.
 	Header *ReportHeader `json:"header,omitempty"`
-
 	// Row: Actual report data.
 	Row *ReportRow `json:"row,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Footer") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Footer") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Footer") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GenerateNetworkReportResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GenerateNetworkReportResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAdSourcesResponse: Response for the ListAdSourcesRequest.
 type ListAdSourcesResponse struct {
 	// AdSources: The ad sources.
 	AdSources []*AdSource `json:"adSources,omitempty"`
-
-	// NextPageToken: Used to set the `page_token` in the
-	// `ListAdSourcesRequest` to retrieve the next page. If this field is
-	// omitted, there are no subsequent pages.
+	// NextPageToken: Used to set the `page_token` in the `ListAdSourcesRequest` to
+	// retrieve the next page. If this field is omitted, there are no subsequent
+	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AdSources") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdSources") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdSources") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAdSourcesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdSourcesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListAdUnitMappingsResponse: Response for the
-// ListAdUnitMappingsRequest.
+// ListAdUnitMappingsResponse: Response for the ListAdUnitMappingsRequest.
 type ListAdUnitMappingsResponse struct {
-	// AdUnitMappings: The ad unit mappings from the specified account and
-	// ad unit.
+	// AdUnitMappings: The ad unit mappings from the specified account and ad unit.
 	AdUnitMappings []*AdUnitMapping `json:"adUnitMappings,omitempty"`
-
 	// NextPageToken: Used to set the `page_token` in the
-	// `ListAdUnitMappingsRequest` to retrieve the next page. If this field
-	// is omitted, there are no subsequent pages.
+	// `ListAdUnitMappingsRequest` to retrieve the next page. If this field is
+	// omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AdUnitMappings") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdUnitMappings") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdUnitMappings") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAdUnitMappingsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdUnitMappingsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAdUnitsResponse: Response for the ad units list request.
 type ListAdUnitsResponse struct {
 	// AdUnits: The resulting ad units for the requested account.
 	AdUnits []*AdUnit `json:"adUnits,omitempty"`
-
-	// NextPageToken: If not empty, indicates that there may be more ad
-	// units for the request; this value should be passed in a new
-	// `ListAdUnitsRequest`.
+	// NextPageToken: If not empty, indicates that there may be more ad units for
+	// the request; this value should be passed in a new `ListAdUnitsRequest`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AdUnits") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdUnits") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdUnits") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdUnits") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAdUnitsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdUnitsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAdaptersResponse: Response for the ListAdaptersRequest.
 type ListAdaptersResponse struct {
 	// Adapters: The adapter.
 	Adapters []*Adapter `json:"adapters,omitempty"`
-
-	// NextPageToken: Used to set the `page_token` in the
-	// `ListAdapterRequest` to retrieve the next page. If this field is
-	// omitted, there are no subsequent pages.
+	// NextPageToken: Used to set the `page_token` in the `ListAdapterRequest` to
+	// retrieve the next page. If this field is omitted, there are no subsequent
+	// pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Adapters") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Adapters") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Adapters") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAdaptersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAdaptersResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAppsResponse: Response for the apps list request.
 type ListAppsResponse struct {
 	// Apps: The resulting apps for the requested account.
 	Apps []*App `json:"apps,omitempty"`
-
-	// NextPageToken: If not empty, indicates that there may be more apps
-	// for the request; this value should be passed in a new
-	// `ListAppsRequest`.
+	// NextPageToken: If not empty, indicates that there may be more apps for the
+	// request; this value should be passed in a new `ListAppsRequest`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Apps") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Apps") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Apps") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Apps") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAppsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAppsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListMediationGroupsResponse: Response for the mediation groups list
-// request.
+// ListMediationGroupsResponse: Response for the mediation groups list request.
 type ListMediationGroupsResponse struct {
-	// MediationGroups: The resulting mediation groups for the requested
-	// account.
+	// MediationGroups: The resulting mediation groups for the requested account.
 	MediationGroups []*MediationGroup `json:"mediationGroups,omitempty"`
-
-	// NextPageToken: If not empty, indicates that there may be more
-	// mediation groups for the request; this value should be passed in a
-	// new `ListMediationGroupsRequest`.
+	// NextPageToken: If not empty, indicates that there may be more mediation
+	// groups for the request; this value should be passed in a new
+	// `ListMediationGroupsRequest`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "MediationGroups") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MediationGroups") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MediationGroups") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListMediationGroupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMediationGroupsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListPublisherAccountsResponse: Response for the publisher account
-// list request.
+// ListPublisherAccountsResponse: Response for the publisher account list
+// request.
 type ListPublisherAccountsResponse struct {
 	// Account: Publisher that the client credentials can access.
 	Account []*PublisherAccount `json:"account,omitempty"`
-
-	// NextPageToken: If not empty, indicates that there might be more
-	// accounts for the request; you must pass this value in a new
+	// NextPageToken: If not empty, indicates that there might be more accounts for
+	// the request; you must pass this value in a new
 	// `ListPublisherAccountsRequest`.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Account") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Account") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Account") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Account") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListPublisherAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPublisherAccountsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// LocalizationSettings: Localization settings for reports, such as
-// currency and language. It affects how metrics are calculated.
+// LocalizationSettings: Localization settings for reports, such as currency
+// and language. It affects how metrics are calculated.
 type LocalizationSettings struct {
-	// CurrencyCode: Currency code of the earning related metrics, which is
-	// the 3-letter code defined in ISO 4217. The daily average rate is used
-	// for the currency conversion. Defaults to the account currency code if
-	// unspecified.
+	// CurrencyCode: Currency code of the earning related metrics, which is the
+	// 3-letter code defined in ISO 4217. The daily average rate is used for the
+	// currency conversion. Defaults to the account currency code if unspecified.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// LanguageCode: Language used for any localized text, such as some
-	// dimension value display labels. The language tag defined in the IETF
-	// BCP47. Defaults to 'en-US' if unspecified.
+	// LanguageCode: Language used for any localized text, such as some dimension
+	// value display labels. The language tag defined in the IETF BCP47. Defaults
+	// to 'en-US' if unspecified.
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrencyCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *LocalizationSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod LocalizationSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MediationAbExperiment: The mediation A/B experiment.
 type MediationAbExperiment struct {
-	// ControlMediationLines: Output only. The experiment mediation lines
-	// for control. They are inherited from the parent mediation group. It
-	// is an output only field.
+	// ControlMediationLines: Output only. The experiment mediation lines for
+	// control. They are inherited from the parent mediation group. It is an output
+	// only field.
 	ControlMediationLines []*MediationAbExperimentExperimentMediationLine `json:"controlMediationLines,omitempty"`
-
 	// DisplayName: The display name for the mediation A/B experiment.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// EndTime: Output only. The time at which the experiment was ended or
-	// target to end (in UTC).
+	// EndTime: Output only. The time at which the experiment was ended or target
+	// to end (in UTC).
 	EndTime string `json:"endTime,omitempty"`
-
 	// ExperimentId: Output only. Unique identifier for the mediation A/B
 	// experiment. It is an output only property.
 	ExperimentId string `json:"experimentId,omitempty"`
-
 	// MediationGroupId: Output only. The mediation group id this experiment
-	// belongs to. This can be used for filtering the experiments in the
-	// list experiments API.
+	// belongs to. This can be used for filtering the experiments in the list
+	// experiments API.
 	MediationGroupId string `json:"mediationGroupId,omitempty"`
-
 	// Name: Resource name for this experiment. The format is
 	// accounts/{publisher_id}/
 	// mediationGroups/{mediation_group_id}/mediationAbExperiment/
@@ -1586,724 +1302,583 @@ type MediationAbExperiment struct {
 	// accounts/pub-9876543210987654/mediationGroups/0123456789/
 	// mediationAbExperiment/12345
 	Name string `json:"name,omitempty"`
-
-	// StartTime: Output only. The time at which the experiment was started
-	// (in UTC).
+	// StartTime: Output only. The time at which the experiment was started (in
+	// UTC).
 	StartTime string `json:"startTime,omitempty"`
-
-	// State: Output only. The state of the experiment. It is an output only
-	// field.
+	// State: Output only. The state of the experiment. It is an output only field.
 	//
 	// Possible values:
-	//   "EXPERIMENT_STATE_UNSPECIFIED" - Default for an unset field. Do not
-	// use.
+	//   "EXPERIMENT_STATE_UNSPECIFIED" - Default for an unset field. Do not use.
 	//   "EXPIRED" - The experiment has expired.
 	//   "RUNNING" - The experiment is running and thus used in serving.
-	//   "ENDED" - The experiment is ended, but not yet expired. Serving
-	// continues in the original configurations while the experiment is
-	// ready to call an action.
+	//   "ENDED" - The experiment is ended, but not yet expired. Serving continues
+	// in the original configurations while the experiment is ready to call an
+	// action.
 	State string `json:"state,omitempty"`
-
-	// TreatmentMediationLines: The experiment mediation lines created for
-	// the treatment. They will be used for serving when the experiment
-	// status is RUNNING.
+	// TreatmentMediationLines: The experiment mediation lines created for the
+	// treatment. They will be used for serving when the experiment status is
+	// RUNNING.
 	TreatmentMediationLines []*MediationAbExperimentExperimentMediationLine `json:"treatmentMediationLines,omitempty"`
-
-	// TreatmentTrafficPercentage: The percentage of the mediation A/B
-	// experiment traffic that will be send to the treatment (variant B).
-	// The remainder is sent to the control (variant A). The percentage is
-	// expressed as an integer in the inclusive range of [1,99]. See
+	// TreatmentTrafficPercentage: The percentage of the mediation A/B experiment
+	// traffic that will be send to the treatment (variant B). The remainder is
+	// sent to the control (variant A). The percentage is expressed as an integer
+	// in the inclusive range of [1,99]. See
 	// https://support.google.com/admob/answer/9572326 for details.
 	TreatmentTrafficPercentage int64 `json:"treatmentTrafficPercentage,omitempty,string"`
-
-	// VariantLeader: Output only. The variant leader for the experiment
-	// according to some key metrics.
+	// VariantLeader: Output only. The variant leader for the experiment according
+	// to some key metrics.
 	//
 	// Possible values:
-	//   "VARIANT_LEADER_UNSPECIFIED" - Default value of the enum. Do not
-	// use.
+	//   "VARIANT_LEADER_UNSPECIFIED" - Default value of the enum. Do not use.
 	//   "CONTROL" - The control leading the experiment.
 	//   "TREATMENT" - The treatment leading the experiment.
-	//   "INSUFFICIENT_DATA" - Collected data (impressions) are insufficient
-	// to determine a leader.
-	//   "TOO_EARLY_TO_CALL" - Experiment hasn't run long enough to
+	//   "INSUFFICIENT_DATA" - Collected data (impressions) are insufficient to
 	// determine a leader.
-	//   "NO_VARIANT_LEADER" - Neither variant is a decisive winner in the
-	// observed data.
+	//   "TOO_EARLY_TO_CALL" - Experiment hasn't run long enough to determine a
+	// leader.
+	//   "NO_VARIANT_LEADER" - Neither variant is a decisive winner in the observed
+	// data.
 	VariantLeader string `json:"variantLeader,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ControlMediationLines") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ControlMediationLines") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "ControlMediationLines") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MediationAbExperiment) MarshalJSON() ([]byte, error) {
 	type NoMethod MediationAbExperiment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MediationAbExperimentExperimentMediationLine: The mediation group
-// line for the experiment. It will be used for serving during the run
-// of the experiment.
+// MediationAbExperimentExperimentMediationLine: The mediation group line for
+// the experiment. It will be used for serving during the run of the
+// experiment.
 type MediationAbExperimentExperimentMediationLine struct {
 	// MediationGroupLine: The mediation group line used by the experiment.
 	MediationGroupLine *MediationGroupMediationGroupLine `json:"mediationGroupLine,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MediationGroupLine")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "MediationGroupLine") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MediationGroupLine") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MediationGroupLine") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MediationAbExperimentExperimentMediationLine) MarshalJSON() ([]byte, error) {
 	type NoMethod MediationAbExperimentExperimentMediationLine
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MediationGroup: Describes an AdMob mediation group.
 type MediationGroup struct {
-	// DisplayName: User provided name for the mediation group. The maximum
-	// length allowed is 120 characters.
+	// DisplayName: User provided name for the mediation group. The maximum length
+	// allowed is 120 characters.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// MediationAbExperimentState: Output only. The state of the mediation
-	// a/b experiment that belongs to this mediation group.
+	// MediationAbExperimentState: Output only. The state of the mediation a/b
+	// experiment that belongs to this mediation group.
 	//
 	// Possible values:
-	//   "EXPERIMENT_STATE_UNSPECIFIED" - Default value for an unset field.
-	// Do not use.
-	//   "RUNNING" - The mediation group has an experiment in the RUNNING
-	// state.
+	//   "EXPERIMENT_STATE_UNSPECIFIED" - Default value for an unset field. Do not
+	// use.
+	//   "RUNNING" - The mediation group has an experiment in the RUNNING state.
 	//   "NOT_RUNNING" - There is no experiment in the RUNNING state in the
 	// mediation group.
 	MediationAbExperimentState string `json:"mediationAbExperimentState,omitempty"`
-
-	// MediationGroupId: The ID of the mediation group. Example:
-	// "0123456789". This is a read only property.
+	// MediationGroupId: The ID of the mediation group. Example: "0123456789". This
+	// is a read only property.
 	MediationGroupId string `json:"mediationGroupId,omitempty"`
-
-	// MediationGroupLines: The mediation lines used for serving for this
-	// mediation group. Key is the ID of the mediation group line. For
-	// creation, use distinct negative values as placeholder.
+	// MediationGroupLines: The mediation lines used for serving for this mediation
+	// group. Key is the ID of the mediation group line. For creation, use distinct
+	// negative values as placeholder.
 	MediationGroupLines map[string]MediationGroupMediationGroupLine `json:"mediationGroupLines,omitempty"`
-
 	// Name: Resource name for this mediation group. Format is:
 	// accounts/{publisher_id}/mediationGroups/{mediation_group_id} Example:
 	// accounts/pub-9876543210987654/mediationGroups/0123456789
 	Name string `json:"name,omitempty"`
-
-	// State: The status of the mediation group. Only enabled mediation
-	// groups will be served.
+	// State: The status of the mediation group. Only enabled mediation groups will
+	// be served.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default value for an unset field. Do not use.
-	//   "ENABLED" - The mediation group is active and used to serve ads or
-	// to collect stats.
+	//   "ENABLED" - The mediation group is active and used to serve ads or to
+	// collect stats.
 	//   "DISABLED" - The mediation group has been disabled and is no longer
 	// serving ads or collecting stats. Disabled mediation groups can be
 	// re-enabled.
 	State string `json:"state,omitempty"`
-
-	// Targeting: Set of criteria targeted by this mediation group, such as
-	// ad units and geo locations.
+	// Targeting: Set of criteria targeted by this mediation group, such as ad
+	// units and geo locations.
 	Targeting *MediationGroupTargeting `json:"targeting,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MediationGroup) MarshalJSON() ([]byte, error) {
 	type NoMethod MediationGroup
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MediationGroupMediationGroupLine: Settings for an ad network used by
-// a mediation group.
+// MediationGroupMediationGroupLine: Settings for an ad network used by a
+// mediation group.
 type MediationGroupMediationGroupLine struct {
-	// AdSourceId: The ID of the ad source this mediation line is associated
-	// with.
+	// AdSourceId: The ID of the ad source this mediation line is associated with.
 	AdSourceId string `json:"adSourceId,omitempty"`
-
 	// AdUnitMappings: References of the ad unit mappings for each ad unit
 	// associated with this mediation line. Key is the ad unit ID, value is
-	// resource name of the ad unit mapping. For mediation lines where the
-	// ad source id is the AdMob Network, ad unit mappings will be ignored.
+	// resource name of the ad unit mapping. For mediation lines where the ad
+	// source id is the AdMob Network, ad unit mappings will be ignored.
 	AdUnitMappings map[string]string `json:"adUnitMappings,omitempty"`
-
-	// CpmMicros: The CPM for this allocation line. $0.01 is the minimum
-	// allowed amount. For LIVE CPM modes, the default amount is $0.01. This
-	// value is ignored if `cpm_mode` is `LIVE`. **Warning:** "USD" is the
-	// only supported currency at the moment. The unit is in micros.
+	// CpmMicros: The CPM for this allocation line. $0.01 is the minimum allowed
+	// amount. For LIVE CPM modes, the default amount is $0.01. This value is
+	// ignored if `cpm_mode` is `LIVE`. **Warning:** "USD" is the only supported
+	// currency at the moment. The unit is in micros.
 	CpmMicros int64 `json:"cpmMicros,omitempty,string"`
-
-	// CpmMode: Indicates how the CPM for this mediation line is provided.
-	// Note that `MANUAL` and `LIVE` are the only fully-supported mode at
-	// the moment. Please use the AdMob UI (https://admob.google.com) if you
-	// wish to create or update to other cpm modes.
+	// CpmMode: Indicates how the CPM for this mediation line is provided. Note
+	// that `MANUAL` and `LIVE` are the only fully-supported mode at the moment.
+	// Please use the AdMob UI (https://admob.google.com) if you wish to create or
+	// update to other cpm modes.
 	//
 	// Possible values:
-	//   "CPM_MODE_UNSPECIFIED" - Default value for an unset field. Do not
-	// use.
+	//   "CPM_MODE_UNSPECIFIED" - Default value for an unset field. Do not use.
 	//   "LIVE" - CPM is calculated per ad request based on the ad auction.
 	//   "MANUAL" - CPM is set by the user manually.
-	//   "ANO" - CPM is retrieved from the ad network using the publisher
-	// specified credentials. Output only.
+	//   "ANO" - CPM is retrieved from the ad network using the publisher specified
+	// credentials. Output only.
 	CpmMode string `json:"cpmMode,omitempty"`
-
-	// DisplayName: User-provided label for this mediation line. The maximum
-	// length allowed is 255 characters.
+	// DisplayName: User-provided label for this mediation line. The maximum length
+	// allowed is 255 characters.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// ExperimentVariant: Output only. The Mediation A/B experiment variant
-	// to which the mediation group line belongs to.
+	// ExperimentVariant: Output only. The Mediation A/B experiment variant to
+	// which the mediation group line belongs to.
 	//
 	// Possible values:
-	//   "VARIANT_UNSPECIFIED" - Default value for an unset field. Do not
-	// use.
+	//   "VARIANT_UNSPECIFIED" - Default value for an unset field. Do not use.
 	//   "VARIANT_A" - The mediation group line belongs to the variant A.
 	//   "VARIANT_B" - The mediation group line belongs to the variant B.
-	//   "ORIGINAL" - The mediation group line isn't a part of an
-	// experiment.
+	//   "ORIGINAL" - The mediation group line isn't a part of an experiment.
 	ExperimentVariant string `json:"experimentVariant,omitempty"`
-
-	// Id: The 16 digit ID for this mediation line e.g. 0123456789012345.
-	// When creating a new mediation group line, use a distinct negative
-	// integer as the ID place holder.
+	// Id: The 16 digit ID for this mediation line e.g. 0123456789012345. When
+	// creating a new mediation group line, use a distinct negative integer as the
+	// ID place holder.
 	Id string `json:"id,omitempty"`
-
-	// State: The status of the mediation group line. Only enabled mediation
-	// group lines will be served.
+	// State: The status of the mediation group line. Only enabled mediation group
+	// lines will be served.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Default value for an unset field. Do not use.
-	//   "ENABLED" - The mediation group line is active and used to serve
-	// ads.
-	//   "DISABLED" - The mediation group line has been disabled and is no
-	// longer served. Disabled mediation group lines can be re-enabled.
-	//   "REMOVED" - The mediation group line will be removed and no longer
-	// served. Removed mediation group lines can not be re-enabled and will
-	// no longer be visible. This is an input only field.
+	//   "ENABLED" - The mediation group line is active and used to serve ads.
+	//   "DISABLED" - The mediation group line has been disabled and is no longer
+	// served. Disabled mediation group lines can be re-enabled.
+	//   "REMOVED" - The mediation group line will be removed and no longer served.
+	// Removed mediation group lines can not be re-enabled and will no longer be
+	// visible. This is an input only field.
 	State string `json:"state,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AdSourceId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdSourceId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdSourceId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MediationGroupMediationGroupLine) MarshalJSON() ([]byte, error) {
 	type NoMethod MediationGroupMediationGroupLine
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MediationGroupTargeting: Set of criteria targeted by this mediation
-// group. For example, a mediation group can target specific ad unit
-// IDs, platform, format and geo location.
+// MediationGroupTargeting: Set of criteria targeted by this mediation group.
+// For example, a mediation group can target specific ad unit IDs, platform,
+// format and geo location.
 type MediationGroupTargeting struct {
 	// AdUnitIds: Ad units targeted by this mediation group. Example:
 	// "ca-app-pub-1234/8790".
 	AdUnitIds []string `json:"adUnitIds,omitempty"`
-
-	// ExcludedRegionCodes: The Unicode country/region code (CLDR) of a
-	// location, such as "US". Unset if this mediation group does not
-	// exclude any region.
+	// ExcludedRegionCodes: The Unicode country/region code (CLDR) of a location,
+	// such as "US". Unset if this mediation group does not exclude any region.
 	ExcludedRegionCodes []string `json:"excludedRegionCodes,omitempty"`
-
-	// Format: Ad format targeted by this mediation group. Examples:
-	// "banner", "native".
+	// Format: Ad format targeted by this mediation group. Examples: "banner",
+	// "native".
 	Format string `json:"format,omitempty"`
-
-	// IdfaTargeting: The parameter can be used to target ad requests based
-	// on the availability of the IDFA. If set to ALL, the mediation group
-	// applies to all ad requests (with or without IDFA). If set to
-	// AVAILABLE, the mediation group applies to ad requests with IDFA. If
-	// set to NOT_AVAILABLE, the mediation group applies to ad requests
-	// without IDFA. Doesn't need to be specified for an ANDROID device.
+	// IdfaTargeting: The parameter can be used to target ad requests based on the
+	// availability of the IDFA. If set to ALL, the mediation group applies to all
+	// ad requests (with or without IDFA). If set to AVAILABLE, the mediation group
+	// applies to ad requests with IDFA. If set to NOT_AVAILABLE, the mediation
+	// group applies to ad requests without IDFA. Doesn't need to be specified for
+	// an ANDROID device.
 	//
 	// Possible values:
 	//   "IDFA_TARGETING_UNSPECIFIED" - Default value. This value is unused.
-	//   "ALL" - All the devices are targeted, regardless of IDFA
-	// availability.
+	//   "ALL" - All the devices are targeted, regardless of IDFA availability.
 	//   "AVAILABLE" - Only the devices with IDFA availability are targeted.
-	//   "NOT_AVAILABLE" - Only the devices without IDFA availability are
-	// targeted.
+	//   "NOT_AVAILABLE" - Only the devices without IDFA availability are targeted.
 	IdfaTargeting string `json:"idfaTargeting,omitempty"`
-
-	// Platform: Describes the platform of the app. Examples: "IOS",
-	// "Android".
+	// Platform: Describes the platform of the app. Examples: "IOS", "Android".
 	Platform string `json:"platform,omitempty"`
-
-	// TargetedRegionCodes: The Unicode country/region code (CLDR) of a
-	// location, such as "US". Unset if this mediation group targets all
-	// available regions. For more information, see
+	// TargetedRegionCodes: The Unicode country/region code (CLDR) of a location,
+	// such as "US". Unset if this mediation group targets all available regions.
+	// For more information, see
 	// http://www.unicode.org/reports/tr35/#unicode_region_subtag.
 	TargetedRegionCodes []string `json:"targetedRegionCodes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AdUnitIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdUnitIds") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AdUnitIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MediationGroupTargeting) MarshalJSON() ([]byte, error) {
 	type NoMethod MediationGroupTargeting
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MediationReportSpec: The specification for generating an AdMob
-// Mediation report. For example, the specification to get observed ECPM
-// sliced by ad source and app for the 'US' and 'CN' countries can look
-// like the following example: { "date_range": { "start_date": {"year":
-// 2021, "month": 9, "day": 1}, "end_date": {"year": 2021, "month": 9,
-// "day": 30} }, "dimensions": ["AD_SOURCE", "APP", "COUNTRY"],
-// "metrics": ["OBSERVED_ECPM"], "dimension_filters": [ { "dimension":
-// "COUNTRY", "matches_any": {"values": [{"value": "US", "value":
-// "CN"}]} } ], "sort_conditions": [ {"dimension":"APP", order:
-// "ASCENDING"} ], "localization_settings": { "currency_code": "USD",
-// "language_code": "en-US" } } For a better understanding, you can
-// treat the preceding specification like the following pseudo SQL:
-// SELECT AD_SOURCE, APP, COUNTRY, OBSERVED_ECPM FROM MEDIATION_REPORT
-// WHERE DATE >= '2021-09-01' AND DATE <= '2021-09-30' AND COUNTRY IN
-// ('US', 'CN') GROUP BY AD_SOURCE, APP, COUNTRY ORDER BY APP ASC;
+// MediationReportSpec: The specification for generating an AdMob Mediation
+// report. For example, the specification to get observed ECPM sliced by ad
+// source and app for the 'US' and 'CN' countries can look like the following
+// example: { "date_range": { "start_date": {"year": 2021, "month": 9, "day":
+// 1}, "end_date": {"year": 2021, "month": 9, "day": 30} }, "dimensions":
+// ["AD_SOURCE", "APP", "COUNTRY"], "metrics": ["OBSERVED_ECPM"],
+// "dimension_filters": [ { "dimension": "COUNTRY", "matches_any": {"values":
+// [{"value": "US", "value": "CN"}]} } ], "sort_conditions": [
+// {"dimension":"APP", order: "ASCENDING"} ], "localization_settings": {
+// "currency_code": "USD", "language_code": "en-US" } } For a better
+// understanding, you can treat the preceding specification like the following
+// pseudo SQL: SELECT AD_SOURCE, APP, COUNTRY, OBSERVED_ECPM FROM
+// MEDIATION_REPORT WHERE DATE >= '2021-09-01' AND DATE <= '2021-09-30' AND
+// COUNTRY IN ('US', 'CN') GROUP BY AD_SOURCE, APP, COUNTRY ORDER BY APP ASC;
 type MediationReportSpec struct {
 	// DateRange: The date range for which the report is generated.
 	DateRange *DateRange `json:"dateRange,omitempty"`
-
 	// DimensionFilters: Describes which report rows to match based on their
 	// dimension values.
 	DimensionFilters []*MediationReportSpecDimensionFilter `json:"dimensionFilters,omitempty"`
-
-	// Dimensions: List of dimensions of the report. The value combination
-	// of these dimensions determines the row of the report. If no
-	// dimensions are specified, the report returns a single row of
-	// requested metrics for the entire account.
+	// Dimensions: List of dimensions of the report. The value combination of these
+	// dimensions determines the row of the report. If no dimensions are specified,
+	// the report returns a single row of requested metrics for the entire account.
 	//
 	// Possible values:
-	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
-	// use.
-	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
-	// Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
-	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
-	// (for example, "20210701"). Requests can specify at most one time
-	// dimension.
-	//   "AD_SOURCE" - The [unique ID of the ad
-	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
-	// and "AdMob Network" as label value).
+	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not use.
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701"). Requests
+	// can specify at most one time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107"). Requests
+	// can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format (for
+	// example, "20210701"). Requests can specify at most one time dimension.
+	//   "AD_SOURCE" - The [unique ID of the ad source](/admob/api/v1/ad_sources)
+	// (for example, "5450213213286189855" and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
-	// example, "ca-app-pub-1234:asi:5678" and "AdMob (default)" as label
-	// value).
+	// example, "ca-app-pub-1234:asi:5678" and "AdMob (default)" as label value).
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
-	// "ca-app-pub-1234/8790"). If AD_UNIT dimension is specified, then APP
-	// is included automatically.
+	// "ca-app-pub-1234/8790"). If AD_UNIT dimension is specified, then APP is
+	// included automatically.
 	//   "APP" - The unique ID of the mobile application (for example,
 	// "ca-app-pub-1234~1234").
-	//   "MEDIATION_GROUP" - The unique ID of the mediation group (for
-	// example, "ca-app-pub-1234:mg:1234" and "AdMob (default)" as label
-	// value).
-	//   "COUNTRY" - CLDR country code of the place where the ad
-	// views/clicks occur (for example, "US" or "FR"). This is a geography
-	// dimension.
-	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
-	// an ad delivery dimension.
-	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
-	// or "iOS").
-	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
-	// 13.5.1".
+	//   "MEDIATION_GROUP" - The unique ID of the mediation group (for example,
+	// "ca-app-pub-1234:mg:1234" and "AdMob (default)" as label value).
+	//   "COUNTRY" - CLDR country code of the place where the ad views/clicks occur
+	// (for example, "US" or "FR"). This is a geography dimension.
+	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"), an ad
+	// delivery dimension.
+	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android" or
+	// "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS 13.5.1".
 	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
-	//   "APP_VERSION_NAME" - For Android, the app version name can be found
-	// in versionName in PackageInfo. For iOS, the app version name can be
-	// found in CFBundleShortVersionString.
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found in
+	// versionName in PackageInfo. For iOS, the app version name can be found in
+	// CFBundleShortVersionString.
 	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
 	// "Non-personalized ads").
 	Dimensions []string `json:"dimensions,omitempty"`
-
 	// LocalizationSettings: Localization settings of the report.
 	LocalizationSettings *LocalizationSettings `json:"localizationSettings,omitempty"`
-
-	// MaxReportRows: Maximum number of report data rows to return. If the
-	// value is not set, the API returns as many rows as possible, up to
-	// 100000. Acceptable values are 1-100000, inclusive. Values larger than
-	// 100000 return an error.
+	// MaxReportRows: Maximum number of report data rows to return. If the value is
+	// not set, the API returns as many rows as possible, up to 100000. Acceptable
+	// values are 1-100000, inclusive. Values larger than 100000 return an error.
 	MaxReportRows int64 `json:"maxReportRows,omitempty"`
-
-	// Metrics: List of metrics of the report. A report must specify at
-	// least one metric.
+	// Metrics: List of metrics of the report. A report must specify at least one
+	// metric.
 	//
 	// Possible values:
-	//   "METRIC_UNSPECIFIED" - Default value for an unset field. Do not
-	// use.
+	//   "METRIC_UNSPECIFIED" - Default value for an unset field. Do not use.
 	//   "AD_REQUESTS" - The number of requests. The value is an integer.
 	//   "CLICKS" - The number of times a user clicks an ad. The value is an
 	// integer.
-	//   "ESTIMATED_EARNINGS" - The estimated earnings of the AdMob
-	// publisher. The currency unit (USD, EUR, or other) of the earning
-	// metrics are determined by the localization setting for currency. The
-	// amount is in micros. For example, $6.50 would be represented as
-	// 6500000. Estimated earnings per mediation group and per ad source
-	// instance level is supported dating back to October 20, 2019.
-	// Third-party estimated earnings will show 0 for dates prior to October
-	// 20, 2019.
-	//   "IMPRESSIONS" - The total number of ads shown to users. The value
-	// is an integer.
-	//   "IMPRESSION_CTR" - The ratio of clicks over impressions. The value
-	// is a double precision (approximate) decimal value.
-	//   "MATCHED_REQUESTS" - The number of times ads are returned in
-	// response to a request. The value is an integer.
+	//   "ESTIMATED_EARNINGS" - The estimated earnings of the AdMob publisher. The
+	// currency unit (USD, EUR, or other) of the earning metrics are determined by
+	// the localization setting for currency. The amount is in micros. For example,
+	// $6.50 would be represented as 6500000. Estimated earnings per mediation
+	// group and per ad source instance level is supported dating back to October
+	// 20, 2019. Third-party estimated earnings will show 0 for dates prior to
+	// October 20, 2019.
+	//   "IMPRESSIONS" - The total number of ads shown to users. The value is an
+	// integer.
+	//   "IMPRESSION_CTR" - The ratio of clicks over impressions. The value is a
+	// double precision (approximate) decimal value.
+	//   "MATCHED_REQUESTS" - The number of times ads are returned in response to a
+	// request. The value is an integer.
 	//   "MATCH_RATE" - The ratio of matched ad requests over the total ad
-	// requests. The value is a double precision (approximate) decimal
-	// value.
-	//   "OBSERVED_ECPM" - The third-party ad network's estimated average
-	// eCPM. The currency unit (USD, EUR, or other) of the earning metrics
-	// are determined by the localization setting for currency. The amount
-	// is in micros. For example, $2.30 would be represented as 2300000. The
-	// estimated average eCPM per mediation group and per ad source instance
-	// level is supported dating back to October 20, 2019. Third-party
-	// estimated average eCPM will show 0 for dates prior to October 20,
-	// 2019.
+	// requests. The value is a double precision (approximate) decimal value.
+	//   "OBSERVED_ECPM" - The third-party ad network's estimated average eCPM. The
+	// currency unit (USD, EUR, or other) of the earning metrics are determined by
+	// the localization setting for currency. The amount is in micros. For example,
+	// $2.30 would be represented as 2300000. The estimated average eCPM per
+	// mediation group and per ad source instance level is supported dating back to
+	// October 20, 2019. Third-party estimated average eCPM will show 0 for dates
+	// prior to October 20, 2019.
 	Metrics []string `json:"metrics,omitempty"`
-
-	// SortConditions: Describes the sorting of report rows. The order of
-	// the condition in the list defines its precedence; the earlier the
-	// condition, the higher its precedence. If no sort conditions are
-	// specified, the row ordering is undefined.
+	// SortConditions: Describes the sorting of report rows. The order of the
+	// condition in the list defines its precedence; the earlier the condition, the
+	// higher its precedence. If no sort conditions are specified, the row ordering
+	// is undefined.
 	SortConditions []*MediationReportSpecSortCondition `json:"sortConditions,omitempty"`
-
 	// TimeZone: A report time zone. Accepts an IANA TZ name values, such as
-	// "America/Los_Angeles." If no time zone is defined, the account
-	// default takes effect. Check default value by the get account action.
-	// **Warning:** The "America/Los_Angeles" is the only supported value at
-	// the moment.
+	// "America/Los_Angeles." If no time zone is defined, the account default takes
+	// effect. Check default value by the get account action. **Warning:** The
+	// "America/Los_Angeles" is the only supported value at the moment.
 	TimeZone string `json:"timeZone,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DateRange") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DateRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MediationReportSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod MediationReportSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MediationReportSpecDimensionFilter: Describes which report rows to
-// match based on their dimension values.
+// MediationReportSpecDimensionFilter: Describes which report rows to match
+// based on their dimension values.
 type MediationReportSpecDimensionFilter struct {
 	// Dimension: Applies the filter criterion to the specified dimension.
 	//
 	// Possible values:
-	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
-	// use.
-	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
-	// Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
-	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
-	// (for example, "20210701"). Requests can specify at most one time
-	// dimension.
-	//   "AD_SOURCE" - The [unique ID of the ad
-	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
-	// and "AdMob Network" as label value).
+	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not use.
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701"). Requests
+	// can specify at most one time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107"). Requests
+	// can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format (for
+	// example, "20210701"). Requests can specify at most one time dimension.
+	//   "AD_SOURCE" - The [unique ID of the ad source](/admob/api/v1/ad_sources)
+	// (for example, "5450213213286189855" and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
-	// example, "ca-app-pub-1234:asi:5678" and "AdMob (default)" as label
-	// value).
+	// example, "ca-app-pub-1234:asi:5678" and "AdMob (default)" as label value).
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
-	// "ca-app-pub-1234/8790"). If AD_UNIT dimension is specified, then APP
-	// is included automatically.
+	// "ca-app-pub-1234/8790"). If AD_UNIT dimension is specified, then APP is
+	// included automatically.
 	//   "APP" - The unique ID of the mobile application (for example,
 	// "ca-app-pub-1234~1234").
-	//   "MEDIATION_GROUP" - The unique ID of the mediation group (for
-	// example, "ca-app-pub-1234:mg:1234" and "AdMob (default)" as label
-	// value).
-	//   "COUNTRY" - CLDR country code of the place where the ad
-	// views/clicks occur (for example, "US" or "FR"). This is a geography
-	// dimension.
-	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
-	// an ad delivery dimension.
-	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
-	// or "iOS").
-	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
-	// 13.5.1".
+	//   "MEDIATION_GROUP" - The unique ID of the mediation group (for example,
+	// "ca-app-pub-1234:mg:1234" and "AdMob (default)" as label value).
+	//   "COUNTRY" - CLDR country code of the place where the ad views/clicks occur
+	// (for example, "US" or "FR"). This is a geography dimension.
+	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"), an ad
+	// delivery dimension.
+	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android" or
+	// "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS 13.5.1".
 	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
-	//   "APP_VERSION_NAME" - For Android, the app version name can be found
-	// in versionName in PackageInfo. For iOS, the app version name can be
-	// found in CFBundleShortVersionString.
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found in
+	// versionName in PackageInfo. For iOS, the app version name can be found in
+	// CFBundleShortVersionString.
 	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
 	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
-
-	// MatchesAny: Matches a row if its value for the specified dimension is
-	// in one of the values specified in this condition.
+	// MatchesAny: Matches a row if its value for the specified dimension is in one
+	// of the values specified in this condition.
 	MatchesAny *StringList `json:"matchesAny,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimension") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimension") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MediationReportSpecDimensionFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod MediationReportSpecDimensionFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MediationReportSpecSortCondition: Sorting direction to be applied on
-// a dimension or a metric.
+// MediationReportSpecSortCondition: Sorting direction to be applied on a
+// dimension or a metric.
 type MediationReportSpecSortCondition struct {
 	// Dimension: Sort by the specified dimension.
 	//
 	// Possible values:
-	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
-	// use.
-	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
-	// Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
-	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
-	// (for example, "20210701"). Requests can specify at most one time
-	// dimension.
-	//   "AD_SOURCE" - The [unique ID of the ad
-	// source](/admob/api/v1/ad_sources) (for example, "5450213213286189855"
-	// and "AdMob Network" as label value).
+	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not use.
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701"). Requests
+	// can specify at most one time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107"). Requests
+	// can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format (for
+	// example, "20210701"). Requests can specify at most one time dimension.
+	//   "AD_SOURCE" - The [unique ID of the ad source](/admob/api/v1/ad_sources)
+	// (for example, "5450213213286189855" and "AdMob Network" as label value).
 	//   "AD_SOURCE_INSTANCE" - The unique ID of the ad source instance (for
-	// example, "ca-app-pub-1234:asi:5678" and "AdMob (default)" as label
-	// value).
+	// example, "ca-app-pub-1234:asi:5678" and "AdMob (default)" as label value).
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
-	// "ca-app-pub-1234/8790"). If AD_UNIT dimension is specified, then APP
-	// is included automatically.
+	// "ca-app-pub-1234/8790"). If AD_UNIT dimension is specified, then APP is
+	// included automatically.
 	//   "APP" - The unique ID of the mobile application (for example,
 	// "ca-app-pub-1234~1234").
-	//   "MEDIATION_GROUP" - The unique ID of the mediation group (for
-	// example, "ca-app-pub-1234:mg:1234" and "AdMob (default)" as label
-	// value).
-	//   "COUNTRY" - CLDR country code of the place where the ad
-	// views/clicks occur (for example, "US" or "FR"). This is a geography
-	// dimension.
-	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
-	// an ad delivery dimension.
-	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
-	// or "iOS").
-	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
-	// 13.5.1".
+	//   "MEDIATION_GROUP" - The unique ID of the mediation group (for example,
+	// "ca-app-pub-1234:mg:1234" and "AdMob (default)" as label value).
+	//   "COUNTRY" - CLDR country code of the place where the ad views/clicks occur
+	// (for example, "US" or "FR"). This is a geography dimension.
+	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"), an ad
+	// delivery dimension.
+	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android" or
+	// "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS 13.5.1".
 	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
-	//   "APP_VERSION_NAME" - For Android, the app version name can be found
-	// in versionName in PackageInfo. For iOS, the app version name can be
-	// found in CFBundleShortVersionString.
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found in
+	// versionName in PackageInfo. For iOS, the app version name can be found in
+	// CFBundleShortVersionString.
 	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
 	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
-
 	// Metric: Sort by the specified metric.
 	//
 	// Possible values:
-	//   "METRIC_UNSPECIFIED" - Default value for an unset field. Do not
-	// use.
+	//   "METRIC_UNSPECIFIED" - Default value for an unset field. Do not use.
 	//   "AD_REQUESTS" - The number of requests. The value is an integer.
 	//   "CLICKS" - The number of times a user clicks an ad. The value is an
 	// integer.
-	//   "ESTIMATED_EARNINGS" - The estimated earnings of the AdMob
-	// publisher. The currency unit (USD, EUR, or other) of the earning
-	// metrics are determined by the localization setting for currency. The
-	// amount is in micros. For example, $6.50 would be represented as
-	// 6500000. Estimated earnings per mediation group and per ad source
-	// instance level is supported dating back to October 20, 2019.
-	// Third-party estimated earnings will show 0 for dates prior to October
-	// 20, 2019.
-	//   "IMPRESSIONS" - The total number of ads shown to users. The value
-	// is an integer.
-	//   "IMPRESSION_CTR" - The ratio of clicks over impressions. The value
-	// is a double precision (approximate) decimal value.
-	//   "MATCHED_REQUESTS" - The number of times ads are returned in
-	// response to a request. The value is an integer.
+	//   "ESTIMATED_EARNINGS" - The estimated earnings of the AdMob publisher. The
+	// currency unit (USD, EUR, or other) of the earning metrics are determined by
+	// the localization setting for currency. The amount is in micros. For example,
+	// $6.50 would be represented as 6500000. Estimated earnings per mediation
+	// group and per ad source instance level is supported dating back to October
+	// 20, 2019. Third-party estimated earnings will show 0 for dates prior to
+	// October 20, 2019.
+	//   "IMPRESSIONS" - The total number of ads shown to users. The value is an
+	// integer.
+	//   "IMPRESSION_CTR" - The ratio of clicks over impressions. The value is a
+	// double precision (approximate) decimal value.
+	//   "MATCHED_REQUESTS" - The number of times ads are returned in response to a
+	// request. The value is an integer.
 	//   "MATCH_RATE" - The ratio of matched ad requests over the total ad
-	// requests. The value is a double precision (approximate) decimal
-	// value.
-	//   "OBSERVED_ECPM" - The third-party ad network's estimated average
-	// eCPM. The currency unit (USD, EUR, or other) of the earning metrics
-	// are determined by the localization setting for currency. The amount
-	// is in micros. For example, $2.30 would be represented as 2300000. The
-	// estimated average eCPM per mediation group and per ad source instance
-	// level is supported dating back to October 20, 2019. Third-party
-	// estimated average eCPM will show 0 for dates prior to October 20,
-	// 2019.
+	// requests. The value is a double precision (approximate) decimal value.
+	//   "OBSERVED_ECPM" - The third-party ad network's estimated average eCPM. The
+	// currency unit (USD, EUR, or other) of the earning metrics are determined by
+	// the localization setting for currency. The amount is in micros. For example,
+	// $2.30 would be represented as 2300000. The estimated average eCPM per
+	// mediation group and per ad source instance level is supported dating back to
+	// October 20, 2019. Third-party estimated average eCPM will show 0 for dates
+	// prior to October 20, 2019.
 	Metric string `json:"metric,omitempty"`
-
 	// Order: Sorting order of the dimension or metric.
 	//
 	// Possible values:
-	//   "SORT_ORDER_UNSPECIFIED" - Default value for an unset field. Do not
-	// use.
-	//   "ASCENDING" - Sort dimension value or metric value in ascending
-	// order.
-	//   "DESCENDING" - Sort dimension value or metric value in descending
-	// order.
+	//   "SORT_ORDER_UNSPECIFIED" - Default value for an unset field. Do not use.
+	//   "ASCENDING" - Sort dimension value or metric value in ascending order.
+	//   "DESCENDING" - Sort dimension value or metric value in descending order.
 	Order string `json:"order,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimension") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimension") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MediationReportSpecSortCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod MediationReportSpecSortCondition
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// NetworkReportSpec: The specification for generating an AdMob Network
-// report. For example, the specification to get clicks and estimated
-// earnings for only the 'US' and 'CN' countries can look like the
-// following example: { 'date_range': { 'start_date': {'year': 2021,
-// 'month': 9, 'day': 1}, 'end_date': {'year': 2021, 'month': 9, 'day':
-// 30} }, 'dimensions': ['DATE', 'APP', 'COUNTRY'], 'metrics':
-// ['CLICKS', 'ESTIMATED_EARNINGS'], 'dimension_filters': [ {
-// 'dimension': 'COUNTRY', 'matches_any': {'values': [{'value': 'US',
-// 'value': 'CN'}]} } ], 'sort_conditions': [ {'dimension':'APP', order:
-// 'ASCENDING'}, {'metric':'CLICKS', order: 'DESCENDING'} ],
-// 'localization_settings': { 'currency_code': 'USD', 'language_code':
-// 'en-US' } } For a better understanding, you can treat the preceding
-// specification like the following pseudo SQL: SELECT DATE, APP,
+// NetworkReportSpec: The specification for generating an AdMob Network report.
+// For example, the specification to get clicks and estimated earnings for only
+// the 'US' and 'CN' countries can look like the following example: {
+// 'date_range': { 'start_date': {'year': 2021, 'month': 9, 'day': 1},
+// 'end_date': {'year': 2021, 'month': 9, 'day': 30} }, 'dimensions': ['DATE',
+// 'APP', 'COUNTRY'], 'metrics': ['CLICKS', 'ESTIMATED_EARNINGS'],
+// 'dimension_filters': [ { 'dimension': 'COUNTRY', 'matches_any': {'values':
+// [{'value': 'US', 'value': 'CN'}]} } ], 'sort_conditions': [
+// {'dimension':'APP', order: 'ASCENDING'}, {'metric':'CLICKS', order:
+// 'DESCENDING'} ], 'localization_settings': { 'currency_code': 'USD',
+// 'language_code': 'en-US' } } For a better understanding, you can treat the
+// preceding specification like the following pseudo SQL: SELECT DATE, APP,
 // COUNTRY, CLICKS, ESTIMATED_EARNINGS FROM NETWORK_REPORT WHERE DATE >=
-// '2021-09-01' AND DATE <= '2021-09-30' AND COUNTRY IN ('US', 'CN')
-// GROUP BY DATE, APP, COUNTRY ORDER BY APP ASC, CLICKS DESC;
+// '2021-09-01' AND DATE <= '2021-09-30' AND COUNTRY IN ('US', 'CN') GROUP BY
+// DATE, APP, COUNTRY ORDER BY APP ASC, CLICKS DESC;
 type NetworkReportSpec struct {
 	// DateRange: The date range for which the report is generated.
 	DateRange *DateRange `json:"dateRange,omitempty"`
-
 	// DimensionFilters: Describes which report rows to match based on their
 	// dimension values.
 	DimensionFilters []*NetworkReportSpecDimensionFilter `json:"dimensionFilters,omitempty"`
-
-	// Dimensions: List of dimensions of the report. The value combination
-	// of these dimensions determines the row of the report. If no
-	// dimensions are specified, the report returns a single row of
-	// requested metrics for the entire account.
+	// Dimensions: List of dimensions of the report. The value combination of these
+	// dimensions determines the row of the report. If no dimensions are specified,
+	// the report returns a single row of requested metrics for the entire account.
 	//
 	// Possible values:
-	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
-	// use.
-	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
-	// Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
-	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
-	// (for example, "20210701"). Requests can specify at most one time
-	// dimension.
+	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not use.
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701"). Requests
+	// can specify at most one time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107"). Requests
+	// can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format (for
+	// example, "20210701"). Requests can specify at most one time dimension.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
-	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP
-	// is included automatically.
+	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP is
+	// included automatically.
 	//   "APP" - The unique ID of the mobile application (for example,
 	// "ca-app-pub-1234~1234").
 	//   "AD_TYPE" - Type of the ad (for example, "text" or "image"), an ad
@@ -2311,122 +1886,102 @@ type NetworkReportSpec struct {
 	// [AD_REQUESTS](#Metric.ENUM_VALUES.AD_REQUESTS),
 	// [MATCH_RATE](#Metric.ENUM_VALUES.MATCH_RATE) and
 	// [IMPRESSION_RPM](#Metric.ENUM_VALUES.IMPRESSION_RPM) metrics.
-	//   "COUNTRY" - CLDR country code of the place where the ad
-	// views/clicks occur (for example, "US" or "FR"). This is a geography
-	// dimension.
-	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
-	// an ad delivery dimension.
-	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
-	// or "iOS").
-	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
-	// 13.5.1".
+	//   "COUNTRY" - CLDR country code of the place where the ad views/clicks occur
+	// (for example, "US" or "FR"). This is a geography dimension.
+	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"), an ad
+	// delivery dimension.
+	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android" or
+	// "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS 13.5.1".
 	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
-	//   "APP_VERSION_NAME" - For Android, the app version name can be found
-	// in versionName in PackageInfo. For iOS, the app version name can be
-	// found in CFBundleShortVersionString.
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found in
+	// versionName in PackageInfo. For iOS, the app version name can be found in
+	// CFBundleShortVersionString.
 	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
 	// "Non-personalized ads").
 	Dimensions []string `json:"dimensions,omitempty"`
-
 	// LocalizationSettings: Localization settings of the report.
 	LocalizationSettings *LocalizationSettings `json:"localizationSettings,omitempty"`
-
-	// MaxReportRows: Maximum number of report data rows to return. If the
-	// value is not set, the API returns as many rows as possible, up to
-	// 100000. Acceptable values are 1-100000, inclusive. Values larger than
-	// 100000 return an error.
+	// MaxReportRows: Maximum number of report data rows to return. If the value is
+	// not set, the API returns as many rows as possible, up to 100000. Acceptable
+	// values are 1-100000, inclusive. Values larger than 100000 return an error.
 	MaxReportRows int64 `json:"maxReportRows,omitempty"`
-
-	// Metrics: List of metrics of the report. A report must specify at
-	// least one metric.
+	// Metrics: List of metrics of the report. A report must specify at least one
+	// metric.
 	//
 	// Possible values:
-	//   "METRIC_UNSPECIFIED" - Default value for an unset field. Do not
-	// use.
+	//   "METRIC_UNSPECIFIED" - Default value for an unset field. Do not use.
 	//   "AD_REQUESTS" - The number of ad requests. The value is an integer.
 	// **Warning:** The metric is incompatible with
 	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
 	//   "CLICKS" - The number of times a user clicks an ad. The value is an
 	// integer.
-	//   "ESTIMATED_EARNINGS" - The estimated earnings of the AdMob
-	// publisher. The currency unit (USD, EUR, or other) of the earning
-	// metrics are determined by the localization setting for currency. The
-	// amount is in micros. For example, $6.50 would be represented as
-	// 6500000.
-	//   "IMPRESSIONS" - The total number of ads shown to users. The value
-	// is an integer.
-	//   "IMPRESSION_CTR" - The ratio of clicks over impressions. The value
-	// is a double precision (approximate) decimal value.
-	//   "IMPRESSION_RPM" - The estimated earnings per thousand ad
-	// impressions. The value is in micros. For example, $1.03 would be
-	// represented as 1030000. Equivalent to eCPM in the AdMob UI.
+	//   "ESTIMATED_EARNINGS" - The estimated earnings of the AdMob publisher. The
+	// currency unit (USD, EUR, or other) of the earning metrics are determined by
+	// the localization setting for currency. The amount is in micros. For example,
+	// $6.50 would be represented as 6500000.
+	//   "IMPRESSIONS" - The total number of ads shown to users. The value is an
+	// integer.
+	//   "IMPRESSION_CTR" - The ratio of clicks over impressions. The value is a
+	// double precision (approximate) decimal value.
+	//   "IMPRESSION_RPM" - The estimated earnings per thousand ad impressions. The
+	// value is in micros. For example, $1.03 would be represented as 1030000.
+	// Equivalent to eCPM in the AdMob UI. **Warning:** The metric is incompatible
+	// with [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
+	//   "MATCHED_REQUESTS" - The number of times ads are returned in response to a
+	// request. The value is an integer.
+	//   "MATCH_RATE" - The ratio of matched ad requests over the total ad
+	// requests. The value is a double precision (approximate) decimal value.
 	// **Warning:** The metric is incompatible with
 	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
-	//   "MATCHED_REQUESTS" - The number of times ads are returned in
-	// response to a request. The value is an integer.
-	//   "MATCH_RATE" - The ratio of matched ad requests over the total ad
-	// requests. The value is a double precision (approximate) decimal
-	// value. **Warning:** The metric is incompatible with
-	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
 	//   "SHOW_RATE" - The ratio of ads that are displayed over ads that are
-	// returned, defined as impressions / matched requests. The value is a
-	// double precision (approximate) decimal value.
+	// returned, defined as impressions / matched requests. The value is a double
+	// precision (approximate) decimal value.
 	Metrics []string `json:"metrics,omitempty"`
-
-	// SortConditions: Describes the sorting of report rows. The order of
-	// the condition in the list defines its precedence; the earlier the
-	// condition, the higher its precedence. If no sort conditions are
-	// specified, the row ordering is undefined.
+	// SortConditions: Describes the sorting of report rows. The order of the
+	// condition in the list defines its precedence; the earlier the condition, the
+	// higher its precedence. If no sort conditions are specified, the row ordering
+	// is undefined.
 	SortConditions []*NetworkReportSpecSortCondition `json:"sortConditions,omitempty"`
-
 	// TimeZone: A report time zone. Accepts an IANA TZ name values, such as
-	// "America/Los_Angeles." If no time zone is defined, the account
-	// default takes effect. Check default value by the get account action.
-	// **Warning:** The "America/Los_Angeles" is the only supported value at
-	// the moment.
+	// "America/Los_Angeles." If no time zone is defined, the account default takes
+	// effect. Check default value by the get account action. **Warning:** The
+	// "America/Los_Angeles" is the only supported value at the moment.
 	TimeZone string `json:"timeZone,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DateRange") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DateRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *NetworkReportSpec) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkReportSpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// NetworkReportSpecDimensionFilter: Describes which report rows to
-// match based on their dimension values.
+// NetworkReportSpecDimensionFilter: Describes which report rows to match based
+// on their dimension values.
 type NetworkReportSpecDimensionFilter struct {
 	// Dimension: Applies the filter criterion to the specified dimension.
 	//
 	// Possible values:
-	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
-	// use.
-	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
-	// Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
-	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
-	// (for example, "20210701"). Requests can specify at most one time
-	// dimension.
+	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not use.
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701"). Requests
+	// can specify at most one time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107"). Requests
+	// can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format (for
+	// example, "20210701"). Requests can specify at most one time dimension.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
-	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP
-	// is included automatically.
+	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP is
+	// included automatically.
 	//   "APP" - The unique ID of the mobile application (for example,
 	// "ca-app-pub-1234~1234").
 	//   "AD_TYPE" - Type of the ad (for example, "text" or "image"), an ad
@@ -2434,48 +1989,39 @@ type NetworkReportSpecDimensionFilter struct {
 	// [AD_REQUESTS](#Metric.ENUM_VALUES.AD_REQUESTS),
 	// [MATCH_RATE](#Metric.ENUM_VALUES.MATCH_RATE) and
 	// [IMPRESSION_RPM](#Metric.ENUM_VALUES.IMPRESSION_RPM) metrics.
-	//   "COUNTRY" - CLDR country code of the place where the ad
-	// views/clicks occur (for example, "US" or "FR"). This is a geography
-	// dimension.
-	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
-	// an ad delivery dimension.
-	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
-	// or "iOS").
-	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
-	// 13.5.1".
+	//   "COUNTRY" - CLDR country code of the place where the ad views/clicks occur
+	// (for example, "US" or "FR"). This is a geography dimension.
+	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"), an ad
+	// delivery dimension.
+	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android" or
+	// "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS 13.5.1".
 	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
-	//   "APP_VERSION_NAME" - For Android, the app version name can be found
-	// in versionName in PackageInfo. For iOS, the app version name can be
-	// found in CFBundleShortVersionString.
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found in
+	// versionName in PackageInfo. For iOS, the app version name can be found in
+	// CFBundleShortVersionString.
 	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
 	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
-
-	// MatchesAny: Matches a row if its value for the specified dimension is
-	// in one of the values specified in this condition.
+	// MatchesAny: Matches a row if its value for the specified dimension is in one
+	// of the values specified in this condition.
 	MatchesAny *StringList `json:"matchesAny,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimension") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimension") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *NetworkReportSpecDimensionFilter) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkReportSpecDimensionFilter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // NetworkReportSpecSortCondition: Sorting direction to be applied on a
@@ -2484,18 +2030,16 @@ type NetworkReportSpecSortCondition struct {
 	// Dimension: Sort by the specified dimension.
 	//
 	// Possible values:
-	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not
-	// use.
-	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701").
-	// Requests can specify at most one time dimension.
-	//   "MONTH" - A month in the YYYYMM format (for example, "202107").
-	// Requests can specify at most one time dimension.
-	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format
-	// (for example, "20210701"). Requests can specify at most one time
-	// dimension.
+	//   "DIMENSION_UNSPECIFIED" - Default value for an unset field. Do not use.
+	//   "DATE" - A date in the YYYYMMDD format (for example, "20210701"). Requests
+	// can specify at most one time dimension.
+	//   "MONTH" - A month in the YYYYMM format (for example, "202107"). Requests
+	// can specify at most one time dimension.
+	//   "WEEK" - The date of the first day of a week in the YYYYMMDD format (for
+	// example, "20210701"). Requests can specify at most one time dimension.
 	//   "AD_UNIT" - The unique ID of the ad unit (for example,
-	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP
-	// is included automatically.
+	// "ca-app-pub-1234/1234"). If AD_UNIT dimension is specified, then APP is
+	// included automatically.
 	//   "APP" - The unique ID of the mobile application (for example,
 	// "ca-app-pub-1234~1234").
 	//   "AD_TYPE" - Type of the ad (for example, "text" or "image"), an ad
@@ -2503,247 +2047,196 @@ type NetworkReportSpecSortCondition struct {
 	// [AD_REQUESTS](#Metric.ENUM_VALUES.AD_REQUESTS),
 	// [MATCH_RATE](#Metric.ENUM_VALUES.MATCH_RATE) and
 	// [IMPRESSION_RPM](#Metric.ENUM_VALUES.IMPRESSION_RPM) metrics.
-	//   "COUNTRY" - CLDR country code of the place where the ad
-	// views/clicks occur (for example, "US" or "FR"). This is a geography
-	// dimension.
-	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"),
-	// an ad delivery dimension.
-	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android"
-	// or "iOS").
-	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS
-	// 13.5.1".
+	//   "COUNTRY" - CLDR country code of the place where the ad views/clicks occur
+	// (for example, "US" or "FR"). This is a geography dimension.
+	//   "FORMAT" - Format of the ad unit (for example, "banner", "native"), an ad
+	// delivery dimension.
+	//   "PLATFORM" - Mobile OS platform of the app (for example, "Android" or
+	// "iOS").
+	//   "MOBILE_OS_VERSION" - Mobile operating system version, e.g. "iOS 13.5.1".
 	//   "GMA_SDK_VERSION" - GMA SDK version, e.g. "iOS 7.62.0".
-	//   "APP_VERSION_NAME" - For Android, the app version name can be found
-	// in versionName in PackageInfo. For iOS, the app version name can be
-	// found in CFBundleShortVersionString.
+	//   "APP_VERSION_NAME" - For Android, the app version name can be found in
+	// versionName in PackageInfo. For iOS, the app version name can be found in
+	// CFBundleShortVersionString.
 	//   "SERVING_RESTRICTION" - Restriction mode for ads serving (e.g.
 	// "Non-personalized ads").
 	Dimension string `json:"dimension,omitempty"`
-
 	// Metric: Sort by the specified metric.
 	//
 	// Possible values:
-	//   "METRIC_UNSPECIFIED" - Default value for an unset field. Do not
-	// use.
+	//   "METRIC_UNSPECIFIED" - Default value for an unset field. Do not use.
 	//   "AD_REQUESTS" - The number of ad requests. The value is an integer.
 	// **Warning:** The metric is incompatible with
 	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
 	//   "CLICKS" - The number of times a user clicks an ad. The value is an
 	// integer.
-	//   "ESTIMATED_EARNINGS" - The estimated earnings of the AdMob
-	// publisher. The currency unit (USD, EUR, or other) of the earning
-	// metrics are determined by the localization setting for currency. The
-	// amount is in micros. For example, $6.50 would be represented as
-	// 6500000.
-	//   "IMPRESSIONS" - The total number of ads shown to users. The value
-	// is an integer.
-	//   "IMPRESSION_CTR" - The ratio of clicks over impressions. The value
-	// is a double precision (approximate) decimal value.
-	//   "IMPRESSION_RPM" - The estimated earnings per thousand ad
-	// impressions. The value is in micros. For example, $1.03 would be
-	// represented as 1030000. Equivalent to eCPM in the AdMob UI.
+	//   "ESTIMATED_EARNINGS" - The estimated earnings of the AdMob publisher. The
+	// currency unit (USD, EUR, or other) of the earning metrics are determined by
+	// the localization setting for currency. The amount is in micros. For example,
+	// $6.50 would be represented as 6500000.
+	//   "IMPRESSIONS" - The total number of ads shown to users. The value is an
+	// integer.
+	//   "IMPRESSION_CTR" - The ratio of clicks over impressions. The value is a
+	// double precision (approximate) decimal value.
+	//   "IMPRESSION_RPM" - The estimated earnings per thousand ad impressions. The
+	// value is in micros. For example, $1.03 would be represented as 1030000.
+	// Equivalent to eCPM in the AdMob UI. **Warning:** The metric is incompatible
+	// with [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
+	//   "MATCHED_REQUESTS" - The number of times ads are returned in response to a
+	// request. The value is an integer.
+	//   "MATCH_RATE" - The ratio of matched ad requests over the total ad
+	// requests. The value is a double precision (approximate) decimal value.
 	// **Warning:** The metric is incompatible with
 	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
-	//   "MATCHED_REQUESTS" - The number of times ads are returned in
-	// response to a request. The value is an integer.
-	//   "MATCH_RATE" - The ratio of matched ad requests over the total ad
-	// requests. The value is a double precision (approximate) decimal
-	// value. **Warning:** The metric is incompatible with
-	// [AD_TYPE](#Dimension.ENUM_VALUES.AD_TYPE) dimension.
 	//   "SHOW_RATE" - The ratio of ads that are displayed over ads that are
-	// returned, defined as impressions / matched requests. The value is a
-	// double precision (approximate) decimal value.
+	// returned, defined as impressions / matched requests. The value is a double
+	// precision (approximate) decimal value.
 	Metric string `json:"metric,omitempty"`
-
 	// Order: Sorting order of the dimension or metric.
 	//
 	// Possible values:
-	//   "SORT_ORDER_UNSPECIFIED" - Default value for an unset field. Do not
-	// use.
-	//   "ASCENDING" - Sort dimension value or metric value in ascending
-	// order.
-	//   "DESCENDING" - Sort dimension value or metric value in descending
-	// order.
+	//   "SORT_ORDER_UNSPECIFIED" - Default value for an unset field. Do not use.
+	//   "ASCENDING" - Sort dimension value or metric value in ascending order.
+	//   "DESCENDING" - Sort dimension value or metric value in descending order.
 	Order string `json:"order,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimension") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimension") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *NetworkReportSpecSortCondition) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkReportSpecSortCondition
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PublisherAccount: A publisher account contains information relevant
-// to the use of this API, such as the time zone used for the reports.
+// PublisherAccount: A publisher account contains information relevant to the
+// use of this API, such as the time zone used for the reports.
 type PublisherAccount struct {
-	// CurrencyCode: Currency code of the earning-related metrics, which is
-	// the 3-letter code defined in ISO 4217. The daily average rate is used
-	// for the currency conversion.
+	// CurrencyCode: Currency code of the earning-related metrics, which is the
+	// 3-letter code defined in ISO 4217. The daily average rate is used for the
+	// currency conversion.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// Name: Resource name of this account. Format is
-	// accounts/{publisher_id}.
+	// Name: Resource name of this account. Format is accounts/{publisher_id}.
 	Name string `json:"name,omitempty"`
-
-	// PublisherId: The unique ID by which this publisher account can be
-	// identified in the API requests (for example, pub-1234567890).
+	// PublisherId: The unique ID by which this publisher account can be identified
+	// in the API requests (for example, pub-1234567890).
 	PublisherId string `json:"publisherId,omitempty"`
-
-	// ReportingTimeZone: The time zone that is used in reports that are
-	// generated for this account. The value is a time-zone ID as specified
-	// by the CLDR project, for example, "America/Los_Angeles".
+	// ReportingTimeZone: The time zone that is used in reports that are generated
+	// for this account. The value is a time-zone ID as specified by the CLDR
+	// project, for example, "America/Los_Angeles".
 	ReportingTimeZone string `json:"reportingTimeZone,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrencyCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PublisherAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod PublisherAccount
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ReportFooter: Groups data available after report generation, for
-// example, warnings and row counts. Always sent as the last message in
-// the stream response.
+// ReportFooter: Groups data available after report generation, for example,
+// warnings and row counts. Always sent as the last message in the stream
+// response.
 type ReportFooter struct {
-	// MatchingRowCount: Total number of rows that matched the request.
-	// Warning: This count does NOT always match the number of rows in the
-	// response. Do not make that assumption when processing the response.
+	// MatchingRowCount: Total number of rows that matched the request. Warning:
+	// This count does NOT always match the number of rows in the response. Do not
+	// make that assumption when processing the response.
 	MatchingRowCount int64 `json:"matchingRowCount,omitempty,string"`
-
 	// Warnings: Warnings associated with generation of the report.
 	Warnings []*ReportWarning `json:"warnings,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MatchingRowCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MatchingRowCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MatchingRowCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ReportFooter) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportFooter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ReportHeader: Groups data helps to treat the generated report. Always
-// sent as a first message in the stream response.
+// ReportHeader: Groups data helps to treat the generated report. Always sent
+// as a first message in the stream response.
 type ReportHeader struct {
 	// DateRange: The date range for which the report is generated. This is
 	// identical to the range specified in the report request.
 	DateRange *DateRange `json:"dateRange,omitempty"`
-
-	// LocalizationSettings: Localization settings of the report. This is
-	// identical to the settings in the report request.
+	// LocalizationSettings: Localization settings of the report. This is identical
+	// to the settings in the report request.
 	LocalizationSettings *LocalizationSettings `json:"localizationSettings,omitempty"`
-
-	// ReportingTimeZone: The report time zone. The value is a time-zone ID
-	// as specified by the CLDR project, for example, "America/Los_Angeles".
+	// ReportingTimeZone: The report time zone. The value is a time-zone ID as
+	// specified by the CLDR project, for example, "America/Los_Angeles".
 	ReportingTimeZone string `json:"reportingTimeZone,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DateRange") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DateRange") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DateRange") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ReportHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportHeader
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportRow: A row of the returning report.
 type ReportRow struct {
-	// DimensionValues: Map of dimension values in a row, with keys as enum
-	// name of the dimensions.
+	// DimensionValues: Map of dimension values in a row, with keys as enum name of
+	// the dimensions.
 	DimensionValues map[string]ReportRowDimensionValue `json:"dimensionValues,omitempty"`
-
-	// MetricValues: Map of metric values in a row, with keys as enum name
-	// of the metrics. If a metric being requested has no value returned,
-	// the map will not include it.
+	// MetricValues: Map of metric values in a row, with keys as enum name of the
+	// metrics. If a metric being requested has no value returned, the map will not
+	// include it.
 	MetricValues map[string]ReportRowMetricValue `json:"metricValues,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionValues") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionValues") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DimensionValues") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ReportRow) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportRow
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportRowDimensionValue: Representation of a dimension value.
@@ -2751,69 +2244,54 @@ type ReportRowDimensionValue struct {
 	// DisplayLabel: The localized string representation of the value. If
 	// unspecified, the display label should be derived from the value.
 	DisplayLabel string `json:"displayLabel,omitempty"`
-
 	// Value: Dimension value in the format specified in the report's spec
 	// Dimension enum.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayLabel") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayLabel") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayLabel") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ReportRowDimensionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportRowDimensionValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ReportRowMetricValue: Representation of a metric value.
 type ReportRowMetricValue struct {
-	// DoubleValue: Double precision (approximate) decimal values. Rates are
-	// from 0 to 1.
+	// DoubleValue: Double precision (approximate) decimal values. Rates are from 0
+	// to 1.
 	DoubleValue float64 `json:"doubleValue,omitempty"`
-
 	// IntegerValue: Metric integer value.
 	IntegerValue int64 `json:"integerValue,omitempty,string"`
-
 	// MicrosValue: Amount in micros. One million is equivalent to one unit.
-	// Currency value is in the unit (USD, EUR or other) specified by the
-	// request. For example, $6.50 whould be represented as 6500000 micros.
+	// Currency value is in the unit (USD, EUR or other) specified by the request.
+	// For example, $6.50 whould be represented as 6500000 micros.
 	MicrosValue int64 `json:"microsValue,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "DoubleValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DoubleValue") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DoubleValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ReportRowMetricValue) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportRowMetricValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ReportRowMetricValue) UnmarshalJSON(data []byte) error {
@@ -2832,52 +2310,44 @@ func (s *ReportRowMetricValue) UnmarshalJSON(data []byte) error {
 
 // ReportWarning: Warnings associated with generation of the report.
 type ReportWarning struct {
-	// Description: Describes the details of the warning message, in
-	// English.
+	// Description: Describes the details of the warning message, in English.
 	Description string `json:"description,omitempty"`
-
 	// Type: Type of the warning.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value for an unset field. Do not use.
 	//   "DATA_BEFORE_ACCOUNT_TIMEZONE_CHANGE" - Some data in this report is
-	// aggregated based on a time zone different from the requested time
-	// zone. This could happen if a local time-zone report has the start
-	// time before the last time this time zone changed. The description
-	// field will contain the date of the last time zone change.
-	//   "DATA_DELAYED" - There is an unusual delay in processing the source
-	// data for the requested date range. The report results might be less
-	// up to date than usual. AdMob is aware of the issue and is actively
-	// working to resolve it.
-	//   "OTHER" - Warnings that are exposed without a specific type. Useful
-	// when new warning types are added but the API is not changed yet.
-	//   "REPORT_CURRENCY_NOT_ACCOUNT_CURRENCY" - The currency being
-	// requested is not the account currency. The earning metrics will be
-	// based on the requested currency, and thus not a good estimation of
-	// the final payment anymore, due to the currency rate fluctuation.
+	// aggregated based on a time zone different from the requested time zone. This
+	// could happen if a local time-zone report has the start time before the last
+	// time this time zone changed. The description field will contain the date of
+	// the last time zone change.
+	//   "DATA_DELAYED" - There is an unusual delay in processing the source data
+	// for the requested date range. The report results might be less up to date
+	// than usual. AdMob is aware of the issue and is actively working to resolve
+	// it.
+	//   "OTHER" - Warnings that are exposed without a specific type. Useful when
+	// new warning types are added but the API is not changed yet.
+	//   "REPORT_CURRENCY_NOT_ACCOUNT_CURRENCY" - The currency being requested is
+	// not the account currency. The earning metrics will be based on the requested
+	// currency, and thus not a good estimation of the final payment anymore, due
+	// to the currency rate fluctuation.
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ReportWarning) MarshalJSON() ([]byte, error) {
 	type NoMethod ReportWarning
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // StopMediationAbExperimentRequest: Request to end the mediation A/B
@@ -2886,68 +2356,53 @@ type StopMediationAbExperimentRequest struct {
 	// VariantChoice: The choice for the winning variant.
 	//
 	// Possible values:
-	//   "VARIANT_CHOICE_UNSPECIFIED" - Default value for an unset field. Do
-	// not use.
-	//   "VARIANT_CHOICE_A" - Use the mediation lines from Variant A and
-	// complete the experiment. Variant A contains the original serving
-	// lines before the experiment creation.
-	//   "VARIANT_CHOICE_B" - Use the mediation lines form Variant B and
-	// complete the experiment. Variant B contains the newly added serving
-	// lines.
+	//   "VARIANT_CHOICE_UNSPECIFIED" - Default value for an unset field. Do not
+	// use.
+	//   "VARIANT_CHOICE_A" - Use the mediation lines from Variant A and complete
+	// the experiment. Variant A contains the original serving lines before the
+	// experiment creation.
+	//   "VARIANT_CHOICE_B" - Use the mediation lines form Variant B and complete
+	// the experiment. Variant B contains the newly added serving lines.
 	VariantChoice string `json:"variantChoice,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "VariantChoice") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "VariantChoice") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "VariantChoice") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StopMediationAbExperimentRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod StopMediationAbExperimentRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // StringList: List of string values.
 type StringList struct {
 	// Values: The string values.
 	Values []string `json:"values,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Values") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Values") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Values") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StringList) MarshalJSON() ([]byte, error) {
 	type NoMethod StringList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "admob.accounts.get":
 
 type AccountsGetCall struct {
 	s            *Service
@@ -2969,33 +2424,29 @@ func (r *AccountsService) Get(name string) *AccountsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsGetCall) IfNoneMatch(entityTag string) *AccountsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsGetCall) Context(ctx context.Context) *AccountsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3004,12 +2455,7 @@ func (c *AccountsGetCall) Header() http.Header {
 }
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3030,12 +2476,11 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "admob.accounts.get" call.
-// Exactly one of *PublisherAccount or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *PublisherAccount.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *PublisherAccount.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*PublisherAccount, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3066,37 +2511,7 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*PublisherAccount, e
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets information about the specified AdMob publisher account.",
-	//   "flatPath": "v1beta/accounts/{accountsId}",
-	//   "httpMethod": "GET",
-	//   "id": "admob.accounts.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Resource name of the publisher account to retrieve. Example: accounts/pub-9876543210987654",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "response": {
-	//     "$ref": "PublisherAccount"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admob.readonly",
-	//     "https://www.googleapis.com/auth/admob.report"
-	//   ],
-	//   "streamingType": "NONE"
-	// }
-
 }
-
-// method id "admob.accounts.list":
 
 type AccountsListCall struct {
 	s            *Service
@@ -3106,58 +2521,54 @@ type AccountsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the AdMob publisher account that was most recently signed
-// in to from the AdMob UI. For more information, see
+// List: Lists the AdMob publisher account that was most recently signed in to
+// from the AdMob UI. For more information, see
 // https://support.google.com/admob/answer/10243672.
 func (r *AccountsService) List() *AccountsListCall {
 	c := &AccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum number of
-// accounts to return.
+// PageSize sets the optional parameter "pageSize": Maximum number of accounts
+// to return.
 func (c *AccountsListCall) PageSize(pageSize int64) *AccountsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListPublisherAccountsResponse`; indicates that this is a
-// continuation of a prior `ListPublisherAccounts` call, and that the
-// system should return the next page of data.
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListPublisherAccountsResponse`; indicates that this is a continuation
+// of a prior `ListPublisherAccounts` call, and that the system should return
+// the next page of data.
 func (c *AccountsListCall) PageToken(pageToken string) *AccountsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsListCall) IfNoneMatch(entityTag string) *AccountsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsListCall) Context(ctx context.Context) *AccountsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3166,12 +2577,7 @@ func (c *AccountsListCall) Header() http.Header {
 }
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3189,12 +2595,11 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "admob.accounts.list" call.
-// Exactly one of *ListPublisherAccountsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListPublisherAccountsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPublisherAccountsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListPublisherAccountsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3225,36 +2630,6 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListPublisherAccou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the AdMob publisher account that was most recently signed in to from the AdMob UI. For more information, see https://support.google.com/admob/answer/10243672.",
-	//   "flatPath": "v1beta/accounts",
-	//   "httpMethod": "GET",
-	//   "id": "admob.accounts.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Maximum number of accounts to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The value returned by the last `ListPublisherAccountsResponse`; indicates that this is a continuation of a prior `ListPublisherAccounts` call, and that the system should return the next page of data.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/accounts",
-	//   "response": {
-	//     "$ref": "ListPublisherAccountsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admob.readonly",
-	//     "https://www.googleapis.com/auth/admob.report"
-	//   ],
-	//   "streamingType": "NONE"
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3262,7 +2637,7 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListPublisherAccou
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsListCall) Pages(ctx context.Context, f func(*ListPublisherAccountsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3278,8 +2653,6 @@ func (c *AccountsListCall) Pages(ctx context.Context, f func(*ListPublisherAccou
 	}
 }
 
-// method id "admob.accounts.adSources.list":
-
 type AccountsAdSourcesListCall struct {
 	s            *Service
 	parent       string
@@ -3291,59 +2664,55 @@ type AccountsAdSourcesListCall struct {
 
 // List: List the ad sources.
 //
-//   - parent: The parent which owns this collection of ad sources.
-//     Format: accounts/{publisher_id}.
+//   - parent: The parent which owns this collection of ad sources. Format:
+//     accounts/{publisher_id}.
 func (r *AccountsAdSourcesService) List(parent string) *AccountsAdSourcesListCall {
 	c := &AccountsAdSourcesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of ad sources to return. If unspecified or 0, at most 10,000 ad
-// sources will be returned. The maximum value is 20,000; values above
-// 10,000 will be coerced to 20,000.
+// PageSize sets the optional parameter "pageSize": The maximum number of ad
+// sources to return. If unspecified or 0, at most 10,000 ad sources will be
+// returned. The maximum value is 20,000; values above 10,000 will be coerced
+// to 20,000.
 func (c *AccountsAdSourcesListCall) PageSize(pageSize int64) *AccountsAdSourcesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListAdSources` call. Provide this to
-// retrieve the subsequent page.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAdSources` call. Provide this to retrieve the
+// subsequent page.
 func (c *AccountsAdSourcesListCall) PageToken(pageToken string) *AccountsAdSourcesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsAdSourcesListCall) Fields(s ...googleapi.Field) *AccountsAdSourcesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsAdSourcesListCall) IfNoneMatch(entityTag string) *AccountsAdSourcesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsAdSourcesListCall) Context(ctx context.Context) *AccountsAdSourcesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsAdSourcesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3352,12 +2721,7 @@ func (c *AccountsAdSourcesListCall) Header() http.Header {
 }
 
 func (c *AccountsAdSourcesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3378,12 +2742,11 @@ func (c *AccountsAdSourcesListCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "admob.accounts.adSources.list" call.
-// Exactly one of *ListAdSourcesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListAdSourcesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAdSourcesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsAdSourcesListCall) Do(opts ...googleapi.CallOption) (*ListAdSourcesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3414,45 +2777,6 @@ func (c *AccountsAdSourcesListCall) Do(opts ...googleapi.CallOption) (*ListAdSou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List the ad sources.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/adSources",
-	//   "httpMethod": "GET",
-	//   "id": "admob.accounts.adSources.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of ad sources to return. If unspecified or 0, at most 10,000 ad sources will be returned. The maximum value is 20,000; values above 10,000 will be coerced to 20,000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListAdSources` call. Provide this to retrieve the subsequent page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent which owns this collection of ad sources. Format: accounts/{publisher_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/adSources",
-	//   "response": {
-	//     "$ref": "ListAdSourcesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admob.readonly",
-	//     "https://www.googleapis.com/auth/admob.report"
-	//   ],
-	//   "streamingType": "NONE"
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3460,7 +2784,7 @@ func (c *AccountsAdSourcesListCall) Do(opts ...googleapi.CallOption) (*ListAdSou
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsAdSourcesListCall) Pages(ctx context.Context, f func(*ListAdSourcesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3475,8 +2799,6 @@ func (c *AccountsAdSourcesListCall) Pages(ctx context.Context, f func(*ListAdSou
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "admob.accounts.adSources.adapters.list":
 
 type AccountsAdSourcesAdaptersListCall struct {
 	s            *Service
@@ -3497,51 +2819,47 @@ func (r *AccountsAdSourcesAdaptersService) List(parent string) *AccountsAdSource
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of adapters to return. If unspecified or 0, at most 10,000 adapters
-// will be returned. The maximum value is 20,000; values above 20,000
-// will be coerced to 20,000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// adapters to return. If unspecified or 0, at most 10,000 adapters will be
+// returned. The maximum value is 20,000; values above 20,000 will be coerced
+// to 20,000.
 func (c *AccountsAdSourcesAdaptersListCall) PageSize(pageSize int64) *AccountsAdSourcesAdaptersListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListAdapters` call. Provide this to
-// retrieve the subsequent page.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAdapters` call. Provide this to retrieve the subsequent
+// page.
 func (c *AccountsAdSourcesAdaptersListCall) PageToken(pageToken string) *AccountsAdSourcesAdaptersListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsAdSourcesAdaptersListCall) Fields(s ...googleapi.Field) *AccountsAdSourcesAdaptersListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsAdSourcesAdaptersListCall) IfNoneMatch(entityTag string) *AccountsAdSourcesAdaptersListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsAdSourcesAdaptersListCall) Context(ctx context.Context) *AccountsAdSourcesAdaptersListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsAdSourcesAdaptersListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3550,12 +2868,7 @@ func (c *AccountsAdSourcesAdaptersListCall) Header() http.Header {
 }
 
 func (c *AccountsAdSourcesAdaptersListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3576,12 +2889,11 @@ func (c *AccountsAdSourcesAdaptersListCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "admob.accounts.adSources.adapters.list" call.
-// Exactly one of *ListAdaptersResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListAdaptersResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAdaptersResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsAdSourcesAdaptersListCall) Do(opts ...googleapi.CallOption) (*ListAdaptersResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3612,44 +2924,6 @@ func (c *AccountsAdSourcesAdaptersListCall) Do(opts ...googleapi.CallOption) (*L
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List the adapters of the ad source.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/adSources/{adSourcesId}/adapters",
-	//   "httpMethod": "GET",
-	//   "id": "admob.accounts.adSources.adapters.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of adapters to return. If unspecified or 0, at most 10,000 adapters will be returned. The maximum value is 20,000; values above 20,000 will be coerced to 20,000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListAdapters` call. Provide this to retrieve the subsequent page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent which owns this collection of adapters. Format: accounts/{publisher_id}/adSources/{ad_source_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/adSources/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/adapters",
-	//   "response": {
-	//     "$ref": "ListAdaptersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admob.readonly"
-	//   ],
-	//   "streamingType": "NONE"
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3657,7 +2931,7 @@ func (c *AccountsAdSourcesAdaptersListCall) Do(opts ...googleapi.CallOption) (*L
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsAdSourcesAdaptersListCall) Pages(ctx context.Context, f func(*ListAdaptersResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3673,8 +2947,6 @@ func (c *AccountsAdSourcesAdaptersListCall) Pages(ctx context.Context, f func(*L
 	}
 }
 
-// method id "admob.accounts.adUnitMappings.batchCreate":
-
 type AccountsAdUnitMappingsBatchCreateCall struct {
 	s                                *Service
 	parent                           string
@@ -3684,15 +2956,15 @@ type AccountsAdUnitMappingsBatchCreateCall struct {
 	header_                          http.Header
 }
 
-// BatchCreate: Batch create the ad unit mappings under the specific
-// AdMob account. The maximum allowed batch size is 100. This method has
-// limited access. If you see a 403 permission denied error, please
-// reach out to your account manager for access.
+// BatchCreate: Batch create the ad unit mappings under the specific AdMob
+// account. The maximum allowed batch size is 100. This method has limited
+// access. If you see a 403 permission denied error, please reach out to your
+// account manager for access.
 //
-//   - parent: The AdMob account which owns this collection of ad unit
-//     mappings. Format: accounts/{publisher_id} See
-//     https://support.google.com/admob/answer/2784578 for instructions on
-//     how to find your AdMob publisher ID.
+//   - parent: The AdMob account which owns this collection of ad unit mappings.
+//     Format: accounts/{publisher_id} See
+//     https://support.google.com/admob/answer/2784578 for instructions on how to
+//     find your AdMob publisher ID.
 func (r *AccountsAdUnitMappingsService) BatchCreate(parent string, batchcreateadunitmappingsrequest *BatchCreateAdUnitMappingsRequest) *AccountsAdUnitMappingsBatchCreateCall {
 	c := &AccountsAdUnitMappingsBatchCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3701,23 +2973,21 @@ func (r *AccountsAdUnitMappingsService) BatchCreate(parent string, batchcreatead
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsAdUnitMappingsBatchCreateCall) Fields(s ...googleapi.Field) *AccountsAdUnitMappingsBatchCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsAdUnitMappingsBatchCreateCall) Context(ctx context.Context) *AccountsAdUnitMappingsBatchCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsAdUnitMappingsBatchCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3726,18 +2996,12 @@ func (c *AccountsAdUnitMappingsBatchCreateCall) Header() http.Header {
 }
 
 func (c *AccountsAdUnitMappingsBatchCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.batchcreateadunitmappingsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/adUnitMappings:batchCreate")
@@ -3754,13 +3018,11 @@ func (c *AccountsAdUnitMappingsBatchCreateCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "admob.accounts.adUnitMappings.batchCreate" call.
-// Exactly one of *BatchCreateAdUnitMappingsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *BatchCreateAdUnitMappingsResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BatchCreateAdUnitMappingsResponse.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsAdUnitMappingsBatchCreateCall) Do(opts ...googleapi.CallOption) (*BatchCreateAdUnitMappingsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3791,36 +3053,7 @@ func (c *AccountsAdUnitMappingsBatchCreateCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Batch create the ad unit mappings under the specific AdMob account. The maximum allowed batch size is 100. This method has limited access. If you see a 403 permission denied error, please reach out to your account manager for access.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/adUnitMappings:batchCreate",
-	//   "httpMethod": "POST",
-	//   "id": "admob.accounts.adUnitMappings.batchCreate",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The AdMob account which owns this collection of ad unit mappings. Format: accounts/{publisher_id} See https://support.google.com/admob/answer/2784578 for instructions on how to find your AdMob publisher ID.",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/adUnitMappings:batchCreate",
-	//   "request": {
-	//     "$ref": "BatchCreateAdUnitMappingsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "BatchCreateAdUnitMappingsResponse"
-	//   },
-	//   "streamingType": "NONE"
-	// }
-
 }
-
-// method id "admob.accounts.adUnits.create":
 
 type AccountsAdUnitsCreateCall struct {
 	s          *Service
@@ -3831,12 +3064,12 @@ type AccountsAdUnitsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates an ad unit under the specified AdMob account. This
-// method has limited access. If you see a 403 permission denied error,
-// please reach out to your account manager for access.
+// Create: Creates an ad unit under the specified AdMob account. This method
+// has limited access. If you see a 403 permission denied error, please reach
+// out to your account manager for access.
 //
-//   - parent: Resource name of the account to create the specified ad
-//     unit for. Example: accounts/pub-9876543210987654.
+//   - parent: Resource name of the account to create the specified ad unit for.
+//     Example: accounts/pub-9876543210987654.
 func (r *AccountsAdUnitsService) Create(parent string, adunit *AdUnit) *AccountsAdUnitsCreateCall {
 	c := &AccountsAdUnitsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3845,23 +3078,21 @@ func (r *AccountsAdUnitsService) Create(parent string, adunit *AdUnit) *Accounts
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsAdUnitsCreateCall) Fields(s ...googleapi.Field) *AccountsAdUnitsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsAdUnitsCreateCall) Context(ctx context.Context) *AccountsAdUnitsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsAdUnitsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3870,18 +3101,12 @@ func (c *AccountsAdUnitsCreateCall) Header() http.Header {
 }
 
 func (c *AccountsAdUnitsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.adunit)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/adUnits")
@@ -3898,12 +3123,10 @@ func (c *AccountsAdUnitsCreateCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "admob.accounts.adUnits.create" call.
-// Exactly one of *AdUnit or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *AdUnit.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdUnit.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsAdUnitsCreateCall) Do(opts ...googleapi.CallOption) (*AdUnit, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3934,36 +3157,7 @@ func (c *AccountsAdUnitsCreateCall) Do(opts ...googleapi.CallOption) (*AdUnit, e
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an ad unit under the specified AdMob account. This method has limited access. If you see a 403 permission denied error, please reach out to your account manager for access.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/adUnits",
-	//   "httpMethod": "POST",
-	//   "id": "admob.accounts.adUnits.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Resource name of the account to create the specified ad unit for. Example: accounts/pub-9876543210987654",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/adUnits",
-	//   "request": {
-	//     "$ref": "AdUnit"
-	//   },
-	//   "response": {
-	//     "$ref": "AdUnit"
-	//   },
-	//   "streamingType": "NONE"
-	// }
-
 }
-
-// method id "admob.accounts.adUnits.list":
 
 type AccountsAdUnitsListCall struct {
 	s            *Service
@@ -3984,52 +3178,47 @@ func (r *AccountsAdUnitsService) List(parent string) *AccountsAdUnitsListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of ad units to return. If unspecified or 0, at most 10,000 ad units
-// will be returned. The maximum value is 20,000; values above 20,000
-// will be coerced to 20,000.
+// PageSize sets the optional parameter "pageSize": The maximum number of ad
+// units to return. If unspecified or 0, at most 10,000 ad units will be
+// returned. The maximum value is 20,000; values above 20,000 will be coerced
+// to 20,000.
 func (c *AccountsAdUnitsListCall) PageSize(pageSize int64) *AccountsAdUnitsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListAdUnitsResponse`; indicates that this is a
-// continuation of a prior `ListAdUnits` call, and that the system
-// should return the next page of data.
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListAdUnitsResponse`; indicates that this is a continuation of a prior
+// `ListAdUnits` call, and that the system should return the next page of data.
 func (c *AccountsAdUnitsListCall) PageToken(pageToken string) *AccountsAdUnitsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsAdUnitsListCall) Fields(s ...googleapi.Field) *AccountsAdUnitsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsAdUnitsListCall) IfNoneMatch(entityTag string) *AccountsAdUnitsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsAdUnitsListCall) Context(ctx context.Context) *AccountsAdUnitsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsAdUnitsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4038,12 +3227,7 @@ func (c *AccountsAdUnitsListCall) Header() http.Header {
 }
 
 func (c *AccountsAdUnitsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4064,12 +3248,11 @@ func (c *AccountsAdUnitsListCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "admob.accounts.adUnits.list" call.
-// Exactly one of *ListAdUnitsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListAdUnitsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAdUnitsResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsAdUnitsListCall) Do(opts ...googleapi.CallOption) (*ListAdUnitsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4100,44 +3283,6 @@ func (c *AccountsAdUnitsListCall) Do(opts ...googleapi.CallOption) (*ListAdUnits
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List the ad units under the specified AdMob account.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/adUnits",
-	//   "httpMethod": "GET",
-	//   "id": "admob.accounts.adUnits.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of ad units to return. If unspecified or 0, at most 10,000 ad units will be returned. The maximum value is 20,000; values above 20,000 will be coerced to 20,000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The value returned by the last `ListAdUnitsResponse`; indicates that this is a continuation of a prior `ListAdUnits` call, and that the system should return the next page of data.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Resource name of the account to list ad units for. Example: accounts/pub-9876543210987654",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/adUnits",
-	//   "response": {
-	//     "$ref": "ListAdUnitsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admob.readonly"
-	//   ],
-	//   "streamingType": "NONE"
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4145,7 +3290,7 @@ func (c *AccountsAdUnitsListCall) Do(opts ...googleapi.CallOption) (*ListAdUnits
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsAdUnitsListCall) Pages(ctx context.Context, f func(*ListAdUnitsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4161,8 +3306,6 @@ func (c *AccountsAdUnitsListCall) Pages(ctx context.Context, f func(*ListAdUnits
 	}
 }
 
-// method id "admob.accounts.adUnits.adUnitMappings.create":
-
 type AccountsAdUnitsAdUnitMappingsCreateCall struct {
 	s             *Service
 	parent        string
@@ -4172,10 +3315,9 @@ type AccountsAdUnitsAdUnitMappingsCreateCall struct {
 	header_       http.Header
 }
 
-// Create: Create an ad unit mapping under the specific AdMob account
-// and ad unit. This method has limited access. If you see a 403
-// permission denied error, please reach out to your account manager for
-// access.
+// Create: Create an ad unit mapping under the specific AdMob account and ad
+// unit. This method has limited access. If you see a 403 permission denied
+// error, please reach out to your account manager for access.
 //
 //   - parent: The parent which owns the ad unit mapping. Format:
 //     accounts/{publisher_id}/adUnits/{ad_unit_id}.
@@ -4187,23 +3329,21 @@ func (r *AccountsAdUnitsAdUnitMappingsService) Create(parent string, adunitmappi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsAdUnitsAdUnitMappingsCreateCall) Fields(s ...googleapi.Field) *AccountsAdUnitsAdUnitMappingsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsAdUnitsAdUnitMappingsCreateCall) Context(ctx context.Context) *AccountsAdUnitsAdUnitMappingsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsAdUnitsAdUnitMappingsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4212,18 +3352,12 @@ func (c *AccountsAdUnitsAdUnitMappingsCreateCall) Header() http.Header {
 }
 
 func (c *AccountsAdUnitsAdUnitMappingsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.adunitmapping)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/adUnitMappings")
@@ -4240,12 +3374,10 @@ func (c *AccountsAdUnitsAdUnitMappingsCreateCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "admob.accounts.adUnits.adUnitMappings.create" call.
-// Exactly one of *AdUnitMapping or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *AdUnitMapping.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *AdUnitMapping.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsAdUnitsAdUnitMappingsCreateCall) Do(opts ...googleapi.CallOption) (*AdUnitMapping, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4276,36 +3408,7 @@ func (c *AccountsAdUnitsAdUnitMappingsCreateCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create an ad unit mapping under the specific AdMob account and ad unit. This method has limited access. If you see a 403 permission denied error, please reach out to your account manager for access.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/adUnits/{adUnitsId}/adUnitMappings",
-	//   "httpMethod": "POST",
-	//   "id": "admob.accounts.adUnits.adUnitMappings.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent which owns the ad unit mapping. Format: accounts/{publisher_id}/adUnits/{ad_unit_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/adUnits/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/adUnitMappings",
-	//   "request": {
-	//     "$ref": "AdUnitMapping"
-	//   },
-	//   "response": {
-	//     "$ref": "AdUnitMapping"
-	//   },
-	//   "streamingType": "NONE"
-	// }
-
 }
-
-// method id "admob.accounts.adUnits.adUnitMappings.list":
 
 type AccountsAdUnitsAdUnitMappingsListCall struct {
 	s            *Service
@@ -4316,76 +3419,71 @@ type AccountsAdUnitsAdUnitMappingsListCall struct {
 	header_      http.Header
 }
 
-// List: List ad unit mappings under the specified AdMob account and ad
-// unit. This method has limited access. If you see a 403 permission
-// denied error, please reach out to your account manager for access.
+// List: List ad unit mappings under the specified AdMob account and ad unit.
+// This method has limited access. If you see a 403 permission denied error,
+// please reach out to your account manager for access.
 //
-//   - parent: The parent which owns this collection of ad unit mappings.
-//     Format: accounts/{publisher_id}/adUnits/{ad_unit_id}.
+//   - parent: The parent which owns this collection of ad unit mappings. Format:
+//     accounts/{publisher_id}/adUnits/{ad_unit_id}.
 func (r *AccountsAdUnitsAdUnitMappingsService) List(parent string) *AccountsAdUnitsAdUnitMappingsListCall {
 	c := &AccountsAdUnitsAdUnitMappingsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filter string that
-// uses EBNF grammar syntax
-// (https://google.aip.dev/assets/misc/ebnf-filtering.txt). Possible
-// field to filter by is: - "DISPLAY_NAME" Possible filter function is:
-// - `IN`: Used to filter fields that represent a singleton including
-// "DISPLAY_NAME". The filter functions can be added together using
-// `AND`. `OR` functionality is not supported. Example: filter:
-// IN(DISPLAY_NAME, "Test Ad Unit Mapping 1", "Test Ad Unit Mapping 2")
+// Filter sets the optional parameter "filter": The filter string that uses
+// EBNF grammar syntax (https://google.aip.dev/assets/misc/ebnf-filtering.txt).
+// Possible field to filter by is: - "DISPLAY_NAME" Possible filter function
+// is: - `IN`: Used to filter fields that represent a singleton including
+// "DISPLAY_NAME". The filter functions can be added together using `AND`. `OR`
+// functionality is not supported. Example: filter: IN(DISPLAY_NAME, "Test Ad
+// Unit Mapping 1", "Test Ad Unit Mapping 2")
 func (c *AccountsAdUnitsAdUnitMappingsListCall) Filter(filter string) *AccountsAdUnitsAdUnitMappingsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of ad unit mappings to return. If unspecified or 0, at most 10,000 ad
-// unit mappings will be returned. The maximum value is 20,000; values
-// above 20,000 will be coerced to 20,000.
+// PageSize sets the optional parameter "pageSize": The maximum number of ad
+// unit mappings to return. If unspecified or 0, at most 10,000 ad unit
+// mappings will be returned. The maximum value is 20,000; values above 20,000
+// will be coerced to 20,000.
 func (c *AccountsAdUnitsAdUnitMappingsListCall) PageSize(pageSize int64) *AccountsAdUnitsAdUnitMappingsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListAdUnitMappings` call. Provide this to
-// retrieve the subsequent page.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListAdUnitMappings` call. Provide this to retrieve the
+// subsequent page.
 func (c *AccountsAdUnitsAdUnitMappingsListCall) PageToken(pageToken string) *AccountsAdUnitsAdUnitMappingsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsAdUnitsAdUnitMappingsListCall) Fields(s ...googleapi.Field) *AccountsAdUnitsAdUnitMappingsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsAdUnitsAdUnitMappingsListCall) IfNoneMatch(entityTag string) *AccountsAdUnitsAdUnitMappingsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsAdUnitsAdUnitMappingsListCall) Context(ctx context.Context) *AccountsAdUnitsAdUnitMappingsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsAdUnitsAdUnitMappingsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4394,12 +3492,7 @@ func (c *AccountsAdUnitsAdUnitMappingsListCall) Header() http.Header {
 }
 
 func (c *AccountsAdUnitsAdUnitMappingsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4420,12 +3513,11 @@ func (c *AccountsAdUnitsAdUnitMappingsListCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "admob.accounts.adUnits.adUnitMappings.list" call.
-// Exactly one of *ListAdUnitMappingsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListAdUnitMappingsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListAdUnitMappingsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsAdUnitsAdUnitMappingsListCall) Do(opts ...googleapi.CallOption) (*ListAdUnitMappingsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4456,49 +3548,6 @@ func (c *AccountsAdUnitsAdUnitMappingsListCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List ad unit mappings under the specified AdMob account and ad unit. This method has limited access. If you see a 403 permission denied error, please reach out to your account manager for access.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/adUnits/{adUnitsId}/adUnitMappings",
-	//   "httpMethod": "GET",
-	//   "id": "admob.accounts.adUnits.adUnitMappings.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The filter string that uses [EBNF grammar syntax](https://google.aip.dev/assets/misc/ebnf-filtering.txt). Possible field to filter by is: - \"DISPLAY_NAME\" Possible filter function is: - `IN`: Used to filter fields that represent a singleton including \"DISPLAY_NAME\". The filter functions can be added together using `AND`. `OR` functionality is not supported. Example: filter: IN(DISPLAY_NAME, \"Test Ad Unit Mapping 1\", \"Test Ad Unit Mapping 2\")",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of ad unit mappings to return. If unspecified or 0, at most 10,000 ad unit mappings will be returned. The maximum value is 20,000; values above 20,000 will be coerced to 20,000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, received from a previous `ListAdUnitMappings` call. Provide this to retrieve the subsequent page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The parent which owns this collection of ad unit mappings. Format: accounts/{publisher_id}/adUnits/{ad_unit_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/adUnits/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/adUnitMappings",
-	//   "response": {
-	//     "$ref": "ListAdUnitMappingsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admob.readonly"
-	//   ],
-	//   "streamingType": "NONE"
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4506,7 +3555,7 @@ func (c *AccountsAdUnitsAdUnitMappingsListCall) Do(opts ...googleapi.CallOption)
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsAdUnitsAdUnitMappingsListCall) Pages(ctx context.Context, f func(*ListAdUnitMappingsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4522,8 +3571,6 @@ func (c *AccountsAdUnitsAdUnitMappingsListCall) Pages(ctx context.Context, f fun
 	}
 }
 
-// method id "admob.accounts.apps.create":
-
 type AccountsAppsCreateCall struct {
 	s          *Service
 	parent     string
@@ -4533,12 +3580,12 @@ type AccountsAppsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates an app under the specified AdMob account. This method
-// has limited access. If you see a 403 permission denied error, please
-// reach out to your account manager for access.
+// Create: Creates an app under the specified AdMob account. This method has
+// limited access. If you see a 403 permission denied error, please reach out
+// to your account manager for access.
 //
-//   - parent: Resource name of the account for which the app is being
-//     created. Example: accounts/pub-9876543210987654.
+//   - parent: Resource name of the account for which the app is being created.
+//     Example: accounts/pub-9876543210987654.
 func (r *AccountsAppsService) Create(parent string, app *App) *AccountsAppsCreateCall {
 	c := &AccountsAppsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4547,23 +3594,21 @@ func (r *AccountsAppsService) Create(parent string, app *App) *AccountsAppsCreat
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsAppsCreateCall) Fields(s ...googleapi.Field) *AccountsAppsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsAppsCreateCall) Context(ctx context.Context) *AccountsAppsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsAppsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4572,18 +3617,12 @@ func (c *AccountsAppsCreateCall) Header() http.Header {
 }
 
 func (c *AccountsAppsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.app)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/apps")
@@ -4600,12 +3639,10 @@ func (c *AccountsAppsCreateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "admob.accounts.apps.create" call.
-// Exactly one of *App or error will be non-nil. Any non-2xx status code
-// is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *App.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsAppsCreateCall) Do(opts ...googleapi.CallOption) (*App, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4636,36 +3673,7 @@ func (c *AccountsAppsCreateCall) Do(opts ...googleapi.CallOption) (*App, error) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates an app under the specified AdMob account. This method has limited access. If you see a 403 permission denied error, please reach out to your account manager for access.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/apps",
-	//   "httpMethod": "POST",
-	//   "id": "admob.accounts.apps.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Resource name of the account for which the app is being created. Example: accounts/pub-9876543210987654",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/apps",
-	//   "request": {
-	//     "$ref": "App"
-	//   },
-	//   "response": {
-	//     "$ref": "App"
-	//   },
-	//   "streamingType": "NONE"
-	// }
-
 }
-
-// method id "admob.accounts.apps.list":
 
 type AccountsAppsListCall struct {
 	s            *Service
@@ -4686,52 +3694,46 @@ func (r *AccountsAppsService) List(parent string) *AccountsAppsListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of apps to return. If unspecified or 0, at most 10,000 apps will be
-// returned. The maximum value is 20,000; values above 20,000 will be
-// coerced to 20,000.
+// PageSize sets the optional parameter "pageSize": The maximum number of apps
+// to return. If unspecified or 0, at most 10,000 apps will be returned. The
+// maximum value is 20,000; values above 20,000 will be coerced to 20,000.
 func (c *AccountsAppsListCall) PageSize(pageSize int64) *AccountsAppsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListAppsResponse`; indicates that this is a continuation
-// of a prior `ListApps` call, and that the system should return the
-// next page of data.
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListAppsResponse`; indicates that this is a continuation of a prior
+// `ListApps` call, and that the system should return the next page of data.
 func (c *AccountsAppsListCall) PageToken(pageToken string) *AccountsAppsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsAppsListCall) Fields(s ...googleapi.Field) *AccountsAppsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsAppsListCall) IfNoneMatch(entityTag string) *AccountsAppsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsAppsListCall) Context(ctx context.Context) *AccountsAppsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsAppsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4740,12 +3742,7 @@ func (c *AccountsAppsListCall) Header() http.Header {
 }
 
 func (c *AccountsAppsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4766,12 +3763,11 @@ func (c *AccountsAppsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "admob.accounts.apps.list" call.
-// Exactly one of *ListAppsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListAppsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAppsResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsAppsListCall) Do(opts ...googleapi.CallOption) (*ListAppsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4802,44 +3798,6 @@ func (c *AccountsAppsListCall) Do(opts ...googleapi.CallOption) (*ListAppsRespon
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List the apps under the specified AdMob account.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/apps",
-	//   "httpMethod": "GET",
-	//   "id": "admob.accounts.apps.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "The maximum number of apps to return. If unspecified or 0, at most 10,000 apps will be returned. The maximum value is 20,000; values above 20,000 will be coerced to 20,000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The value returned by the last `ListAppsResponse`; indicates that this is a continuation of a prior `ListApps` call, and that the system should return the next page of data.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Resource name of the account to list apps for. Example: accounts/pub-9876543210987654",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/apps",
-	//   "response": {
-	//     "$ref": "ListAppsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admob.readonly"
-	//   ],
-	//   "streamingType": "NONE"
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4847,7 +3805,7 @@ func (c *AccountsAppsListCall) Do(opts ...googleapi.CallOption) (*ListAppsRespon
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsAppsListCall) Pages(ctx context.Context, f func(*ListAppsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4863,8 +3821,6 @@ func (c *AccountsAppsListCall) Pages(ctx context.Context, f func(*ListAppsRespon
 	}
 }
 
-// method id "admob.accounts.campaignReport.generate":
-
 type AccountsCampaignReportGenerateCall struct {
 	s                             *Service
 	parent                        string
@@ -4876,8 +3832,8 @@ type AccountsCampaignReportGenerateCall struct {
 
 // Generate: Generates Campaign Report based on provided specifications.
 //
-//   - parent: Resource name of the account to generate the report for.
-//     Example: accounts/pub-9876543210987654.
+//   - parent: Resource name of the account to generate the report for. Example:
+//     accounts/pub-9876543210987654.
 func (r *AccountsCampaignReportService) Generate(parent string, generatecampaignreportrequest *GenerateCampaignReportRequest) *AccountsCampaignReportGenerateCall {
 	c := &AccountsCampaignReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4886,23 +3842,21 @@ func (r *AccountsCampaignReportService) Generate(parent string, generatecampaign
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsCampaignReportGenerateCall) Fields(s ...googleapi.Field) *AccountsCampaignReportGenerateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsCampaignReportGenerateCall) Context(ctx context.Context) *AccountsCampaignReportGenerateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsCampaignReportGenerateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4911,18 +3865,12 @@ func (c *AccountsCampaignReportGenerateCall) Header() http.Header {
 }
 
 func (c *AccountsCampaignReportGenerateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.generatecampaignreportrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/campaignReport:generate")
@@ -4939,12 +3887,11 @@ func (c *AccountsCampaignReportGenerateCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "admob.accounts.campaignReport.generate" call.
-// Exactly one of *GenerateCampaignReportResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GenerateCampaignReportResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateCampaignReportResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsCampaignReportGenerateCall) Do(opts ...googleapi.CallOption) (*GenerateCampaignReportResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4975,40 +3922,7 @@ func (c *AccountsCampaignReportGenerateCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Generates Campaign Report based on provided specifications.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/campaignReport:generate",
-	//   "httpMethod": "POST",
-	//   "id": "admob.accounts.campaignReport.generate",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Resource name of the account to generate the report for. Example: accounts/pub-9876543210987654",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/campaignReport:generate",
-	//   "request": {
-	//     "$ref": "GenerateCampaignReportRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GenerateCampaignReportResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admob.readonly",
-	//     "https://www.googleapis.com/auth/admob.report"
-	//   ],
-	//   "streamingType": "NONE"
-	// }
-
 }
-
-// method id "admob.accounts.mediationGroups.create":
 
 type AccountsMediationGroupsCreateCall struct {
 	s              *Service
@@ -5019,9 +3933,9 @@ type AccountsMediationGroupsCreateCall struct {
 	header_        http.Header
 }
 
-// Create: Create a mediation group under the specific AdMob account.
-// This method has limited access. If you see a 403 permission denied
-// error, please reach out to your account manager for access.
+// Create: Create a mediation group under the specific AdMob account. This
+// method has limited access. If you see a 403 permission denied error, please
+// reach out to your account manager for access.
 //
 //   - parent: The parent which owns the mediation group. Format:
 //     accounts/{publisher_id}.
@@ -5033,23 +3947,21 @@ func (r *AccountsMediationGroupsService) Create(parent string, mediationgroup *M
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsMediationGroupsCreateCall) Fields(s ...googleapi.Field) *AccountsMediationGroupsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsMediationGroupsCreateCall) Context(ctx context.Context) *AccountsMediationGroupsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsMediationGroupsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5058,18 +3970,12 @@ func (c *AccountsMediationGroupsCreateCall) Header() http.Header {
 }
 
 func (c *AccountsMediationGroupsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mediationgroup)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/mediationGroups")
@@ -5086,12 +3992,10 @@ func (c *AccountsMediationGroupsCreateCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "admob.accounts.mediationGroups.create" call.
-// Exactly one of *MediationGroup or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *MediationGroup.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *MediationGroup.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsMediationGroupsCreateCall) Do(opts ...googleapi.CallOption) (*MediationGroup, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5122,36 +4026,7 @@ func (c *AccountsMediationGroupsCreateCall) Do(opts ...googleapi.CallOption) (*M
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create a mediation group under the specific AdMob account. This method has limited access. If you see a 403 permission denied error, please reach out to your account manager for access.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/mediationGroups",
-	//   "httpMethod": "POST",
-	//   "id": "admob.accounts.mediationGroups.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent which owns the mediation group. Format: accounts/{publisher_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/mediationGroups",
-	//   "request": {
-	//     "$ref": "MediationGroup"
-	//   },
-	//   "response": {
-	//     "$ref": "MediationGroup"
-	//   },
-	//   "streamingType": "NONE"
-	// }
-
 }
-
-// method id "admob.accounts.mediationGroups.list":
 
 type AccountsMediationGroupsListCall struct {
 	s            *Service
@@ -5162,9 +4037,9 @@ type AccountsMediationGroupsListCall struct {
 	header_      http.Header
 }
 
-// List: List mediation groups under the specified AdMob account. This
-// method has limited access. If you see a 403 permission denied error,
-// please reach out to your account manager for access.
+// List: List mediation groups under the specified AdMob account. This method
+// has limited access. If you see a 403 permission denied error, please reach
+// out to your account manager for access.
 //
 //   - parent: Resource name of the account to list mediation groups for.
 //     Example: accounts/pub-9876543210987654.
@@ -5174,72 +4049,66 @@ func (r *AccountsMediationGroupsService) List(parent string) *AccountsMediationG
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filter string that
-// uses EBNF grammar syntax
-// (https://google.aip.dev/assets/misc/ebnf-filtering.txt). Possible
-// fields to filter by are: - "AD_SOURCE_IDS" - "AD_UNIT_IDS" -
-// "APP_IDS" - "DISPLAY_NAME" - "FORMAT" - "MEDIATION_GROUP_ID" -
-// "PLATFORM" - "STATE" - "TARGETED_REGION_CODES" Possible filter
-// functions are: - `IN`: Used to filter fields that represent a
-// singleton including "MEDIATION_GROUP_ID", "DISPLAY_NAME", "STATE",
-// "PLATFORM", and "FORMAT". - `CONTAINS_ANY`: Used to filter fields
-// that represent a collection including "AD_SOURCE_IDS", "AD_UNIT_IDS",
-// "APP_IDS", and "TARGETED_REGION_CODES". The filter functions can be
-// added together using `AND`. `OR` functionality is not supported.
-// Example: filter: IN(DISPLAY_NAME, "Test Group 1", "Test Group 2") AND
-// IN(PLATFORM, "ANDROID") AND CONTAINS_ANY(AD_SOURCE_IDS,
+// Filter sets the optional parameter "filter": The filter string that uses
+// EBNF grammar syntax (https://google.aip.dev/assets/misc/ebnf-filtering.txt).
+// Possible fields to filter by are: - "AD_SOURCE_IDS" - "AD_UNIT_IDS" -
+// "APP_IDS" - "DISPLAY_NAME" - "FORMAT" - "MEDIATION_GROUP_ID" - "PLATFORM" -
+// "STATE" - "TARGETED_REGION_CODES" Possible filter functions are: - `IN`:
+// Used to filter fields that represent a singleton including
+// "MEDIATION_GROUP_ID", "DISPLAY_NAME", "STATE", "PLATFORM", and "FORMAT". -
+// `CONTAINS_ANY`: Used to filter fields that represent a collection including
+// "AD_SOURCE_IDS", "AD_UNIT_IDS", "APP_IDS", and "TARGETED_REGION_CODES". The
+// filter functions can be added together using `AND`. `OR` functionality is
+// not supported. Example: filter: IN(DISPLAY_NAME, "Test Group 1", "Test Group
+// 2") AND IN(PLATFORM, "ANDROID") AND CONTAINS_ANY(AD_SOURCE_IDS,
 // "5450213213286189855")
 func (c *AccountsMediationGroupsListCall) Filter(filter string) *AccountsMediationGroupsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of mediation groups to return. If unspecified or 0, at most 10,000
-// mediation groups will be returned. The maximum value is 20,000;
-// values above 20,000 will be coerced to 20,000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// mediation groups to return. If unspecified or 0, at most 10,000 mediation
+// groups will be returned. The maximum value is 20,000; values above 20,000
+// will be coerced to 20,000.
 func (c *AccountsMediationGroupsListCall) PageSize(pageSize int64) *AccountsMediationGroupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The value returned
-// by the last `ListMediationGroupsResponse`; indicates that this is a
-// continuation of a prior `ListMediationGroups` call, and that the
-// system should return the next page of data.
+// PageToken sets the optional parameter "pageToken": The value returned by the
+// last `ListMediationGroupsResponse`; indicates that this is a continuation of
+// a prior `ListMediationGroups` call, and that the system should return the
+// next page of data.
 func (c *AccountsMediationGroupsListCall) PageToken(pageToken string) *AccountsMediationGroupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsMediationGroupsListCall) Fields(s ...googleapi.Field) *AccountsMediationGroupsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsMediationGroupsListCall) IfNoneMatch(entityTag string) *AccountsMediationGroupsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsMediationGroupsListCall) Context(ctx context.Context) *AccountsMediationGroupsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsMediationGroupsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5248,12 +4117,7 @@ func (c *AccountsMediationGroupsListCall) Header() http.Header {
 }
 
 func (c *AccountsMediationGroupsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5274,12 +4138,11 @@ func (c *AccountsMediationGroupsListCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "admob.accounts.mediationGroups.list" call.
-// Exactly one of *ListMediationGroupsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListMediationGroupsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListMediationGroupsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsMediationGroupsListCall) Do(opts ...googleapi.CallOption) (*ListMediationGroupsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5310,49 +4173,6 @@ func (c *AccountsMediationGroupsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List mediation groups under the specified AdMob account. This method has limited access. If you see a 403 permission denied error, please reach out to your account manager for access.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/mediationGroups",
-	//   "httpMethod": "GET",
-	//   "id": "admob.accounts.mediationGroups.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The filter string that uses [EBNF grammar syntax](https://google.aip.dev/assets/misc/ebnf-filtering.txt). Possible fields to filter by are: - \"AD_SOURCE_IDS\" - \"AD_UNIT_IDS\" - \"APP_IDS\" - \"DISPLAY_NAME\" - \"FORMAT\" - \"MEDIATION_GROUP_ID\" - \"PLATFORM\" - \"STATE\" - \"TARGETED_REGION_CODES\" Possible filter functions are: - `IN`: Used to filter fields that represent a singleton including \"MEDIATION_GROUP_ID\", \"DISPLAY_NAME\", \"STATE\", \"PLATFORM\", and \"FORMAT\". - `CONTAINS_ANY`: Used to filter fields that represent a collection including \"AD_SOURCE_IDS\", \"AD_UNIT_IDS\", \"APP_IDS\", and \"TARGETED_REGION_CODES\". The filter functions can be added together using `AND`. `OR` functionality is not supported. Example: filter: IN(DISPLAY_NAME, \"Test Group 1\", \"Test Group 2\") AND IN(PLATFORM, \"ANDROID\") AND CONTAINS_ANY(AD_SOURCE_IDS, \"5450213213286189855\")",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of mediation groups to return. If unspecified or 0, at most 10,000 mediation groups will be returned. The maximum value is 20,000; values above 20,000 will be coerced to 20,000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The value returned by the last `ListMediationGroupsResponse`; indicates that this is a continuation of a prior `ListMediationGroups` call, and that the system should return the next page of data.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. Resource name of the account to list mediation groups for. Example: accounts/pub-9876543210987654",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/mediationGroups",
-	//   "response": {
-	//     "$ref": "ListMediationGroupsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admob.readonly"
-	//   ],
-	//   "streamingType": "NONE"
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5360,7 +4180,7 @@ func (c *AccountsMediationGroupsListCall) Do(opts ...googleapi.CallOption) (*Lis
 // The provided context supersedes any context provided to the Context method.
 func (c *AccountsMediationGroupsListCall) Pages(ctx context.Context, f func(*ListMediationGroupsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5376,8 +4196,6 @@ func (c *AccountsMediationGroupsListCall) Pages(ctx context.Context, f func(*Lis
 	}
 }
 
-// method id "admob.accounts.mediationGroups.patch":
-
 type AccountsMediationGroupsPatchCall struct {
 	s              *Service
 	name           string
@@ -5388,12 +4206,12 @@ type AccountsMediationGroupsPatchCall struct {
 }
 
 // Patch: Update the specified mediation group under the specified AdMob
-// account. This method has limited access. If you see a 403 permission
-// denied error, please reach out to your account manager for access.
+// account. This method has limited access. If you see a 403 permission denied
+// error, please reach out to your account manager for access.
 //
 //   - name: Resource name for this mediation group. Format is:
-//     accounts/{publisher_id}/mediationGroups/{mediation_group_id}
-//     Example: accounts/pub-9876543210987654/mediationGroups/0123456789.
+//     accounts/{publisher_id}/mediationGroups/{mediation_group_id} Example:
+//     accounts/pub-9876543210987654/mediationGroups/0123456789.
 func (r *AccountsMediationGroupsService) Patch(name string, mediationgroup *MediationGroup) *AccountsMediationGroupsPatchCall {
 	c := &AccountsMediationGroupsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5401,22 +4219,20 @@ func (r *AccountsMediationGroupsService) Patch(name string, mediationgroup *Medi
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": List of
-// mediation group fields to be updated. Updates to repeated fields such
-// as items in a list will fully replace the existing value(s) with the
-// new value(s). Updates to individual values in a map can be done by
-// indexing by the key. The following field masks are supported for
-// mediation group updates: -
-// "mediation_group_lines[\"{mediation_group_line_id}\"]" clang-format
-// off -
-// "mediation_group_lines[\"{mediation_group_line_id}\"].ad_unit_mappings
-// [\"{ad_unit_id}\"]" clang-format on -
+// UpdateMask sets the optional parameter "updateMask": List of mediation group
+// fields to be updated. Updates to repeated fields such as items in a list
+// will fully replace the existing value(s) with the new value(s). Updates to
+// individual values in a map can be done by indexing by the key. The following
+// field masks are supported for mediation group updates: -
+// "mediation_group_lines[\"{mediation_group_line_id}\"]" clang-format off -
+// "mediation_group_lines[\"{mediation_group_line_id}\"].ad_unit_mappings[\"{ad_
+// unit_id}\"]" clang-format on -
 // "mediation_group_lines[\"{mediation_group_line_id}\"].cpm_micros" -
 // "mediation_group_lines[\"{mediation_group_line_id}\"].cpm_mode" -
 // "mediation_group_lines[\"{mediation_group_line_id}\"].state" -
 // "mediation_group_lines[\"{mediation_group_line_id}\"].display_name" -
-// "targeting.ad_unit_ids" To update a mediation group with a new
-// mediation group line, use a distinct negative number for the
+// "targeting.ad_unit_ids" To update a mediation group with a new mediation
+// group line, use a distinct negative number for the
 // "mediation_group_line_id". For Example: update_mask { paths:
 // "mediation_group_lines[\"123456789012345\"].cpm_micros" }
 func (c *AccountsMediationGroupsPatchCall) UpdateMask(updateMask string) *AccountsMediationGroupsPatchCall {
@@ -5425,23 +4241,21 @@ func (c *AccountsMediationGroupsPatchCall) UpdateMask(updateMask string) *Accoun
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsMediationGroupsPatchCall) Fields(s ...googleapi.Field) *AccountsMediationGroupsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsMediationGroupsPatchCall) Context(ctx context.Context) *AccountsMediationGroupsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsMediationGroupsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5450,18 +4264,12 @@ func (c *AccountsMediationGroupsPatchCall) Header() http.Header {
 }
 
 func (c *AccountsMediationGroupsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mediationgroup)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}")
@@ -5478,12 +4286,10 @@ func (c *AccountsMediationGroupsPatchCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "admob.accounts.mediationGroups.patch" call.
-// Exactly one of *MediationGroup or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *MediationGroup.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *MediationGroup.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsMediationGroupsPatchCall) Do(opts ...googleapi.CallOption) (*MediationGroup, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5514,42 +4320,7 @@ func (c *AccountsMediationGroupsPatchCall) Do(opts ...googleapi.CallOption) (*Me
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update the specified mediation group under the specified AdMob account. This method has limited access. If you see a 403 permission denied error, please reach out to your account manager for access.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/mediationGroups/{mediationGroupsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "admob.accounts.mediationGroups.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Resource name for this mediation group. Format is: accounts/{publisher_id}/mediationGroups/{mediation_group_id} Example: accounts/pub-9876543210987654/mediationGroups/0123456789",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/mediationGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "List of mediation group fields to be updated. Updates to repeated fields such as items in a list will fully replace the existing value(s) with the new value(s). Updates to individual values in a map can be done by indexing by the key. The following field masks are supported for mediation group updates: - \"mediation_group_lines[\\\"{mediation_group_line_id}\\\"]\" clang-format off - \"mediation_group_lines[\\\"{mediation_group_line_id}\\\"].ad_unit_mappings[\\\"{ad_unit_id}\\\"]\" clang-format on - \"mediation_group_lines[\\\"{mediation_group_line_id}\\\"].cpm_micros\" - \"mediation_group_lines[\\\"{mediation_group_line_id}\\\"].cpm_mode\" - \"mediation_group_lines[\\\"{mediation_group_line_id}\\\"].state\" - \"mediation_group_lines[\\\"{mediation_group_line_id}\\\"].display_name\" - \"targeting.ad_unit_ids\" To update a mediation group with a new mediation group line, use a distinct negative number for the \"mediation_group_line_id\". For Example: update_mask { paths: \"mediation_group_lines[\\\"123456789012345\\\"].cpm_micros\" }",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}",
-	//   "request": {
-	//     "$ref": "MediationGroup"
-	//   },
-	//   "response": {
-	//     "$ref": "MediationGroup"
-	//   },
-	//   "streamingType": "NONE"
-	// }
-
 }
-
-// method id "admob.accounts.mediationGroups.mediationAbExperiments.create":
 
 type AccountsMediationGroupsMediationAbExperimentsCreateCall struct {
 	s                     *Service
@@ -5560,10 +4331,9 @@ type AccountsMediationGroupsMediationAbExperimentsCreateCall struct {
 	header_               http.Header
 }
 
-// Create: Create an A/B testing experiment for a specified AdMob
-// account and a mediation group. This method has limited access. If you
-// see a 403 permission denied error, please reach out to your account
-// manager for access.
+// Create: Create an A/B testing experiment for a specified AdMob account and a
+// mediation group. This method has limited access. If you see a 403 permission
+// denied error, please reach out to your account manager for access.
 //
 //   - parent: The parent which owns the mediation group. Format:
 //     accounts/{publisher_id}/mediationGroups/{mediation_group_id}.
@@ -5575,23 +4345,21 @@ func (r *AccountsMediationGroupsMediationAbExperimentsService) Create(parent str
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsMediationGroupsMediationAbExperimentsCreateCall) Fields(s ...googleapi.Field) *AccountsMediationGroupsMediationAbExperimentsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsMediationGroupsMediationAbExperimentsCreateCall) Context(ctx context.Context) *AccountsMediationGroupsMediationAbExperimentsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsMediationGroupsMediationAbExperimentsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5600,18 +4368,12 @@ func (c *AccountsMediationGroupsMediationAbExperimentsCreateCall) Header() http.
 }
 
 func (c *AccountsMediationGroupsMediationAbExperimentsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.mediationabexperiment)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/mediationAbExperiments")
@@ -5628,12 +4390,11 @@ func (c *AccountsMediationGroupsMediationAbExperimentsCreateCall) doRequest(alt 
 }
 
 // Do executes the "admob.accounts.mediationGroups.mediationAbExperiments.create" call.
-// Exactly one of *MediationAbExperiment or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *MediationAbExperiment.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *MediationAbExperiment.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsMediationGroupsMediationAbExperimentsCreateCall) Do(opts ...googleapi.CallOption) (*MediationAbExperiment, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5664,36 +4425,7 @@ func (c *AccountsMediationGroupsMediationAbExperimentsCreateCall) Do(opts ...goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create an A/B testing experiment for a specified AdMob account and a mediation group. This method has limited access. If you see a 403 permission denied error, please reach out to your account manager for access.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/mediationGroups/{mediationGroupsId}/mediationAbExperiments",
-	//   "httpMethod": "POST",
-	//   "id": "admob.accounts.mediationGroups.mediationAbExperiments.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The parent which owns the mediation group. Format: accounts/{publisher_id}/mediationGroups/{mediation_group_id}",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/mediationGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/mediationAbExperiments",
-	//   "request": {
-	//     "$ref": "MediationAbExperiment"
-	//   },
-	//   "response": {
-	//     "$ref": "MediationAbExperiment"
-	//   },
-	//   "streamingType": "NONE"
-	// }
-
 }
-
-// method id "admob.accounts.mediationGroups.mediationAbExperiments.stop":
 
 type AccountsMediationGroupsMediationAbExperimentsStopCall struct {
 	s                                *Service
@@ -5704,12 +4436,12 @@ type AccountsMediationGroupsMediationAbExperimentsStopCall struct {
 	header_                          http.Header
 }
 
-// Stop: Stop the mediation A/B experiment and choose a variant. This
-// method has limited access. If you see a 403 permission denied error,
-// please reach out to your account manager for access.
+// Stop: Stop the mediation A/B experiment and choose a variant. This method
+// has limited access. If you see a 403 permission denied error, please reach
+// out to your account manager for access.
 //
-//   - name: Name of the mediation group, the experiment for which to
-//     choose a variant for. Example:
+//   - name: Name of the mediation group, the experiment for which to choose a
+//     variant for. Example:
 //     accounts/pub-9876543210987654/mediationGroups/0123456789/
 //     mediationAbExperiments.
 func (r *AccountsMediationGroupsMediationAbExperimentsService) Stop(name string, stopmediationabexperimentrequest *StopMediationAbExperimentRequest) *AccountsMediationGroupsMediationAbExperimentsStopCall {
@@ -5720,23 +4452,21 @@ func (r *AccountsMediationGroupsMediationAbExperimentsService) Stop(name string,
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsMediationGroupsMediationAbExperimentsStopCall) Fields(s ...googleapi.Field) *AccountsMediationGroupsMediationAbExperimentsStopCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsMediationGroupsMediationAbExperimentsStopCall) Context(ctx context.Context) *AccountsMediationGroupsMediationAbExperimentsStopCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsMediationGroupsMediationAbExperimentsStopCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5745,18 +4475,12 @@ func (c *AccountsMediationGroupsMediationAbExperimentsStopCall) Header() http.He
 }
 
 func (c *AccountsMediationGroupsMediationAbExperimentsStopCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.stopmediationabexperimentrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+name}:stop")
@@ -5773,12 +4497,11 @@ func (c *AccountsMediationGroupsMediationAbExperimentsStopCall) doRequest(alt st
 }
 
 // Do executes the "admob.accounts.mediationGroups.mediationAbExperiments.stop" call.
-// Exactly one of *MediationAbExperiment or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *MediationAbExperiment.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *MediationAbExperiment.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsMediationGroupsMediationAbExperimentsStopCall) Do(opts ...googleapi.CallOption) (*MediationAbExperiment, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5809,36 +4532,7 @@ func (c *AccountsMediationGroupsMediationAbExperimentsStopCall) Do(opts ...googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Stop the mediation A/B experiment and choose a variant. This method has limited access. If you see a 403 permission denied error, please reach out to your account manager for access.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/mediationGroups/{mediationGroupsId}/mediationAbExperiments:stop",
-	//   "httpMethod": "POST",
-	//   "id": "admob.accounts.mediationGroups.mediationAbExperiments.stop",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Name of the mediation group, the experiment for which to choose a variant for. Example: accounts/pub-9876543210987654/mediationGroups/0123456789/ mediationAbExperiments",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+/mediationGroups/[^/]+/mediationAbExperiments$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+name}:stop",
-	//   "request": {
-	//     "$ref": "StopMediationAbExperimentRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "MediationAbExperiment"
-	//   },
-	//   "streamingType": "NONE"
-	// }
-
 }
-
-// method id "admob.accounts.mediationReport.generate":
 
 type AccountsMediationReportGenerateCall struct {
 	s                              *Service
@@ -5849,12 +4543,12 @@ type AccountsMediationReportGenerateCall struct {
 	header_                        http.Header
 }
 
-// Generate: Generates an AdMob mediation report based on the provided
-// report specification. Returns result of a server-side streaming RPC.
-// The result is returned in a sequence of responses.
+// Generate: Generates an AdMob mediation report based on the provided report
+// specification. Returns result of a server-side streaming RPC. The result is
+// returned in a sequence of responses.
 //
-//   - parent: Resource name of the account to generate the report for.
-//     Example: accounts/pub-9876543210987654.
+//   - parent: Resource name of the account to generate the report for. Example:
+//     accounts/pub-9876543210987654.
 func (r *AccountsMediationReportService) Generate(parent string, generatemediationreportrequest *GenerateMediationReportRequest) *AccountsMediationReportGenerateCall {
 	c := &AccountsMediationReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5863,23 +4557,21 @@ func (r *AccountsMediationReportService) Generate(parent string, generatemediati
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsMediationReportGenerateCall) Fields(s ...googleapi.Field) *AccountsMediationReportGenerateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsMediationReportGenerateCall) Context(ctx context.Context) *AccountsMediationReportGenerateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5888,18 +4580,12 @@ func (c *AccountsMediationReportGenerateCall) Header() http.Header {
 }
 
 func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.generatemediationreportrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/mediationReport:generate")
@@ -5916,12 +4602,11 @@ func (c *AccountsMediationReportGenerateCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "admob.accounts.mediationReport.generate" call.
-// Exactly one of *GenerateMediationReportResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GenerateMediationReportResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateMediationReportResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsMediationReportGenerateCall) Do(opts ...googleapi.CallOption) (*GenerateMediationReportResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5952,40 +4637,7 @@ func (c *AccountsMediationReportGenerateCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Generates an AdMob mediation report based on the provided report specification. Returns result of a server-side streaming RPC. The result is returned in a sequence of responses.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/mediationReport:generate",
-	//   "httpMethod": "POST",
-	//   "id": "admob.accounts.mediationReport.generate",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Resource name of the account to generate the report for. Example: accounts/pub-9876543210987654",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/mediationReport:generate",
-	//   "request": {
-	//     "$ref": "GenerateMediationReportRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GenerateMediationReportResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admob.readonly",
-	//     "https://www.googleapis.com/auth/admob.report"
-	//   ],
-	//   "streamingType": "SERVER_SIDE"
-	// }
-
 }
-
-// method id "admob.accounts.networkReport.generate":
 
 type AccountsNetworkReportGenerateCall struct {
 	s                            *Service
@@ -5996,12 +4648,12 @@ type AccountsNetworkReportGenerateCall struct {
 	header_                      http.Header
 }
 
-// Generate: Generates an AdMob Network report based on the provided
-// report specification. Returns result of a server-side streaming RPC.
-// The result is returned in a sequence of responses.
+// Generate: Generates an AdMob Network report based on the provided report
+// specification. Returns result of a server-side streaming RPC. The result is
+// returned in a sequence of responses.
 //
-//   - parent: Resource name of the account to generate the report for.
-//     Example: accounts/pub-9876543210987654.
+//   - parent: Resource name of the account to generate the report for. Example:
+//     accounts/pub-9876543210987654.
 func (r *AccountsNetworkReportService) Generate(parent string, generatenetworkreportrequest *GenerateNetworkReportRequest) *AccountsNetworkReportGenerateCall {
 	c := &AccountsNetworkReportGenerateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -6010,23 +4662,21 @@ func (r *AccountsNetworkReportService) Generate(parent string, generatenetworkre
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsNetworkReportGenerateCall) Fields(s ...googleapi.Field) *AccountsNetworkReportGenerateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsNetworkReportGenerateCall) Context(ctx context.Context) *AccountsNetworkReportGenerateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6035,18 +4685,12 @@ func (c *AccountsNetworkReportGenerateCall) Header() http.Header {
 }
 
 func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.generatenetworkreportrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta/{+parent}/networkReport:generate")
@@ -6063,12 +4707,11 @@ func (c *AccountsNetworkReportGenerateCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "admob.accounts.networkReport.generate" call.
-// Exactly one of *GenerateNetworkReportResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GenerateNetworkReportResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GenerateNetworkReportResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsNetworkReportGenerateCall) Do(opts ...googleapi.CallOption) (*GenerateNetworkReportResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6099,35 +4742,4 @@ func (c *AccountsNetworkReportGenerateCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Generates an AdMob Network report based on the provided report specification. Returns result of a server-side streaming RPC. The result is returned in a sequence of responses.",
-	//   "flatPath": "v1beta/accounts/{accountsId}/networkReport:generate",
-	//   "httpMethod": "POST",
-	//   "id": "admob.accounts.networkReport.generate",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Resource name of the account to generate the report for. Example: accounts/pub-9876543210987654",
-	//       "location": "path",
-	//       "pattern": "^accounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta/{+parent}/networkReport:generate",
-	//   "request": {
-	//     "$ref": "GenerateNetworkReportRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GenerateNetworkReportResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/admob.readonly",
-	//     "https://www.googleapis.com/auth/admob.report"
-	//   ],
-	//   "streamingType": "SERVER_SIDE"
-	// }
-
 }

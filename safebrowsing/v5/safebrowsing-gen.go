@@ -152,177 +152,149 @@ type HashesService struct {
 	s *Service
 }
 
-// GoogleSecuritySafebrowsingV5FullHash: The full hash identified with
-// one or more matches.
+// GoogleSecuritySafebrowsingV5FullHash: The full hash identified with one or
+// more matches.
 type GoogleSecuritySafebrowsingV5FullHash struct {
-	// FullHash: The matching full hash. This is the SHA256 hash. The length
-	// will be exactly 32 bytes.
+	// FullHash: The matching full hash. This is the SHA256 hash. The length will
+	// be exactly 32 bytes.
 	FullHash string `json:"fullHash,omitempty"`
-
-	// FullHashDetails: Unordered list. A repeated field identifying the
-	// details relevant to this full hash.
+	// FullHashDetails: Unordered list. A repeated field identifying the details
+	// relevant to this full hash.
 	FullHashDetails []*GoogleSecuritySafebrowsingV5FullHashFullHashDetail `json:"fullHashDetails,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "FullHash") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "FullHash") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "FullHash") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV5FullHash) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV5FullHash
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV5FullHashFullHashDetail: Details about a
-// matching full hash. An important note about forward compatibility:
-// new threat types and threat attributes may be added by the server at
-// any time; those additions are considered minor version changes. It is
-// Google's policy not to expose minor version numbers in APIs (see
-// https://cloud.google.com/apis/design/versioning for the versioning
-// policy), so clients MUST be prepared to receive `FullHashDetail`
-// messages containing `ThreatType` enum values or `ThreatAttribute`
-// enum values that are considered invalid by the client. Therefore, it
-// is the client's responsibility to check for the validity of all
-// `ThreatType` and `ThreatAttribute` enum values; if any value is
-// considered invalid, the client MUST disregard the entire
-// `FullHashDetail` message.
+// GoogleSecuritySafebrowsingV5FullHashFullHashDetail: Details about a matching
+// full hash. An important note about forward compatibility: new threat types
+// and threat attributes may be added by the server at any time; those
+// additions are considered minor version changes. It is Google's policy not to
+// expose minor version numbers in APIs (see
+// https://cloud.google.com/apis/design/versioning for the versioning policy),
+// so clients MUST be prepared to receive `FullHashDetail` messages containing
+// `ThreatType` enum values or `ThreatAttribute` enum values that are
+// considered invalid by the client. Therefore, it is the client's
+// responsibility to check for the validity of all `ThreatType` and
+// `ThreatAttribute` enum values; if any value is considered invalid, the
+// client MUST disregard the entire `FullHashDetail` message.
 type GoogleSecuritySafebrowsingV5FullHashFullHashDetail struct {
-	// Attributes: Unordered list. Additional attributes about those full
-	// hashes. This may be empty.
+	// Attributes: Unordered list. Additional attributes about those full hashes.
+	// This may be empty.
 	//
 	// Possible values:
-	//   "THREAT_ATTRIBUTE_UNSPECIFIED" - Unknown attribute. If this is
-	// returned by the server, the client shall disregard the enclosing
-	// `FullHashDetail` altogether.
+	//   "THREAT_ATTRIBUTE_UNSPECIFIED" - Unknown attribute. If this is returned by
+	// the server, the client shall disregard the enclosing `FullHashDetail`
+	// altogether.
 	//   "CANARY" - Indicates that the threat_type should not be used for
 	// enforcement.
-	//   "FRAME_ONLY" - Indicates that the threat_type should only be used
-	// for enforcement on frames.
+	//   "FRAME_ONLY" - Indicates that the threat_type should only be used for
+	// enforcement on frames.
 	Attributes []string `json:"attributes,omitempty"`
-
 	// ThreatType: The type of threat. This field will never be empty.
 	//
 	// Possible values:
-	//   "THREAT_TYPE_UNSPECIFIED" - Unknown threat type. If this is
-	// returned by the server, the client shall disregard the enclosing
-	// `FullHashDetail` altogether.
+	//   "THREAT_TYPE_UNSPECIFIED" - Unknown threat type. If this is returned by
+	// the server, the client shall disregard the enclosing `FullHashDetail`
+	// altogether.
 	//   "MALWARE" - Malware threat type. Malware is any software or mobile
-	// application specifically designed to harm a computer, a mobile
-	// device, the software it's running, or its users. Malware exhibits
-	// malicious behavior that can include installing software without user
-	// consent and installing harmful software such as viruses. More
-	// information can be found
-	// [here](https://developers.google.com/search/docs/monitor-debug/securit
-	// y/malware).
-	//   "SOCIAL_ENGINEERING" - Social engineering threat type. Social
-	// engineering pages falsely purport to act on behalf of a third party
-	// with the intention of confusing viewers into performing an action
-	// with which the viewer would only trust a true agent of that third
-	// party. Phishing is a type of social engineering that tricks the
-	// viewer into performing the specific action of providing information,
-	// such as login credentials. More information can be found
-	// [here](https://developers.google.com/search/docs/monitor-debug/securit
-	// y/social-engineering).
-	//   "UNWANTED_SOFTWARE" - Unwanted software threat type. Unwanted
-	// software is any software that does not adhere to [Google's Software
-	// Principles](https://www.google.com/about/software-principles.html)
-	// but isn't malware.
-	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application
-	// threat type [as used by Google Play Protect for the Play
-	// Store](https://developers.google.com/android/play-protect/potentially-
-	// harmful-applications).
+	// application specifically designed to harm a computer, a mobile device, the
+	// software it's running, or its users. Malware exhibits malicious behavior
+	// that can include installing software without user consent and installing
+	// harmful software such as viruses. More information can be found
+	// [here](https://developers.google.com/search/docs/monitor-debug/security/malwa
+	// re).
+	//   "SOCIAL_ENGINEERING" - Social engineering threat type. Social engineering
+	// pages falsely purport to act on behalf of a third party with the intention
+	// of confusing viewers into performing an action with which the viewer would
+	// only trust a true agent of that third party. Phishing is a type of social
+	// engineering that tricks the viewer into performing the specific action of
+	// providing information, such as login credentials. More information can be
+	// found
+	// [here](https://developers.google.com/search/docs/monitor-debug/security/socia
+	// l-engineering).
+	//   "UNWANTED_SOFTWARE" - Unwanted software threat type. Unwanted software is
+	// any software that does not adhere to [Google's Software
+	// Principles](https://www.google.com/about/software-principles.html) but isn't
+	// malware.
+	//   "POTENTIALLY_HARMFUL_APPLICATION" - Potentially harmful application threat
+	// type [as used by Google Play Protect for the Play
+	// Store](https://developers.google.com/android/play-protect/potentially-harmful
+	// -applications).
 	ThreatType string `json:"threatType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Attributes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Attributes") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Attributes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV5FullHashFullHashDetail) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV5FullHashFullHashDetail
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleSecuritySafebrowsingV5SearchHashesResponse: The response
-// returned after searching threat hashes. If nothing is found, the
-// server will return an OK status (HTTP status code 200) with the
-// `full_hashes` field empty, rather than returning a NOT_FOUND status
-// (HTTP status code 404). **What's new in V5**: There is a separation
-// between `FullHash` and `FullHashDetail`. In the case when a hash
-// represents a site having multiple threats (e.g. both MALWARE and
-// SOCIAL_ENGINEERING), the full hash does not need to be sent twice as
-// in V4. Furthermore, the cache duration has been simplified into a
+// GoogleSecuritySafebrowsingV5SearchHashesResponse: The response returned
+// after searching threat hashes. If nothing is found, the server will return
+// an OK status (HTTP status code 200) with the `full_hashes` field empty,
+// rather than returning a NOT_FOUND status (HTTP status code 404). **What's
+// new in V5**: There is a separation between `FullHash` and `FullHashDetail`.
+// In the case when a hash represents a site having multiple threats (e.g. both
+// MALWARE and SOCIAL_ENGINEERING), the full hash does not need to be sent
+// twice as in V4. Furthermore, the cache duration has been simplified into a
 // single `cache_duration` field.
 type GoogleSecuritySafebrowsingV5SearchHashesResponse struct {
-	// CacheDuration: The client-side cache duration. The client MUST add
-	// this duration to the current time to determine the expiration time.
-	// The expiration time then applies to every hash prefix queried by the
-	// client in the request, regardless of how many full hashes are
-	// returned in the response. Even if the server returns no full hashes
-	// for a particular hash prefix, this fact MUST also be cached by the
-	// client. Important: the client MUST NOT assume that the server will
-	// return the same cache duration for all responses. The server MAY
-	// choose different cache durations for different responses depending on
-	// the situation.
+	// CacheDuration: The client-side cache duration. The client MUST add this
+	// duration to the current time to determine the expiration time. The
+	// expiration time then applies to every hash prefix queried by the client in
+	// the request, regardless of how many full hashes are returned in the
+	// response. Even if the server returns no full hashes for a particular hash
+	// prefix, this fact MUST also be cached by the client. Important: the client
+	// MUST NOT assume that the server will return the same cache duration for all
+	// responses. The server MAY choose different cache durations for different
+	// responses depending on the situation.
 	CacheDuration string `json:"cacheDuration,omitempty"`
-
 	// FullHashes: Unordered list. The unordered list of full hashes found.
 	FullHashes []*GoogleSecuritySafebrowsingV5FullHash `json:"fullHashes,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CacheDuration") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CacheDuration") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CacheDuration") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleSecuritySafebrowsingV5SearchHashesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleSecuritySafebrowsingV5SearchHashesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "safebrowsing.hashes.search":
 
 type HashesSearchCall struct {
 	s            *Service
@@ -332,55 +304,49 @@ type HashesSearchCall struct {
 	header_      http.Header
 }
 
-// Search: Search for full hashes matching the specified prefixes. This
-// is a custom method as defined by https://google.aip.dev/136 (the
-// custom method refers to this method having a custom name within
-// Google's general API development nomenclature; it does not refer to
-// using a custom HTTP method).
+// Search: Search for full hashes matching the specified prefixes. This is a
+// custom method as defined by https://google.aip.dev/136 (the custom method
+// refers to this method having a custom name within Google's general API
+// development nomenclature; it does not refer to using a custom HTTP method).
 func (r *HashesService) Search() *HashesSearchCall {
 	c := &HashesSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// HashPrefixes sets the optional parameter "hashPrefixes": Required.
-// The hash prefixes to be looked up. Clients MUST NOT send more than
-// 1000 hash prefixes. However, following the URL processing procedure,
-// clients SHOULD NOT need to send more than 30 hash prefixes. Currently
-// each hash prefix is required to be exactly 4 bytes long. This MAY be
-// relaxed in the future.
+// HashPrefixes sets the optional parameter "hashPrefixes": Required. The hash
+// prefixes to be looked up. Clients MUST NOT send more than 1000 hash
+// prefixes. However, following the URL processing procedure, clients SHOULD
+// NOT need to send more than 30 hash prefixes. Currently each hash prefix is
+// required to be exactly 4 bytes long. This MAY be relaxed in the future.
 func (c *HashesSearchCall) HashPrefixes(hashPrefixes ...string) *HashesSearchCall {
 	c.urlParams_.SetMulti("hashPrefixes", append([]string{}, hashPrefixes...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *HashesSearchCall) Fields(s ...googleapi.Field) *HashesSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *HashesSearchCall) IfNoneMatch(entityTag string) *HashesSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *HashesSearchCall) Context(ctx context.Context) *HashesSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *HashesSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -389,12 +355,7 @@ func (c *HashesSearchCall) Header() http.Header {
 }
 
 func (c *HashesSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -412,14 +373,11 @@ func (c *HashesSearchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "safebrowsing.hashes.search" call.
-// Exactly one of *GoogleSecuritySafebrowsingV5SearchHashesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleSecuritySafebrowsingV5SearchHashesResponse.ServerResponse.Heade
-// r or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleSecuritySafebrowsingV5SearchHashesResponse.ServerResponse.Header or
+// (if a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *HashesSearchCall) Do(opts ...googleapi.CallOption) (*GoogleSecuritySafebrowsingV5SearchHashesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -450,25 +408,4 @@ func (c *HashesSearchCall) Do(opts ...googleapi.CallOption) (*GoogleSecuritySafe
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Search for full hashes matching the specified prefixes. This is a custom method as defined by https://google.aip.dev/136 (the custom method refers to this method having a custom name within Google's general API development nomenclature; it does not refer to using a custom HTTP method).",
-	//   "flatPath": "v5/hashes:search",
-	//   "httpMethod": "GET",
-	//   "id": "safebrowsing.hashes.search",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "hashPrefixes": {
-	//       "description": "Required. The hash prefixes to be looked up. Clients MUST NOT send more than 1000 hash prefixes. However, following the URL processing procedure, clients SHOULD NOT need to send more than 30 hash prefixes. Currently each hash prefix is required to be exactly 4 bytes long. This MAY be relaxed in the future.",
-	//       "format": "byte",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v5/hashes:search",
-	//   "response": {
-	//     "$ref": "GoogleSecuritySafebrowsingV5SearchHashesResponse"
-	//   }
-	// }
-
 }

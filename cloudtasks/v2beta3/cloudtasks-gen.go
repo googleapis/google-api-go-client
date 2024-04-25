@@ -98,8 +98,8 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -202,128 +202,110 @@ type ProjectsLocationsQueuesTasksService struct {
 	s *Service
 }
 
-// AppEngineHttpQueue: App Engine HTTP queue. The task will be delivered
-// to the App Engine application hostname specified by its
-// AppEngineHttpQueue and AppEngineHttpRequest. The documentation for
-// AppEngineHttpRequest explains how the task's host URL is constructed.
-// Using AppEngineHttpQueue requires `appengine.applications.get`
-// (https://cloud.google.com/appengine/docs/admin-api/access-control)
-// Google IAM permission for the project and the following scope:
+// AppEngineHttpQueue: App Engine HTTP queue. The task will be delivered to the
+// App Engine application hostname specified by its AppEngineHttpQueue and
+// AppEngineHttpRequest. The documentation for AppEngineHttpRequest explains
+// how the task's host URL is constructed. Using AppEngineHttpQueue requires
+// `appengine.applications.get`
+// (https://cloud.google.com/appengine/docs/admin-api/access-control) Google
+// IAM permission for the project and the following scope:
 // `https://www.googleapis.com/auth/cloud-platform`
 type AppEngineHttpQueue struct {
-	// AppEngineRoutingOverride: Overrides for the task-level
-	// app_engine_routing. If set, `app_engine_routing_override` is used for
-	// all tasks in the queue, no matter what the setting is for the
-	// task-level app_engine_routing.
+	// AppEngineRoutingOverride: Overrides for the task-level app_engine_routing.
+	// If set, `app_engine_routing_override` is used for all tasks in the queue, no
+	// matter what the setting is for the task-level app_engine_routing.
 	AppEngineRoutingOverride *AppEngineRouting `json:"appEngineRoutingOverride,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AppEngineRoutingOverride") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AppEngineRoutingOverride")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppEngineRoutingOverride")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AppEngineRoutingOverride") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AppEngineHttpQueue) MarshalJSON() ([]byte, error) {
 	type NoMethod AppEngineHttpQueue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// AppEngineHttpRequest: App Engine HTTP request. The message defines
-// the HTTP request that is sent to an App Engine app when the task is
-// dispatched. Using AppEngineHttpRequest requires
-// `appengine.applications.get`
-// (https://cloud.google.com/appengine/docs/admin-api/access-control)
-// Google IAM permission for the project and the following scope:
-// `https://www.googleapis.com/auth/cloud-platform` The task will be
-// delivered to the App Engine app which belongs to the same project as
-// the queue. For more information, see How Requests are Routed
+// AppEngineHttpRequest: App Engine HTTP request. The message defines the HTTP
+// request that is sent to an App Engine app when the task is dispatched. Using
+// AppEngineHttpRequest requires `appengine.applications.get`
+// (https://cloud.google.com/appengine/docs/admin-api/access-control) Google
+// IAM permission for the project and the following scope:
+// `https://www.googleapis.com/auth/cloud-platform` The task will be delivered
+// to the App Engine app which belongs to the same project as the queue. For
+// more information, see How Requests are Routed
 // (https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed)
 // and how routing is affected by dispatch files
-// (https://cloud.google.com/appengine/docs/python/config/dispatchref).
-// Traffic is encrypted during transport and never leaves Google
-// datacenters. Because this traffic is carried over a communication
-// mechanism internal to Google, you cannot explicitly set the protocol
-// (for example, HTTP or HTTPS). The request to the handler, however,
-// will appear to have used the HTTP protocol. The AppEngineRouting used
-// to construct the URL that the task is delivered to can be set at the
-// queue-level or task-level: * If set, app_engine_routing_override is
-// used for all tasks in the queue, no matter what the setting is for
-// the task-level app_engine_routing. The `url` that the task will be
-// sent to is: * `url =` host `+` relative_uri Tasks can be dispatched
-// to secure app handlers, unsecure app handlers, and URIs restricted
-// with `login: admin`
+// (https://cloud.google.com/appengine/docs/python/config/dispatchref). Traffic
+// is encrypted during transport and never leaves Google datacenters. Because
+// this traffic is carried over a communication mechanism internal to Google,
+// you cannot explicitly set the protocol (for example, HTTP or HTTPS). The
+// request to the handler, however, will appear to have used the HTTP protocol.
+// The AppEngineRouting used to construct the URL that the task is delivered to
+// can be set at the queue-level or task-level: * If set,
+// app_engine_routing_override is used for all tasks in the queue, no matter
+// what the setting is for the task-level app_engine_routing. The `url` that
+// the task will be sent to is: * `url =` host `+` relative_uri Tasks can be
+// dispatched to secure app handlers, unsecure app handlers, and URIs
+// restricted with `login: admin`
 // (https://cloud.google.com/appengine/docs/standard/python/config/appref).
-// Because tasks are not run as any user, they cannot be dispatched to
-// URIs restricted with `login: required`
-// (https://cloud.google.com/appengine/docs/standard/python/config/appref)
-// Task dispatches also do not follow redirects. The task attempt has
-// succeeded if the app's request handler returns an HTTP response code
-// in the range [`200` - `299`]. The task attempt has failed if the
-// app's handler returns a non-2xx response code or Cloud Tasks does not
-// receive response before the deadline. Failed tasks will be retried
-// according to the retry configuration. `503` (Service Unavailable) is
-// considered an App Engine system error instead of an application error
-// and will cause Cloud Tasks' traffic congestion control to temporarily
-// throttle the queue's dispatches. Unlike other types of task targets,
-// a `429` (Too Many Requests) response from an app handler does not
+// Because tasks are not run as any user, they cannot be dispatched to URIs
+// restricted with `login: required`
+// (https://cloud.google.com/appengine/docs/standard/python/config/appref) Task
+// dispatches also do not follow redirects. The task attempt has succeeded if
+// the app's request handler returns an HTTP response code in the range [`200`
+// - `299`]. The task attempt has failed if the app's handler returns a non-2xx
+// response code or Cloud Tasks does not receive response before the deadline.
+// Failed tasks will be retried according to the retry configuration. `503`
+// (Service Unavailable) is considered an App Engine system error instead of an
+// application error and will cause Cloud Tasks' traffic congestion control to
+// temporarily throttle the queue's dispatches. Unlike other types of task
+// targets, a `429` (Too Many Requests) response from an app handler does not
 // cause traffic congestion control to throttle the queue.
 type AppEngineHttpRequest struct {
 	// AppEngineRouting: Task-level setting for App Engine routing. If set,
-	// app_engine_routing_override is used for all tasks in the queue, no
-	// matter what the setting is for the task-level app_engine_routing.
+	// app_engine_routing_override is used for all tasks in the queue, no matter
+	// what the setting is for the task-level app_engine_routing.
 	AppEngineRouting *AppEngineRouting `json:"appEngineRouting,omitempty"`
-
-	// Body: HTTP request body. A request body is allowed only if the HTTP
-	// method is POST or PUT. It is an error to set a body on a task with an
-	// incompatible HttpMethod.
+	// Body: HTTP request body. A request body is allowed only if the HTTP method
+	// is POST or PUT. It is an error to set a body on a task with an incompatible
+	// HttpMethod.
 	Body string `json:"body,omitempty"`
-
-	// Headers: HTTP request headers. This map contains the header field
-	// names and values. Headers can be set when the task is created.
-	// Repeated headers are not supported but a header value can contain
-	// commas. Cloud Tasks sets some headers to default values: *
-	// `User-Agent`: By default, this header is "AppEngine-Google;
-	// (+http://code.google.com/appengine)". This header can be modified,
-	// but Cloud Tasks will append "AppEngine-Google;
-	// (+http://code.google.com/appengine)" to the modified `User-Agent`.
-	// If the task has a body, Cloud Tasks sets the following headers: *
-	// `Content-Type`: By default, the `Content-Type` header is set to
-	// "application/octet-stream". The default can be overridden by
-	// explicitly setting `Content-Type` to a particular media type when the
-	// task is created. For example, `Content-Type` can be set to
-	// "application/json". * `Content-Length`: This is computed by Cloud
-	// Tasks. This value is output only. It cannot be changed. The headers
-	// below cannot be set or overridden: * `Host` * `X-Google-*` *
-	// `X-AppEngine-*` In addition, Cloud Tasks sets some headers when the
-	// task is dispatched, such as headers containing information about the
-	// task; see request headers
+	// Headers: HTTP request headers. This map contains the header field names and
+	// values. Headers can be set when the task is created. Repeated headers are
+	// not supported but a header value can contain commas. Cloud Tasks sets some
+	// headers to default values: * `User-Agent`: By default, this header is
+	// "AppEngine-Google; (+http://code.google.com/appengine)". This header can
+	// be modified, but Cloud Tasks will append "AppEngine-Google;
+	// (+http://code.google.com/appengine)" to the modified `User-Agent`. If the
+	// task has a body, Cloud Tasks sets the following headers: * `Content-Type`:
+	// By default, the `Content-Type` header is set to
+	// "application/octet-stream". The default can be overridden by explicitly
+	// setting `Content-Type` to a particular media type when the task is created.
+	// For example, `Content-Type` can be set to "application/json". *
+	// `Content-Length`: This is computed by Cloud Tasks. This value is output
+	// only. It cannot be changed. The headers below cannot be set or overridden: *
+	// `Host` * `X-Google-*` * `X-AppEngine-*` In addition, Cloud Tasks sets some
+	// headers when the task is dispatched, such as headers containing information
+	// about the task; see request headers
 	// (https://cloud.google.com/tasks/docs/creating-appengine-handlers#reading_request_headers).
-	// These headers are set only when the task is dispatched, so they are
-	// not visible when the task is returned in a Cloud Tasks response.
-	// Although there is no specific limit for the maximum number of headers
-	// or the size, there is a limit on the maximum size of the Task. For
-	// more information, see the CreateTask documentation.
+	// These headers are set only when the task is dispatched, so they are not
+	// visible when the task is returned in a Cloud Tasks response. Although there
+	// is no specific limit for the maximum number of headers or the size, there is
+	// a limit on the maximum size of the Task. For more information, see the
+	// CreateTask documentation.
 	Headers map[string]string `json:"headers,omitempty"`
-
-	// HttpMethod: The HTTP method to use for the request. The default is
-	// POST. The app's request handler for the task's target URL must be
-	// able to handle HTTP requests with this http_method, otherwise the
-	// task attempt fails with error code 405 (Method Not Allowed). See
-	// Writing a push task request handler
+	// HttpMethod: The HTTP method to use for the request. The default is POST. The
+	// app's request handler for the task's target URL must be able to handle HTTP
+	// requests with this http_method, otherwise the task attempt fails with error
+	// code 405 (Method Not Allowed). See Writing a push task request handler
 	// (https://cloud.google.com/appengine/docs/java/taskqueue/push/creating-handlers#writing_a_push_task_request_handler)
 	// and the App Engine documentation for your runtime on How Requests are
 	// Handled
@@ -339,42 +321,34 @@ type AppEngineHttpRequest struct {
 	//   "PATCH" - HTTP PATCH
 	//   "OPTIONS" - HTTP OPTIONS
 	HttpMethod string `json:"httpMethod,omitempty"`
-
-	// RelativeUri: The relative URI. The relative URI must begin with "/"
-	// and must be a valid HTTP relative URI. It can contain a path and
-	// query string arguments. If the relative URI is empty, then the root
-	// path "/" will be used. No spaces are allowed, and the maximum length
-	// allowed is 2083 characters.
+	// RelativeUri: The relative URI. The relative URI must begin with "/" and must
+	// be a valid HTTP relative URI. It can contain a path and query string
+	// arguments. If the relative URI is empty, then the root path "/" will be
+	// used. No spaces are allowed, and the maximum length allowed is 2083
+	// characters.
 	RelativeUri string `json:"relativeUri,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AppEngineRouting") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppEngineRouting") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AppEngineRouting") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AppEngineHttpRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AppEngineHttpRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AppEngineRouting: App Engine Routing. Defines routing characteristics
 // specific to App Engine - service, version, and instance. For more
-// information about services, versions, and instances see An Overview
-// of App Engine
+// information about services, versions, and instances see An Overview of App
+// Engine
 // (https://cloud.google.com/appengine/docs/python/an-overview-of-app-engine),
 // Microservices Architecture on Google App Engine
 // (https://cloud.google.com/appengine/docs/python/microservices-on-app-engine),
@@ -384,67 +358,54 @@ func (s *AppEngineHttpRequest) MarshalJSON() ([]byte, error) {
 // (https://cloud.google.com/appengine/docs/flexible/python/how-requests-are-routed).
 type AppEngineRouting struct {
 	// Host: Output only. The host that the task is sent to. The host is
-	// constructed from the domain name of the app associated with the
-	// queue's project ID (for example .appspot.com), and the service,
-	// version, and instance. Tasks which were created using the App Engine
-	// SDK might have a custom domain name. For more information, see How
-	// Requests are Routed
+	// constructed from the domain name of the app associated with the queue's
+	// project ID (for example .appspot.com), and the service, version, and
+	// instance. Tasks which were created using the App Engine SDK might have a
+	// custom domain name. For more information, see How Requests are Routed
 	// (https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed).
 	Host string `json:"host,omitempty"`
-
-	// Instance: App instance. By default, the task is sent to an instance
-	// which is available when the task is attempted. Requests can only be
-	// sent to a specific instance if manual scaling is used in App Engine
-	// Standard
+	// Instance: App instance. By default, the task is sent to an instance which is
+	// available when the task is attempted. Requests can only be sent to a
+	// specific instance if manual scaling is used in App Engine Standard
 	// (https://cloud.google.com/appengine/docs/python/an-overview-of-app-engine?hl=en_US#scaling_types_and_instance_classes).
-	// App Engine Flex does not support instances. For more information, see
-	// App Engine Standard request routing
+	// App Engine Flex does not support instances. For more information, see App
+	// Engine Standard request routing
 	// (https://cloud.google.com/appengine/docs/standard/python/how-requests-are-routed)
 	// and App Engine Flex request routing
 	// (https://cloud.google.com/appengine/docs/flexible/python/how-requests-are-routed).
 	Instance string `json:"instance,omitempty"`
-
-	// Service: App service. By default, the task is sent to the service
-	// which is the default service when the task is attempted. For some
-	// queues or tasks which were created using the App Engine Task Queue
-	// API, host is not parsable into service, version, and instance. For
-	// example, some tasks which were created using the App Engine SDK use a
-	// custom domain name; custom domains are not parsed by Cloud Tasks. If
-	// host is not parsable, then service, version, and instance are the
-	// empty string.
+	// Service: App service. By default, the task is sent to the service which is
+	// the default service when the task is attempted. For some queues or tasks
+	// which were created using the App Engine Task Queue API, host is not parsable
+	// into service, version, and instance. For example, some tasks which were
+	// created using the App Engine SDK use a custom domain name; custom domains
+	// are not parsed by Cloud Tasks. If host is not parsable, then service,
+	// version, and instance are the empty string.
 	Service string `json:"service,omitempty"`
-
-	// Version: App version. By default, the task is sent to the version
-	// which is the default version when the task is attempted. For some
-	// queues or tasks which were created using the App Engine Task Queue
-	// API, host is not parsable into service, version, and instance. For
-	// example, some tasks which were created using the App Engine SDK use a
-	// custom domain name; custom domains are not parsed by Cloud Tasks. If
-	// host is not parsable, then service, version, and instance are the
-	// empty string.
+	// Version: App version. By default, the task is sent to the version which is
+	// the default version when the task is attempted. For some queues or tasks
+	// which were created using the App Engine Task Queue API, host is not parsable
+	// into service, version, and instance. For example, some tasks which were
+	// created using the App Engine SDK use a custom domain name; custom domains
+	// are not parsed by Cloud Tasks. If host is not parsable, then service,
+	// version, and instance are the empty string.
 	Version string `json:"version,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Host") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Host") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Host") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Host") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AppEngineRouting) MarshalJSON() ([]byte, error) {
 	type NoMethod AppEngineRouting
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Attempt: The status of a task attempt.
@@ -452,182 +413,154 @@ type Attempt struct {
 	// DispatchTime: Output only. The time that this attempt was dispatched.
 	// `dispatch_time` will be truncated to the nearest microsecond.
 	DispatchTime string `json:"dispatchTime,omitempty"`
-
-	// ResponseStatus: Output only. The response from the worker for this
-	// attempt. If `response_time` is unset, then the task has not been
-	// attempted or is currently running and the `response_status` field is
-	// meaningless.
+	// ResponseStatus: Output only. The response from the worker for this attempt.
+	// If `response_time` is unset, then the task has not been attempted or is
+	// currently running and the `response_status` field is meaningless.
 	ResponseStatus *Status `json:"responseStatus,omitempty"`
-
-	// ResponseTime: Output only. The time that this attempt response was
-	// received. `response_time` will be truncated to the nearest
-	// microsecond.
+	// ResponseTime: Output only. The time that this attempt response was received.
+	// `response_time` will be truncated to the nearest microsecond.
 	ResponseTime string `json:"responseTime,omitempty"`
-
 	// ScheduleTime: Output only. The time that this attempt was scheduled.
 	// `schedule_time` will be truncated to the nearest microsecond.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DispatchTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DispatchTime") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DispatchTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Attempt) MarshalJSON() ([]byte, error) {
 	type NoMethod Attempt
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
-	// condition evaluates to `true`, then this binding applies to the
-	// current request. If the condition evaluates to `false`, then this
-	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the
-	// principals in this binding. To learn which resources support
-	// conditions in their IAM policies, see the IAM documentation
+	// condition evaluates to `true`, then this binding applies to the current
+	// request. If the condition evaluates to `false`, then this binding does not
+	// apply to the current request. However, a different role binding might grant
+	// the same role to one or more of the principals in this binding. To learn
+	// which resources support conditions in their IAM policies, see the IAM
+	// documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
-
-	// Members: Specifies the principals requesting access for a Google
-	// Cloud resource. `members` can have the following values: *
-	// `allUsers`: A special identifier that represents anyone who is on the
-	// internet; with or without a Google account. *
-	// `allAuthenticatedUsers`: A special identifier that represents anyone
-	// who is authenticated with a Google account or a service account. Does
-	// not include identities that come from external identity providers
-	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// Members: Specifies the principals requesting access for a Google Cloud
+	// resource. `members` can have the following values: * `allUsers`: A special
+	// identifier that represents anyone who is on the internet; with or without a
+	// Google account. * `allAuthenticatedUsers`: A special identifier that
+	// represents anyone who is authenticated with a Google account or a service
+	// account. Does not include identities that come from external identity
+	// providers (IdPs) through identity federation. * `user:{emailid}`: An email
 	// address that represents a specific Google account. For example,
-	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
-	// that represents a Google service account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address that
+	// represents a Google service account. For example,
 	// `my-other-app@appspot.gserviceaccount.com`. *
-	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
-	//  An identifier for a Kubernetes service account
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An
+	// identifier for a Kubernetes service account
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
-	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
-	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
-	// domain (primary) that represents all the users of that domain. For
-	// example, `google.com` or `example.com`. *
-	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
-	// id}/subject/{subject_attribute_value}`: A single identity in a
-	// workforce identity pool. *
-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
-	// ol_id}/group/{group_id}`: All workforce identities in a group. *
-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
-	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
-	// identities with a specific attribute value. *
-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
-	// ol_id}/*`: All identities in a workforce identity pool. *
-	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
-	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
-	// `: A single identity in a workload identity pool. *
-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
-	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
-	// identity pool group. *
-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
-	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
-	// tribute_value}`: All identities in a workload identity pool with a
-	// certain attribute. *
-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
-	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
-	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
-	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus unique identifier) representing a service account that has been
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. *
+	// `group:{emailid}`: An email address that represents a Google group. For
+	// example, `admins@example.com`. * `domain:{domain}`: The G Suite domain
+	// (primary) that represents all the users of that domain. For example,
+	// `google.com` or `example.com`. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/sub
+	// ject/{subject_attribute_value}`: A single identity in a workforce identity
+	// pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/
+	// group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/
+	// attribute.{attribute_name}/{attribute_value}`: All workforce identities with
+	// a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/
+	// *`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/global/wo
+	// rkloadIdentityPools/{pool_id}/subject/{subject_attribute_value}`: A single
+	// identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
+	// /workloadIdentityPools/{pool_id}/group/{group_id}`: A workload identity pool
+	// group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
+	// /workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}
+	// `: All identities in a workload identity pool with a certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
+	// /workloadIdentityPools/{pool_id}/*`: All identities in a workload identity
+	// pool. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently deleted. For
+	// example, `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered user
+	// retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a service account that has been recently
+	// deleted. For example,
+	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the
+	// service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains the
+	// role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email
+	// address (plus unique identifier) representing a Google group that has been
 	// recently deleted. For example,
-	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	// If the service account is undeleted, this value reverts to
-	// `serviceAccount:{emailid}` and the undeleted service account retains
-	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
-	// An email address (plus unique identifier) representing a Google group
-	// that has been recently deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If the group is
-	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. *
-	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
-	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
-	// identity in a workforce identity pool. For example,
-	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
-	// s/my-pool-id/subject/my-subject-attribute-value`.
+	// `admins@example.com?uid=123456789012345678901`. If the group is recovered,
+	// this value reverts to `group:{emailid}` and the recovered group retains the
+	// role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool
+	// _id}/subject/{subject_attribute_value}`: Deleted single identity in a
+	// workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-po
+	// ol-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
-
-	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
-	// overview of the IAM roles and permissions, see the IAM documentation
+	// Role: Role that is assigned to the list of `members`, or principals. For
+	// example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview
+	// of the IAM roles and permissions, see the IAM documentation
 	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
 	// available pre-defined roles, see here
 	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Condition") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Condition") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Condition") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BufferTaskRequest: Request message for BufferTask.
 type BufferTaskRequest struct {
-	// Body: Optional. Body of the HTTP request. The body can take any
-	// generic value. The value is written to the HttpRequest of the [Task].
+	// Body: Optional. Body of the HTTP request. The body can take any generic
+	// value. The value is written to the HttpRequest of the [Task].
 	Body *HttpBody `json:"body,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Body") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Body") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BufferTaskRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod BufferTaskRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BufferTaskResponse: Response message for BufferTask.
@@ -635,450 +568,363 @@ type BufferTaskResponse struct {
 	// Task: The created task.
 	Task *Task `json:"task,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Task") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Task") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Task") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Task") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BufferTaskResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod BufferTaskResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CmekConfig: Describes the customer-managed encryption key (CMEK)
 // configuration associated with a project and location.
 type CmekConfig struct {
 	// KmsKey: Resource name of the Cloud KMS key, of the form
-	// `projects/PROJECT_ID/locations/LOCATION_ID/keyRings/KEY_RING_ID/crypto
-	// Keys/KEY_ID`, that will be used to encrypt the Queues & Tasks in the
-	// region. Setting this as blank will turn off CMEK encryption.
+	// `projects/PROJECT_ID/locations/LOCATION_ID/keyRings/KEY_RING_ID/cryptoKeys/KE
+	// Y_ID`, that will be used to encrypt the Queues & Tasks in the region.
+	// Setting this as blank will turn off CMEK encryption.
 	KmsKey string `json:"kmsKey,omitempty"`
-
-	// Name: Output only. The config resource name which includes the
-	// project and location and must end in 'cmekConfig', in the format
+	// Name: Output only. The config resource name which includes the project and
+	// location and must end in 'cmekConfig', in the format
 	// projects/PROJECT_ID/locations/LOCATION_ID/cmekConfig`
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "KmsKey") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "KmsKey") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CmekConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CmekConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateTaskRequest: Request message for CreateTask.
 type CreateTaskRequest struct {
-	// ResponseView: The response_view specifies which subset of the Task
-	// will be returned. By default response_view is BASIC; not all
-	// information is retrieved by default because some data, such as
-	// payloads, might be desirable to return only when needed because of
-	// its large size or because of the sensitivity of data that it
-	// contains. Authorization for FULL requires `cloudtasks.tasks.fullView`
-	// Google IAM (https://cloud.google.com/iam/) permission on the Task
-	// resource.
+	// ResponseView: The response_view specifies which subset of the Task will be
+	// returned. By default response_view is BASIC; not all information is
+	// retrieved by default because some data, such as payloads, might be desirable
+	// to return only when needed because of its large size or because of the
+	// sensitivity of data that it contains. Authorization for FULL requires
+	// `cloudtasks.tasks.fullView` Google IAM (https://cloud.google.com/iam/)
+	// permission on the Task resource.
 	//
 	// Possible values:
 	//   "VIEW_UNSPECIFIED" - Unspecified. Defaults to BASIC.
-	//   "BASIC" - The basic view omits fields which can be large or can
-	// contain sensitive data. This view does not include the body in
-	// AppEngineHttpRequest. Bodies are desirable to return only when
-	// needed, because they can be large and because of the sensitivity of
-	// the data that you choose to store in it.
-	//   "FULL" - All information is returned. Authorization for FULL
-	// requires `cloudtasks.tasks.fullView` [Google
-	// IAM](https://cloud.google.com/iam/) permission on the Queue resource.
+	//   "BASIC" - The basic view omits fields which can be large or can contain
+	// sensitive data. This view does not include the body in AppEngineHttpRequest.
+	// Bodies are desirable to return only when needed, because they can be large
+	// and because of the sensitivity of the data that you choose to store in it.
+	//   "FULL" - All information is returned. Authorization for FULL requires
+	// `cloudtasks.tasks.fullView` [Google IAM](https://cloud.google.com/iam/)
+	// permission on the Queue resource.
 	ResponseView string `json:"responseView,omitempty"`
-
-	// Task: Required. The task to add. Task names have the following
-	// format:
-	// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_
-	// ID`. The user can optionally specify a task name. If a name is not
-	// specified then the system will generate a random unique task id,
-	// which will be set in the task returned in the response. If
-	// schedule_time is not set or is in the past then Cloud Tasks will set
-	// it to the current time. Task De-duplication: Explicitly specifying a
-	// task ID enables task de-duplication. If a task's ID is identical to
-	// that of an existing task or a task that was deleted or executed
-	// recently then the call will fail with ALREADY_EXISTS. The IDs of
-	// deleted tasks are not immediately available for reuse. It can take up
-	// to 4 hours (or 9 days if the task's queue was created using a
-	// queue.yaml or queue.xml) for the task ID to be released and made
-	// available again. Because there is an extra lookup cost to identify
-	// duplicate task names, these CreateTask calls have significantly
-	// increased latency. Using hashed strings for the task id or for the
-	// prefix of the task id is recommended. Choosing task ids that are
-	// sequential or have sequential prefixes, for example using a
-	// timestamp, causes an increase in latency and error rates in all task
-	// commands. The infrastructure relies on an approximately uniform
-	// distribution of task ids to store and serve tasks efficiently.
+	// Task: Required. The task to add. Task names have the following format:
+	// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`.
+	// The user can optionally specify a task name. If a name is not specified then
+	// the system will generate a random unique task id, which will be set in the
+	// task returned in the response. If schedule_time is not set or is in the past
+	// then Cloud Tasks will set it to the current time. Task De-duplication:
+	// Explicitly specifying a task ID enables task de-duplication. If a task's ID
+	// is identical to that of an existing task or a task that was deleted or
+	// executed recently then the call will fail with ALREADY_EXISTS. The IDs of
+	// deleted tasks are not immediately available for reuse. It can take up to 4
+	// hours (or 9 days if the task's queue was created using a queue.yaml or
+	// queue.xml) for the task ID to be released and made available again. Because
+	// there is an extra lookup cost to identify duplicate task names, these
+	// CreateTask calls have significantly increased latency. Using hashed strings
+	// for the task id or for the prefix of the task id is recommended. Choosing
+	// task ids that are sequential or have sequential prefixes, for example using
+	// a timestamp, causes an increase in latency and error rates in all task
+	// commands. The infrastructure relies on an approximately uniform distribution
+	// of task ids to store and serve tasks efficiently.
 	Task *Task `json:"task,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ResponseView") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ResponseView") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ResponseView") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CreateTaskRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateTaskRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// Expr: Represents a textual expression in the Common Expression
-// Language (CEL) syntax. CEL is a C-like expression language. The
-// syntax and semantics of CEL are documented at
-// https://github.com/google/cel-spec. Example (Comparison): title:
-// "Summary size limit" description: "Determines if a summary is less
-// than 100 chars" expression: "document.summary.size() < 100" Example
-// (Equality): title: "Requestor is owner" description: "Determines if
+// Expr: Represents a textual expression in the Common Expression Language
+// (CEL) syntax. CEL is a C-like expression language. The syntax and semantics
+// of CEL are documented at https://github.com/google/cel-spec. Example
+// (Comparison): title: "Summary size limit" description: "Determines if a
+// summary is less than 100 chars" expression: "document.summary.size() < 100"
+// Example (Equality): title: "Requestor is owner" description: "Determines if
 // requestor is the document owner" expression: "document.owner ==
 // request.auth.claims.email" Example (Logic): title: "Public documents"
-// description: "Determine whether the document should be publicly
-// visible" expression: "document.type != 'private' && document.type !=
-// 'internal'" Example (Data Manipulation): title: "Notification string"
-// description: "Create a notification string with a timestamp."
-// expression: "'New message received at ' +
-// string(document.create_time)" The exact variables and functions that
-// may be referenced within an expression are determined by the service
-// that evaluates it. See the service documentation for additional
+// description: "Determine whether the document should be publicly visible"
+// expression: "document.type != 'private' && document.type != 'internal'"
+// Example (Data Manipulation): title: "Notification string" description:
+// "Create a notification string with a timestamp." expression: "'New message
+// received at ' + string(document.create_time)" The exact variables and
+// functions that may be referenced within an expression are determined by the
+// service that evaluates it. See the service documentation for additional
 // information.
 type Expr struct {
-	// Description: Optional. Description of the expression. This is a
-	// longer text which describes the expression, e.g. when hovered over it
-	// in a UI.
+	// Description: Optional. Description of the expression. This is a longer text
+	// which describes the expression, e.g. when hovered over it in a UI.
 	Description string `json:"description,omitempty"`
-
-	// Expression: Textual representation of an expression in Common
-	// Expression Language syntax.
+	// Expression: Textual representation of an expression in Common Expression
+	// Language syntax.
 	Expression string `json:"expression,omitempty"`
-
-	// Location: Optional. String indicating the location of the expression
-	// for error reporting, e.g. a file name and a position in the file.
+	// Location: Optional. String indicating the location of the expression for
+	// error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
-
-	// Title: Optional. Title for the expression, i.e. a short string
-	// describing its purpose. This can be used e.g. in UIs which allow to
-	// enter the expression.
+	// Title: Optional. Title for the expression, i.e. a short string describing
+	// its purpose. This can be used e.g. in UIs which allow to enter the
+	// expression.
 	Title string `json:"title,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GetIamPolicyRequest: Request message for `GetIamPolicy` method.
 type GetIamPolicyRequest struct {
-	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options
-	// to `GetIamPolicy`.
+	// Options: OPTIONAL: A `GetPolicyOptions` object for specifying options to
+	// `GetIamPolicy`.
 	Options *GetPolicyOptions `json:"options,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Options") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Options") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Options") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Options") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GetIamPolicyRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GetPolicyOptions: Encapsulates settings provided to GetIamPolicy.
 type GetPolicyOptions struct {
-	// RequestedPolicyVersion: Optional. The maximum policy version that
-	// will be used to format the policy. Valid values are 0, 1, and 3.
-	// Requests specifying an invalid value will be rejected. Requests for
-	// policies with any conditional role bindings must specify version 3.
-	// Policies with no conditional role bindings may specify any valid
-	// value or leave the field unset. The policy in the response might use
-	// the policy version that you specified, or it might use a lower policy
-	// version. For example, if you specify version 3, but the policy has no
-	// conditional role bindings, the response uses version 1. To learn
-	// which resources support conditions in their IAM policies, see the IAM
-	// documentation
+	// RequestedPolicyVersion: Optional. The maximum policy version that will be
+	// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
+	// an invalid value will be rejected. Requests for policies with any
+	// conditional role bindings must specify version 3. Policies with no
+	// conditional role bindings may specify any valid value or leave the field
+	// unset. The policy in the response might use the policy version that you
+	// specified, or it might use a lower policy version. For example, if you
+	// specify version 3, but the policy has no conditional role bindings, the
+	// response uses version 1. To learn which resources support conditions in
+	// their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	RequestedPolicyVersion int64 `json:"requestedPolicyVersion,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "RequestedPolicyVersion") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "RequestedPolicyVersion") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "RequestedPolicyVersion")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "RequestedPolicyVersion") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GetPolicyOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod GetPolicyOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Header: Defines a header message. A header can have a key and a
-// value.
+// Header: Defines a header message. A header can have a key and a value.
 type Header struct {
 	// Key: The Key of the header.
 	Key string `json:"key,omitempty"`
-
 	// Value: The Value of the header.
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Header) MarshalJSON() ([]byte, error) {
 	type NoMethod Header
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // HeaderOverride: Wraps the Header object.
 type HeaderOverride struct {
-	// Header: Header embodying a key and a value. Do not put business
-	// sensitive or personally identifying data in the HTTP Header Override
-	// Configuration or other similar fields in accordance with Section 12
-	// (Resource Fields) of the Service Specific Terms
-	// (https://cloud.google.com/terms/service-terms).
+	// Header: Header embodying a key and a value. Do not put business sensitive or
+	// personally identifying data in the HTTP Header Override Configuration or
+	// other similar fields in accordance with Section 12 (Resource Fields) of the
+	// Service Specific Terms (https://cloud.google.com/terms/service-terms).
 	Header *Header `json:"header,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Header") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Header") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Header") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *HeaderOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod HeaderOverride
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// HttpBody: Message that represents an arbitrary HTTP body. It should
-// only be used for payload formats that can't be represented as JSON,
-// such as raw binary or an HTML page. This message can be used both in
-// streaming and non-streaming API methods in the request as well as the
-// response. It can be used as a top-level request field, which is
-// convenient if one wants to extract parameters from either the URL or
-// HTTP template into the request fields and also want access to the raw
-// HTTP body. Example: message GetResourceRequest { // A unique request
-// id. string request_id = 1; // The raw HTTP body is bound to this
-// field. google.api.HttpBody http_body = 2; } service ResourceService {
-// rpc GetResource(GetResourceRequest) returns (google.api.HttpBody);
-// rpc UpdateResource(google.api.HttpBody) returns
+// HttpBody: Message that represents an arbitrary HTTP body. It should only be
+// used for payload formats that can't be represented as JSON, such as raw
+// binary or an HTML page. This message can be used both in streaming and
+// non-streaming API methods in the request as well as the response. It can be
+// used as a top-level request field, which is convenient if one wants to
+// extract parameters from either the URL or HTTP template into the request
+// fields and also want access to the raw HTTP body. Example: message
+// GetResourceRequest { // A unique request id. string request_id = 1; // The
+// raw HTTP body is bound to this field. google.api.HttpBody http_body = 2; }
+// service ResourceService { rpc GetResource(GetResourceRequest) returns
+// (google.api.HttpBody); rpc UpdateResource(google.api.HttpBody) returns
 // (google.protobuf.Empty); } Example with streaming methods: service
-// CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns
-// (stream google.api.HttpBody); rpc UpdateCalendar(stream
-// google.api.HttpBody) returns (stream google.api.HttpBody); } Use of
-// this type only changes how the request and response bodies are
-// handled, all other features will continue to work unchanged.
+// CaldavService { rpc GetCalendar(stream google.api.HttpBody) returns (stream
+// google.api.HttpBody); rpc UpdateCalendar(stream google.api.HttpBody) returns
+// (stream google.api.HttpBody); } Use of this type only changes how the
+// request and response bodies are handled, all other features will continue to
+// work unchanged.
 type HttpBody struct {
-	// ContentType: The HTTP Content-Type header value specifying the
-	// content type of the body.
+	// ContentType: The HTTP Content-Type header value specifying the content type
+	// of the body.
 	ContentType string `json:"contentType,omitempty"`
-
 	// Data: The HTTP request/response body as raw binary.
 	Data string `json:"data,omitempty"`
-
-	// Extensions: Application specific response metadata. Must be set in
-	// the first response for streaming APIs.
+	// Extensions: Application specific response metadata. Must be set in the first
+	// response for streaming APIs.
 	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ContentType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContentType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *HttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpBody
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// HttpRequest: HTTP request. The task will be pushed to the worker as
-// an HTTP request. If the worker or the redirected worker acknowledges
-// the task by returning a successful HTTP response code ([`200` -
-// `299`]), the task will be removed from the queue. If any other HTTP
-// response code is returned or no response is received, the task will
-// be retried according to the following: * User-specified throttling:
-// retry configuration, rate limits, and the queue's state. * System
-// throttling: To prevent the worker from overloading, Cloud Tasks may
-// temporarily reduce the queue's effective rate. User-specified
-// settings will not be changed. System throttling happens because: *
-// Cloud Tasks backs off on all errors. Normally the backoff specified
-// in rate limits will be used. But if the worker returns `429` (Too
-// Many Requests), `503` (Service Unavailable), or the rate of errors is
-// high, Cloud Tasks will use a higher backoff rate. The retry specified
-// in the `Retry-After` HTTP response header is considered. * To prevent
-// traffic spikes and to smooth sudden increases in traffic, dispatches
-// ramp up slowly when the queue is newly created or idle and if large
-// numbers of tasks suddenly become available to dispatch (due to spikes
-// in create task rates, the queue being unpaused, or many tasks that
-// are scheduled at the same time).
+// HttpRequest: HTTP request. The task will be pushed to the worker as an HTTP
+// request. If the worker or the redirected worker acknowledges the task by
+// returning a successful HTTP response code ([`200` - `299`]), the task will
+// be removed from the queue. If any other HTTP response code is returned or no
+// response is received, the task will be retried according to the following: *
+// User-specified throttling: retry configuration, rate limits, and the queue's
+// state. * System throttling: To prevent the worker from overloading, Cloud
+// Tasks may temporarily reduce the queue's effective rate. User-specified
+// settings will not be changed. System throttling happens because: * Cloud
+// Tasks backs off on all errors. Normally the backoff specified in rate limits
+// will be used. But if the worker returns `429` (Too Many Requests), `503`
+// (Service Unavailable), or the rate of errors is high, Cloud Tasks will use a
+// higher backoff rate. The retry specified in the `Retry-After` HTTP response
+// header is considered. * To prevent traffic spikes and to smooth sudden
+// increases in traffic, dispatches ramp up slowly when the queue is newly
+// created or idle and if large numbers of tasks suddenly become available to
+// dispatch (due to spikes in create task rates, the queue being unpaused, or
+// many tasks that are scheduled at the same time).
 type HttpRequest struct {
-	// Body: HTTP request body. A request body is allowed only if the HTTP
-	// method is POST, PUT, or PATCH. It is an error to set body on a task
-	// with an incompatible HttpMethod.
+	// Body: HTTP request body. A request body is allowed only if the HTTP method
+	// is POST, PUT, or PATCH. It is an error to set body on a task with an
+	// incompatible HttpMethod.
 	Body string `json:"body,omitempty"`
-
-	// Headers: HTTP request headers. This map contains the header field
-	// names and values. Headers can be set when the task is created. These
-	// headers represent a subset of the headers that will accompany the
-	// task's HTTP request. Some HTTP request headers will be ignored or
-	// replaced. A partial list of headers that will be ignored or replaced
-	// is: * Any header that is prefixed with "X-CloudTasks-" will be
-	// treated as service header. Service headers define properties of the
-	// task and are predefined in CloudTask. * Host: This will be computed
-	// by Cloud Tasks and derived from HttpRequest.url. * Content-Length:
-	// This will be computed by Cloud Tasks. * User-Agent: This will be set
-	// to "Google-Cloud-Tasks". * `X-Google-*`: Google use only. *
-	// `X-AppEngine-*`: Google use only. `Content-Type` won't be set by
-	// Cloud Tasks. You can explicitly set `Content-Type` to a media type
-	// when the task is created. For example, `Content-Type` can be set to
-	// "application/octet-stream" or "application/json". Headers which
-	// can have multiple values (according to RFC2616) can be specified
-	// using comma-separated values. The size of the headers must be less
-	// than 80KB.
+	// Headers: HTTP request headers. This map contains the header field names and
+	// values. Headers can be set when the task is created. These headers represent
+	// a subset of the headers that will accompany the task's HTTP request. Some
+	// HTTP request headers will be ignored or replaced. A partial list of headers
+	// that will be ignored or replaced is: * Any header that is prefixed with
+	// "X-CloudTasks-" will be treated as service header. Service headers define
+	// properties of the task and are predefined in CloudTask. * Host: This will be
+	// computed by Cloud Tasks and derived from HttpRequest.url. * Content-Length:
+	// This will be computed by Cloud Tasks. * User-Agent: This will be set to
+	// "Google-Cloud-Tasks". * `X-Google-*`: Google use only. * `X-AppEngine-*`:
+	// Google use only. `Content-Type` won't be set by Cloud Tasks. You can
+	// explicitly set `Content-Type` to a media type when the task is created. For
+	// example, `Content-Type` can be set to "application/octet-stream" or
+	// "application/json". Headers which can have multiple values (according to
+	// RFC2616) can be specified using comma-separated values. The size of the
+	// headers must be less than 80KB.
 	Headers map[string]string `json:"headers,omitempty"`
-
-	// HttpMethod: The HTTP method to use for the request. The default is
-	// POST.
+	// HttpMethod: The HTTP method to use for the request. The default is POST.
 	//
 	// Possible values:
 	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method unspecified
@@ -1090,85 +936,71 @@ type HttpRequest struct {
 	//   "PATCH" - HTTP PATCH
 	//   "OPTIONS" - HTTP OPTIONS
 	HttpMethod string `json:"httpMethod,omitempty"`
-
 	// OauthToken: If specified, an OAuth token
-	// (https://developers.google.com/identity/protocols/OAuth2) will be
-	// generated and attached as an `Authorization` header in the HTTP
-	// request. This type of authorization should generally only be used
-	// when calling Google APIs hosted on *.googleapis.com.
+	// (https://developers.google.com/identity/protocols/OAuth2) will be generated
+	// and attached as an `Authorization` header in the HTTP request. This type of
+	// authorization should generally only be used when calling Google APIs hosted
+	// on *.googleapis.com.
 	OauthToken *OAuthToken `json:"oauthToken,omitempty"`
-
 	// OidcToken: If specified, an OIDC
-	// (https://developers.google.com/identity/protocols/OpenIDConnect)
-	// token will be generated and attached as an `Authorization` header in
-	// the HTTP request. This type of authorization can be used for many
-	// scenarios, including calling Cloud Run, or endpoints where you intend
-	// to validate the token yourself.
+	// (https://developers.google.com/identity/protocols/OpenIDConnect) token will
+	// be generated and attached as an `Authorization` header in the HTTP request.
+	// This type of authorization can be used for many scenarios, including calling
+	// Cloud Run, or endpoints where you intend to validate the token yourself.
 	OidcToken *OidcToken `json:"oidcToken,omitempty"`
-
-	// Url: Required. The full url path that the request will be sent to.
-	// This string must begin with either "http://" or "https://". Some
-	// examples are: `http://acme.com` and `https://acme.com/sales:8080`.
-	// Cloud Tasks will encode some characters for safety and compatibility.
-	// The maximum allowed URL length is 2083 characters after encoding. The
-	// `Location` header response from a redirect response [`300` - `399`]
-	// may be followed. The redirect is not counted as a separate attempt.
+	// Url: Required. The full url path that the request will be sent to. This
+	// string must begin with either "http://" or "https://". Some examples are:
+	// `http://acme.com` and `https://acme.com/sales:8080`. Cloud Tasks will encode
+	// some characters for safety and compatibility. The maximum allowed URL length
+	// is 2083 characters after encoding. The `Location` header response from a
+	// redirect response [`300` - `399`] may be followed. The redirect is not
+	// counted as a separate attempt.
 	Url string `json:"url,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Body") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Body") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Body") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Body") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *HttpRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// HttpTarget: HTTP target. When specified as a Queue, all the tasks
-// with [HttpRequest] will be overridden according to the target.
+// HttpTarget: HTTP target. When specified as a Queue, all the tasks with
+// [HttpRequest] will be overridden according to the target.
 type HttpTarget struct {
-	// HeaderOverrides: HTTP target headers. This map contains the header
-	// field names and values. Headers will be set when running the
-	// CreateTask and/or BufferTask. These headers represent a subset of the
-	// headers that will be configured for the task's HTTP request. Some
-	// HTTP request headers will be ignored or replaced. A partial list of
-	// headers that will be ignored or replaced is: * Several predefined
-	// headers, prefixed with "X-CloudTasks-", can be used to define
-	// properties of the task. * Host: This will be computed by Cloud Tasks
-	// and derived from HttpRequest.url. * Content-Length: This will be
-	// computed by Cloud Tasks. `Content-Type` won't be set by Cloud Tasks.
-	// You can explicitly set `Content-Type` to a media type when the task
-	// is created. For example,`Content-Type` can be set to
-	// "application/octet-stream" or "application/json". The default
-	// value is set to "application/json". * User-Agent: This will be set
-	// to "Google-Cloud-Tasks". Headers which can have multiple values
-	// (according to RFC2616) can be specified using comma-separated values.
-	// The size of the headers must be less than 80KB. Queue-level headers
-	// to override headers of all the tasks in the queue. Do not put
-	// business sensitive or personally identifying data in the HTTP Header
-	// Override Configuration or other similar fields in accordance with
-	// Section 12 (Resource Fields) of the Service Specific Terms
+	// HeaderOverrides: HTTP target headers. This map contains the header field
+	// names and values. Headers will be set when running the CreateTask and/or
+	// BufferTask. These headers represent a subset of the headers that will be
+	// configured for the task's HTTP request. Some HTTP request headers will be
+	// ignored or replaced. A partial list of headers that will be ignored or
+	// replaced is: * Several predefined headers, prefixed with "X-CloudTasks-",
+	// can be used to define properties of the task. * Host: This will be computed
+	// by Cloud Tasks and derived from HttpRequest.url. * Content-Length: This will
+	// be computed by Cloud Tasks. `Content-Type` won't be set by Cloud Tasks. You
+	// can explicitly set `Content-Type` to a media type when the task is created.
+	// For example,`Content-Type` can be set to "application/octet-stream" or
+	// "application/json". The default value is set to "application/json". *
+	// User-Agent: This will be set to "Google-Cloud-Tasks". Headers which can
+	// have multiple values (according to RFC2616) can be specified using
+	// comma-separated values. The size of the headers must be less than 80KB.
+	// Queue-level headers to override headers of all the tasks in the queue. Do
+	// not put business sensitive or personally identifying data in the HTTP Header
+	// Override Configuration or other similar fields in accordance with Section 12
+	// (Resource Fields) of the Service Specific Terms
 	// (https://cloud.google.com/terms/service-terms).
 	HeaderOverrides []*HeaderOverride `json:"headerOverrides,omitempty"`
-
-	// HttpMethod: The HTTP method to use for the request. When specified,
-	// it overrides HttpRequest for the task. Note that if the value is set
-	// to HttpMethod the HttpRequest of the task will be ignored at
-	// execution time.
+	// HttpMethod: The HTTP method to use for the request. When specified, it
+	// overrides HttpRequest for the task. Note that if the value is set to
+	// HttpMethod the HttpRequest of the task will be ignored at execution time.
 	//
 	// Possible values:
 	//   "HTTP_METHOD_UNSPECIFIED" - HTTP method unspecified
@@ -1180,642 +1012,514 @@ type HttpTarget struct {
 	//   "PATCH" - HTTP PATCH
 	//   "OPTIONS" - HTTP OPTIONS
 	HttpMethod string `json:"httpMethod,omitempty"`
-
 	// OauthToken: If specified, an OAuth token
-	// (https://developers.google.com/identity/protocols/OAuth2) will be
-	// generated and attached as the `Authorization` header in the HTTP
-	// request. This type of authorization should generally only be used
-	// when calling Google APIs hosted on *.googleapis.com.
+	// (https://developers.google.com/identity/protocols/OAuth2) will be generated
+	// and attached as the `Authorization` header in the HTTP request. This type of
+	// authorization should generally only be used when calling Google APIs hosted
+	// on *.googleapis.com.
 	OauthToken *OAuthToken `json:"oauthToken,omitempty"`
-
 	// OidcToken: If specified, an OIDC
-	// (https://developers.google.com/identity/protocols/OpenIDConnect)
-	// token will be generated and attached as an `Authorization` header in
-	// the HTTP request. This type of authorization can be used for many
-	// scenarios, including calling Cloud Run, or endpoints where you intend
-	// to validate the token yourself.
+	// (https://developers.google.com/identity/protocols/OpenIDConnect) token will
+	// be generated and attached as an `Authorization` header in the HTTP request.
+	// This type of authorization can be used for many scenarios, including calling
+	// Cloud Run, or endpoints where you intend to validate the token yourself.
 	OidcToken *OidcToken `json:"oidcToken,omitempty"`
-
-	// UriOverride: URI override. When specified, overrides the execution
-	// URI for all the tasks in the queue.
+	// UriOverride: URI override. When specified, overrides the execution URI for
+	// all the tasks in the queue.
 	UriOverride *UriOverride `json:"uriOverride,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "HeaderOverrides") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HeaderOverrides") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "HeaderOverrides") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *HttpTarget) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpTarget
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListLocationsResponse: The response message for
-// Locations.ListLocations.
+// ListLocationsResponse: The response message for Locations.ListLocations.
 type ListLocationsResponse struct {
-	// Locations: A list of locations that matches the specified filter in
-	// the request.
+	// Locations: A list of locations that matches the specified filter in the
+	// request.
 	Locations []*Location `json:"locations,omitempty"`
-
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Locations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Locations") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Locations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListQueuesResponse: Response message for ListQueues.
 type ListQueuesResponse struct {
-	// NextPageToken: A token to retrieve next page of results. To return
-	// the next page of results, call ListQueues with this value as the
-	// page_token. If the next_page_token is empty, there are no more
-	// results. The page token is valid for only 2 hours.
+	// NextPageToken: A token to retrieve next page of results. To return the next
+	// page of results, call ListQueues with this value as the page_token. If the
+	// next_page_token is empty, there are no more results. The page token is valid
+	// for only 2 hours.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Queues: The list of queues.
 	Queues []*Queue `json:"queues,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListQueuesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListQueuesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListTasksResponse: Response message for listing tasks using
-// ListTasks.
+// ListTasksResponse: Response message for listing tasks using ListTasks.
 type ListTasksResponse struct {
-	// NextPageToken: A token to retrieve next page of results. To return
-	// the next page of results, call ListTasks with this value as the
-	// page_token. If the next_page_token is empty, there are no more
-	// results.
+	// NextPageToken: A token to retrieve next page of results. To return the next
+	// page of results, call ListTasks with this value as the page_token. If the
+	// next_page_token is empty, there are no more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Tasks: The list of tasks.
 	Tasks []*Task `json:"tasks,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListTasksResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTasksResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
 type Location struct {
-	// DisplayName: The friendly name for this location, typically a nearby
-	// city name. For example, "Tokyo".
+	// DisplayName: The friendly name for this location, typically a nearby city
+	// name. For example, "Tokyo".
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Labels: Cross-service attributes for the location. For example
 	// {"cloud.googleapis.com/region": "us-east1"}
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// LocationId: The canonical id for this location. For example:
-	// "us-east1".
+	// LocationId: The canonical id for this location. For example: "us-east1".
 	LocationId string `json:"locationId,omitempty"`
-
-	// Metadata: Service-specific metadata. For example the available
-	// capacity at the given location.
+	// Metadata: Service-specific metadata. For example the available capacity at
+	// the given location.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
 	// Name: Resource name for the location, which may vary between
 	// implementations. For example:
 	// "projects/example-project/locations/us-east1"
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // OAuthToken: Contains information needed for generating an OAuth token
-// (https://developers.google.com/identity/protocols/OAuth2). This type
-// of authorization should generally only be used when calling Google
-// APIs hosted on *.googleapis.com.
+// (https://developers.google.com/identity/protocols/OAuth2). This type of
+// authorization should generally only be used when calling Google APIs hosted
+// on *.googleapis.com.
 type OAuthToken struct {
-	// Scope: OAuth scope to be used for generating OAuth access token. If
-	// not specified, "https://www.googleapis.com/auth/cloud-platform" will
-	// be used.
+	// Scope: OAuth scope to be used for generating OAuth access token. If not
+	// specified, "https://www.googleapis.com/auth/cloud-platform" will be used.
 	Scope string `json:"scope,omitempty"`
-
 	// ServiceAccountEmail: Service account email
 	// (https://cloud.google.com/iam/docs/service-accounts) to be used for
-	// generating OAuth token. The service account must be within the same
-	// project as the queue. The caller must have iam.serviceAccounts.actAs
-	// permission for the service account.
+	// generating OAuth token. The service account must be within the same project
+	// as the queue. The caller must have iam.serviceAccounts.actAs permission for
+	// the service account.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Scope") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Scope") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Scope") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *OAuthToken) MarshalJSON() ([]byte, error) {
 	type NoMethod OAuthToken
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// OidcToken: Contains information needed for generating an OpenID
-// Connect token
-// (https://developers.google.com/identity/protocols/OpenIDConnect).
-// This type of authorization can be used for many scenarios, including
-// calling Cloud Run, or endpoints where you intend to validate the
-// token yourself.
+// OidcToken: Contains information needed for generating an OpenID Connect
+// token (https://developers.google.com/identity/protocols/OpenIDConnect). This
+// type of authorization can be used for many scenarios, including calling
+// Cloud Run, or endpoints where you intend to validate the token yourself.
 type OidcToken struct {
-	// Audience: Audience to be used when generating OIDC token. If not
-	// specified, the URI specified in target will be used.
+	// Audience: Audience to be used when generating OIDC token. If not specified,
+	// the URI specified in target will be used.
 	Audience string `json:"audience,omitempty"`
-
 	// ServiceAccountEmail: Service account email
 	// (https://cloud.google.com/iam/docs/service-accounts) to be used for
-	// generating OIDC token. The service account must be within the same
-	// project as the queue. The caller must have iam.serviceAccounts.actAs
-	// permission for the service account.
+	// generating OIDC token. The service account must be within the same project
+	// as the queue. The caller must have iam.serviceAccounts.actAs permission for
+	// the service account.
 	ServiceAccountEmail string `json:"serviceAccountEmail,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Audience") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Audience") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Audience") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *OidcToken) MarshalJSON() ([]byte, error) {
 	type NoMethod OidcToken
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PathOverride: PathOverride. Path message defines path override for
-// HTTP targets.
+// PathOverride: PathOverride. Path message defines path override for HTTP
+// targets.
 type PathOverride struct {
 	// Path: The URI path (e.g., /users/1234). Default is an empty string.
 	Path string `json:"path,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Path") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Path") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Path") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Path") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PathOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod PathOverride
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PauseQueueRequest: Request message for PauseQueue.
 type PauseQueueRequest struct {
 }
 
-// Policy: An Identity and Access Management (IAM) policy, which
-// specifies access controls for Google Cloud resources. A `Policy` is a
-// collection of `bindings`. A `binding` binds one or more `members`, or
-// principals, to a single `role`. Principals can be user accounts,
-// service accounts, Google groups, and domains (such as G Suite). A
-// `role` is a named list of permissions; each `role` can be an IAM
-// predefined role or a user-created custom role. For some types of
-// Google Cloud resources, a `binding` can also specify a `condition`,
-// which is a logical expression that allows access to a resource only
-// if the expression evaluates to `true`. A condition can add
-// constraints based on attributes of the request, the resource, or
-// both. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
-// (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** ``` { "bindings": [ { "role":
+// Policy: An Identity and Access Management (IAM) policy, which specifies
+// access controls for Google Cloud resources. A `Policy` is a collection of
+// `bindings`. A `binding` binds one or more `members`, or principals, to a
+// single `role`. Principals can be user accounts, service accounts, Google
+// groups, and domains (such as G Suite). A `role` is a named list of
+// permissions; each `role` can be an IAM predefined role or a user-created
+// custom role. For some types of Google Cloud resources, a `binding` can also
+// specify a `condition`, which is a logical expression that allows access to a
+// resource only if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or both. To
+// learn which resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies). **JSON
+// example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
-// "user:mike@example.com", "group:admins@example.com",
-// "domain:google.com",
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
-// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:mike@example.com", "group:admins@example.com", "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, { "role":
+// "roles/resourcemanager.organizationViewer", "members": [
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
-// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
-// bindings: - members: - user:mike@example.com -
-// group:admins@example.com - domain:google.com -
-// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
-// roles/resourcemanager.organizationAdmin - members: -
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ], "etag":
+// "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ``` bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+// role: roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
-// condition: title: expirable access description: Does not grant access
-// after Sep 2020 expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// ``` For a description of IAM and its features, see the IAM
-// documentation (https://cloud.google.com/iam/docs/).
+// condition: title: expirable access description: Does not grant access after
+// Sep 2020 expression: request.time < timestamp('2020-10-01T00:00:00.000Z')
+// etag: BwWWja0YfJA= version: 3 ``` For a description of IAM and its features,
+// see the IAM documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
-	// Bindings: Associates a list of `members`, or principals, with a
-	// `role`. Optionally, may specify a `condition` that determines how and
-	// when the `bindings` are applied. Each of the `bindings` must contain
-	// at least one principal. The `bindings` in a `Policy` can refer to up
-	// to 1,500 principals; up to 250 of these principals can be Google
-	// groups. Each occurrence of a principal counts towards these limits.
-	// For example, if the `bindings` grant 50 different roles to
-	// `user:alice@example.com`, and not to any other principal, then you
-	// can add another 1,450 principals to the `bindings` in the `Policy`.
+	// Bindings: Associates a list of `members`, or principals, with a `role`.
+	// Optionally, may specify a `condition` that determines how and when the
+	// `bindings` are applied. Each of the `bindings` must contain at least one
+	// principal. The `bindings` in a `Policy` can refer to up to 1,500 principals;
+	// up to 250 of these principals can be Google groups. Each occurrence of a
+	// principal counts towards these limits. For example, if the `bindings` grant
+	// 50 different roles to `user:alice@example.com`, and not to any other
+	// principal, then you can add another 1,450 principals to the `bindings` in
+	// the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
-
-	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help prevent simultaneous updates of a policy from overwriting each
-	// other. It is strongly suggested that systems make use of the `etag`
-	// in the read-modify-write cycle to perform policy updates in order to
-	// avoid race conditions: An `etag` is returned in the response to
-	// `getIamPolicy`, and systems are expected to put that etag in the
-	// request to `setIamPolicy` to ensure that their change will be applied
-	// to the same version of the policy. **Important:** If you use IAM
-	// Conditions, you must include the `etag` field whenever you call
-	// `setIamPolicy`. If you omit this field, then IAM allows you to
-	// overwrite a version `3` policy with a version `1` policy, and all of
+	// Etag: `etag` is used for optimistic concurrency control as a way to help
+	// prevent simultaneous updates of a policy from overwriting each other. It is
+	// strongly suggested that systems make use of the `etag` in the
+	// read-modify-write cycle to perform policy updates in order to avoid race
+	// conditions: An `etag` is returned in the response to `getIamPolicy`, and
+	// systems are expected to put that etag in the request to `setIamPolicy` to
+	// ensure that their change will be applied to the same version of the policy.
+	// **Important:** If you use IAM Conditions, you must include the `etag` field
+	// whenever you call `setIamPolicy`. If you omit this field, then IAM allows
+	// you to overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
-
-	// Version: Specifies the format of the policy. Valid values are `0`,
-	// `1`, and `3`. Requests that specify an invalid value are rejected.
-	// Any operation that affects conditional role bindings must specify
-	// version `3`. This requirement applies to the following operations: *
-	// Getting a policy that includes a conditional role binding * Adding a
-	// conditional role binding to a policy * Changing a conditional role
-	// binding in a policy * Removing any role binding, with or without a
-	// condition, from a policy that includes conditions **Important:** If
-	// you use IAM Conditions, you must include the `etag` field whenever
-	// you call `setIamPolicy`. If you omit this field, then IAM allows you
-	// to overwrite a version `3` policy with a version `1` policy, and all
-	// of the conditions in the version `3` policy are lost. If a policy
-	// does not include any conditions, operations on that policy may
-	// specify any valid version or leave the field unset. To learn which
-	// resources support conditions in their IAM policies, see the IAM
-	// documentation
+	// Version: Specifies the format of the policy. Valid values are `0`, `1`, and
+	// `3`. Requests that specify an invalid value are rejected. Any operation that
+	// affects conditional role bindings must specify version `3`. This requirement
+	// applies to the following operations: * Getting a policy that includes a
+	// conditional role binding * Adding a conditional role binding to a policy *
+	// Changing a conditional role binding in a policy * Removing any role binding,
+	// with or without a condition, from a policy that includes conditions
+	// **Important:** If you use IAM Conditions, you must include the `etag` field
+	// whenever you call `setIamPolicy`. If you omit this field, then IAM allows
+	// you to overwrite a version `3` policy with a version `1` policy, and all of
+	// the conditions in the version `3` policy are lost. If a policy does not
+	// include any conditions, operations on that policy may specify any valid
+	// version or leave the field unset. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Bindings") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Bindings") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Bindings") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PullMessage: Pull Message. This proto can only be used for tasks in a
-// queue which has PULL type. It currently exists for backwards
-// compatibility with the App Engine Task Queue SDK. This message type
-// maybe returned with methods list and get, when the response view is
-// FULL.
+// PullMessage: Pull Message. This proto can only be used for tasks in a queue
+// which has PULL type. It currently exists for backwards compatibility with
+// the App Engine Task Queue SDK. This message type maybe returned with methods
+// list and get, when the response view is FULL.
 type PullMessage struct {
 	// Payload: A data payload consumed by the worker to execute the task.
 	Payload string `json:"payload,omitempty"`
-
 	// Tag: The tasks's tag. The tag is less than 500 characters. SDK
-	// compatibility: Although the SDK allows tags to be either string or
-	// bytes
+	// compatibility: Although the SDK allows tags to be either string or bytes
 	// (https://cloud.google.com/appengine/docs/standard/java/javadoc/com/google/appengine/api/taskqueue/TaskOptions.html#tag-byte:A-),
-	// only UTF-8 encoded tags can be used in Cloud Tasks. If a tag isn't
-	// UTF-8 encoded, the tag will be empty when the task is returned by
-	// Cloud Tasks.
+	// only UTF-8 encoded tags can be used in Cloud Tasks. If a tag isn't UTF-8
+	// encoded, the tag will be empty when the task is returned by Cloud Tasks.
 	Tag string `json:"tag,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Payload") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Payload") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Payload") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Payload") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PullMessage) MarshalJSON() ([]byte, error) {
 	type NoMethod PullMessage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PurgeQueueRequest: Request message for PurgeQueue.
 type PurgeQueueRequest struct {
 }
 
-// QueryOverride: QueryOverride. Query message defines query override
-// for HTTP targets.
+// QueryOverride: QueryOverride. Query message defines query override for HTTP
+// targets.
 type QueryOverride struct {
-	// QueryParams: The query parameters (e.g., qparam1=123&qparam2=456).
-	// Default is an empty string.
+	// QueryParams: The query parameters (e.g., qparam1=123&qparam2=456). Default
+	// is an empty string.
 	QueryParams string `json:"queryParams,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "QueryParams") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "QueryParams") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "QueryParams") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *QueryOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryOverride
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Queue: A queue is a container of related tasks. Queues are configured
-// to manage how those tasks are dispatched. Configurable properties
-// include rate limits, retry options, queue types, and others.
+// Queue: A queue is a container of related tasks. Queues are configured to
+// manage how those tasks are dispatched. Configurable properties include rate
+// limits, retry options, queue types, and others.
 type Queue struct {
-	// AppEngineHttpQueue: AppEngineHttpQueue settings apply only to App
-	// Engine tasks in this queue. Http tasks are not affected by this
-	// proto.
+	// AppEngineHttpQueue: AppEngineHttpQueue settings apply only to App Engine
+	// tasks in this queue. Http tasks are not affected by this proto.
 	AppEngineHttpQueue *AppEngineHttpQueue `json:"appEngineHttpQueue,omitempty"`
-
 	// HttpTarget: Modifies HTTP target for HTTP tasks.
 	HttpTarget *HttpTarget `json:"httpTarget,omitempty"`
-
-	// Name: Caller-specified and required in CreateQueue, after which it
-	// becomes output only. The queue name. The queue name must have the
-	// following format:
-	// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` *
-	// `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens
-	// (-), colons (:), or periods (.). For more information, see
-	// Identifying projects
+	// Name: Caller-specified and required in CreateQueue, after which it becomes
+	// output only. The queue name. The queue name must have the following format:
+	// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` * `PROJECT_ID`
+	// can contain letters ([A-Za-z]), numbers ([0-9]), hyphens (-), colons (:), or
+	// periods (.). For more information, see Identifying projects
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)
-	// * `LOCATION_ID` is the canonical ID for the queue's location. The
-	// list of available locations can be obtained by calling ListLocations.
-	// For more information, see https://cloud.google.com/about/locations/.
-	// * `QUEUE_ID` can contain letters ([A-Za-z]), numbers ([0-9]), or
-	// hyphens (-). The maximum length is 100 characters.
+	// * `LOCATION_ID` is the canonical ID for the queue's location. The list of
+	// available locations can be obtained by calling ListLocations. For more
+	// information, see https://cloud.google.com/about/locations/. * `QUEUE_ID` can
+	// contain letters ([A-Za-z]), numbers ([0-9]), or hyphens (-). The maximum
+	// length is 100 characters.
 	Name string `json:"name,omitempty"`
-
-	// PurgeTime: Output only. The last time this queue was purged. All
-	// tasks that were created before this time were purged. A queue can be
-	// purged using PurgeQueue, the App Engine Task Queue SDK, or the Cloud
-	// Console
+	// PurgeTime: Output only. The last time this queue was purged. All tasks that
+	// were created before this time were purged. A queue can be purged using
+	// PurgeQueue, the App Engine Task Queue SDK, or the Cloud Console
 	// (https://cloud.google.com/appengine/docs/standard/python/taskqueue/push/deleting-tasks-and-queues#purging_all_tasks_from_a_queue).
-	// Purge time will be truncated to the nearest microsecond. Purge time
-	// will be unset if the queue has never been purged.
+	// Purge time will be truncated to the nearest microsecond. Purge time will be
+	// unset if the queue has never been purged.
 	PurgeTime string `json:"purgeTime,omitempty"`
-
-	// RateLimits: Rate limits for task dispatches. rate_limits and
-	// retry_config are related because they both control task attempts.
-	// However they control task attempts in different ways: * rate_limits
-	// controls the total rate of dispatches from a queue (i.e. all traffic
-	// dispatched from the queue, regardless of whether the dispatch is from
-	// a first attempt or a retry). * retry_config controls what happens to
-	// particular a task after its first attempt fails. That is,
-	// retry_config controls task retries (the second attempt, third
-	// attempt, etc). The queue's actual dispatch rate is the result of: *
-	// Number of tasks in the queue * User-specified throttling:
-	// rate_limits, retry_config, and the queue's state. * System throttling
-	// due to `429` (Too Many Requests) or `503` (Service Unavailable)
-	// responses from the worker, high error rates, or to smooth sudden
-	// large traffic spikes.
+	// RateLimits: Rate limits for task dispatches. rate_limits and retry_config
+	// are related because they both control task attempts. However they control
+	// task attempts in different ways: * rate_limits controls the total rate of
+	// dispatches from a queue (i.e. all traffic dispatched from the queue,
+	// regardless of whether the dispatch is from a first attempt or a retry). *
+	// retry_config controls what happens to particular a task after its first
+	// attempt fails. That is, retry_config controls task retries (the second
+	// attempt, third attempt, etc). The queue's actual dispatch rate is the result
+	// of: * Number of tasks in the queue * User-specified throttling: rate_limits,
+	// retry_config, and the queue's state. * System throttling due to `429` (Too
+	// Many Requests) or `503` (Service Unavailable) responses from the worker,
+	// high error rates, or to smooth sudden large traffic spikes.
 	RateLimits *RateLimits `json:"rateLimits,omitempty"`
-
-	// RetryConfig: Settings that determine the retry behavior. * For tasks
-	// created using Cloud Tasks: the queue-level retry settings apply to
-	// all tasks in the queue that were created using Cloud Tasks. Retry
-	// settings cannot be set on individual tasks. * For tasks created using
-	// the App Engine SDK: the queue-level retry settings apply to all tasks
-	// in the queue which do not have retry settings explicitly set on the
-	// task and were created by the App Engine SDK. See App Engine
-	// documentation
+	// RetryConfig: Settings that determine the retry behavior. * For tasks created
+	// using Cloud Tasks: the queue-level retry settings apply to all tasks in the
+	// queue that were created using Cloud Tasks. Retry settings cannot be set on
+	// individual tasks. * For tasks created using the App Engine SDK: the
+	// queue-level retry settings apply to all tasks in the queue which do not have
+	// retry settings explicitly set on the task and were created by the App Engine
+	// SDK. See App Engine documentation
 	// (https://cloud.google.com/appengine/docs/standard/python/taskqueue/push/retrying-tasks).
 	RetryConfig *RetryConfig `json:"retryConfig,omitempty"`
-
 	// StackdriverLoggingConfig: Configuration options for writing logs to
-	// Stackdriver Logging (https://cloud.google.com/logging/docs/). If this
-	// field is unset, then no logs are written.
+	// Stackdriver Logging (https://cloud.google.com/logging/docs/). If this field
+	// is unset, then no logs are written.
 	StackdriverLoggingConfig *StackdriverLoggingConfig `json:"stackdriverLoggingConfig,omitempty"`
-
-	// State: Output only. The state of the queue. `state` can only be
-	// changed by called PauseQueue, ResumeQueue, or uploading
-	// queue.yaml/xml
+	// State: Output only. The state of the queue. `state` can only be changed by
+	// called PauseQueue, ResumeQueue, or uploading queue.yaml/xml
 	// (https://cloud.google.com/appengine/docs/python/config/queueref).
 	// UpdateQueue cannot be used to change `state`.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - Unspecified state.
-	//   "RUNNING" - The queue is running. Tasks can be dispatched. If the
-	// queue was created using Cloud Tasks and the queue has had no activity
-	// (method calls or task dispatches) for 30 days, the queue may take a
-	// few minutes to re-activate. Some method calls may return NOT_FOUND
-	// and tasks may not be dispatched for a few minutes until the queue has
-	// been re-activated.
-	//   "PAUSED" - Tasks are paused by the user. If the queue is paused
-	// then Cloud Tasks will stop delivering tasks from it, but more tasks
-	// can still be added to it by the user.
+	//   "RUNNING" - The queue is running. Tasks can be dispatched. If the queue
+	// was created using Cloud Tasks and the queue has had no activity (method
+	// calls or task dispatches) for 30 days, the queue may take a few minutes to
+	// re-activate. Some method calls may return NOT_FOUND and tasks may not be
+	// dispatched for a few minutes until the queue has been re-activated.
+	//   "PAUSED" - Tasks are paused by the user. If the queue is paused then Cloud
+	// Tasks will stop delivering tasks from it, but more tasks can still be added
+	// to it by the user.
 	//   "DISABLED" - The queue is disabled. A queue becomes `DISABLED` when
-	// [queue.yaml](https://cloud.google.com/appengine/docs/python/config/que
-	// ueref) or
-	// [queue.xml](https://cloud.google.com/appengine/docs/standard/java/conf
-	// ig/queueref) is uploaded which does not contain the queue. You cannot
-	// directly disable a queue. When a queue is disabled, tasks can still
-	// be added to a queue but the tasks are not dispatched. To permanently
-	// delete this queue and all of its tasks, call DeleteQueue.
+	// [queue.yaml](https://cloud.google.com/appengine/docs/python/config/queueref)
+	// or
+	// [queue.xml](https://cloud.google.com/appengine/docs/standard/java/config/queu
+	// eref) is uploaded which does not contain the queue. You cannot directly
+	// disable a queue. When a queue is disabled, tasks can still be added to a
+	// queue but the tasks are not dispatched. To permanently delete this queue and
+	// all of its tasks, call DeleteQueue.
 	State string `json:"state,omitempty"`
-
-	// Stats: Output only. The realtime, informational statistics for a
-	// queue. In order to receive the statistics the caller should include
-	// this field in the FieldMask.
+	// Stats: Output only. The realtime, informational statistics for a queue. In
+	// order to receive the statistics the caller should include this field in the
+	// FieldMask.
 	Stats *QueueStats `json:"stats,omitempty"`
-
-	// TaskTtl: The maximum amount of time that a task will be retained in
-	// this queue. After a task has lived for `task_ttl`, the task will be
-	// deleted regardless of whether it was dispatched or not. The minimum
-	// value is 10 days. The maximum value is 10 years. The value must be
-	// given as a string that indicates the length of time (in seconds)
-	// followed by `s` (for "seconds"). For more information on the format,
-	// see the documentation for Duration
-	// (https://protobuf.dev/reference/protobuf/google.protobuf/#duration).
-	// Queues created by Cloud Tasks have a default `task_ttl` of 31 days. .
-	// Queues created by queue.yaml/xml have a fixed `task_ttl` of the
-	// maximum duration, because there is a storage quota
-	// (https://cloud.google.com/appengine/quotas#Task_Queue) for these
-	// queues.
+	// TaskTtl: The maximum amount of time that a task will be retained in this
+	// queue. After a task has lived for `task_ttl`, the task will be deleted
+	// regardless of whether it was dispatched or not. The minimum value is 10
+	// days. The maximum value is 10 years. The value must be given as a string
+	// that indicates the length of time (in seconds) followed by `s` (for
+	// "seconds"). For more information on the format, see the documentation for
+	// Duration
+	// (https://protobuf.dev/reference/protobuf/google.protobuf/#duration). Queues
+	// created by Cloud Tasks have a default `task_ttl` of 31 days. . Queues
+	// created by queue.yaml/xml have a fixed `task_ttl` of the maximum duration,
+	// because there is a storage quota
+	// (https://cloud.google.com/appengine/quotas#Task_Queue) for these queues.
 	TaskTtl string `json:"taskTtl,omitempty"`
-
-	// TombstoneTtl: The task tombstone time to live (TTL). After a task is
-	// deleted or executed, the task's tombstone is retained for the length
-	// of time specified by `tombstone_ttl`. The tombstone is used by task
-	// de-duplication; another task with the same name can't be created
-	// until the tombstone has expired. For more information about task
-	// de-duplication, see the documentation for CreateTaskRequest. The
-	// minimum value is 1 hour. The maximum value is 9 days. The value must
-	// be given as a string that indicates the length of time (in seconds)
-	// followed by `s` (for "seconds"). For more information on the format,
-	// see the documentation for Duration
-	// (https://protobuf.dev/reference/protobuf/google.protobuf/#duration).
-	// Queues created by Cloud Tasks have a default `tombstone_ttl` of 1
-	// hour.
+	// TombstoneTtl: The task tombstone time to live (TTL). After a task is deleted
+	// or executed, the task's tombstone is retained for the length of time
+	// specified by `tombstone_ttl`. The tombstone is used by task de-duplication;
+	// another task with the same name can't be created until the tombstone has
+	// expired. For more information about task de-duplication, see the
+	// documentation for CreateTaskRequest. The minimum value is 1 hour. The
+	// maximum value is 9 days. The value must be given as a string that indicates
+	// the length of time (in seconds) followed by `s` (for "seconds"). For more
+	// information on the format, see the documentation for Duration
+	// (https://protobuf.dev/reference/protobuf/google.protobuf/#duration). Queues
+	// created by Cloud Tasks have a default `tombstone_ttl` of 1 hour.
 	TombstoneTtl string `json:"tombstoneTtl,omitempty"`
-
-	// Type: Immutable. The type of a queue (push or pull). `Queue.type` is
-	// an immutable property of the queue that is set at the queue creation
-	// time. When left unspecified, the default value of `PUSH` is selected.
+	// Type: Immutable. The type of a queue (push or pull). `Queue.type` is an
+	// immutable property of the queue that is set at the queue creation time. When
+	// left unspecified, the default value of `PUSH` is selected.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - Default value.
@@ -1823,87 +1527,64 @@ type Queue struct {
 	//   "PUSH" - A push queue.
 	Type string `json:"type,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "AppEngineHttpQueue")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AppEngineHttpQueue") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppEngineHttpQueue") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AppEngineHttpQueue") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Queue) MarshalJSON() ([]byte, error) {
 	type NoMethod Queue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // QueueStats: Statistics for a queue.
 type QueueStats struct {
-	// ConcurrentDispatchesCount: Output only. The number of requests that
-	// the queue has dispatched but has not received a reply for yet.
+	// ConcurrentDispatchesCount: Output only. The number of requests that the
+	// queue has dispatched but has not received a reply for yet.
 	ConcurrentDispatchesCount int64 `json:"concurrentDispatchesCount,omitempty,string"`
-
-	// EffectiveExecutionRate: Output only. The current maximum number of
-	// tasks per second executed by the queue. The maximum value of this
-	// variable is controlled by the RateLimits of the Queue. However, this
-	// value could be less to avoid overloading the endpoints tasks in the
-	// queue are targeting.
+	// EffectiveExecutionRate: Output only. The current maximum number of tasks per
+	// second executed by the queue. The maximum value of this variable is
+	// controlled by the RateLimits of the Queue. However, this value could be less
+	// to avoid overloading the endpoints tasks in the queue are targeting.
 	EffectiveExecutionRate float64 `json:"effectiveExecutionRate,omitempty"`
-
-	// ExecutedLastMinuteCount: Output only. The number of tasks that the
-	// queue has dispatched and received a reply for during the last minute.
-	// This variable counts both successful and non-successful executions.
+	// ExecutedLastMinuteCount: Output only. The number of tasks that the queue has
+	// dispatched and received a reply for during the last minute. This variable
+	// counts both successful and non-successful executions.
 	ExecutedLastMinuteCount int64 `json:"executedLastMinuteCount,omitempty,string"`
-
-	// OldestEstimatedArrivalTime: Output only. An estimation of the nearest
-	// time in the future where a task in the queue is scheduled to be
-	// executed.
+	// OldestEstimatedArrivalTime: Output only. An estimation of the nearest time
+	// in the future where a task in the queue is scheduled to be executed.
 	OldestEstimatedArrivalTime string `json:"oldestEstimatedArrivalTime,omitempty"`
-
-	// TasksCount: Output only. An estimation of the number of tasks in the
-	// queue, that is, the tasks in the queue that haven't been executed,
-	// the tasks in the queue which the queue has dispatched but has not yet
-	// received a reply for, and the failed tasks that the queue is
-	// retrying.
+	// TasksCount: Output only. An estimation of the number of tasks in the queue,
+	// that is, the tasks in the queue that haven't been executed, the tasks in the
+	// queue which the queue has dispatched but has not yet received a reply for,
+	// and the failed tasks that the queue is retrying.
 	TasksCount int64 `json:"tasksCount,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ConcurrentDispatchesCount") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ConcurrentDispatchesCount")
+	// to unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "ConcurrentDispatchesCount") to include in API requests with the JSON
-	// null value. By default, fields with empty values are omitted from API
-	// requests. However, any field with an empty value appearing in
-	// NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ConcurrentDispatchesCount") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *QueueStats) MarshalJSON() ([]byte, error) {
 	type NoMethod QueueStats
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *QueueStats) UnmarshalJSON(data []byte) error {
@@ -1920,73 +1601,61 @@ func (s *QueueStats) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// RateLimits: Rate limits. This message determines the maximum rate
-// that tasks can be dispatched by a queue, regardless of whether the
-// dispatch is a first task attempt or a retry. Note: The debugging
-// command, RunTask, will run a task even if the queue has reached its
-// RateLimits.
+// RateLimits: Rate limits. This message determines the maximum rate that tasks
+// can be dispatched by a queue, regardless of whether the dispatch is a first
+// task attempt or a retry. Note: The debugging command, RunTask, will run a
+// task even if the queue has reached its RateLimits.
 type RateLimits struct {
-	// MaxBurstSize: The max burst size. Max burst size limits how fast
-	// tasks in queue are processed when many tasks are in the queue and the
-	// rate is high. This field allows the queue to have a high rate so
-	// processing starts shortly after a task is enqueued, but still limits
-	// resource usage when many tasks are enqueued in a short period of
-	// time. The token bucket (https://wikipedia.org/wiki/Token_Bucket)
-	// algorithm is used to control the rate of task dispatches. Each queue
-	// has a token bucket that holds tokens, up to the maximum specified by
-	// `max_burst_size`. Each time a task is dispatched, a token is removed
-	// from the bucket. Tasks will be dispatched until the queue's bucket
-	// runs out of tokens. The bucket will be continuously refilled with new
-	// tokens based on max_dispatches_per_second. The default value of
-	// `max_burst_size` is picked by Cloud Tasks based on the value of
-	// max_dispatches_per_second. The maximum value of `max_burst_size` is
-	// 500. For App Engine queues that were created or updated using
-	// `queue.yaml/xml`, `max_burst_size` is equal to bucket_size
+	// MaxBurstSize: The max burst size. Max burst size limits how fast tasks in
+	// queue are processed when many tasks are in the queue and the rate is high.
+	// This field allows the queue to have a high rate so processing starts shortly
+	// after a task is enqueued, but still limits resource usage when many tasks
+	// are enqueued in a short period of time. The token bucket
+	// (https://wikipedia.org/wiki/Token_Bucket) algorithm is used to control the
+	// rate of task dispatches. Each queue has a token bucket that holds tokens, up
+	// to the maximum specified by `max_burst_size`. Each time a task is
+	// dispatched, a token is removed from the bucket. Tasks will be dispatched
+	// until the queue's bucket runs out of tokens. The bucket will be continuously
+	// refilled with new tokens based on max_dispatches_per_second. The default
+	// value of `max_burst_size` is picked by Cloud Tasks based on the value of
+	// max_dispatches_per_second. The maximum value of `max_burst_size` is 500. For
+	// App Engine queues that were created or updated using `queue.yaml/xml`,
+	// `max_burst_size` is equal to bucket_size
 	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#bucket_size).
-	// If UpdateQueue is called on a queue without explicitly setting a
-	// value for `max_burst_size`, `max_burst_size` value will get updated
-	// if UpdateQueue is updating max_dispatches_per_second.
+	// If UpdateQueue is called on a queue without explicitly setting a value for
+	// `max_burst_size`, `max_burst_size` value will get updated if UpdateQueue is
+	// updating max_dispatches_per_second.
 	MaxBurstSize int64 `json:"maxBurstSize,omitempty"`
-
-	// MaxConcurrentDispatches: The maximum number of concurrent tasks that
-	// Cloud Tasks allows to be dispatched for this queue. After this
-	// threshold has been reached, Cloud Tasks stops dispatching tasks until
-	// the number of concurrent requests decreases. If unspecified when the
-	// queue is created, Cloud Tasks will pick the default. The maximum
-	// allowed value is 5,000. This field has the same meaning as
-	// max_concurrent_requests in queue.yaml/xml
+	// MaxConcurrentDispatches: The maximum number of concurrent tasks that Cloud
+	// Tasks allows to be dispatched for this queue. After this threshold has been
+	// reached, Cloud Tasks stops dispatching tasks until the number of concurrent
+	// requests decreases. If unspecified when the queue is created, Cloud Tasks
+	// will pick the default. The maximum allowed value is 5,000. This field has
+	// the same meaning as max_concurrent_requests in queue.yaml/xml
 	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#max_concurrent_requests).
 	MaxConcurrentDispatches int64 `json:"maxConcurrentDispatches,omitempty"`
-
-	// MaxDispatchesPerSecond: The maximum rate at which tasks are
-	// dispatched from this queue. If unspecified when the queue is created,
-	// Cloud Tasks will pick the default. * For App Engine queues, the
-	// maximum allowed value is 500. This field has the same meaning as rate
-	// in queue.yaml/xml
+	// MaxDispatchesPerSecond: The maximum rate at which tasks are dispatched from
+	// this queue. If unspecified when the queue is created, Cloud Tasks will pick
+	// the default. * For App Engine queues, the maximum allowed value is 500. This
+	// field has the same meaning as rate in queue.yaml/xml
 	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#rate).
 	MaxDispatchesPerSecond float64 `json:"maxDispatchesPerSecond,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MaxBurstSize") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MaxBurstSize") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MaxBurstSize") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RateLimits) MarshalJSON() ([]byte, error) {
 	type NoMethod RateLimits
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *RateLimits) UnmarshalJSON(data []byte) error {
@@ -2007,206 +1676,171 @@ func (s *RateLimits) UnmarshalJSON(data []byte) error {
 type ResumeQueueRequest struct {
 }
 
-// RetryConfig: Retry config. These settings determine when a failed
-// task attempt is retried.
+// RetryConfig: Retry config. These settings determine when a failed task
+// attempt is retried.
 type RetryConfig struct {
-	// MaxAttempts: Number of attempts per task. Cloud Tasks will attempt
-	// the task `max_attempts` times (that is, if the first attempt fails,
-	// then there will be `max_attempts - 1` retries). Must be >= -1. If
-	// unspecified when the queue is created, Cloud Tasks will pick the
-	// default. -1 indicates unlimited attempts. This field has the same
-	// meaning as task_retry_limit in queue.yaml/xml
+	// MaxAttempts: Number of attempts per task. Cloud Tasks will attempt the task
+	// `max_attempts` times (that is, if the first attempt fails, then there will
+	// be `max_attempts - 1` retries). Must be >= -1. If unspecified when the queue
+	// is created, Cloud Tasks will pick the default. -1 indicates unlimited
+	// attempts. This field has the same meaning as task_retry_limit in
+	// queue.yaml/xml
 	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MaxAttempts int64 `json:"maxAttempts,omitempty"`
-
-	// MaxBackoff: A task will be scheduled for retry between min_backoff
-	// and max_backoff duration after it fails, if the queue's RetryConfig
-	// specifies that the task should be retried. If unspecified when the
-	// queue is created, Cloud Tasks will pick the default. The value must
-	// be given as a string that indicates the length of time (in seconds)
-	// followed by `s` (for "seconds"). For more information on the format,
-	// see the documentation for Duration
+	// MaxBackoff: A task will be scheduled for retry between min_backoff and
+	// max_backoff duration after it fails, if the queue's RetryConfig specifies
+	// that the task should be retried. If unspecified when the queue is created,
+	// Cloud Tasks will pick the default. The value must be given as a string that
+	// indicates the length of time (in seconds) followed by `s` (for "seconds").
+	// For more information on the format, see the documentation for Duration
 	// (https://protobuf.dev/reference/protobuf/google.protobuf/#duration).
-	// `max_backoff` will be truncated to the nearest second. This field has
-	// the same meaning as max_backoff_seconds in queue.yaml/xml
+	// `max_backoff` will be truncated to the nearest second. This field has the
+	// same meaning as max_backoff_seconds in queue.yaml/xml
 	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MaxBackoff string `json:"maxBackoff,omitempty"`
-
-	// MaxDoublings: The time between retries will double `max_doublings`
-	// times. A task's retry interval starts at min_backoff, then doubles
-	// `max_doublings` times, then increases linearly, and finally retries
-	// at intervals of max_backoff up to max_attempts times. For example, if
-	// min_backoff is 10s, max_backoff is 300s, and `max_doublings` is 3,
-	// then the a task will first be retried in 10s. The retry interval will
-	// double three times, and then increase linearly by 2^3 * 10s. Finally,
-	// the task will retry at intervals of max_backoff until the task has
-	// been attempted max_attempts times. Thus, the requests will retry at
-	// 10s, 20s, 40s, 80s, 160s, 240s, 300s, 300s, .... If unspecified when
-	// the queue is created, Cloud Tasks will pick the default. This field
-	// has the same meaning as max_doublings in queue.yaml/xml
+	// MaxDoublings: The time between retries will double `max_doublings` times. A
+	// task's retry interval starts at min_backoff, then doubles `max_doublings`
+	// times, then increases linearly, and finally retries at intervals of
+	// max_backoff up to max_attempts times. For example, if min_backoff is 10s,
+	// max_backoff is 300s, and `max_doublings` is 3, then the a task will first be
+	// retried in 10s. The retry interval will double three times, and then
+	// increase linearly by 2^3 * 10s. Finally, the task will retry at intervals of
+	// max_backoff until the task has been attempted max_attempts times. Thus, the
+	// requests will retry at 10s, 20s, 40s, 80s, 160s, 240s, 300s, 300s, .... If
+	// unspecified when the queue is created, Cloud Tasks will pick the default.
+	// This field has the same meaning as max_doublings in queue.yaml/xml
 	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MaxDoublings int64 `json:"maxDoublings,omitempty"`
-
-	// MaxRetryDuration: If positive, `max_retry_duration` specifies the
-	// time limit for retrying a failed task, measured from when the task
-	// was first attempted. Once `max_retry_duration` time has passed *and*
-	// the task has been attempted max_attempts times, no further attempts
-	// will be made and the task will be deleted. If zero, then the task age
-	// is unlimited. If unspecified when the queue is created, Cloud Tasks
-	// will pick the default. The value must be given as a string that
-	// indicates the length of time (in seconds) followed by `s` (for
-	// "seconds"). For the maximum possible value or the format, see the
+	// MaxRetryDuration: If positive, `max_retry_duration` specifies the time limit
+	// for retrying a failed task, measured from when the task was first attempted.
+	// Once `max_retry_duration` time has passed *and* the task has been attempted
+	// max_attempts times, no further attempts will be made and the task will be
+	// deleted. If zero, then the task age is unlimited. If unspecified when the
+	// queue is created, Cloud Tasks will pick the default. The value must be given
+	// as a string that indicates the length of time (in seconds) followed by `s`
+	// (for "seconds"). For the maximum possible value or the format, see the
 	// documentation for Duration
 	// (https://protobuf.dev/reference/protobuf/google.protobuf/#duration).
-	// `max_retry_duration` will be truncated to the nearest second. This
-	// field has the same meaning as task_age_limit in queue.yaml/xml
+	// `max_retry_duration` will be truncated to the nearest second. This field has
+	// the same meaning as task_age_limit in queue.yaml/xml
 	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MaxRetryDuration string `json:"maxRetryDuration,omitempty"`
-
-	// MinBackoff: A task will be scheduled for retry between min_backoff
-	// and max_backoff duration after it fails, if the queue's RetryConfig
-	// specifies that the task should be retried. If unspecified when the
-	// queue is created, Cloud Tasks will pick the default. The value must
-	// be given as a string that indicates the length of time (in seconds)
-	// followed by `s` (for "seconds"). For more information on the format,
-	// see the documentation for Duration
+	// MinBackoff: A task will be scheduled for retry between min_backoff and
+	// max_backoff duration after it fails, if the queue's RetryConfig specifies
+	// that the task should be retried. If unspecified when the queue is created,
+	// Cloud Tasks will pick the default. The value must be given as a string that
+	// indicates the length of time (in seconds) followed by `s` (for "seconds").
+	// For more information on the format, see the documentation for Duration
 	// (https://protobuf.dev/reference/protobuf/google.protobuf/#duration).
-	// `min_backoff` will be truncated to the nearest second. This field has
-	// the same meaning as min_backoff_seconds in queue.yaml/xml
+	// `min_backoff` will be truncated to the nearest second. This field has the
+	// same meaning as min_backoff_seconds in queue.yaml/xml
 	// (https://cloud.google.com/appengine/docs/standard/python/config/queueref#retry_parameters).
 	MinBackoff string `json:"minBackoff,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MaxAttempts") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MaxAttempts") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MaxAttempts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RetryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod RetryConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// RunTaskRequest: Request message for forcing a task to run now using
-// RunTask.
+// RunTaskRequest: Request message for forcing a task to run now using RunTask.
 type RunTaskRequest struct {
-	// ResponseView: The response_view specifies which subset of the Task
-	// will be returned. By default response_view is BASIC; not all
-	// information is retrieved by default because some data, such as
-	// payloads, might be desirable to return only when needed because of
-	// its large size or because of the sensitivity of data that it
-	// contains. Authorization for FULL requires `cloudtasks.tasks.fullView`
-	// Google IAM (https://cloud.google.com/iam/) permission on the Task
-	// resource.
+	// ResponseView: The response_view specifies which subset of the Task will be
+	// returned. By default response_view is BASIC; not all information is
+	// retrieved by default because some data, such as payloads, might be desirable
+	// to return only when needed because of its large size or because of the
+	// sensitivity of data that it contains. Authorization for FULL requires
+	// `cloudtasks.tasks.fullView` Google IAM (https://cloud.google.com/iam/)
+	// permission on the Task resource.
 	//
 	// Possible values:
 	//   "VIEW_UNSPECIFIED" - Unspecified. Defaults to BASIC.
-	//   "BASIC" - The basic view omits fields which can be large or can
-	// contain sensitive data. This view does not include the body in
-	// AppEngineHttpRequest. Bodies are desirable to return only when
-	// needed, because they can be large and because of the sensitivity of
-	// the data that you choose to store in it.
-	//   "FULL" - All information is returned. Authorization for FULL
-	// requires `cloudtasks.tasks.fullView` [Google
-	// IAM](https://cloud.google.com/iam/) permission on the Queue resource.
+	//   "BASIC" - The basic view omits fields which can be large or can contain
+	// sensitive data. This view does not include the body in AppEngineHttpRequest.
+	// Bodies are desirable to return only when needed, because they can be large
+	// and because of the sensitivity of the data that you choose to store in it.
+	//   "FULL" - All information is returned. Authorization for FULL requires
+	// `cloudtasks.tasks.fullView` [Google IAM](https://cloud.google.com/iam/)
+	// permission on the Queue resource.
 	ResponseView string `json:"responseView,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ResponseView") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ResponseView") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ResponseView") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RunTaskRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RunTaskRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
-	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Google Cloud services
-	// (such as Projects) might reject them.
+	// Policy: REQUIRED: The complete policy to be applied to the `resource`. The
+	// size of the policy is limited to a few 10s of KB. An empty policy is a valid
+	// policy but certain Google Cloud services (such as Projects) might reject
+	// them.
 	Policy *Policy `json:"policy,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Policy") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Policy") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // StackdriverLoggingConfig: Configuration options for writing logs to
 // Stackdriver Logging (https://cloud.google.com/logging/docs/).
 type StackdriverLoggingConfig struct {
-	// SamplingRatio: Specifies the fraction of operations to write to
-	// Stackdriver Logging (https://cloud.google.com/logging/docs/). This
-	// field may contain any value between 0.0 and 1.0, inclusive. 0.0 is
-	// the default and means that no operations are logged.
+	// SamplingRatio: Specifies the fraction of operations to write to Stackdriver
+	// Logging (https://cloud.google.com/logging/docs/). This field may contain any
+	// value between 0.0 and 1.0, inclusive. 0.0 is the default and means that no
+	// operations are logged.
 	SamplingRatio float64 `json:"samplingRatio,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SamplingRatio") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SamplingRatio") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SamplingRatio") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StackdriverLoggingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod StackdriverLoggingConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *StackdriverLoggingConfig) UnmarshalJSON(data []byte) error {
@@ -2223,330 +1857,264 @@ func (s *StackdriverLoggingConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Status: The `Status` type defines a logical error model that is
-// suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the API Design Guide
-// (https://cloud.google.com/apis/design/errors).
+// Status: The `Status` type defines a logical error model that is suitable for
+// different programming environments, including REST APIs and RPC APIs. It is
+// used by gRPC (https://github.com/grpc). Each `Status` message contains three
+// pieces of data: error code, error message, and error details. You can find
+// out more about this error model and how to work with it in the API Design
+// Guide (https://cloud.google.com/apis/design/errors).
 type Status struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Task: A unit of scheduled work.
 type Task struct {
 	// AppEngineHttpRequest: HTTP request that is sent to the App Engine app
-	// handler. An App Engine task is a task that has AppEngineHttpRequest
-	// set.
+	// handler. An App Engine task is a task that has AppEngineHttpRequest set.
 	AppEngineHttpRequest *AppEngineHttpRequest `json:"appEngineHttpRequest,omitempty"`
-
-	// CreateTime: Output only. The time that the task was created.
-	// `create_time` will be truncated to the nearest second.
+	// CreateTime: Output only. The time that the task was created. `create_time`
+	// will be truncated to the nearest second.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// DispatchCount: Output only. The number of attempts dispatched. This
-	// count includes attempts which have been dispatched but haven't
-	// received a response.
+	// DispatchCount: Output only. The number of attempts dispatched. This count
+	// includes attempts which have been dispatched but haven't received a
+	// response.
 	DispatchCount int64 `json:"dispatchCount,omitempty"`
-
-	// DispatchDeadline: The deadline for requests sent to the worker. If
-	// the worker does not respond by this deadline then the request is
-	// cancelled and the attempt is marked as a `DEADLINE_EXCEEDED` failure.
-	// Cloud Tasks will retry the task according to the RetryConfig. Note
-	// that when the request is cancelled, Cloud Tasks will stop listening
-	// for the response, but whether the worker stops processing depends on
-	// the worker. For example, if the worker is stuck, it may not react to
-	// cancelled requests. The default and maximum values depend on the type
-	// of request: * For HTTP tasks, the default is 10 minutes. The deadline
-	// must be in the interval [15 seconds, 30 minutes]. * For App Engine
-	// tasks, 0 indicates that the request has the default deadline. The
-	// default deadline depends on the scaling type
+	// DispatchDeadline: The deadline for requests sent to the worker. If the
+	// worker does not respond by this deadline then the request is cancelled and
+	// the attempt is marked as a `DEADLINE_EXCEEDED` failure. Cloud Tasks will
+	// retry the task according to the RetryConfig. Note that when the request is
+	// cancelled, Cloud Tasks will stop listening for the response, but whether the
+	// worker stops processing depends on the worker. For example, if the worker is
+	// stuck, it may not react to cancelled requests. The default and maximum
+	// values depend on the type of request: * For HTTP tasks, the default is 10
+	// minutes. The deadline must be in the interval [15 seconds, 30 minutes]. *
+	// For App Engine tasks, 0 indicates that the request has the default deadline.
+	// The default deadline depends on the scaling type
 	// (https://cloud.google.com/appengine/docs/standard/go/how-instances-are-managed#instance_scaling)
-	// of the service: 10 minutes for standard apps with automatic scaling,
-	// 24 hours for standard apps with manual and basic scaling, and 60
-	// minutes for flex apps. If the request deadline is set, it must be in
-	// the interval [15 seconds, 24 hours 15 seconds]. Regardless of the
-	// task's `dispatch_deadline`, the app handler will not run for longer
-	// than than the service's timeout. We recommend setting the
-	// `dispatch_deadline` to at most a few seconds more than the app
-	// handler's timeout. For more information see Timeouts
+	// of the service: 10 minutes for standard apps with automatic scaling, 24
+	// hours for standard apps with manual and basic scaling, and 60 minutes for
+	// flex apps. If the request deadline is set, it must be in the interval [15
+	// seconds, 24 hours 15 seconds]. Regardless of the task's `dispatch_deadline`,
+	// the app handler will not run for longer than than the service's timeout. We
+	// recommend setting the `dispatch_deadline` to at most a few seconds more than
+	// the app handler's timeout. For more information see Timeouts
 	// (https://cloud.google.com/tasks/docs/creating-appengine-handlers#timeouts).
-	// The value must be given as a string that indicates the length of time
-	// (in seconds) followed by `s` (for "seconds"). For more information on
-	// the format, see the documentation for Duration
+	// The value must be given as a string that indicates the length of time (in
+	// seconds) followed by `s` (for "seconds"). For more information on the
+	// format, see the documentation for Duration
 	// (https://protobuf.dev/reference/protobuf/google.protobuf/#duration).
 	// `dispatch_deadline` will be truncated to the nearest millisecond. The
 	// deadline is an approximate deadline.
 	DispatchDeadline string `json:"dispatchDeadline,omitempty"`
-
-	// FirstAttempt: Output only. The status of the task's first attempt.
-	// Only dispatch_time will be set. The other Attempt information is not
-	// retained by Cloud Tasks.
+	// FirstAttempt: Output only. The status of the task's first attempt. Only
+	// dispatch_time will be set. The other Attempt information is not retained by
+	// Cloud Tasks.
 	FirstAttempt *Attempt `json:"firstAttempt,omitempty"`
-
-	// HttpRequest: HTTP request that is sent to the task's target. An HTTP
-	// task is a task that has HttpRequest set.
+	// HttpRequest: HTTP request that is sent to the task's target. An HTTP task is
+	// a task that has HttpRequest set.
 	HttpRequest *HttpRequest `json:"httpRequest,omitempty"`
-
 	// LastAttempt: Output only. The status of the task's last attempt.
 	LastAttempt *Attempt `json:"lastAttempt,omitempty"`
-
-	// Name: Optionally caller-specified in CreateTask. The task name. The
-	// task name must have the following format:
-	// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_
-	// ID` * `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),
-	// hyphens (-), colons (:), or periods (.). For more information, see
-	// Identifying projects
+	// Name: Optionally caller-specified in CreateTask. The task name. The task
+	// name must have the following format:
+	// `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID` *
+	// `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens (-),
+	// colons (:), or periods (.). For more information, see Identifying projects
 	// (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)
-	// * `LOCATION_ID` is the canonical ID for the task's location. The list
-	// of available locations can be obtained by calling ListLocations. For
-	// more information, see https://cloud.google.com/about/locations/. *
-	// `QUEUE_ID` can contain letters ([A-Za-z]), numbers ([0-9]), or
-	// hyphens (-). The maximum length is 100 characters. * `TASK_ID` can
-	// contain only letters ([A-Za-z]), numbers ([0-9]), hyphens (-), or
-	// underscores (_). The maximum length is 500 characters.
+	// * `LOCATION_ID` is the canonical ID for the task's location. The list of
+	// available locations can be obtained by calling ListLocations. For more
+	// information, see https://cloud.google.com/about/locations/. * `QUEUE_ID` can
+	// contain letters ([A-Za-z]), numbers ([0-9]), or hyphens (-). The maximum
+	// length is 100 characters. * `TASK_ID` can contain only letters ([A-Za-z]),
+	// numbers ([0-9]), hyphens (-), or underscores (_). The maximum length is 500
+	// characters.
 	Name string `json:"name,omitempty"`
-
-	// PullMessage: Pull Message contained in a task in a PULL queue type.
-	// This payload type cannot be explicitly set through Cloud Tasks API.
-	// Its purpose, currently is to provide backward compatibility with App
-	// Engine Task Queue pull
-	// (https://cloud.google.com/appengine/docs/standard/java/taskqueue/pull/)
+	// PullMessage: Pull Message contained in a task in a PULL queue type. This
+	// payload type cannot be explicitly set through Cloud Tasks API. Its purpose,
+	// currently is to provide backward compatibility with App Engine Task Queue
+	// pull (https://cloud.google.com/appengine/docs/standard/java/taskqueue/pull/)
 	// queues to provide a way to inspect contents of pull tasks through the
 	// CloudTasks.GetTask.
 	PullMessage *PullMessage `json:"pullMessage,omitempty"`
-
-	// ResponseCount: Output only. The number of attempts which have
-	// received a response.
+	// ResponseCount: Output only. The number of attempts which have received a
+	// response.
 	ResponseCount int64 `json:"responseCount,omitempty"`
-
-	// ScheduleTime: The time when the task is scheduled to be attempted.
-	// For App Engine queues, this is when the task will be attempted or
-	// retried. `schedule_time` will be truncated to the nearest
-	// microsecond.
+	// ScheduleTime: The time when the task is scheduled to be attempted. For App
+	// Engine queues, this is when the task will be attempted or retried.
+	// `schedule_time` will be truncated to the nearest microsecond.
 	ScheduleTime string `json:"scheduleTime,omitempty"`
-
-	// View: Output only. The view specifies which subset of the Task has
-	// been returned.
+	// View: Output only. The view specifies which subset of the Task has been
+	// returned.
 	//
 	// Possible values:
 	//   "VIEW_UNSPECIFIED" - Unspecified. Defaults to BASIC.
-	//   "BASIC" - The basic view omits fields which can be large or can
-	// contain sensitive data. This view does not include the body in
-	// AppEngineHttpRequest. Bodies are desirable to return only when
-	// needed, because they can be large and because of the sensitivity of
-	// the data that you choose to store in it.
-	//   "FULL" - All information is returned. Authorization for FULL
-	// requires `cloudtasks.tasks.fullView` [Google
-	// IAM](https://cloud.google.com/iam/) permission on the Queue resource.
+	//   "BASIC" - The basic view omits fields which can be large or can contain
+	// sensitive data. This view does not include the body in AppEngineHttpRequest.
+	// Bodies are desirable to return only when needed, because they can be large
+	// and because of the sensitivity of the data that you choose to store in it.
+	//   "FULL" - All information is returned. Authorization for FULL requires
+	// `cloudtasks.tasks.fullView` [Google IAM](https://cloud.google.com/iam/)
+	// permission on the Queue resource.
 	View string `json:"view,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AppEngineHttpRequest") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AppEngineHttpRequest") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AppEngineHttpRequest") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AppEngineHttpRequest") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Task) MarshalJSON() ([]byte, error) {
 	type NoMethod Task
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TestIamPermissionsRequest: Request message for `TestIamPermissions`
-// method.
+// TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
 type TestIamPermissionsRequest struct {
-	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as `*` or `storage.*`) are not
-	// allowed. For more information see IAM Overview
+	// Permissions: The set of permissions to check for the `resource`. Permissions
+	// with wildcards (such as `*` or `storage.*`) are not allowed. For more
+	// information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permissions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permissions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
 // method.
 type TestIamPermissionsResponse struct {
-	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is allowed.
+	// Permissions: A subset of `TestPermissionsRequest.permissions` that the
+	// caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permissions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permissions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// UriOverride: URI Override. When specified, all the HTTP tasks inside
-// the queue will be partially or fully overridden depending on the
-// configured values.
+// UriOverride: URI Override. When specified, all the HTTP tasks inside the
+// queue will be partially or fully overridden depending on the configured
+// values.
 type UriOverride struct {
-	// Host: Host override. When specified, replaces the host part of the
-	// task URL. For example, if the task URL is "https://www.google.com,"
-	// and host value is set to "example.net", the overridden URI will be
-	// changed to "https://example.net." Host value cannot be an empty
-	// string (INVALID_ARGUMENT).
+	// Host: Host override. When specified, replaces the host part of the task URL.
+	// For example, if the task URL is "https://www.google.com," and host value is
+	// set to "example.net", the overridden URI will be changed to
+	// "https://example.net." Host value cannot be an empty string
+	// (INVALID_ARGUMENT).
 	Host string `json:"host,omitempty"`
-
-	// PathOverride: URI path. When specified, replaces the existing path of
-	// the task URL. Setting the path value to an empty string clears the
-	// URI path segment.
+	// PathOverride: URI path. When specified, replaces the existing path of the
+	// task URL. Setting the path value to an empty string clears the URI path
+	// segment.
 	PathOverride *PathOverride `json:"pathOverride,omitempty"`
-
-	// Port: Port override. When specified, replaces the port part of the
-	// task URI. For instance, for a URI http://www.google.com/foo and
-	// port=123, the overridden URI becomes http://www.google.com:123/foo.
-	// Note that the port value must be a positive integer. Setting the port
-	// to 0 (Zero) clears the URI port.
+	// Port: Port override. When specified, replaces the port part of the task URI.
+	// For instance, for a URI http://www.google.com/foo and port=123, the
+	// overridden URI becomes http://www.google.com:123/foo. Note that the port
+	// value must be a positive integer. Setting the port to 0 (Zero) clears the
+	// URI port.
 	Port int64 `json:"port,omitempty,string"`
-
-	// QueryOverride: URI Query. When specified, replaces the query part of
-	// the task URI. Setting the query value to an empty string clears the
-	// URI query segment.
+	// QueryOverride: URI Query. When specified, replaces the query part of the
+	// task URI. Setting the query value to an empty string clears the URI query
+	// segment.
 	QueryOverride *QueryOverride `json:"queryOverride,omitempty"`
-
-	// Scheme: Scheme override. When specified, the task URI scheme is
-	// replaced by the provided value (HTTP or HTTPS).
+	// Scheme: Scheme override. When specified, the task URI scheme is replaced by
+	// the provided value (HTTP or HTTPS).
 	//
 	// Possible values:
 	//   "SCHEME_UNSPECIFIED" - Scheme unspecified. Defaults to HTTPS.
-	//   "HTTP" - Convert the scheme to HTTP, e.g., https://www.google.ca
-	// will change to http://www.google.ca.
-	//   "HTTPS" - Convert the scheme to HTTPS, e.g., http://www.google.ca
-	// will change to https://www.google.ca.
+	//   "HTTP" - Convert the scheme to HTTP, e.g., https://www.google.ca will
+	// change to http://www.google.ca.
+	//   "HTTPS" - Convert the scheme to HTTPS, e.g., http://www.google.ca will
+	// change to https://www.google.ca.
 	Scheme string `json:"scheme,omitempty"`
-
-	// UriOverrideEnforceMode: URI Override Enforce Mode When specified,
-	// determines the Target UriOverride mode. If not specified, it defaults
-	// to ALWAYS.
+	// UriOverrideEnforceMode: URI Override Enforce Mode When specified, determines
+	// the Target UriOverride mode. If not specified, it defaults to ALWAYS.
 	//
 	// Possible values:
 	//   "URI_OVERRIDE_ENFORCE_MODE_UNSPECIFIED" - OverrideMode Unspecified.
 	// Defaults to ALWAYS.
-	//   "IF_NOT_EXISTS" - In the IF_NOT_EXISTS mode, queue-level
-	// configuration is only applied where task-level configuration does not
-	// exist.
-	//   "ALWAYS" - In the ALWAYS mode, queue-level configuration overrides
-	// all task-level configuration
+	//   "IF_NOT_EXISTS" - In the IF_NOT_EXISTS mode, queue-level configuration is
+	// only applied where task-level configuration does not exist.
+	//   "ALWAYS" - In the ALWAYS mode, queue-level configuration overrides all
+	// task-level configuration
 	UriOverrideEnforceMode string `json:"uriOverrideEnforceMode,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Host") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Host") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Host") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Host") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UriOverride) MarshalJSON() ([]byte, error) {
 	type NoMethod UriOverride
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "cloudtasks.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
 	s            *Service
@@ -2567,33 +2135,29 @@ func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGetCall) Context(ctx context.Context) *ProjectsLocationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2602,12 +2166,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2628,12 +2187,10 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "cloudtasks.projects.locations.get" call.
-// Exactly one of *Location or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Location.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Location.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2664,35 +2221,7 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets information about a location.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudtasks.projects.locations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Resource name for the location.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+name}",
-	//   "response": {
-	//     "$ref": "Location"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.getCmekConfig":
 
 type ProjectsLocationsGetCmekConfigCall struct {
 	s            *Service
@@ -2703,9 +2232,9 @@ type ProjectsLocationsGetCmekConfigCall struct {
 	header_      http.Header
 }
 
-// GetCmekConfig: Gets the CMEK config. Gets the Customer Managed
-// Encryption Key configured with the Cloud Tasks lcoation. By default
-// there is no kms_key configured.
+// GetCmekConfig: Gets the CMEK config. Gets the Customer Managed Encryption
+// Key configured with the Cloud Tasks lcoation. By default there is no kms_key
+// configured.
 //
 //   - name: The config resource name. For example:
 //     projects/PROJECT_ID/locations/LOCATION_ID/cmekConfig`.
@@ -2716,33 +2245,29 @@ func (r *ProjectsLocationsService) GetCmekConfig(name string) *ProjectsLocations
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGetCmekConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetCmekConfigCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsGetCmekConfigCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetCmekConfigCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGetCmekConfigCall) Context(ctx context.Context) *ProjectsLocationsGetCmekConfigCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGetCmekConfigCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2751,12 +2276,7 @@ func (c *ProjectsLocationsGetCmekConfigCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsGetCmekConfigCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2777,12 +2297,10 @@ func (c *ProjectsLocationsGetCmekConfigCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "cloudtasks.projects.locations.getCmekConfig" call.
-// Exactly one of *CmekConfig or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *CmekConfig.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CmekConfig.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsGetCmekConfigCall) Do(opts ...googleapi.CallOption) (*CmekConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2813,35 +2331,7 @@ func (c *ProjectsLocationsGetCmekConfigCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the CMEK config. Gets the Customer Managed Encryption Key configured with the Cloud Tasks lcoation. By default there is no kms_key configured.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/cmekConfig",
-	//   "httpMethod": "GET",
-	//   "id": "cloudtasks.projects.locations.getCmekConfig",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The config resource name. For example: projects/PROJECT_ID/locations/LOCATION_ID/cmekConfig`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/cmekConfig$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+name}",
-	//   "response": {
-	//     "$ref": "CmekConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.list":
 
 type ProjectsLocationsListCall struct {
 	s            *Service
@@ -2852,69 +2342,63 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this
-// service.
+// List: Lists information about the supported locations for this service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter to narrow down
-// results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in
-// AIP-160 (https://google.aip.dev/160).
+// Filter sets the optional parameter "filter": A filter to narrow down results
+// to a preferred subset. The filtering language accepts strings like
+// "displayName=tokyo", and is documented in more detail in AIP-160
+// (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If not set, the service selects a default.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token
-// received from the `next_page_token` field in the response. Send that
-// page token to receive the subsequent page.
+// PageToken sets the optional parameter "pageToken": A page token received
+// from the `next_page_token` field in the response. Send that page token to
+// receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsListCall) Context(ctx context.Context) *ProjectsLocationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2923,12 +2407,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2949,12 +2428,11 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "cloudtasks.projects.locations.list" call.
-// Exactly one of *ListLocationsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListLocationsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListLocationsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2985,48 +2463,6 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists information about the supported locations for this service.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations",
-	//   "httpMethod": "GET",
-	//   "id": "cloudtasks.projects.locations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like `\"displayName=tokyo\"`, and is documented in more detail in [AIP-160](https://google.aip.dev/160).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The resource that owns the locations collection, if applicable.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token received from the `next_page_token` field in the response. Send that page token to receive the subsequent page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+name}/locations",
-	//   "response": {
-	//     "$ref": "ListLocationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3034,7 +2470,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3050,8 +2486,6 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
-// method id "cloudtasks.projects.locations.updateCmekConfig":
-
 type ProjectsLocationsUpdateCmekConfigCall struct {
 	s          *Service
 	name       string
@@ -3061,14 +2495,13 @@ type ProjectsLocationsUpdateCmekConfigCall struct {
 	header_    http.Header
 }
 
-// UpdateCmekConfig: Creates or Updates a CMEK config. Updates the
-// Customer Managed Encryption Key assotiated with the Cloud Tasks
-// location (Creates if the key does not already exist). All new tasks
-// created in the location will be encrypted at-rest with the KMS-key
-// provided in the config.
+// UpdateCmekConfig: Creates or Updates a CMEK config. Updates the Customer
+// Managed Encryption Key assotiated with the Cloud Tasks location (Creates if
+// the key does not already exist). All new tasks created in the location will
+// be encrypted at-rest with the KMS-key provided in the config.
 //
-//   - name: Output only. The config resource name which includes the
-//     project and location and must end in 'cmekConfig', in the format
+//   - name: Output only. The config resource name which includes the project and
+//     location and must end in 'cmekConfig', in the format
 //     projects/PROJECT_ID/locations/LOCATION_ID/cmekConfig`.
 func (r *ProjectsLocationsService) UpdateCmekConfig(name string, cmekconfig *CmekConfig) *ProjectsLocationsUpdateCmekConfigCall {
 	c := &ProjectsLocationsUpdateCmekConfigCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3077,31 +2510,29 @@ func (r *ProjectsLocationsService) UpdateCmekConfig(name string, cmekconfig *Cme
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": List of fields
-// to be updated in this request.
+// UpdateMask sets the optional parameter "updateMask": List of fields to be
+// updated in this request.
 func (c *ProjectsLocationsUpdateCmekConfigCall) UpdateMask(updateMask string) *ProjectsLocationsUpdateCmekConfigCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsUpdateCmekConfigCall) Fields(s ...googleapi.Field) *ProjectsLocationsUpdateCmekConfigCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsUpdateCmekConfigCall) Context(ctx context.Context) *ProjectsLocationsUpdateCmekConfigCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsUpdateCmekConfigCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3110,18 +2541,12 @@ func (c *ProjectsLocationsUpdateCmekConfigCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsUpdateCmekConfigCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cmekconfig)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta3/{+name}")
@@ -3138,12 +2563,10 @@ func (c *ProjectsLocationsUpdateCmekConfigCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "cloudtasks.projects.locations.updateCmekConfig" call.
-// Exactly one of *CmekConfig or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *CmekConfig.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CmekConfig.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsUpdateCmekConfigCall) Do(opts ...googleapi.CallOption) (*CmekConfig, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3174,44 +2597,7 @@ func (c *ProjectsLocationsUpdateCmekConfigCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates or Updates a CMEK config. Updates the Customer Managed Encryption Key assotiated with the Cloud Tasks location (Creates if the key does not already exist). All new tasks created in the location will be encrypted at-rest with the KMS-key provided in the config.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/cmekConfig",
-	//   "httpMethod": "PATCH",
-	//   "id": "cloudtasks.projects.locations.updateCmekConfig",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Output only. The config resource name which includes the project and location and must end in 'cmekConfig', in the format projects/PROJECT_ID/locations/LOCATION_ID/cmekConfig`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/cmekConfig$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "List of fields to be updated in this request.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+name}",
-	//   "request": {
-	//     "$ref": "CmekConfig"
-	//   },
-	//   "response": {
-	//     "$ref": "CmekConfig"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.queues.create":
 
 type ProjectsLocationsQueuesCreateCall struct {
 	s          *Service
@@ -3222,19 +2608,17 @@ type ProjectsLocationsQueuesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Creates a queue. Queues created with this method allow tasks
-// to live for a maximum of 31 days. After a task is 31 days old, the
-// task will be deleted regardless of whether it was dispatched or not.
-// WARNING: Using this method may have unintended side effects if you
-// are using an App Engine `queue.yaml` or `queue.xml` file to manage
-// your queues. Read Overview of Queue Management and queue.yaml
-// (https://cloud.google.com/tasks/docs/queue-yaml) before using this
-// method.
+// Create: Creates a queue. Queues created with this method allow tasks to live
+// for a maximum of 31 days. After a task is 31 days old, the task will be
+// deleted regardless of whether it was dispatched or not. WARNING: Using this
+// method may have unintended side effects if you are using an App Engine
+// `queue.yaml` or `queue.xml` file to manage your queues. Read Overview of
+// Queue Management and queue.yaml
+// (https://cloud.google.com/tasks/docs/queue-yaml) before using this method.
 //
-//   - parent: The location name in which the queue will be created. For
-//     example: `projects/PROJECT_ID/locations/LOCATION_ID` The list of
-//     allowed locations can be obtained by calling Cloud Tasks'
-//     implementation of ListLocations.
+//   - parent: The location name in which the queue will be created. For example:
+//     `projects/PROJECT_ID/locations/LOCATION_ID` The list of allowed locations
+//     can be obtained by calling Cloud Tasks' implementation of ListLocations.
 func (r *ProjectsLocationsQueuesService) Create(parent string, queue *Queue) *ProjectsLocationsQueuesCreateCall {
 	c := &ProjectsLocationsQueuesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3243,23 +2627,21 @@ func (r *ProjectsLocationsQueuesService) Create(parent string, queue *Queue) *Pr
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesCreateCall) Context(ctx context.Context) *ProjectsLocationsQueuesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3268,18 +2650,12 @@ func (c *ProjectsLocationsQueuesCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queue)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta3/{+parent}/queues")
@@ -3296,12 +2672,10 @@ func (c *ProjectsLocationsQueuesCreateCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.create" call.
-// Exactly one of *Queue or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Queue.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Queue.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsQueuesCreateCall) Do(opts ...googleapi.CallOption) (*Queue, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3332,38 +2706,7 @@ func (c *ProjectsLocationsQueuesCreateCall) Do(opts ...googleapi.CallOption) (*Q
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a queue. Queues created with this method allow tasks to live for a maximum of 31 days. After a task is 31 days old, the task will be deleted regardless of whether it was dispatched or not. WARNING: Using this method may have unintended side effects if you are using an App Engine `queue.yaml` or `queue.xml` file to manage your queues. Read [Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using this method.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues",
-	//   "httpMethod": "POST",
-	//   "id": "cloudtasks.projects.locations.queues.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The location name in which the queue will be created. For example: `projects/PROJECT_ID/locations/LOCATION_ID` The list of allowed locations can be obtained by calling Cloud Tasks' implementation of ListLocations.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+parent}/queues",
-	//   "request": {
-	//     "$ref": "Queue"
-	//   },
-	//   "response": {
-	//     "$ref": "Queue"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.queues.delete":
 
 type ProjectsLocationsQueuesDeleteCall struct {
 	s          *Service
@@ -3373,21 +2716,19 @@ type ProjectsLocationsQueuesDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a queue. This command will delete the queue even if
-// it has tasks in it. Note : If you delete a queue, you may be
-// prevented from creating a new queue with the same name as the deleted
-// queue for a tombstone window of up to 3 days. During this window, the
-// CreateQueue operation may appear to recreate the queue, but this can
-// be misleading. If you attempt to create a queue with the same name as
-// one that is in the tombstone window, run GetQueue to confirm that the
-// queue creation was successful. If GetQueue returns 200 response code,
-// your queue was successfully created with the name of the previously
-// deleted queue. Otherwise, your queue did not successfully recreate.
-// WARNING: Using this method may have unintended side effects if you
-// are using an App Engine `queue.yaml` or `queue.xml` file to manage
-// your queues. Read Overview of Queue Management and queue.yaml
-// (https://cloud.google.com/tasks/docs/queue-yaml) before using this
-// method.
+// Delete: Deletes a queue. This command will delete the queue even if it has
+// tasks in it. Note : If you delete a queue, you may be prevented from
+// creating a new queue with the same name as the deleted queue for a tombstone
+// window of up to 3 days. During this window, the CreateQueue operation may
+// appear to recreate the queue, but this can be misleading. If you attempt to
+// create a queue with the same name as one that is in the tombstone window,
+// run GetQueue to confirm that the queue creation was successful. If GetQueue
+// returns 200 response code, your queue was successfully created with the name
+// of the previously deleted queue. Otherwise, your queue did not successfully
+// recreate. WARNING: Using this method may have unintended side effects if you
+// are using an App Engine `queue.yaml` or `queue.xml` file to manage your
+// queues. Read Overview of Queue Management and queue.yaml
+// (https://cloud.google.com/tasks/docs/queue-yaml) before using this method.
 //
 //   - name: The queue name. For example:
 //     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`.
@@ -3398,23 +2739,21 @@ func (r *ProjectsLocationsQueuesService) Delete(name string) *ProjectsLocationsQ
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesDeleteCall) Context(ctx context.Context) *ProjectsLocationsQueuesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3423,12 +2762,7 @@ func (c *ProjectsLocationsQueuesDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3446,12 +2780,10 @@ func (c *ProjectsLocationsQueuesDeleteCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsQueuesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3482,35 +2814,7 @@ func (c *ProjectsLocationsQueuesDeleteCall) Do(opts ...googleapi.CallOption) (*E
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a queue. This command will delete the queue even if it has tasks in it. Note : If you delete a queue, you may be prevented from creating a new queue with the same name as the deleted queue for a tombstone window of up to 3 days. During this window, the CreateQueue operation may appear to recreate the queue, but this can be misleading. If you attempt to create a queue with the same name as one that is in the tombstone window, run GetQueue to confirm that the queue creation was successful. If GetQueue returns 200 response code, your queue was successfully created with the name of the previously deleted queue. Otherwise, your queue did not successfully recreate. WARNING: Using this method may have unintended side effects if you are using an App Engine `queue.yaml` or `queue.xml` file to manage your queues. Read [Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using this method.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "cloudtasks.projects.locations.queues.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The queue name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.queues.get":
 
 type ProjectsLocationsQueuesGetCall struct {
 	s            *Service
@@ -3531,44 +2835,39 @@ func (r *ProjectsLocationsQueuesService) Get(name string) *ProjectsLocationsQueu
 	return c
 }
 
-// ReadMask sets the optional parameter "readMask": Read mask is used
-// for a more granular control over what the API returns. If the mask is
-// not present all fields will be returned except [Queue.stats].
-// [Queue.stats] will be returned only if it was explicitly specified in
-// the mask.
+// ReadMask sets the optional parameter "readMask": Read mask is used for a
+// more granular control over what the API returns. If the mask is not present
+// all fields will be returned except [Queue.stats]. [Queue.stats] will be
+// returned only if it was explicitly specified in the mask.
 func (c *ProjectsLocationsQueuesGetCall) ReadMask(readMask string) *ProjectsLocationsQueuesGetCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsQueuesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsQueuesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesGetCall) Context(ctx context.Context) *ProjectsLocationsQueuesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3577,12 +2876,7 @@ func (c *ProjectsLocationsQueuesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3603,12 +2897,10 @@ func (c *ProjectsLocationsQueuesGetCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.get" call.
-// Exactly one of *Queue or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Queue.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Queue.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsQueuesGetCall) Do(opts ...googleapi.CallOption) (*Queue, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3639,41 +2931,7 @@ func (c *ProjectsLocationsQueuesGetCall) Do(opts ...googleapi.CallOption) (*Queu
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a queue.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudtasks.projects.locations.queues.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the queue. For example: `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "readMask": {
-	//       "description": "Optional. Read mask is used for a more granular control over what the API returns. If the mask is not present all fields will be returned except [Queue.stats]. [Queue.stats] will be returned only if it was explicitly specified in the mask.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+name}",
-	//   "response": {
-	//     "$ref": "Queue"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.queues.getIamPolicy":
 
 type ProjectsLocationsQueuesGetIamPolicyCall struct {
 	s                   *Service
@@ -3684,16 +2942,14 @@ type ProjectsLocationsQueuesGetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a Queue. Returns an
-// empty policy if the resource exists and does not have a policy set.
-// Authorization requires the following Google IAM
-// (https://cloud.google.com/iam) permission on the specified resource
-// parent: * `cloudtasks.queues.getIamPolicy`
+// GetIamPolicy: Gets the access control policy for a Queue. Returns an empty
+// policy if the resource exists and does not have a policy set. Authorization
+// requires the following Google IAM (https://cloud.google.com/iam) permission
+// on the specified resource parent: * `cloudtasks.queues.getIamPolicy`
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsLocationsQueuesService) GetIamPolicy(resource string, getiampolicyrequest *GetIamPolicyRequest) *ProjectsLocationsQueuesGetIamPolicyCall {
 	c := &ProjectsLocationsQueuesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -3702,23 +2958,21 @@ func (r *ProjectsLocationsQueuesService) GetIamPolicy(resource string, getiampol
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesGetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsQueuesGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesGetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3727,18 +2981,12 @@ func (c *ProjectsLocationsQueuesGetIamPolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.getiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta3/{+resource}:getIamPolicy")
@@ -3755,12 +3003,10 @@ func (c *ProjectsLocationsQueuesGetIamPolicyCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.getIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsQueuesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3791,38 +3037,7 @@ func (c *ProjectsLocationsQueuesGetIamPolicyCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the access control policy for a Queue. Returns an empty policy if the resource exists and does not have a policy set. Authorization requires the following [Google IAM](https://cloud.google.com/iam) permission on the specified resource parent: * `cloudtasks.queues.getIamPolicy`",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}:getIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "cloudtasks.projects.locations.queues.getIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+resource}:getIamPolicy",
-	//   "request": {
-	//     "$ref": "GetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.queues.list":
 
 type ProjectsLocationsQueuesListCall struct {
 	s            *Service
@@ -3843,78 +3058,72 @@ func (r *ProjectsLocationsQueuesService) List(parent string) *ProjectsLocationsQ
 	return c
 }
 
-// Filter sets the optional parameter "filter": `filter` can be used to
-// specify a subset of queues. Any Queue field can be used as a filter
-// and several operators as supported. For example: `<=, <, >=, >, !=,
-// =, :`. The filter syntax is the same as described in Stackdriver's
-// Advanced Logs Filters
-// (https://cloud.google.com/logging/docs/view/advanced_filters). Sample
-// filter "state: PAUSED". Note that using filters might cause fewer
-// queues than the requested page_size to be returned.
+// Filter sets the optional parameter "filter": `filter` can be used to specify
+// a subset of queues. Any Queue field can be used as a filter and several
+// operators as supported. For example: `<=, <, >=, >, !=, =, :`. The filter
+// syntax is the same as described in Stackdriver's Advanced Logs Filters
+// (https://cloud.google.com/logging/docs/view/advanced_filters). Sample filter
+// "state: PAUSED". Note that using filters might cause fewer queues than the
+// requested page_size to be returned.
 func (c *ProjectsLocationsQueuesListCall) Filter(filter string) *ProjectsLocationsQueuesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The maximum page size is 9800. If unspecified, the page size will be
-// the maximum. Fewer queues than requested might be returned, even if
-// more queues exist; use the next_page_token in the response to
-// determine if more queues exist.
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// maximum page size is 9800. If unspecified, the page size will be the
+// maximum. Fewer queues than requested might be returned, even if more queues
+// exist; use the next_page_token in the response to determine if more queues
+// exist.
 func (c *ProjectsLocationsQueuesListCall) PageSize(pageSize int64) *ProjectsLocationsQueuesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying the page of results to return. To request the first page
-// results, page_token must be empty. To request the next page of
-// results, page_token must be the value of next_page_token returned
-// from the previous call to ListQueues method. It is an error to switch
-// the value of the filter while iterating through pages.
+// PageToken sets the optional parameter "pageToken": A token identifying the
+// page of results to return. To request the first page results, page_token
+// must be empty. To request the next page of results, page_token must be the
+// value of next_page_token returned from the previous call to ListQueues
+// method. It is an error to switch the value of the filter while iterating
+// through pages.
 func (c *ProjectsLocationsQueuesListCall) PageToken(pageToken string) *ProjectsLocationsQueuesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ReadMask sets the optional parameter "readMask": Read mask is used
-// for a more granular control over what the API returns. If the mask is
-// not present all fields will be returned except [Queue.stats].
-// [Queue.stats] will be returned only if it was explicitly specified in
-// the mask.
+// ReadMask sets the optional parameter "readMask": Read mask is used for a
+// more granular control over what the API returns. If the mask is not present
+// all fields will be returned except [Queue.stats]. [Queue.stats] will be
+// returned only if it was explicitly specified in the mask.
 func (c *ProjectsLocationsQueuesListCall) ReadMask(readMask string) *ProjectsLocationsQueuesListCall {
 	c.urlParams_.Set("readMask", readMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsQueuesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsQueuesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesListCall) Context(ctx context.Context) *ProjectsLocationsQueuesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3923,12 +3132,7 @@ func (c *ProjectsLocationsQueuesListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3949,12 +3153,11 @@ func (c *ProjectsLocationsQueuesListCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.list" call.
-// Exactly one of *ListQueuesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListQueuesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListQueuesResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsQueuesListCall) Do(opts ...googleapi.CallOption) (*ListQueuesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3985,54 +3188,6 @@ func (c *ProjectsLocationsQueuesListCall) Do(opts ...googleapi.CallOption) (*Lis
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists queues. Queues are returned in lexicographical order.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues",
-	//   "httpMethod": "GET",
-	//   "id": "cloudtasks.projects.locations.queues.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "`filter` can be used to specify a subset of queues. Any Queue field can be used as a filter and several operators as supported. For example: `\u003c=, \u003c, \u003e=, \u003e, !=, =, :`. The filter syntax is the same as described in [Stackdriver's Advanced Logs Filters](https://cloud.google.com/logging/docs/view/advanced_filters). Sample filter \"state: PAUSED\". Note that using filters might cause fewer queues than the requested page_size to be returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Requested page size. The maximum page size is 9800. If unspecified, the page size will be the maximum. Fewer queues than requested might be returned, even if more queues exist; use the next_page_token in the response to determine if more queues exist.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying the page of results to return. To request the first page results, page_token must be empty. To request the next page of results, page_token must be the value of next_page_token returned from the previous call to ListQueues method. It is an error to switch the value of the filter while iterating through pages.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The location name. For example: `projects/PROJECT_ID/locations/LOCATION_ID`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "readMask": {
-	//       "description": "Optional. Read mask is used for a more granular control over what the API returns. If the mask is not present all fields will be returned except [Queue.stats]. [Queue.stats] will be returned only if it was explicitly specified in the mask.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+parent}/queues",
-	//   "response": {
-	//     "$ref": "ListQueuesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4040,7 +3195,7 @@ func (c *ProjectsLocationsQueuesListCall) Do(opts ...googleapi.CallOption) (*Lis
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsQueuesListCall) Pages(ctx context.Context, f func(*ListQueuesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4056,8 +3211,6 @@ func (c *ProjectsLocationsQueuesListCall) Pages(ctx context.Context, f func(*Lis
 	}
 }
 
-// method id "cloudtasks.projects.locations.queues.patch":
-
 type ProjectsLocationsQueuesPatchCall struct {
 	s          *Service
 	name       string
@@ -4067,31 +3220,26 @@ type ProjectsLocationsQueuesPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a queue. This method creates the queue if it does not
-// exist and updates the queue if it does exist. Queues created with
-// this method allow tasks to live for a maximum of 31 days. After a
-// task is 31 days old, the task will be deleted regardless of whether
-// it was dispatched or not. WARNING: Using this method may have
-// unintended side effects if you are using an App Engine `queue.yaml`
-// or `queue.xml` file to manage your queues. Read Overview of Queue
-// Management and queue.yaml
-// (https://cloud.google.com/tasks/docs/queue-yaml) before using this
-// method.
+// Patch: Updates a queue. This method creates the queue if it does not exist
+// and updates the queue if it does exist. Queues created with this method
+// allow tasks to live for a maximum of 31 days. After a task is 31 days old,
+// the task will be deleted regardless of whether it was dispatched or not.
+// WARNING: Using this method may have unintended side effects if you are using
+// an App Engine `queue.yaml` or `queue.xml` file to manage your queues. Read
+// Overview of Queue Management and queue.yaml
+// (https://cloud.google.com/tasks/docs/queue-yaml) before using this method.
 //
-//   - name: Caller-specified and required in CreateQueue, after which it
-//     becomes output only. The queue name. The queue name must have the
-//     following format:
-//     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` *
-//     `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]),
-//     hyphens (-), colons (:), or periods (.). For more information, see
-//     Identifying projects
+//   - name: Caller-specified and required in CreateQueue, after which it becomes
+//     output only. The queue name. The queue name must have the following
+//     format: `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` *
+//     `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens (-),
+//     colons (:), or periods (.). For more information, see Identifying projects
 //     (https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects)
-//   - `LOCATION_ID` is the canonical ID for the queue's location. The
-//     list of available locations can be obtained by calling
-//     ListLocations. For more information, see
-//     https://cloud.google.com/about/locations/. * `QUEUE_ID` can contain
-//     letters ([A-Za-z]), numbers ([0-9]), or hyphens (-). The maximum
-//     length is 100 characters.
+//   - `LOCATION_ID` is the canonical ID for the queue's location. The list of
+//     available locations can be obtained by calling ListLocations. For more
+//     information, see https://cloud.google.com/about/locations/. * `QUEUE_ID`
+//     can contain letters ([A-Za-z]), numbers ([0-9]), or hyphens (-). The
+//     maximum length is 100 characters.
 func (r *ProjectsLocationsQueuesService) Patch(name string, queue *Queue) *ProjectsLocationsQueuesPatchCall {
 	c := &ProjectsLocationsQueuesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4099,32 +3247,30 @@ func (r *ProjectsLocationsQueuesService) Patch(name string, queue *Queue) *Proje
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": A mask used to
-// specify which fields of the queue are being updated. If empty, then
-// all fields will be updated.
+// UpdateMask sets the optional parameter "updateMask": A mask used to specify
+// which fields of the queue are being updated. If empty, then all fields will
+// be updated.
 func (c *ProjectsLocationsQueuesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsQueuesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesPatchCall) Context(ctx context.Context) *ProjectsLocationsQueuesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4133,18 +3279,12 @@ func (c *ProjectsLocationsQueuesPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.queue)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta3/{+name}")
@@ -4161,12 +3301,10 @@ func (c *ProjectsLocationsQueuesPatchCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.patch" call.
-// Exactly one of *Queue or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Queue.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Queue.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsQueuesPatchCall) Do(opts ...googleapi.CallOption) (*Queue, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4197,44 +3335,7 @@ func (c *ProjectsLocationsQueuesPatchCall) Do(opts ...googleapi.CallOption) (*Qu
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a queue. This method creates the queue if it does not exist and updates the queue if it does exist. Queues created with this method allow tasks to live for a maximum of 31 days. After a task is 31 days old, the task will be deleted regardless of whether it was dispatched or not. WARNING: Using this method may have unintended side effects if you are using an App Engine `queue.yaml` or `queue.xml` file to manage your queues. Read [Overview of Queue Management and queue.yaml](https://cloud.google.com/tasks/docs/queue-yaml) before using this method.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "cloudtasks.projects.locations.queues.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Caller-specified and required in CreateQueue, after which it becomes output only. The queue name. The queue name must have the following format: `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` * `PROJECT_ID` can contain letters ([A-Za-z]), numbers ([0-9]), hyphens (-), colons (:), or periods (.). For more information, see [Identifying projects](https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects) * `LOCATION_ID` is the canonical ID for the queue's location. The list of available locations can be obtained by calling ListLocations. For more information, see https://cloud.google.com/about/locations/. * `QUEUE_ID` can contain letters ([A-Za-z]), numbers ([0-9]), or hyphens (-). The maximum length is 100 characters.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "A mask used to specify which fields of the queue are being updated. If empty, then all fields will be updated.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+name}",
-	//   "request": {
-	//     "$ref": "Queue"
-	//   },
-	//   "response": {
-	//     "$ref": "Queue"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.queues.pause":
 
 type ProjectsLocationsQueuesPauseCall struct {
 	s                 *Service
@@ -4245,10 +3346,10 @@ type ProjectsLocationsQueuesPauseCall struct {
 	header_           http.Header
 }
 
-// Pause: Pauses the queue. If a queue is paused then the system will
-// stop dispatching tasks until the queue is resumed via ResumeQueue.
-// Tasks can still be added when the queue is paused. A queue is paused
-// if its state is PAUSED.
+// Pause: Pauses the queue. If a queue is paused then the system will stop
+// dispatching tasks until the queue is resumed via ResumeQueue. Tasks can
+// still be added when the queue is paused. A queue is paused if its state is
+// PAUSED.
 //
 //   - name: The queue name. For example:
 //     `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`.
@@ -4260,23 +3361,21 @@ func (r *ProjectsLocationsQueuesService) Pause(name string, pausequeuerequest *P
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesPauseCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesPauseCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesPauseCall) Context(ctx context.Context) *ProjectsLocationsQueuesPauseCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesPauseCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4285,18 +3384,12 @@ func (c *ProjectsLocationsQueuesPauseCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesPauseCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.pausequeuerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta3/{+name}:pause")
@@ -4313,12 +3406,10 @@ func (c *ProjectsLocationsQueuesPauseCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.pause" call.
-// Exactly one of *Queue or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Queue.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Queue.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsQueuesPauseCall) Do(opts ...googleapi.CallOption) (*Queue, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4349,38 +3440,7 @@ func (c *ProjectsLocationsQueuesPauseCall) Do(opts ...googleapi.CallOption) (*Qu
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Pauses the queue. If a queue is paused then the system will stop dispatching tasks until the queue is resumed via ResumeQueue. Tasks can still be added when the queue is paused. A queue is paused if its state is PAUSED.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}:pause",
-	//   "httpMethod": "POST",
-	//   "id": "cloudtasks.projects.locations.queues.pause",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The queue name. For example: `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+name}:pause",
-	//   "request": {
-	//     "$ref": "PauseQueueRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Queue"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.queues.purge":
 
 type ProjectsLocationsQueuesPurgeCall struct {
 	s                 *Service
@@ -4391,10 +3451,10 @@ type ProjectsLocationsQueuesPurgeCall struct {
 	header_           http.Header
 }
 
-// Purge: Purges a queue by deleting all of its tasks. All tasks created
-// before this method is called are permanently deleted. Purge
-// operations can take up to one minute to take effect. Tasks might be
-// dispatched before the purge takes effect. A purge is irreversible.
+// Purge: Purges a queue by deleting all of its tasks. All tasks created before
+// this method is called are permanently deleted. Purge operations can take up
+// to one minute to take effect. Tasks might be dispatched before the purge
+// takes effect. A purge is irreversible.
 //
 //   - name: The queue name. For example:
 //     `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`.
@@ -4406,23 +3466,21 @@ func (r *ProjectsLocationsQueuesService) Purge(name string, purgequeuerequest *P
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesPurgeCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesPurgeCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesPurgeCall) Context(ctx context.Context) *ProjectsLocationsQueuesPurgeCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesPurgeCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4431,18 +3489,12 @@ func (c *ProjectsLocationsQueuesPurgeCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesPurgeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.purgequeuerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta3/{+name}:purge")
@@ -4459,12 +3511,10 @@ func (c *ProjectsLocationsQueuesPurgeCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.purge" call.
-// Exactly one of *Queue or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Queue.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Queue.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsQueuesPurgeCall) Do(opts ...googleapi.CallOption) (*Queue, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4495,38 +3545,7 @@ func (c *ProjectsLocationsQueuesPurgeCall) Do(opts ...googleapi.CallOption) (*Qu
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Purges a queue by deleting all of its tasks. All tasks created before this method is called are permanently deleted. Purge operations can take up to one minute to take effect. Tasks might be dispatched before the purge takes effect. A purge is irreversible.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}:purge",
-	//   "httpMethod": "POST",
-	//   "id": "cloudtasks.projects.locations.queues.purge",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The queue name. For example: `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+name}:purge",
-	//   "request": {
-	//     "$ref": "PurgeQueueRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Queue"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.queues.resume":
 
 type ProjectsLocationsQueuesResumeCall struct {
 	s                  *Service
@@ -4537,12 +3556,12 @@ type ProjectsLocationsQueuesResumeCall struct {
 	header_            http.Header
 }
 
-// Resume: Resume a queue. This method resumes a queue after it has been
-// PAUSED or DISABLED. The state of a queue is stored in the queue's
-// state; after calling this method it will be set to RUNNING. WARNING:
-// Resuming many high-QPS queues at the same time can lead to target
-// overloading. If you are resuming high-QPS queues, follow the 500/50/5
-// pattern described in Managing Cloud Tasks Scaling Risks
+// Resume: Resume a queue. This method resumes a queue after it has been PAUSED
+// or DISABLED. The state of a queue is stored in the queue's state; after
+// calling this method it will be set to RUNNING. WARNING: Resuming many
+// high-QPS queues at the same time can lead to target overloading. If you are
+// resuming high-QPS queues, follow the 500/50/5 pattern described in Managing
+// Cloud Tasks Scaling Risks
 // (https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).
 //
 //   - name: The queue name. For example:
@@ -4555,23 +3574,21 @@ func (r *ProjectsLocationsQueuesService) Resume(name string, resumequeuerequest 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesResumeCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesResumeCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesResumeCall) Context(ctx context.Context) *ProjectsLocationsQueuesResumeCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesResumeCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4580,18 +3597,12 @@ func (c *ProjectsLocationsQueuesResumeCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesResumeCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.resumequeuerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta3/{+name}:resume")
@@ -4608,12 +3619,10 @@ func (c *ProjectsLocationsQueuesResumeCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.resume" call.
-// Exactly one of *Queue or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Queue.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Queue.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsQueuesResumeCall) Do(opts ...googleapi.CallOption) (*Queue, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4644,38 +3653,7 @@ func (c *ProjectsLocationsQueuesResumeCall) Do(opts ...googleapi.CallOption) (*Q
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Resume a queue. This method resumes a queue after it has been PAUSED or DISABLED. The state of a queue is stored in the queue's state; after calling this method it will be set to RUNNING. WARNING: Resuming many high-QPS queues at the same time can lead to target overloading. If you are resuming high-QPS queues, follow the 500/50/5 pattern described in [Managing Cloud Tasks Scaling Risks](https://cloud.google.com/tasks/docs/manage-cloud-task-scaling).",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}:resume",
-	//   "httpMethod": "POST",
-	//   "id": "cloudtasks.projects.locations.queues.resume",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The queue name. For example: `projects/PROJECT_ID/location/LOCATION_ID/queues/QUEUE_ID`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+name}:resume",
-	//   "request": {
-	//     "$ref": "ResumeQueueRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Queue"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.queues.setIamPolicy":
 
 type ProjectsLocationsQueuesSetIamPolicyCall struct {
 	s                   *Service
@@ -4686,17 +3664,16 @@ type ProjectsLocationsQueuesSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy for a Queue. Replaces
-// any existing policy. Note: The Cloud Console does not check
-// queue-level IAM permissions yet. Project-level permissions are
-// required to use the Cloud Console. Authorization requires the
-// following Google IAM (https://cloud.google.com/iam) permission on the
-// specified resource parent: * `cloudtasks.queues.setIamPolicy`
+// SetIamPolicy: Sets the access control policy for a Queue. Replaces any
+// existing policy. Note: The Cloud Console does not check queue-level IAM
+// permissions yet. Project-level permissions are required to use the Cloud
+// Console. Authorization requires the following Google IAM
+// (https://cloud.google.com/iam) permission on the specified resource parent:
+// * `cloudtasks.queues.setIamPolicy`
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsLocationsQueuesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsQueuesSetIamPolicyCall {
 	c := &ProjectsLocationsQueuesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4705,23 +3682,21 @@ func (r *ProjectsLocationsQueuesService) SetIamPolicy(resource string, setiampol
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesSetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsQueuesSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesSetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4730,18 +3705,12 @@ func (c *ProjectsLocationsQueuesSetIamPolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta3/{+resource}:setIamPolicy")
@@ -4758,12 +3727,10 @@ func (c *ProjectsLocationsQueuesSetIamPolicyCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.setIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsQueuesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4794,38 +3761,7 @@ func (c *ProjectsLocationsQueuesSetIamPolicyCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Sets the access control policy for a Queue. Replaces any existing policy. Note: The Cloud Console does not check queue-level IAM permissions yet. Project-level permissions are required to use the Cloud Console. Authorization requires the following [Google IAM](https://cloud.google.com/iam) permission on the specified resource parent: * `cloudtasks.queues.setIamPolicy`",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}:setIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "cloudtasks.projects.locations.queues.setIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+resource}:setIamPolicy",
-	//   "request": {
-	//     "$ref": "SetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.queues.testIamPermissions":
 
 type ProjectsLocationsQueuesTestIamPermissionsCall struct {
 	s                         *Service
@@ -4836,17 +3772,16 @@ type ProjectsLocationsQueuesTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Returns permissions that a caller has on a Queue.
-// If the resource does not exist, this will return an empty set of
-// permissions, not a NOT_FOUND error. Note: This operation is designed
-// to be used for building permission-aware UIs and command-line tools,
-// not for authorization checking. This operation may "fail open"
-// without warning.
+// TestIamPermissions: Returns permissions that a caller has on a Queue. If the
+// resource does not exist, this will return an empty set of permissions, not a
+// NOT_FOUND error. Note: This operation is designed to be used for building
+// permission-aware UIs and command-line tools, not for authorization checking.
+// This operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
 func (r *ProjectsLocationsQueuesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsQueuesTestIamPermissionsCall {
 	c := &ProjectsLocationsQueuesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4855,23 +3790,21 @@ func (r *ProjectsLocationsQueuesService) TestIamPermissions(resource string, tes
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsQueuesTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesTestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4880,18 +3813,12 @@ func (c *ProjectsLocationsQueuesTestIamPermissionsCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta3/{+resource}:testIamPermissions")
@@ -4908,12 +3835,11 @@ func (c *ProjectsLocationsQueuesTestIamPermissionsCall) doRequest(alt string) (*
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.testIamPermissions" call.
-// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsQueuesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4944,38 +3870,7 @@ func (c *ProjectsLocationsQueuesTestIamPermissionsCall) Do(opts ...googleapi.Cal
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns permissions that a caller has on a Queue. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error. Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}:testIamPermissions",
-	//   "httpMethod": "POST",
-	//   "id": "cloudtasks.projects.locations.queues.testIamPermissions",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+resource}:testIamPermissions",
-	//   "request": {
-	//     "$ref": "TestIamPermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TestIamPermissionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.queues.tasks.buffer":
 
 type ProjectsLocationsQueuesTasksBufferCall struct {
 	s                 *Service
@@ -4987,21 +3882,19 @@ type ProjectsLocationsQueuesTasksBufferCall struct {
 	header_           http.Header
 }
 
-// Buffer: Creates and buffers a new task without the need to explicitly
-// define a Task message. The queue must have HTTP target. To create the
-// task with a custom ID, use the following format and set TASK_ID to
-// your desired ID:
-// projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_I
-// D:buffer To create the task with an automatically generated ID, use
-// the following format:
-// projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks:buffer
-// .
+// Buffer: Creates and buffers a new task without the need to explicitly define
+// a Task message. The queue must have HTTP target. To create the task with a
+// custom ID, use the following format and set TASK_ID to your desired ID:
+// projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID:buffe
+// r To create the task with an automatically generated ID, use the following
+// format:
+// projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks:buffer.
 //
 //   - queue: The parent queue name. For example:
-//     projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The
-//     queue must already exist.
-//   - taskId: Optional. Task ID for the task being created. If not
-//     provided, a random task ID is assigned to the task.
+//     projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The queue must
+//     already exist.
+//   - taskId: Optional. Task ID for the task being created. If not provided, a
+//     random task ID is assigned to the task.
 func (r *ProjectsLocationsQueuesTasksService) Buffer(queue string, taskId string, buffertaskrequest *BufferTaskRequest) *ProjectsLocationsQueuesTasksBufferCall {
 	c := &ProjectsLocationsQueuesTasksBufferCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.queue = queue
@@ -5011,23 +3904,21 @@ func (r *ProjectsLocationsQueuesTasksService) Buffer(queue string, taskId string
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesTasksBufferCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesTasksBufferCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesTasksBufferCall) Context(ctx context.Context) *ProjectsLocationsQueuesTasksBufferCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesTasksBufferCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5036,18 +3927,12 @@ func (c *ProjectsLocationsQueuesTasksBufferCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesTasksBufferCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.buffertaskrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta3/{+queue}/tasks/{taskId}:buffer")
@@ -5065,12 +3950,11 @@ func (c *ProjectsLocationsQueuesTasksBufferCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.tasks.buffer" call.
-// Exactly one of *BufferTaskResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *BufferTaskResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BufferTaskResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsQueuesTasksBufferCall) Do(opts ...googleapi.CallOption) (*BufferTaskResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5101,45 +3985,7 @@ func (c *ProjectsLocationsQueuesTasksBufferCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates and buffers a new task without the need to explicitly define a Task message. The queue must have HTTP target. To create the task with a custom ID, use the following format and set TASK_ID to your desired ID: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID:buffer To create the task with an automatically generated ID, use the following format: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks:buffer.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks/{taskId}:buffer",
-	//   "httpMethod": "POST",
-	//   "id": "cloudtasks.projects.locations.queues.tasks.buffer",
-	//   "parameterOrder": [
-	//     "queue",
-	//     "taskId"
-	//   ],
-	//   "parameters": {
-	//     "queue": {
-	//       "description": "Required. The parent queue name. For example: projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The queue must already exist.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "taskId": {
-	//       "description": "Optional. Task ID for the task being created. If not provided, a random task ID is assigned to the task.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+queue}/tasks/{taskId}:buffer",
-	//   "request": {
-	//     "$ref": "BufferTaskRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "BufferTaskResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.queues.tasks.create":
 
 type ProjectsLocationsQueuesTasksCreateCall struct {
 	s                 *Service
@@ -5150,13 +3996,12 @@ type ProjectsLocationsQueuesTasksCreateCall struct {
 	header_           http.Header
 }
 
-// Create: Creates a task and adds it to a queue. Tasks cannot be
-// updated after creation; there is no UpdateTask command. * The maximum
-// task size is 100KB.
+// Create: Creates a task and adds it to a queue. Tasks cannot be updated after
+// creation; there is no UpdateTask command. * The maximum task size is 100KB.
 //
 //   - parent: The queue name. For example:
-//     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The
-//     queue must already exist.
+//     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The queue must
+//     already exist.
 func (r *ProjectsLocationsQueuesTasksService) Create(parent string, createtaskrequest *CreateTaskRequest) *ProjectsLocationsQueuesTasksCreateCall {
 	c := &ProjectsLocationsQueuesTasksCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -5165,23 +4010,21 @@ func (r *ProjectsLocationsQueuesTasksService) Create(parent string, createtaskre
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesTasksCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesTasksCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesTasksCreateCall) Context(ctx context.Context) *ProjectsLocationsQueuesTasksCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesTasksCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5190,18 +4033,12 @@ func (c *ProjectsLocationsQueuesTasksCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesTasksCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createtaskrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta3/{+parent}/tasks")
@@ -5218,12 +4055,10 @@ func (c *ProjectsLocationsQueuesTasksCreateCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.tasks.create" call.
-// Exactly one of *Task or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Task.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsQueuesTasksCreateCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5254,38 +4089,7 @@ func (c *ProjectsLocationsQueuesTasksCreateCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a task and adds it to a queue. Tasks cannot be updated after creation; there is no UpdateTask command. * The maximum task size is 100KB.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks",
-	//   "httpMethod": "POST",
-	//   "id": "cloudtasks.projects.locations.queues.tasks.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The queue name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID` The queue must already exist.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+parent}/tasks",
-	//   "request": {
-	//     "$ref": "CreateTaskRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Task"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.queues.tasks.delete":
 
 type ProjectsLocationsQueuesTasksDeleteCall struct {
 	s          *Service
@@ -5296,12 +4100,11 @@ type ProjectsLocationsQueuesTasksDeleteCall struct {
 }
 
 // Delete: Deletes a task. A task can be deleted if it is scheduled or
-// dispatched. A task cannot be deleted if it has executed successfully
-// or permanently failed.
+// dispatched. A task cannot be deleted if it has executed successfully or
+// permanently failed.
 //
 //   - name: The task name. For example:
-//     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TAS
-//     K_ID`.
+//     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`.
 func (r *ProjectsLocationsQueuesTasksService) Delete(name string) *ProjectsLocationsQueuesTasksDeleteCall {
 	c := &ProjectsLocationsQueuesTasksDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5309,23 +4112,21 @@ func (r *ProjectsLocationsQueuesTasksService) Delete(name string) *ProjectsLocat
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesTasksDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesTasksDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesTasksDeleteCall) Context(ctx context.Context) *ProjectsLocationsQueuesTasksDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesTasksDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5334,12 +4135,7 @@ func (c *ProjectsLocationsQueuesTasksDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesTasksDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -5357,12 +4153,10 @@ func (c *ProjectsLocationsQueuesTasksDeleteCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.tasks.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsQueuesTasksDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5393,35 +4187,7 @@ func (c *ProjectsLocationsQueuesTasksDeleteCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a task. A task can be deleted if it is scheduled or dispatched. A task cannot be deleted if it has executed successfully or permanently failed.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks/{tasksId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "cloudtasks.projects.locations.queues.tasks.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The task name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+/tasks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.queues.tasks.get":
 
 type ProjectsLocationsQueuesTasksGetCall struct {
 	s            *Service
@@ -5435,70 +4201,63 @@ type ProjectsLocationsQueuesTasksGetCall struct {
 // Get: Gets a task.
 //
 //   - name: The task name. For example:
-//     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TAS
-//     K_ID`.
+//     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`.
 func (r *ProjectsLocationsQueuesTasksService) Get(name string) *ProjectsLocationsQueuesTasksGetCall {
 	c := &ProjectsLocationsQueuesTasksGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// ResponseView sets the optional parameter "responseView": The
-// response_view specifies which subset of the Task will be returned. By
-// default response_view is BASIC; not all information is retrieved by
-// default because some data, such as payloads, might be desirable to
-// return only when needed because of its large size or because of the
-// sensitivity of data that it contains. Authorization for FULL requires
-// `cloudtasks.tasks.fullView` Google IAM
-// (https://cloud.google.com/iam/) permission on the Task resource.
+// ResponseView sets the optional parameter "responseView": The response_view
+// specifies which subset of the Task will be returned. By default
+// response_view is BASIC; not all information is retrieved by default because
+// some data, such as payloads, might be desirable to return only when needed
+// because of its large size or because of the sensitivity of data that it
+// contains. Authorization for FULL requires `cloudtasks.tasks.fullView` Google
+// IAM (https://cloud.google.com/iam/) permission on the Task resource.
 //
 // Possible values:
 //
 //	"VIEW_UNSPECIFIED" - Unspecified. Defaults to BASIC.
-//	"BASIC" - The basic view omits fields which can be large or can
+//	"BASIC" - The basic view omits fields which can be large or can contain
 //
-// contain sensitive data. This view does not include the body in
-// AppEngineHttpRequest. Bodies are desirable to return only when
-// needed, because they can be large and because of the sensitivity of
-// the data that you choose to store in it.
+// sensitive data. This view does not include the body in AppEngineHttpRequest.
+// Bodies are desirable to return only when needed, because they can be large
+// and because of the sensitivity of the data that you choose to store in it.
 //
-//	"FULL" - All information is returned. Authorization for FULL
+//	"FULL" - All information is returned. Authorization for FULL requires
 //
-// requires `cloudtasks.tasks.fullView` [Google
-// IAM](https://cloud.google.com/iam/) permission on the Queue resource.
+// `cloudtasks.tasks.fullView` [Google IAM](https://cloud.google.com/iam/)
+// permission on the Queue resource.
 func (c *ProjectsLocationsQueuesTasksGetCall) ResponseView(responseView string) *ProjectsLocationsQueuesTasksGetCall {
 	c.urlParams_.Set("responseView", responseView)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesTasksGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesTasksGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsQueuesTasksGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsQueuesTasksGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesTasksGetCall) Context(ctx context.Context) *ProjectsLocationsQueuesTasksGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesTasksGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5507,12 +4266,7 @@ func (c *ProjectsLocationsQueuesTasksGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesTasksGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5533,12 +4287,10 @@ func (c *ProjectsLocationsQueuesTasksGetCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.tasks.get" call.
-// Exactly one of *Task or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Task.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsQueuesTasksGetCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5569,50 +4321,7 @@ func (c *ProjectsLocationsQueuesTasksGetCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a task.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks/{tasksId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudtasks.projects.locations.queues.tasks.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The task name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+/tasks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "responseView": {
-	//       "description": "The response_view specifies which subset of the Task will be returned. By default response_view is BASIC; not all information is retrieved by default because some data, such as payloads, might be desirable to return only when needed because of its large size or because of the sensitivity of data that it contains. Authorization for FULL requires `cloudtasks.tasks.fullView` [Google IAM](https://cloud.google.com/iam/) permission on the Task resource.",
-	//       "enum": [
-	//         "VIEW_UNSPECIFIED",
-	//         "BASIC",
-	//         "FULL"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unspecified. Defaults to BASIC.",
-	//         "The basic view omits fields which can be large or can contain sensitive data. This view does not include the body in AppEngineHttpRequest. Bodies are desirable to return only when needed, because they can be large and because of the sensitivity of the data that you choose to store in it.",
-	//         "All information is returned. Authorization for FULL requires `cloudtasks.tasks.fullView` [Google IAM](https://cloud.google.com/iam/) permission on the Queue resource."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+name}",
-	//   "response": {
-	//     "$ref": "Task"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudtasks.projects.locations.queues.tasks.list":
 
 type ProjectsLocationsQueuesTasksListCall struct {
 	s            *Service
@@ -5624,9 +4333,9 @@ type ProjectsLocationsQueuesTasksListCall struct {
 }
 
 // List: Lists the tasks in a queue. By default, only the BASIC view is
-// retrieved due to performance considerations; response_view controls
-// the subset of information which is returned. The tasks may be
-// returned in any order. The ordering may change at any time.
+// retrieved due to performance considerations; response_view controls the
+// subset of information which is returned. The tasks may be returned in any
+// order. The ordering may change at any time.
 //
 //   - parent: The queue name. For example:
 //     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`.
@@ -5636,83 +4345,76 @@ func (r *ProjectsLocationsQueuesTasksService) List(parent string) *ProjectsLocat
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Maximum page size.
-// Fewer tasks than requested might be returned, even if more tasks
-// exist; use next_page_token in the response to determine if more tasks
-// exist. The maximum page size is 1000. If unspecified, the page size
-// will be the maximum.
+// PageSize sets the optional parameter "pageSize": Maximum page size. Fewer
+// tasks than requested might be returned, even if more tasks exist; use
+// next_page_token in the response to determine if more tasks exist. The
+// maximum page size is 1000. If unspecified, the page size will be the
+// maximum.
 func (c *ProjectsLocationsQueuesTasksListCall) PageSize(pageSize int64) *ProjectsLocationsQueuesTasksListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying the page of results to return. To request the first page
-// results, page_token must be empty. To request the next page of
-// results, page_token must be the value of next_page_token returned
-// from the previous call to ListTasks method. The page token is valid
-// for only 2 hours.
+// PageToken sets the optional parameter "pageToken": A token identifying the
+// page of results to return. To request the first page results, page_token
+// must be empty. To request the next page of results, page_token must be the
+// value of next_page_token returned from the previous call to ListTasks
+// method. The page token is valid for only 2 hours.
 func (c *ProjectsLocationsQueuesTasksListCall) PageToken(pageToken string) *ProjectsLocationsQueuesTasksListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ResponseView sets the optional parameter "responseView": The
-// response_view specifies which subset of the Task will be returned. By
-// default response_view is BASIC; not all information is retrieved by
-// default because some data, such as payloads, might be desirable to
-// return only when needed because of its large size or because of the
-// sensitivity of data that it contains. Authorization for FULL requires
-// `cloudtasks.tasks.fullView` Google IAM
-// (https://cloud.google.com/iam/) permission on the Task resource.
+// ResponseView sets the optional parameter "responseView": The response_view
+// specifies which subset of the Task will be returned. By default
+// response_view is BASIC; not all information is retrieved by default because
+// some data, such as payloads, might be desirable to return only when needed
+// because of its large size or because of the sensitivity of data that it
+// contains. Authorization for FULL requires `cloudtasks.tasks.fullView` Google
+// IAM (https://cloud.google.com/iam/) permission on the Task resource.
 //
 // Possible values:
 //
 //	"VIEW_UNSPECIFIED" - Unspecified. Defaults to BASIC.
-//	"BASIC" - The basic view omits fields which can be large or can
+//	"BASIC" - The basic view omits fields which can be large or can contain
 //
-// contain sensitive data. This view does not include the body in
-// AppEngineHttpRequest. Bodies are desirable to return only when
-// needed, because they can be large and because of the sensitivity of
-// the data that you choose to store in it.
+// sensitive data. This view does not include the body in AppEngineHttpRequest.
+// Bodies are desirable to return only when needed, because they can be large
+// and because of the sensitivity of the data that you choose to store in it.
 //
-//	"FULL" - All information is returned. Authorization for FULL
+//	"FULL" - All information is returned. Authorization for FULL requires
 //
-// requires `cloudtasks.tasks.fullView` [Google
-// IAM](https://cloud.google.com/iam/) permission on the Queue resource.
+// `cloudtasks.tasks.fullView` [Google IAM](https://cloud.google.com/iam/)
+// permission on the Queue resource.
 func (c *ProjectsLocationsQueuesTasksListCall) ResponseView(responseView string) *ProjectsLocationsQueuesTasksListCall {
 	c.urlParams_.Set("responseView", responseView)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesTasksListCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesTasksListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsQueuesTasksListCall) IfNoneMatch(entityTag string) *ProjectsLocationsQueuesTasksListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesTasksListCall) Context(ctx context.Context) *ProjectsLocationsQueuesTasksListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesTasksListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5721,12 +4423,7 @@ func (c *ProjectsLocationsQueuesTasksListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesTasksListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5747,12 +4444,11 @@ func (c *ProjectsLocationsQueuesTasksListCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.tasks.list" call.
-// Exactly one of *ListTasksResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListTasksResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListTasksResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsQueuesTasksListCall) Do(opts ...googleapi.CallOption) (*ListTasksResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5783,58 +4479,6 @@ func (c *ProjectsLocationsQueuesTasksListCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the tasks in a queue. By default, only the BASIC view is retrieved due to performance considerations; response_view controls the subset of information which is returned. The tasks may be returned in any order. The ordering may change at any time.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks",
-	//   "httpMethod": "GET",
-	//   "id": "cloudtasks.projects.locations.queues.tasks.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Maximum page size. Fewer tasks than requested might be returned, even if more tasks exist; use next_page_token in the response to determine if more tasks exist. The maximum page size is 1000. If unspecified, the page size will be the maximum.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying the page of results to return. To request the first page results, page_token must be empty. To request the next page of results, page_token must be the value of next_page_token returned from the previous call to ListTasks method. The page token is valid for only 2 hours.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The queue name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "responseView": {
-	//       "description": "The response_view specifies which subset of the Task will be returned. By default response_view is BASIC; not all information is retrieved by default because some data, such as payloads, might be desirable to return only when needed because of its large size or because of the sensitivity of data that it contains. Authorization for FULL requires `cloudtasks.tasks.fullView` [Google IAM](https://cloud.google.com/iam/) permission on the Task resource.",
-	//       "enum": [
-	//         "VIEW_UNSPECIFIED",
-	//         "BASIC",
-	//         "FULL"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Unspecified. Defaults to BASIC.",
-	//         "The basic view omits fields which can be large or can contain sensitive data. This view does not include the body in AppEngineHttpRequest. Bodies are desirable to return only when needed, because they can be large and because of the sensitivity of the data that you choose to store in it.",
-	//         "All information is returned. Authorization for FULL requires `cloudtasks.tasks.fullView` [Google IAM](https://cloud.google.com/iam/) permission on the Queue resource."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+parent}/tasks",
-	//   "response": {
-	//     "$ref": "ListTasksResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5842,7 +4486,7 @@ func (c *ProjectsLocationsQueuesTasksListCall) Do(opts ...googleapi.CallOption) 
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsQueuesTasksListCall) Pages(ctx context.Context, f func(*ListTasksResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5858,8 +4502,6 @@ func (c *ProjectsLocationsQueuesTasksListCall) Pages(ctx context.Context, f func
 	}
 }
 
-// method id "cloudtasks.projects.locations.queues.tasks.run":
-
 type ProjectsLocationsQueuesTasksRunCall struct {
 	s              *Service
 	name           string
@@ -5869,24 +4511,21 @@ type ProjectsLocationsQueuesTasksRunCall struct {
 	header_        http.Header
 }
 
-// Run: Forces a task to run now. When this method is called, Cloud
-// Tasks will dispatch the task, even if the task is already running,
-// the queue has reached its RateLimits or is PAUSED. This command is
-// meant to be used for manual debugging. For example, RunTask can be
-// used to retry a failed task after a fix has been made or to manually
-// force a task to be dispatched now. The dispatched task is returned.
-// That is, the task that is returned contains the status after the task
-// is dispatched but before the task is received by its target. If Cloud
-// Tasks receives a successful response from the task's target, then the
-// task will be deleted; otherwise the task's schedule_time will be
-// reset to the time that RunTask was called plus the retry delay
-// specified in the queue's RetryConfig. RunTask returns NOT_FOUND when
-// it is called on a task that has already succeeded or permanently
-// failed.
+// Run: Forces a task to run now. When this method is called, Cloud Tasks will
+// dispatch the task, even if the task is already running, the queue has
+// reached its RateLimits or is PAUSED. This command is meant to be used for
+// manual debugging. For example, RunTask can be used to retry a failed task
+// after a fix has been made or to manually force a task to be dispatched now.
+// The dispatched task is returned. That is, the task that is returned contains
+// the status after the task is dispatched but before the task is received by
+// its target. If Cloud Tasks receives a successful response from the task's
+// target, then the task will be deleted; otherwise the task's schedule_time
+// will be reset to the time that RunTask was called plus the retry delay
+// specified in the queue's RetryConfig. RunTask returns NOT_FOUND when it is
+// called on a task that has already succeeded or permanently failed.
 //
 //   - name: The task name. For example:
-//     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TAS
-//     K_ID`.
+//     `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`.
 func (r *ProjectsLocationsQueuesTasksService) Run(name string, runtaskrequest *RunTaskRequest) *ProjectsLocationsQueuesTasksRunCall {
 	c := &ProjectsLocationsQueuesTasksRunCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5895,23 +4534,21 @@ func (r *ProjectsLocationsQueuesTasksService) Run(name string, runtaskrequest *R
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsQueuesTasksRunCall) Fields(s ...googleapi.Field) *ProjectsLocationsQueuesTasksRunCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsQueuesTasksRunCall) Context(ctx context.Context) *ProjectsLocationsQueuesTasksRunCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsQueuesTasksRunCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5920,18 +4557,12 @@ func (c *ProjectsLocationsQueuesTasksRunCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsQueuesTasksRunCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.runtaskrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2beta3/{+name}:run")
@@ -5948,12 +4579,10 @@ func (c *ProjectsLocationsQueuesTasksRunCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "cloudtasks.projects.locations.queues.tasks.run" call.
-// Exactly one of *Task or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Task.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsQueuesTasksRunCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5984,33 +4613,4 @@ func (c *ProjectsLocationsQueuesTasksRunCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Forces a task to run now. When this method is called, Cloud Tasks will dispatch the task, even if the task is already running, the queue has reached its RateLimits or is PAUSED. This command is meant to be used for manual debugging. For example, RunTask can be used to retry a failed task after a fix has been made or to manually force a task to be dispatched now. The dispatched task is returned. That is, the task that is returned contains the status after the task is dispatched but before the task is received by its target. If Cloud Tasks receives a successful response from the task's target, then the task will be deleted; otherwise the task's schedule_time will be reset to the time that RunTask was called plus the retry delay specified in the queue's RetryConfig. RunTask returns NOT_FOUND when it is called on a task that has already succeeded or permanently failed.",
-	//   "flatPath": "v2beta3/projects/{projectsId}/locations/{locationsId}/queues/{queuesId}/tasks/{tasksId}:run",
-	//   "httpMethod": "POST",
-	//   "id": "cloudtasks.projects.locations.queues.tasks.run",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The task name. For example: `projects/PROJECT_ID/locations/LOCATION_ID/queues/QUEUE_ID/tasks/TASK_ID`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/queues/[^/]+/tasks/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2beta3/{+name}:run",
-	//   "request": {
-	//     "$ref": "RunTaskRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Task"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

@@ -166,55 +166,44 @@ type MediaService struct {
 
 // ClickTag: Creative Click Tag.
 type ClickTag struct {
-	// ClickThroughUrl: Parameter value for the specified click tag. This
-	// field contains a click-through url.
+	// ClickThroughUrl: Parameter value for the specified click tag. This field
+	// contains a click-through url.
 	ClickThroughUrl *CreativeClickThroughUrl `json:"clickThroughUrl,omitempty"`
-
-	// EventName: Advertiser event name associated with the click tag. This
-	// field is used by DISPLAY_IMAGE_GALLERY and HTML5_BANNER creatives.
-	// Applicable to DISPLAY when the primary asset type is not HTML_IMAGE.
+	// EventName: Advertiser event name associated with the click tag. This field
+	// is used by DISPLAY_IMAGE_GALLERY and HTML5_BANNER creatives. Applicable to
+	// DISPLAY when the primary asset type is not HTML_IMAGE.
 	EventName string `json:"eventName,omitempty"`
-
-	// Name: Parameter name for the specified click tag. For
-	// DISPLAY_IMAGE_GALLERY creative assets, this field must match the
-	// value of the creative asset's creativeAssetId.name field.
+	// Name: Parameter name for the specified click tag. For DISPLAY_IMAGE_GALLERY
+	// creative assets, this field must match the value of the creative asset's
+	// creativeAssetId.name field.
 	Name string `json:"name,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClickThroughUrl") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClickThroughUrl") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ClickThroughUrl") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ClickTag) MarshalJSON() ([]byte, error) {
 	type NoMethod ClickTag
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CreativeAssetId: Creative Asset ID.
 type CreativeAssetId struct {
-	// Name: Name of the creative asset. This is a required field while
-	// inserting an asset. After insertion, this assetIdentifier is used to
-	// identify the uploaded asset. Characters in the name must be
-	// alphanumeric or one of the following: ".-_ ". Spaces are allowed.
+	// Name: Name of the creative asset. This is a required field while inserting
+	// an asset. After insertion, this assetIdentifier is used to identify the
+	// uploaded asset. Characters in the name must be alphanumeric or one of the
+	// following: ".-_ ". Spaces are allowed.
 	Name string `json:"name,omitempty"`
-
-	// Type: Type of asset to upload. This is a required field. FLASH and
-	// IMAGE are no longer supported for new uploads. All image assets
-	// should use HTML_IMAGE.
+	// Type: Type of asset to upload. This is a required field. FLASH and IMAGE are
+	// no longer supported for new uploads. All image assets should use HTML_IMAGE.
 	//
 	// Possible values:
 	//   "IMAGE"
@@ -224,53 +213,41 @@ type CreativeAssetId struct {
 	//   "HTML_IMAGE"
 	//   "AUDIO"
 	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CreativeAssetId) MarshalJSON() ([]byte, error) {
 	type NoMethod CreativeAssetId
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CreativeAssetMetadata: CreativeAssets contains properties of a
-// creative asset file which will be uploaded or has already been
-// uploaded. Refer to the creative sample code for how to upload assets
-// and insert a creative.
+// CreativeAssetMetadata: CreativeAssets contains properties of a creative
+// asset file which will be uploaded or has already been uploaded. Refer to the
+// creative sample code for how to upload assets and insert a creative.
 type CreativeAssetMetadata struct {
 	// AssetIdentifier: ID of the creative asset. This is a required field.
 	AssetIdentifier *CreativeAssetId `json:"assetIdentifier,omitempty"`
-
-	// ClickTags: List of detected click tags for assets. This is a
-	// read-only, auto-generated field. This field is empty for a rich media
-	// asset.
+	// ClickTags: List of detected click tags for assets. This is a read-only,
+	// auto-generated field. This field is empty for a rich media asset.
 	ClickTags []*ClickTag `json:"clickTags,omitempty"`
-
-	// CounterCustomEvents: List of counter events configured for the asset.
-	// This is a read-only, auto-generated field and only applicable to a
-	// rich media asset.
+	// CounterCustomEvents: List of counter events configured for the asset. This
+	// is a read-only, auto-generated field and only applicable to a rich media
+	// asset.
 	CounterCustomEvents []*CreativeCustomEvent `json:"counterCustomEvents,omitempty"`
-
-	// DetectedFeatures: List of feature dependencies for the creative asset
-	// that are detected by Campaign Manager. Feature dependencies are
-	// features that a browser must be able to support in order to render
-	// your HTML5 creative correctly. This is a read-only, auto-generated
-	// field.
+	// DetectedFeatures: List of feature dependencies for the creative asset that
+	// are detected by Campaign Manager. Feature dependencies are features that a
+	// browser must be able to support in order to render your HTML5 creative
+	// correctly. This is a read-only, auto-generated field.
 	//
 	// Possible values:
 	//   "CSS_FONT_FACE"
@@ -340,50 +317,36 @@ type CreativeAssetMetadata struct {
 	//   "SVG_FILTERS"
 	//   "SVG_FE_IMAGE"
 	DetectedFeatures []string `json:"detectedFeatures,omitempty"`
-
-	// ExitCustomEvents: List of exit events configured for the asset. This
-	// is a read-only, auto-generated field and only applicable to a rich
-	// media asset.
+	// ExitCustomEvents: List of exit events configured for the asset. This is a
+	// read-only, auto-generated field and only applicable to a rich media asset.
 	ExitCustomEvents []*CreativeCustomEvent `json:"exitCustomEvents,omitempty"`
-
-	// Id: Numeric ID of the asset. This is a read-only, auto-generated
-	// field.
+	// Id: Numeric ID of the asset. This is a read-only, auto-generated field.
 	Id int64 `json:"id,omitempty,string"`
-
-	// IdDimensionValue: Dimension value for the numeric ID of the asset.
-	// This is a read-only, auto-generated field.
+	// IdDimensionValue: Dimension value for the numeric ID of the asset. This is a
+	// read-only, auto-generated field.
 	IdDimensionValue *DimensionValue `json:"idDimensionValue,omitempty"`
-
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "dfareporting#creativeAssetMetadata".
-	Kind string `json:"kind,omitempty"`
-
-	MediaRequestInfo *MediaRequestInfo `json:"mediaRequestInfo,omitempty"`
-
+	// Kind: Identifies what kind of resource this is. Value: the fixed string
+	// "dfareporting#creativeAssetMetadata".
+	Kind              string             `json:"kind,omitempty"`
+	MediaRequestInfo  *MediaRequestInfo  `json:"mediaRequestInfo,omitempty"`
 	MediaResponseInfo *MediaResponseInfo `json:"mediaResponseInfo,omitempty"`
-
-	// RichMedia: True if the uploaded asset is a rich media asset. This is
-	// a read-only, auto-generated field.
+	// RichMedia: True if the uploaded asset is a rich media asset. This is a
+	// read-only, auto-generated field.
 	RichMedia bool `json:"richMedia,omitempty"`
-
-	// TimerCustomEvents: List of timer events configured for the asset.
-	// This is a read-only, auto-generated field and only applicable to a
-	// rich media asset.
+	// TimerCustomEvents: List of timer events configured for the asset. This is a
+	// read-only, auto-generated field and only applicable to a rich media asset.
 	TimerCustomEvents []*CreativeCustomEvent `json:"timerCustomEvents,omitempty"`
-
-	// WarnedValidationRules: Rules validated during code generation that
-	// generated a warning. This is a read-only, auto-generated field.
-	// Possible values are: - "ADMOB_REFERENCED" -
-	// "ASSET_FORMAT_UNSUPPORTED_DCM" - "ASSET_INVALID" -
+	// WarnedValidationRules: Rules validated during code generation that generated
+	// a warning. This is a read-only, auto-generated field. Possible values are: -
+	// "ADMOB_REFERENCED" - "ASSET_FORMAT_UNSUPPORTED_DCM" - "ASSET_INVALID" -
 	// "CLICK_TAG_HARD_CODED" - "CLICK_TAG_INVALID" - "CLICK_TAG_IN_GWD" -
-	// "CLICK_TAG_MISSING" - "CLICK_TAG_MORE_THAN_ONE" -
-	// "CLICK_TAG_NON_TOP_LEVEL" - "COMPONENT_UNSUPPORTED_DCM" -
-	// "ENABLER_UNSUPPORTED_METHOD_DCM" - "EXTERNAL_FILE_REFERENCED" -
-	// "FILE_DETAIL_EMPTY" - "FILE_TYPE_INVALID" - "GWD_PROPERTIES_INVALID"
-	// - "HTML5_FEATURE_UNSUPPORTED" - "LINKED_FILE_NOT_FOUND" -
-	// "MAX_FLASH_VERSION_11" - "MRAID_REFERENCED" - "NOT_SSL_COMPLIANT" -
-	// "ORPHANED_ASSET" - "PRIMARY_HTML_MISSING" - "SVG_INVALID" -
-	// "ZIP_INVALID"
+	// "CLICK_TAG_MISSING" - "CLICK_TAG_MORE_THAN_ONE" - "CLICK_TAG_NON_TOP_LEVEL"
+	// - "COMPONENT_UNSUPPORTED_DCM" - "ENABLER_UNSUPPORTED_METHOD_DCM" -
+	// "EXTERNAL_FILE_REFERENCED" - "FILE_DETAIL_EMPTY" - "FILE_TYPE_INVALID" -
+	// "GWD_PROPERTIES_INVALID" - "HTML5_FEATURE_UNSUPPORTED" -
+	// "LINKED_FILE_NOT_FOUND" - "MAX_FLASH_VERSION_11" - "MRAID_REFERENCED" -
+	// "NOT_SSL_COMPLIANT" - "ORPHANED_ASSET" - "PRIMARY_HTML_MISSING" -
+	// "SVG_INVALID" - "ZIP_INVALID"
 	//
 	// Possible values:
 	//   "CLICK_TAG_NON_TOP_LEVEL"
@@ -414,100 +377,76 @@ type CreativeAssetMetadata struct {
 	//   "MISSING_ENABLER_REFERENCE"
 	WarnedValidationRules []string `json:"warnedValidationRules,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AssetIdentifier") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AssetIdentifier") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AssetIdentifier") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CreativeAssetMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod CreativeAssetMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CreativeClickThroughUrl: Click-through URL
 type CreativeClickThroughUrl struct {
-	// ComputedClickThroughUrl: Read-only convenience field representing the
-	// actual URL that will be used for this click-through. The URL is
-	// computed as follows: - If landingPageId is specified then that
-	// landing page's URL is assigned to this field. - Otherwise, the
-	// customClickThroughUrl is assigned to this field.
+	// ComputedClickThroughUrl: Read-only convenience field representing the actual
+	// URL that will be used for this click-through. The URL is computed as
+	// follows: - If landingPageId is specified then that landing page's URL is
+	// assigned to this field. - Otherwise, the customClickThroughUrl is assigned
+	// to this field.
 	ComputedClickThroughUrl string `json:"computedClickThroughUrl,omitempty"`
-
 	// CustomClickThroughUrl: Custom click-through URL. Applicable if the
 	// landingPageId field is left unset.
 	CustomClickThroughUrl string `json:"customClickThroughUrl,omitempty"`
-
 	// LandingPageId: ID of the landing page for the click-through URL.
 	LandingPageId int64 `json:"landingPageId,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ComputedClickThroughUrl") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ComputedClickThroughUrl") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ComputedClickThroughUrl")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ComputedClickThroughUrl") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CreativeClickThroughUrl) MarshalJSON() ([]byte, error) {
 	type NoMethod CreativeClickThroughUrl
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CreativeCustomEvent: Creative Custom Event.
 type CreativeCustomEvent struct {
-	// AdvertiserCustomEventId: Unique ID of this event used by Reporting
-	// and Data Transfer. This is a read-only field.
+	// AdvertiserCustomEventId: Unique ID of this event used by Reporting and Data
+	// Transfer. This is a read-only field.
 	AdvertiserCustomEventId int64 `json:"advertiserCustomEventId,omitempty,string"`
-
 	// AdvertiserCustomEventName: User-entered name for the event.
 	AdvertiserCustomEventName string `json:"advertiserCustomEventName,omitempty"`
-
-	// AdvertiserCustomEventType: Type of the event. This is a read-only
-	// field.
+	// AdvertiserCustomEventType: Type of the event. This is a read-only field.
 	//
 	// Possible values:
 	//   "ADVERTISER_EVENT_TIMER"
 	//   "ADVERTISER_EVENT_EXIT"
 	//   "ADVERTISER_EVENT_COUNTER"
 	AdvertiserCustomEventType string `json:"advertiserCustomEventType,omitempty"`
-
-	// ArtworkLabel: Artwork label column, used to link events in Campaign
-	// Manager back to events in Studio. This is a required field and should
-	// not be modified after insertion.
+	// ArtworkLabel: Artwork label column, used to link events in Campaign Manager
+	// back to events in Studio. This is a required field and should not be
+	// modified after insertion.
 	ArtworkLabel string `json:"artworkLabel,omitempty"`
-
-	// ArtworkType: Artwork type used by the creative.This is a read-only
-	// field.
+	// ArtworkType: Artwork type used by the creative.This is a read-only field.
 	//
 	// Possible values:
 	//   "ARTWORK_TYPE_FLASH"
@@ -515,19 +454,15 @@ type CreativeCustomEvent struct {
 	//   "ARTWORK_TYPE_MIXED"
 	//   "ARTWORK_TYPE_IMAGE"
 	ArtworkType string `json:"artworkType,omitempty"`
-
-	// ExitClickThroughUrl: Exit click-through URL for the event. This field
-	// is used only for exit events.
+	// ExitClickThroughUrl: Exit click-through URL for the event. This field is
+	// used only for exit events.
 	ExitClickThroughUrl *CreativeClickThroughUrl `json:"exitClickThroughUrl,omitempty"`
-
-	// Id: ID of this event. This is a required field and should not be
-	// modified after insertion.
+	// Id: ID of this event. This is a required field and should not be modified
+	// after insertion.
 	Id int64 `json:"id,omitempty,string"`
-
-	// PopupWindowProperties: Properties for rich media popup windows. This
-	// field is used only for exit events.
+	// PopupWindowProperties: Properties for rich media popup windows. This field
+	// is used only for exit events.
 	PopupWindowProperties *PopupWindowProperties `json:"popupWindowProperties,omitempty"`
-
 	// TargetType: Target type used by the event.
 	//
 	// Possible values:
@@ -537,57 +472,43 @@ type CreativeCustomEvent struct {
 	//   "TARGET_PARENT"
 	//   "TARGET_POPUP"
 	TargetType string `json:"targetType,omitempty"`
-
-	// VideoReportingId: Video reporting ID, used to differentiate multiple
-	// videos in a single creative. This is a read-only field.
+	// VideoReportingId: Video reporting ID, used to differentiate multiple videos
+	// in a single creative. This is a read-only field.
 	VideoReportingId string `json:"videoReportingId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "AdvertiserCustomEventId") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AdvertiserCustomEventId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AdvertiserCustomEventId")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AdvertiserCustomEventId") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CreativeCustomEvent) MarshalJSON() ([]byte, error) {
 	type NoMethod CreativeCustomEvent
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DimensionValue: Represents a DimensionValue resource.
 type DimensionValue struct {
 	// DimensionName: The name of the dimension.
 	DimensionName string `json:"dimensionName,omitempty"`
-
 	// Etag: The eTag of this response for caching purposes.
 	Etag string `json:"etag,omitempty"`
-
 	// Id: The ID associated with the value if available.
 	Id string `json:"id,omitempty"`
-
 	// Kind: The kind of resource this is, in this case
 	// dfareporting#dimensionValue.
 	Kind string `json:"kind,omitempty"`
-
-	// MatchType: Determines how the 'value' field is matched when
-	// filtering. If not specified, defaults to EXACT. If set to
-	// WILDCARD_EXPRESSION, '*' is allowed as a placeholder for variable
-	// length character sequences, and it can be escaped with a backslash.
-	// Note, only paid search dimensions ('dfa:paidSearch*') allow a
-	// matchType other than EXACT.
+	// MatchType: Determines how the 'value' field is matched when filtering. If
+	// not specified, defaults to EXACT. If set to WILDCARD_EXPRESSION, '*' is
+	// allowed as a placeholder for variable length character sequences, and it can
+	// be escaped with a backslash. Note, only paid search dimensions
+	// ('dfa:paidSearch*') allow a matchType other than EXACT.
 	//
 	// Possible values:
 	//   "EXACT"
@@ -595,192 +516,159 @@ type DimensionValue struct {
 	//   "CONTAINS"
 	//   "WILDCARD_EXPRESSION"
 	MatchType string `json:"matchType,omitempty"`
-
 	// Value: The value of the dimension.
 	Value string `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DimensionName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DimensionName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DimensionName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DimensionValue) MarshalJSON() ([]byte, error) {
 	type NoMethod DimensionValue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MediaRequestInfo: Extra information added to operations that support
-// Scotty media requests.
+// MediaRequestInfo: Extra information added to operations that support Scotty
+// media requests.
 type MediaRequestInfo struct {
 	// CurrentBytes: The number of current bytes uploaded or downloaded.
 	CurrentBytes int64 `json:"currentBytes,omitempty,string"`
-
-	// CustomData: Data to be copied to backend requests. Custom data is
-	// returned to Scotty in the agent_state field, which Scotty will then
-	// provide in subsequent upload notifications.
+	// CustomData: Data to be copied to backend requests. Custom data is returned
+	// to Scotty in the agent_state field, which Scotty will then provide in
+	// subsequent upload notifications.
 	CustomData string `json:"customData,omitempty"`
-
-	// DiffObjectVersion: Set if the http request info is diff encoded. The
-	// value of this field is the version number of the base revision. This
-	// is corresponding to Apiary's mediaDiffObjectVersion
-	// (//depot/google3/java/com/google/api/server/media/variable/DiffObjectV
-	// ersionVariable.java). See go/esf-scotty-diff-upload for more
-	// information.
+	// DiffObjectVersion: Set if the http request info is diff encoded. The value
+	// of this field is the version number of the base revision. This is
+	// corresponding to Apiary's mediaDiffObjectVersion
+	// (//depot/google3/java/com/google/api/server/media/variable/DiffObjectVersionV
+	// ariable.java). See go/esf-scotty-diff-upload for more information.
 	DiffObjectVersion string `json:"diffObjectVersion,omitempty"`
-
-	// FinalStatus: The existence of the final_status field indicates that
-	// this is the last call to the agent for this request_id.
+	// FinalStatus: The existence of the final_status field indicates that this is
+	// the last call to the agent for this request_id.
 	// http://google3/uploader/agent/scotty_agent.proto?l=737&rcl=347601929
 	FinalStatus int64 `json:"finalStatus,omitempty"`
-
 	// NotificationType: The type of notification received from Scotty.
 	//
 	// Possible values:
-	//   "START" - Such requests signals the start of a request containing
-	// media upload. Only the media field(s) in the inserted/updated
-	// resource are set. The response should either return an error or
-	// succeed. On success, responses don't need to contain anything.
-	//   "PROGRESS" - Such requests signals that the upload has progressed
-	// and that the backend might want to access the media file specified in
-	// relevant fields in the resource. Only the media field(s) in the
-	// inserted/updated resource are set. The response should either return
-	// an error or succeed. On success, responses don't need to contain
-	// anything.
+	//   "START" - Such requests signals the start of a request containing media
+	// upload. Only the media field(s) in the inserted/updated resource are set.
+	// The response should either return an error or succeed. On success, responses
+	// don't need to contain anything.
+	//   "PROGRESS" - Such requests signals that the upload has progressed and that
+	// the backend might want to access the media file specified in relevant fields
+	// in the resource. Only the media field(s) in the inserted/updated resource
+	// are set. The response should either return an error or succeed. On success,
+	// responses don't need to contain anything.
 	//   "END" - Such requests signals the end of a request containing media
-	// upload. END should be handled just like normal Insert/Upload
-	// requests, that is, they should process the request and return a
-	// complete resource in the response. Pointers to media data (a GFS path
-	// usually) appear in the relevant fields in the inserted/updated
-	// resource. See gdata.Media in data.proto.
-	//   "RESPONSE_SENT" - Such requests occur after an END and signal that
-	// the response has been sent back to the client. RESPONSE_SENT is only
-	// sent to the backend if it is configured to receive them. The response
-	// does not need to contain anything.
-	//   "ERROR" - Such requests indicate that an error occurred while
-	// processing the request. ERROR is only sent to the backend if it is
-	// configured to receive them. It is not guaranteed that all errors will
-	// result in this notification to the backend, even if the backend
-	// requests them. Since these requests are just for informational
-	// purposes, the response does not need to contain anything.
+	// upload. END should be handled just like normal Insert/Upload requests, that
+	// is, they should process the request and return a complete resource in the
+	// response. Pointers to media data (a GFS path usually) appear in the relevant
+	// fields in the inserted/updated resource. See gdata.Media in data.proto.
+	//   "RESPONSE_SENT" - Such requests occur after an END and signal that the
+	// response has been sent back to the client. RESPONSE_SENT is only sent to the
+	// backend if it is configured to receive them. The response does not need to
+	// contain anything.
+	//   "ERROR" - Such requests indicate that an error occurred while processing
+	// the request. ERROR is only sent to the backend if it is configured to
+	// receive them. It is not guaranteed that all errors will result in this
+	// notification to the backend, even if the backend requests them. Since these
+	// requests are just for informational purposes, the response does not need to
+	// contain anything.
 	NotificationType string `json:"notificationType,omitempty"`
-
 	// RequestId: The Scotty request ID.
 	RequestId string `json:"requestId,omitempty"`
-
 	// RequestReceivedParamsServingInfo: The partition of the Scotty server
 	// handling this request. type is
 	// uploader_service.RequestReceivedParamsServingInfo
 	// LINT.IfChange(request_received_params_serving_info_annotations)
 	// LINT.ThenChange()
 	RequestReceivedParamsServingInfo string `json:"requestReceivedParamsServingInfo,omitempty"`
-
 	// TotalBytes: The total size of the file.
 	TotalBytes int64 `json:"totalBytes,omitempty,string"`
-
-	// TotalBytesIsEstimated: Whether the total bytes field contains an
-	// estimated data.
+	// TotalBytesIsEstimated: Whether the total bytes field contains an estimated
+	// data.
 	TotalBytesIsEstimated bool `json:"totalBytesIsEstimated,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CurrentBytes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrentBytes") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CurrentBytes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MediaRequestInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod MediaRequestInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MediaResponseInfo: This message is for backends to pass their scotty
-// media specific fields to ESF. Backend will include this in their
-// response message to ESF. Example: ExportFile is an rpc defined for
-// upload using scotty from ESF. rpc ExportFile(ExportFileRequest)
-// returns (ExportFileResponse) Message ExportFileResponse will include
-// apiserving.MediaResponseInfo to tell ESF about data like
-// dynamic_dropzone it needs to pass to Scotty. message
+// MediaResponseInfo: This message is for backends to pass their scotty media
+// specific fields to ESF. Backend will include this in their response message
+// to ESF. Example: ExportFile is an rpc defined for upload using scotty from
+// ESF. rpc ExportFile(ExportFileRequest) returns (ExportFileResponse) Message
+// ExportFileResponse will include apiserving.MediaResponseInfo to tell ESF
+// about data like dynamic_dropzone it needs to pass to Scotty. message
 // ExportFileResponse { optional gdata.Media blob = 1; optional
 // apiserving.MediaResponseInfo media_response_info = 2 }
 type MediaResponseInfo struct {
-	// CustomData: Data to copy from backend response to the next backend
-	// requests. Custom data is returned to Scotty in the agent_state field,
-	// which Scotty will then provide in subsequent upload notifications.
+	// CustomData: Data to copy from backend response to the next backend requests.
+	// Custom data is returned to Scotty in the agent_state field, which Scotty
+	// will then provide in subsequent upload notifications.
 	CustomData string `json:"customData,omitempty"`
-
-	// DataStorageTransform: Specifies any transformation to be applied to
-	// data before persisting it or retrieving from storage. E.g.,
-	// encryption options for blobstore2. This should be of the form
+	// DataStorageTransform: Specifies any transformation to be applied to data
+	// before persisting it or retrieving from storage. E.g., encryption options
+	// for blobstore2. This should be of the form
 	// uploader_service.DataStorageTransform.
 	DataStorageTransform string `json:"dataStorageTransform,omitempty"`
-
-	// DynamicDropTarget: Specifies the Scotty Drop Target to use for
-	// uploads. If present in a media response, Scotty does not upload to a
-	// standard drop zone. Instead, Scotty saves the upload directly to the
-	// location specified in this drop target. Unlike drop zones, the drop
-	// target is the final storage location for an upload. So, the agent
-	// does not need to clone the blob at the end of the upload. The agent
-	// is responsible for garbage collecting any orphaned blobs that may
-	// occur due to aborted uploads. For more information, see the drop
-	// target design doc here: http://goto/ScottyDropTarget This field will
-	// be preferred to dynamicDropzone. If provided, the identified field in
+	// DynamicDropTarget: Specifies the Scotty Drop Target to use for uploads. If
+	// present in a media response, Scotty does not upload to a standard drop zone.
+	// Instead, Scotty saves the upload directly to the location specified in this
+	// drop target. Unlike drop zones, the drop target is the final storage
+	// location for an upload. So, the agent does not need to clone the blob at the
+	// end of the upload. The agent is responsible for garbage collecting any
+	// orphaned blobs that may occur due to aborted uploads. For more information,
+	// see the drop target design doc here: http://goto/ScottyDropTarget This field
+	// will be preferred to dynamicDropzone. If provided, the identified field in
 	// the response must be of the type uploader.agent.DropTarget.
 	DynamicDropTarget string `json:"dynamicDropTarget,omitempty"`
-
 	// DynamicDropzone: Specifies the Scotty dropzone to use for uploads.
 	DynamicDropzone string `json:"dynamicDropzone,omitempty"`
-
-	// RequestClass: Request class to use for all Blobstore operations for
-	// this request.
+	// RequestClass: Request class to use for all Blobstore operations for this
+	// request.
 	//
 	// Possible values:
-	//   "UNKNOWN_REQUEST_CLASS" - Unpopulated request_class in log files
-	// will be taken as 0 in dremel query. GoogleSQL will try to cast it to
-	// enum by default. An unused 0 value is added to avoid GoogleSQL
-	// casting error. Please refer to b/69677280.
+	//   "UNKNOWN_REQUEST_CLASS" - Unpopulated request_class in log files will be
+	// taken as 0 in dremel query. GoogleSQL will try to cast it to enum by
+	// default. An unused 0 value is added to avoid GoogleSQL casting error. Please
+	// refer to b/69677280.
 	//   "LATENCY_SENSITIVE" - A latency-sensitive request.
 	//   "PRODUCTION_BATCH" - A request generated by a batch process.
 	//   "BEST_EFFORT" - A best-effort request.
 	RequestClass string `json:"requestClass,omitempty"`
-
-	// ScottyAgentUserId: Requester ID passed along to be recorded in the
-	// Scotty logs
+	// ScottyAgentUserId: Requester ID passed along to be recorded in the Scotty
+	// logs
 	ScottyAgentUserId int64 `json:"scottyAgentUserId,omitempty,string"`
-
-	// ScottyCustomerLog: Customer-specific data to be recorded in the
-	// Scotty logs type is logs_proto_scotty.CustomerLog
+	// ScottyCustomerLog: Customer-specific data to be recorded in the Scotty logs
+	// type is logs_proto_scotty.CustomerLog
 	ScottyCustomerLog string `json:"scottyCustomerLog,omitempty"`
-
-	// TrafficClassField: Specifies the TrafficClass that Scotty should use
-	// for any RPCs to fetch the response bytes. Will override the traffic
-	// class GTOS of the incoming http request. This is a temporary field to
-	// facilitate whitelisting and experimentation by the bigstore agent
-	// only. For instance, this does not apply to RTMP reads. WARNING: DO
-	// NOT USE WITHOUT PERMISSION FROM THE SCOTTY TEAM.
+	// TrafficClassField: Specifies the TrafficClass that Scotty should use for any
+	// RPCs to fetch the response bytes. Will override the traffic class GTOS of
+	// the incoming http request. This is a temporary field to facilitate
+	// whitelisting and experimentation by the bigstore agent only. For instance,
+	// this does not apply to RTMP reads. WARNING: DO NOT USE WITHOUT PERMISSION
+	// FROM THE SCOTTY TEAM.
 	//
 	// Possible values:
 	//   "BE1" - Application-selectable traffic classes Best effort
@@ -795,76 +683,59 @@ type MediaResponseInfo struct {
 	//   "LLQ1" - LLQ best effort (go/llq2)
 	//   "LLQ2" - LLQ assured forwarding priority 2 (go/llq2)
 	TrafficClassField string `json:"trafficClassField,omitempty"`
-
-	// VerifyHashFromHeader: Tells Scotty to verify hashes on the agent's
-	// behalf by parsing out the X-Goog-Hash header.
+	// VerifyHashFromHeader: Tells Scotty to verify hashes on the agent's behalf by
+	// parsing out the X-Goog-Hash header.
 	VerifyHashFromHeader bool `json:"verifyHashFromHeader,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CustomData") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomData") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CustomData") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MediaResponseInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod MediaResponseInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // OffsetPosition: Offset Position.
 type OffsetPosition struct {
 	// Left: Offset distance from left side of an asset or a window.
 	Left int64 `json:"left,omitempty"`
-
 	// Top: Offset distance from top side of an asset or a window.
 	Top int64 `json:"top,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Left") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Left") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Left") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Left") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *OffsetPosition) MarshalJSON() ([]byte, error) {
 	type NoMethod OffsetPosition
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PopupWindowProperties: Popup Window Properties.
 type PopupWindowProperties struct {
 	// Dimension: Popup dimension for a creative. This is a read-only field.
-	// Applicable to the following creative types: all RICH_MEDIA and all
-	// VPAID
+	// Applicable to the following creative types: all RICH_MEDIA and all VPAID
 	Dimension *Size `json:"dimension,omitempty"`
-
-	// Offset: Upper-left corner coordinates of the popup window. Applicable
-	// if positionType is COORDINATES.
+	// Offset: Upper-left corner coordinates of the popup window. Applicable if
+	// positionType is COORDINATES.
 	Offset *OffsetPosition `json:"offset,omitempty"`
-
 	// PositionType: Popup window position either centered or at specific
 	// coordinate.
 	//
@@ -872,93 +743,67 @@ type PopupWindowProperties struct {
 	//   "CENTER"
 	//   "COORDINATES"
 	PositionType string `json:"positionType,omitempty"`
-
 	// ShowAddressBar: Whether to display the browser address bar.
 	ShowAddressBar bool `json:"showAddressBar,omitempty"`
-
 	// ShowMenuBar: Whether to display the browser menu bar.
 	ShowMenuBar bool `json:"showMenuBar,omitempty"`
-
 	// ShowScrollBar: Whether to display the browser scroll bar.
 	ShowScrollBar bool `json:"showScrollBar,omitempty"`
-
 	// ShowStatusBar: Whether to display the browser status bar.
 	ShowStatusBar bool `json:"showStatusBar,omitempty"`
-
 	// ShowToolBar: Whether to display the browser tool bar.
 	ShowToolBar bool `json:"showToolBar,omitempty"`
-
 	// Title: Title of popup window.
 	Title string `json:"title,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Dimension") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Dimension") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Dimension") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PopupWindowProperties) MarshalJSON() ([]byte, error) {
 	type NoMethod PopupWindowProperties
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Size: Represents the dimensions of ads, placements, creatives, or
-// creative assets.
+// Size: Represents the dimensions of ads, placements, creatives, or creative
+// assets.
 type Size struct {
-	// Height: Height of this size. Acceptable values are 0 to 32767,
-	// inclusive.
+	// Height: Height of this size. Acceptable values are 0 to 32767, inclusive.
 	Height int64 `json:"height,omitempty"`
-
 	// Iab: IAB standard size. This is a read-only, auto-generated field.
 	Iab bool `json:"iab,omitempty"`
-
 	// Id: ID of this size. This is a read-only, auto-generated field.
 	Id int64 `json:"id,omitempty,string"`
-
-	// Kind: Identifies what kind of resource this is. Value: the fixed
-	// string "dfareporting#size".
+	// Kind: Identifies what kind of resource this is. Value: the fixed string
+	// "dfareporting#size".
 	Kind string `json:"kind,omitempty"`
-
-	// Width: Width of this size. Acceptable values are 0 to 32767,
-	// inclusive.
+	// Width: Width of this size. Acceptable values are 0 to 32767, inclusive.
 	Width int64 `json:"width,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Height") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Height") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Height") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Size) MarshalJSON() ([]byte, error) {
 	type NoMethod Size
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "dfareporting.media.upload":
 
 type MediaUploadCall struct {
 	s                     *Service
@@ -973,9 +818,8 @@ type MediaUploadCall struct {
 
 // Upload: Inserts a new creative asset.
 //
-//   - advertiserId: Advertiser ID of this creative. This is a required
-//     field.
-//   - profileId: User profile ID associated with this request.
+// - advertiserId: Advertiser ID of this creative. This is a required field.
+// - profileId: User profile ID associated with this request.
 func (r *MediaService) Upload(profileId int64, advertiserId int64, creativeassetmetadata *CreativeAssetMetadata) *MediaUploadCall {
 	c := &MediaUploadCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.profileId = profileId
@@ -984,54 +828,51 @@ func (r *MediaService) Upload(profileId int64, advertiserId int64, creativeasset
 	return c
 }
 
-// Media specifies the media to upload in one or more chunks. The chunk
-// size may be controlled by supplying a MediaOption generated by
+// Media specifies the media to upload in one or more chunks. The chunk size
+// may be controlled by supplying a MediaOption generated by
 // googleapi.ChunkSize. The chunk size defaults to
-// googleapi.DefaultUploadChunkSize.The Content-Type header used in the
-// upload request will be determined by sniffing the contents of r,
-// unless a MediaOption generated by googleapi.ContentType is
-// supplied.
+// googleapi.DefaultUploadChunkSize.The Content-Type header used in the upload
+// request will be determined by sniffing the contents of r, unless a
+// MediaOption generated by googleapi.ContentType is supplied.
 // At most one of Media and ResumableMedia may be set.
 func (c *MediaUploadCall) Media(r io.Reader, options ...googleapi.MediaOption) *MediaUploadCall {
 	c.mediaInfo_ = gensupport.NewInfoFromMedia(r, options)
 	return c
 }
 
-// ResumableMedia specifies the media to upload in chunks and can be
-// canceled with ctx.
+// ResumableMedia specifies the media to upload in chunks and can be canceled
+// with ctx.
 //
 // Deprecated: use Media instead.
 //
-// At most one of Media and ResumableMedia may be set. mediaType
-// identifies the MIME media type of the upload, such as "image/png". If
-// mediaType is "", it will be auto-detected. The provided ctx will
-// supersede any context previously provided to the Context method.
+// At most one of Media and ResumableMedia may be set. mediaType identifies the
+// MIME media type of the upload, such as "image/png". If mediaType is "", it
+// will be auto-detected. The provided ctx will supersede any context
+// previously provided to the Context method.
 func (c *MediaUploadCall) ResumableMedia(ctx context.Context, r io.ReaderAt, size int64, mediaType string) *MediaUploadCall {
 	c.ctx_ = ctx
 	c.mediaInfo_ = gensupport.NewInfoFromResumableMedia(r, size, mediaType)
 	return c
 }
 
-// ProgressUpdater provides a callback function that will be called
-// after every chunk. It should be a low-latency function in order to
-// not slow down the upload operation. This should only be called when
-// using ResumableMedia (as opposed to Media).
+// ProgressUpdater provides a callback function that will be called after every
+// chunk. It should be a low-latency function in order to not slow down the
+// upload operation. This should only be called when using ResumableMedia (as
+// opposed to Media).
 func (c *MediaUploadCall) ProgressUpdater(pu googleapi.ProgressUpdater) *MediaUploadCall {
 	c.mediaInfo_.SetProgressUpdater(pu)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *MediaUploadCall) Fields(s ...googleapi.Field) *MediaUploadCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 // This context will supersede any context previously provided to the
 // ResumableMedia method.
 func (c *MediaUploadCall) Context(ctx context.Context) *MediaUploadCall {
@@ -1039,8 +880,8 @@ func (c *MediaUploadCall) Context(ctx context.Context) *MediaUploadCall {
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *MediaUploadCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1049,18 +890,12 @@ func (c *MediaUploadCall) Header() http.Header {
 }
 
 func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.creativeassetmetadata)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "userprofiles/{+profileId}/creativeAssets/{+advertiserId}/creativeAssets")
@@ -1089,12 +924,11 @@ func (c *MediaUploadCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "dfareporting.media.upload" call.
-// Exactly one of *CreativeAssetMetadata or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *CreativeAssetMetadata.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CreativeAssetMetadata.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*CreativeAssetMetadata, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1142,56 +976,4 @@ func (c *MediaUploadCall) Do(opts ...googleapi.CallOption) (*CreativeAssetMetada
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Inserts a new creative asset.",
-	//   "flatPath": "userprofiles/{userprofilesId}/creativeAssets/{creativeAssetsId}/creativeAssets",
-	//   "httpMethod": "POST",
-	//   "id": "dfareporting.media.upload",
-	//   "mediaUpload": {
-	//     "accept": [
-	//       "*/*"
-	//     ],
-	//     "maxSize": "1073741824",
-	//     "protocols": {
-	//       "simple": {
-	//         "multipart": true,
-	//         "path": "/upload/dfareporting/v3.5/userprofiles/{+profileId}/creativeAssets/{+advertiserId}/creativeAssets"
-	//       }
-	//     }
-	//   },
-	//   "parameterOrder": [
-	//     "profileId",
-	//     "advertiserId"
-	//   ],
-	//   "parameters": {
-	//     "advertiserId": {
-	//       "description": "Advertiser ID of this creative. This is a required field.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "profileId": {
-	//       "description": "User profile ID associated with this request.",
-	//       "format": "int64",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "userprofiles/{+profileId}/creativeAssets/{+advertiserId}/creativeAssets",
-	//   "request": {
-	//     "$ref": "CreativeAssetMetadata"
-	//   },
-	//   "response": {
-	//     "$ref": "CreativeAssetMetadata"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/dfatrafficking"
-	//   ],
-	//   "supportsMediaUpload": true
-	// }
-
 }

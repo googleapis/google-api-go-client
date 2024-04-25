@@ -189,9 +189,9 @@ type PlatformsChannelsVersionsReleasesService struct {
 }
 
 // Channel: Each Channel is owned by a Platform and owns a collection of
-// versions. Possible Channels are listed in the Channel enum below. Not
-// all Channels are available for every Platform (e.g. CANARY does not
-// exist for LINUX).
+// versions. Possible Channels are listed in the Channel enum below. Not all
+// Channels are available for every Platform (e.g. CANARY does not exist for
+// LINUX).
 type Channel struct {
 	// ChannelType: Type of channel.
 	//
@@ -201,235 +201,183 @@ type Channel struct {
 	//   "BETA" - The Beta channel.
 	//   "DEV" - The Dev channel.
 	//   "CANARY" - The Canary channel.
-	//   "CANARY_ASAN" - The Canary channel for Chrome, with DCHECK/ASAN
-	// enabled.
+	//   "CANARY_ASAN" - The Canary channel for Chrome, with DCHECK/ASAN enabled.
 	//   "ALL"
 	//   "EXTENDED" - The Extended Stable channel for Chrome.
 	//   "LTS" - The Long-term support channel for ChromeOS.
 	//   "LTC" - The Long-term support candidate channel for ChromeOS.
 	ChannelType string `json:"channelType,omitempty"`
-
 	// Name: Channel name. Format is
 	// "{product}/platforms/{platform}/channels/{channel}"
 	Name string `json:"name,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ChannelType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ChannelType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ChannelType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Channel) MarshalJSON() ([]byte, error) {
 	type NoMethod Channel
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Interval: Represents a time interval, encoded as a Timestamp start
-// (inclusive) and a Timestamp end (exclusive). The start must be less
-// than or equal to the end. When the start equals the end, the interval
-// is empty (matches no time). When both start and end are unspecified,
-// the interval matches any time.
+// (inclusive) and a Timestamp end (exclusive). The start must be less than or
+// equal to the end. When the start equals the end, the interval is empty
+// (matches no time). When both start and end are unspecified, the interval
+// matches any time.
 type Interval struct {
-	// EndTime: Optional. Exclusive end of the interval. If specified, a
-	// Timestamp matching this interval will have to be before the end.
+	// EndTime: Optional. Exclusive end of the interval. If specified, a Timestamp
+	// matching this interval will have to be before the end.
 	EndTime string `json:"endTime,omitempty"`
-
 	// StartTime: Optional. Inclusive start of the interval. If specified, a
-	// Timestamp matching this interval will have to be the same or after
-	// the start.
+	// Timestamp matching this interval will have to be the same or after the
+	// start.
 	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Interval) MarshalJSON() ([]byte, error) {
 	type NoMethod Interval
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListChannelsResponse: Response message for ListChannels.
 type ListChannelsResponse struct {
 	// Channels: The list of channels.
 	Channels []*Channel `json:"channels,omitempty"`
-
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Channels") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Channels") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Channels") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListChannelsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListChannelsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListPlatformsResponse: Response message for ListPlatforms.
 type ListPlatformsResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Platforms: The list of platforms.
 	Platforms []*Platform `json:"platforms,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListPlatformsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListPlatformsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListReleasesResponse: Response message for ListReleases.
 type ListReleasesResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Releases: The list of releases.
 	Releases []*Release `json:"releases,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListReleasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReleasesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVersionsResponse: Response message for ListVersions.
 type ListVersionsResponse struct {
-	// NextPageToken: A token, which can be sent as `page_token` to retrieve
-	// the next page. If this field is omitted, there are no subsequent
-	// pages.
+	// NextPageToken: A token, which can be sent as `page_token` to retrieve the
+	// next page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Versions: The list of versions.
 	Versions []*Version `json:"versions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVersionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Platform: Each Platform is owned by a Product and owns a collection
-// of channels. Available platforms are listed in Platform enum below.
-// Not all Channels are available for every Platform (e.g. CANARY does
-// not exist for LINUX).
+// Platform: Each Platform is owned by a Product and owns a collection of
+// channels. Available platforms are listed in Platform enum below. Not all
+// Channels are available for every Platform (e.g. CANARY does not exist for
+// LINUX).
 type Platform struct {
 	// Name: Platform name. Format is "{product}/platforms/{platform}"
 	Name string `json:"name,omitempty"`
-
 	// PlatformType: Type of platform.
 	//
 	// Possible values:
@@ -450,81 +398,63 @@ type Platform struct {
 	//   "FUCHSIA" - Chrome for Fuchsia.
 	//   "WIN_ARM64" - Chrome Desktop for Windows (ARM64).
 	PlatformType string `json:"platformType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Platform) MarshalJSON() ([]byte, error) {
 	type NoMethod Platform
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Release: A Release is owned by a Version. A Release contains
-// information about the release(s) of its parent version. This includes
-// when the release began and ended, as well as what percentage it was
-// released at. If the version is released again, or if the serving
-// percentage changes, it will create another release under the version.
+// Release: A Release is owned by a Version. A Release contains information
+// about the release(s) of its parent version. This includes when the release
+// began and ended, as well as what percentage it was released at. If the
+// version is released again, or if the serving percentage changes, it will
+// create another release under the version.
 type Release struct {
-	// Fraction: Rollout fraction. This fraction indicates the fraction of
-	// people that should receive this version in this release. If the
-	// fraction is not specified in ReleaseManager, the API will assume
-	// fraction is 1.
+	// Fraction: Rollout fraction. This fraction indicates the fraction of people
+	// that should receive this version in this release. If the fraction is not
+	// specified in ReleaseManager, the API will assume fraction is 1.
 	Fraction float64 `json:"fraction,omitempty"`
-
 	// FractionGroup: Rollout fraction group. Only fractions with the same
-	// fraction_group are statistically comparable: there may be
-	// non-fractional differences between different fraction groups.
+	// fraction_group are statistically comparable: there may be non-fractional
+	// differences between different fraction groups.
 	FractionGroup int64 `json:"fractionGroup,omitempty,string"`
-
 	// Name: Release name. Format is
-	// "{product}/platforms/{platform}/channels/{channel}/versions/{version}/
-	// releases/{release}"
+	// "{product}/platforms/{platform}/channels/{channel}/versions/{version}/release
+	// s/{release}"
 	Name string `json:"name,omitempty"`
-
-	// Serving: Timestamp interval of when the release was live. If end_time
-	// is unspecified, the release is currently live.
+	// Serving: Timestamp interval of when the release was live. If end_time is
+	// unspecified, the release is currently live.
 	Serving *Interval `json:"serving,omitempty"`
-
-	// Version: String containing just the version number. e.g.
-	// "84.0.4147.38"
+	// Version: String containing just the version number. e.g. "84.0.4147.38"
 	Version string `json:"version,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Fraction") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Fraction") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Fraction") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Release) MarshalJSON() ([]byte, error) {
 	type NoMethod Release
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *Release) UnmarshalJSON(data []byte) error {
@@ -541,43 +471,32 @@ func (s *Release) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// Version: Each Version is owned by a Channel. A Version only displays
-// the Version number (e.g. 84.0.4147.38). A Version owns a collection
-// of releases.
+// Version: Each Version is owned by a Channel. A Version only displays the
+// Version number (e.g. 84.0.4147.38). A Version owns a collection of releases.
 type Version struct {
 	// Name: Version name. Format is
-	// "{product}/platforms/{platform}/channels/{channel}/versions/{version}"
-	//  e.g. "chrome/platforms/win/channels/beta/versions/84.0.4147.38"
+	// "{product}/platforms/{platform}/channels/{channel}/versions/{version}" e.g.
+	// "chrome/platforms/win/channels/beta/versions/84.0.4147.38"
 	Name string `json:"name,omitempty"`
-
-	// Version: String containing just the version number. e.g.
-	// "84.0.4147.38"
+	// Version: String containing just the version number. e.g. "84.0.4147.38"
 	Version string `json:"version,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Version) MarshalJSON() ([]byte, error) {
 	type NoMethod Version
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "versionhistory.platforms.list":
 
 type PlatformsListCall struct {
 	s            *Service
@@ -588,61 +507,57 @@ type PlatformsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns list of platforms that are available for a given
-// product. The resource "product" has no resource name in its name.
+// List: Returns list of platforms that are available for a given product. The
+// resource "product" has no resource name in its name.
 //
-//   - parent: The product, which owns this collection of platforms.
-//     Format: {product}.
+//   - parent: The product, which owns this collection of platforms. Format:
+//     {product}.
 func (r *PlatformsService) List(parent string) *PlatformsListCall {
 	c := &PlatformsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Optional limit on
-// the number of channels to include in the response. If unspecified,
-// the server will pick an appropriate default.
+// PageSize sets the optional parameter "pageSize": Optional limit on the
+// number of channels to include in the response. If unspecified, the server
+// will pick an appropriate default.
 func (c *PlatformsListCall) PageSize(pageSize int64) *PlatformsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListChannels` call. Provide this to
-// retrieve the subsequent page.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListChannels` call. Provide this to retrieve the subsequent
+// page.
 func (c *PlatformsListCall) PageToken(pageToken string) *PlatformsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PlatformsListCall) Fields(s ...googleapi.Field) *PlatformsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PlatformsListCall) IfNoneMatch(entityTag string) *PlatformsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PlatformsListCall) Context(ctx context.Context) *PlatformsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PlatformsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -651,12 +566,7 @@ func (c *PlatformsListCall) Header() http.Header {
 }
 
 func (c *PlatformsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -677,12 +587,11 @@ func (c *PlatformsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "versionhistory.platforms.list" call.
-// Exactly one of *ListPlatformsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListPlatformsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListPlatformsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PlatformsListCall) Do(opts ...googleapi.CallOption) (*ListPlatformsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -713,40 +622,6 @@ func (c *PlatformsListCall) Do(opts ...googleapi.CallOption) (*ListPlatformsResp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns list of platforms that are available for a given product. The resource \"product\" has no resource name in its name.",
-	//   "flatPath": "v1/{v1Id}/platforms",
-	//   "httpMethod": "GET",
-	//   "id": "versionhistory.platforms.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. Optional limit on the number of channels to include in the response. If unspecified, the server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous `ListChannels` call. Provide this to retrieve the subsequent page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The product, which owns this collection of platforms. Format: {product}",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/platforms",
-	//   "response": {
-	//     "$ref": "ListPlatformsResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -754,7 +629,7 @@ func (c *PlatformsListCall) Do(opts ...googleapi.CallOption) (*ListPlatformsResp
 // The provided context supersedes any context provided to the Context method.
 func (c *PlatformsListCall) Pages(ctx context.Context, f func(*ListPlatformsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -770,8 +645,6 @@ func (c *PlatformsListCall) Pages(ctx context.Context, f func(*ListPlatformsResp
 	}
 }
 
-// method id "versionhistory.platforms.channels.list":
-
 type PlatformsChannelsListCall struct {
 	s            *Service
 	parent       string
@@ -781,61 +654,56 @@ type PlatformsChannelsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns list of channels that are available for a given
-// platform.
+// List: Returns list of channels that are available for a given platform.
 //
-//   - parent: The platform, which owns this collection of channels.
-//     Format: {product}/platforms/{platform}.
+//   - parent: The platform, which owns this collection of channels. Format:
+//     {product}/platforms/{platform}.
 func (r *PlatformsChannelsService) List(parent string) *PlatformsChannelsListCall {
 	c := &PlatformsChannelsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Optional limit on
-// the number of channels to include in the response. If unspecified,
-// the server will pick an appropriate default.
+// PageSize sets the optional parameter "pageSize": Optional limit on the
+// number of channels to include in the response. If unspecified, the server
+// will pick an appropriate default.
 func (c *PlatformsChannelsListCall) PageSize(pageSize int64) *PlatformsChannelsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListChannels` call. Provide this to
-// retrieve the subsequent page.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListChannels` call. Provide this to retrieve the subsequent
+// page.
 func (c *PlatformsChannelsListCall) PageToken(pageToken string) *PlatformsChannelsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PlatformsChannelsListCall) Fields(s ...googleapi.Field) *PlatformsChannelsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PlatformsChannelsListCall) IfNoneMatch(entityTag string) *PlatformsChannelsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PlatformsChannelsListCall) Context(ctx context.Context) *PlatformsChannelsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PlatformsChannelsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -844,12 +712,7 @@ func (c *PlatformsChannelsListCall) Header() http.Header {
 }
 
 func (c *PlatformsChannelsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -870,12 +733,11 @@ func (c *PlatformsChannelsListCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "versionhistory.platforms.channels.list" call.
-// Exactly one of *ListChannelsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListChannelsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListChannelsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PlatformsChannelsListCall) Do(opts ...googleapi.CallOption) (*ListChannelsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -906,40 +768,6 @@ func (c *PlatformsChannelsListCall) Do(opts ...googleapi.CallOption) (*ListChann
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns list of channels that are available for a given platform.",
-	//   "flatPath": "v1/{v1Id}/platforms/{platformsId}/channels",
-	//   "httpMethod": "GET",
-	//   "id": "versionhistory.platforms.channels.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Optional. Optional limit on the number of channels to include in the response. If unspecified, the server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous `ListChannels` call. Provide this to retrieve the subsequent page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The platform, which owns this collection of channels. Format: {product}/platforms/{platform}",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/platforms/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/channels",
-	//   "response": {
-	//     "$ref": "ListChannelsResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -947,7 +775,7 @@ func (c *PlatformsChannelsListCall) Do(opts ...googleapi.CallOption) (*ListChann
 // The provided context supersedes any context provided to the Context method.
 func (c *PlatformsChannelsListCall) Pages(ctx context.Context, f func(*ListChannelsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -963,8 +791,6 @@ func (c *PlatformsChannelsListCall) Pages(ctx context.Context, f func(*ListChann
 	}
 }
 
-// method id "versionhistory.platforms.channels.versions.list":
-
 type PlatformsChannelsVersionsListCall struct {
 	s            *Service
 	parent       string
@@ -976,24 +802,23 @@ type PlatformsChannelsVersionsListCall struct {
 
 // List: Returns list of version for the given platform/channel.
 //
-//   - parent: The channel, which owns this collection of versions.
-//     Format: {product}/platforms/{platform}/channels/{channel}.
+//   - parent: The channel, which owns this collection of versions. Format:
+//     {product}/platforms/{platform}/channels/{channel}.
 func (r *PlatformsChannelsVersionsService) List(parent string) *PlatformsChannelsVersionsListCall {
 	c := &PlatformsChannelsVersionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter string. Format is
-// a comma separated list of All comma separated filter clauses are
-// conjoined with a logical "and". Valid field_names are "version",
-// "name", "platform", and "channel". Valid operators are "<", "<=",
-// "=", ">=", and ">". Channel comparison is done by distance from
-// stable. Ex) stable < beta, beta < dev, canary < canary_asan. Version
-// comparison is done numerically. If version is not entirely written,
-// the version will be appended with 0 in missing fields. Ex) version >
-// 80 becoms version > 80.0.0.0 Name and platform are filtered by string
-// comparison. Ex) "...?filter=channel<=beta, version >= 80 Ex)
+// Filter sets the optional parameter "filter": Filter string. Format is a
+// comma separated list of All comma separated filter clauses are conjoined
+// with a logical "and". Valid field_names are "version", "name", "platform",
+// and "channel". Valid operators are "<", "<=", "=", ">=", and ">". Channel
+// comparison is done by distance from stable. Ex) stable < beta, beta < dev,
+// canary < canary_asan. Version comparison is done numerically. If version is
+// not entirely written, the version will be appended with 0 in missing fields.
+// Ex) version > 80 becoms version > 80.0.0.0 Name and platform are filtered by
+// string comparison. Ex) "...?filter=channel<=beta, version >= 80 Ex)
 // "...?filter=version > 80, version < 81
 func (c *PlatformsChannelsVersionsListCall) Filter(filter string) *PlatformsChannelsVersionsListCall {
 	c.urlParams_.Set("filter", filter)
@@ -1002,65 +827,60 @@ func (c *PlatformsChannelsVersionsListCall) Filter(filter string) *PlatformsChan
 
 // OrderBy sets the optional parameter "orderBy": Ordering string. Valid
 // order_by strings are "version", "name", "platform", and "channel".
-// Optionally, you can append " desc" or " asc" to specify the sorting
-// order. Multiple order_by strings can be used in a comma separated
-// list. Ordering by channel will sort by distance from the stable
-// channel (not alphabetically). A list of channels sorted in this order
-// is: stable, beta, dev, canary, and canary_asan. Sorting by name may
-// cause unexpected behaviour as it is a naive string sort. For example,
-// 1.0.0.8 will be before 1.0.0.10 in descending order. If order_by is
-// not specified the response will be sorted by version in descending
-// order. Ex) "...?order_by=version asc" Ex) "...?order_by=platform
-// desc, channel, version"
+// Optionally, you can append " desc" or " asc" to specify the sorting order.
+// Multiple order_by strings can be used in a comma separated list. Ordering by
+// channel will sort by distance from the stable channel (not alphabetically).
+// A list of channels sorted in this order is: stable, beta, dev, canary, and
+// canary_asan. Sorting by name may cause unexpected behaviour as it is a naive
+// string sort. For example, 1.0.0.8 will be before 1.0.0.10 in descending
+// order. If order_by is not specified the response will be sorted by version
+// in descending order. Ex) "...?order_by=version asc" Ex)
+// "...?order_by=platform desc, channel, version"
 func (c *PlatformsChannelsVersionsListCall) OrderBy(orderBy string) *PlatformsChannelsVersionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Optional limit on
-// the number of versions to include in the response. If unspecified,
-// the server will pick an appropriate default.
+// PageSize sets the optional parameter "pageSize": Optional limit on the
+// number of versions to include in the response. If unspecified, the server
+// will pick an appropriate default.
 func (c *PlatformsChannelsVersionsListCall) PageSize(pageSize int64) *PlatformsChannelsVersionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListVersions` call. Provide this to
-// retrieve the subsequent page.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListVersions` call. Provide this to retrieve the subsequent
+// page.
 func (c *PlatformsChannelsVersionsListCall) PageToken(pageToken string) *PlatformsChannelsVersionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PlatformsChannelsVersionsListCall) Fields(s ...googleapi.Field) *PlatformsChannelsVersionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PlatformsChannelsVersionsListCall) IfNoneMatch(entityTag string) *PlatformsChannelsVersionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PlatformsChannelsVersionsListCall) Context(ctx context.Context) *PlatformsChannelsVersionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PlatformsChannelsVersionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1069,12 +889,7 @@ func (c *PlatformsChannelsVersionsListCall) Header() http.Header {
 }
 
 func (c *PlatformsChannelsVersionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1095,12 +910,11 @@ func (c *PlatformsChannelsVersionsListCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "versionhistory.platforms.channels.versions.list" call.
-// Exactly one of *ListVersionsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListVersionsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListVersionsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PlatformsChannelsVersionsListCall) Do(opts ...googleapi.CallOption) (*ListVersionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1131,50 +945,6 @@ func (c *PlatformsChannelsVersionsListCall) Do(opts ...googleapi.CallOption) (*L
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns list of version for the given platform/channel.",
-	//   "flatPath": "v1/{v1Id}/platforms/{platformsId}/channels/{channelsId}/versions",
-	//   "httpMethod": "GET",
-	//   "id": "versionhistory.platforms.channels.versions.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filter string. Format is a comma separated list of All comma separated filter clauses are conjoined with a logical \"and\". Valid field_names are \"version\", \"name\", \"platform\", and \"channel\". Valid operators are \"\u003c\", \"\u003c=\", \"=\", \"\u003e=\", and \"\u003e\". Channel comparison is done by distance from stable. Ex) stable \u003c beta, beta \u003c dev, canary \u003c canary_asan. Version comparison is done numerically. If version is not entirely written, the version will be appended with 0 in missing fields. Ex) version \u003e 80 becoms version \u003e 80.0.0.0 Name and platform are filtered by string comparison. Ex) \"...?filter=channel\u003c=beta, version \u003e= 80 Ex) \"...?filter=version \u003e 80, version \u003c 81",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Optional. Ordering string. Valid order_by strings are \"version\", \"name\", \"platform\", and \"channel\". Optionally, you can append \" desc\" or \" asc\" to specify the sorting order. Multiple order_by strings can be used in a comma separated list. Ordering by channel will sort by distance from the stable channel (not alphabetically). A list of channels sorted in this order is: stable, beta, dev, canary, and canary_asan. Sorting by name may cause unexpected behaviour as it is a naive string sort. For example, 1.0.0.8 will be before 1.0.0.10 in descending order. If order_by is not specified the response will be sorted by version in descending order. Ex) \"...?order_by=version asc\" Ex) \"...?order_by=platform desc, channel, version\"",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Optional limit on the number of versions to include in the response. If unspecified, the server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous `ListVersions` call. Provide this to retrieve the subsequent page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The channel, which owns this collection of versions. Format: {product}/platforms/{platform}/channels/{channel}",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/platforms/[^/]+/channels/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/versions",
-	//   "response": {
-	//     "$ref": "ListVersionsResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1182,7 +952,7 @@ func (c *PlatformsChannelsVersionsListCall) Do(opts ...googleapi.CallOption) (*L
 // The provided context supersedes any context provided to the Context method.
 func (c *PlatformsChannelsVersionsListCall) Pages(ctx context.Context, f func(*ListVersionsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1198,8 +968,6 @@ func (c *PlatformsChannelsVersionsListCall) Pages(ctx context.Context, f func(*L
 	}
 }
 
-// method id "versionhistory.platforms.channels.versions.releases.list":
-
 type PlatformsChannelsVersionsReleasesListCall struct {
 	s            *Service
 	parent       string
@@ -1211,8 +979,7 @@ type PlatformsChannelsVersionsReleasesListCall struct {
 
 // List: Returns list of releases of the given version.
 //
-//   - parent: The version, which owns this collection of releases.
-//     Format:
+//   - parent: The version, which owns this collection of releases. Format:
 //     {product}/platforms/{platform}/channels/{channel}/versions/{version}.
 func (r *PlatformsChannelsVersionsReleasesService) List(parent string) *PlatformsChannelsVersionsReleasesListCall {
 	c := &PlatformsChannelsVersionsReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1220,20 +987,19 @@ func (r *PlatformsChannelsVersionsReleasesService) List(parent string) *Platform
 	return c
 }
 
-// Filter sets the optional parameter "filter": Filter string. Format is
-// a comma separated list of All comma separated filter clauses are
-// conjoined with a logical "and". Valid field_names are "version",
-// "name", "platform", "channel", "fraction" "starttime", and "endtime".
-// Valid operators are "<", "<=", "=", ">=", and ">". Channel comparison
-// is done by distance from stable. must be a valid channel when
-// filtering by channel. Ex) stable < beta, beta < dev, canary <
-// canary_asan. Version comparison is done numerically. Ex) 1.0.0.8 <
-// 1.0.0.10. If version is not entirely written, the version will be
-// appended with 0 for the missing fields. Ex) version > 80 becoms
-// version > 80.0.0.0 When filtering by starttime or endtime, string
-// must be in RFC 3339 date string format. Name and platform are
-// filtered by string comparison. Ex) "...?filter=channel<=beta, version
-// >= 80 Ex) "...?filter=version > 80, version < 81 Ex)
+// Filter sets the optional parameter "filter": Filter string. Format is a
+// comma separated list of All comma separated filter clauses are conjoined
+// with a logical "and". Valid field_names are "version", "name", "platform",
+// "channel", "fraction" "starttime", and "endtime". Valid operators are "<",
+// "<=", "=", ">=", and ">". Channel comparison is done by distance from
+// stable. must be a valid channel when filtering by channel. Ex) stable <
+// beta, beta < dev, canary < canary_asan. Version comparison is done
+// numerically. Ex) 1.0.0.8 < 1.0.0.10. If version is not entirely written, the
+// version will be appended with 0 for the missing fields. Ex) version > 80
+// becoms version > 80.0.0.0 When filtering by starttime or endtime, string
+// must be in RFC 3339 date string format. Name and platform are filtered by
+// string comparison. Ex) "...?filter=channel<=beta, version >= 80 Ex)
+// "...?filter=version > 80, version < 81 Ex)
 // "...?filter=starttime>2020-01-01T00:00:00Z
 func (c *PlatformsChannelsVersionsReleasesListCall) Filter(filter string) *PlatformsChannelsVersionsReleasesListCall {
 	c.urlParams_.Set("filter", filter)
@@ -1241,67 +1007,62 @@ func (c *PlatformsChannelsVersionsReleasesListCall) Filter(filter string) *Platf
 }
 
 // OrderBy sets the optional parameter "orderBy": Ordering string. Valid
-// order_by strings are "version", "name", "starttime", "endtime",
-// "platform", "channel", and "fraction". Optionally, you can append
-// "desc" or "asc" to specify the sorting order. Multiple order_by
-// strings can be used in a comma separated list. Ordering by channel
-// will sort by distance from the stable channel (not alphabetically). A
-// list of channels sorted in this order is: stable, beta, dev, canary,
-// and canary_asan. Sorting by name may cause unexpected behaviour as it
-// is a naive string sort. For example, 1.0.0.8 will be before 1.0.0.10
-// in descending order. If order_by is not specified the response will
-// be sorted by starttime in descending order. Ex)
-// "...?order_by=starttime asc" Ex) "...?order_by=platform desc,
-// channel, startime desc"
+// order_by strings are "version", "name", "starttime", "endtime", "platform",
+// "channel", and "fraction". Optionally, you can append "desc" or "asc" to
+// specify the sorting order. Multiple order_by strings can be used in a comma
+// separated list. Ordering by channel will sort by distance from the stable
+// channel (not alphabetically). A list of channels sorted in this order is:
+// stable, beta, dev, canary, and canary_asan. Sorting by name may cause
+// unexpected behaviour as it is a naive string sort. For example, 1.0.0.8 will
+// be before 1.0.0.10 in descending order. If order_by is not specified the
+// response will be sorted by starttime in descending order. Ex)
+// "...?order_by=starttime asc" Ex) "...?order_by=platform desc, channel,
+// startime desc"
 func (c *PlatformsChannelsVersionsReleasesListCall) OrderBy(orderBy string) *PlatformsChannelsVersionsReleasesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Optional limit on
-// the number of releases to include in the response. If unspecified,
-// the server will pick an appropriate default.
+// PageSize sets the optional parameter "pageSize": Optional limit on the
+// number of releases to include in the response. If unspecified, the server
+// will pick an appropriate default.
 func (c *PlatformsChannelsVersionsReleasesListCall) PageSize(pageSize int64) *PlatformsChannelsVersionsReleasesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous `ListReleases` call. Provide this to
-// retrieve the subsequent page.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous `ListReleases` call. Provide this to retrieve the subsequent
+// page.
 func (c *PlatformsChannelsVersionsReleasesListCall) PageToken(pageToken string) *PlatformsChannelsVersionsReleasesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PlatformsChannelsVersionsReleasesListCall) Fields(s ...googleapi.Field) *PlatformsChannelsVersionsReleasesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PlatformsChannelsVersionsReleasesListCall) IfNoneMatch(entityTag string) *PlatformsChannelsVersionsReleasesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PlatformsChannelsVersionsReleasesListCall) Context(ctx context.Context) *PlatformsChannelsVersionsReleasesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PlatformsChannelsVersionsReleasesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1310,12 +1071,7 @@ func (c *PlatformsChannelsVersionsReleasesListCall) Header() http.Header {
 }
 
 func (c *PlatformsChannelsVersionsReleasesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1336,12 +1092,11 @@ func (c *PlatformsChannelsVersionsReleasesListCall) doRequest(alt string) (*http
 }
 
 // Do executes the "versionhistory.platforms.channels.versions.releases.list" call.
-// Exactly one of *ListReleasesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListReleasesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListReleasesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PlatformsChannelsVersionsReleasesListCall) Do(opts ...googleapi.CallOption) (*ListReleasesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1372,50 +1127,6 @@ func (c *PlatformsChannelsVersionsReleasesListCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns list of releases of the given version.",
-	//   "flatPath": "v1/{v1Id}/platforms/{platformsId}/channels/{channelsId}/versions/{versionsId}/releases",
-	//   "httpMethod": "GET",
-	//   "id": "versionhistory.platforms.channels.versions.releases.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. Filter string. Format is a comma separated list of All comma separated filter clauses are conjoined with a logical \"and\". Valid field_names are \"version\", \"name\", \"platform\", \"channel\", \"fraction\" \"starttime\", and \"endtime\". Valid operators are \"\u003c\", \"\u003c=\", \"=\", \"\u003e=\", and \"\u003e\". Channel comparison is done by distance from stable. must be a valid channel when filtering by channel. Ex) stable \u003c beta, beta \u003c dev, canary \u003c canary_asan. Version comparison is done numerically. Ex) 1.0.0.8 \u003c 1.0.0.10. If version is not entirely written, the version will be appended with 0 for the missing fields. Ex) version \u003e 80 becoms version \u003e 80.0.0.0 When filtering by starttime or endtime, string must be in RFC 3339 date string format. Name and platform are filtered by string comparison. Ex) \"...?filter=channel\u003c=beta, version \u003e= 80 Ex) \"...?filter=version \u003e 80, version \u003c 81 Ex) \"...?filter=starttime\u003e2020-01-01T00:00:00Z",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Optional. Ordering string. Valid order_by strings are \"version\", \"name\", \"starttime\", \"endtime\", \"platform\", \"channel\", and \"fraction\". Optionally, you can append \"desc\" or \"asc\" to specify the sorting order. Multiple order_by strings can be used in a comma separated list. Ordering by channel will sort by distance from the stable channel (not alphabetically). A list of channels sorted in this order is: stable, beta, dev, canary, and canary_asan. Sorting by name may cause unexpected behaviour as it is a naive string sort. For example, 1.0.0.8 will be before 1.0.0.10 in descending order. If order_by is not specified the response will be sorted by starttime in descending order. Ex) \"...?order_by=starttime asc\" Ex) \"...?order_by=platform desc, channel, startime desc\"",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. Optional limit on the number of releases to include in the response. If unspecified, the server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous `ListReleases` call. Provide this to retrieve the subsequent page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The version, which owns this collection of releases. Format: {product}/platforms/{platform}/channels/{channel}/versions/{version}",
-	//       "location": "path",
-	//       "pattern": "^[^/]+/platforms/[^/]+/channels/[^/]+/versions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/releases",
-	//   "response": {
-	//     "$ref": "ListReleasesResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1423,7 +1134,7 @@ func (c *PlatformsChannelsVersionsReleasesListCall) Do(opts ...googleapi.CallOpt
 // The provided context supersedes any context provided to the Context method.
 func (c *PlatformsChannelsVersionsReleasesListCall) Pages(ctx context.Context, f func(*ListReleasesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

@@ -101,8 +101,8 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and administer all your Firebase data and settings
@@ -205,369 +205,286 @@ type ProjectsRulesetsService struct {
 type Arg struct {
 	// AnyValue: Argument matches any value provided.
 	AnyValue *Empty `json:"anyValue,omitempty"`
-
 	// ExactValue: Argument exactly matches value provided.
 	ExactValue interface{} `json:"exactValue,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AnyValue") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AnyValue") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AnyValue") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Arg) MarshalJSON() ([]byte, error) {
 	type NoMethod Arg
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// ExpressionReport: Describes where in a file an expression is found
-// and what it was evaluated to over the course of its use.
+// ExpressionReport: Describes where in a file an expression is found and what
+// it was evaluated to over the course of its use.
 type ExpressionReport struct {
 	// Children: Subexpressions
 	Children []*ExpressionReport `json:"children,omitempty"`
-
 	// SourcePosition: Position of expression in original rules source.
 	SourcePosition *SourcePosition `json:"sourcePosition,omitempty"`
-
 	// Values: Values that this expression evaluated to when encountered.
 	Values []*ValueCount `json:"values,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Children") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Children") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Children") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ExpressionReport) MarshalJSON() ([]byte, error) {
 	type NoMethod ExpressionReport
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // File: `File` containing source content.
 type File struct {
 	// Content: Required. Textual Content.
 	Content string `json:"content,omitempty"`
-
-	// Fingerprint: Fingerprint (e.g. github sha) associated with the
-	// `File`.
+	// Fingerprint: Fingerprint (e.g. github sha) associated with the `File`.
 	Fingerprint string `json:"fingerprint,omitempty"`
-
 	// Name: Required. File name.
 	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Content") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Content") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Content") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Content") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *File) MarshalJSON() ([]byte, error) {
 	type NoMethod File
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// FunctionCall: Represents a service-defined function call that was
-// invoked during test execution.
+// FunctionCall: Represents a service-defined function call that was invoked
+// during test execution.
 type FunctionCall struct {
 	// Args: The arguments that were provided to the function.
 	Args []interface{} `json:"args,omitempty"`
-
 	// Function: Name of the function invoked.
 	Function string `json:"function,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Args") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Args") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Args") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *FunctionCall) MarshalJSON() ([]byte, error) {
 	type NoMethod FunctionCall
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// FunctionMock: Mock function definition. Mocks must refer to a
-// function declared by the target service. The type of the function
-// args and result will be inferred at test time. If either the arg or
-// result values are not compatible with function type declaration, the
-// request will be considered invalid. More than one `FunctionMock` may
-// be provided for a given function name so long as the `Arg` matchers
-// are distinct. There may be only one function for a given overload
-// where all `Arg` values are `Arg.any_value`.
+// FunctionMock: Mock function definition. Mocks must refer to a function
+// declared by the target service. The type of the function args and result
+// will be inferred at test time. If either the arg or result values are not
+// compatible with function type declaration, the request will be considered
+// invalid. More than one `FunctionMock` may be provided for a given function
+// name so long as the `Arg` matchers are distinct. There may be only one
+// function for a given overload where all `Arg` values are `Arg.any_value`.
 type FunctionMock struct {
-	// Args: The list of `Arg` values to match. The order in which the
-	// arguments are provided is the order in which they must appear in the
-	// function invocation.
+	// Args: The list of `Arg` values to match. The order in which the arguments
+	// are provided is the order in which they must appear in the function
+	// invocation.
 	Args []*Arg `json:"args,omitempty"`
-
 	// Function: The name of the function. The function name must match one
 	// provided by a service declaration.
 	Function string `json:"function,omitempty"`
-
 	// Result: The mock result of the function call.
 	Result *Result `json:"result,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Args") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Args") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Args") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Args") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *FunctionMock) MarshalJSON() ([]byte, error) {
 	type NoMethod FunctionMock
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GetReleaseExecutableResponse: The response for
 // FirebaseRulesService.GetReleaseExecutable
 type GetReleaseExecutableResponse struct {
-	// Executable: Executable view of the `Ruleset` referenced by the
-	// `Release`.
+	// Executable: Executable view of the `Ruleset` referenced by the `Release`.
 	Executable string `json:"executable,omitempty"`
-
 	// ExecutableVersion: The Rules runtime version of the executable.
 	//
 	// Possible values:
-	//   "RELEASE_EXECUTABLE_VERSION_UNSPECIFIED" - Executable format
-	// unspecified. Defaults to FIREBASE_RULES_EXECUTABLE_V1
-	//   "FIREBASE_RULES_EXECUTABLE_V1" - Firebase Rules syntax 'rules2'
-	// executable versions: Custom AST for use with Java clients.
-	//   "FIREBASE_RULES_EXECUTABLE_V2" - CEL-based executable for use with
-	// C++ clients.
+	//   "RELEASE_EXECUTABLE_VERSION_UNSPECIFIED" - Executable format unspecified.
+	// Defaults to FIREBASE_RULES_EXECUTABLE_V1
+	//   "FIREBASE_RULES_EXECUTABLE_V1" - Firebase Rules syntax 'rules2' executable
+	// versions: Custom AST for use with Java clients.
+	//   "FIREBASE_RULES_EXECUTABLE_V2" - CEL-based executable for use with C++
+	// clients.
 	ExecutableVersion string `json:"executableVersion,omitempty"`
-
 	// Language: `Language` used to generate the executable bytes.
 	//
 	// Possible values:
-	//   "LANGUAGE_UNSPECIFIED" - Language unspecified. Defaults to
-	// FIREBASE_RULES.
+	//   "LANGUAGE_UNSPECIFIED" - Language unspecified. Defaults to FIREBASE_RULES.
 	//   "FIREBASE_RULES" - Firebase Rules language.
 	//   "EVENT_FLOW_TRIGGERS" - Event Flow triggers.
 	Language string `json:"language,omitempty"`
-
 	// RulesetName: `Ruleset` name associated with the `Release` executable.
 	RulesetName string `json:"rulesetName,omitempty"`
-
-	// SyncTime: Optional, indicates the freshness of the result. The
-	// response is guaranteed to be the latest within an interval up to the
-	// sync_time (inclusive).
+	// SyncTime: Optional, indicates the freshness of the result. The response is
+	// guaranteed to be the latest within an interval up to the sync_time
+	// (inclusive).
 	SyncTime string `json:"syncTime,omitempty"`
-
 	// UpdateTime: Timestamp for the most recent `Release.update_time`.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Executable") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Executable") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Executable") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GetReleaseExecutableResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GetReleaseExecutableResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Issue: Issues include warnings, errors, and deprecation notices.
 type Issue struct {
 	// Description: Short error description.
 	Description string `json:"description,omitempty"`
-
 	// Severity: The severity of the issue.
 	//
 	// Possible values:
 	//   "SEVERITY_UNSPECIFIED" - An unspecified severity.
-	//   "DEPRECATION" - Deprecation issue for statements and method that
-	// may no longer be supported or maintained.
+	//   "DEPRECATION" - Deprecation issue for statements and method that may no
+	// longer be supported or maintained.
 	//   "WARNING" - Warnings such as: unused variables.
-	//   "ERROR" - Errors such as: unmatched curly braces or variable
-	// redefinition.
+	//   "ERROR" - Errors such as: unmatched curly braces or variable redefinition.
 	Severity string `json:"severity,omitempty"`
-
 	// SourcePosition: Position of the issue in the `Source`.
 	SourcePosition *SourcePosition `json:"sourcePosition,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Issue) MarshalJSON() ([]byte, error) {
 	type NoMethod Issue
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListReleasesResponse: The response for
-// FirebaseRulesService.ListReleases.
+// ListReleasesResponse: The response for FirebaseRulesService.ListReleases.
 type ListReleasesResponse struct {
-	// NextPageToken: The pagination token to retrieve the next page of
-	// results. If the value is empty, no further results remain.
+	// NextPageToken: The pagination token to retrieve the next page of results. If
+	// the value is empty, no further results remain.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Releases: List of `Release` instances.
 	Releases []*Release `json:"releases,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListReleasesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListReleasesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListRulesetsResponse: The response for
-// FirebaseRulesService.ListRulesets.
+// ListRulesetsResponse: The response for FirebaseRulesService.ListRulesets.
 type ListRulesetsResponse struct {
-	// NextPageToken: The pagination token to retrieve the next page of
-	// results. If the value is empty, no further results remain.
+	// NextPageToken: The pagination token to retrieve the next page of results. If
+	// the value is empty, no further results remain.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Rulesets: List of `Ruleset` instances.
 	Rulesets []*Ruleset `json:"rulesets,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListRulesetsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListRulesetsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Metadata: Metadata for a Ruleset.
@@ -575,72 +492,56 @@ type Metadata struct {
 	// Services: Services that this ruleset has declarations for (e.g.,
 	// "cloud.firestore"). There may be 0+ of these.
 	Services []string `json:"services,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Services") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Services") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Services") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Metadata) MarshalJSON() ([]byte, error) {
 	type NoMethod Metadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Release: `Release` is a named reference to a `Ruleset`. Once a
-// `Release` refers to a `Ruleset`, rules-enabled services will be able
-// to enforce the `Ruleset`.
+// Release: `Release` is a named reference to a `Ruleset`. Once a `Release`
+// refers to a `Ruleset`, rules-enabled services will be able to enforce the
+// `Ruleset`.
 type Release struct {
 	// CreateTime: Output only. Time the release was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Name: Required. Format: `projects/{project_id}/releases/{release_id}`
 	Name string `json:"name,omitempty"`
-
-	// RulesetName: Required. Name of the `Ruleset` referred to by this
-	// `Release`. The `Ruleset` must exist for the `Release` to be created.
+	// RulesetName: Required. Name of the `Ruleset` referred to by this `Release`.
+	// The `Ruleset` must exist for the `Release` to be created.
 	RulesetName string `json:"rulesetName,omitempty"`
-
 	// UpdateTime: Output only. Time the release was updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Release) MarshalJSON() ([]byte, error) {
 	type NoMethod Release
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Result: Possible result values from the function mock invocation.
@@ -648,164 +549,126 @@ type Result struct {
 	// Undefined: The result is undefined, meaning the result could not be
 	// computed.
 	Undefined *Empty `json:"undefined,omitempty"`
-
-	// Value: The result is an actual value. The type of the value must
-	// match that of the type declared by the service.
+	// Value: The result is an actual value. The type of the value must match that
+	// of the type declared by the service.
 	Value interface{} `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Undefined") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Undefined") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Undefined") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Result) MarshalJSON() ([]byte, error) {
 	type NoMethod Result
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Ruleset: `Ruleset` is an immutable copy of `Source` with a globally
-// unique identifier and a creation time.
+// Ruleset: `Ruleset` is an immutable copy of `Source` with a globally unique
+// identifier and a creation time.
 type Ruleset struct {
-	// AttachmentPoint: Immutable. Intended resource to which this Ruleset
-	// should be released. May be left blank to signify the resource
-	// associated with the default release. Expected format:
+	// AttachmentPoint: Immutable. Intended resource to which this Ruleset should
+	// be released. May be left blank to signify the resource associated with the
+	// default release. Expected format:
 	// firestore.googleapis.com/projects//databases/
 	AttachmentPoint string `json:"attachmentPoint,omitempty"`
-
 	// CreateTime: Output only. Time the `Ruleset` was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Metadata: Output only. The metadata for this ruleset.
 	Metadata *Metadata `json:"metadata,omitempty"`
-
-	// Name: Output only. Name of the `Ruleset`. The ruleset_id is auto
-	// generated by the service. Format:
-	// `projects/{project_id}/rulesets/{ruleset_id}`
+	// Name: Output only. Name of the `Ruleset`. The ruleset_id is auto generated
+	// by the service. Format: `projects/{project_id}/rulesets/{ruleset_id}`
 	Name string `json:"name,omitempty"`
-
 	// Source: Required. `Source` for the `Ruleset`.
 	Source *Source `json:"source,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AttachmentPoint") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AttachmentPoint") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AttachmentPoint") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Ruleset) MarshalJSON() ([]byte, error) {
 	type NoMethod Ruleset
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Source: `Source` is one or more `File` messages comprising a logical
-// set of rules.
+// Source: `Source` is one or more `File` messages comprising a logical set of
+// rules.
 type Source struct {
 	// Files: Required. `File` set constituting the `Source` bundle.
 	Files []*File `json:"files,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Files") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Files") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Files") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Source) MarshalJSON() ([]byte, error) {
 	type NoMethod Source
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SourcePosition: Position in the `Source` content including its line,
-// column number, and an index of the `File` in the `Source` message.
-// Used for debug purposes.
+// SourcePosition: Position in the `Source` content including its line, column
+// number, and an index of the `File` in the `Source` message. Used for debug
+// purposes.
 type SourcePosition struct {
-	// Column: First column on the source line associated with the source
-	// fragment.
+	// Column: First column on the source line associated with the source fragment.
 	Column int64 `json:"column,omitempty"`
-
 	// CurrentOffset: Start position relative to the beginning of the file.
 	CurrentOffset int64 `json:"currentOffset,omitempty"`
-
 	// EndOffset: End position relative to the beginning of the file.
 	EndOffset int64 `json:"endOffset,omitempty"`
-
 	// FileName: Name of the `File`.
 	FileName string `json:"fileName,omitempty"`
-
 	// Line: Line number of the source fragment. 1-based.
 	Line int64 `json:"line,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Column") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Column") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Column") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SourcePosition) MarshalJSON() ([]byte, error) {
 	type NoMethod SourcePosition
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TestCase: `TestCase` messages provide the request context and an
-// expectation as to whether the given context will be allowed or
-// denied. Test cases may specify the `request`, `resource`, and
-// `function_mocks` to mock a function call to a service-provided
-// function. The `request` object represents context present at
-// request-time. The `resource` is the value of the target resource as
-// it appears in persistent storage before the request is executed.
+// TestCase: `TestCase` messages provide the request context and an expectation
+// as to whether the given context will be allowed or denied. Test cases may
+// specify the `request`, `resource`, and `function_mocks` to mock a function
+// call to a service-provided function. The `request` object represents context
+// present at request-time. The `resource` is the value of the target resource
+// as it appears in persistent storage before the request is executed.
 type TestCase struct {
 	// Expectation: Test expectation.
 	//
@@ -814,106 +677,86 @@ type TestCase struct {
 	//   "ALLOW" - Expect an allowed result.
 	//   "DENY" - Expect a denied result.
 	Expectation string `json:"expectation,omitempty"`
-
-	// ExpressionReportLevel: Specifies what should be included in the
-	// response.
+	// ExpressionReportLevel: Specifies what should be included in the response.
 	//
 	// Possible values:
-	//   "LEVEL_UNSPECIFIED" - No level has been specified. Defaults to
-	// "NONE" behavior.
+	//   "LEVEL_UNSPECIFIED" - No level has been specified. Defaults to "NONE"
+	// behavior.
 	//   "NONE" - Do not include any additional information.
 	//   "FULL" - Include detailed reporting on expressions evaluated.
 	//   "VISITED" - Only include the expressions that were visited during
 	// evaluation.
 	ExpressionReportLevel string `json:"expressionReportLevel,omitempty"`
-
-	// FunctionMocks: Optional function mocks for service-defined functions.
-	// If not set, any service defined function is expected to return an
-	// error, which may or may not influence the test outcome.
+	// FunctionMocks: Optional function mocks for service-defined functions. If not
+	// set, any service defined function is expected to return an error, which may
+	// or may not influence the test outcome.
 	FunctionMocks []*FunctionMock `json:"functionMocks,omitempty"`
-
-	// PathEncoding: Specifies whether paths (such as request.path) are
-	// encoded and how.
+	// PathEncoding: Specifies whether paths (such as request.path) are encoded and
+	// how.
 	//
 	// Possible values:
-	//   "ENCODING_UNSPECIFIED" - No encoding has been specified. Defaults
-	// to "URL_ENCODED" behavior.
-	//   "URL_ENCODED" - Treats path segments as URL encoded but with
-	// non-encoded separators ("/"). This is the default behavior.
+	//   "ENCODING_UNSPECIFIED" - No encoding has been specified. Defaults to
+	// "URL_ENCODED" behavior.
+	//   "URL_ENCODED" - Treats path segments as URL encoded but with non-encoded
+	// separators ("/"). This is the default behavior.
 	//   "PLAIN" - Treats total path as non-URL encoded e.g. raw.
 	PathEncoding string `json:"pathEncoding,omitempty"`
-
 	// Request: Request context. The exact format of the request context is
-	// service-dependent. See the appropriate service documentation for
-	// information about the supported fields and types on the request.
-	// Minimally, all services support the following fields and types:
-	// Request field | Type ---------------|----------------- auth.uid |
-	// `string` auth.token | `map` headers | `map` method | `string` params
-	// | `map` path | `string` time | `google.protobuf.Timestamp` If the
-	// request value is not well-formed for the service, the request will be
-	// rejected as an invalid argument.
+	// service-dependent. See the appropriate service documentation for information
+	// about the supported fields and types on the request. Minimally, all services
+	// support the following fields and types: Request field | Type
+	// ---------------|----------------- auth.uid | `string` auth.token | `map`
+	// headers | `map` method | `string` params | `map` path | `string` time |
+	// `google.protobuf.Timestamp` If the request value is not well-formed for the
+	// service, the request will be rejected as an invalid argument.
 	Request interface{} `json:"request,omitempty"`
-
-	// Resource: Optional resource value as it appears in persistent storage
-	// before the request is fulfilled. The resource type depends on the
-	// `request.path` value.
+	// Resource: Optional resource value as it appears in persistent storage before
+	// the request is fulfilled. The resource type depends on the `request.path`
+	// value.
 	Resource interface{} `json:"resource,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Expectation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Expectation") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Expectation") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TestCase) MarshalJSON() ([]byte, error) {
 	type NoMethod TestCase
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TestResult: Test result message containing the state of the test as
-// well as a description and source position for test failures.
+// TestResult: Test result message containing the state of the test as well as
+// a description and source position for test failures.
 type TestResult struct {
-	// DebugMessages: Debug messages related to test execution issues
-	// encountered during evaluation. Debug messages may be related to too
-	// many or too few invocations of function mocks or to runtime errors
-	// that occur during evaluation. For example: ```Unable to read variable
-	// [name: "resource"]```
+	// DebugMessages: Debug messages related to test execution issues encountered
+	// during evaluation. Debug messages may be related to too many or too few
+	// invocations of function mocks or to runtime errors that occur during
+	// evaluation. For example: ```Unable to read variable [name: "resource"]```
 	DebugMessages []string `json:"debugMessages,omitempty"`
-
-	// ErrorPosition: Position in the `Source` or `Ruleset` where the
-	// principle runtime error occurs. Evaluation of an expression may
-	// result in an error. Rules are deny by default, so a `DENY`
-	// expectation when an error is generated is valid. When there is a
-	// `DENY` with an error, the `SourcePosition` is returned. E.g.
-	// `error_position { line: 19 column: 37 }`
+	// ErrorPosition: Position in the `Source` or `Ruleset` where the principle
+	// runtime error occurs. Evaluation of an expression may result in an error.
+	// Rules are deny by default, so a `DENY` expectation when an error is
+	// generated is valid. When there is a `DENY` with an error, the
+	// `SourcePosition` is returned. E.g. `error_position { line: 19 column: 37 }`
 	ErrorPosition *SourcePosition `json:"errorPosition,omitempty"`
-
-	// ExpressionReports: The mapping from expression in the ruleset AST to
-	// the values they were evaluated to. Partially-nested to mirror AST
-	// structure. Note that this field is actually tracking expressions and
-	// not permission statements in contrast to the "visited_expressions"
-	// field above. Literal expressions are omitted.
+	// ExpressionReports: The mapping from expression in the ruleset AST to the
+	// values they were evaluated to. Partially-nested to mirror AST structure.
+	// Note that this field is actually tracking expressions and not permission
+	// statements in contrast to the "visited_expressions" field above. Literal
+	// expressions are omitted.
 	ExpressionReports []*ExpressionReport `json:"expressionReports,omitempty"`
-
-	// FunctionCalls: The set of function calls made to service-defined
-	// methods. Function calls are included in the order in which they are
-	// encountered during evaluation, are provided for both mocked and
-	// unmocked functions, and included on the response regardless of the
-	// test `state`.
+	// FunctionCalls: The set of function calls made to service-defined methods.
+	// Function calls are included in the order in which they are encountered
+	// during evaluation, are provided for both mocked and unmocked functions, and
+	// included on the response regardless of the test `state`.
 	FunctionCalls []*FunctionCall `json:"functionCalls,omitempty"`
-
 	// State: State of the test.
 	//
 	// Possible values:
@@ -921,172 +764,134 @@ type TestResult struct {
 	//   "SUCCESS" - Test is a success.
 	//   "FAILURE" - Test is a failure.
 	State string `json:"state,omitempty"`
-
-	// VisitedExpressions: The set of visited permission expressions for a
-	// given test. This returns the positions and evaluation results of all
-	// visited permission expressions which were relevant to the test case,
-	// e.g. ``` match /path { allow read if: } ``` For a detailed report of
-	// the intermediate evaluation states, see the `expression_reports`
-	// field
+	// VisitedExpressions: The set of visited permission expressions for a given
+	// test. This returns the positions and evaluation results of all visited
+	// permission expressions which were relevant to the test case, e.g. ``` match
+	// /path { allow read if: } ``` For a detailed report of the intermediate
+	// evaluation states, see the `expression_reports` field
 	VisitedExpressions []*VisitedExpression `json:"visitedExpressions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DebugMessages") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DebugMessages") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DebugMessages") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TestResult) MarshalJSON() ([]byte, error) {
 	type NoMethod TestResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // TestRulesetRequest: The request for FirebaseRulesService.TestRuleset.
 type TestRulesetRequest struct {
-	// Source: Optional `Source` to be checked for correctness. This field
-	// must not be set when the resource name refers to a `Ruleset`.
+	// Source: Optional `Source` to be checked for correctness. This field must not
+	// be set when the resource name refers to a `Ruleset`.
 	Source *Source `json:"source,omitempty"`
-
-	// TestSuite: The tests to execute against the `Source`. When `Source`
-	// is provided inline, the test cases will only be run if the `Source`
-	// is syntactically and semantically valid. Inline `TestSuite` to run.
+	// TestSuite: The tests to execute against the `Source`. When `Source` is
+	// provided inline, the test cases will only be run if the `Source` is
+	// syntactically and semantically valid. Inline `TestSuite` to run.
 	TestSuite *TestSuite `json:"testSuite,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Source") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Source") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Source") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TestRulesetRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestRulesetRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TestRulesetResponse: The response for
-// FirebaseRulesService.TestRuleset.
+// TestRulesetResponse: The response for FirebaseRulesService.TestRuleset.
 type TestRulesetResponse struct {
-	// Issues: Syntactic and semantic `Source` issues of varying severity.
-	// Issues of `ERROR` severity will prevent tests from executing.
+	// Issues: Syntactic and semantic `Source` issues of varying severity. Issues
+	// of `ERROR` severity will prevent tests from executing.
 	Issues []*Issue `json:"issues,omitempty"`
-
 	// TestResults: The set of test results given the test cases in the
-	// `TestSuite`. The results will appear in the same order as the test
-	// cases appear in the `TestSuite`.
+	// `TestSuite`. The results will appear in the same order as the test cases
+	// appear in the `TestSuite`.
 	TestResults []*TestResult `json:"testResults,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Issues") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Issues") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Issues") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TestRulesetResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestRulesetResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TestSuite: `TestSuite` is a collection of `TestCase` instances that
-// validate the logical correctness of a `Ruleset`. The `TestSuite` may
-// be referenced in-line within a `TestRuleset` invocation or as part of
-// a `Release` object as a pre-release check.
+// TestSuite: `TestSuite` is a collection of `TestCase` instances that validate
+// the logical correctness of a `Ruleset`. The `TestSuite` may be referenced
+// in-line within a `TestRuleset` invocation or as part of a `Release` object
+// as a pre-release check.
 type TestSuite struct {
 	// TestCases: Collection of test cases associated with the `TestSuite`.
 	TestCases []*TestCase `json:"testCases,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "TestCases") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TestCases") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "TestCases") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TestSuite) MarshalJSON() ([]byte, error) {
 	type NoMethod TestSuite
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// UpdateReleaseRequest: The request for
-// FirebaseRulesService.UpdateRelease.
+// UpdateReleaseRequest: The request for FirebaseRulesService.UpdateRelease.
 type UpdateReleaseRequest struct {
 	// Release: Required. `Release` to update.
 	Release *Release `json:"release,omitempty"`
-
 	// UpdateMask: Specifies which fields to update.
 	UpdateMask string `json:"updateMask,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Release") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Release") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Release") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Release") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UpdateReleaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod UpdateReleaseRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ValueCount: Tuple for how many times an Expression was evaluated to a
@@ -1094,69 +899,51 @@ func (s *UpdateReleaseRequest) MarshalJSON() ([]byte, error) {
 type ValueCount struct {
 	// Count: The amount of times that expression returned.
 	Count int64 `json:"count,omitempty"`
-
 	// Value: The return value of the expression
 	Value interface{} `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Count") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Count") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Count") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ValueCount) MarshalJSON() ([]byte, error) {
 	type NoMethod ValueCount
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// VisitedExpression: Store the position and access outcome for an
-// expression visited in rules.
+// VisitedExpression: Store the position and access outcome for an expression
+// visited in rules.
 type VisitedExpression struct {
-	// SourcePosition: Position in the `Source` or `Ruleset` where an
-	// expression was visited.
+	// SourcePosition: Position in the `Source` or `Ruleset` where an expression
+	// was visited.
 	SourcePosition *SourcePosition `json:"sourcePosition,omitempty"`
-
-	// Value: The evaluated value for the visited expression, e.g.
-	// true/false
+	// Value: The evaluated value for the visited expression, e.g. true/false
 	Value interface{} `json:"value,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SourcePosition") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SourcePosition") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "SourcePosition") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *VisitedExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod VisitedExpression
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "firebaserules.projects.test":
 
 type ProjectsTestCall struct {
 	s                  *Service
@@ -1167,24 +954,22 @@ type ProjectsTestCall struct {
 	header_            http.Header
 }
 
-// Test: Test `Source` for syntactic and semantic correctness. Issues
-// present, if any, will be returned to the caller with a description,
-// severity, and source location. The test method may be executed with
-// `Source` or a `Ruleset` name. Passing `Source` is useful for unit
-// testing new rules. Passing a `Ruleset` name is useful for regression
-// testing an existing rule. The following is an example of `Source`
-// that permits users to upload images to a bucket bearing their user id
-// and matching the correct metadata: _*Example*_ // Users are allowed
-// to subscribe and unsubscribe to the blog. service firebase.storage {
-// match /users/{userId}/images/{imageName} { allow write: if userId ==
-// request.auth.uid && (imageName.matches('*.png$') ||
-// imageName.matches('*.jpg$')) && resource.mimeType.matches('^image/')
-// } }
+// Test: Test `Source` for syntactic and semantic correctness. Issues present,
+// if any, will be returned to the caller with a description, severity, and
+// source location. The test method may be executed with `Source` or a
+// `Ruleset` name. Passing `Source` is useful for unit testing new rules.
+// Passing a `Ruleset` name is useful for regression testing an existing rule.
+// The following is an example of `Source` that permits users to upload images
+// to a bucket bearing their user id and matching the correct metadata:
+// _*Example*_ // Users are allowed to subscribe and unsubscribe to the blog.
+// service firebase.storage { match /users/{userId}/images/{imageName} { allow
+// write: if userId == request.auth.uid && (imageName.matches('*.png$') ||
+// imageName.matches('*.jpg$')) && resource.mimeType.matches('^image/') } }
 //
-//   - name: Tests may either provide `source` or a `Ruleset` resource
-//     name. For tests against `source`, the resource name must refer to
-//     the project: Format: `projects/{project_id}` For tests against a
-//     `Ruleset`, this must be the `Ruleset` resource name: Format:
+//   - name: Tests may either provide `source` or a `Ruleset` resource name. For
+//     tests against `source`, the resource name must refer to the project:
+//     Format: `projects/{project_id}` For tests against a `Ruleset`, this must
+//     be the `Ruleset` resource name: Format:
 //     `projects/{project_id}/rulesets/{ruleset_id}`.
 func (r *ProjectsService) Test(name string, testrulesetrequest *TestRulesetRequest) *ProjectsTestCall {
 	c := &ProjectsTestCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -1194,23 +979,21 @@ func (r *ProjectsService) Test(name string, testrulesetrequest *TestRulesetReque
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsTestCall) Fields(s ...googleapi.Field) *ProjectsTestCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsTestCall) Context(ctx context.Context) *ProjectsTestCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsTestCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1219,18 +1002,12 @@ func (c *ProjectsTestCall) Header() http.Header {
 }
 
 func (c *ProjectsTestCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testrulesetrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:test")
@@ -1247,12 +1024,11 @@ func (c *ProjectsTestCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "firebaserules.projects.test" call.
-// Exactly one of *TestRulesetResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *TestRulesetResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TestRulesetResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsTestCall) Do(opts ...googleapi.CallOption) (*TestRulesetResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1283,40 +1059,7 @@ func (c *ProjectsTestCall) Do(opts ...googleapi.CallOption) (*TestRulesetRespons
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Test `Source` for syntactic and semantic correctness. Issues present, if any, will be returned to the caller with a description, severity, and source location. The test method may be executed with `Source` or a `Ruleset` name. Passing `Source` is useful for unit testing new rules. Passing a `Ruleset` name is useful for regression testing an existing rule. The following is an example of `Source` that permits users to upload images to a bucket bearing their user id and matching the correct metadata: _*Example*_ // Users are allowed to subscribe and unsubscribe to the blog. service firebase.storage { match /users/{userId}/images/{imageName} { allow write: if userId == request.auth.uid \u0026\u0026 (imageName.matches('*.png$') || imageName.matches('*.jpg$')) \u0026\u0026 resource.mimeType.matches('^image/') } }",
-	//   "flatPath": "v1/projects/{projectsId}:test",
-	//   "httpMethod": "POST",
-	//   "id": "firebaserules.projects.test",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Tests may either provide `source` or a `Ruleset` resource name. For tests against `source`, the resource name must refer to the project: Format: `projects/{project_id}` For tests against a `Ruleset`, this must be the `Ruleset` resource name: Format: `projects/{project_id}/rulesets/{ruleset_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:test",
-	//   "request": {
-	//     "$ref": "TestRulesetRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TestRulesetResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase",
-	//     "https://www.googleapis.com/auth/firebase.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "firebaserules.projects.releases.create":
 
 type ProjectsReleasesCreateCall struct {
 	s          *Service
@@ -1327,25 +1070,23 @@ type ProjectsReleasesCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Create a `Release`. Release names should reflect the
-// developer's deployment practices. For example, the release name may
-// include the environment name, application name, application version,
-// or any other name meaningful to the developer. Once a `Release`
-// refers to a `Ruleset`, the rules can be enforced by Firebase
-// Rules-enabled services. More than one `Release` may be 'live'
-// concurrently. Consider the following three `Release` names for
-// `projects/foo` and the `Ruleset` to which they refer. Release Name ->
-// Ruleset Name * projects/foo/releases/prod ->
+// Create: Create a `Release`. Release names should reflect the developer's
+// deployment practices. For example, the release name may include the
+// environment name, application name, application version, or any other name
+// meaningful to the developer. Once a `Release` refers to a `Ruleset`, the
+// rules can be enforced by Firebase Rules-enabled services. More than one
+// `Release` may be 'live' concurrently. Consider the following three `Release`
+// names for `projects/foo` and the `Ruleset` to which they refer. Release Name
+// -> Ruleset Name * projects/foo/releases/prod ->
 // projects/foo/rulesets/uuid123 * projects/foo/releases/prod/beta ->
 // projects/foo/rulesets/uuid123 * projects/foo/releases/prod/v23 ->
-// projects/foo/rulesets/uuid456 The relationships reflect a `Ruleset`
-// rollout in progress. The `prod` and `prod/beta` releases refer to the
-// same `Ruleset`. However, `prod/v23` refers to a new `Ruleset`. The
-// `Ruleset` reference for a `Release` may be updated using the
-// UpdateRelease method.
+// projects/foo/rulesets/uuid456 The relationships reflect a `Ruleset` rollout
+// in progress. The `prod` and `prod/beta` releases refer to the same
+// `Ruleset`. However, `prod/v23` refers to a new `Ruleset`. The `Ruleset`
+// reference for a `Release` may be updated using the UpdateRelease method.
 //
-//   - name: Resource name for the project which owns this `Release`.
-//     Format: `projects/{project_id}`.
+//   - name: Resource name for the project which owns this `Release`. Format:
+//     `projects/{project_id}`.
 func (r *ProjectsReleasesService) Create(name string, release *Release) *ProjectsReleasesCreateCall {
 	c := &ProjectsReleasesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1354,23 +1095,21 @@ func (r *ProjectsReleasesService) Create(name string, release *Release) *Project
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsReleasesCreateCall) Fields(s ...googleapi.Field) *ProjectsReleasesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsReleasesCreateCall) Context(ctx context.Context) *ProjectsReleasesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsReleasesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1379,18 +1118,12 @@ func (c *ProjectsReleasesCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsReleasesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.release)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/releases")
@@ -1407,12 +1140,10 @@ func (c *ProjectsReleasesCreateCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "firebaserules.projects.releases.create" call.
-// Exactly one of *Release or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Release.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Release.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Release, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1443,39 +1174,7 @@ func (c *ProjectsReleasesCreateCall) Do(opts ...googleapi.CallOption) (*Release,
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create a `Release`. Release names should reflect the developer's deployment practices. For example, the release name may include the environment name, application name, application version, or any other name meaningful to the developer. Once a `Release` refers to a `Ruleset`, the rules can be enforced by Firebase Rules-enabled services. More than one `Release` may be 'live' concurrently. Consider the following three `Release` names for `projects/foo` and the `Ruleset` to which they refer. Release Name -\u003e Ruleset Name * projects/foo/releases/prod -\u003e projects/foo/rulesets/uuid123 * projects/foo/releases/prod/beta -\u003e projects/foo/rulesets/uuid123 * projects/foo/releases/prod/v23 -\u003e projects/foo/rulesets/uuid456 The relationships reflect a `Ruleset` rollout in progress. The `prod` and `prod/beta` releases refer to the same `Ruleset`. However, `prod/v23` refers to a new `Ruleset`. The `Ruleset` reference for a `Release` may be updated using the UpdateRelease method.",
-	//   "flatPath": "v1/projects/{projectsId}/releases",
-	//   "httpMethod": "POST",
-	//   "id": "firebaserules.projects.releases.create",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name for the project which owns this `Release`. Format: `projects/{project_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}/releases",
-	//   "request": {
-	//     "$ref": "Release"
-	//   },
-	//   "response": {
-	//     "$ref": "Release"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaserules.projects.releases.delete":
 
 type ProjectsReleasesDeleteCall struct {
 	s          *Service
@@ -1496,23 +1195,21 @@ func (r *ProjectsReleasesService) Delete(name string) *ProjectsReleasesDeleteCal
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsReleasesDeleteCall) Fields(s ...googleapi.Field) *ProjectsReleasesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsReleasesDeleteCall) Context(ctx context.Context) *ProjectsReleasesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsReleasesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1521,12 +1218,7 @@ func (c *ProjectsReleasesDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsReleasesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1544,12 +1236,10 @@ func (c *ProjectsReleasesDeleteCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "firebaserules.projects.releases.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsReleasesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1580,36 +1270,7 @@ func (c *ProjectsReleasesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, e
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete a `Release` by resource name.",
-	//   "flatPath": "v1/projects/{projectsId}/releases/{releasesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "firebaserules.projects.releases.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name for the `Release` to delete. Format: `projects/{project_id}/releases/{release_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/releases/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaserules.projects.releases.get":
 
 type ProjectsReleasesGetCall struct {
 	s            *Service
@@ -1631,33 +1292,29 @@ func (r *ProjectsReleasesService) Get(name string) *ProjectsReleasesGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsReleasesGetCall) Fields(s ...googleapi.Field) *ProjectsReleasesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsReleasesGetCall) IfNoneMatch(entityTag string) *ProjectsReleasesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsReleasesGetCall) Context(ctx context.Context) *ProjectsReleasesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsReleasesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1666,12 +1323,7 @@ func (c *ProjectsReleasesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsReleasesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1692,12 +1344,10 @@ func (c *ProjectsReleasesGetCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "firebaserules.projects.releases.get" call.
-// Exactly one of *Release or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Release.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Release.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsReleasesGetCall) Do(opts ...googleapi.CallOption) (*Release, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1728,37 +1378,7 @@ func (c *ProjectsReleasesGetCall) Do(opts ...googleapi.CallOption) (*Release, er
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get a `Release` by name.",
-	//   "flatPath": "v1/projects/{projectsId}/releases/{releasesId}",
-	//   "httpMethod": "GET",
-	//   "id": "firebaserules.projects.releases.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the `Release`. Format: `projects/{project_id}/releases/{release_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/releases/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Release"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase",
-	//     "https://www.googleapis.com/auth/firebase.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "firebaserules.projects.releases.getExecutable":
 
 type ProjectsReleasesGetExecutableCall struct {
 	s            *Service
@@ -1769,8 +1389,7 @@ type ProjectsReleasesGetExecutableCall struct {
 	header_      http.Header
 }
 
-// GetExecutable: Get the `Release` executable to use when enforcing
-// rules.
+// GetExecutable: Get the `Release` executable to use when enforcing rules.
 //
 //   - name: Resource name of the `Release`. Format:
 //     `projects/{project_id}/releases/{release_id}`.
@@ -1780,56 +1399,52 @@ func (r *ProjectsReleasesService) GetExecutable(name string) *ProjectsReleasesGe
 	return c
 }
 
-// ExecutableVersion sets the optional parameter "executableVersion":
-// The requested runtime executable version. Defaults to
+// ExecutableVersion sets the optional parameter "executableVersion": The
+// requested runtime executable version. Defaults to
 // FIREBASE_RULES_EXECUTABLE_V1.
 //
 // Possible values:
 //
-//	"RELEASE_EXECUTABLE_VERSION_UNSPECIFIED" - Executable format
+//	"RELEASE_EXECUTABLE_VERSION_UNSPECIFIED" - Executable format unspecified.
 //
-// unspecified. Defaults to FIREBASE_RULES_EXECUTABLE_V1
+// Defaults to FIREBASE_RULES_EXECUTABLE_V1
 //
-//	"FIREBASE_RULES_EXECUTABLE_V1" - Firebase Rules syntax 'rules2'
+//	"FIREBASE_RULES_EXECUTABLE_V1" - Firebase Rules syntax 'rules2' executable
 //
-// executable versions: Custom AST for use with Java clients.
+// versions: Custom AST for use with Java clients.
 //
-//	"FIREBASE_RULES_EXECUTABLE_V2" - CEL-based executable for use with
+//	"FIREBASE_RULES_EXECUTABLE_V2" - CEL-based executable for use with C++
 //
-// C++ clients.
+// clients.
 func (c *ProjectsReleasesGetExecutableCall) ExecutableVersion(executableVersion string) *ProjectsReleasesGetExecutableCall {
 	c.urlParams_.Set("executableVersion", executableVersion)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsReleasesGetExecutableCall) Fields(s ...googleapi.Field) *ProjectsReleasesGetExecutableCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsReleasesGetExecutableCall) IfNoneMatch(entityTag string) *ProjectsReleasesGetExecutableCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsReleasesGetExecutableCall) Context(ctx context.Context) *ProjectsReleasesGetExecutableCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsReleasesGetExecutableCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1838,12 +1453,7 @@ func (c *ProjectsReleasesGetExecutableCall) Header() http.Header {
 }
 
 func (c *ProjectsReleasesGetExecutableCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1864,12 +1474,11 @@ func (c *ProjectsReleasesGetExecutableCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "firebaserules.projects.releases.getExecutable" call.
-// Exactly one of *GetReleaseExecutableResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GetReleaseExecutableResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GetReleaseExecutableResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsReleasesGetExecutableCall) Do(opts ...googleapi.CallOption) (*GetReleaseExecutableResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1900,52 +1509,7 @@ func (c *ProjectsReleasesGetExecutableCall) Do(opts ...googleapi.CallOption) (*G
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get the `Release` executable to use when enforcing rules.",
-	//   "flatPath": "v1/projects/{projectsId}/releases/{releasesId}:getExecutable",
-	//   "httpMethod": "GET",
-	//   "id": "firebaserules.projects.releases.getExecutable",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "executableVersion": {
-	//       "description": "The requested runtime executable version. Defaults to FIREBASE_RULES_EXECUTABLE_V1.",
-	//       "enum": [
-	//         "RELEASE_EXECUTABLE_VERSION_UNSPECIFIED",
-	//         "FIREBASE_RULES_EXECUTABLE_V1",
-	//         "FIREBASE_RULES_EXECUTABLE_V2"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Executable format unspecified. Defaults to FIREBASE_RULES_EXECUTABLE_V1",
-	//         "Firebase Rules syntax 'rules2' executable versions: Custom AST for use with Java clients.",
-	//         "CEL-based executable for use with C++ clients."
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. Resource name of the `Release`. Format: `projects/{project_id}/releases/{release_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/releases/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:getExecutable",
-	//   "response": {
-	//     "$ref": "GetReleaseExecutableResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase",
-	//     "https://www.googleapis.com/auth/firebase.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "firebaserules.projects.releases.list":
 
 type ProjectsReleasesListCall struct {
 	s            *Service
@@ -1956,83 +1520,77 @@ type ProjectsReleasesListCall struct {
 	header_      http.Header
 }
 
-// List: List the `Release` values for a project. This list may
-// optionally be filtered by `Release` name, `Ruleset` name, `TestSuite`
-// name, or any combination thereof.
+// List: List the `Release` values for a project. This list may optionally be
+// filtered by `Release` name, `Ruleset` name, `TestSuite` name, or any
+// combination thereof.
 //
-//   - name: Resource name for the project. Format:
-//     `projects/{project_id}`.
+// - name: Resource name for the project. Format: `projects/{project_id}`.
 func (r *ProjectsReleasesService) List(name string) *ProjectsReleasesListCall {
 	c := &ProjectsReleasesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": `Release` filter. The
-// list method supports filters with restrictions on the `Release.name`,
-// and `Release.ruleset_name`. Example 1: A filter of 'name=prod*' might
-// return `Release`s with names within 'projects/foo' prefixed with
-// 'prod': Name -> Ruleset Name: * projects/foo/releases/prod ->
-// projects/foo/rulesets/uuid1234 * projects/foo/releases/prod/v1 ->
-// projects/foo/rulesets/uuid1234 * projects/foo/releases/prod/v2 ->
-// projects/foo/rulesets/uuid8888 Example 2: A filter of `name=prod*
-// ruleset_name=uuid1234` would return only `Release` instances for
-// 'projects/foo' with names prefixed with 'prod' referring to the same
-// `Ruleset` name of 'uuid1234': Name -> Ruleset Name: *
+// Filter sets the optional parameter "filter": `Release` filter. The list
+// method supports filters with restrictions on the `Release.name`, and
+// `Release.ruleset_name`. Example 1: A filter of 'name=prod*' might return
+// `Release`s with names within 'projects/foo' prefixed with 'prod': Name ->
+// Ruleset Name: * projects/foo/releases/prod -> projects/foo/rulesets/uuid1234
+// * projects/foo/releases/prod/v1 -> projects/foo/rulesets/uuid1234 *
+// projects/foo/releases/prod/v2 -> projects/foo/rulesets/uuid8888 Example 2: A
+// filter of `name=prod* ruleset_name=uuid1234` would return only `Release`
+// instances for 'projects/foo' with names prefixed with 'prod' referring to
+// the same `Ruleset` name of 'uuid1234': Name -> Ruleset Name: *
 // projects/foo/releases/prod -> projects/foo/rulesets/1234 *
-// projects/foo/releases/prod/v1 -> projects/foo/rulesets/1234 In the
-// examples, the filter parameters refer to the search filters are
-// relative to the project. Fully qualified prefixed may also be used.
+// projects/foo/releases/prod/v1 -> projects/foo/rulesets/1234 In the examples,
+// the filter parameters refer to the search filters are relative to the
+// project. Fully qualified prefixed may also be used.
 func (c *ProjectsReleasesListCall) Filter(filter string) *ProjectsReleasesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Page size to load.
-// Maximum of 100. Defaults to 10. Note: `page_size` is just a hint and
-// the service may choose to load fewer than `page_size` results due to
-// the size of the output. To traverse all of the releases, the caller
-// should iterate until the `page_token` on the response is empty.
+// PageSize sets the optional parameter "pageSize": Page size to load. Maximum
+// of 100. Defaults to 10. Note: `page_size` is just a hint and the service may
+// choose to load fewer than `page_size` results due to the size of the output.
+// To traverse all of the releases, the caller should iterate until the
+// `page_token` on the response is empty.
 func (c *ProjectsReleasesListCall) PageSize(pageSize int64) *ProjectsReleasesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Next page token
-// for the next batch of `Release` instances.
+// PageToken sets the optional parameter "pageToken": Next page token for the
+// next batch of `Release` instances.
 func (c *ProjectsReleasesListCall) PageToken(pageToken string) *ProjectsReleasesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsReleasesListCall) Fields(s ...googleapi.Field) *ProjectsReleasesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsReleasesListCall) IfNoneMatch(entityTag string) *ProjectsReleasesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsReleasesListCall) Context(ctx context.Context) *ProjectsReleasesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsReleasesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2041,12 +1599,7 @@ func (c *ProjectsReleasesListCall) Header() http.Header {
 }
 
 func (c *ProjectsReleasesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2067,12 +1620,11 @@ func (c *ProjectsReleasesListCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "firebaserules.projects.releases.list" call.
-// Exactly one of *ListReleasesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListReleasesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListReleasesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsReleasesListCall) Do(opts ...googleapi.CallOption) (*ListReleasesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2103,50 +1655,6 @@ func (c *ProjectsReleasesListCall) Do(opts ...googleapi.CallOption) (*ListReleas
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List the `Release` values for a project. This list may optionally be filtered by `Release` name, `Ruleset` name, `TestSuite` name, or any combination thereof.",
-	//   "flatPath": "v1/projects/{projectsId}/releases",
-	//   "httpMethod": "GET",
-	//   "id": "firebaserules.projects.releases.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "`Release` filter. The list method supports filters with restrictions on the `Release.name`, and `Release.ruleset_name`. Example 1: A filter of 'name=prod*' might return `Release`s with names within 'projects/foo' prefixed with 'prod': Name -\u003e Ruleset Name: * projects/foo/releases/prod -\u003e projects/foo/rulesets/uuid1234 * projects/foo/releases/prod/v1 -\u003e projects/foo/rulesets/uuid1234 * projects/foo/releases/prod/v2 -\u003e projects/foo/rulesets/uuid8888 Example 2: A filter of `name=prod* ruleset_name=uuid1234` would return only `Release` instances for 'projects/foo' with names prefixed with 'prod' referring to the same `Ruleset` name of 'uuid1234': Name -\u003e Ruleset Name: * projects/foo/releases/prod -\u003e projects/foo/rulesets/1234 * projects/foo/releases/prod/v1 -\u003e projects/foo/rulesets/1234 In the examples, the filter parameters refer to the search filters are relative to the project. Fully qualified prefixed may also be used.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. Resource name for the project. Format: `projects/{project_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Page size to load. Maximum of 100. Defaults to 10. Note: `page_size` is just a hint and the service may choose to load fewer than `page_size` results due to the size of the output. To traverse all of the releases, the caller should iterate until the `page_token` on the response is empty.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Next page token for the next batch of `Release` instances.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}/releases",
-	//   "response": {
-	//     "$ref": "ListReleasesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase",
-	//     "https://www.googleapis.com/auth/firebase.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2154,7 +1662,7 @@ func (c *ProjectsReleasesListCall) Do(opts ...googleapi.CallOption) (*ListReleas
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsReleasesListCall) Pages(ctx context.Context, f func(*ListReleasesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2170,8 +1678,6 @@ func (c *ProjectsReleasesListCall) Pages(ctx context.Context, f func(*ListReleas
 	}
 }
 
-// method id "firebaserules.projects.releases.patch":
-
 type ProjectsReleasesPatchCall struct {
 	s                    *Service
 	name                 string
@@ -2181,12 +1687,12 @@ type ProjectsReleasesPatchCall struct {
 	header_              http.Header
 }
 
-// Patch: Update a `Release` via PATCH. Only updates to `ruleset_name`
-// will be honored. `Release` rename is not supported. To create a
-// `Release` use the CreateRelease method.
+// Patch: Update a `Release` via PATCH. Only updates to `ruleset_name` will be
+// honored. `Release` rename is not supported. To create a `Release` use the
+// CreateRelease method.
 //
-//   - name: Resource name for the project which owns this `Release`.
-//     Format: `projects/{project_id}`.
+//   - name: Resource name for the project which owns this `Release`. Format:
+//     `projects/{project_id}`.
 func (r *ProjectsReleasesService) Patch(name string, updatereleaserequest *UpdateReleaseRequest) *ProjectsReleasesPatchCall {
 	c := &ProjectsReleasesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2195,23 +1701,21 @@ func (r *ProjectsReleasesService) Patch(name string, updatereleaserequest *Updat
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsReleasesPatchCall) Fields(s ...googleapi.Field) *ProjectsReleasesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsReleasesPatchCall) Context(ctx context.Context) *ProjectsReleasesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsReleasesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2220,18 +1724,12 @@ func (c *ProjectsReleasesPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsReleasesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.updatereleaserequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -2248,12 +1746,10 @@ func (c *ProjectsReleasesPatchCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "firebaserules.projects.releases.patch" call.
-// Exactly one of *Release or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Release.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Release.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsReleasesPatchCall) Do(opts ...googleapi.CallOption) (*Release, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2284,39 +1780,7 @@ func (c *ProjectsReleasesPatchCall) Do(opts ...googleapi.CallOption) (*Release, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update a `Release` via PATCH. Only updates to `ruleset_name` will be honored. `Release` rename is not supported. To create a `Release` use the CreateRelease method.",
-	//   "flatPath": "v1/projects/{projectsId}/releases/{releasesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "firebaserules.projects.releases.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name for the project which owns this `Release`. Format: `projects/{project_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/releases/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "UpdateReleaseRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Release"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaserules.projects.rulesets.create":
 
 type ProjectsRulesetsCreateCall struct {
 	s          *Service
@@ -2327,11 +1791,11 @@ type ProjectsRulesetsCreateCall struct {
 	header_    http.Header
 }
 
-// Create: Create a `Ruleset` from `Source`. The `Ruleset` is given a
-// unique generated name which is returned to the caller. `Source`
-// containing syntactic or semantics errors will result in an error
-// response indicating the first error encountered. For a detailed view
-// of `Source` issues, use TestRuleset.
+// Create: Create a `Ruleset` from `Source`. The `Ruleset` is given a unique
+// generated name which is returned to the caller. `Source` containing
+// syntactic or semantics errors will result in an error response indicating
+// the first error encountered. For a detailed view of `Source` issues, use
+// TestRuleset.
 //
 //   - name: Resource name for Project which owns this `Ruleset`. Format:
 //     `projects/{project_id}`.
@@ -2343,23 +1807,21 @@ func (r *ProjectsRulesetsService) Create(name string, ruleset *Ruleset) *Project
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsRulesetsCreateCall) Fields(s ...googleapi.Field) *ProjectsRulesetsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsRulesetsCreateCall) Context(ctx context.Context) *ProjectsRulesetsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsRulesetsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2368,18 +1830,12 @@ func (c *ProjectsRulesetsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsRulesetsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.ruleset)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/rulesets")
@@ -2396,12 +1852,10 @@ func (c *ProjectsRulesetsCreateCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "firebaserules.projects.rulesets.create" call.
-// Exactly one of *Ruleset or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Ruleset.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Ruleset.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsRulesetsCreateCall) Do(opts ...googleapi.CallOption) (*Ruleset, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2432,39 +1886,7 @@ func (c *ProjectsRulesetsCreateCall) Do(opts ...googleapi.CallOption) (*Ruleset,
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create a `Ruleset` from `Source`. The `Ruleset` is given a unique generated name which is returned to the caller. `Source` containing syntactic or semantics errors will result in an error response indicating the first error encountered. For a detailed view of `Source` issues, use TestRuleset.",
-	//   "flatPath": "v1/projects/{projectsId}/rulesets",
-	//   "httpMethod": "POST",
-	//   "id": "firebaserules.projects.rulesets.create",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name for Project which owns this `Ruleset`. Format: `projects/{project_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}/rulesets",
-	//   "request": {
-	//     "$ref": "Ruleset"
-	//   },
-	//   "response": {
-	//     "$ref": "Ruleset"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaserules.projects.rulesets.delete":
 
 type ProjectsRulesetsDeleteCall struct {
 	s          *Service
@@ -2474,8 +1896,8 @@ type ProjectsRulesetsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Delete a `Ruleset` by resource name. If the `Ruleset` is
-// referenced by a `Release` the operation will fail.
+// Delete: Delete a `Ruleset` by resource name. If the `Ruleset` is referenced
+// by a `Release` the operation will fail.
 //
 //   - name: Resource name for the ruleset to delete. Format:
 //     `projects/{project_id}/rulesets/{ruleset_id}`.
@@ -2486,23 +1908,21 @@ func (r *ProjectsRulesetsService) Delete(name string) *ProjectsRulesetsDeleteCal
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsRulesetsDeleteCall) Fields(s ...googleapi.Field) *ProjectsRulesetsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsRulesetsDeleteCall) Context(ctx context.Context) *ProjectsRulesetsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsRulesetsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2511,12 +1931,7 @@ func (c *ProjectsRulesetsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsRulesetsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2534,12 +1949,10 @@ func (c *ProjectsRulesetsDeleteCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "firebaserules.projects.rulesets.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsRulesetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2570,36 +1983,7 @@ func (c *ProjectsRulesetsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, e
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete a `Ruleset` by resource name. If the `Ruleset` is referenced by a `Release` the operation will fail.",
-	//   "flatPath": "v1/projects/{projectsId}/rulesets/{rulesetsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "firebaserules.projects.rulesets.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name for the ruleset to delete. Format: `projects/{project_id}/rulesets/{ruleset_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/rulesets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase"
-	//   ]
-	// }
-
 }
-
-// method id "firebaserules.projects.rulesets.get":
 
 type ProjectsRulesetsGetCall struct {
 	s            *Service
@@ -2621,33 +2005,29 @@ func (r *ProjectsRulesetsService) Get(name string) *ProjectsRulesetsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsRulesetsGetCall) Fields(s ...googleapi.Field) *ProjectsRulesetsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsRulesetsGetCall) IfNoneMatch(entityTag string) *ProjectsRulesetsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsRulesetsGetCall) Context(ctx context.Context) *ProjectsRulesetsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsRulesetsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2656,12 +2036,7 @@ func (c *ProjectsRulesetsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsRulesetsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2682,12 +2057,10 @@ func (c *ProjectsRulesetsGetCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "firebaserules.projects.rulesets.get" call.
-// Exactly one of *Ruleset or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Ruleset.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Ruleset.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsRulesetsGetCall) Do(opts ...googleapi.CallOption) (*Ruleset, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2718,37 +2091,7 @@ func (c *ProjectsRulesetsGetCall) Do(opts ...googleapi.CallOption) (*Ruleset, er
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get a `Ruleset` by name including the full `Source` contents.",
-	//   "flatPath": "v1/projects/{projectsId}/rulesets/{rulesetsId}",
-	//   "httpMethod": "GET",
-	//   "id": "firebaserules.projects.rulesets.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name for the ruleset to get. Format: `projects/{project_id}/rulesets/{ruleset_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/rulesets/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Ruleset"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase",
-	//     "https://www.googleapis.com/auth/firebase.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "firebaserules.projects.rulesets.list":
 
 type ProjectsRulesetsListCall struct {
 	s            *Service
@@ -2759,73 +2102,68 @@ type ProjectsRulesetsListCall struct {
 	header_      http.Header
 }
 
-// List: List `Ruleset` metadata only and optionally filter the results
-// by `Ruleset` name. The full `Source` contents of a `Ruleset` may be
-// retrieved with GetRuleset.
+// List: List `Ruleset` metadata only and optionally filter the results by
+// `Ruleset` name. The full `Source` contents of a `Ruleset` may be retrieved
+// with GetRuleset.
 //
-//   - name: Resource name for the project. Format:
-//     `projects/{project_id}`.
+// - name: Resource name for the project. Format: `projects/{project_id}`.
 func (r *ProjectsRulesetsService) List(name string) *ProjectsRulesetsListCall {
 	c := &ProjectsRulesetsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": `Ruleset` filter. The
-// list method supports filters with restrictions on `Ruleset.name`.
-// Filters on `Ruleset.create_time` should use the `date` function which
-// parses strings that conform to the RFC 3339 date/time specifications.
-// Example: `create_time > date("2017-01-01T00:00:00Z") AND name=UUID-*`
+// Filter sets the optional parameter "filter": `Ruleset` filter. The list
+// method supports filters with restrictions on `Ruleset.name`. Filters on
+// `Ruleset.create_time` should use the `date` function which parses strings
+// that conform to the RFC 3339 date/time specifications. Example: `create_time
+// > date("2017-01-01T00:00:00Z") AND name=UUID-*`
 func (c *ProjectsRulesetsListCall) Filter(filter string) *ProjectsRulesetsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Page size to load.
-// Maximum of 100. Defaults to 10. Note: `page_size` is just a hint and
-// the service may choose to load less than `page_size` due to the size
-// of the output. To traverse all of the releases, caller should iterate
-// until the `page_token` is empty.
+// PageSize sets the optional parameter "pageSize": Page size to load. Maximum
+// of 100. Defaults to 10. Note: `page_size` is just a hint and the service may
+// choose to load less than `page_size` due to the size of the output. To
+// traverse all of the releases, caller should iterate until the `page_token`
+// is empty.
 func (c *ProjectsRulesetsListCall) PageSize(pageSize int64) *ProjectsRulesetsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Next page token
-// for loading the next batch of `Ruleset` instances.
+// PageToken sets the optional parameter "pageToken": Next page token for
+// loading the next batch of `Ruleset` instances.
 func (c *ProjectsRulesetsListCall) PageToken(pageToken string) *ProjectsRulesetsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsRulesetsListCall) Fields(s ...googleapi.Field) *ProjectsRulesetsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsRulesetsListCall) IfNoneMatch(entityTag string) *ProjectsRulesetsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsRulesetsListCall) Context(ctx context.Context) *ProjectsRulesetsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsRulesetsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2834,12 +2172,7 @@ func (c *ProjectsRulesetsListCall) Header() http.Header {
 }
 
 func (c *ProjectsRulesetsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2860,12 +2193,11 @@ func (c *ProjectsRulesetsListCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "firebaserules.projects.rulesets.list" call.
-// Exactly one of *ListRulesetsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListRulesetsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListRulesetsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsRulesetsListCall) Do(opts ...googleapi.CallOption) (*ListRulesetsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2896,50 +2228,6 @@ func (c *ProjectsRulesetsListCall) Do(opts ...googleapi.CallOption) (*ListRulese
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List `Ruleset` metadata only and optionally filter the results by `Ruleset` name. The full `Source` contents of a `Ruleset` may be retrieved with GetRuleset.",
-	//   "flatPath": "v1/projects/{projectsId}/rulesets",
-	//   "httpMethod": "GET",
-	//   "id": "firebaserules.projects.rulesets.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "`Ruleset` filter. The list method supports filters with restrictions on `Ruleset.name`. Filters on `Ruleset.create_time` should use the `date` function which parses strings that conform to the RFC 3339 date/time specifications. Example: `create_time \u003e date(\"2017-01-01T00:00:00Z\") AND name=UUID-*`",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. Resource name for the project. Format: `projects/{project_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Page size to load. Maximum of 100. Defaults to 10. Note: `page_size` is just a hint and the service may choose to load less than `page_size` due to the size of the output. To traverse all of the releases, caller should iterate until the `page_token` is empty.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Next page token for loading the next batch of `Ruleset` instances.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}/rulesets",
-	//   "response": {
-	//     "$ref": "ListRulesetsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/firebase",
-	//     "https://www.googleapis.com/auth/firebase.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2947,7 +2235,7 @@ func (c *ProjectsRulesetsListCall) Do(opts ...googleapi.CallOption) (*ListRulese
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsRulesetsListCall) Pages(ctx context.Context, f func(*ListRulesetsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

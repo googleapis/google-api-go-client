@@ -103,8 +103,8 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 
 	// View and manage your Google Cloud Datastore data
@@ -224,186 +224,149 @@ type ProjectsDatabasesCollectionGroupsIndexesService struct {
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleFirestoreAdminV1CreateDatabaseMetadata: Metadata related to the
-// create database operation.
+// GoogleFirestoreAdminV1CreateDatabaseMetadata: Metadata related to the create
+// database operation.
 type GoogleFirestoreAdminV1CreateDatabaseMetadata struct {
 }
 
-// GoogleFirestoreAdminV1DeleteDatabaseMetadata: Metadata related to the
-// delete database operation.
+// GoogleFirestoreAdminV1DeleteDatabaseMetadata: Metadata related to the delete
+// database operation.
 type GoogleFirestoreAdminV1DeleteDatabaseMetadata struct {
 }
 
-// GoogleFirestoreAdminV1Progress: Describes the progress of the
-// operation. Unit of work is generic and must be interpreted based on
-// where Progress is used.
+// GoogleFirestoreAdminV1Progress: Describes the progress of the operation.
+// Unit of work is generic and must be interpreted based on where Progress is
+// used.
 type GoogleFirestoreAdminV1Progress struct {
 	// CompletedWork: The amount of work completed.
 	CompletedWork int64 `json:"completedWork,omitempty,string"`
-
 	// EstimatedWork: The amount of work estimated.
 	EstimatedWork int64 `json:"estimatedWork,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "CompletedWork") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompletedWork") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CompletedWork") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1Progress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1Progress
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirestoreAdminV1RestoreDatabaseMetadata: Metadata for the
-// long-running operation from the RestoreDatabase request.
+// GoogleFirestoreAdminV1RestoreDatabaseMetadata: Metadata for the long-running
+// operation from the RestoreDatabase request.
 type GoogleFirestoreAdminV1RestoreDatabaseMetadata struct {
 	// Backup: The name of the backup restoring from.
 	Backup string `json:"backup,omitempty"`
-
 	// Database: The name of the database being restored to.
 	Database string `json:"database,omitempty"`
-
 	// EndTime: The time the restore finished, unset for ongoing restores.
 	EndTime string `json:"endTime,omitempty"`
-
 	// OperationState: The operation state of the restore.
 	//
 	// Possible values:
 	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
 	//   "INITIALIZING" - Request is being prepared for processing.
 	//   "PROCESSING" - Request is actively being processed.
-	//   "CANCELLING" - Request is in the process of being cancelled after
-	// user called google.longrunning.Operations.CancelOperation on the
-	// operation.
-	//   "FINALIZING" - Request has been processed and is in its
-	// finalization stage.
+	//   "CANCELLING" - Request is in the process of being cancelled after user
+	// called google.longrunning.Operations.CancelOperation on the operation.
+	//   "FINALIZING" - Request has been processed and is in its finalization
+	// stage.
 	//   "SUCCESSFUL" - Request has completed successfully.
-	//   "FAILED" - Request has finished being processed, but encountered an
-	// error.
-	//   "CANCELLED" - Request has finished being cancelled after user
-	// called google.longrunning.Operations.CancelOperation.
+	//   "FAILED" - Request has finished being processed, but encountered an error.
+	//   "CANCELLED" - Request has finished being cancelled after user called
+	// google.longrunning.Operations.CancelOperation.
 	OperationState string `json:"operationState,omitempty"`
-
-	// ProgressPercentage: How far along the restore is as an estimated
-	// percentage of remaining time.
+	// ProgressPercentage: How far along the restore is as an estimated percentage
+	// of remaining time.
 	ProgressPercentage *GoogleFirestoreAdminV1Progress `json:"progressPercentage,omitempty"`
-
 	// StartTime: The time the restore was started.
 	StartTime string `json:"startTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Backup") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Backup") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1RestoreDatabaseMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1RestoreDatabaseMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirestoreAdminV1UpdateDatabaseMetadata: Metadata related to the
-// update database operation.
+// GoogleFirestoreAdminV1UpdateDatabaseMetadata: Metadata related to the update
+// database operation.
 type GoogleFirestoreAdminV1UpdateDatabaseMetadata struct {
 }
 
 // GoogleFirestoreAdminV1beta2ExportDocumentsMetadata: Metadata for
-// google.longrunning.Operation results from
-// FirestoreAdmin.ExportDocuments.
+// google.longrunning.Operation results from FirestoreAdmin.ExportDocuments.
 type GoogleFirestoreAdminV1beta2ExportDocumentsMetadata struct {
 	// CollectionIds: Which collection ids are being exported.
 	CollectionIds []string `json:"collectionIds,omitempty"`
-
-	// EndTime: The time this operation completed. Will be unset if
-	// operation still in progress.
+	// EndTime: The time this operation completed. Will be unset if operation still
+	// in progress.
 	EndTime string `json:"endTime,omitempty"`
-
 	// OperationState: The state of the export operation.
 	//
 	// Possible values:
 	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
 	//   "INITIALIZING" - Request is being prepared for processing.
 	//   "PROCESSING" - Request is actively being processed.
-	//   "CANCELLING" - Request is in the process of being cancelled after
-	// user called google.longrunning.Operations.CancelOperation on the
-	// operation.
-	//   "FINALIZING" - Request has been processed and is in its
-	// finalization stage.
+	//   "CANCELLING" - Request is in the process of being cancelled after user
+	// called google.longrunning.Operations.CancelOperation on the operation.
+	//   "FINALIZING" - Request has been processed and is in its finalization
+	// stage.
 	//   "SUCCESSFUL" - Request has completed successfully.
-	//   "FAILED" - Request has finished being processed, but encountered an
-	// error.
-	//   "CANCELLED" - Request has finished being cancelled after user
-	// called google.longrunning.Operations.CancelOperation.
+	//   "FAILED" - Request has finished being processed, but encountered an error.
+	//   "CANCELLED" - Request has finished being cancelled after user called
+	// google.longrunning.Operations.CancelOperation.
 	OperationState string `json:"operationState,omitempty"`
-
 	// OutputUriPrefix: Where the entities are being exported to.
 	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
-
 	// ProgressBytes: The progress, in bytes, of this operation.
 	ProgressBytes *GoogleFirestoreAdminV1beta2Progress `json:"progressBytes,omitempty"`
-
 	// ProgressDocuments: The progress, in documents, of this operation.
 	ProgressDocuments *GoogleFirestoreAdminV1beta2Progress `json:"progressDocuments,omitempty"`
-
 	// StartTime: The time this operation started.
 	StartTime string `json:"startTime,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CollectionIds") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CollectionIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1beta2ExportDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2ExportDocumentsMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2ExportDocumentsRequest: The request for
@@ -412,129 +375,105 @@ type GoogleFirestoreAdminV1beta2ExportDocumentsRequest struct {
 	// CollectionIds: Which collection ids to export. Unspecified means all
 	// collections.
 	CollectionIds []string `json:"collectionIds,omitempty"`
-
 	// OutputUriPrefix: The output URI. Currently only supports Google Cloud
 	// Storage URIs of the form: `gs://BUCKET_NAME[/NAMESPACE_PATH]`, where
 	// `BUCKET_NAME` is the name of the Google Cloud Storage bucket and
-	// `NAMESPACE_PATH` is an optional Google Cloud Storage namespace path.
-	// When choosing a name, be sure to consider Google Cloud Storage naming
-	// guidelines: https://cloud.google.com/storage/docs/naming. If the URI
-	// is a bucket (without a namespace path), a prefix will be generated
-	// based on the start time.
+	// `NAMESPACE_PATH` is an optional Google Cloud Storage namespace path. When
+	// choosing a name, be sure to consider Google Cloud Storage naming guidelines:
+	// https://cloud.google.com/storage/docs/naming. If the URI is a bucket
+	// (without a namespace path), a prefix will be generated based on the start
+	// time.
 	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CollectionIds") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CollectionIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1beta2ExportDocumentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2ExportDocumentsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2ExportDocumentsResponse: Returned in the
 // google.longrunning.Operation response field.
 type GoogleFirestoreAdminV1beta2ExportDocumentsResponse struct {
-	// OutputUriPrefix: Location of the output files. This can be used to
-	// begin an import into Cloud Firestore (this project or another
-	// project) after the operation completes successfully.
+	// OutputUriPrefix: Location of the output files. This can be used to begin an
+	// import into Cloud Firestore (this project or another project) after the
+	// operation completes successfully.
 	OutputUriPrefix string `json:"outputUriPrefix,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "OutputUriPrefix") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "OutputUriPrefix") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "OutputUriPrefix") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1beta2ExportDocumentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2ExportDocumentsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirestoreAdminV1beta2Field: Represents a single field in the
-// database. Fields are grouped by their "Collection Group", which
-// represent all collections in the database with the same id.
+// GoogleFirestoreAdminV1beta2Field: Represents a single field in the database.
+// Fields are grouped by their "Collection Group", which represent all
+// collections in the database with the same id.
 type GoogleFirestoreAdminV1beta2Field struct {
 	// IndexConfig: The index configuration for this field. If unset, field
-	// indexing will revert to the configuration defined by the
-	// `ancestor_field`. To explicitly remove all indexes for this field,
-	// specify an index config with an empty list of indexes.
+	// indexing will revert to the configuration defined by the `ancestor_field`.
+	// To explicitly remove all indexes for this field, specify an index config
+	// with an empty list of indexes.
 	IndexConfig *GoogleFirestoreAdminV1beta2IndexConfig `json:"indexConfig,omitempty"`
-
 	// Name: A field name of the form
-	// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-	// ction_id}/fields/{field_path}` A field path may be a simple field
-	// name, e.g. `address` or a path to fields within map_value , e.g.
-	// `address.city`, or a special field path. The only valid special field
-	// is `*`, which represents any field. Field paths may be quoted using `
-	// (backtick). The only character that needs to be escaped within a
-	// quoted field path is the backtick character itself, escaped using a
-	// backslash. Special characters in field paths that must be quoted
-	// include: `*`, `.`, ``` (backtick), `[`, `]`, as well as any ascii
-	// symbolic characters. Examples: (Note: Comments here are written in
-	// markdown syntax, so there is an additional layer of backticks to
+	// `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_i
+	// d}/fields/{field_path}` A field path may be a simple field name, e.g.
+	// `address` or a path to fields within map_value , e.g. `address.city`, or a
+	// special field path. The only valid special field is `*`, which represents
+	// any field. Field paths may be quoted using ` (backtick). The only character
+	// that needs to be escaped within a quoted field path is the backtick
+	// character itself, escaped using a backslash. Special characters in field
+	// paths that must be quoted include: `*`, `.`, ``` (backtick), `[`, `]`, as
+	// well as any ascii symbolic characters. Examples: (Note: Comments here are
+	// written in markdown syntax, so there is an additional layer of backticks to
 	// represent a code block) `\`address.city\`` represents a field named
-	// `address.city`, not the map key `city` in the field `address`.
-	// `\`*\`` represents a field named `*`, not any field. A special
-	// `Field` contains the default indexing settings for all fields. This
-	// field's resource name is:
-	// `projects/{project_id}/databases/{database_id}/collectionGroups/__defa
-	// ult__/fields/*` Indexes defined on this `Field` will be applied to
-	// all fields which do not have their own `Field` index configuration.
+	// `address.city`, not the map key `city` in the field `address`. `\`*\``
+	// represents a field named `*`, not any field. A special `Field` contains the
+	// default indexing settings for all fields. This field's resource name is:
+	// `projects/{project_id}/databases/{database_id}/collectionGroups/__default__/f
+	// ields/*` Indexes defined on this `Field` will be applied to all fields which
+	// do not have their own `Field` index configuration.
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "IndexConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IndexConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IndexConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1beta2Field) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2Field
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2FieldOperationMetadata: Metadata for
@@ -542,130 +481,100 @@ func (s *GoogleFirestoreAdminV1beta2Field) MarshalJSON() ([]byte, error) {
 type GoogleFirestoreAdminV1beta2FieldOperationMetadata struct {
 	// BytesProgress: The progress, in bytes, of this operation.
 	BytesProgress *GoogleFirestoreAdminV1beta2Progress `json:"bytesProgress,omitempty"`
-
 	// DocumentProgress: The progress, in documents, of this operation.
 	DocumentProgress *GoogleFirestoreAdminV1beta2Progress `json:"documentProgress,omitempty"`
-
-	// EndTime: The time this operation completed. Will be unset if
-	// operation still in progress.
+	// EndTime: The time this operation completed. Will be unset if operation still
+	// in progress.
 	EndTime string `json:"endTime,omitempty"`
-
-	// Field: The field resource that this operation is acting on. For
-	// example:
-	// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-	// ction_id}/fields/{field_path}`
+	// Field: The field resource that this operation is acting on. For example:
+	// `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_i
+	// d}/fields/{field_path}`
 	Field string `json:"field,omitempty"`
-
-	// IndexConfigDeltas: A list of IndexConfigDelta, which describe the
-	// intent of this operation.
+	// IndexConfigDeltas: A list of IndexConfigDelta, which describe the intent of
+	// this operation.
 	IndexConfigDeltas []*GoogleFirestoreAdminV1beta2IndexConfigDelta `json:"indexConfigDeltas,omitempty"`
-
 	// StartTime: The time this operation started.
 	StartTime string `json:"startTime,omitempty"`
-
 	// State: The state of the operation.
 	//
 	// Possible values:
 	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
 	//   "INITIALIZING" - Request is being prepared for processing.
 	//   "PROCESSING" - Request is actively being processed.
-	//   "CANCELLING" - Request is in the process of being cancelled after
-	// user called google.longrunning.Operations.CancelOperation on the
-	// operation.
-	//   "FINALIZING" - Request has been processed and is in its
-	// finalization stage.
+	//   "CANCELLING" - Request is in the process of being cancelled after user
+	// called google.longrunning.Operations.CancelOperation on the operation.
+	//   "FINALIZING" - Request has been processed and is in its finalization
+	// stage.
 	//   "SUCCESSFUL" - Request has completed successfully.
-	//   "FAILED" - Request has finished being processed, but encountered an
-	// error.
-	//   "CANCELLED" - Request has finished being cancelled after user
-	// called google.longrunning.Operations.CancelOperation.
+	//   "FAILED" - Request has finished being processed, but encountered an error.
+	//   "CANCELLED" - Request has finished being cancelled after user called
+	// google.longrunning.Operations.CancelOperation.
 	State string `json:"state,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BytesProgress") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BytesProgress") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BytesProgress") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1beta2FieldOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2FieldOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2ImportDocumentsMetadata: Metadata for
-// google.longrunning.Operation results from
-// FirestoreAdmin.ImportDocuments.
+// google.longrunning.Operation results from FirestoreAdmin.ImportDocuments.
 type GoogleFirestoreAdminV1beta2ImportDocumentsMetadata struct {
 	// CollectionIds: Which collection ids are being imported.
 	CollectionIds []string `json:"collectionIds,omitempty"`
-
-	// EndTime: The time this operation completed. Will be unset if
-	// operation still in progress.
+	// EndTime: The time this operation completed. Will be unset if operation still
+	// in progress.
 	EndTime string `json:"endTime,omitempty"`
-
 	// InputUriPrefix: The location of the documents being imported.
 	InputUriPrefix string `json:"inputUriPrefix,omitempty"`
-
 	// OperationState: The state of the import operation.
 	//
 	// Possible values:
 	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
 	//   "INITIALIZING" - Request is being prepared for processing.
 	//   "PROCESSING" - Request is actively being processed.
-	//   "CANCELLING" - Request is in the process of being cancelled after
-	// user called google.longrunning.Operations.CancelOperation on the
-	// operation.
-	//   "FINALIZING" - Request has been processed and is in its
-	// finalization stage.
+	//   "CANCELLING" - Request is in the process of being cancelled after user
+	// called google.longrunning.Operations.CancelOperation on the operation.
+	//   "FINALIZING" - Request has been processed and is in its finalization
+	// stage.
 	//   "SUCCESSFUL" - Request has completed successfully.
-	//   "FAILED" - Request has finished being processed, but encountered an
-	// error.
-	//   "CANCELLED" - Request has finished being cancelled after user
-	// called google.longrunning.Operations.CancelOperation.
+	//   "FAILED" - Request has finished being processed, but encountered an error.
+	//   "CANCELLED" - Request has finished being cancelled after user called
+	// google.longrunning.Operations.CancelOperation.
 	OperationState string `json:"operationState,omitempty"`
-
 	// ProgressBytes: The progress, in bytes, of this operation.
 	ProgressBytes *GoogleFirestoreAdminV1beta2Progress `json:"progressBytes,omitempty"`
-
 	// ProgressDocuments: The progress, in documents, of this operation.
 	ProgressDocuments *GoogleFirestoreAdminV1beta2Progress `json:"progressDocuments,omitempty"`
-
 	// StartTime: The time this operation started.
 	StartTime string `json:"startTime,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CollectionIds") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CollectionIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1beta2ImportDocumentsMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2ImportDocumentsMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2ImportDocumentsRequest: The request for
@@ -674,322 +583,260 @@ type GoogleFirestoreAdminV1beta2ImportDocumentsRequest struct {
 	// CollectionIds: Which collection ids to import. Unspecified means all
 	// collections included in the import.
 	CollectionIds []string `json:"collectionIds,omitempty"`
-
 	// InputUriPrefix: Location of the exported files. This must match the
-	// output_uri_prefix of an ExportDocumentsResponse from an export that
-	// has completed successfully. See:
-	// google.firestore.admin.v1beta2.ExportDocumentsResponse.output_uri_pref
-	// ix.
+	// output_uri_prefix of an ExportDocumentsResponse from an export that has
+	// completed successfully. See:
+	// google.firestore.admin.v1beta2.ExportDocumentsResponse.output_uri_prefix.
 	InputUriPrefix string `json:"inputUriPrefix,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CollectionIds") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CollectionIds") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CollectionIds") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1beta2ImportDocumentsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2ImportDocumentsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirestoreAdminV1beta2Index: Cloud Firestore indexes enable
-// simple and complex queries against documents in a database.
+// GoogleFirestoreAdminV1beta2Index: Cloud Firestore indexes enable simple and
+// complex queries against documents in a database.
 type GoogleFirestoreAdminV1beta2Index struct {
-	// Fields: The fields supported by this index. For composite indexes,
-	// this is always 2 or more fields. The last field entry is always for
-	// the field path `__name__`. If, on creation, `__name__` was not
-	// specified as the last field, it will be added automatically with the
-	// same direction as that of the last field defined. If the final field
-	// in a composite index is not directional, the `__name__` will be
-	// ordered ASCENDING (unless explicitly specified). For single field
-	// indexes, this will always be exactly one entry with a field path
-	// equal to the field path of the associated field.
+	// Fields: The fields supported by this index. For composite indexes, this is
+	// always 2 or more fields. The last field entry is always for the field path
+	// `__name__`. If, on creation, `__name__` was not specified as the last field,
+	// it will be added automatically with the same direction as that of the last
+	// field defined. If the final field in a composite index is not directional,
+	// the `__name__` will be ordered ASCENDING (unless explicitly specified). For
+	// single field indexes, this will always be exactly one entry with a field
+	// path equal to the field path of the associated field.
 	Fields []*GoogleFirestoreAdminV1beta2IndexField `json:"fields,omitempty"`
-
-	// Name: Output only. A server defined name for this index. The form of
-	// this name for composite indexes will be:
-	// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-	// ction_id}/indexes/{composite_index_id}` For single field indexes,
-	// this field will be empty.
+	// Name: Output only. A server defined name for this index. The form of this
+	// name for composite indexes will be:
+	// `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_i
+	// d}/indexes/{composite_index_id}` For single field indexes, this field will
+	// be empty.
 	Name string `json:"name,omitempty"`
-
-	// QueryScope: Indexes with a collection query scope specified allow
-	// queries against a collection that is the child of a specific
-	// document, specified at query time, and that has the same collection
-	// id. Indexes with a collection group query scope specified allow
-	// queries against all collections descended from a specific document,
-	// specified at query time, and that have the same collection id as this
-	// index.
+	// QueryScope: Indexes with a collection query scope specified allow queries
+	// against a collection that is the child of a specific document, specified at
+	// query time, and that has the same collection id. Indexes with a collection
+	// group query scope specified allow queries against all collections descended
+	// from a specific document, specified at query time, and that have the same
+	// collection id as this index.
 	//
 	// Possible values:
-	//   "QUERY_SCOPE_UNSPECIFIED" - The query scope is unspecified. Not a
-	// valid option.
-	//   "COLLECTION" - Indexes with a collection query scope specified
-	// allow queries against a collection that is the child of a specific
-	// document, specified at query time, and that has the collection id
-	// specified by the index.
-	//   "COLLECTION_GROUP" - Indexes with a collection group query scope
-	// specified allow queries against all collections that has the
-	// collection id specified by the index.
+	//   "QUERY_SCOPE_UNSPECIFIED" - The query scope is unspecified. Not a valid
+	// option.
+	//   "COLLECTION" - Indexes with a collection query scope specified allow
+	// queries against a collection that is the child of a specific document,
+	// specified at query time, and that has the collection id specified by the
+	// index.
+	//   "COLLECTION_GROUP" - Indexes with a collection group query scope specified
+	// allow queries against all collections that has the collection id specified
+	// by the index.
 	QueryScope string `json:"queryScope,omitempty"`
-
 	// State: Output only. The serving state of the index.
 	//
 	// Possible values:
 	//   "STATE_UNSPECIFIED" - The state is unspecified.
-	//   "CREATING" - The index is being created. There is an active
-	// long-running operation for the index. The index is updated when
-	// writing a document. Some index data may exist.
-	//   "READY" - The index is ready to be used. The index is updated when
-	// writing a document. The index is fully populated from all stored
-	// documents it applies to.
-	//   "NEEDS_REPAIR" - The index was being created, but something went
-	// wrong. There is no active long-running operation for the index, and
-	// the most recently finished long-running operation failed. The index
-	// is not updated when writing a document. Some index data may exist.
-	// Use the google.longrunning.Operations API to determine why the
-	// operation that last attempted to create this index failed, then
-	// re-create the index.
+	//   "CREATING" - The index is being created. There is an active long-running
+	// operation for the index. The index is updated when writing a document. Some
+	// index data may exist.
+	//   "READY" - The index is ready to be used. The index is updated when writing
+	// a document. The index is fully populated from all stored documents it
+	// applies to.
+	//   "NEEDS_REPAIR" - The index was being created, but something went wrong.
+	// There is no active long-running operation for the index, and the most
+	// recently finished long-running operation failed. The index is not updated
+	// when writing a document. Some index data may exist. Use the
+	// google.longrunning.Operations API to determine why the operation that last
+	// attempted to create this index failed, then re-create the index.
 	State string `json:"state,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Fields") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Fields") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1beta2Index) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2Index
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirestoreAdminV1beta2IndexConfig: The index configuration for
-// this field.
+// GoogleFirestoreAdminV1beta2IndexConfig: The index configuration for this
+// field.
 type GoogleFirestoreAdminV1beta2IndexConfig struct {
-	// AncestorField: Output only. Specifies the resource name of the
-	// `Field` from which this field's index configuration is set (when
-	// `uses_ancestor_config` is true), or from which it *would* be set if
-	// this field had no index configuration (when `uses_ancestor_config` is
-	// false).
+	// AncestorField: Output only. Specifies the resource name of the `Field` from
+	// which this field's index configuration is set (when `uses_ancestor_config`
+	// is true), or from which it *would* be set if this field had no index
+	// configuration (when `uses_ancestor_config` is false).
 	AncestorField string `json:"ancestorField,omitempty"`
-
 	// Indexes: The indexes supported for this field.
 	Indexes []*GoogleFirestoreAdminV1beta2Index `json:"indexes,omitempty"`
-
-	// Reverting: Output only When true, the `Field`'s index configuration
-	// is in the process of being reverted. Once complete, the index config
-	// will transition to the same state as the field specified by
-	// `ancestor_field`, at which point `uses_ancestor_config` will be
-	// `true` and `reverting` will be `false`.
+	// Reverting: Output only When true, the `Field`'s index configuration is in
+	// the process of being reverted. Once complete, the index config will
+	// transition to the same state as the field specified by `ancestor_field`, at
+	// which point `uses_ancestor_config` will be `true` and `reverting` will be
+	// `false`.
 	Reverting bool `json:"reverting,omitempty"`
-
 	// UsesAncestorConfig: Output only. When true, the `Field`'s index
 	// configuration is set from the configuration specified by the
-	// `ancestor_field`. When false, the `Field`'s index configuration is
-	// defined explicitly.
+	// `ancestor_field`. When false, the `Field`'s index configuration is defined
+	// explicitly.
 	UsesAncestorConfig bool `json:"usesAncestorConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AncestorField") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AncestorField") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AncestorField") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1beta2IndexConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2IndexConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirestoreAdminV1beta2IndexConfigDelta: Information about an
-// index configuration change.
+// GoogleFirestoreAdminV1beta2IndexConfigDelta: Information about an index
+// configuration change.
 type GoogleFirestoreAdminV1beta2IndexConfigDelta struct {
 	// ChangeType: Specifies how the index is changing.
 	//
 	// Possible values:
-	//   "CHANGE_TYPE_UNSPECIFIED" - The type of change is not specified or
-	// known.
+	//   "CHANGE_TYPE_UNSPECIFIED" - The type of change is not specified or known.
 	//   "ADD" - The single field index is being added.
 	//   "REMOVE" - The single field index is being removed.
 	ChangeType string `json:"changeType,omitempty"`
-
 	// Index: The index being changed.
 	Index *GoogleFirestoreAdminV1beta2Index `json:"index,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ChangeType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ChangeType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ChangeType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1beta2IndexConfigDelta) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2IndexConfigDelta
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFirestoreAdminV1beta2IndexField: A field in an index. The
-// field_path describes which field is indexed, the value_mode describes
-// how the field value is indexed.
+// GoogleFirestoreAdminV1beta2IndexField: A field in an index. The field_path
+// describes which field is indexed, the value_mode describes how the field
+// value is indexed.
 type GoogleFirestoreAdminV1beta2IndexField struct {
 	// ArrayConfig: Indicates that this field supports operations on
 	// `array_value`s.
 	//
 	// Possible values:
-	//   "ARRAY_CONFIG_UNSPECIFIED" - The index does not support additional
-	// array queries.
+	//   "ARRAY_CONFIG_UNSPECIFIED" - The index does not support additional array
+	// queries.
 	//   "CONTAINS" - The index supports array containment queries.
 	ArrayConfig string `json:"arrayConfig,omitempty"`
-
-	// FieldPath: Can be __name__. For single field indexes, this must match
-	// the name of the field or may be omitted.
+	// FieldPath: Can be __name__. For single field indexes, this must match the
+	// name of the field or may be omitted.
 	FieldPath string `json:"fieldPath,omitempty"`
-
-	// Order: Indicates that this field supports ordering by the specified
-	// order or comparing using =, <, <=, >, >=.
+	// Order: Indicates that this field supports ordering by the specified order or
+	// comparing using =, <, <=, >, >=.
 	//
 	// Possible values:
-	//   "ORDER_UNSPECIFIED" - The ordering is unspecified. Not a valid
-	// option.
+	//   "ORDER_UNSPECIFIED" - The ordering is unspecified. Not a valid option.
 	//   "ASCENDING" - The field is ordered by ascending field value.
 	//   "DESCENDING" - The field is ordered by descending field value.
 	Order string `json:"order,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ArrayConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ArrayConfig") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ArrayConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1beta2IndexField) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2IndexField
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2IndexOperationMetadata: Metadata for
 // google.longrunning.Operation results from FirestoreAdmin.CreateIndex.
 type GoogleFirestoreAdminV1beta2IndexOperationMetadata struct {
-	// EndTime: The time this operation completed. Will be unset if
-	// operation still in progress.
+	// EndTime: The time this operation completed. Will be unset if operation still
+	// in progress.
 	EndTime string `json:"endTime,omitempty"`
-
-	// Index: The index resource that this operation is acting on. For
-	// example:
-	// `projects/{project_id}/databases/{database_id}/collectionGroups/{colle
-	// ction_id}/indexes/{index_id}`
+	// Index: The index resource that this operation is acting on. For example:
+	// `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_i
+	// d}/indexes/{index_id}`
 	Index string `json:"index,omitempty"`
-
 	// ProgressBytes: The progress, in bytes, of this operation.
 	ProgressBytes *GoogleFirestoreAdminV1beta2Progress `json:"progressBytes,omitempty"`
-
 	// ProgressDocuments: The progress, in documents, of this operation.
 	ProgressDocuments *GoogleFirestoreAdminV1beta2Progress `json:"progressDocuments,omitempty"`
-
 	// StartTime: The time this operation started.
 	StartTime string `json:"startTime,omitempty"`
-
 	// State: The state of the operation.
 	//
 	// Possible values:
 	//   "OPERATION_STATE_UNSPECIFIED" - Unspecified.
 	//   "INITIALIZING" - Request is being prepared for processing.
 	//   "PROCESSING" - Request is actively being processed.
-	//   "CANCELLING" - Request is in the process of being cancelled after
-	// user called google.longrunning.Operations.CancelOperation on the
-	// operation.
-	//   "FINALIZING" - Request has been processed and is in its
-	// finalization stage.
+	//   "CANCELLING" - Request is in the process of being cancelled after user
+	// called google.longrunning.Operations.CancelOperation on the operation.
+	//   "FINALIZING" - Request has been processed and is in its finalization
+	// stage.
 	//   "SUCCESSFUL" - Request has completed successfully.
-	//   "FAILED" - Request has finished being processed, but encountered an
-	// error.
-	//   "CANCELLED" - Request has finished being cancelled after user
-	// called google.longrunning.Operations.CancelOperation.
+	//   "FAILED" - Request has finished being processed, but encountered an error.
+	//   "CANCELLED" - Request has finished being cancelled after user called
+	// google.longrunning.Operations.CancelOperation.
 	State string `json:"state,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1beta2IndexOperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2IndexOperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2ListFieldsResponse: The response for
@@ -997,36 +844,28 @@ func (s *GoogleFirestoreAdminV1beta2IndexOperationMetadata) MarshalJSON() ([]byt
 type GoogleFirestoreAdminV1beta2ListFieldsResponse struct {
 	// Fields: The requested fields.
 	Fields []*GoogleFirestoreAdminV1beta2Field `json:"fields,omitempty"`
-
-	// NextPageToken: A page token that may be used to request another page
-	// of results. If blank, this is the last page.
+	// NextPageToken: A page token that may be used to request another page of
+	// results. If blank, this is the last page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Fields") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Fields") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Fields") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1beta2ListFieldsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2ListFieldsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2ListIndexesResponse: The response for
@@ -1034,178 +873,136 @@ func (s *GoogleFirestoreAdminV1beta2ListFieldsResponse) MarshalJSON() ([]byte, e
 type GoogleFirestoreAdminV1beta2ListIndexesResponse struct {
 	// Indexes: The requested indexes.
 	Indexes []*GoogleFirestoreAdminV1beta2Index `json:"indexes,omitempty"`
-
-	// NextPageToken: A page token that may be used to request another page
-	// of results. If blank, this is the last page.
+	// NextPageToken: A page token that may be used to request another page of
+	// results. If blank, this is the last page.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Indexes") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Indexes") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Indexes") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Indexes") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1beta2ListIndexesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2ListIndexesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleFirestoreAdminV1beta2Progress: Describes the progress of the
-// operation. Unit of work is generic and must be interpreted based on
-// where Progress is used.
+// operation. Unit of work is generic and must be interpreted based on where
+// Progress is used.
 type GoogleFirestoreAdminV1beta2Progress struct {
 	// CompletedWork: The amount of work completed.
 	CompletedWork int64 `json:"completedWork,omitempty,string"`
-
 	// EstimatedWork: The amount of work estimated.
 	EstimatedWork int64 `json:"estimatedWork,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "CompletedWork") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompletedWork") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CompletedWork") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFirestoreAdminV1beta2Progress) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFirestoreAdminV1beta2Progress
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleLongrunningOperation: This resource represents a long-running
 // operation that is the result of a network API call.
 type GoogleLongrunningOperation struct {
-	// Done: If the value is `false`, it means the operation is still in
-	// progress. If `true`, the operation is completed, and either `error`
-	// or `response` is available.
+	// Done: If the value is `false`, it means the operation is still in progress.
+	// If `true`, the operation is completed, and either `error` or `response` is
+	// available.
 	Done bool `json:"done,omitempty"`
-
-	// Error: The error result of the operation in case of failure or
-	// cancellation.
+	// Error: The error result of the operation in case of failure or cancellation.
 	Error *Status `json:"error,omitempty"`
-
 	// Metadata: Service-specific metadata associated with the operation. It
-	// typically contains progress information and common metadata such as
-	// create time. Some services might not provide such metadata. Any
-	// method that returns a long-running operation should document the
-	// metadata type, if any.
+	// typically contains progress information and common metadata such as create
+	// time. Some services might not provide such metadata. Any method that returns
+	// a long-running operation should document the metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// Name: The server-assigned name, which is only unique within the same
-	// service that originally returns it. If you use the default HTTP
-	// mapping, the `name` should be a resource name ending with
-	// `operations/{unique_id}`.
+	// Name: The server-assigned name, which is only unique within the same service
+	// that originally returns it. If you use the default HTTP mapping, the `name`
+	// should be a resource name ending with `operations/{unique_id}`.
 	Name string `json:"name,omitempty"`
-
-	// Response: The normal, successful response of the operation. If the
-	// original method returns no data on success, such as `Delete`, the
-	// response is `google.protobuf.Empty`. If the original method is
-	// standard `Get`/`Create`/`Update`, the response should be the
-	// resource. For other methods, the response should have the type
-	// `XxxResponse`, where `Xxx` is the original method name. For example,
-	// if the original method name is `TakeSnapshot()`, the inferred
-	// response type is `TakeSnapshotResponse`.
+	// Response: The normal, successful response of the operation. If the original
+	// method returns no data on success, such as `Delete`, the response is
+	// `google.protobuf.Empty`. If the original method is standard
+	// `Get`/`Create`/`Update`, the response should be the resource. For other
+	// methods, the response should have the type `XxxResponse`, where `Xxx` is the
+	// original method name. For example, if the original method name is
+	// `TakeSnapshot()`, the inferred response type is `TakeSnapshotResponse`.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Done") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Done") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Done") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleLongrunningOperation) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleLongrunningOperation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Status: The `Status` type defines a logical error model that is
-// suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
-// `Status` message contains three pieces of data: error code, error
-// message, and error details. You can find out more about this error
-// model and how to work with it in the API Design Guide
-// (https://cloud.google.com/apis/design/errors).
+// Status: The `Status` type defines a logical error model that is suitable for
+// different programming environments, including REST APIs and RPC APIs. It is
+// used by gRPC (https://github.com/grpc). Each `Status` message contains three
+// pieces of data: error code, error message, and error details. You can find
+// out more about this error model and how to work with it in the API Design
+// Guide (https://cloud.google.com/apis/design/errors).
 type Status struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "firestore.projects.databases.exportDocuments":
 
 type ProjectsDatabasesExportDocumentsCall struct {
 	s                                                 *Service
@@ -1216,14 +1013,14 @@ type ProjectsDatabasesExportDocumentsCall struct {
 	header_                                           http.Header
 }
 
-// ExportDocuments: Exports a copy of all or a subset of documents from
-// Google Cloud Firestore to another storage system, such as Google
-// Cloud Storage. Recent updates to documents may not be reflected in
-// the export. The export occurs in the background and its progress can
-// be monitored and managed via the Operation resource that is created.
-// The output of an export may only be used once the associated
-// operation is done. If an export operation is cancelled before
-// completion it may leave partial data behind in Google Cloud Storage.
+// ExportDocuments: Exports a copy of all or a subset of documents from Google
+// Cloud Firestore to another storage system, such as Google Cloud Storage.
+// Recent updates to documents may not be reflected in the export. The export
+// occurs in the background and its progress can be monitored and managed via
+// the Operation resource that is created. The output of an export may only be
+// used once the associated operation is done. If an export operation is
+// cancelled before completion it may leave partial data behind in Google Cloud
+// Storage.
 //
 //   - name: Database to export. Should be of the form:
 //     `projects/{project_id}/databases/{database_id}`.
@@ -1235,23 +1032,21 @@ func (r *ProjectsDatabasesService) ExportDocuments(name string, googlefirestorea
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatabasesExportDocumentsCall) Fields(s ...googleapi.Field) *ProjectsDatabasesExportDocumentsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatabasesExportDocumentsCall) Context(ctx context.Context) *ProjectsDatabasesExportDocumentsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatabasesExportDocumentsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1260,18 +1055,12 @@ func (c *ProjectsDatabasesExportDocumentsCall) Header() http.Header {
 }
 
 func (c *ProjectsDatabasesExportDocumentsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1beta2exportdocumentsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}:exportDocuments")
@@ -1288,12 +1077,11 @@ func (c *ProjectsDatabasesExportDocumentsCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "firestore.projects.databases.exportDocuments" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatabasesExportDocumentsCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1324,39 +1112,7 @@ func (c *ProjectsDatabasesExportDocumentsCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Exports a copy of all or a subset of documents from Google Cloud Firestore to another storage system, such as Google Cloud Storage. Recent updates to documents may not be reflected in the export. The export occurs in the background and its progress can be monitored and managed via the Operation resource that is created. The output of an export may only be used once the associated operation is done. If an export operation is cancelled before completion it may leave partial data behind in Google Cloud Storage.",
-	//   "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}:exportDocuments",
-	//   "httpMethod": "POST",
-	//   "id": "firestore.projects.databases.exportDocuments",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Database to export. Should be of the form: `projects/{project_id}/databases/{database_id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta2/{+name}:exportDocuments",
-	//   "request": {
-	//     "$ref": "GoogleFirestoreAdminV1beta2ExportDocumentsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/datastore"
-	//   ]
-	// }
-
 }
-
-// method id "firestore.projects.databases.importDocuments":
 
 type ProjectsDatabasesImportDocumentsCall struct {
 	s                                                 *Service
@@ -1367,12 +1123,12 @@ type ProjectsDatabasesImportDocumentsCall struct {
 	header_                                           http.Header
 }
 
-// ImportDocuments: Imports documents into Google Cloud Firestore.
-// Existing documents with the same name are overwritten. The import
-// occurs in the background and its progress can be monitored and
-// managed via the Operation resource that is created. If an
-// ImportDocuments operation is cancelled, it is possible that a subset
-// of the data has already been imported to Cloud Firestore.
+// ImportDocuments: Imports documents into Google Cloud Firestore. Existing
+// documents with the same name are overwritten. The import occurs in the
+// background and its progress can be monitored and managed via the Operation
+// resource that is created. If an ImportDocuments operation is cancelled, it
+// is possible that a subset of the data has already been imported to Cloud
+// Firestore.
 //
 //   - name: Database to import into. Should be of the form:
 //     `projects/{project_id}/databases/{database_id}`.
@@ -1384,23 +1140,21 @@ func (r *ProjectsDatabasesService) ImportDocuments(name string, googlefirestorea
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatabasesImportDocumentsCall) Fields(s ...googleapi.Field) *ProjectsDatabasesImportDocumentsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatabasesImportDocumentsCall) Context(ctx context.Context) *ProjectsDatabasesImportDocumentsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatabasesImportDocumentsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1409,18 +1163,12 @@ func (c *ProjectsDatabasesImportDocumentsCall) Header() http.Header {
 }
 
 func (c *ProjectsDatabasesImportDocumentsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1beta2importdocumentsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}:importDocuments")
@@ -1437,12 +1185,11 @@ func (c *ProjectsDatabasesImportDocumentsCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "firestore.projects.databases.importDocuments" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatabasesImportDocumentsCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1473,39 +1220,7 @@ func (c *ProjectsDatabasesImportDocumentsCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Imports documents into Google Cloud Firestore. Existing documents with the same name are overwritten. The import occurs in the background and its progress can be monitored and managed via the Operation resource that is created. If an ImportDocuments operation is cancelled, it is possible that a subset of the data has already been imported to Cloud Firestore.",
-	//   "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}:importDocuments",
-	//   "httpMethod": "POST",
-	//   "id": "firestore.projects.databases.importDocuments",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Database to import into. Should be of the form: `projects/{project_id}/databases/{database_id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/databases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta2/{+name}:importDocuments",
-	//   "request": {
-	//     "$ref": "GoogleFirestoreAdminV1beta2ImportDocumentsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/datastore"
-	//   ]
-	// }
-
 }
-
-// method id "firestore.projects.databases.collectionGroups.fields.get":
 
 type ProjectsDatabasesCollectionGroupsFieldsGetCall struct {
 	s            *Service
@@ -1519,8 +1234,8 @@ type ProjectsDatabasesCollectionGroupsFieldsGetCall struct {
 // Get: Gets the metadata and configuration for a Field.
 //
 //   - name: A name of the form
-//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
-//     lection_id}/fields/{field_id}`.
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{collection
+//     _id}/fields/{field_id}`.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) Get(name string) *ProjectsDatabasesCollectionGroupsFieldsGetCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1528,33 +1243,29 @@ func (r *ProjectsDatabasesCollectionGroupsFieldsService) Get(name string) *Proje
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) Fields(s ...googleapi.Field) *ProjectsDatabasesCollectionGroupsFieldsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) IfNoneMatch(entityTag string) *ProjectsDatabasesCollectionGroupsFieldsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) Context(ctx context.Context) *ProjectsDatabasesCollectionGroupsFieldsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1563,12 +1274,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1589,12 +1295,11 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) doRequest(alt string) (
 }
 
 // Do executes the "firestore.projects.databases.collectionGroups.fields.get" call.
-// Exactly one of *GoogleFirestoreAdminV1beta2Field or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleFirestoreAdminV1beta2Field.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirestoreAdminV1beta2Field.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1beta2Field, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1625,36 +1330,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsGetCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the metadata and configuration for a Field.",
-	//   "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/fields/{fieldsId}",
-	//   "httpMethod": "GET",
-	//   "id": "firestore.projects.databases.collectionGroups.fields.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "A name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/fields/{field_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+/fields/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleFirestoreAdminV1beta2Field"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/datastore"
-	//   ]
-	// }
-
 }
-
-// method id "firestore.projects.databases.collectionGroups.fields.list":
 
 type ProjectsDatabasesCollectionGroupsFieldsListCall struct {
 	s            *Service
@@ -1666,73 +1342,69 @@ type ProjectsDatabasesCollectionGroupsFieldsListCall struct {
 }
 
 // List: Lists the field configuration and metadata for this database.
-// Currently, FirestoreAdmin.ListFields only supports listing fields
-// that have been explicitly overridden. To issue this query, call
+// Currently, FirestoreAdmin.ListFields only supports listing fields that have
+// been explicitly overridden. To issue this query, call
 // FirestoreAdmin.ListFields with the filter set to
 // `indexConfig.usesAncestorConfig:false`.
 //
 //   - parent: A parent name of the form
-//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
-//     lection_id}`.
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{collection
+//     _id}`.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) List(parent string) *ProjectsDatabasesCollectionGroupsFieldsListCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filter to apply to
-// list results. Currently, FirestoreAdmin.ListFields only supports
-// listing fields that have been explicitly overridden. To issue this
-// query, call FirestoreAdmin.ListFields with the filter set to
+// Filter sets the optional parameter "filter": The filter to apply to list
+// results. Currently, FirestoreAdmin.ListFields only supports listing fields
+// that have been explicitly overridden. To issue this query, call
+// FirestoreAdmin.ListFields with the filter set to
 // `indexConfig.usesAncestorConfig:false`.
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Filter(filter string) *ProjectsDatabasesCollectionGroupsFieldsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The number of
-// results to return.
+// PageSize sets the optional parameter "pageSize": The number of results to
+// return.
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) PageSize(pageSize int64) *ProjectsDatabasesCollectionGroupsFieldsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// returned from a previous call to FirestoreAdmin.ListFields, that may
-// be used to get the next page of results.
+// PageToken sets the optional parameter "pageToken": A page token, returned
+// from a previous call to FirestoreAdmin.ListFields, that may be used to get
+// the next page of results.
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) PageToken(pageToken string) *ProjectsDatabasesCollectionGroupsFieldsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Fields(s ...googleapi.Field) *ProjectsDatabasesCollectionGroupsFieldsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) IfNoneMatch(entityTag string) *ProjectsDatabasesCollectionGroupsFieldsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Context(ctx context.Context) *ProjectsDatabasesCollectionGroupsFieldsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1741,12 +1413,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Header() http.Header {
 }
 
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1767,14 +1434,11 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) doRequest(alt string) 
 }
 
 // Do executes the "firestore.projects.databases.collectionGroups.fields.list" call.
-// Exactly one of *GoogleFirestoreAdminV1beta2ListFieldsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirestoreAdminV1beta2ListFieldsResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirestoreAdminV1beta2ListFieldsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1beta2ListFieldsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1805,49 +1469,6 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the field configuration and metadata for this database. Currently, FirestoreAdmin.ListFields only supports listing fields that have been explicitly overridden. To issue this query, call FirestoreAdmin.ListFields with the filter set to `indexConfig.usesAncestorConfig:false`.",
-	//   "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/fields",
-	//   "httpMethod": "GET",
-	//   "id": "firestore.projects.databases.collectionGroups.fields.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The filter to apply to list results. Currently, FirestoreAdmin.ListFields only supports listing fields that have been explicitly overridden. To issue this query, call FirestoreAdmin.ListFields with the filter set to `indexConfig.usesAncestorConfig:false`.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The number of results to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, returned from a previous call to FirestoreAdmin.ListFields, that may be used to get the next page of results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "A parent name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta2/{+parent}/fields",
-	//   "response": {
-	//     "$ref": "GoogleFirestoreAdminV1beta2ListFieldsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/datastore"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1855,7 +1476,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Do(opts ...googleapi.C
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Pages(ctx context.Context, f func(*GoogleFirestoreAdminV1beta2ListFieldsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1871,8 +1492,6 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsListCall) Pages(ctx context.Cont
 	}
 }
 
-// method id "firestore.projects.databases.collectionGroups.fields.patch":
-
 type ProjectsDatabasesCollectionGroupsFieldsPatchCall struct {
 	s                                *Service
 	name                             string
@@ -1882,40 +1501,37 @@ type ProjectsDatabasesCollectionGroupsFieldsPatchCall struct {
 	header_                          http.Header
 }
 
-// Patch: Updates a field configuration. Currently, field updates apply
-// only to single field index configuration. However, calls to
-// FirestoreAdmin.UpdateField should provide a field mask to avoid
-// changing any configuration that the caller isn't aware of. The field
-// mask should be specified as: `{ paths: "index_config" }`. This call
-// returns a google.longrunning.Operation which may be used to track the
-// status of the field update. The metadata for the operation will be
-// the type FieldOperationMetadata. To configure the default field
-// settings for the database, use the special `Field` with resource
-// name:
-// `projects/{project_id}/databases/{database_id}/collectionGroups/__defa
-// ult__/fields/*`.
+// Patch: Updates a field configuration. Currently, field updates apply only to
+// single field index configuration. However, calls to
+// FirestoreAdmin.UpdateField should provide a field mask to avoid changing any
+// configuration that the caller isn't aware of. The field mask should be
+// specified as: `{ paths: "index_config" }`. This call returns a
+// google.longrunning.Operation which may be used to track the status of the
+// field update. The metadata for the operation will be the type
+// FieldOperationMetadata. To configure the default field settings for the
+// database, use the special `Field` with resource name:
+// `projects/{project_id}/databases/{database_id}/collectionGroups/__default__/f
+// ields/*`.
 //
 //   - name: A field name of the form
-//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
-//     lection_id}/fields/{field_path}` A field path may be a simple field
-//     name, e.g. `address` or a path to fields within map_value , e.g.
-//     `address.city`, or a special field path. The only valid special
-//     field is `*`, which represents any field. Field paths may be quoted
-//     using ` (backtick). The only character that needs to be escaped
-//     within a quoted field path is the backtick character itself,
-//     escaped using a backslash. Special characters in field paths that
-//     must be quoted include: `*`, `.`, ``` (backtick), `[`, `]`, as well
-//     as any ascii symbolic characters. Examples: (Note: Comments here
-//     are written in markdown syntax, so there is an additional layer of
-//     backticks to represent a code block) `\`address.city\“ represents
-//     a field named `address.city`, not the map key `city` in the field
-//     `address`. `\`*\“ represents a field named `*`, not any field. A
-//     special `Field` contains the default indexing settings for all
-//     fields. This field's resource name is:
-//     `projects/{project_id}/databases/{database_id}/collectionGroups/__de
-//     fault__/fields/*` Indexes defined on this `Field` will be applied
-//     to all fields which do not have their own `Field` index
-//     configuration.
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{collection
+//     _id}/fields/{field_path}` A field path may be a simple field name, e.g.
+//     `address` or a path to fields within map_value , e.g. `address.city`, or a
+//     special field path. The only valid special field is `*`, which represents
+//     any field. Field paths may be quoted using ` (backtick). The only
+//     character that needs to be escaped within a quoted field path is the
+//     backtick character itself, escaped using a backslash. Special characters
+//     in field paths that must be quoted include: `*`, `.`, ``` (backtick), `[`,
+//     `]`, as well as any ascii symbolic characters. Examples: (Note: Comments
+//     here are written in markdown syntax, so there is an additional layer of
+//     backticks to represent a code block) `\`address.city\“ represents a field
+//     named `address.city`, not the map key `city` in the field `address`.
+//     `\`*\“ represents a field named `*`, not any field. A special `Field`
+//     contains the default indexing settings for all fields. This field's
+//     resource name is:
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/__default__
+//     /fields/*` Indexes defined on this `Field` will be applied to all fields
+//     which do not have their own `Field` index configuration.
 func (r *ProjectsDatabasesCollectionGroupsFieldsService) Patch(name string, googlefirestoreadminv1beta2field *GoogleFirestoreAdminV1beta2Field) *ProjectsDatabasesCollectionGroupsFieldsPatchCall {
 	c := &ProjectsDatabasesCollectionGroupsFieldsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1923,32 +1539,30 @@ func (r *ProjectsDatabasesCollectionGroupsFieldsService) Patch(name string, goog
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": A mask, relative
-// to the field. If specified, only configuration specified by this
-// field_mask will be updated in the field.
+// UpdateMask sets the optional parameter "updateMask": A mask, relative to the
+// field. If specified, only configuration specified by this field_mask will be
+// updated in the field.
 func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) UpdateMask(updateMask string) *ProjectsDatabasesCollectionGroupsFieldsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) Fields(s ...googleapi.Field) *ProjectsDatabasesCollectionGroupsFieldsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) Context(ctx context.Context) *ProjectsDatabasesCollectionGroupsFieldsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1957,18 +1571,12 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) Header() http.Header 
 }
 
 func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1beta2field)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+name}")
@@ -1985,12 +1593,11 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) doRequest(alt string)
 }
 
 // Do executes the "firestore.projects.databases.collectionGroups.fields.patch" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2021,45 +1628,7 @@ func (c *ProjectsDatabasesCollectionGroupsFieldsPatchCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a field configuration. Currently, field updates apply only to single field index configuration. However, calls to FirestoreAdmin.UpdateField should provide a field mask to avoid changing any configuration that the caller isn't aware of. The field mask should be specified as: `{ paths: \"index_config\" }`. This call returns a google.longrunning.Operation which may be used to track the status of the field update. The metadata for the operation will be the type FieldOperationMetadata. To configure the default field settings for the database, use the special `Field` with resource name: `projects/{project_id}/databases/{database_id}/collectionGroups/__default__/fields/*`.",
-	//   "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/fields/{fieldsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "firestore.projects.databases.collectionGroups.fields.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "A field name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/fields/{field_path}` A field path may be a simple field name, e.g. `address` or a path to fields within map_value , e.g. `address.city`, or a special field path. The only valid special field is `*`, which represents any field. Field paths may be quoted using ` (backtick). The only character that needs to be escaped within a quoted field path is the backtick character itself, escaped using a backslash. Special characters in field paths that must be quoted include: `*`, `.`, ``` (backtick), `[`, `]`, as well as any ascii symbolic characters. Examples: (Note: Comments here are written in markdown syntax, so there is an additional layer of backticks to represent a code block) `\\`address.city\\`` represents a field named `address.city`, not the map key `city` in the field `address`. `\\`*\\`` represents a field named `*`, not any field. A special `Field` contains the default indexing settings for all fields. This field's resource name is: `projects/{project_id}/databases/{database_id}/collectionGroups/__default__/fields/*` Indexes defined on this `Field` will be applied to all fields which do not have their own `Field` index configuration.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+/fields/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "A mask, relative to the field. If specified, only configuration specified by this field_mask will be updated in the field.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta2/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleFirestoreAdminV1beta2Field"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/datastore"
-	//   ]
-	// }
-
 }
-
-// method id "firestore.projects.databases.collectionGroups.indexes.create":
 
 type ProjectsDatabasesCollectionGroupsIndexesCreateCall struct {
 	s                                *Service
@@ -2071,13 +1640,13 @@ type ProjectsDatabasesCollectionGroupsIndexesCreateCall struct {
 }
 
 // Create: Creates a composite index. This returns a
-// google.longrunning.Operation which may be used to track the status of
-// the creation. The metadata for the operation will be the type
+// google.longrunning.Operation which may be used to track the status of the
+// creation. The metadata for the operation will be the type
 // IndexOperationMetadata.
 //
 //   - parent: A parent name of the form
-//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
-//     lection_id}`.
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{collection
+//     _id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Create(parent string, googlefirestoreadminv1beta2index *GoogleFirestoreAdminV1beta2Index) *ProjectsDatabasesCollectionGroupsIndexesCreateCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2086,23 +1655,21 @@ func (r *ProjectsDatabasesCollectionGroupsIndexesService) Create(parent string, 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Fields(s ...googleapi.Field) *ProjectsDatabasesCollectionGroupsIndexesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Context(ctx context.Context) *ProjectsDatabasesCollectionGroupsIndexesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2111,18 +1678,12 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Header() http.Heade
 }
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefirestoreadminv1beta2index)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta2/{+parent}/indexes")
@@ -2139,12 +1700,11 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) doRequest(alt strin
 }
 
 // Do executes the "firestore.projects.databases.collectionGroups.indexes.create" call.
-// Exactly one of *GoogleLongrunningOperation or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *GoogleLongrunningOperation.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *GoogleLongrunningOperation.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleLongrunningOperation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2175,39 +1735,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesCreateCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a composite index. This returns a google.longrunning.Operation which may be used to track the status of the creation. The metadata for the operation will be the type IndexOperationMetadata.",
-	//   "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/indexes",
-	//   "httpMethod": "POST",
-	//   "id": "firestore.projects.databases.collectionGroups.indexes.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "A parent name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta2/{+parent}/indexes",
-	//   "request": {
-	//     "$ref": "GoogleFirestoreAdminV1beta2Index"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleLongrunningOperation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/datastore"
-	//   ]
-	// }
-
 }
-
-// method id "firestore.projects.databases.collectionGroups.indexes.delete":
 
 type ProjectsDatabasesCollectionGroupsIndexesDeleteCall struct {
 	s          *Service
@@ -2220,8 +1748,8 @@ type ProjectsDatabasesCollectionGroupsIndexesDeleteCall struct {
 // Delete: Deletes a composite index.
 //
 //   - name: A name of the form
-//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
-//     lection_id}/indexes/{index_id}`.
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{collection
+//     _id}/indexes/{index_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Delete(name string) *ProjectsDatabasesCollectionGroupsIndexesDeleteCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2229,23 +1757,21 @@ func (r *ProjectsDatabasesCollectionGroupsIndexesService) Delete(name string) *P
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) Fields(s ...googleapi.Field) *ProjectsDatabasesCollectionGroupsIndexesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) Context(ctx context.Context) *ProjectsDatabasesCollectionGroupsIndexesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2254,12 +1780,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) Header() http.Heade
 }
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2277,12 +1798,10 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) doRequest(alt strin
 }
 
 // Do executes the "firestore.projects.databases.collectionGroups.indexes.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2313,36 +1832,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesDeleteCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a composite index.",
-	//   "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/indexes/{indexesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "firestore.projects.databases.collectionGroups.indexes.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "A name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/indexes/{index_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+/indexes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta2/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/datastore"
-	//   ]
-	// }
-
 }
-
-// method id "firestore.projects.databases.collectionGroups.indexes.get":
 
 type ProjectsDatabasesCollectionGroupsIndexesGetCall struct {
 	s            *Service
@@ -2356,8 +1846,8 @@ type ProjectsDatabasesCollectionGroupsIndexesGetCall struct {
 // Get: Gets a composite index.
 //
 //   - name: A name of the form
-//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
-//     lection_id}/indexes/{index_id}`.
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{collection
+//     _id}/indexes/{index_id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) Get(name string) *ProjectsDatabasesCollectionGroupsIndexesGetCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2365,33 +1855,29 @@ func (r *ProjectsDatabasesCollectionGroupsIndexesService) Get(name string) *Proj
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) Fields(s ...googleapi.Field) *ProjectsDatabasesCollectionGroupsIndexesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) IfNoneMatch(entityTag string) *ProjectsDatabasesCollectionGroupsIndexesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) Context(ctx context.Context) *ProjectsDatabasesCollectionGroupsIndexesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2400,12 +1886,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2426,12 +1907,11 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) doRequest(alt string) 
 }
 
 // Do executes the "firestore.projects.databases.collectionGroups.indexes.get" call.
-// Exactly one of *GoogleFirestoreAdminV1beta2Index or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleFirestoreAdminV1beta2Index.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirestoreAdminV1beta2Index.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1beta2Index, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2462,36 +1942,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesGetCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a composite index.",
-	//   "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/indexes/{indexesId}",
-	//   "httpMethod": "GET",
-	//   "id": "firestore.projects.databases.collectionGroups.indexes.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "A name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}/indexes/{index_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+/indexes/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleFirestoreAdminV1beta2Index"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/datastore"
-	//   ]
-	// }
-
 }
-
-// method id "firestore.projects.databases.collectionGroups.indexes.list":
 
 type ProjectsDatabasesCollectionGroupsIndexesListCall struct {
 	s            *Service
@@ -2505,64 +1956,60 @@ type ProjectsDatabasesCollectionGroupsIndexesListCall struct {
 // List: Lists composite indexes.
 //
 //   - parent: A parent name of the form
-//     `projects/{project_id}/databases/{database_id}/collectionGroups/{col
-//     lection_id}`.
+//     `projects/{project_id}/databases/{database_id}/collectionGroups/{collection
+//     _id}`.
 func (r *ProjectsDatabasesCollectionGroupsIndexesService) List(parent string) *ProjectsDatabasesCollectionGroupsIndexesListCall {
 	c := &ProjectsDatabasesCollectionGroupsIndexesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filter to apply to
-// list results.
+// Filter sets the optional parameter "filter": The filter to apply to list
+// results.
 func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Filter(filter string) *ProjectsDatabasesCollectionGroupsIndexesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The number of
-// results to return.
+// PageSize sets the optional parameter "pageSize": The number of results to
+// return.
 func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) PageSize(pageSize int64) *ProjectsDatabasesCollectionGroupsIndexesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// returned from a previous call to FirestoreAdmin.ListIndexes, that may
-// be used to get the next page of results.
+// PageToken sets the optional parameter "pageToken": A page token, returned
+// from a previous call to FirestoreAdmin.ListIndexes, that may be used to get
+// the next page of results.
 func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) PageToken(pageToken string) *ProjectsDatabasesCollectionGroupsIndexesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Fields(s ...googleapi.Field) *ProjectsDatabasesCollectionGroupsIndexesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) IfNoneMatch(entityTag string) *ProjectsDatabasesCollectionGroupsIndexesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Context(ctx context.Context) *ProjectsDatabasesCollectionGroupsIndexesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2571,12 +2018,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Header() http.Header 
 }
 
 func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2597,14 +2039,11 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) doRequest(alt string)
 }
 
 // Do executes the "firestore.projects.databases.collectionGroups.indexes.list" call.
-// Exactly one of *GoogleFirestoreAdminV1beta2ListIndexesResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFirestoreAdminV1beta2ListIndexesResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFirestoreAdminV1beta2ListIndexesResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Do(opts ...googleapi.CallOption) (*GoogleFirestoreAdminV1beta2ListIndexesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2635,49 +2074,6 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists composite indexes.",
-	//   "flatPath": "v1beta2/projects/{projectsId}/databases/{databasesId}/collectionGroups/{collectionGroupsId}/indexes",
-	//   "httpMethod": "GET",
-	//   "id": "firestore.projects.databases.collectionGroups.indexes.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The filter to apply to list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The number of results to return.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token, returned from a previous call to FirestoreAdmin.ListIndexes, that may be used to get the next page of results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "A parent name of the form `projects/{project_id}/databases/{database_id}/collectionGroups/{collection_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/databases/[^/]+/collectionGroups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta2/{+parent}/indexes",
-	//   "response": {
-	//     "$ref": "GoogleFirestoreAdminV1beta2ListIndexesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform",
-	//     "https://www.googleapis.com/auth/datastore"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2685,7 +2081,7 @@ func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Do(opts ...googleapi.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsDatabasesCollectionGroupsIndexesListCall) Pages(ctx context.Context, f func(*GoogleFirestoreAdminV1beta2ListIndexesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

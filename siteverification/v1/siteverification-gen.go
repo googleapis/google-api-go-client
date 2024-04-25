@@ -173,216 +173,166 @@ type WebResourceService struct {
 type SiteVerificationWebResourceGettokenRequest struct {
 	// Site: The site for which a verification token will be generated.
 	Site *SiteVerificationWebResourceGettokenRequestSite `json:"site,omitempty"`
-
-	// VerificationMethod: The verification method that will be used to
-	// verify this site. For sites, 'FILE' or 'META' methods may be used.
-	// For domains, only 'DNS' may be used.
+	// VerificationMethod: The verification method that will be used to verify this
+	// site. For sites, 'FILE' or 'META' methods may be used. For domains, only
+	// 'DNS' may be used.
 	VerificationMethod string `json:"verificationMethod,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Site") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Site") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Site") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Site") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SiteVerificationWebResourceGettokenRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SiteVerificationWebResourceGettokenRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SiteVerificationWebResourceGettokenRequestSite: The site for which a
 // verification token will be generated.
 type SiteVerificationWebResourceGettokenRequestSite struct {
-	// Identifier: The site identifier. If the type is set to SITE, the
-	// identifier is a URL. If the type is set to INET_DOMAIN, the site
-	// identifier is a domain name.
+	// Identifier: The site identifier. If the type is set to SITE, the identifier
+	// is a URL. If the type is set to INET_DOMAIN, the site identifier is a domain
+	// name.
 	Identifier string `json:"identifier,omitempty"`
-
 	// Type: The type of resource to be verified. Can be SITE or INET_DOMAIN
 	// (domain name).
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Identifier") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Identifier") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Identifier") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SiteVerificationWebResourceGettokenRequestSite) MarshalJSON() ([]byte, error) {
 	type NoMethod SiteVerificationWebResourceGettokenRequestSite
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type SiteVerificationWebResourceGettokenResponse struct {
-	// Method: The verification method to use in conjunction with this
-	// token. For FILE, the token should be placed in the top-level
-	// directory of the site, stored inside a file of the same name. For
-	// META, the token should be placed in the HEAD tag of the default page
-	// that is loaded for the site. For DNS, the token should be placed in a
-	// TXT record of the domain.
+	// Method: The verification method to use in conjunction with this token. For
+	// FILE, the token should be placed in the top-level directory of the site,
+	// stored inside a file of the same name. For META, the token should be placed
+	// in the HEAD tag of the default page that is loaded for the site. For DNS,
+	// the token should be placed in a TXT record of the domain.
 	Method string `json:"method,omitempty"`
-
-	// Token: The verification token. The token must be placed appropriately
-	// in order for verification to succeed.
+	// Token: The verification token. The token must be placed appropriately in
+	// order for verification to succeed.
 	Token string `json:"token,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Method") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Method") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Method") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SiteVerificationWebResourceGettokenResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SiteVerificationWebResourceGettokenResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type SiteVerificationWebResourceListResponse struct {
 	// Items: The list of sites that are owned by the authenticated user.
 	Items []*SiteVerificationWebResourceResource `json:"items,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Items") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Items") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Items") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SiteVerificationWebResourceListResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod SiteVerificationWebResourceListResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type SiteVerificationWebResourceResource struct {
-	// Id: The string used to identify this site. This value should be used
-	// in the "id" portion of the REST URL for the Get, Update, and Delete
-	// operations.
+	// Id: The string used to identify this site. This value should be used in the
+	// "id" portion of the REST URL for the Get, Update, and Delete operations.
 	Id string `json:"id,omitempty"`
-
 	// Owners: The email addresses of all verified owners.
 	Owners []string `json:"owners,omitempty"`
-
-	// Site: The address and type of a site that is verified or will be
-	// verified.
+	// Site: The address and type of a site that is verified or will be verified.
 	Site *SiteVerificationWebResourceResourceSite `json:"site,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SiteVerificationWebResourceResource) MarshalJSON() ([]byte, error) {
 	type NoMethod SiteVerificationWebResourceResource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SiteVerificationWebResourceResourceSite: The address and type of a
-// site that is verified or will be verified.
+// SiteVerificationWebResourceResourceSite: The address and type of a site that
+// is verified or will be verified.
 type SiteVerificationWebResourceResourceSite struct {
-	// Identifier: The site identifier. If the type is set to SITE, the
-	// identifier is a URL. If the type is set to INET_DOMAIN, the site
-	// identifier is a domain name.
+	// Identifier: The site identifier. If the type is set to SITE, the identifier
+	// is a URL. If the type is set to INET_DOMAIN, the site identifier is a domain
+	// name.
 	Identifier string `json:"identifier,omitempty"`
-
 	// Type: The site type. Can be SITE or INET_DOMAIN (domain name).
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Identifier") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Identifier") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Identifier") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SiteVerificationWebResourceResourceSite) MarshalJSON() ([]byte, error) {
 	type NoMethod SiteVerificationWebResourceResourceSite
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "siteVerification.webResource.delete":
 
 type WebResourceDeleteCall struct {
 	s          *Service
@@ -402,23 +352,21 @@ func (r *WebResourceService) Delete(id string) *WebResourceDeleteCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *WebResourceDeleteCall) Fields(s ...googleapi.Field) *WebResourceDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *WebResourceDeleteCall) Context(ctx context.Context) *WebResourceDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *WebResourceDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -427,12 +375,7 @@ func (c *WebResourceDeleteCall) Header() http.Header {
 }
 
 func (c *WebResourceDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -461,30 +404,7 @@ func (c *WebResourceDeleteCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Relinquish ownership of a website or domain.",
-	//   "httpMethod": "DELETE",
-	//   "id": "siteVerification.webResource.delete",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The id of a verified site or domain.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "webResource/{id}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/siteverification"
-	//   ]
-	// }
-
 }
-
-// method id "siteVerification.webResource.get":
 
 type WebResourceGetCall struct {
 	s            *Service
@@ -505,33 +425,29 @@ func (r *WebResourceService) Get(id string) *WebResourceGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *WebResourceGetCall) Fields(s ...googleapi.Field) *WebResourceGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *WebResourceGetCall) IfNoneMatch(entityTag string) *WebResourceGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *WebResourceGetCall) Context(ctx context.Context) *WebResourceGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *WebResourceGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -540,12 +456,7 @@ func (c *WebResourceGetCall) Header() http.Header {
 }
 
 func (c *WebResourceGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -566,13 +477,11 @@ func (c *WebResourceGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "siteVerification.webResource.get" call.
-// Exactly one of *SiteVerificationWebResourceResource or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *SiteVerificationWebResourceResource.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SiteVerificationWebResourceResource.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *WebResourceGetCall) Do(opts ...googleapi.CallOption) (*SiteVerificationWebResourceResource, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -603,33 +512,7 @@ func (c *WebResourceGetCall) Do(opts ...googleapi.CallOption) (*SiteVerification
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get the most current data for a website or domain.",
-	//   "httpMethod": "GET",
-	//   "id": "siteVerification.webResource.get",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The id of a verified site or domain.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "webResource/{id}",
-	//   "response": {
-	//     "$ref": "SiteVerificationWebResourceResource"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/siteverification"
-	//   ]
-	// }
-
 }
-
-// method id "siteVerification.webResource.getToken":
 
 type WebResourceGetTokenCall struct {
 	s                                          *Service
@@ -639,8 +522,7 @@ type WebResourceGetTokenCall struct {
 	header_                                    http.Header
 }
 
-// GetToken: Get a verification token for placing on a website or
-// domain.
+// GetToken: Get a verification token for placing on a website or domain.
 func (r *WebResourceService) GetToken(siteverificationwebresourcegettokenrequest *SiteVerificationWebResourceGettokenRequest) *WebResourceGetTokenCall {
 	c := &WebResourceGetTokenCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.siteverificationwebresourcegettokenrequest = siteverificationwebresourcegettokenrequest
@@ -648,23 +530,21 @@ func (r *WebResourceService) GetToken(siteverificationwebresourcegettokenrequest
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *WebResourceGetTokenCall) Fields(s ...googleapi.Field) *WebResourceGetTokenCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *WebResourceGetTokenCall) Context(ctx context.Context) *WebResourceGetTokenCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *WebResourceGetTokenCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -673,18 +553,12 @@ func (c *WebResourceGetTokenCall) Header() http.Header {
 }
 
 func (c *WebResourceGetTokenCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourcegettokenrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "token")
@@ -698,14 +572,11 @@ func (c *WebResourceGetTokenCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "siteVerification.webResource.getToken" call.
-// Exactly one of *SiteVerificationWebResourceGettokenResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *SiteVerificationWebResourceGettokenResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SiteVerificationWebResourceGettokenResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *WebResourceGetTokenCall) Do(opts ...googleapi.CallOption) (*SiteVerificationWebResourceGettokenResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -736,26 +607,7 @@ func (c *WebResourceGetTokenCall) Do(opts ...googleapi.CallOption) (*SiteVerific
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get a verification token for placing on a website or domain.",
-	//   "httpMethod": "POST",
-	//   "id": "siteVerification.webResource.getToken",
-	//   "path": "token",
-	//   "request": {
-	//     "$ref": "SiteVerificationWebResourceGettokenRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "SiteVerificationWebResourceGettokenResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/siteverification",
-	//     "https://www.googleapis.com/auth/siteverification.verify_only"
-	//   ]
-	// }
-
 }
-
-// method id "siteVerification.webResource.insert":
 
 type WebResourceInsertCall struct {
 	s                                   *Service
@@ -767,8 +619,7 @@ type WebResourceInsertCall struct {
 
 // Insert: Attempt verification of a website or domain.
 //
-//   - verificationMethod: The method to use for verifying a site or
-//     domain.
+// - verificationMethod: The method to use for verifying a site or domain.
 func (r *WebResourceService) Insert(verificationMethod string, siteverificationwebresourceresource *SiteVerificationWebResourceResource) *WebResourceInsertCall {
 	c := &WebResourceInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.urlParams_.Set("verificationMethod", verificationMethod)
@@ -777,23 +628,21 @@ func (r *WebResourceService) Insert(verificationMethod string, siteverificationw
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *WebResourceInsertCall) Fields(s ...googleapi.Field) *WebResourceInsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *WebResourceInsertCall) Context(ctx context.Context) *WebResourceInsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *WebResourceInsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -802,18 +651,12 @@ func (c *WebResourceInsertCall) Header() http.Header {
 }
 
 func (c *WebResourceInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource")
@@ -827,13 +670,11 @@ func (c *WebResourceInsertCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "siteVerification.webResource.insert" call.
-// Exactly one of *SiteVerificationWebResourceResource or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *SiteVerificationWebResourceResource.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SiteVerificationWebResourceResource.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *WebResourceInsertCall) Do(opts ...googleapi.CallOption) (*SiteVerificationWebResourceResource, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -864,37 +705,7 @@ func (c *WebResourceInsertCall) Do(opts ...googleapi.CallOption) (*SiteVerificat
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Attempt verification of a website or domain.",
-	//   "httpMethod": "POST",
-	//   "id": "siteVerification.webResource.insert",
-	//   "parameterOrder": [
-	//     "verificationMethod"
-	//   ],
-	//   "parameters": {
-	//     "verificationMethod": {
-	//       "description": "The method to use for verifying a site or domain.",
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "webResource",
-	//   "request": {
-	//     "$ref": "SiteVerificationWebResourceResource"
-	//   },
-	//   "response": {
-	//     "$ref": "SiteVerificationWebResourceResource"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/siteverification",
-	//     "https://www.googleapis.com/auth/siteverification.verify_only"
-	//   ]
-	// }
-
 }
-
-// method id "siteVerification.webResource.list":
 
 type WebResourceListCall struct {
 	s            *Service
@@ -911,33 +722,29 @@ func (r *WebResourceService) List() *WebResourceListCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *WebResourceListCall) Fields(s ...googleapi.Field) *WebResourceListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *WebResourceListCall) IfNoneMatch(entityTag string) *WebResourceListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *WebResourceListCall) Context(ctx context.Context) *WebResourceListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *WebResourceListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -946,12 +753,7 @@ func (c *WebResourceListCall) Header() http.Header {
 }
 
 func (c *WebResourceListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -969,13 +771,11 @@ func (c *WebResourceListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "siteVerification.webResource.list" call.
-// Exactly one of *SiteVerificationWebResourceListResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *SiteVerificationWebResourceListResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SiteVerificationWebResourceListResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *WebResourceListCall) Do(opts ...googleapi.CallOption) (*SiteVerificationWebResourceListResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1006,22 +806,7 @@ func (c *WebResourceListCall) Do(opts ...googleapi.CallOption) (*SiteVerificatio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get the list of your verified websites and domains.",
-	//   "httpMethod": "GET",
-	//   "id": "siteVerification.webResource.list",
-	//   "path": "webResource",
-	//   "response": {
-	//     "$ref": "SiteVerificationWebResourceListResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/siteverification"
-	//   ]
-	// }
-
 }
-
-// method id "siteVerification.webResource.patch":
 
 type WebResourcePatchCall struct {
 	s                                   *Service
@@ -1032,8 +817,8 @@ type WebResourcePatchCall struct {
 	header_                             http.Header
 }
 
-// Patch: Modify the list of owners for your website or domain. This
-// method supports patch semantics.
+// Patch: Modify the list of owners for your website or domain. This method
+// supports patch semantics.
 //
 // - id: The id of a verified site or domain.
 func (r *WebResourceService) Patch(id string, siteverificationwebresourceresource *SiteVerificationWebResourceResource) *WebResourcePatchCall {
@@ -1044,23 +829,21 @@ func (r *WebResourceService) Patch(id string, siteverificationwebresourceresourc
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *WebResourcePatchCall) Fields(s ...googleapi.Field) *WebResourcePatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *WebResourcePatchCall) Context(ctx context.Context) *WebResourcePatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *WebResourcePatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1069,18 +852,12 @@ func (c *WebResourcePatchCall) Header() http.Header {
 }
 
 func (c *WebResourcePatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource/{id}")
@@ -1097,13 +874,11 @@ func (c *WebResourcePatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "siteVerification.webResource.patch" call.
-// Exactly one of *SiteVerificationWebResourceResource or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *SiteVerificationWebResourceResource.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SiteVerificationWebResourceResource.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *WebResourcePatchCall) Do(opts ...googleapi.CallOption) (*SiteVerificationWebResourceResource, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1134,36 +909,7 @@ func (c *WebResourcePatchCall) Do(opts ...googleapi.CallOption) (*SiteVerificati
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Modify the list of owners for your website or domain. This method supports patch semantics.",
-	//   "httpMethod": "PATCH",
-	//   "id": "siteVerification.webResource.patch",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The id of a verified site or domain.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "webResource/{id}",
-	//   "request": {
-	//     "$ref": "SiteVerificationWebResourceResource"
-	//   },
-	//   "response": {
-	//     "$ref": "SiteVerificationWebResourceResource"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/siteverification"
-	//   ]
-	// }
-
 }
-
-// method id "siteVerification.webResource.update":
 
 type WebResourceUpdateCall struct {
 	s                                   *Service
@@ -1185,23 +931,21 @@ func (r *WebResourceService) Update(id string, siteverificationwebresourceresour
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *WebResourceUpdateCall) Fields(s ...googleapi.Field) *WebResourceUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *WebResourceUpdateCall) Context(ctx context.Context) *WebResourceUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *WebResourceUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1210,18 +954,12 @@ func (c *WebResourceUpdateCall) Header() http.Header {
 }
 
 func (c *WebResourceUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.siteverificationwebresourceresource)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "webResource/{id}")
@@ -1238,13 +976,11 @@ func (c *WebResourceUpdateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "siteVerification.webResource.update" call.
-// Exactly one of *SiteVerificationWebResourceResource or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *SiteVerificationWebResourceResource.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *SiteVerificationWebResourceResource.ServerResponse.Header or (if a response
+// was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *WebResourceUpdateCall) Do(opts ...googleapi.CallOption) (*SiteVerificationWebResourceResource, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1275,31 +1011,4 @@ func (c *WebResourceUpdateCall) Do(opts ...googleapi.CallOption) (*SiteVerificat
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Modify the list of owners for your website or domain.",
-	//   "httpMethod": "PUT",
-	//   "id": "siteVerification.webResource.update",
-	//   "parameterOrder": [
-	//     "id"
-	//   ],
-	//   "parameters": {
-	//     "id": {
-	//       "description": "The id of a verified site or domain.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "webResource/{id}",
-	//   "request": {
-	//     "$ref": "SiteVerificationWebResourceResource"
-	//   },
-	//   "response": {
-	//     "$ref": "SiteVerificationWebResourceResource"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/siteverification"
-	//   ]
-	// }
-
 }

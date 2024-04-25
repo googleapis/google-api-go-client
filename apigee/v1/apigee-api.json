@@ -10045,7 +10045,7 @@
       }
     }
   },
-  "revision": "20240415",
+  "revision": "20240419",
   "rootUrl": "https://apigee.googleapis.com/",
   "schemas": {
     "EdgeConfigstoreBundleBadBundle": {
@@ -11694,7 +11694,7 @@
         },
         "timeRange": {
           "$ref": "GoogleTypeInterval",
-          "description": "Required. Time range for score calculation. At most 14 days of scores will be returned."
+          "description": "Required. Time range for score calculation. At most 14 days of scores will be returned, and both the start and end dates must be within the last 90 days."
         }
       },
       "type": "object"
@@ -16709,6 +16709,14 @@
           },
           "type": "array"
         },
+        "asns": {
+          "description": "Optional. A list of ASN numbers to act on, e.g. 23. https://en.wikipedia.org/wiki/Autonomous_system_(Internet) This uses int64 instead of uint32 because of https://linter.aip.dev/141/forbidden-types.",
+          "items": {
+            "format": "int64",
+            "type": "string"
+          },
+          "type": "array"
+        },
         "botReasons": {
           "description": "Optional. A list of Bot Reasons. Current options: Flooder, Brute Guessor, Static Content Scraper, OAuth Abuser, Robot Abuser, TorListRule, Advanced Anomaly Detection, Advanced API Scraper, Search Engine Crawlers, Public Clouds, Public Cloud AWS, Public Cloud Azure, and Public Cloud Google.",
           "items": {
@@ -16732,6 +16740,13 @@
         },
         "ipAddressRanges": {
           "description": "Optional. A list of IP addresses. This could be either IPv4 or IPv6. Limited to 100 per action.",
+          "items": {
+            "type": "string"
+          },
+          "type": "array"
+        },
+        "regionCodes": {
+          "description": "Optional. A list of countries/region codes to act on, e.g. US. This follows https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2.",
           "items": {
             "type": "string"
           },
@@ -16896,8 +16911,6 @@
             "LOW",
             "MEDIUM",
             "HIGH",
-            "NONE",
-            "NO_RISK",
             "MINIMAL"
           ],
           "enumDescriptions": [
@@ -16905,8 +16918,6 @@
             "Severity is low.",
             "Severity is medium.",
             "Severity is high.",
-            "Severity is none.",
-            "Severity represents no risk",
             "Severity is minimal"
           ],
           "type": "string"

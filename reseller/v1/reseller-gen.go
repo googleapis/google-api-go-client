@@ -198,325 +198,248 @@ type SubscriptionsService struct {
 
 // Address: JSON template for address of a customer.
 type Address struct {
-	// AddressLine1: A customer's physical address. An address can be
-	// composed of one to three lines. The `addressline2` and `addressLine3`
-	// are optional.
+	// AddressLine1: A customer's physical address. An address can be composed of
+	// one to three lines. The `addressline2` and `addressLine3` are optional.
 	AddressLine1 string `json:"addressLine1,omitempty"`
-
 	// AddressLine2: Line 2 of the address.
 	AddressLine2 string `json:"addressLine2,omitempty"`
-
 	// AddressLine3: Line 3 of the address.
 	AddressLine3 string `json:"addressLine3,omitempty"`
-
 	// ContactName: The customer contact's name. This is required.
 	ContactName string `json:"contactName,omitempty"`
-
-	// CountryCode: For `countryCode` information, see the ISO 3166 country
-	// code elements. Verify that country is approved for resale of Google
-	// products. This property is required when creating a new customer.
+	// CountryCode: For `countryCode` information, see the ISO 3166 country code
+	// elements. Verify that country is approved for resale of Google products.
+	// This property is required when creating a new customer.
 	CountryCode string `json:"countryCode,omitempty"`
-
 	// Kind: Identifies the resource as a customer address. Value:
 	// `customers#address`
 	Kind string `json:"kind,omitempty"`
-
-	// Locality: An example of a `locality` value is the city of `San
-	// Francisco`.
+	// Locality: An example of a `locality` value is the city of `San Francisco`.
 	Locality string `json:"locality,omitempty"`
-
-	// OrganizationName: The company or company division name. This is
-	// required.
+	// OrganizationName: The company or company division name. This is required.
 	OrganizationName string `json:"organizationName,omitempty"`
-
-	// PostalCode: A `postalCode` example is a postal zip code such as
-	// `94043`. This property is required when creating a new customer.
+	// PostalCode: A `postalCode` example is a postal zip code such as `94043`.
+	// This property is required when creating a new customer.
 	PostalCode string `json:"postalCode,omitempty"`
-
-	// Region: An example of a `region` value is `CA` for the state of
-	// California.
+	// Region: An example of a `region` value is `CA` for the state of California.
 	Region string `json:"region,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AddressLine1") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AddressLine1") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AddressLine1") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Address) MarshalJSON() ([]byte, error) {
 	type NoMethod Address
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ChangePlanRequest: JSON template for the ChangePlan rpc request.
 type ChangePlanRequest struct {
 	// DealCode: Google-issued code (100 char max) for discounted pricing on
-	// subscription plans. Deal code must be included in `changePlan`
-	// request in order to receive discounted rate. This property is
-	// optional. If a deal code has already been added to a subscription,
-	// this property may be left empty and the existing discounted rate will
-	// still apply (if not empty, only provide the deal code that is already
-	// present on the subscription). If a deal code has never been added to
-	// a subscription and this property is left blank, regular pricing will
-	// apply.
+	// subscription plans. Deal code must be included in `changePlan` request in
+	// order to receive discounted rate. This property is optional. If a deal code
+	// has already been added to a subscription, this property may be left empty
+	// and the existing discounted rate will still apply (if not empty, only
+	// provide the deal code that is already present on the subscription). If a
+	// deal code has never been added to a subscription and this property is left
+	// blank, regular pricing will apply.
 	DealCode string `json:"dealCode,omitempty"`
-
-	// Kind: Identifies the resource as a subscription change plan request.
-	// Value: `subscriptions#changePlanRequest`
+	// Kind: Identifies the resource as a subscription change plan request. Value:
+	// `subscriptions#changePlanRequest`
 	Kind string `json:"kind,omitempty"`
-
-	// PlanName: The `planName` property is required. This is the name of
-	// the subscription's payment plan. For more information about the
-	// Google payment plans, see API concepts. Possible values are: -
-	// `ANNUAL_MONTHLY_PAY` - The annual commitment plan with monthly
-	// payments *Caution: *`ANNUAL_MONTHLY_PAY` is returned as `ANNUAL` in
-	// all API responses. - `ANNUAL_YEARLY_PAY` - The annual commitment plan
-	// with yearly payments - `FLEXIBLE` - The flexible plan - `TRIAL` - The
-	// 30-day free trial plan
+	// PlanName: The `planName` property is required. This is the name of the
+	// subscription's payment plan. For more information about the Google payment
+	// plans, see API concepts. Possible values are: - `ANNUAL_MONTHLY_PAY` - The
+	// annual commitment plan with monthly payments *Caution: *`ANNUAL_MONTHLY_PAY`
+	// is returned as `ANNUAL` in all API responses. - `ANNUAL_YEARLY_PAY` - The
+	// annual commitment plan with yearly payments - `FLEXIBLE` - The flexible plan
+	// - `TRIAL` - The 30-day free trial plan
 	PlanName string `json:"planName,omitempty"`
-
-	// PurchaseOrderId: This is an optional property. This purchase order
-	// (PO) information is for resellers to use for their company tracking
-	// usage. If a `purchaseOrderId` value is given it appears in the API
-	// responses and shows up in the invoice. The property accepts up to 80
-	// plain text characters.
+	// PurchaseOrderId: This is an optional property. This purchase order (PO)
+	// information is for resellers to use for their company tracking usage. If a
+	// `purchaseOrderId` value is given it appears in the API responses and shows
+	// up in the invoice. The property accepts up to 80 plain text characters.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
-
-	// Seats: This is a required property. The seats property is the number
-	// of user seat licenses.
+	// Seats: This is a required property. The seats property is the number of user
+	// seat licenses.
 	Seats *Seats `json:"seats,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DealCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DealCode") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DealCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ChangePlanRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ChangePlanRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Customer: When a Google customer's account is registered with a
-// reseller, the customer's subscriptions for Google services are
-// managed by this reseller. A customer is described by a primary domain
-// name and a physical address.
+// Customer: When a Google customer's account is registered with a reseller,
+// the customer's subscriptions for Google services are managed by this
+// reseller. A customer is described by a primary domain name and a physical
+// address.
 type Customer struct {
-	// AlternateEmail: Like the "Customer email" in the reseller tools, this
-	// email is the secondary contact used if something happens to the
-	// customer's service such as service outage or a security issue. This
-	// property is required when creating a new "domain" customer and should
-	// not use the same domain as `customerDomain`. The `alternateEmail`
-	// field is not necessary to create a "team" customer.
+	// AlternateEmail: Like the "Customer email" in the reseller tools, this email
+	// is the secondary contact used if something happens to the customer's service
+	// such as service outage or a security issue. This property is required when
+	// creating a new "domain" customer and should not use the same domain as
+	// `customerDomain`. The `alternateEmail` field is not necessary to create a
+	// "team" customer.
 	AlternateEmail string `json:"alternateEmail,omitempty"`
-
-	// CustomerDomain: The customer's primary domain name string.
-	// `customerDomain` is required when creating a new customer. Do not
-	// include the `www` prefix in the domain when adding a customer.
+	// CustomerDomain: The customer's primary domain name string. `customerDomain`
+	// is required when creating a new customer. Do not include the `www` prefix in
+	// the domain when adding a customer.
 	CustomerDomain string `json:"customerDomain,omitempty"`
-
-	// CustomerDomainVerified: Whether the customer's primary domain has
-	// been verified.
+	// CustomerDomainVerified: Whether the customer's primary domain has been
+	// verified.
 	CustomerDomainVerified bool `json:"customerDomainVerified,omitempty"`
-
-	// CustomerId: This property will always be returned in a response as
-	// the unique identifier generated by Google. In a request, this
-	// property can be either the primary domain or the unique identifier
-	// generated by Google.
+	// CustomerId: This property will always be returned in a response as the
+	// unique identifier generated by Google. In a request, this property can be
+	// either the primary domain or the unique identifier generated by Google.
 	CustomerId string `json:"customerId,omitempty"`
-
 	// CustomerType: Identifies the type of the customer. Acceptable values
-	// include: * `domain`: Implies a domain-verified customer (default). *
-	// `team`: Implies an email-verified customer. For more information, see
-	// managed teams (https://support.google.com/a/users/answer/9939479).
+	// include: * `domain`: Implies a domain-verified customer (default). * `team`:
+	// Implies an email-verified customer. For more information, see managed teams
+	// (https://support.google.com/a/users/answer/9939479).
 	//
 	// Possible values:
 	//   "customerTypeUnspecified" - Customer type not known
 	//   "domain" - Domained or domain-owning customers
 	//   "team" - Domainless or email-verified customers
 	CustomerType string `json:"customerType,omitempty"`
-
-	// Kind: Identifies the resource as a customer. Value:
-	// `reseller#customer`
+	// Kind: Identifies the resource as a customer. Value: `reseller#customer`
 	Kind string `json:"kind,omitempty"`
-
-	// PhoneNumber: Customer contact phone number. Must start with "+"
-	// followed by the country code. The rest of the number can be
-	// contiguous numbers or respect the phone local format conventions, but
-	// it must be a real phone number and not, for example, "123". This
-	// field is silently ignored if invalid.
+	// PhoneNumber: Customer contact phone number. Must start with "+" followed by
+	// the country code. The rest of the number can be contiguous numbers or
+	// respect the phone local format conventions, but it must be a real phone
+	// number and not, for example, "123". This field is silently ignored if
+	// invalid.
 	PhoneNumber string `json:"phoneNumber,omitempty"`
-
-	// PostalAddress: A customer's address information. Each field has a
-	// limit of 255 charcters.
+	// PostalAddress: A customer's address information. Each field has a limit of
+	// 255 charcters.
 	PostalAddress *Address `json:"postalAddress,omitempty"`
-
-	// PrimaryAdmin: The first admin details of the customer, present in
-	// case of TEAM customer.
+	// PrimaryAdmin: The first admin details of the customer, present in case of
+	// TEAM customer.
 	PrimaryAdmin *PrimaryAdmin `json:"primaryAdmin,omitempty"`
-
-	// ResourceUiUrl: URL to customer's Admin console dashboard. The
-	// read-only URL is generated by the API service. This is used if your
-	// client application requires the customer to complete a task in the
-	// Admin console.
+	// ResourceUiUrl: URL to customer's Admin console dashboard. The read-only URL
+	// is generated by the API service. This is used if your client application
+	// requires the customer to complete a task in the Admin console.
 	ResourceUiUrl string `json:"resourceUiUrl,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AlternateEmail") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AlternateEmail") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AlternateEmail") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Customer) MarshalJSON() ([]byte, error) {
 	type NoMethod Customer
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PrimaryAdmin: JSON template for primary admin in case of TEAM
-// customers
+// PrimaryAdmin: JSON template for primary admin in case of TEAM customers
 type PrimaryAdmin struct {
 	// PrimaryEmail: The business email of the primary administrator of the
-	// customer. The email verification link is sent to this email address
-	// at the time of customer creation. Primary administrators have access
-	// to the customer's Admin Console, including the ability to invite and
-	// evict users and manage the administrative needs of the customer.
+	// customer. The email verification link is sent to this email address at the
+	// time of customer creation. Primary administrators have access to the
+	// customer's Admin Console, including the ability to invite and evict users
+	// and manage the administrative needs of the customer.
 	PrimaryEmail string `json:"primaryEmail,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "PrimaryEmail") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "PrimaryEmail") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "PrimaryEmail") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PrimaryAdmin) MarshalJSON() ([]byte, error) {
 	type NoMethod PrimaryAdmin
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // RenewalSettings: JSON template for a subscription renewal settings.
 type RenewalSettings struct {
-	// Kind: Identifies the resource as a subscription renewal setting.
-	// Value: `subscriptions#renewalSettings`
+	// Kind: Identifies the resource as a subscription renewal setting. Value:
+	// `subscriptions#renewalSettings`
 	Kind string `json:"kind,omitempty"`
-
-	// RenewalType: Renewal settings for the annual commitment plan. For
-	// more detailed information, see renewal options in the administrator
-	// help center. When renewing a subscription, the `renewalType` is a
-	// required property.
+	// RenewalType: Renewal settings for the annual commitment plan. For more
+	// detailed information, see renewal options in the administrator help center.
+	// When renewing a subscription, the `renewalType` is a required property.
 	RenewalType string `json:"renewalType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RenewalSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod RenewalSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ResellernotifyGetwatchdetailsResponse: JSON template for
-// resellernotify getwatchdetails response.
+// ResellernotifyGetwatchdetailsResponse: JSON template for resellernotify
+// getwatchdetails response.
 type ResellernotifyGetwatchdetailsResponse struct {
 	// ServiceAccountEmailAddresses: List of registered service accounts.
 	ServiceAccountEmailAddresses []string `json:"serviceAccountEmailAddresses,omitempty"`
-
 	// TopicName: Topic name of the PubSub
 	TopicName string `json:"topicName,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g.
-	// "ServiceAccountEmailAddresses") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// "ServiceAccountEmailAddresses") to unconditionally include in API requests.
+	// By default, fields with empty or default values are omitted from API
+	// requests. See https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields
+	// for more details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g.
-	// "ServiceAccountEmailAddresses") to include in API requests with the
-	// JSON null value. By default, fields with empty values are omitted
-	// from API requests. However, any field with an empty value appearing
-	// in NullFields will be sent to the server as null. It is an error if a
-	// field in this list has a non-empty value. This may be used to include
-	// null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ServiceAccountEmailAddresses") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ResellernotifyGetwatchdetailsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ResellernotifyGetwatchdetailsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ResellernotifyResource: JSON template for resellernotify response.
@@ -524,31 +447,24 @@ type ResellernotifyResource struct {
 	// TopicName: Topic name of the PubSub
 	TopicName string `json:"topicName,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "TopicName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "TopicName") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "TopicName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ResellernotifyResource) MarshalJSON() ([]byte, error) {
 	type NoMethod ResellernotifyResource
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Seats: JSON template for subscription seats.
@@ -556,410 +472,321 @@ type Seats struct {
 	// Kind: Identifies the resource as a subscription seat setting. Value:
 	// `subscriptions#seats`
 	Kind string `json:"kind,omitempty"`
-
-	// LicensedNumberOfSeats: Read-only field containing the current number
-	// of users that are assigned a license for the product defined in
-	// `skuId`. This field's value is equivalent to the numerical count of
-	// users returned by the Enterprise License Manager API method:
-	// `listForProductAndSku`
-	// (/admin-sdk/licensing/v1/reference/licenseAssignments/listForProductAn
-	// dSku).
+	// LicensedNumberOfSeats: Read-only field containing the current number of
+	// users that are assigned a license for the product defined in `skuId`. This
+	// field's value is equivalent to the numerical count of users returned by the
+	// Enterprise License Manager API method: `listForProductAndSku`
+	// (/admin-sdk/licensing/v1/reference/licenseAssignments/listForProductAndSku).
 	LicensedNumberOfSeats int64 `json:"licensedNumberOfSeats,omitempty"`
-
 	// MaximumNumberOfSeats: This is a required property and is exclusive to
-	// subscriptions with `FLEXIBLE` or `TRIAL` plans. This property sets
-	// the maximum number of licensed users allowed on a subscription. This
-	// quantity can be increased up to the maximum limit defined in the
-	// reseller's contract. The minimum quantity is the current number of
-	// users in the customer account. *Note: *G Suite subscriptions
-	// automatically assign a license to every user.
+	// subscriptions with `FLEXIBLE` or `TRIAL` plans. This property sets the
+	// maximum number of licensed users allowed on a subscription. This quantity
+	// can be increased up to the maximum limit defined in the reseller's contract.
+	// The minimum quantity is the current number of users in the customer account.
+	// *Note: *G Suite subscriptions automatically assign a license to every user.
 	MaximumNumberOfSeats int64 `json:"maximumNumberOfSeats,omitempty"`
-
-	// NumberOfSeats: This is a required property and is exclusive to
-	// subscriptions with `ANNUAL_MONTHLY_PAY` and `ANNUAL_YEARLY_PAY`
-	// plans. This property sets the maximum number of licenses assignable
-	// to users on a subscription. The reseller can add more licenses, but
-	// once set, the `numberOfSeats` cannot be reduced until renewal. The
-	// reseller is invoiced based on the `numberOfSeats` value regardless of
-	// how many of these user licenses are assigned. *Note: *Google
-	// Workspace subscriptions automatically assign a license to every user.
+	// NumberOfSeats: This is a required property and is exclusive to subscriptions
+	// with `ANNUAL_MONTHLY_PAY` and `ANNUAL_YEARLY_PAY` plans. This property sets
+	// the maximum number of licenses assignable to users on a subscription. The
+	// reseller can add more licenses, but once set, the `numberOfSeats` cannot be
+	// reduced until renewal. The reseller is invoiced based on the `numberOfSeats`
+	// value regardless of how many of these user licenses are assigned. *Note:
+	// *Google Workspace subscriptions automatically assign a license to every
+	// user.
 	NumberOfSeats int64 `json:"numberOfSeats,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Seats) MarshalJSON() ([]byte, error) {
 	type NoMethod Seats
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Subscription: JSON template for a subscription.
 type Subscription struct {
-	// BillingMethod: Read-only field that returns the current billing
-	// method for a subscription.
+	// BillingMethod: Read-only field that returns the current billing method for a
+	// subscription.
 	BillingMethod string `json:"billingMethod,omitempty"`
-
-	// CreationTime: The `creationTime` property is the date when
-	// subscription was created. It is in milliseconds using the Epoch
-	// format. See an example Epoch converter.
+	// CreationTime: The `creationTime` property is the date when subscription was
+	// created. It is in milliseconds using the Epoch format. See an example Epoch
+	// converter.
 	CreationTime int64 `json:"creationTime,omitempty,string"`
-
 	// CustomerDomain: Primary domain name of the customer
 	CustomerDomain string `json:"customerDomain,omitempty"`
-
-	// CustomerId: This property will always be returned in a response as
-	// the unique identifier generated by Google. In a request, this
-	// property can be either the primary domain or the unique identifier
-	// generated by Google.
+	// CustomerId: This property will always be returned in a response as the
+	// unique identifier generated by Google. In a request, this property can be
+	// either the primary domain or the unique identifier generated by Google.
 	CustomerId string `json:"customerId,omitempty"`
-
 	// DealCode: Google-issued code (100 char max) for discounted pricing on
-	// subscription plans. Deal code must be included in `insert` requests
-	// in order to receive discounted rate. This property is optional,
-	// regular pricing applies if left empty.
+	// subscription plans. Deal code must be included in `insert` requests in order
+	// to receive discounted rate. This property is optional, regular pricing
+	// applies if left empty.
 	DealCode string `json:"dealCode,omitempty"`
-
 	// Kind: Identifies the resource as a Subscription. Value:
 	// `reseller#subscription`
 	Kind string `json:"kind,omitempty"`
-
-	// Plan: The `plan` property is required. In this version of the API,
-	// the G Suite plans are the flexible plan, annual commitment plan, and
-	// the 30-day free trial plan. For more information about the API"s
-	// payment plans, see the API concepts.
+	// Plan: The `plan` property is required. In this version of the API, the G
+	// Suite plans are the flexible plan, annual commitment plan, and the 30-day
+	// free trial plan. For more information about the API"s payment plans, see the
+	// API concepts.
 	Plan *SubscriptionPlan `json:"plan,omitempty"`
-
-	// PurchaseOrderId: This is an optional property. This purchase order
-	// (PO) information is for resellers to use for their company tracking
-	// usage. If a `purchaseOrderId` value is given it appears in the API
-	// responses and shows up in the invoice. The property accepts up to 80
-	// plain text characters.
+	// PurchaseOrderId: This is an optional property. This purchase order (PO)
+	// information is for resellers to use for their company tracking usage. If a
+	// `purchaseOrderId` value is given it appears in the API responses and shows
+	// up in the invoice. The property accepts up to 80 plain text characters.
 	PurchaseOrderId string `json:"purchaseOrderId,omitempty"`
-
-	// RenewalSettings: Renewal settings for the annual commitment plan. For
-	// more detailed information, see renewal options in the administrator
-	// help center.
+	// RenewalSettings: Renewal settings for the annual commitment plan. For more
+	// detailed information, see renewal options in the administrator help center.
 	RenewalSettings *RenewalSettings `json:"renewalSettings,omitempty"`
-
-	// ResourceUiUrl: URL to customer's Subscriptions page in the Admin
-	// console. The read-only URL is generated by the API service. This is
-	// used if your client application requires the customer to complete a
-	// task using the Subscriptions page in the Admin console.
+	// ResourceUiUrl: URL to customer's Subscriptions page in the Admin console.
+	// The read-only URL is generated by the API service. This is used if your
+	// client application requires the customer to complete a task using the
+	// Subscriptions page in the Admin console.
 	ResourceUiUrl string `json:"resourceUiUrl,omitempty"`
-
 	// Seats: This is a required property. The number and limit of user seat
 	// licenses in the plan.
 	Seats *Seats `json:"seats,omitempty"`
-
-	// SkuId: A required property. The `skuId` is a unique system identifier
-	// for a product's SKU assigned to a customer in the subscription. For
-	// products and SKUs available in this version of the API, see Product
-	// and SKU IDs.
+	// SkuId: A required property. The `skuId` is a unique system identifier for a
+	// product's SKU assigned to a customer in the subscription. For products and
+	// SKUs available in this version of the API, see Product and SKU IDs.
 	SkuId string `json:"skuId,omitempty"`
-
-	// SkuName: Read-only external display name for a product's SKU assigned
-	// to a customer in the subscription. SKU names are subject to change at
-	// Google's discretion. For products and SKUs available in this version
-	// of the API, see Product and SKU IDs.
+	// SkuName: Read-only external display name for a product's SKU assigned to a
+	// customer in the subscription. SKU names are subject to change at Google's
+	// discretion. For products and SKUs available in this version of the API, see
+	// Product and SKU IDs.
 	SkuName string `json:"skuName,omitempty"`
-
 	// Status: This is an optional property.
 	Status string `json:"status,omitempty"`
-
-	// SubscriptionId: The `subscriptionId` is the subscription identifier
-	// and is unique for each customer. This is a required property. Since a
-	// `subscriptionId` changes when a subscription is updated, we recommend
-	// not using this ID as a key for persistent data. Use the
-	// `subscriptionId` as described in retrieve all reseller subscriptions.
+	// SubscriptionId: The `subscriptionId` is the subscription identifier and is
+	// unique for each customer. This is a required property. Since a
+	// `subscriptionId` changes when a subscription is updated, we recommend not
+	// using this ID as a key for persistent data. Use the `subscriptionId` as
+	// described in retrieve all reseller subscriptions.
 	SubscriptionId string `json:"subscriptionId,omitempty"`
-
-	// SuspensionReasons: Read-only field containing an enumerable of all
-	// the current suspension reasons for a subscription. It is possible for
-	// a subscription to have many concurrent, overlapping suspension
-	// reasons. A subscription's `STATUS` is `SUSPENDED` until all pending
-	// suspensions are removed. Possible options include: -
-	// `PENDING_TOS_ACCEPTANCE` - The customer has not logged in and
-	// accepted the G Suite Resold Terms of Services. -
-	// `RENEWAL_WITH_TYPE_CANCEL` - The customer's commitment ended and
-	// their service was cancelled at the end of their term. -
-	// `RESELLER_INITIATED` - A manual suspension invoked by a Reseller. -
-	// `TRIAL_ENDED` - The customer's trial expired without a plan selected.
-	// - `OTHER` - The customer is suspended for an internal Google reason
-	// (e.g. abuse or otherwise).
+	// SuspensionReasons: Read-only field containing an enumerable of all the
+	// current suspension reasons for a subscription. It is possible for a
+	// subscription to have many concurrent, overlapping suspension reasons. A
+	// subscription's `STATUS` is `SUSPENDED` until all pending suspensions are
+	// removed. Possible options include: - `PENDING_TOS_ACCEPTANCE` - The customer
+	// has not logged in and accepted the G Suite Resold Terms of Services. -
+	// `RENEWAL_WITH_TYPE_CANCEL` - The customer's commitment ended and their
+	// service was cancelled at the end of their term. - `RESELLER_INITIATED` - A
+	// manual suspension invoked by a Reseller. - `TRIAL_ENDED` - The customer's
+	// trial expired without a plan selected. - `OTHER` - The customer is suspended
+	// for an internal Google reason (e.g. abuse or otherwise).
 	SuspensionReasons []string `json:"suspensionReasons,omitempty"`
-
-	// TransferInfo: Read-only transfer related information for the
-	// subscription. For more information, see retrieve transferable
-	// subscriptions for a customer.
+	// TransferInfo: Read-only transfer related information for the subscription.
+	// For more information, see retrieve transferable subscriptions for a
+	// customer.
 	TransferInfo *SubscriptionTransferInfo `json:"transferInfo,omitempty"`
-
-	// TrialSettings: The G Suite annual commitment and flexible payment
-	// plans can be in a 30-day free trial. For more information, see the
-	// API concepts.
+	// TrialSettings: The G Suite annual commitment and flexible payment plans can
+	// be in a 30-day free trial. For more information, see the API concepts.
 	TrialSettings *SubscriptionTrialSettings `json:"trialSettings,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "BillingMethod") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BillingMethod") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BillingMethod") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Subscription) MarshalJSON() ([]byte, error) {
 	type NoMethod Subscription
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SubscriptionPlan: The `plan` property is required. In this version of
-// the API, the G Suite plans are the flexible plan, annual commitment
-// plan, and the 30-day free trial plan. For more information about the
-// API"s payment plans, see the API concepts.
+// SubscriptionPlan: The `plan` property is required. In this version of the
+// API, the G Suite plans are the flexible plan, annual commitment plan, and
+// the 30-day free trial plan. For more information about the API"s payment
+// plans, see the API concepts.
 type SubscriptionPlan struct {
-	// CommitmentInterval: In this version of the API, annual commitment
-	// plan's interval is one year. *Note: *When `billingMethod` value is
-	// `OFFLINE`, the subscription property object `plan.commitmentInterval`
-	// is omitted in all API responses.
+	// CommitmentInterval: In this version of the API, annual commitment plan's
+	// interval is one year. *Note: *When `billingMethod` value is `OFFLINE`, the
+	// subscription property object `plan.commitmentInterval` is omitted in all API
+	// responses.
 	CommitmentInterval *SubscriptionPlanCommitmentInterval `json:"commitmentInterval,omitempty"`
-
-	// IsCommitmentPlan: The `isCommitmentPlan` property's boolean value
-	// identifies the plan as an annual commitment plan: - `true` — The
-	// subscription's plan is an annual commitment plan. - `false` — The
-	// plan is not an annual commitment plan.
+	// IsCommitmentPlan: The `isCommitmentPlan` property's boolean value identifies
+	// the plan as an annual commitment plan: - `true` — The subscription's plan
+	// is an annual commitment plan. - `false` — The plan is not an annual
+	// commitment plan.
 	IsCommitmentPlan bool `json:"isCommitmentPlan,omitempty"`
-
-	// PlanName: The `planName` property is required. This is the name of
-	// the subscription's plan. For more information about the Google
-	// payment plans, see the API concepts. Possible values are: -
-	// `ANNUAL_MONTHLY_PAY` — The annual commitment plan with monthly
-	// payments. *Caution: *`ANNUAL_MONTHLY_PAY` is returned as `ANNUAL` in
-	// all API responses. - `ANNUAL_YEARLY_PAY` — The annual commitment
-	// plan with yearly payments - `FLEXIBLE` — The flexible plan -
-	// `TRIAL` — The 30-day free trial plan. A subscription in trial will
-	// be suspended after the 30th free day if no payment plan is assigned.
-	// Calling `changePlan` will assign a payment plan to a trial but will
-	// not activate the plan. A trial will automatically begin its assigned
-	// payment plan after its 30th free day or immediately after calling
-	// `startPaidService`. - `FREE` — The free plan is exclusive to the
-	// Cloud Identity SKU and does not incur any billing.
+	// PlanName: The `planName` property is required. This is the name of the
+	// subscription's plan. For more information about the Google payment plans,
+	// see the API concepts. Possible values are: - `ANNUAL_MONTHLY_PAY` — The
+	// annual commitment plan with monthly payments. *Caution:
+	// *`ANNUAL_MONTHLY_PAY` is returned as `ANNUAL` in all API responses. -
+	// `ANNUAL_YEARLY_PAY` — The annual commitment plan with yearly payments -
+	// `FLEXIBLE` — The flexible plan - `TRIAL` — The 30-day free trial plan. A
+	// subscription in trial will be suspended after the 30th free day if no
+	// payment plan is assigned. Calling `changePlan` will assign a payment plan to
+	// a trial but will not activate the plan. A trial will automatically begin its
+	// assigned payment plan after its 30th free day or immediately after calling
+	// `startPaidService`. - `FREE` — The free plan is exclusive to the Cloud
+	// Identity SKU and does not incur any billing.
 	PlanName string `json:"planName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "CommitmentInterval")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CommitmentInterval") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CommitmentInterval") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CommitmentInterval") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SubscriptionPlan) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionPlan
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SubscriptionPlanCommitmentInterval: In this version of the API,
-// annual commitment plan's interval is one year. *Note: *When
-// `billingMethod` value is `OFFLINE`, the subscription property object
-// `plan.commitmentInterval` is omitted in all API responses.
+// SubscriptionPlanCommitmentInterval: In this version of the API, annual
+// commitment plan's interval is one year. *Note: *When `billingMethod` value
+// is `OFFLINE`, the subscription property object `plan.commitmentInterval` is
+// omitted in all API responses.
 type SubscriptionPlanCommitmentInterval struct {
-	// EndTime: An annual commitment plan's interval's `endTime` in
-	// milliseconds using the UNIX Epoch format. See an example Epoch
-	// converter.
+	// EndTime: An annual commitment plan's interval's `endTime` in milliseconds
+	// using the UNIX Epoch format. See an example Epoch converter.
 	EndTime int64 `json:"endTime,omitempty,string"`
-
 	// StartTime: An annual commitment plan's interval's `startTime` in
 	// milliseconds using UNIX Epoch format. See an example Epoch converter.
 	StartTime int64 `json:"startTime,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "EndTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "EndTime") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "EndTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SubscriptionPlanCommitmentInterval) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionPlanCommitmentInterval
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// SubscriptionTransferInfo: Read-only transfer related information for
-// the subscription. For more information, see retrieve transferable
-// subscriptions for a customer.
+// SubscriptionTransferInfo: Read-only transfer related information for the
+// subscription. For more information, see retrieve transferable subscriptions
+// for a customer.
 type SubscriptionTransferInfo struct {
-	// CurrentLegacySkuId: The `skuId` of the current resold subscription.
-	// This is populated only when the customer has a subscription with a
-	// legacy SKU and the subscription resource is populated with the
-	// `skuId` of the SKU recommended for the transfer.
+	// CurrentLegacySkuId: The `skuId` of the current resold subscription. This is
+	// populated only when the customer has a subscription with a legacy SKU and
+	// the subscription resource is populated with the `skuId` of the SKU
+	// recommended for the transfer.
 	CurrentLegacySkuId string `json:"currentLegacySkuId,omitempty"`
-
-	// MinimumTransferableSeats: When inserting a subscription, this is the
-	// minimum number of seats listed in the transfer order for this
-	// product. For example, if the customer has 20 users, the reseller
-	// cannot place a transfer order of 15 seats. The minimum is 20 seats.
+	// MinimumTransferableSeats: When inserting a subscription, this is the minimum
+	// number of seats listed in the transfer order for this product. For example,
+	// if the customer has 20 users, the reseller cannot place a transfer order of
+	// 15 seats. The minimum is 20 seats.
 	MinimumTransferableSeats int64 `json:"minimumTransferableSeats,omitempty"`
-
-	// TransferabilityExpirationTime: The time when transfer token or intent
-	// to transfer will expire. The time is in milliseconds using UNIX Epoch
-	// format.
+	// TransferabilityExpirationTime: The time when transfer token or intent to
+	// transfer will expire. The time is in milliseconds using UNIX Epoch format.
 	TransferabilityExpirationTime int64 `json:"transferabilityExpirationTime,omitempty,string"`
-
-	// ForceSendFields is a list of field names (e.g. "CurrentLegacySkuId")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CurrentLegacySkuId") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrentLegacySkuId") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CurrentLegacySkuId") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SubscriptionTransferInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionTransferInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SubscriptionTrialSettings: The G Suite annual commitment and flexible
-// payment plans can be in a 30-day free trial. For more information,
-// see the API concepts.
+// payment plans can be in a 30-day free trial. For more information, see the
+// API concepts.
 type SubscriptionTrialSettings struct {
-	// IsInTrial: Determines if a subscription's plan is in a 30-day free
-	// trial or not: - `true` — The plan is in trial. - `false` — The
-	// plan is not in trial.
+	// IsInTrial: Determines if a subscription's plan is in a 30-day free trial or
+	// not: - `true` — The plan is in trial. - `false` — The plan is not in
+	// trial.
 	IsInTrial bool `json:"isInTrial,omitempty"`
-
-	// TrialEndTime: Date when the trial ends. The value is in milliseconds
-	// using the UNIX Epoch format. See an example Epoch converter.
+	// TrialEndTime: Date when the trial ends. The value is in milliseconds using
+	// the UNIX Epoch format. See an example Epoch converter.
 	TrialEndTime int64 `json:"trialEndTime,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "IsInTrial") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IsInTrial") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IsInTrial") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SubscriptionTrialSettings) MarshalJSON() ([]byte, error) {
 	type NoMethod SubscriptionTrialSettings
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Subscriptions: A subscription manages the relationship of a Google
-// customer's payment plan with a product's SKU, user licenses, 30-day
-// free trial status, and renewal options. A primary role of a reseller
-// is to manage the Google customer's subscriptions.
+// customer's payment plan with a product's SKU, user licenses, 30-day free
+// trial status, and renewal options. A primary role of a reseller is to manage
+// the Google customer's subscriptions.
 type Subscriptions struct {
-	// Kind: Identifies the resource as a collection of subscriptions.
-	// Value: reseller#subscriptions
+	// Kind: Identifies the resource as a collection of subscriptions. Value:
+	// reseller#subscriptions
 	Kind string `json:"kind,omitempty"`
-
-	// NextPageToken: The continuation token, used to page through large
-	// result sets. Provide this value in a subsequent request to return the
-	// next page of results.
+	// NextPageToken: The continuation token, used to page through large result
+	// sets. Provide this value in a subsequent request to return the next page of
+	// results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Subscriptions: The subscriptions in this page of results.
 	Subscriptions []*Subscription `json:"subscriptions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Kind") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Kind") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Kind") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Kind") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Subscriptions) MarshalJSON() ([]byte, error) {
 	type NoMethod Subscriptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "reseller.customers.get":
 
 type CustomersGetCall struct {
 	s            *Service
@@ -970,19 +797,19 @@ type CustomersGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a customer account. Use this operation to see a customer
-// account already in your reseller management, or to see the minimal
-// account information for an existing customer that you do not manage.
-// For more information about the API response for existing customers,
-// see retrieving a customer account
+// Get: Gets a customer account. Use this operation to see a customer account
+// already in your reseller management, or to see the minimal account
+// information for an existing customer that you do not manage. For more
+// information about the API response for existing customers, see retrieving a
+// customer account
 // (/admin-sdk/reseller/v1/how-tos/manage_customers#get_customer).
 //
-//   - customerId: This can be either the customer's primary domain name
-//     or the customer's unique identifier. If the domain name for a
-//     customer changes, the old domain name cannot be used to access the
-//     customer, but the customer's unique identifier (as returned by the
-//     API) can always be used. We recommend storing the unique identifier
-//     in your systems where applicable.
+//   - customerId: This can be either the customer's primary domain name or the
+//     customer's unique identifier. If the domain name for a customer changes,
+//     the old domain name cannot be used to access the customer, but the
+//     customer's unique identifier (as returned by the API) can always be used.
+//     We recommend storing the unique identifier in your systems where
+//     applicable.
 func (r *CustomersService) Get(customerId string) *CustomersGetCall {
 	c := &CustomersGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -990,33 +817,29 @@ func (r *CustomersService) Get(customerId string) *CustomersGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersGetCall) Fields(s ...googleapi.Field) *CustomersGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *CustomersGetCall) IfNoneMatch(entityTag string) *CustomersGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersGetCall) Context(ctx context.Context) *CustomersGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1025,12 +848,7 @@ func (c *CustomersGetCall) Header() http.Header {
 }
 
 func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1051,12 +869,10 @@ func (c *CustomersGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "reseller.customers.get" call.
-// Exactly one of *Customer or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Customer.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Customer.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CustomersGetCall) Do(opts ...googleapi.CallOption) (*Customer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1087,35 +903,7 @@ func (c *CustomersGetCall) Do(opts ...googleapi.CallOption) (*Customer, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a customer account. Use this operation to see a customer account already in your reseller management, or to see the minimal account information for an existing customer that you do not manage. For more information about the API response for existing customers, see [retrieving a customer account](/admin-sdk/reseller/v1/how-tos/manage_customers#get_customer).",
-	//   "flatPath": "apps/reseller/v1/customers/{customerId}",
-	//   "httpMethod": "GET",
-	//   "id": "reseller.customers.get",
-	//   "parameterOrder": [
-	//     "customerId"
-	//   ],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/customers/{customerId}",
-	//   "response": {
-	//     "$ref": "Customer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order",
-	//     "https://www.googleapis.com/auth/apps.order.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "reseller.customers.insert":
 
 type CustomersInsertCall struct {
 	s          *Service
@@ -1125,60 +913,55 @@ type CustomersInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Orders a new customer's account. Before ordering a new
-// customer account, establish whether the customer account already
-// exists using the `customers.get`
-// (/admin-sdk/reseller/v1/reference/customers/get) If the customer
-// account exists as a direct Google account or as a resold customer
-// account from another reseller, use the `customerAuthToken\` as
-// described in order a resold account for an existing customer
-// (/admin-sdk/reseller/v1/how-tos/manage_customers#create_existing_custo
-// mer). For more information about ordering a new customer account, see
-// order a new customer account
-// (/admin-sdk/reseller/v1/how-tos/manage_customers#create_customer).
-// After creating a new customer account, you must provision a user as
-// an administrator. The customer's administrator is required to sign in
-// to the Admin console and sign the G Suite via Reseller agreement to
-// activate the account. Resellers are prohibited from signing the G
-// Suite via Reseller agreement on the customer's behalf. For more
-// information, see order a new customer account
-// (/admin-sdk/reseller/v1/how-tos/manage_customers#tos).
+// Insert: Orders a new customer's account. Before ordering a new customer
+// account, establish whether the customer account already exists using the
+// `customers.get` (/admin-sdk/reseller/v1/reference/customers/get) If the
+// customer account exists as a direct Google account or as a resold customer
+// account from another reseller, use the `customerAuthToken\` as described in
+// order a resold account for an existing customer
+// (/admin-sdk/reseller/v1/how-tos/manage_customers#create_existing_customer).
+// For more information about ordering a new customer account, see order a new
+// customer account
+// (/admin-sdk/reseller/v1/how-tos/manage_customers#create_customer). After
+// creating a new customer account, you must provision a user as an
+// administrator. The customer's administrator is required to sign in to the
+// Admin console and sign the G Suite via Reseller agreement to activate the
+// account. Resellers are prohibited from signing the G Suite via Reseller
+// agreement on the customer's behalf. For more information, see order a new
+// customer account (/admin-sdk/reseller/v1/how-tos/manage_customers#tos).
 func (r *CustomersService) Insert(customer *Customer) *CustomersInsertCall {
 	c := &CustomersInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customer = customer
 	return c
 }
 
-// CustomerAuthToken sets the optional parameter "customerAuthToken":
-// The `customerAuthToken` query string is required when creating a
-// resold account that transfers a direct customer's subscription or
-// transfers another reseller customer's subscription to your reseller
-// management. This is a hexadecimal authentication token needed to
-// complete the subscription transfer. For more information, see the
-// administrator help center.
+// CustomerAuthToken sets the optional parameter "customerAuthToken": The
+// `customerAuthToken` query string is required when creating a resold account
+// that transfers a direct customer's subscription or transfers another
+// reseller customer's subscription to your reseller management. This is a
+// hexadecimal authentication token needed to complete the subscription
+// transfer. For more information, see the administrator help center.
 func (c *CustomersInsertCall) CustomerAuthToken(customerAuthToken string) *CustomersInsertCall {
 	c.urlParams_.Set("customerAuthToken", customerAuthToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersInsertCall) Fields(s ...googleapi.Field) *CustomersInsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersInsertCall) Context(ctx context.Context) *CustomersInsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersInsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1187,18 +970,12 @@ func (c *CustomersInsertCall) Header() http.Header {
 }
 
 func (c *CustomersInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customer)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers")
@@ -1212,12 +989,10 @@ func (c *CustomersInsertCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "reseller.customers.insert" call.
-// Exactly one of *Customer or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Customer.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Customer.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CustomersInsertCall) Do(opts ...googleapi.CallOption) (*Customer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1248,34 +1023,7 @@ func (c *CustomersInsertCall) Do(opts ...googleapi.CallOption) (*Customer, error
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Orders a new customer's account. Before ordering a new customer account, establish whether the customer account already exists using the [`customers.get`](/admin-sdk/reseller/v1/reference/customers/get) If the customer account exists as a direct Google account or as a resold customer account from another reseller, use the `customerAuthToken\\` as described in [order a resold account for an existing customer](/admin-sdk/reseller/v1/how-tos/manage_customers#create_existing_customer). For more information about ordering a new customer account, see [order a new customer account](/admin-sdk/reseller/v1/how-tos/manage_customers#create_customer). After creating a new customer account, you must provision a user as an administrator. The customer's administrator is required to sign in to the Admin console and sign the G Suite via Reseller agreement to activate the account. Resellers are prohibited from signing the G Suite via Reseller agreement on the customer's behalf. For more information, see [order a new customer account](/admin-sdk/reseller/v1/how-tos/manage_customers#tos).",
-	//   "flatPath": "apps/reseller/v1/customers",
-	//   "httpMethod": "POST",
-	//   "id": "reseller.customers.insert",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "customerAuthToken": {
-	//       "description": "The `customerAuthToken` query string is required when creating a resold account that transfers a direct customer's subscription or transfers another reseller customer's subscription to your reseller management. This is a hexadecimal authentication token needed to complete the subscription transfer. For more information, see the administrator help center.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/customers",
-	//   "request": {
-	//     "$ref": "Customer"
-	//   },
-	//   "response": {
-	//     "$ref": "Customer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "reseller.customers.patch":
 
 type CustomersPatchCall struct {
 	s          *Service
@@ -1286,19 +1034,18 @@ type CustomersPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates a customer account's settings. This method supports
-// patch semantics. You cannot update `customerType` via the Reseller
-// API, but a "team" customer can verify their domain and become
-// `customerType = "domain". For more information, see Verify your
-// domain to unlock Essentials features
-// (https://support.google.com/a/answer/9122284).
+// Patch: Updates a customer account's settings. This method supports patch
+// semantics. You cannot update `customerType` via the Reseller API, but a
+// "team" customer can verify their domain and become `customerType =
+// "domain". For more information, see Verify your domain to unlock Essentials
+// features (https://support.google.com/a/answer/9122284).
 //
-//   - customerId: This can be either the customer's primary domain name
-//     or the customer's unique identifier. If the domain name for a
-//     customer changes, the old domain name cannot be used to access the
-//     customer, but the customer's unique identifier (as returned by the
-//     API) can always be used. We recommend storing the unique identifier
-//     in your systems where applicable.
+//   - customerId: This can be either the customer's primary domain name or the
+//     customer's unique identifier. If the domain name for a customer changes,
+//     the old domain name cannot be used to access the customer, but the
+//     customer's unique identifier (as returned by the API) can always be used.
+//     We recommend storing the unique identifier in your systems where
+//     applicable.
 func (r *CustomersService) Patch(customerId string, customer *Customer) *CustomersPatchCall {
 	c := &CustomersPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -1307,23 +1054,21 @@ func (r *CustomersService) Patch(customerId string, customer *Customer) *Custome
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersPatchCall) Fields(s ...googleapi.Field) *CustomersPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersPatchCall) Context(ctx context.Context) *CustomersPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1332,18 +1077,12 @@ func (c *CustomersPatchCall) Header() http.Header {
 }
 
 func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customer)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}")
@@ -1360,12 +1099,10 @@ func (c *CustomersPatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "reseller.customers.patch" call.
-// Exactly one of *Customer or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Customer.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Customer.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CustomersPatchCall) Do(opts ...googleapi.CallOption) (*Customer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1396,37 +1133,7 @@ func (c *CustomersPatchCall) Do(opts ...googleapi.CallOption) (*Customer, error)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a customer account's settings. This method supports patch semantics. You cannot update `customerType` via the Reseller API, but a `\"team\"` customer can verify their domain and become `customerType = \"domain\"`. For more information, see [Verify your domain to unlock Essentials features](https://support.google.com/a/answer/9122284).",
-	//   "flatPath": "apps/reseller/v1/customers/{customerId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "reseller.customers.patch",
-	//   "parameterOrder": [
-	//     "customerId"
-	//   ],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/customers/{customerId}",
-	//   "request": {
-	//     "$ref": "Customer"
-	//   },
-	//   "response": {
-	//     "$ref": "Customer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "reseller.customers.update":
 
 type CustomersUpdateCall struct {
 	s          *Service
@@ -1438,17 +1145,17 @@ type CustomersUpdateCall struct {
 }
 
 // Update: Updates a customer account's settings. You cannot update
-// `customerType` via the Reseller API, but a "team" customer can
-// verify their domain and become `customerType = "domain". For more
-// information, see update a customer's settings
+// `customerType` via the Reseller API, but a "team" customer can verify
+// their domain and become `customerType = "domain". For more information, see
+// update a customer's settings
 // (/admin-sdk/reseller/v1/how-tos/manage_customers#update_customer).
 //
-//   - customerId: This can be either the customer's primary domain name
-//     or the customer's unique identifier. If the domain name for a
-//     customer changes, the old domain name cannot be used to access the
-//     customer, but the customer's unique identifier (as returned by the
-//     API) can always be used. We recommend storing the unique identifier
-//     in your systems where applicable.
+//   - customerId: This can be either the customer's primary domain name or the
+//     customer's unique identifier. If the domain name for a customer changes,
+//     the old domain name cannot be used to access the customer, but the
+//     customer's unique identifier (as returned by the API) can always be used.
+//     We recommend storing the unique identifier in your systems where
+//     applicable.
 func (r *CustomersService) Update(customerId string, customer *Customer) *CustomersUpdateCall {
 	c := &CustomersUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -1457,23 +1164,21 @@ func (r *CustomersService) Update(customerId string, customer *Customer) *Custom
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *CustomersUpdateCall) Fields(s ...googleapi.Field) *CustomersUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *CustomersUpdateCall) Context(ctx context.Context) *CustomersUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *CustomersUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1482,18 +1187,12 @@ func (c *CustomersUpdateCall) Header() http.Header {
 }
 
 func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.customer)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}")
@@ -1510,12 +1209,10 @@ func (c *CustomersUpdateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "reseller.customers.update" call.
-// Exactly one of *Customer or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Customer.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Customer.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *CustomersUpdateCall) Do(opts ...googleapi.CallOption) (*Customer, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1546,37 +1243,7 @@ func (c *CustomersUpdateCall) Do(opts ...googleapi.CallOption) (*Customer, error
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a customer account's settings. You cannot update `customerType` via the Reseller API, but a `\"team\"` customer can verify their domain and become `customerType = \"domain\"`. For more information, see [update a customer's settings](/admin-sdk/reseller/v1/how-tos/manage_customers#update_customer).",
-	//   "flatPath": "apps/reseller/v1/customers/{customerId}",
-	//   "httpMethod": "PUT",
-	//   "id": "reseller.customers.update",
-	//   "parameterOrder": [
-	//     "customerId"
-	//   ],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/customers/{customerId}",
-	//   "request": {
-	//     "$ref": "Customer"
-	//   },
-	//   "response": {
-	//     "$ref": "Customer"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "reseller.resellernotify.getwatchdetails":
 
 type ResellernotifyGetwatchdetailsCall struct {
 	s            *Service
@@ -1586,41 +1253,37 @@ type ResellernotifyGetwatchdetailsCall struct {
 	header_      http.Header
 }
 
-// Getwatchdetails: Returns all the details of the watch corresponding
-// to the reseller.
+// Getwatchdetails: Returns all the details of the watch corresponding to the
+// reseller.
 func (r *ResellernotifyService) Getwatchdetails() *ResellernotifyGetwatchdetailsCall {
 	c := &ResellernotifyGetwatchdetailsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ResellernotifyGetwatchdetailsCall) Fields(s ...googleapi.Field) *ResellernotifyGetwatchdetailsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ResellernotifyGetwatchdetailsCall) IfNoneMatch(entityTag string) *ResellernotifyGetwatchdetailsCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ResellernotifyGetwatchdetailsCall) Context(ctx context.Context) *ResellernotifyGetwatchdetailsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ResellernotifyGetwatchdetailsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1629,12 +1292,7 @@ func (c *ResellernotifyGetwatchdetailsCall) Header() http.Header {
 }
 
 func (c *ResellernotifyGetwatchdetailsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1652,13 +1310,11 @@ func (c *ResellernotifyGetwatchdetailsCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "reseller.resellernotify.getwatchdetails" call.
-// Exactly one of *ResellernotifyGetwatchdetailsResponse or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
+// Any non-2xx status code is an error. Response headers are in either
 // *ResellernotifyGetwatchdetailsResponse.ServerResponse.Header or (if a
 // response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ResellernotifyGetwatchdetailsCall) Do(opts ...googleapi.CallOption) (*ResellernotifyGetwatchdetailsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1689,26 +1345,7 @@ func (c *ResellernotifyGetwatchdetailsCall) Do(opts ...googleapi.CallOption) (*R
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns all the details of the watch corresponding to the reseller.",
-	//   "flatPath": "apps/reseller/v1/resellernotify/getwatchdetails",
-	//   "httpMethod": "GET",
-	//   "id": "reseller.resellernotify.getwatchdetails",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "apps/reseller/v1/resellernotify/getwatchdetails",
-	//   "response": {
-	//     "$ref": "ResellernotifyGetwatchdetailsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order",
-	//     "https://www.googleapis.com/auth/apps.order.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "reseller.resellernotify.register":
 
 type ResellernotifyRegisterCall struct {
 	s          *Service
@@ -1724,31 +1361,29 @@ func (r *ResellernotifyService) Register() *ResellernotifyRegisterCall {
 }
 
 // ServiceAccountEmailAddress sets the optional parameter
-// "serviceAccountEmailAddress": The service account which will own the
-// created Cloud-PubSub topic.
+// "serviceAccountEmailAddress": The service account which will own the created
+// Cloud-PubSub topic.
 func (c *ResellernotifyRegisterCall) ServiceAccountEmailAddress(serviceAccountEmailAddress string) *ResellernotifyRegisterCall {
 	c.urlParams_.Set("serviceAccountEmailAddress", serviceAccountEmailAddress)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ResellernotifyRegisterCall) Fields(s ...googleapi.Field) *ResellernotifyRegisterCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ResellernotifyRegisterCall) Context(ctx context.Context) *ResellernotifyRegisterCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ResellernotifyRegisterCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1757,12 +1392,7 @@ func (c *ResellernotifyRegisterCall) Header() http.Header {
 }
 
 func (c *ResellernotifyRegisterCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1777,12 +1407,11 @@ func (c *ResellernotifyRegisterCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "reseller.resellernotify.register" call.
-// Exactly one of *ResellernotifyResource or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ResellernotifyResource.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ResellernotifyResource.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ResellernotifyRegisterCall) Do(opts ...googleapi.CallOption) (*ResellernotifyResource, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1813,31 +1442,7 @@ func (c *ResellernotifyRegisterCall) Do(opts ...googleapi.CallOption) (*Reseller
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Registers a Reseller for receiving notifications.",
-	//   "flatPath": "apps/reseller/v1/resellernotify/register",
-	//   "httpMethod": "POST",
-	//   "id": "reseller.resellernotify.register",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "serviceAccountEmailAddress": {
-	//       "description": "The service account which will own the created Cloud-PubSub topic.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/resellernotify/register",
-	//   "response": {
-	//     "$ref": "ResellernotifyResource"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "reseller.resellernotify.unregister":
 
 type ResellernotifyUnregisterCall struct {
 	s          *Service
@@ -1861,23 +1466,21 @@ func (c *ResellernotifyUnregisterCall) ServiceAccountEmailAddress(serviceAccount
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ResellernotifyUnregisterCall) Fields(s ...googleapi.Field) *ResellernotifyUnregisterCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ResellernotifyUnregisterCall) Context(ctx context.Context) *ResellernotifyUnregisterCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ResellernotifyUnregisterCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1886,12 +1489,7 @@ func (c *ResellernotifyUnregisterCall) Header() http.Header {
 }
 
 func (c *ResellernotifyUnregisterCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1906,12 +1504,11 @@ func (c *ResellernotifyUnregisterCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "reseller.resellernotify.unregister" call.
-// Exactly one of *ResellernotifyResource or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ResellernotifyResource.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ResellernotifyResource.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ResellernotifyUnregisterCall) Do(opts ...googleapi.CallOption) (*ResellernotifyResource, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1942,31 +1539,7 @@ func (c *ResellernotifyUnregisterCall) Do(opts ...googleapi.CallOption) (*Resell
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Unregisters a Reseller for receiving notifications.",
-	//   "flatPath": "apps/reseller/v1/resellernotify/unregister",
-	//   "httpMethod": "POST",
-	//   "id": "reseller.resellernotify.unregister",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "serviceAccountEmailAddress": {
-	//       "description": "The service account which owns the Cloud-PubSub topic.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/resellernotify/unregister",
-	//   "response": {
-	//     "$ref": "ResellernotifyResource"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "reseller.subscriptions.activate":
 
 type SubscriptionsActivateCall struct {
 	s              *Service
@@ -1977,23 +1550,22 @@ type SubscriptionsActivateCall struct {
 	header_        http.Header
 }
 
-// Activate: Activates a subscription previously suspended by the
-// reseller. If you did not suspend the customer subscription and it is
-// suspended for any other reason, such as for abuse or a pending ToS
-// acceptance, this call will not reactivate the customer subscription.
+// Activate: Activates a subscription previously suspended by the reseller. If
+// you did not suspend the customer subscription and it is suspended for any
+// other reason, such as for abuse or a pending ToS acceptance, this call will
+// not reactivate the customer subscription.
 //
-//   - customerId: This can be either the customer's primary domain name
-//     or the customer's unique identifier. If the domain name for a
-//     customer changes, the old domain name cannot be used to access the
-//     customer, but the customer's unique identifier (as returned by the
-//     API) can always be used. We recommend storing the unique identifier
-//     in your systems where applicable.
-//   - subscriptionId: This is a required property. The `subscriptionId`
-//     is the subscription identifier and is unique for each customer.
-//     Since a `subscriptionId` changes when a subscription is updated, we
-//     recommend to not use this ID as a key for persistent data. And the
-//     `subscriptionId` can be found using the retrieve all reseller
-//     subscriptions method.
+//   - customerId: This can be either the customer's primary domain name or the
+//     customer's unique identifier. If the domain name for a customer changes,
+//     the old domain name cannot be used to access the customer, but the
+//     customer's unique identifier (as returned by the API) can always be used.
+//     We recommend storing the unique identifier in your systems where
+//     applicable.
+//   - subscriptionId: This is a required property. The `subscriptionId` is the
+//     subscription identifier and is unique for each customer. Since a
+//     `subscriptionId` changes when a subscription is updated, we recommend to
+//     not use this ID as a key for persistent data. And the `subscriptionId` can
+//     be found using the retrieve all reseller subscriptions method.
 func (r *SubscriptionsService) Activate(customerId string, subscriptionId string) *SubscriptionsActivateCall {
 	c := &SubscriptionsActivateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2002,23 +1574,21 @@ func (r *SubscriptionsService) Activate(customerId string, subscriptionId string
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsActivateCall) Fields(s ...googleapi.Field) *SubscriptionsActivateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsActivateCall) Context(ctx context.Context) *SubscriptionsActivateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsActivateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2027,12 +1597,7 @@ func (c *SubscriptionsActivateCall) Header() http.Header {
 }
 
 func (c *SubscriptionsActivateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2051,12 +1616,10 @@ func (c *SubscriptionsActivateCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "reseller.subscriptions.activate" call.
-// Exactly one of *Subscription or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Subscription.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsActivateCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2087,41 +1650,7 @@ func (c *SubscriptionsActivateCall) Do(opts ...googleapi.CallOption) (*Subscript
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Activates a subscription previously suspended by the reseller. If you did not suspend the customer subscription and it is suspended for any other reason, such as for abuse or a pending ToS acceptance, this call will not reactivate the customer subscription.",
-	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/activate",
-	//   "httpMethod": "POST",
-	//   "id": "reseller.subscriptions.activate",
-	//   "parameterOrder": [
-	//     "customerId",
-	//     "subscriptionId"
-	//   ],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "subscriptionId": {
-	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/activate",
-	//   "response": {
-	//     "$ref": "Subscription"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "reseller.subscriptions.changePlan":
 
 type SubscriptionsChangePlanCall struct {
 	s                 *Service
@@ -2133,26 +1662,25 @@ type SubscriptionsChangePlanCall struct {
 	header_           http.Header
 }
 
-// ChangePlan: Updates a subscription plan. Use this method to update a
-// plan for a 30-day trial or a flexible plan subscription to an annual
-// commitment plan with monthly or yearly payments. How a plan is
-// updated differs depending on the plan and the products. For more
-// information, see the description in manage subscriptions
-// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscripti
-// on_plan).
+// ChangePlan: Updates a subscription plan. Use this method to update a plan
+// for a 30-day trial or a flexible plan subscription to an annual commitment
+// plan with monthly or yearly payments. How a plan is updated differs
+// depending on the plan and the products. For more information, see the
+// description in manage subscriptions
+// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscription_plan
+// ).
 //
-//   - customerId: This can be either the customer's primary domain name
-//     or the customer's unique identifier. If the domain name for a
-//     customer changes, the old domain name cannot be used to access the
-//     customer, but the customer's unique identifier (as returned by the
-//     API) can always be used. We recommend storing the unique identifier
-//     in your systems where applicable.
-//   - subscriptionId: This is a required property. The `subscriptionId`
-//     is the subscription identifier and is unique for each customer.
-//     Since a `subscriptionId` changes when a subscription is updated, we
-//     recommend to not use this ID as a key for persistent data. And the
-//     `subscriptionId` can be found using the retrieve all reseller
-//     subscriptions method.
+//   - customerId: This can be either the customer's primary domain name or the
+//     customer's unique identifier. If the domain name for a customer changes,
+//     the old domain name cannot be used to access the customer, but the
+//     customer's unique identifier (as returned by the API) can always be used.
+//     We recommend storing the unique identifier in your systems where
+//     applicable.
+//   - subscriptionId: This is a required property. The `subscriptionId` is the
+//     subscription identifier and is unique for each customer. Since a
+//     `subscriptionId` changes when a subscription is updated, we recommend to
+//     not use this ID as a key for persistent data. And the `subscriptionId` can
+//     be found using the retrieve all reseller subscriptions method.
 func (r *SubscriptionsService) ChangePlan(customerId string, subscriptionId string, changeplanrequest *ChangePlanRequest) *SubscriptionsChangePlanCall {
 	c := &SubscriptionsChangePlanCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2162,23 +1690,21 @@ func (r *SubscriptionsService) ChangePlan(customerId string, subscriptionId stri
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsChangePlanCall) Fields(s ...googleapi.Field) *SubscriptionsChangePlanCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsChangePlanCall) Context(ctx context.Context) *SubscriptionsChangePlanCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsChangePlanCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2187,18 +1713,12 @@ func (c *SubscriptionsChangePlanCall) Header() http.Header {
 }
 
 func (c *SubscriptionsChangePlanCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.changeplanrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changePlan")
@@ -2216,12 +1736,10 @@ func (c *SubscriptionsChangePlanCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "reseller.subscriptions.changePlan" call.
-// Exactly one of *Subscription or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Subscription.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsChangePlanCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2252,44 +1770,7 @@ func (c *SubscriptionsChangePlanCall) Do(opts ...googleapi.CallOption) (*Subscri
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a subscription plan. Use this method to update a plan for a 30-day trial or a flexible plan subscription to an annual commitment plan with monthly or yearly payments. How a plan is updated differs depending on the plan and the products. For more information, see the description in [manage subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscription_plan).",
-	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changePlan",
-	//   "httpMethod": "POST",
-	//   "id": "reseller.subscriptions.changePlan",
-	//   "parameterOrder": [
-	//     "customerId",
-	//     "subscriptionId"
-	//   ],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "subscriptionId": {
-	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changePlan",
-	//   "request": {
-	//     "$ref": "ChangePlanRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Subscription"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "reseller.subscriptions.changeRenewalSettings":
 
 type SubscriptionsChangeRenewalSettingsCall struct {
 	s               *Service
@@ -2301,23 +1782,22 @@ type SubscriptionsChangeRenewalSettingsCall struct {
 	header_         http.Header
 }
 
-// ChangeRenewalSettings: Updates a user license's renewal settings.
-// This is applicable for accounts with annual commitment plans only.
-// For more information, see the description in manage subscriptions
+// ChangeRenewalSettings: Updates a user license's renewal settings. This is
+// applicable for accounts with annual commitment plans only. For more
+// information, see the description in manage subscriptions
 // (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_renewal).
 //
-//   - customerId: This can be either the customer's primary domain name
-//     or the customer's unique identifier. If the domain name for a
-//     customer changes, the old domain name cannot be used to access the
-//     customer, but the customer's unique identifier (as returned by the
-//     API) can always be used. We recommend storing the unique identifier
-//     in your systems where applicable.
-//   - subscriptionId: This is a required property. The `subscriptionId`
-//     is the subscription identifier and is unique for each customer.
-//     Since a `subscriptionId` changes when a subscription is updated, we
-//     recommend to not use this ID as a key for persistent data. And the
-//     `subscriptionId` can be found using the retrieve all reseller
-//     subscriptions method.
+//   - customerId: This can be either the customer's primary domain name or the
+//     customer's unique identifier. If the domain name for a customer changes,
+//     the old domain name cannot be used to access the customer, but the
+//     customer's unique identifier (as returned by the API) can always be used.
+//     We recommend storing the unique identifier in your systems where
+//     applicable.
+//   - subscriptionId: This is a required property. The `subscriptionId` is the
+//     subscription identifier and is unique for each customer. Since a
+//     `subscriptionId` changes when a subscription is updated, we recommend to
+//     not use this ID as a key for persistent data. And the `subscriptionId` can
+//     be found using the retrieve all reseller subscriptions method.
 func (r *SubscriptionsService) ChangeRenewalSettings(customerId string, subscriptionId string, renewalsettings *RenewalSettings) *SubscriptionsChangeRenewalSettingsCall {
 	c := &SubscriptionsChangeRenewalSettingsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2327,23 +1807,21 @@ func (r *SubscriptionsService) ChangeRenewalSettings(customerId string, subscrip
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsChangeRenewalSettingsCall) Fields(s ...googleapi.Field) *SubscriptionsChangeRenewalSettingsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsChangeRenewalSettingsCall) Context(ctx context.Context) *SubscriptionsChangeRenewalSettingsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsChangeRenewalSettingsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2352,18 +1830,12 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Header() http.Header {
 }
 
 func (c *SubscriptionsChangeRenewalSettingsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.renewalsettings)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeRenewalSettings")
@@ -2381,12 +1853,10 @@ func (c *SubscriptionsChangeRenewalSettingsCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "reseller.subscriptions.changeRenewalSettings" call.
-// Exactly one of *Subscription or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Subscription.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsChangeRenewalSettingsCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2417,44 +1887,7 @@ func (c *SubscriptionsChangeRenewalSettingsCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a user license's renewal settings. This is applicable for accounts with annual commitment plans only. For more information, see the description in [manage subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_renewal).",
-	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeRenewalSettings",
-	//   "httpMethod": "POST",
-	//   "id": "reseller.subscriptions.changeRenewalSettings",
-	//   "parameterOrder": [
-	//     "customerId",
-	//     "subscriptionId"
-	//   ],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "subscriptionId": {
-	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeRenewalSettings",
-	//   "request": {
-	//     "$ref": "RenewalSettings"
-	//   },
-	//   "response": {
-	//     "$ref": "Subscription"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "reseller.subscriptions.changeSeats":
 
 type SubscriptionsChangeSeatsCall struct {
 	s              *Service
@@ -2467,23 +1900,22 @@ type SubscriptionsChangeSeatsCall struct {
 }
 
 // ChangeSeats: Updates a subscription's user license settings. For more
-// information about updating an annual commitment plan or a flexible
-// plan subscription’s licenses, see Manage Subscriptions
-// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscripti
-// on_seat).
+// information about updating an annual commitment plan or a flexible plan
+// subscription’s licenses, see Manage Subscriptions
+// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscription_seat
+// ).
 //
-//   - customerId: This can be either the customer's primary domain name
-//     or the customer's unique identifier. If the domain name for a
-//     customer changes, the old domain name cannot be used to access the
-//     customer, but the customer's unique identifier (as returned by the
-//     API) can always be used. We recommend storing the unique identifier
-//     in your systems where applicable.
-//   - subscriptionId: This is a required property. The `subscriptionId`
-//     is the subscription identifier and is unique for each customer.
-//     Since a `subscriptionId` changes when a subscription is updated, we
-//     recommend to not use this ID as a key for persistent data. And the
-//     `subscriptionId` can be found using the retrieve all reseller
-//     subscriptions method.
+//   - customerId: This can be either the customer's primary domain name or the
+//     customer's unique identifier. If the domain name for a customer changes,
+//     the old domain name cannot be used to access the customer, but the
+//     customer's unique identifier (as returned by the API) can always be used.
+//     We recommend storing the unique identifier in your systems where
+//     applicable.
+//   - subscriptionId: This is a required property. The `subscriptionId` is the
+//     subscription identifier and is unique for each customer. Since a
+//     `subscriptionId` changes when a subscription is updated, we recommend to
+//     not use this ID as a key for persistent data. And the `subscriptionId` can
+//     be found using the retrieve all reseller subscriptions method.
 func (r *SubscriptionsService) ChangeSeats(customerId string, subscriptionId string, seats *Seats) *SubscriptionsChangeSeatsCall {
 	c := &SubscriptionsChangeSeatsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2493,23 +1925,21 @@ func (r *SubscriptionsService) ChangeSeats(customerId string, subscriptionId str
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsChangeSeatsCall) Fields(s ...googleapi.Field) *SubscriptionsChangeSeatsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsChangeSeatsCall) Context(ctx context.Context) *SubscriptionsChangeSeatsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsChangeSeatsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2518,18 +1948,12 @@ func (c *SubscriptionsChangeSeatsCall) Header() http.Header {
 }
 
 func (c *SubscriptionsChangeSeatsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.seats)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeSeats")
@@ -2547,12 +1971,10 @@ func (c *SubscriptionsChangeSeatsCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "reseller.subscriptions.changeSeats" call.
-// Exactly one of *Subscription or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Subscription.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsChangeSeatsCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2583,44 +2005,7 @@ func (c *SubscriptionsChangeSeatsCall) Do(opts ...googleapi.CallOption) (*Subscr
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a subscription's user license settings. For more information about updating an annual commitment plan or a flexible plan subscription’s licenses, see [Manage Subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#update_subscription_seat).",
-	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeSeats",
-	//   "httpMethod": "POST",
-	//   "id": "reseller.subscriptions.changeSeats",
-	//   "parameterOrder": [
-	//     "customerId",
-	//     "subscriptionId"
-	//   ],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "subscriptionId": {
-	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/changeSeats",
-	//   "request": {
-	//     "$ref": "Seats"
-	//   },
-	//   "response": {
-	//     "$ref": "Subscription"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "reseller.subscriptions.delete":
 
 type SubscriptionsDeleteCall struct {
 	s              *Service
@@ -2633,20 +2018,19 @@ type SubscriptionsDeleteCall struct {
 
 // Delete: Cancels, suspends, or transfers a subscription to direct.
 //
-//   - customerId: This can be either the customer's primary domain name
-//     or the customer's unique identifier. If the domain name for a
-//     customer changes, the old domain name cannot be used to access the
-//     customer, but the customer's unique identifier (as returned by the
-//     API) can always be used. We recommend storing the unique identifier
-//     in your systems where applicable.
-//   - deletionType: The `deletionType` query string enables the
-//     cancellation, downgrade, or suspension of a subscription.
-//   - subscriptionId: This is a required property. The `subscriptionId`
-//     is the subscription identifier and is unique for each customer.
-//     Since a `subscriptionId` changes when a subscription is updated, we
-//     recommend to not use this ID as a key for persistent data. And the
-//     `subscriptionId` can be found using the retrieve all reseller
-//     subscriptions method.
+//   - customerId: This can be either the customer's primary domain name or the
+//     customer's unique identifier. If the domain name for a customer changes,
+//     the old domain name cannot be used to access the customer, but the
+//     customer's unique identifier (as returned by the API) can always be used.
+//     We recommend storing the unique identifier in your systems where
+//     applicable.
+//   - deletionType: The `deletionType` query string enables the cancellation,
+//     downgrade, or suspension of a subscription.
+//   - subscriptionId: This is a required property. The `subscriptionId` is the
+//     subscription identifier and is unique for each customer. Since a
+//     `subscriptionId` changes when a subscription is updated, we recommend to
+//     not use this ID as a key for persistent data. And the `subscriptionId` can
+//     be found using the retrieve all reseller subscriptions method.
 func (r *SubscriptionsService) Delete(customerId string, subscriptionId string, deletionType string) *SubscriptionsDeleteCall {
 	c := &SubscriptionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2656,23 +2040,21 @@ func (r *SubscriptionsService) Delete(customerId string, subscriptionId string, 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsDeleteCall) Fields(s ...googleapi.Field) *SubscriptionsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsDeleteCall) Context(ctx context.Context) *SubscriptionsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2681,12 +2063,7 @@ func (c *SubscriptionsDeleteCall) Header() http.Header {
 }
 
 func (c *SubscriptionsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2716,55 +2093,7 @@ func (c *SubscriptionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Cancels, suspends, or transfers a subscription to direct.",
-	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "reseller.subscriptions.delete",
-	//   "parameterOrder": [
-	//     "customerId",
-	//     "subscriptionId",
-	//     "deletionType"
-	//   ],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "deletionType": {
-	//       "description": "The `deletionType` query string enables the cancellation, downgrade, or suspension of a subscription.",
-	//       "enum": [
-	//         "deletion_type_undefined",
-	//         "cancel",
-	//         "transfer_to_direct"
-	//       ],
-	//       "enumDescriptions": [
-	//         "",
-	//         "Cancels the subscription immediately. This does not apply to a G Suite subscription.",
-	//         "Transfers a subscription directly to Google. The customer is immediately transferred to a direct billing relationship with Google and is given a short amount of time with no service interruption. The customer can then choose to set up billing directly with Google by using a credit card, or they can transfer to another reseller."
-	//       ],
-	//       "location": "query",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "subscriptionId": {
-	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "reseller.subscriptions.get":
 
 type SubscriptionsGetCall struct {
 	s              *Service
@@ -2776,26 +2105,24 @@ type SubscriptionsGetCall struct {
 	header_        http.Header
 }
 
-// Get: Gets a specific subscription. The `subscriptionId` can be found
-// using the Retrieve all reseller subscriptions
-// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#get_all_subscript
-// ions) method. For more information about retrieving a specific
-// subscription, see the information descrived in manage subscriptions
-// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#get_subscription)
-// .
+// Get: Gets a specific subscription. The `subscriptionId` can be found using
+// the Retrieve all reseller subscriptions
+// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#get_all_subscriptions)
+// method. For more information about retrieving a specific subscription, see
+// the information descrived in manage subscriptions
+// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#get_subscription).
 //
-//   - customerId: This can be either the customer's primary domain name
-//     or the customer's unique identifier. If the domain name for a
-//     customer changes, the old domain name cannot be used to access the
-//     customer, but the customer's unique identifier (as returned by the
-//     API) can always be used. We recommend storing the unique identifier
-//     in your systems where applicable.
-//   - subscriptionId: This is a required property. The `subscriptionId`
-//     is the subscription identifier and is unique for each customer.
-//     Since a `subscriptionId` changes when a subscription is updated, we
-//     recommend to not use this ID as a key for persistent data. And the
-//     `subscriptionId` can be found using the retrieve all reseller
-//     subscriptions method.
+//   - customerId: This can be either the customer's primary domain name or the
+//     customer's unique identifier. If the domain name for a customer changes,
+//     the old domain name cannot be used to access the customer, but the
+//     customer's unique identifier (as returned by the API) can always be used.
+//     We recommend storing the unique identifier in your systems where
+//     applicable.
+//   - subscriptionId: This is a required property. The `subscriptionId` is the
+//     subscription identifier and is unique for each customer. Since a
+//     `subscriptionId` changes when a subscription is updated, we recommend to
+//     not use this ID as a key for persistent data. And the `subscriptionId` can
+//     be found using the retrieve all reseller subscriptions method.
 func (r *SubscriptionsService) Get(customerId string, subscriptionId string) *SubscriptionsGetCall {
 	c := &SubscriptionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2804,33 +2131,29 @@ func (r *SubscriptionsService) Get(customerId string, subscriptionId string) *Su
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsGetCall) Fields(s ...googleapi.Field) *SubscriptionsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SubscriptionsGetCall) IfNoneMatch(entityTag string) *SubscriptionsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsGetCall) Context(ctx context.Context) *SubscriptionsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2839,12 +2162,7 @@ func (c *SubscriptionsGetCall) Header() http.Header {
 }
 
 func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2866,12 +2184,10 @@ func (c *SubscriptionsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "reseller.subscriptions.get" call.
-// Exactly one of *Subscription or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Subscription.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2902,42 +2218,7 @@ func (c *SubscriptionsGetCall) Do(opts ...googleapi.CallOption) (*Subscription, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a specific subscription. The `subscriptionId` can be found using the [Retrieve all reseller subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#get_all_subscriptions) method. For more information about retrieving a specific subscription, see the information descrived in [manage subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#get_subscription).",
-	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}",
-	//   "httpMethod": "GET",
-	//   "id": "reseller.subscriptions.get",
-	//   "parameterOrder": [
-	//     "customerId",
-	//     "subscriptionId"
-	//   ],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "subscriptionId": {
-	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}",
-	//   "response": {
-	//     "$ref": "Subscription"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order",
-	//     "https://www.googleapis.com/auth/apps.order.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "reseller.subscriptions.insert":
 
 type SubscriptionsInsertCall struct {
 	s            *Service
@@ -2948,29 +2229,27 @@ type SubscriptionsInsertCall struct {
 	header_      http.Header
 }
 
-// Insert: Creates or transfer a subscription. Create a subscription for
-// a customer's account that you ordered using the Order a new customer
-// account (/admin-sdk/reseller/v1/reference/customers/insert.html)
-// method. For more information about creating a subscription for
-// different payment plans, see manage subscriptions
-// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#create_subscripti
-// on).\ If you did not order the customer's account using the customer
-// insert method, use the customer's `customerAuthToken` when creating a
-// subscription for that customer. If transferring a G Suite
-// subscription with an associated Google Drive or Google Vault
-// subscription, use the batch operation
+// Insert: Creates or transfer a subscription. Create a subscription for a
+// customer's account that you ordered using the Order a new customer account
+// (/admin-sdk/reseller/v1/reference/customers/insert.html) method. For more
+// information about creating a subscription for different payment plans, see
+// manage subscriptions
+// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#create_subscription).\
+// If you did not order the customer's account using the customer insert
+// method, use the customer's `customerAuthToken` when creating a subscription
+// for that customer. If transferring a G Suite subscription with an associated
+// Google Drive or Google Vault subscription, use the batch operation
 // (/admin-sdk/reseller/v1/how-tos/batch.html) to transfer all of these
-// subscriptions. For more information, see how to transfer
-// subscriptions
-// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#transfer_a_subscr
-// iption).
+// subscriptions. For more information, see how to transfer subscriptions
+// (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#transfer_a_subscription)
+// .
 //
-//   - customerId: This can be either the customer's primary domain name
-//     or the customer's unique identifier. If the domain name for a
-//     customer changes, the old domain name cannot be used to access the
-//     customer, but the customer's unique identifier (as returned by the
-//     API) can always be used. We recommend storing the unique identifier
-//     in your systems where applicable.
+//   - customerId: This can be either the customer's primary domain name or the
+//     customer's unique identifier. If the domain name for a customer changes,
+//     the old domain name cannot be used to access the customer, but the
+//     customer's unique identifier (as returned by the API) can always be used.
+//     We recommend storing the unique identifier in your systems where
+//     applicable.
 func (r *SubscriptionsService) Insert(customerId string, subscription *Subscription) *SubscriptionsInsertCall {
 	c := &SubscriptionsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -2978,71 +2257,64 @@ func (r *SubscriptionsService) Insert(customerId string, subscription *Subscript
 	return c
 }
 
-// Action sets the optional parameter "action": The intented insert
-// action. The usage of this field is governed by certain policies which
-// are being developed & tested currently. Hence, these might not work
-// as intended. Once this is fully tested & available to consume, we
-// will share more information about its usage, limitations and policy
-// documentation.
+// Action sets the optional parameter "action": The intented insert action. The
+// usage of this field is governed by certain policies which are being
+// developed & tested currently. Hence, these might not work as intended. Once
+// this is fully tested & available to consume, we will share more information
+// about its usage, limitations and policy documentation.
 //
 // Possible values:
 //
-//	"actionUnspecified" - Auto determines whether to create new
+//	"actionUnspecified" - Auto determines whether to create new subscription,
 //
-// subscription, upgrade or downagrade existing subscription or transfer
-// the existing subscription
+// upgrade or downagrade existing subscription or transfer the existing
+// subscription
 //
 //	"buy" - Create new subscription
-//	"switch" - Switch existing subscription to another sku
-//
-// (upgrade/downgrade)
+//	"switch" - Switch existing subscription to another sku (upgrade/downgrade)
 func (c *SubscriptionsInsertCall) Action(action string) *SubscriptionsInsertCall {
 	c.urlParams_.Set("action", action)
 	return c
 }
 
-// CustomerAuthToken sets the optional parameter "customerAuthToken":
-// The `customerAuthToken` query string is required when creating a
-// resold account that transfers a direct customer's subscription or
-// transfers another reseller customer's subscription to your reseller
-// management. This is a hexadecimal authentication token needed to
-// complete the subscription transfer. For more information, see the
-// administrator help center.
+// CustomerAuthToken sets the optional parameter "customerAuthToken": The
+// `customerAuthToken` query string is required when creating a resold account
+// that transfers a direct customer's subscription or transfers another
+// reseller customer's subscription to your reseller management. This is a
+// hexadecimal authentication token needed to complete the subscription
+// transfer. For more information, see the administrator help center.
 func (c *SubscriptionsInsertCall) CustomerAuthToken(customerAuthToken string) *SubscriptionsInsertCall {
 	c.urlParams_.Set("customerAuthToken", customerAuthToken)
 	return c
 }
 
-// SourceSkuId sets the optional parameter "sourceSkuId": The sku_id of
-// the existing subscription to be upgraded or downgraded. This is
-// required when action is SWITCH. The usage of this field is governed
-// by certain policies which are being developed & tested currently.
-// Hence, these might not work as intended. Once this is fully tested &
-// available to consume, we will share more information about its usage,
-// limitations and policy documentation.
+// SourceSkuId sets the optional parameter "sourceSkuId": The sku_id of the
+// existing subscription to be upgraded or downgraded. This is required when
+// action is SWITCH. The usage of this field is governed by certain policies
+// which are being developed & tested currently. Hence, these might not work as
+// intended. Once this is fully tested & available to consume, we will share
+// more information about its usage, limitations and policy documentation.
 func (c *SubscriptionsInsertCall) SourceSkuId(sourceSkuId string) *SubscriptionsInsertCall {
 	c.urlParams_.Set("sourceSkuId", sourceSkuId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsInsertCall) Fields(s ...googleapi.Field) *SubscriptionsInsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsInsertCall) Context(ctx context.Context) *SubscriptionsInsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsInsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3051,18 +2323,12 @@ func (c *SubscriptionsInsertCall) Header() http.Header {
 }
 
 func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.subscription)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "apps/reseller/v1/customers/{customerId}/subscriptions")
@@ -3079,12 +2345,10 @@ func (c *SubscriptionsInsertCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "reseller.subscriptions.insert" call.
-// Exactly one of *Subscription or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Subscription.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsInsertCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3115,62 +2379,7 @@ func (c *SubscriptionsInsertCall) Do(opts ...googleapi.CallOption) (*Subscriptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates or transfer a subscription. Create a subscription for a customer's account that you ordered using the [Order a new customer account](/admin-sdk/reseller/v1/reference/customers/insert.html) method. For more information about creating a subscription for different payment plans, see [manage subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#create_subscription).\\ If you did not order the customer's account using the customer insert method, use the customer's `customerAuthToken` when creating a subscription for that customer. If transferring a G Suite subscription with an associated Google Drive or Google Vault subscription, use the [batch operation](/admin-sdk/reseller/v1/how-tos/batch.html) to transfer all of these subscriptions. For more information, see how to [transfer subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#transfer_a_subscription).",
-	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions",
-	//   "httpMethod": "POST",
-	//   "id": "reseller.subscriptions.insert",
-	//   "parameterOrder": [
-	//     "customerId"
-	//   ],
-	//   "parameters": {
-	//     "action": {
-	//       "description": "The intented insert action. The usage of this field is governed by certain policies which are being developed \u0026 tested currently. Hence, these might not work as intended. Once this is fully tested \u0026 available to consume, we will share more information about its usage, limitations and policy documentation.",
-	//       "enum": [
-	//         "actionUnspecified",
-	//         "buy",
-	//         "switch"
-	//       ],
-	//       "enumDescriptions": [
-	//         "Auto determines whether to create new subscription, upgrade or downagrade existing subscription or transfer the existing subscription",
-	//         "Create new subscription",
-	//         "Switch existing subscription to another sku (upgrade/downgrade)"
-	//       ],
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "customerAuthToken": {
-	//       "description": "The `customerAuthToken` query string is required when creating a resold account that transfers a direct customer's subscription or transfers another reseller customer's subscription to your reseller management. This is a hexadecimal authentication token needed to complete the subscription transfer. For more information, see the administrator help center.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "customerId": {
-	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "sourceSkuId": {
-	//       "description": "The sku_id of the existing subscription to be upgraded or downgraded. This is required when action is SWITCH. The usage of this field is governed by certain policies which are being developed \u0026 tested currently. Hence, these might not work as intended. Once this is fully tested \u0026 available to consume, we will share more information about its usage, limitations and policy documentation.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions",
-	//   "request": {
-	//     "$ref": "Subscription"
-	//   },
-	//   "response": {
-	//     "$ref": "Subscription"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "reseller.subscriptions.list":
 
 type SubscriptionsListCall struct {
 	s            *Service
@@ -3180,98 +2389,90 @@ type SubscriptionsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists of subscriptions managed by the reseller. The list can be
-// all subscriptions, all of a customer's subscriptions, or all of a
-// customer's transferable subscriptions. Optionally, this method can
-// filter the response by a `customerNamePrefix`. For more information,
-// see manage subscriptions
+// List: Lists of subscriptions managed by the reseller. The list can be all
+// subscriptions, all of a customer's subscriptions, or all of a customer's
+// transferable subscriptions. Optionally, this method can filter the response
+// by a `customerNamePrefix`. For more information, see manage subscriptions
 // (/admin-sdk/reseller/v1/how-tos/manage_subscriptions).
 func (r *SubscriptionsService) List() *SubscriptionsListCall {
 	c := &SubscriptionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// CustomerAuthToken sets the optional parameter "customerAuthToken":
-// The `customerAuthToken` query string is required when creating a
-// resold account that transfers a direct customer's subscription or
-// transfers another reseller customer's subscription to your reseller
-// management. This is a hexadecimal authentication token needed to
-// complete the subscription transfer. For more information, see the
-// administrator help center.
+// CustomerAuthToken sets the optional parameter "customerAuthToken": The
+// `customerAuthToken` query string is required when creating a resold account
+// that transfers a direct customer's subscription or transfers another
+// reseller customer's subscription to your reseller management. This is a
+// hexadecimal authentication token needed to complete the subscription
+// transfer. For more information, see the administrator help center.
 func (c *SubscriptionsListCall) CustomerAuthToken(customerAuthToken string) *SubscriptionsListCall {
 	c.urlParams_.Set("customerAuthToken", customerAuthToken)
 	return c
 }
 
-// CustomerId sets the optional parameter "customerId": This can be
-// either the customer's primary domain name or the customer's unique
-// identifier. If the domain name for a customer changes, the old domain
-// name cannot be used to access the customer, but the customer's unique
-// identifier (as returned by the API) can always be used. We recommend
-// storing the unique identifier in your systems where applicable.
+// CustomerId sets the optional parameter "customerId": This can be either the
+// customer's primary domain name or the customer's unique identifier. If the
+// domain name for a customer changes, the old domain name cannot be used to
+// access the customer, but the customer's unique identifier (as returned by
+// the API) can always be used. We recommend storing the unique identifier in
+// your systems where applicable.
 func (c *SubscriptionsListCall) CustomerId(customerId string) *SubscriptionsListCall {
 	c.urlParams_.Set("customerId", customerId)
 	return c
 }
 
-// CustomerNamePrefix sets the optional parameter "customerNamePrefix":
-// When retrieving all of your subscriptions and filtering for specific
-// customers, you can enter a prefix for a customer name. Using an
-// example customer group that includes `exam.com`, `example20.com` and
-// `example.com`: - `exa` -- Returns all customer names that start with
-// 'exa' which could include `exam.com`, `example20.com`, and
-// `example.com`. A name prefix is similar to using a regular
-// expression's asterisk, exa*. - `example` -- Returns `example20.com`
-// and `example.com`.
+// CustomerNamePrefix sets the optional parameter "customerNamePrefix": When
+// retrieving all of your subscriptions and filtering for specific customers,
+// you can enter a prefix for a customer name. Using an example customer group
+// that includes `exam.com`, `example20.com` and `example.com`: - `exa` --
+// Returns all customer names that start with 'exa' which could include
+// `exam.com`, `example20.com`, and `example.com`. A name prefix is similar to
+// using a regular expression's asterisk, exa*. - `example` -- Returns
+// `example20.com` and `example.com`.
 func (c *SubscriptionsListCall) CustomerNamePrefix(customerNamePrefix string) *SubscriptionsListCall {
 	c.urlParams_.Set("customerNamePrefix", customerNamePrefix)
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": When retrieving
-// a large list, the `maxResults` is the maximum number of results per
-// page. The `nextPageToken` value takes you to the next page. The
-// default is 20.
+// MaxResults sets the optional parameter "maxResults": When retrieving a large
+// list, the `maxResults` is the maximum number of results per page. The
+// `nextPageToken` value takes you to the next page. The default is 20.
 func (c *SubscriptionsListCall) MaxResults(maxResults int64) *SubscriptionsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token to specify
-// next page in the list
+// PageToken sets the optional parameter "pageToken": Token to specify next
+// page in the list
 func (c *SubscriptionsListCall) PageToken(pageToken string) *SubscriptionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsListCall) Fields(s ...googleapi.Field) *SubscriptionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *SubscriptionsListCall) IfNoneMatch(entityTag string) *SubscriptionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsListCall) Context(ctx context.Context) *SubscriptionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3280,12 +2481,7 @@ func (c *SubscriptionsListCall) Header() http.Header {
 }
 
 func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3303,12 +2499,10 @@ func (c *SubscriptionsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "reseller.subscriptions.list" call.
-// Exactly one of *Subscriptions or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Subscriptions.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Subscriptions.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*Subscriptions, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3339,52 +2533,6 @@ func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*Subscriptions
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists of subscriptions managed by the reseller. The list can be all subscriptions, all of a customer's subscriptions, or all of a customer's transferable subscriptions. Optionally, this method can filter the response by a `customerNamePrefix`. For more information, see [manage subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions).",
-	//   "flatPath": "apps/reseller/v1/subscriptions",
-	//   "httpMethod": "GET",
-	//   "id": "reseller.subscriptions.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "customerAuthToken": {
-	//       "description": "The `customerAuthToken` query string is required when creating a resold account that transfers a direct customer's subscription or transfers another reseller customer's subscription to your reseller management. This is a hexadecimal authentication token needed to complete the subscription transfer. For more information, see the administrator help center.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "customerId": {
-	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "customerNamePrefix": {
-	//       "description": "When retrieving all of your subscriptions and filtering for specific customers, you can enter a prefix for a customer name. Using an example customer group that includes `exam.com`, `example20.com` and `example.com`: - `exa` -- Returns all customer names that start with 'exa' which could include `exam.com`, `example20.com`, and `example.com`. A name prefix is similar to using a regular expression's asterisk, exa*. - `example` -- Returns `example20.com` and `example.com`. ",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "description": "When retrieving a large list, the `maxResults` is the maximum number of results per page. The `nextPageToken` value takes you to the next page. The default is 20.",
-	//       "format": "uint32",
-	//       "location": "query",
-	//       "maximum": "100",
-	//       "minimum": "1",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Token to specify next page in the list",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/subscriptions",
-	//   "response": {
-	//     "$ref": "Subscriptions"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order",
-	//     "https://www.googleapis.com/auth/apps.order.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3392,7 +2540,7 @@ func (c *SubscriptionsListCall) Do(opts ...googleapi.CallOption) (*Subscriptions
 // The provided context supersedes any context provided to the Context method.
 func (c *SubscriptionsListCall) Pages(ctx context.Context, f func(*Subscriptions) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3408,8 +2556,6 @@ func (c *SubscriptionsListCall) Pages(ctx context.Context, f func(*Subscriptions
 	}
 }
 
-// method id "reseller.subscriptions.startPaidService":
-
 type SubscriptionsStartPaidServiceCall struct {
 	s              *Service
 	customerId     string
@@ -3419,24 +2565,23 @@ type SubscriptionsStartPaidServiceCall struct {
 	header_        http.Header
 }
 
-// StartPaidService: Immediately move a 30-day free trial subscription
-// to a paid service subscription. This method is only applicable if a
-// payment plan has already been set up for the 30-day trial
-// subscription. For more information, see manage subscriptions
+// StartPaidService: Immediately move a 30-day free trial subscription to a
+// paid service subscription. This method is only applicable if a payment plan
+// has already been set up for the 30-day trial subscription. For more
+// information, see manage subscriptions
 // (/admin-sdk/reseller/v1/how-tos/manage_subscriptions#paid_service).
 //
-//   - customerId: This can be either the customer's primary domain name
-//     or the customer's unique identifier. If the domain name for a
-//     customer changes, the old domain name cannot be used to access the
-//     customer, but the customer's unique identifier (as returned by the
-//     API) can always be used. We recommend storing the unique identifier
-//     in your systems where applicable.
-//   - subscriptionId: This is a required property. The `subscriptionId`
-//     is the subscription identifier and is unique for each customer.
-//     Since a `subscriptionId` changes when a subscription is updated, we
-//     recommend to not use this ID as a key for persistent data. And the
-//     `subscriptionId` can be found using the retrieve all reseller
-//     subscriptions method.
+//   - customerId: This can be either the customer's primary domain name or the
+//     customer's unique identifier. If the domain name for a customer changes,
+//     the old domain name cannot be used to access the customer, but the
+//     customer's unique identifier (as returned by the API) can always be used.
+//     We recommend storing the unique identifier in your systems where
+//     applicable.
+//   - subscriptionId: This is a required property. The `subscriptionId` is the
+//     subscription identifier and is unique for each customer. Since a
+//     `subscriptionId` changes when a subscription is updated, we recommend to
+//     not use this ID as a key for persistent data. And the `subscriptionId` can
+//     be found using the retrieve all reseller subscriptions method.
 func (r *SubscriptionsService) StartPaidService(customerId string, subscriptionId string) *SubscriptionsStartPaidServiceCall {
 	c := &SubscriptionsStartPaidServiceCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -3445,23 +2590,21 @@ func (r *SubscriptionsService) StartPaidService(customerId string, subscriptionI
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsStartPaidServiceCall) Fields(s ...googleapi.Field) *SubscriptionsStartPaidServiceCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsStartPaidServiceCall) Context(ctx context.Context) *SubscriptionsStartPaidServiceCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsStartPaidServiceCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3470,12 +2613,7 @@ func (c *SubscriptionsStartPaidServiceCall) Header() http.Header {
 }
 
 func (c *SubscriptionsStartPaidServiceCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3494,12 +2632,10 @@ func (c *SubscriptionsStartPaidServiceCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "reseller.subscriptions.startPaidService" call.
-// Exactly one of *Subscription or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Subscription.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsStartPaidServiceCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3530,41 +2666,7 @@ func (c *SubscriptionsStartPaidServiceCall) Do(opts ...googleapi.CallOption) (*S
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Immediately move a 30-day free trial subscription to a paid service subscription. This method is only applicable if a payment plan has already been set up for the 30-day trial subscription. For more information, see [manage subscriptions](/admin-sdk/reseller/v1/how-tos/manage_subscriptions#paid_service).",
-	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/startPaidService",
-	//   "httpMethod": "POST",
-	//   "id": "reseller.subscriptions.startPaidService",
-	//   "parameterOrder": [
-	//     "customerId",
-	//     "subscriptionId"
-	//   ],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "subscriptionId": {
-	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/startPaidService",
-	//   "response": {
-	//     "$ref": "Subscription"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }
-
-// method id "reseller.subscriptions.suspend":
 
 type SubscriptionsSuspendCall struct {
 	s              *Service
@@ -3575,30 +2677,28 @@ type SubscriptionsSuspendCall struct {
 	header_        http.Header
 }
 
-// Suspend: Suspends an active subscription. You can use this method to
-// suspend a paid subscription that is currently in the `ACTIVE` state.
-// * For `FLEXIBLE` subscriptions, billing is paused. * For
-// `ANNUAL_MONTHLY_PAY` or `ANNUAL_YEARLY_PAY` subscriptions: *
-// Suspending the subscription does not change the renewal date that was
-// originally committed to. * A suspended subscription does not renew.
-// If you activate the subscription after the original renewal date, a
-// new annual subscription will be created, starting on the day of
-// activation. We strongly encourage you to suspend subscriptions only
-// for short periods of time as suspensions over 60 days may result in
-// the subscription being cancelled.
+// Suspend: Suspends an active subscription. You can use this method to suspend
+// a paid subscription that is currently in the `ACTIVE` state. * For
+// `FLEXIBLE` subscriptions, billing is paused. * For `ANNUAL_MONTHLY_PAY` or
+// `ANNUAL_YEARLY_PAY` subscriptions: * Suspending the subscription does not
+// change the renewal date that was originally committed to. * A suspended
+// subscription does not renew. If you activate the subscription after the
+// original renewal date, a new annual subscription will be created, starting
+// on the day of activation. We strongly encourage you to suspend subscriptions
+// only for short periods of time as suspensions over 60 days may result in the
+// subscription being cancelled.
 //
-//   - customerId: This can be either the customer's primary domain name
-//     or the customer's unique identifier. If the domain name for a
-//     customer changes, the old domain name cannot be used to access the
-//     customer, but the customer's unique identifier (as returned by the
-//     API) can always be used. We recommend storing the unique identifier
-//     in your systems where applicable.
-//   - subscriptionId: This is a required property. The `subscriptionId`
-//     is the subscription identifier and is unique for each customer.
-//     Since a `subscriptionId` changes when a subscription is updated, we
-//     recommend to not use this ID as a key for persistent data. And the
-//     `subscriptionId` can be found using the retrieve all reseller
-//     subscriptions method.
+//   - customerId: This can be either the customer's primary domain name or the
+//     customer's unique identifier. If the domain name for a customer changes,
+//     the old domain name cannot be used to access the customer, but the
+//     customer's unique identifier (as returned by the API) can always be used.
+//     We recommend storing the unique identifier in your systems where
+//     applicable.
+//   - subscriptionId: This is a required property. The `subscriptionId` is the
+//     subscription identifier and is unique for each customer. Since a
+//     `subscriptionId` changes when a subscription is updated, we recommend to
+//     not use this ID as a key for persistent data. And the `subscriptionId` can
+//     be found using the retrieve all reseller subscriptions method.
 func (r *SubscriptionsService) Suspend(customerId string, subscriptionId string) *SubscriptionsSuspendCall {
 	c := &SubscriptionsSuspendCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.customerId = customerId
@@ -3607,23 +2707,21 @@ func (r *SubscriptionsService) Suspend(customerId string, subscriptionId string)
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *SubscriptionsSuspendCall) Fields(s ...googleapi.Field) *SubscriptionsSuspendCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *SubscriptionsSuspendCall) Context(ctx context.Context) *SubscriptionsSuspendCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *SubscriptionsSuspendCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3632,12 +2730,7 @@ func (c *SubscriptionsSuspendCall) Header() http.Header {
 }
 
 func (c *SubscriptionsSuspendCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3656,12 +2749,10 @@ func (c *SubscriptionsSuspendCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "reseller.subscriptions.suspend" call.
-// Exactly one of *Subscription or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Subscription.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Subscription.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *SubscriptionsSuspendCall) Do(opts ...googleapi.CallOption) (*Subscription, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3692,36 +2783,4 @@ func (c *SubscriptionsSuspendCall) Do(opts ...googleapi.CallOption) (*Subscripti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Suspends an active subscription. You can use this method to suspend a paid subscription that is currently in the `ACTIVE` state. * For `FLEXIBLE` subscriptions, billing is paused. * For `ANNUAL_MONTHLY_PAY` or `ANNUAL_YEARLY_PAY` subscriptions: * Suspending the subscription does not change the renewal date that was originally committed to. * A suspended subscription does not renew. If you activate the subscription after the original renewal date, a new annual subscription will be created, starting on the day of activation. We strongly encourage you to suspend subscriptions only for short periods of time as suspensions over 60 days may result in the subscription being cancelled.",
-	//   "flatPath": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/suspend",
-	//   "httpMethod": "POST",
-	//   "id": "reseller.subscriptions.suspend",
-	//   "parameterOrder": [
-	//     "customerId",
-	//     "subscriptionId"
-	//   ],
-	//   "parameters": {
-	//     "customerId": {
-	//       "description": "This can be either the customer's primary domain name or the customer's unique identifier. If the domain name for a customer changes, the old domain name cannot be used to access the customer, but the customer's unique identifier (as returned by the API) can always be used. We recommend storing the unique identifier in your systems where applicable.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "subscriptionId": {
-	//       "description": "This is a required property. The `subscriptionId` is the subscription identifier and is unique for each customer. Since a `subscriptionId` changes when a subscription is updated, we recommend to not use this ID as a key for persistent data. And the `subscriptionId` can be found using the retrieve all reseller subscriptions method.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "apps/reseller/v1/customers/{customerId}/subscriptions/{subscriptionId}/suspend",
-	//   "response": {
-	//     "$ref": "Subscription"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/apps.order"
-	//   ]
-	// }
-
 }

@@ -107,8 +107,8 @@ const (
 	// View your Google Cloud Platform billing accounts
 	CloudBillingReadonlyScope = "https://www.googleapis.com/auth/cloud-billing.readonly"
 
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -261,114 +261,91 @@ type ServicesSkusService struct {
 	s *APIService
 }
 
-// AggregationInfo: Represents the aggregation level and interval for
-// pricing of a single SKU.
+// AggregationInfo: Represents the aggregation level and interval for pricing
+// of a single SKU.
 type AggregationInfo struct {
-	// AggregationCount: The number of intervals to aggregate over. Example:
-	// If aggregation_level is "DAILY" and aggregation_count is 14,
-	// aggregation will be over 14 days.
+	// AggregationCount: The number of intervals to aggregate over. Example: If
+	// aggregation_level is "DAILY" and aggregation_count is 14, aggregation will
+	// be over 14 days.
 	AggregationCount int64 `json:"aggregationCount,omitempty"`
-
 	// Possible values:
 	//   "AGGREGATION_INTERVAL_UNSPECIFIED"
 	//   "DAILY"
 	//   "MONTHLY"
 	AggregationInterval string `json:"aggregationInterval,omitempty"`
-
 	// Possible values:
 	//   "AGGREGATION_LEVEL_UNSPECIFIED"
 	//   "ACCOUNT"
 	//   "PROJECT"
 	AggregationLevel string `json:"aggregationLevel,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AggregationCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AggregationCount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AggregationCount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AggregationInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod AggregationInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
-// identities, if any, are exempted from logging. An AuditConfig must
-// have one or more AuditLogConfigs. If there are AuditConfigs for both
-// `allServices` and a specific service, the union of the two
-// AuditConfigs is used for that service: the log_types specified in
-// each AuditConfig are enabled, and the exempted_members in each
-// AuditLogConfig are exempted. Example Policy with multiple
-// AuditConfigs: { "audit_configs": [ { "service": "allServices",
-// "audit_log_configs": [ { "log_type": "DATA_READ", "exempted_members":
-// [ "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, {
-// "log_type": "ADMIN_READ" } ] }, { "service":
-// "sampleservice.googleapis.com", "audit_log_configs": [ { "log_type":
-// "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
-// "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
-// enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// `jose@example.com` from DATA_READ logging, and `aliya@example.com`
-// from DATA_WRITE logging.
+// identities, if any, are exempted from logging. An AuditConfig must have one
+// or more AuditLogConfigs. If there are AuditConfigs for both `allServices`
+// and a specific service, the union of the two AuditConfigs is used for that
+// service: the log_types specified in each AuditConfig are enabled, and the
+// exempted_members in each AuditLogConfig are exempted. Example Policy with
+// multiple AuditConfigs: { "audit_configs": [ { "service": "allServices",
+// "audit_log_configs": [ { "log_type": "DATA_READ", "exempted_members": [
+// "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, { "log_type":
+// "ADMIN_READ" } ] }, { "service": "sampleservice.googleapis.com",
+// "audit_log_configs": [ { "log_type": "DATA_READ" }, { "log_type":
+// "DATA_WRITE", "exempted_members": [ "user:aliya@example.com" ] } ] } ] } For
+// sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ
+// logging. It also exempts `jose@example.com` from DATA_READ logging, and
+// `aliya@example.com` from DATA_WRITE logging.
 type AuditConfig struct {
-	// AuditLogConfigs: The configuration for logging of each type of
-	// permission.
+	// AuditLogConfigs: The configuration for logging of each type of permission.
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
-
-	// Service: Specifies a service that will be enabled for audit logging.
-	// For example, `storage.googleapis.com`, `cloudsql.googleapis.com`.
-	// `allServices` is a special value that covers all services.
+	// Service: Specifies a service that will be enabled for audit logging. For
+	// example, `storage.googleapis.com`, `cloudsql.googleapis.com`. `allServices`
+	// is a special value that covers all services.
 	Service string `json:"service,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AuditLogConfigs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AuditLogConfigs") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AuditLogConfigs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
-// permissions. Example: { "audit_log_configs": [ { "log_type":
-// "DATA_READ", "exempted_members": [ "user:jose@example.com" ] }, {
-// "log_type": "DATA_WRITE" } ] } This enables 'DATA_READ' and
-// 'DATA_WRITE' logging, while exempting jose@example.com from DATA_READ
-// logging.
+// permissions. Example: { "audit_log_configs": [ { "log_type": "DATA_READ",
+// "exempted_members": [ "user:jose@example.com" ] }, { "log_type":
+// "DATA_WRITE" } ] } This enables 'DATA_READ' and 'DATA_WRITE' logging, while
+// exempting jose@example.com from DATA_READ logging.
 type AuditLogConfig struct {
-	// ExemptedMembers: Specifies the identities that do not cause logging
-	// for this type of permission. Follows the same format of
-	// Binding.members.
+	// ExemptedMembers: Specifies the identities that do not cause logging for this
+	// type of permission. Follows the same format of Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
-
 	// LogType: The log type that this config enables.
 	//
 	// Possible values:
@@ -377,751 +354,601 @@ type AuditLogConfig struct {
 	//   "DATA_WRITE" - Data writes. Example: CloudSQL Users create
 	//   "DATA_READ" - Data reads. Example: CloudSQL Users list
 	LogType string `json:"logType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ExemptedMembers") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExemptedMembers") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ExemptedMembers") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BillingAccount: A billing account in the Google Cloud Console
-// (https://console.cloud.google.com/). You can assign a billing account
-// to one or more projects.
+// (https://console.cloud.google.com/). You can assign a billing account to one
+// or more projects.
 type BillingAccount struct {
-	// DisplayName: The display name given to the billing account, such as
-	// `My Billing Account`. This name is displayed in the Google Cloud
-	// Console.
+	// DisplayName: The display name given to the billing account, such as `My
+	// Billing Account`. This name is displayed in the Google Cloud Console.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// MasterBillingAccount: If this account is a subaccount
-	// (https://cloud.google.com/billing/docs/concepts), then this will be
-	// the resource name of the parent billing account that it is being
-	// resold through. Otherwise this will be empty.
+	// (https://cloud.google.com/billing/docs/concepts), then this will be the
+	// resource name of the parent billing account that it is being resold through.
+	// Otherwise this will be empty.
 	MasterBillingAccount string `json:"masterBillingAccount,omitempty"`
-
-	// Name: Output only. The resource name of the billing account. The
-	// resource name has the form `billingAccounts/{billing_account_id}`.
-	// For example, `billingAccounts/012345-567890-ABCDEF` would be the
-	// resource name for billing account `012345-567890-ABCDEF`.
+	// Name: Output only. The resource name of the billing account. The resource
+	// name has the form `billingAccounts/{billing_account_id}`. For example,
+	// `billingAccounts/012345-567890-ABCDEF` would be the resource name for
+	// billing account `012345-567890-ABCDEF`.
 	Name string `json:"name,omitempty"`
-
-	// Open: Output only. True if the billing account is open, and will
-	// therefore be charged for any usage on associated projects. False if
-	// the billing account is closed, and therefore projects associated with
-	// it are unable to use paid services.
+	// Open: Output only. True if the billing account is open, and will therefore
+	// be charged for any usage on associated projects. False if the billing
+	// account is closed, and therefore projects associated with it are unable to
+	// use paid services.
 	Open bool `json:"open,omitempty"`
-
-	// Parent: Output only. The billing account's parent resource
-	// identifier. Use the `MoveBillingAccount` method to update the
-	// account's parent resource if it is a organization. Format: -
-	// `organizations/{organization_id}`, for example,
-	// `organizations/12345678` - `billingAccounts/{billing_account_id}`,
+	// Parent: Output only. The billing account's parent resource identifier. Use
+	// the `MoveBillingAccount` method to update the account's parent resource if
+	// it is a organization. Format: - `organizations/{organization_id}`, for
+	// example, `organizations/12345678` - `billingAccounts/{billing_account_id}`,
 	// for example, `billingAccounts/012345-567890-ABCDEF`
 	Parent string `json:"parent,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BillingAccount) MarshalJSON() ([]byte, error) {
 	type NoMethod BillingAccount
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates `members`, or principals, with a `role`.
 type Binding struct {
 	// Condition: The condition that is associated with this binding. If the
-	// condition evaluates to `true`, then this binding applies to the
-	// current request. If the condition evaluates to `false`, then this
-	// binding does not apply to the current request. However, a different
-	// role binding might grant the same role to one or more of the
-	// principals in this binding. To learn which resources support
-	// conditions in their IAM policies, see the IAM documentation
+	// condition evaluates to `true`, then this binding applies to the current
+	// request. If the condition evaluates to `false`, then this binding does not
+	// apply to the current request. However, a different role binding might grant
+	// the same role to one or more of the principals in this binding. To learn
+	// which resources support conditions in their IAM policies, see the IAM
+	// documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
-
-	// Members: Specifies the principals requesting access for a Google
-	// Cloud resource. `members` can have the following values: *
-	// `allUsers`: A special identifier that represents anyone who is on the
-	// internet; with or without a Google account. *
-	// `allAuthenticatedUsers`: A special identifier that represents anyone
-	// who is authenticated with a Google account or a service account. Does
-	// not include identities that come from external identity providers
-	// (IdPs) through identity federation. * `user:{emailid}`: An email
+	// Members: Specifies the principals requesting access for a Google Cloud
+	// resource. `members` can have the following values: * `allUsers`: A special
+	// identifier that represents anyone who is on the internet; with or without a
+	// Google account. * `allAuthenticatedUsers`: A special identifier that
+	// represents anyone who is authenticated with a Google account or a service
+	// account. Does not include identities that come from external identity
+	// providers (IdPs) through identity federation. * `user:{emailid}`: An email
 	// address that represents a specific Google account. For example,
-	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address
-	// that represents a Google service account. For example,
+	// `alice@example.com` . * `serviceAccount:{emailid}`: An email address that
+	// represents a Google service account. For example,
 	// `my-other-app@appspot.gserviceaccount.com`. *
-	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`:
-	//  An identifier for a Kubernetes service account
+	// `serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]`: An
+	// identifier for a Kubernetes service account
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
-	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`.
-	// * `group:{emailid}`: An email address that represents a Google group.
-	// For example, `admins@example.com`. * `domain:{domain}`: The G Suite
-	// domain (primary) that represents all the users of that domain. For
-	// example, `google.com` or `example.com`. *
-	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_
-	// id}/subject/{subject_attribute_value}`: A single identity in a
-	// workforce identity pool. *
-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
-	// ol_id}/group/{group_id}`: All workforce identities in a group. *
-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
-	// ol_id}/attribute.{attribute_name}/{attribute_value}`: All workforce
-	// identities with a specific attribute value. *
-	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{po
-	// ol_id}/*`: All identities in a workforce identity pool. *
-	// `principal://iam.googleapis.com/projects/{project_number}/locations/gl
-	// obal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}
-	// `: A single identity in a workload identity pool. *
-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
-	// /global/workloadIdentityPools/{pool_id}/group/{group_id}`: A workload
-	// identity pool group. *
-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
-	// /global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{at
-	// tribute_value}`: All identities in a workload identity pool with a
-	// certain attribute. *
-	// `principalSet://iam.googleapis.com/projects/{project_number}/locations
-	// /global/workloadIdentityPools/{pool_id}/*`: All identities in a
-	// workload identity pool. * `deleted:user:{emailid}?uid={uniqueid}`: An
-	// email address (plus unique identifier) representing a user that has
-	// been recently deleted. For example,
-	// `alice@example.com?uid=123456789012345678901`. If the user is
-	// recovered, this value reverts to `user:{emailid}` and the recovered
-	// user retains the role in the binding. *
-	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address
-	// (plus unique identifier) representing a service account that has been
+	// For example, `my-project.svc.id.goog[my-namespace/my-kubernetes-sa]`. *
+	// `group:{emailid}`: An email address that represents a Google group. For
+	// example, `admins@example.com`. * `domain:{domain}`: The G Suite domain
+	// (primary) that represents all the users of that domain. For example,
+	// `google.com` or `example.com`. *
+	// `principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/sub
+	// ject/{subject_attribute_value}`: A single identity in a workforce identity
+	// pool. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/
+	// group/{group_id}`: All workforce identities in a group. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/
+	// attribute.{attribute_name}/{attribute_value}`: All workforce identities with
+	// a specific attribute value. *
+	// `principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/
+	// *`: All identities in a workforce identity pool. *
+	// `principal://iam.googleapis.com/projects/{project_number}/locations/global/wo
+	// rkloadIdentityPools/{pool_id}/subject/{subject_attribute_value}`: A single
+	// identity in a workload identity pool. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
+	// /workloadIdentityPools/{pool_id}/group/{group_id}`: A workload identity pool
+	// group. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
+	// /workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}
+	// `: All identities in a workload identity pool with a certain attribute. *
+	// `principalSet://iam.googleapis.com/projects/{project_number}/locations/global
+	// /workloadIdentityPools/{pool_id}/*`: All identities in a workload identity
+	// pool. * `deleted:user:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a user that has been recently deleted. For
+	// example, `alice@example.com?uid=123456789012345678901`. If the user is
+	// recovered, this value reverts to `user:{emailid}` and the recovered user
+	// retains the role in the binding. *
+	// `deleted:serviceAccount:{emailid}?uid={uniqueid}`: An email address (plus
+	// unique identifier) representing a service account that has been recently
+	// deleted. For example,
+	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`. If the
+	// service account is undeleted, this value reverts to
+	// `serviceAccount:{emailid}` and the undeleted service account retains the
+	// role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`: An email
+	// address (plus unique identifier) representing a Google group that has been
 	// recently deleted. For example,
-	// `my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901`.
-	// If the service account is undeleted, this value reverts to
-	// `serviceAccount:{emailid}` and the undeleted service account retains
-	// the role in the binding. * `deleted:group:{emailid}?uid={uniqueid}`:
-	// An email address (plus unique identifier) representing a Google group
-	// that has been recently deleted. For example,
-	// `admins@example.com?uid=123456789012345678901`. If the group is
-	// recovered, this value reverts to `group:{emailid}` and the recovered
-	// group retains the role in the binding. *
-	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
-	// s/{pool_id}/subject/{subject_attribute_value}`: Deleted single
-	// identity in a workforce identity pool. For example,
-	// `deleted:principal://iam.googleapis.com/locations/global/workforcePool
-	// s/my-pool-id/subject/my-subject-attribute-value`.
+	// `admins@example.com?uid=123456789012345678901`. If the group is recovered,
+	// this value reverts to `group:{emailid}` and the recovered group retains the
+	// role in the binding. *
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool
+	// _id}/subject/{subject_attribute_value}`: Deleted single identity in a
+	// workforce identity pool. For example,
+	// `deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-po
+	// ol-id/subject/my-subject-attribute-value`.
 	Members []string `json:"members,omitempty"`
-
-	// Role: Role that is assigned to the list of `members`, or principals.
-	// For example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an
-	// overview of the IAM roles and permissions, see the IAM documentation
+	// Role: Role that is assigned to the list of `members`, or principals. For
+	// example, `roles/viewer`, `roles/editor`, or `roles/owner`. For an overview
+	// of the IAM roles and permissions, see the IAM documentation
 	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
 	// available pre-defined roles, see here
 	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Condition") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Condition") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Condition") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Category: Represents the category hierarchy of a SKU.
 type Category struct {
-	// ResourceFamily: The type of product the SKU refers to. Example:
-	// "Compute", "Storage", "Network", "ApplicationServices" etc.
+	// ResourceFamily: The type of product the SKU refers to. Example: "Compute",
+	// "Storage", "Network", "ApplicationServices" etc.
 	ResourceFamily string `json:"resourceFamily,omitempty"`
-
-	// ResourceGroup: A group classification for related SKUs. Example:
-	// "RAM", "GPU", "Prediction", "Ops", "GoogleEgress" etc.
+	// ResourceGroup: A group classification for related SKUs. Example: "RAM",
+	// "GPU", "Prediction", "Ops", "GoogleEgress" etc.
 	ResourceGroup string `json:"resourceGroup,omitempty"`
-
-	// ServiceDisplayName: The display name of the service this SKU belongs
-	// to.
+	// ServiceDisplayName: The display name of the service this SKU belongs to.
 	ServiceDisplayName string `json:"serviceDisplayName,omitempty"`
-
 	// UsageType: Represents how the SKU is consumed. Example: "OnDemand",
 	// "Preemptible", "Commit1Mo", "Commit1Yr" etc.
 	UsageType string `json:"usageType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ResourceFamily") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ResourceFamily") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ResourceFamily") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Category) MarshalJSON() ([]byte, error) {
 	type NoMethod Category
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Expr: Represents a textual expression in the Common Expression
-// Language (CEL) syntax. CEL is a C-like expression language. The
-// syntax and semantics of CEL are documented at
-// https://github.com/google/cel-spec. Example (Comparison): title:
-// "Summary size limit" description: "Determines if a summary is less
-// than 100 chars" expression: "document.summary.size() < 100" Example
-// (Equality): title: "Requestor is owner" description: "Determines if
+// Expr: Represents a textual expression in the Common Expression Language
+// (CEL) syntax. CEL is a C-like expression language. The syntax and semantics
+// of CEL are documented at https://github.com/google/cel-spec. Example
+// (Comparison): title: "Summary size limit" description: "Determines if a
+// summary is less than 100 chars" expression: "document.summary.size() < 100"
+// Example (Equality): title: "Requestor is owner" description: "Determines if
 // requestor is the document owner" expression: "document.owner ==
 // request.auth.claims.email" Example (Logic): title: "Public documents"
-// description: "Determine whether the document should be publicly
-// visible" expression: "document.type != 'private' && document.type !=
-// 'internal'" Example (Data Manipulation): title: "Notification string"
-// description: "Create a notification string with a timestamp."
-// expression: "'New message received at ' +
-// string(document.create_time)" The exact variables and functions that
-// may be referenced within an expression are determined by the service
-// that evaluates it. See the service documentation for additional
+// description: "Determine whether the document should be publicly visible"
+// expression: "document.type != 'private' && document.type != 'internal'"
+// Example (Data Manipulation): title: "Notification string" description:
+// "Create a notification string with a timestamp." expression: "'New message
+// received at ' + string(document.create_time)" The exact variables and
+// functions that may be referenced within an expression are determined by the
+// service that evaluates it. See the service documentation for additional
 // information.
 type Expr struct {
-	// Description: Optional. Description of the expression. This is a
-	// longer text which describes the expression, e.g. when hovered over it
-	// in a UI.
+	// Description: Optional. Description of the expression. This is a longer text
+	// which describes the expression, e.g. when hovered over it in a UI.
 	Description string `json:"description,omitempty"`
-
-	// Expression: Textual representation of an expression in Common
-	// Expression Language syntax.
+	// Expression: Textual representation of an expression in Common Expression
+	// Language syntax.
 	Expression string `json:"expression,omitempty"`
-
-	// Location: Optional. String indicating the location of the expression
-	// for error reporting, e.g. a file name and a position in the file.
+	// Location: Optional. String indicating the location of the expression for
+	// error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
-
-	// Title: Optional. Title for the expression, i.e. a short string
-	// describing its purpose. This can be used e.g. in UIs which allow to
-	// enter the expression.
+	// Title: Optional. Title for the expression, i.e. a short string describing
+	// its purpose. This can be used e.g. in UIs which allow to enter the
+	// expression.
 	Title string `json:"title,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GeoTaxonomy: Encapsulates the geographic taxonomy data for a sku.
 type GeoTaxonomy struct {
-	// Regions: The list of regions associated with a sku. Empty for Global
-	// skus, which are associated with all Google Cloud regions.
+	// Regions: The list of regions associated with a sku. Empty for Global skus,
+	// which are associated with all Google Cloud regions.
 	Regions []string `json:"regions,omitempty"`
-
 	// Type: The type of Geo Taxonomy: GLOBAL, REGIONAL, or MULTI_REGIONAL.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - The type is not specified.
-	//   "GLOBAL" - The sku is global in nature, e.g. a license sku. Global
-	// skus are available in all regions, and so have an empty region list.
-	//   "REGIONAL" - The sku is available in a specific region, e.g.
-	// "us-west2".
-	//   "MULTI_REGIONAL" - The sku is associated with multiple regions,
-	// e.g. "us-west2" and "us-east1".
+	//   "GLOBAL" - The sku is global in nature, e.g. a license sku. Global skus
+	// are available in all regions, and so have an empty region list.
+	//   "REGIONAL" - The sku is available in a specific region, e.g. "us-west2".
+	//   "MULTI_REGIONAL" - The sku is associated with multiple regions, e.g.
+	// "us-west2" and "us-east1".
 	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Regions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Regions") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Regions") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Regions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GeoTaxonomy) MarshalJSON() ([]byte, error) {
 	type NoMethod GeoTaxonomy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListBillingAccountsResponse: Response message for
-// `ListBillingAccounts`.
+// ListBillingAccountsResponse: Response message for `ListBillingAccounts`.
 type ListBillingAccountsResponse struct {
 	// BillingAccounts: A list of billing accounts.
 	BillingAccounts []*BillingAccount `json:"billingAccounts,omitempty"`
-
-	// NextPageToken: A token to retrieve the next page of results. To
-	// retrieve the next page, call `ListBillingAccounts` again with the
-	// `page_token` field set to this value. This field is empty if there
-	// are no more results to retrieve.
+	// NextPageToken: A token to retrieve the next page of results. To retrieve the
+	// next page, call `ListBillingAccounts` again with the `page_token` field set
+	// to this value. This field is empty if there are no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "BillingAccounts") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BillingAccounts") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BillingAccounts") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListBillingAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBillingAccountsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListProjectBillingInfoResponse: Request message for
 // `ListProjectBillingInfoResponse`.
 type ListProjectBillingInfoResponse struct {
-	// NextPageToken: A token to retrieve the next page of results. To
-	// retrieve the next page, call `ListProjectBillingInfo` again with the
-	// `page_token` field set to this value. This field is empty if there
-	// are no more results to retrieve.
+	// NextPageToken: A token to retrieve the next page of results. To retrieve the
+	// next page, call `ListProjectBillingInfo` again with the `page_token` field
+	// set to this value. This field is empty if there are no more results to
+	// retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// ProjectBillingInfo: A list of `ProjectBillingInfo` resources
-	// representing the projects associated with the billing account.
+	// ProjectBillingInfo: A list of `ProjectBillingInfo` resources representing
+	// the projects associated with the billing account.
 	ProjectBillingInfo []*ProjectBillingInfo `json:"projectBillingInfo,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListProjectBillingInfoResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListProjectBillingInfoResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListServicesResponse: Response message for `ListServices`.
 type ListServicesResponse struct {
-	// NextPageToken: A token to retrieve the next page of results. To
-	// retrieve the next page, call `ListServices` again with the
-	// `page_token` field set to this value. This field is empty if there
-	// are no more results to retrieve.
+	// NextPageToken: A token to retrieve the next page of results. To retrieve the
+	// next page, call `ListServices` again with the `page_token` field set to this
+	// value. This field is empty if there are no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Services: A list of services.
 	Services []*Service `json:"services,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListServicesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListSkusResponse: Response message for `ListSkus`.
 type ListSkusResponse struct {
-	// NextPageToken: A token to retrieve the next page of results. To
-	// retrieve the next page, call `ListSkus` again with the `page_token`
-	// field set to this value. This field is empty if there are no more
-	// results to retrieve.
+	// NextPageToken: A token to retrieve the next page of results. To retrieve the
+	// next page, call `ListSkus` again with the `page_token` field set to this
+	// value. This field is empty if there are no more results to retrieve.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Skus: The list of public SKUs of the given service.
 	Skus []*Sku `json:"skus,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListSkusResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListSkusResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Money: Represents an amount of money with its currency type.
 type Money struct {
 	// CurrencyCode: The three-letter currency code defined in ISO 4217.
 	CurrencyCode string `json:"currencyCode,omitempty"`
-
-	// Nanos: Number of nano (10^-9) units of the amount. The value must be
-	// between -999,999,999 and +999,999,999 inclusive. If `units` is
-	// positive, `nanos` must be positive or zero. If `units` is zero,
-	// `nanos` can be positive, zero, or negative. If `units` is negative,
-	// `nanos` must be negative or zero. For example $-1.75 is represented
-	// as `units`=-1 and `nanos`=-750,000,000.
+	// Nanos: Number of nano (10^-9) units of the amount. The value must be between
+	// -999,999,999 and +999,999,999 inclusive. If `units` is positive, `nanos`
+	// must be positive or zero. If `units` is zero, `nanos` can be positive, zero,
+	// or negative. If `units` is negative, `nanos` must be negative or zero. For
+	// example $-1.75 is represented as `units`=-1 and `nanos`=-750,000,000.
 	Nanos int64 `json:"nanos,omitempty"`
-
-	// Units: The whole units of the amount. For example if `currencyCode`
-	// is "USD", then 1 unit is one US dollar.
+	// Units: The whole units of the amount. For example if `currencyCode` is
+	// "USD", then 1 unit is one US dollar.
 	Units int64 `json:"units,omitempty,string"`
-
 	// ForceSendFields is a list of field names (e.g. "CurrencyCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CurrencyCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CurrencyCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Money) MarshalJSON() ([]byte, error) {
 	type NoMethod Money
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MoveBillingAccountRequest: Request message for `MoveBillingAccount`
-// RPC.
+// MoveBillingAccountRequest: Request message for `MoveBillingAccount` RPC.
 type MoveBillingAccountRequest struct {
-	// DestinationParent: Required. The resource name of the Organization to
-	// move the billing account under. Must be of the form
+	// DestinationParent: Required. The resource name of the Organization to move
+	// the billing account under. Must be of the form
 	// `organizations/{organization_id}`.
 	DestinationParent string `json:"destinationParent,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DestinationParent")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DestinationParent") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DestinationParent") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DestinationParent") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MoveBillingAccountRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MoveBillingAccountRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Policy: An Identity and Access Management (IAM) policy, which
-// specifies access controls for Google Cloud resources. A `Policy` is a
-// collection of `bindings`. A `binding` binds one or more `members`, or
-// principals, to a single `role`. Principals can be user accounts,
-// service accounts, Google groups, and domains (such as G Suite). A
-// `role` is a named list of permissions; each `role` can be an IAM
-// predefined role or a user-created custom role. For some types of
-// Google Cloud resources, a `binding` can also specify a `condition`,
-// which is a logical expression that allows access to a resource only
-// if the expression evaluates to `true`. A condition can add
-// constraints based on attributes of the request, the resource, or
-// both. To learn which resources support conditions in their IAM
-// policies, see the IAM documentation
-// (https://cloud.google.com/iam/help/conditions/resource-policies).
-// **JSON example:** ``` { "bindings": [ { "role":
+// Policy: An Identity and Access Management (IAM) policy, which specifies
+// access controls for Google Cloud resources. A `Policy` is a collection of
+// `bindings`. A `binding` binds one or more `members`, or principals, to a
+// single `role`. Principals can be user accounts, service accounts, Google
+// groups, and domains (such as G Suite). A `role` is a named list of
+// permissions; each `role` can be an IAM predefined role or a user-created
+// custom role. For some types of Google Cloud resources, a `binding` can also
+// specify a `condition`, which is a logical expression that allows access to a
+// resource only if the expression evaluates to `true`. A condition can add
+// constraints based on attributes of the request, the resource, or both. To
+// learn which resources support conditions in their IAM policies, see the IAM
+// documentation
+// (https://cloud.google.com/iam/help/conditions/resource-policies). **JSON
+// example:** ``` { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
-// "user:mike@example.com", "group:admins@example.com",
-// "domain:google.com",
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
-// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:mike@example.com", "group:admins@example.com", "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, { "role":
+// "roles/resourcemanager.organizationViewer", "members": [
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
-// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ```
-// bindings: - members: - user:mike@example.com -
-// group:admins@example.com - domain:google.com -
-// serviceAccount:my-project-id@appspot.gserviceaccount.com role:
-// roles/resourcemanager.organizationAdmin - members: -
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ], "etag":
+// "BwWWja0YfJA=", "version": 3 } ``` **YAML example:** ``` bindings: -
+// members: - user:mike@example.com - group:admins@example.com -
+// domain:google.com - serviceAccount:my-project-id@appspot.gserviceaccount.com
+// role: roles/resourcemanager.organizationAdmin - members: -
 // user:eve@example.com role: roles/resourcemanager.organizationViewer
-// condition: title: expirable access description: Does not grant access
-// after Sep 2020 expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// ``` For a description of IAM and its features, see the IAM
-// documentation (https://cloud.google.com/iam/docs/).
+// condition: title: expirable access description: Does not grant access after
+// Sep 2020 expression: request.time < timestamp('2020-10-01T00:00:00.000Z')
+// etag: BwWWja0YfJA= version: 3 ``` For a description of IAM and its features,
+// see the IAM documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
-	// AuditConfigs: Specifies cloud audit logging configuration for this
-	// policy.
+	// AuditConfigs: Specifies cloud audit logging configuration for this policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
-
-	// Bindings: Associates a list of `members`, or principals, with a
-	// `role`. Optionally, may specify a `condition` that determines how and
-	// when the `bindings` are applied. Each of the `bindings` must contain
-	// at least one principal. The `bindings` in a `Policy` can refer to up
-	// to 1,500 principals; up to 250 of these principals can be Google
-	// groups. Each occurrence of a principal counts towards these limits.
-	// For example, if the `bindings` grant 50 different roles to
-	// `user:alice@example.com`, and not to any other principal, then you
-	// can add another 1,450 principals to the `bindings` in the `Policy`.
+	// Bindings: Associates a list of `members`, or principals, with a `role`.
+	// Optionally, may specify a `condition` that determines how and when the
+	// `bindings` are applied. Each of the `bindings` must contain at least one
+	// principal. The `bindings` in a `Policy` can refer to up to 1,500 principals;
+	// up to 250 of these principals can be Google groups. Each occurrence of a
+	// principal counts towards these limits. For example, if the `bindings` grant
+	// 50 different roles to `user:alice@example.com`, and not to any other
+	// principal, then you can add another 1,450 principals to the `bindings` in
+	// the `Policy`.
 	Bindings []*Binding `json:"bindings,omitempty"`
-
-	// Etag: `etag` is used for optimistic concurrency control as a way to
-	// help prevent simultaneous updates of a policy from overwriting each
-	// other. It is strongly suggested that systems make use of the `etag`
-	// in the read-modify-write cycle to perform policy updates in order to
-	// avoid race conditions: An `etag` is returned in the response to
-	// `getIamPolicy`, and systems are expected to put that etag in the
-	// request to `setIamPolicy` to ensure that their change will be applied
-	// to the same version of the policy. **Important:** If you use IAM
-	// Conditions, you must include the `etag` field whenever you call
-	// `setIamPolicy`. If you omit this field, then IAM allows you to
-	// overwrite a version `3` policy with a version `1` policy, and all of
+	// Etag: `etag` is used for optimistic concurrency control as a way to help
+	// prevent simultaneous updates of a policy from overwriting each other. It is
+	// strongly suggested that systems make use of the `etag` in the
+	// read-modify-write cycle to perform policy updates in order to avoid race
+	// conditions: An `etag` is returned in the response to `getIamPolicy`, and
+	// systems are expected to put that etag in the request to `setIamPolicy` to
+	// ensure that their change will be applied to the same version of the policy.
+	// **Important:** If you use IAM Conditions, you must include the `etag` field
+	// whenever you call `setIamPolicy`. If you omit this field, then IAM allows
+	// you to overwrite a version `3` policy with a version `1` policy, and all of
 	// the conditions in the version `3` policy are lost.
 	Etag string `json:"etag,omitempty"`
-
-	// Version: Specifies the format of the policy. Valid values are `0`,
-	// `1`, and `3`. Requests that specify an invalid value are rejected.
-	// Any operation that affects conditional role bindings must specify
-	// version `3`. This requirement applies to the following operations: *
-	// Getting a policy that includes a conditional role binding * Adding a
-	// conditional role binding to a policy * Changing a conditional role
-	// binding in a policy * Removing any role binding, with or without a
-	// condition, from a policy that includes conditions **Important:** If
-	// you use IAM Conditions, you must include the `etag` field whenever
-	// you call `setIamPolicy`. If you omit this field, then IAM allows you
-	// to overwrite a version `3` policy with a version `1` policy, and all
-	// of the conditions in the version `3` policy are lost. If a policy
-	// does not include any conditions, operations on that policy may
-	// specify any valid version or leave the field unset. To learn which
-	// resources support conditions in their IAM policies, see the IAM
-	// documentation
+	// Version: Specifies the format of the policy. Valid values are `0`, `1`, and
+	// `3`. Requests that specify an invalid value are rejected. Any operation that
+	// affects conditional role bindings must specify version `3`. This requirement
+	// applies to the following operations: * Getting a policy that includes a
+	// conditional role binding * Adding a conditional role binding to a policy *
+	// Changing a conditional role binding in a policy * Removing any role binding,
+	// with or without a condition, from a policy that includes conditions
+	// **Important:** If you use IAM Conditions, you must include the `etag` field
+	// whenever you call `setIamPolicy`. If you omit this field, then IAM allows
+	// you to overwrite a version `3` policy with a version `1` policy, and all of
+	// the conditions in the version `3` policy are lost. If a policy does not
+	// include any conditions, operations on that policy may specify any valid
+	// version or leave the field unset. To learn which resources support
+	// conditions in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AuditConfigs") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AuditConfigs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// PricingExpression: Expresses a mathematical pricing formula. For
-// Example:- `usage_unit: GBy` `tiered_rates:` `[start_usage_amount: 20,
-// unit_price: $10]` `[start_usage_amount: 100, unit_price: $5]` The
-// above expresses a pricing formula where the first 20GB is free, the
-// next 80GB is priced at $10 per GB followed by $5 per GB for
-// additional usage.
+// PricingExpression: Expresses a mathematical pricing formula. For Example:-
+// `usage_unit: GBy` `tiered_rates:` `[start_usage_amount: 20, unit_price:
+// $10]` `[start_usage_amount: 100, unit_price: $5]` The above expresses a
+// pricing formula where the first 20GB is free, the next 80GB is priced at $10
+// per GB followed by $5 per GB for additional usage.
 type PricingExpression struct {
-	// BaseUnit: The base unit for the SKU which is the unit used in usage
-	// exports. Example: "By"
+	// BaseUnit: The base unit for the SKU which is the unit used in usage exports.
+	// Example: "By"
 	BaseUnit string `json:"baseUnit,omitempty"`
-
-	// BaseUnitConversionFactor: Conversion factor for converting from price
-	// per usage_unit to price per base_unit, and start_usage_amount to
-	// start_usage_amount in base_unit. unit_price /
-	// base_unit_conversion_factor = price per base_unit. start_usage_amount
-	// * base_unit_conversion_factor = start_usage_amount in base_unit.
+	// BaseUnitConversionFactor: Conversion factor for converting from price per
+	// usage_unit to price per base_unit, and start_usage_amount to
+	// start_usage_amount in base_unit. unit_price / base_unit_conversion_factor =
+	// price per base_unit. start_usage_amount * base_unit_conversion_factor =
+	// start_usage_amount in base_unit.
 	BaseUnitConversionFactor float64 `json:"baseUnitConversionFactor,omitempty"`
-
-	// BaseUnitDescription: The base unit in human readable form. Example:
-	// "byte".
+	// BaseUnitDescription: The base unit in human readable form. Example: "byte".
 	BaseUnitDescription string `json:"baseUnitDescription,omitempty"`
-
-	// DisplayQuantity: The recommended quantity of units for displaying
-	// pricing info. When displaying pricing info it is recommended to
-	// display: (unit_price * display_quantity) per display_quantity
-	// usage_unit. This field does not affect the pricing formula and is for
-	// display purposes only. Example: If the unit_price is "0.0001 USD",
-	// the usage_unit is "GB" and the display_quantity is "1000" then the
-	// recommended way of displaying the pricing info is "0.10 USD per 1000
-	// GB"
+	// DisplayQuantity: The recommended quantity of units for displaying pricing
+	// info. When displaying pricing info it is recommended to display: (unit_price
+	// * display_quantity) per display_quantity usage_unit. This field does not
+	// affect the pricing formula and is for display purposes only. Example: If the
+	// unit_price is "0.0001 USD", the usage_unit is "GB" and the display_quantity
+	// is "1000" then the recommended way of displaying the pricing info is "0.10
+	// USD per 1000 GB"
 	DisplayQuantity float64 `json:"displayQuantity,omitempty"`
-
-	// TieredRates: The list of tiered rates for this pricing. The total
-	// cost is computed by applying each of the tiered rates on usage. This
-	// repeated list is sorted by ascending order of start_usage_amount.
+	// TieredRates: The list of tiered rates for this pricing. The total cost is
+	// computed by applying each of the tiered rates on usage. This repeated list
+	// is sorted by ascending order of start_usage_amount.
 	TieredRates []*TierRate `json:"tieredRates,omitempty"`
-
-	// UsageUnit: The short hand for unit of usage this pricing is specified
-	// in. Example: usage_unit of "GiBy" means that usage is specified in
-	// "Gibi Byte".
+	// UsageUnit: The short hand for unit of usage this pricing is specified in.
+	// Example: usage_unit of "GiBy" means that usage is specified in "Gibi Byte".
 	UsageUnit string `json:"usageUnit,omitempty"`
-
-	// UsageUnitDescription: The unit of usage in human readable form.
-	// Example: "gibi byte".
+	// UsageUnitDescription: The unit of usage in human readable form. Example:
+	// "gibi byte".
 	UsageUnitDescription string `json:"usageUnitDescription,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BaseUnit") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BaseUnit") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BaseUnit") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PricingExpression) MarshalJSON() ([]byte, error) {
 	type NoMethod PricingExpression
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PricingExpression) UnmarshalJSON(data []byte) error {
@@ -1140,58 +967,47 @@ func (s *PricingExpression) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// PricingInfo: Represents the pricing information for a SKU at a single
-// point of time.
+// PricingInfo: Represents the pricing information for a SKU at a single point
+// of time.
 type PricingInfo struct {
-	// AggregationInfo: Aggregation Info. This can be left unspecified if
-	// the pricing expression doesn't require aggregation.
+	// AggregationInfo: Aggregation Info. This can be left unspecified if the
+	// pricing expression doesn't require aggregation.
 	AggregationInfo *AggregationInfo `json:"aggregationInfo,omitempty"`
-
-	// CurrencyConversionRate: Conversion rate used for currency conversion,
-	// from USD to the currency specified in the request. This includes any
-	// surcharge collected for billing in non USD currency. If a currency is
-	// not specified in the request this defaults to 1.0. Example: USD *
-	// currency_conversion_rate = JPY
+	// CurrencyConversionRate: Conversion rate used for currency conversion, from
+	// USD to the currency specified in the request. This includes any surcharge
+	// collected for billing in non USD currency. If a currency is not specified in
+	// the request this defaults to 1.0. Example: USD * currency_conversion_rate =
+	// JPY
 	CurrencyConversionRate float64 `json:"currencyConversionRate,omitempty"`
-
-	// EffectiveTime: The timestamp from which this pricing was effective
-	// within the requested time range. This is guaranteed to be greater
-	// than or equal to the start_time field in the request and less than
-	// the end_time field in the request. If a time range was not specified
-	// in the request this field will be equivalent to a time within the
-	// last 12 hours, indicating the latest pricing info.
+	// EffectiveTime: The timestamp from which this pricing was effective within
+	// the requested time range. This is guaranteed to be greater than or equal to
+	// the start_time field in the request and less than the end_time field in the
+	// request. If a time range was not specified in the request this field will be
+	// equivalent to a time within the last 12 hours, indicating the latest pricing
+	// info.
 	EffectiveTime string `json:"effectiveTime,omitempty"`
-
-	// PricingExpression: Expresses the pricing formula. See
-	// `PricingExpression` for an example.
+	// PricingExpression: Expresses the pricing formula. See `PricingExpression`
+	// for an example.
 	PricingExpression *PricingExpression `json:"pricingExpression,omitempty"`
-
-	// Summary: An optional human readable summary of the pricing
-	// information, has a maximum length of 256 characters.
+	// Summary: An optional human readable summary of the pricing information, has
+	// a maximum length of 256 characters.
 	Summary string `json:"summary,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AggregationInfo") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AggregationInfo") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AggregationInfo") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PricingInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod PricingInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *PricingInfo) UnmarshalJSON(data []byte) error {
@@ -1208,295 +1024,226 @@ func (s *PricingInfo) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ProjectBillingInfo: Encapsulation of billing information for a Google
-// Cloud Console project. A project has at most one associated billing
-// account at a time (but a billing account can be assigned to multiple
-// projects).
+// ProjectBillingInfo: Encapsulation of billing information for a Google Cloud
+// Console project. A project has at most one associated billing account at a
+// time (but a billing account can be assigned to multiple projects).
 type ProjectBillingInfo struct {
-	// BillingAccountName: The resource name of the billing account
-	// associated with the project, if any. For example,
-	// `billingAccounts/012345-567890-ABCDEF`.
+	// BillingAccountName: The resource name of the billing account associated with
+	// the project, if any. For example, `billingAccounts/012345-567890-ABCDEF`.
 	BillingAccountName string `json:"billingAccountName,omitempty"`
-
-	// BillingEnabled: Output only. True if the project is associated with
-	// an open billing account, to which usage on the project is charged.
-	// False if the project is associated with a closed billing account, or
-	// no billing account at all, and therefore cannot use paid services.
+	// BillingEnabled: Output only. True if the project is associated with an open
+	// billing account, to which usage on the project is charged. False if the
+	// project is associated with a closed billing account, or no billing account
+	// at all, and therefore cannot use paid services.
 	BillingEnabled bool `json:"billingEnabled,omitempty"`
-
-	// Name: Output only. The resource name for the `ProjectBillingInfo`;
-	// has the form `projects/{project_id}/billingInfo`. For example, the
-	// resource name for the billing information for project
-	// `tokyo-rain-123` would be `projects/tokyo-rain-123/billingInfo`.
+	// Name: Output only. The resource name for the `ProjectBillingInfo`; has the
+	// form `projects/{project_id}/billingInfo`. For example, the resource name for
+	// the billing information for project `tokyo-rain-123` would be
+	// `projects/tokyo-rain-123/billingInfo`.
 	Name string `json:"name,omitempty"`
-
-	// ProjectId: Output only. The ID of the project that this
-	// `ProjectBillingInfo` represents, such as `tokyo-rain-123`. This is a
-	// convenience field so that you don't need to parse the `name` field to
-	// obtain a project ID.
+	// ProjectId: Output only. The ID of the project that this `ProjectBillingInfo`
+	// represents, such as `tokyo-rain-123`. This is a convenience field so that
+	// you don't need to parse the `name` field to obtain a project ID.
 	ProjectId string `json:"projectId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "BillingAccountName")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BillingAccountName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BillingAccountName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BillingAccountName") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ProjectBillingInfo) MarshalJSON() ([]byte, error) {
 	type NoMethod ProjectBillingInfo
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Service: Encapsulates a single service in Google Cloud Platform.
 type Service struct {
-	// BusinessEntityName: The business under which the service is offered.
-	// Ex. "businessEntities/GCP", "businessEntities/Maps"
+	// BusinessEntityName: The business under which the service is offered. Ex.
+	// "businessEntities/GCP", "businessEntities/Maps"
 	BusinessEntityName string `json:"businessEntityName,omitempty"`
-
 	// DisplayName: A human readable display name for this service.
 	DisplayName string `json:"displayName,omitempty"`
-
-	// Name: The resource name for the service. Example:
-	// "services/DA34-426B-A397"
+	// Name: The resource name for the service. Example: "services/DA34-426B-A397"
 	Name string `json:"name,omitempty"`
-
 	// ServiceId: The identifier for the service. Example: "DA34-426B-A397"
 	ServiceId string `json:"serviceId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BusinessEntityName")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BusinessEntityName") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BusinessEntityName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BusinessEntityName") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Service) MarshalJSON() ([]byte, error) {
 	type NoMethod Service
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for `SetIamPolicy` method.
 type SetIamPolicyRequest struct {
-	// Policy: REQUIRED: The complete policy to be applied to the
-	// `resource`. The size of the policy is limited to a few 10s of KB. An
-	// empty policy is a valid policy but certain Google Cloud services
-	// (such as Projects) might reject them.
+	// Policy: REQUIRED: The complete policy to be applied to the `resource`. The
+	// size of the policy is limited to a few 10s of KB. An empty policy is a valid
+	// policy but certain Google Cloud services (such as Projects) might reject
+	// them.
 	Policy *Policy `json:"policy,omitempty"`
-
-	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the
-	// policy to modify. Only the fields in the mask will be modified. If no
-	// mask is provided, the following default mask is used: `paths:
-	// "bindings, etag"
+	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the policy to
+	// modify. Only the fields in the mask will be modified. If no mask is
+	// provided, the following default mask is used: `paths: "bindings, etag"
 	UpdateMask string `json:"updateMask,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Policy") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Policy") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Sku: Encapsulates a single SKU in Google Cloud Platform
 type Sku struct {
-	// Category: The category hierarchy of this SKU, purely for
-	// organizational purpose.
+	// Category: The category hierarchy of this SKU, purely for organizational
+	// purpose.
 	Category *Category `json:"category,omitempty"`
-
-	// Description: A human readable description of the SKU, has a maximum
-	// length of 256 characters.
+	// Description: A human readable description of the SKU, has a maximum length
+	// of 256 characters.
 	Description string `json:"description,omitempty"`
-
 	// GeoTaxonomy: The geographic taxonomy for this sku.
 	GeoTaxonomy *GeoTaxonomy `json:"geoTaxonomy,omitempty"`
-
 	// Name: The resource name for the SKU. Example:
 	// "services/DA34-426B-A397/skus/AA95-CD31-42FE"
 	Name string `json:"name,omitempty"`
-
-	// PricingInfo: A timeline of pricing info for this SKU in chronological
-	// order.
+	// PricingInfo: A timeline of pricing info for this SKU in chronological order.
 	PricingInfo []*PricingInfo `json:"pricingInfo,omitempty"`
-
-	// ServiceProviderName: Identifies the service provider. This is
-	// 'Google' for first party services in Google Cloud Platform.
+	// ServiceProviderName: Identifies the service provider. This is 'Google' for
+	// first party services in Google Cloud Platform.
 	ServiceProviderName string `json:"serviceProviderName,omitempty"`
-
-	// ServiceRegions: List of service regions this SKU is offered at.
-	// Example: "asia-east1" Service regions can be found at
+	// ServiceRegions: List of service regions this SKU is offered at. Example:
+	// "asia-east1" Service regions can be found at
 	// https://cloud.google.com/about/locations/
 	ServiceRegions []string `json:"serviceRegions,omitempty"`
-
 	// SkuId: The identifier for the SKU. Example: "AA95-CD31-42FE"
 	SkuId string `json:"skuId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Category") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Category") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Category") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Sku) MarshalJSON() ([]byte, error) {
 	type NoMethod Sku
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TestIamPermissionsRequest: Request message for `TestIamPermissions`
-// method.
+// TestIamPermissionsRequest: Request message for `TestIamPermissions` method.
 type TestIamPermissionsRequest struct {
-	// Permissions: The set of permissions to check for the `resource`.
-	// Permissions with wildcards (such as `*` or `storage.*`) are not
-	// allowed. For more information see IAM Overview
+	// Permissions: The set of permissions to check for the `resource`. Permissions
+	// with wildcards (such as `*` or `storage.*`) are not allowed. For more
+	// information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permissions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permissions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // TestIamPermissionsResponse: Response message for `TestIamPermissions`
 // method.
 type TestIamPermissionsResponse struct {
-	// Permissions: A subset of `TestPermissionsRequest.permissions` that
-	// the caller is allowed.
+	// Permissions: A subset of `TestPermissionsRequest.permissions` that the
+	// caller is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permissions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permissions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TierRate: The price rate indicating starting usage and its
-// corresponding price.
+// TierRate: The price rate indicating starting usage and its corresponding
+// price.
 type TierRate struct {
-	// StartUsageAmount: Usage is priced at this rate only after this
-	// amount. Example: start_usage_amount of 10 indicates that the usage
-	// will be priced at the unit_price after the first 10 usage_units.
+	// StartUsageAmount: Usage is priced at this rate only after this amount.
+	// Example: start_usage_amount of 10 indicates that the usage will be priced at
+	// the unit_price after the first 10 usage_units.
 	StartUsageAmount float64 `json:"startUsageAmount,omitempty"`
-
-	// UnitPrice: The price per unit of usage. Example: unit_price of amount
-	// $10 indicates that each unit will cost $10.
+	// UnitPrice: The price per unit of usage. Example: unit_price of amount $10
+	// indicates that each unit will cost $10.
 	UnitPrice *Money `json:"unitPrice,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "StartUsageAmount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "StartUsageAmount") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "StartUsageAmount") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TierRate) MarshalJSON() ([]byte, error) {
 	type NoMethod TierRate
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *TierRate) UnmarshalJSON(data []byte) error {
@@ -1513,8 +1260,6 @@ func (s *TierRate) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// method id "cloudbilling.billingAccounts.create":
-
 type BillingAccountsCreateCall struct {
 	s              *APIService
 	billingaccount *BillingAccount
@@ -1524,27 +1269,25 @@ type BillingAccountsCreateCall struct {
 }
 
 // Create: This method creates billing subaccounts
-// (https://cloud.google.com/billing/docs/concepts#subaccounts). Google
-// Cloud resellers should use the Channel Services APIs,
-// accounts.customers.create
+// (https://cloud.google.com/billing/docs/concepts#subaccounts). Google Cloud
+// resellers should use the Channel Services APIs, accounts.customers.create
 // (https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create)
 // and accounts.customers.entitlements.create
 // (https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create).
-// When creating a subaccount, the current authenticated user must have
-// the `billing.accounts.update` IAM permission on the parent account,
-// which is typically given to billing account administrators
-// (https://cloud.google.com/billing/docs/how-to/billing-access). This
-// method will return an error if the parent account has not been
-// provisioned for subaccounts.
+// When creating a subaccount, the current authenticated user must have the
+// `billing.accounts.update` IAM permission on the parent account, which is
+// typically given to billing account administrators
+// (https://cloud.google.com/billing/docs/how-to/billing-access). This method
+// will return an error if the parent account has not been provisioned for
+// subaccounts.
 func (r *BillingAccountsService) Create(billingaccount *BillingAccount) *BillingAccountsCreateCall {
 	c := &BillingAccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.billingaccount = billingaccount
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent to create a
-// billing account from. Format: -
-// `billingAccounts/{billing_account_id}`, for example,
+// Parent sets the optional parameter "parent": The parent to create a billing
+// account from. Format: - `billingAccounts/{billing_account_id}`, for example,
 // `billingAccounts/012345-567890-ABCDEF`
 func (c *BillingAccountsCreateCall) Parent(parent string) *BillingAccountsCreateCall {
 	c.urlParams_.Set("parent", parent)
@@ -1552,23 +1295,21 @@ func (c *BillingAccountsCreateCall) Parent(parent string) *BillingAccountsCreate
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsCreateCall) Fields(s ...googleapi.Field) *BillingAccountsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsCreateCall) Context(ctx context.Context) *BillingAccountsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1577,18 +1318,12 @@ func (c *BillingAccountsCreateCall) Header() http.Header {
 }
 
 func (c *BillingAccountsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.billingaccount)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/billingAccounts")
@@ -1602,12 +1337,10 @@ func (c *BillingAccountsCreateCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "cloudbilling.billingAccounts.create" call.
-// Exactly one of *BillingAccount or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *BillingAccount.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BillingAccount.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAccount, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1638,35 +1371,7 @@ func (c *BillingAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAc
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "This method creates [billing subaccounts](https://cloud.google.com/billing/docs/concepts#subaccounts). Google Cloud resellers should use the Channel Services APIs, [accounts.customers.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create) and [accounts.customers.entitlements.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create). When creating a subaccount, the current authenticated user must have the `billing.accounts.update` IAM permission on the parent account, which is typically given to billing account [administrators](https://cloud.google.com/billing/docs/how-to/billing-access). This method will return an error if the parent account has not been provisioned for subaccounts.",
-	//   "flatPath": "v1/billingAccounts",
-	//   "httpMethod": "POST",
-	//   "id": "cloudbilling.billingAccounts.create",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Optional. The parent to create a billing account from. Format: - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/billingAccounts",
-	//   "request": {
-	//     "$ref": "BillingAccount"
-	//   },
-	//   "response": {
-	//     "$ref": "BillingAccount"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.billingAccounts.get":
 
 type BillingAccountsGetCall struct {
 	s            *APIService
@@ -1677,12 +1382,12 @@ type BillingAccountsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets information about a billing account. The current
-// authenticated user must be a viewer of the billing account
+// Get: Gets information about a billing account. The current authenticated
+// user must be a viewer of the billing account
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
 //
-//   - name: The resource name of the billing account to retrieve. For
-//     example, `billingAccounts/012345-567890-ABCDEF`.
+//   - name: The resource name of the billing account to retrieve. For example,
+//     `billingAccounts/012345-567890-ABCDEF`.
 func (r *BillingAccountsService) Get(name string) *BillingAccountsGetCall {
 	c := &BillingAccountsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1690,33 +1395,29 @@ func (r *BillingAccountsService) Get(name string) *BillingAccountsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsGetCall) Fields(s ...googleapi.Field) *BillingAccountsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BillingAccountsGetCall) IfNoneMatch(entityTag string) *BillingAccountsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsGetCall) Context(ctx context.Context) *BillingAccountsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1725,12 +1426,7 @@ func (c *BillingAccountsGetCall) Header() http.Header {
 }
 
 func (c *BillingAccountsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1751,12 +1447,10 @@ func (c *BillingAccountsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudbilling.billingAccounts.get" call.
-// Exactly one of *BillingAccount or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *BillingAccount.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BillingAccount.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsGetCall) Do(opts ...googleapi.CallOption) (*BillingAccount, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1787,37 +1481,7 @@ func (c *BillingAccountsGetCall) Do(opts ...googleapi.CallOption) (*BillingAccou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets information about a billing account. The current authenticated user must be a [viewer of the billing account](https://cloud.google.com/billing/docs/how-to/billing-access).",
-	//   "flatPath": "v1/billingAccounts/{billingAccountsId}",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.billingAccounts.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the billing account to retrieve. For example, `billingAccounts/012345-567890-ABCDEF`.",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "BillingAccount"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.billingAccounts.getIamPolicy":
 
 type BillingAccountsGetIamPolicyCall struct {
 	s            *APIService
@@ -1828,15 +1492,14 @@ type BillingAccountsGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a billing account.
-// The caller must have the `billing.accounts.getIamPolicy` permission
-// on the account, which is often given to billing account viewers
+// GetIamPolicy: Gets the access control policy for a billing account. The
+// caller must have the `billing.accounts.getIamPolicy` permission on the
+// account, which is often given to billing account viewers
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *BillingAccountsService) GetIamPolicy(resource string) *BillingAccountsGetIamPolicyCall {
 	c := &BillingAccountsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -1844,17 +1507,16 @@ func (r *BillingAccountsService) GetIamPolicy(resource string) *BillingAccountsG
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The maximum policy version that
-// will be used to format the policy. Valid values are 0, 1, and 3.
-// Requests specifying an invalid value will be rejected. Requests for
-// policies with any conditional role bindings must specify version 3.
-// Policies with no conditional role bindings may specify any valid
-// value or leave the field unset. The policy in the response might use
-// the policy version that you specified, or it might use a lower policy
-// version. For example, if you specify version 3, but the policy has no
-// conditional role bindings, the response uses version 1. To learn
-// which resources support conditions in their IAM policies, see the IAM
-// documentation
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy. Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected. Requests for policies with any
+// conditional role bindings must specify version 3. Policies with no
+// conditional role bindings may specify any valid value or leave the field
+// unset. The policy in the response might use the policy version that you
+// specified, or it might use a lower policy version. For example, if you
+// specify version 3, but the policy has no conditional role bindings, the
+// response uses version 1. To learn which resources support conditions in
+// their IAM policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *BillingAccountsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *BillingAccountsGetIamPolicyCall {
 	c.urlParams_.Set("options.requestedPolicyVersion", fmt.Sprint(optionsRequestedPolicyVersion))
@@ -1862,33 +1524,29 @@ func (c *BillingAccountsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsR
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsGetIamPolicyCall) Fields(s ...googleapi.Field) *BillingAccountsGetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BillingAccountsGetIamPolicyCall) IfNoneMatch(entityTag string) *BillingAccountsGetIamPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsGetIamPolicyCall) Context(ctx context.Context) *BillingAccountsGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsGetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1897,12 +1555,7 @@ func (c *BillingAccountsGetIamPolicyCall) Header() http.Header {
 }
 
 func (c *BillingAccountsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1923,12 +1576,10 @@ func (c *BillingAccountsGetIamPolicyCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "cloudbilling.billingAccounts.getIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1959,43 +1610,7 @@ func (c *BillingAccountsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the access control policy for a billing account. The caller must have the `billing.accounts.getIamPolicy` permission on the account, which is often given to billing account [viewers](https://cloud.google.com/billing/docs/how-to/billing-access).",
-	//   "flatPath": "v1/billingAccounts/{billingAccountsId}:getIamPolicy",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.billingAccounts.getIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The maximum policy version that will be used to format the policy. Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected. Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset. The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1. To learn which resources support conditions in their IAM policies, see the [IAM documentation](https://cloud.google.com/iam/help/conditions/resource-policies).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resource}:getIamPolicy",
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.billingAccounts.list":
 
 type BillingAccountsListCall struct {
 	s            *APIService
@@ -2005,46 +1620,44 @@ type BillingAccountsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the billing accounts that the current authenticated user
-// has permission to view
+// List: Lists the billing accounts that the current authenticated user has
+// permission to view
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
 func (r *BillingAccountsService) List() *BillingAccountsListCall {
 	c := &BillingAccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// Filter sets the optional parameter "filter": Options for how to
-// filter the returned billing accounts. This only supports filtering
-// for subaccounts (https://cloud.google.com/billing/docs/concepts)
-// under a single provided parent billing account. (for example,
-// `master_billing_account=billingAccounts/012345-678901-ABCDEF`).
-// Boolean algebra and other fields are not currently supported.
+// Filter sets the optional parameter "filter": Options for how to filter the
+// returned billing accounts. This only supports filtering for subaccounts
+// (https://cloud.google.com/billing/docs/concepts) under a single provided
+// parent billing account. (for example,
+// `master_billing_account=billingAccounts/012345-678901-ABCDEF`). Boolean
+// algebra and other fields are not currently supported.
 func (c *BillingAccountsListCall) Filter(filter string) *BillingAccountsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The maximum page size is 100; this is also the default.
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// maximum page size is 100; this is also the default.
 func (c *BillingAccountsListCall) PageSize(pageSize int64) *BillingAccountsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to return. This should be a
-// `next_page_token` value returned from a previous
-// `ListBillingAccounts` call. If unspecified, the first page of results
-// is returned.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results to return. This should be a `next_page_token` value returned
+// from a previous `ListBillingAccounts` call. If unspecified, the first page
+// of results is returned.
 func (c *BillingAccountsListCall) PageToken(pageToken string) *BillingAccountsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Parent sets the optional parameter "parent": The parent resource to
-// list billing accounts from. Format: -
-// `organizations/{organization_id}`, for example,
-// `organizations/12345678` - `billingAccounts/{billing_account_id}`,
+// Parent sets the optional parameter "parent": The parent resource to list
+// billing accounts from. Format: - `organizations/{organization_id}`, for
+// example, `organizations/12345678` - `billingAccounts/{billing_account_id}`,
 // for example, `billingAccounts/012345-567890-ABCDEF`
 func (c *BillingAccountsListCall) Parent(parent string) *BillingAccountsListCall {
 	c.urlParams_.Set("parent", parent)
@@ -2052,33 +1665,29 @@ func (c *BillingAccountsListCall) Parent(parent string) *BillingAccountsListCall
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsListCall) Fields(s ...googleapi.Field) *BillingAccountsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BillingAccountsListCall) IfNoneMatch(entityTag string) *BillingAccountsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsListCall) Context(ctx context.Context) *BillingAccountsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2087,12 +1696,7 @@ func (c *BillingAccountsListCall) Header() http.Header {
 }
 
 func (c *BillingAccountsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2110,12 +1714,11 @@ func (c *BillingAccountsListCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "cloudbilling.billingAccounts.list" call.
-// Exactly one of *ListBillingAccountsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListBillingAccountsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListBillingAccountsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *BillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBillingAccountsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2146,46 +1749,6 @@ func (c *BillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBilling
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the billing accounts that the current authenticated user has permission to [view](https://cloud.google.com/billing/docs/how-to/billing-access).",
-	//   "flatPath": "v1/billingAccounts",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.billingAccounts.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Options for how to filter the returned billing accounts. This only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided parent billing account. (for example, `master_billing_account=billingAccounts/012345-678901-ABCDEF`). Boolean algebra and other fields are not currently supported.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Requested page size. The maximum page size is 100; this is also the default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results to return. This should be a `next_page_token` value returned from a previous `ListBillingAccounts` call. If unspecified, the first page of results is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Optional. The parent resource to list billing accounts from. Format: - `organizations/{organization_id}`, for example, `organizations/12345678` - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/billingAccounts",
-	//   "response": {
-	//     "$ref": "ListBillingAccountsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2193,7 +1756,7 @@ func (c *BillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBilling
 // The provided context supersedes any context provided to the Context method.
 func (c *BillingAccountsListCall) Pages(ctx context.Context, f func(*ListBillingAccountsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2209,8 +1772,6 @@ func (c *BillingAccountsListCall) Pages(ctx context.Context, f func(*ListBilling
 	}
 }
 
-// method id "cloudbilling.billingAccounts.move":
-
 type BillingAccountsMoveCall struct {
 	s                         *APIService
 	name                      string
@@ -2222,10 +1783,10 @@ type BillingAccountsMoveCall struct {
 
 // Move: Changes which parent organization a billing account belongs to.
 //
-//   - name: The resource name of the billing account to move. Must be of
-//     the form `billingAccounts/{billing_account_id}`. The specified
-//     billing account cannot be a subaccount, since a subaccount always
-//     belongs to the same organization as its parent account.
+//   - name: The resource name of the billing account to move. Must be of the
+//     form `billingAccounts/{billing_account_id}`. The specified billing account
+//     cannot be a subaccount, since a subaccount always belongs to the same
+//     organization as its parent account.
 func (r *BillingAccountsService) Move(name string, movebillingaccountrequest *MoveBillingAccountRequest) *BillingAccountsMoveCall {
 	c := &BillingAccountsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2234,23 +1795,21 @@ func (r *BillingAccountsService) Move(name string, movebillingaccountrequest *Mo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsMoveCall) Fields(s ...googleapi.Field) *BillingAccountsMoveCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsMoveCall) Context(ctx context.Context) *BillingAccountsMoveCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsMoveCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2259,18 +1818,12 @@ func (c *BillingAccountsMoveCall) Header() http.Header {
 }
 
 func (c *BillingAccountsMoveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.movebillingaccountrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}:move")
@@ -2287,12 +1840,10 @@ func (c *BillingAccountsMoveCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "cloudbilling.billingAccounts.move" call.
-// Exactly one of *BillingAccount or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *BillingAccount.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BillingAccount.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsMoveCall) Do(opts ...googleapi.CallOption) (*BillingAccount, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2323,39 +1874,7 @@ func (c *BillingAccountsMoveCall) Do(opts ...googleapi.CallOption) (*BillingAcco
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Changes which parent organization a billing account belongs to.",
-	//   "flatPath": "v1/billingAccounts/{billingAccountsId}:move",
-	//   "httpMethod": "POST",
-	//   "id": "cloudbilling.billingAccounts.move",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the billing account to move. Must be of the form `billingAccounts/{billing_account_id}`. The specified billing account cannot be a subaccount, since a subaccount always belongs to the same organization as its parent account.",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}:move",
-	//   "request": {
-	//     "$ref": "MoveBillingAccountRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "BillingAccount"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.billingAccounts.patch":
 
 type BillingAccountsPatchCall struct {
 	s              *APIService
@@ -2366,12 +1885,11 @@ type BillingAccountsPatchCall struct {
 	header_        http.Header
 }
 
-// Patch: Updates a billing account's fields. Currently the only field
-// that can be edited is `display_name`. The current authenticated user
-// must have the `billing.accounts.update` IAM permission, which is
-// typically given to the administrator
-// (https://cloud.google.com/billing/docs/how-to/billing-access) of the
-// billing account.
+// Patch: Updates a billing account's fields. Currently the only field that can
+// be edited is `display_name`. The current authenticated user must have the
+// `billing.accounts.update` IAM permission, which is typically given to the
+// administrator (https://cloud.google.com/billing/docs/how-to/billing-access)
+// of the billing account.
 //
 // - name: The name of the billing account resource to be updated.
 func (r *BillingAccountsService) Patch(name string, billingaccount *BillingAccount) *BillingAccountsPatchCall {
@@ -2381,31 +1899,29 @@ func (r *BillingAccountsService) Patch(name string, billingaccount *BillingAccou
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": The update mask
-// applied to the resource. Only "display_name" is currently supported.
+// UpdateMask sets the optional parameter "updateMask": The update mask applied
+// to the resource. Only "display_name" is currently supported.
 func (c *BillingAccountsPatchCall) UpdateMask(updateMask string) *BillingAccountsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsPatchCall) Fields(s ...googleapi.Field) *BillingAccountsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsPatchCall) Context(ctx context.Context) *BillingAccountsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2414,18 +1930,12 @@ func (c *BillingAccountsPatchCall) Header() http.Header {
 }
 
 func (c *BillingAccountsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.billingaccount)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}")
@@ -2442,12 +1952,10 @@ func (c *BillingAccountsPatchCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "cloudbilling.billingAccounts.patch" call.
-// Exactly one of *BillingAccount or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *BillingAccount.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BillingAccount.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsPatchCall) Do(opts ...googleapi.CallOption) (*BillingAccount, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2478,45 +1986,7 @@ func (c *BillingAccountsPatchCall) Do(opts ...googleapi.CallOption) (*BillingAcc
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a billing account's fields. Currently the only field that can be edited is `display_name`. The current authenticated user must have the `billing.accounts.update` IAM permission, which is typically given to the [administrator](https://cloud.google.com/billing/docs/how-to/billing-access) of the billing account.",
-	//   "flatPath": "v1/billingAccounts/{billingAccountsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "cloudbilling.billingAccounts.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The name of the billing account resource to be updated.",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "The update mask applied to the resource. Only \"display_name\" is currently supported.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "request": {
-	//     "$ref": "BillingAccount"
-	//   },
-	//   "response": {
-	//     "$ref": "BillingAccount"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.billingAccounts.setIamPolicy":
 
 type BillingAccountsSetIamPolicyCall struct {
 	s                   *APIService
@@ -2527,16 +1997,15 @@ type BillingAccountsSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy for a billing account.
-// Replaces any existing policy. The caller must have the
-// `billing.accounts.setIamPolicy` permission on the account, which is
-// often given to billing account administrators
+// SetIamPolicy: Sets the access control policy for a billing account. Replaces
+// any existing policy. The caller must have the
+// `billing.accounts.setIamPolicy` permission on the account, which is often
+// given to billing account administrators
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *BillingAccountsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *BillingAccountsSetIamPolicyCall {
 	c := &BillingAccountsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2545,23 +2014,21 @@ func (r *BillingAccountsService) SetIamPolicy(resource string, setiampolicyreque
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsSetIamPolicyCall) Fields(s ...googleapi.Field) *BillingAccountsSetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsSetIamPolicyCall) Context(ctx context.Context) *BillingAccountsSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsSetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2570,18 +2037,12 @@ func (c *BillingAccountsSetIamPolicyCall) Header() http.Header {
 }
 
 func (c *BillingAccountsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:setIamPolicy")
@@ -2598,12 +2059,10 @@ func (c *BillingAccountsSetIamPolicyCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "cloudbilling.billingAccounts.setIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2634,39 +2093,7 @@ func (c *BillingAccountsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Pol
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Sets the access control policy for a billing account. Replaces any existing policy. The caller must have the `billing.accounts.setIamPolicy` permission on the account, which is often given to billing account [administrators](https://cloud.google.com/billing/docs/how-to/billing-access).",
-	//   "flatPath": "v1/billingAccounts/{billingAccountsId}:setIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "cloudbilling.billingAccounts.setIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resource}:setIamPolicy",
-	//   "request": {
-	//     "$ref": "SetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.billingAccounts.testIamPermissions":
 
 type BillingAccountsTestIamPermissionsCall struct {
 	s                         *APIService
@@ -2677,15 +2104,15 @@ type BillingAccountsTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Tests the access control policy for a billing
-// account. This method takes the resource and a set of permissions as
-// input and returns the subset of the input permissions that the caller
-// is allowed for that resource.
+// TestIamPermissions: Tests the access control policy for a billing account.
+// This method takes the resource and a set of permissions as input and returns
+// the subset of the input permissions that the caller is allowed for that
+// resource.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
 func (r *BillingAccountsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *BillingAccountsTestIamPermissionsCall {
 	c := &BillingAccountsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -2694,23 +2121,21 @@ func (r *BillingAccountsService) TestIamPermissions(resource string, testiamperm
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsTestIamPermissionsCall) Fields(s ...googleapi.Field) *BillingAccountsTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsTestIamPermissionsCall) Context(ctx context.Context) *BillingAccountsTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsTestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2719,18 +2144,12 @@ func (c *BillingAccountsTestIamPermissionsCall) Header() http.Header {
 }
 
 func (c *BillingAccountsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+resource}:testIamPermissions")
@@ -2747,12 +2166,11 @@ func (c *BillingAccountsTestIamPermissionsCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "cloudbilling.billingAccounts.testIamPermissions" call.
-// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *BillingAccountsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2783,40 +2201,7 @@ func (c *BillingAccountsTestIamPermissionsCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Tests the access control policy for a billing account. This method takes the resource and a set of permissions as input and returns the subset of the input permissions that the caller is allowed for that resource.",
-	//   "flatPath": "v1/billingAccounts/{billingAccountsId}:testIamPermissions",
-	//   "httpMethod": "POST",
-	//   "id": "cloudbilling.billingAccounts.testIamPermissions",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See [Resource names](https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+resource}:testIamPermissions",
-	//   "request": {
-	//     "$ref": "TestIamPermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TestIamPermissionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.billingAccounts.projects.list":
 
 type BillingAccountsProjectsListCall struct {
 	s            *APIService
@@ -2827,10 +2212,9 @@ type BillingAccountsProjectsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the projects associated with a billing account. The
-// current authenticated user must have the
-// `billing.resourceAssociations.list` IAM permission, which is often
-// given to billing account viewers
+// List: Lists the projects associated with a billing account. The current
+// authenticated user must have the `billing.resourceAssociations.list` IAM
+// permission, which is often given to billing account viewers
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
 //
 //   - name: The resource name of the billing account associated with the
@@ -2842,51 +2226,46 @@ func (r *BillingAccountsProjectsService) List(name string) *BillingAccountsProje
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The maximum page size is 100; this is also the default.
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// maximum page size is 100; this is also the default.
 func (c *BillingAccountsProjectsListCall) PageSize(pageSize int64) *BillingAccountsProjectsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to be returned. This should be a
-// `next_page_token` value returned from a previous
-// `ListProjectBillingInfo` call. If unspecified, the first page of
-// results is returned.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results to be returned. This should be a `next_page_token` value
+// returned from a previous `ListProjectBillingInfo` call. If unspecified, the
+// first page of results is returned.
 func (c *BillingAccountsProjectsListCall) PageToken(pageToken string) *BillingAccountsProjectsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsProjectsListCall) Fields(s ...googleapi.Field) *BillingAccountsProjectsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BillingAccountsProjectsListCall) IfNoneMatch(entityTag string) *BillingAccountsProjectsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsProjectsListCall) Context(ctx context.Context) *BillingAccountsProjectsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsProjectsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2895,12 +2274,7 @@ func (c *BillingAccountsProjectsListCall) Header() http.Header {
 }
 
 func (c *BillingAccountsProjectsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2921,12 +2295,11 @@ func (c *BillingAccountsProjectsListCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "cloudbilling.billingAccounts.projects.list" call.
-// Exactly one of *ListProjectBillingInfoResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListProjectBillingInfoResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListProjectBillingInfoResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *BillingAccountsProjectsListCall) Do(opts ...googleapi.CallOption) (*ListProjectBillingInfoResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2957,45 +2330,6 @@ func (c *BillingAccountsProjectsListCall) Do(opts ...googleapi.CallOption) (*Lis
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the projects associated with a billing account. The current authenticated user must have the `billing.resourceAssociations.list` IAM permission, which is often given to billing account [viewers](https://cloud.google.com/billing/docs/how-to/billing-access).",
-	//   "flatPath": "v1/billingAccounts/{billingAccountsId}/projects",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.billingAccounts.projects.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the billing account associated with the projects that you want to list. For example, `billingAccounts/012345-567890-ABCDEF`.",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Requested page size. The maximum page size is 100; this is also the default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results to be returned. This should be a `next_page_token` value returned from a previous `ListProjectBillingInfo` call. If unspecified, the first page of results is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}/projects",
-	//   "response": {
-	//     "$ref": "ListProjectBillingInfoResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3003,7 +2337,7 @@ func (c *BillingAccountsProjectsListCall) Do(opts ...googleapi.CallOption) (*Lis
 // The provided context supersedes any context provided to the Context method.
 func (c *BillingAccountsProjectsListCall) Pages(ctx context.Context, f func(*ListProjectBillingInfoResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3019,8 +2353,6 @@ func (c *BillingAccountsProjectsListCall) Pages(ctx context.Context, f func(*Lis
 	}
 }
 
-// method id "cloudbilling.billingAccounts.subAccounts.create":
-
 type BillingAccountsSubAccountsCreateCall struct {
 	s              *APIService
 	parent         string
@@ -3031,21 +2363,20 @@ type BillingAccountsSubAccountsCreateCall struct {
 }
 
 // Create: This method creates billing subaccounts
-// (https://cloud.google.com/billing/docs/concepts#subaccounts). Google
-// Cloud resellers should use the Channel Services APIs,
-// accounts.customers.create
+// (https://cloud.google.com/billing/docs/concepts#subaccounts). Google Cloud
+// resellers should use the Channel Services APIs, accounts.customers.create
 // (https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create)
 // and accounts.customers.entitlements.create
 // (https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create).
-// When creating a subaccount, the current authenticated user must have
-// the `billing.accounts.update` IAM permission on the parent account,
-// which is typically given to billing account administrators
-// (https://cloud.google.com/billing/docs/how-to/billing-access). This
-// method will return an error if the parent account has not been
-// provisioned for subaccounts.
+// When creating a subaccount, the current authenticated user must have the
+// `billing.accounts.update` IAM permission on the parent account, which is
+// typically given to billing account administrators
+// (https://cloud.google.com/billing/docs/how-to/billing-access). This method
+// will return an error if the parent account has not been provisioned for
+// subaccounts.
 //
-//   - parent: Optional. The parent to create a billing account from.
-//     Format: - `billingAccounts/{billing_account_id}`, for example,
+//   - parent: Optional. The parent to create a billing account from. Format: -
+//     `billingAccounts/{billing_account_id}`, for example,
 //     `billingAccounts/012345-567890-ABCDEF`.
 func (r *BillingAccountsSubAccountsService) Create(parent string, billingaccount *BillingAccount) *BillingAccountsSubAccountsCreateCall {
 	c := &BillingAccountsSubAccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3055,23 +2386,21 @@ func (r *BillingAccountsSubAccountsService) Create(parent string, billingaccount
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsSubAccountsCreateCall) Fields(s ...googleapi.Field) *BillingAccountsSubAccountsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsSubAccountsCreateCall) Context(ctx context.Context) *BillingAccountsSubAccountsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsSubAccountsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3080,18 +2409,12 @@ func (c *BillingAccountsSubAccountsCreateCall) Header() http.Header {
 }
 
 func (c *BillingAccountsSubAccountsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.billingaccount)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/subAccounts")
@@ -3108,12 +2431,10 @@ func (c *BillingAccountsSubAccountsCreateCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "cloudbilling.billingAccounts.subAccounts.create" call.
-// Exactly one of *BillingAccount or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *BillingAccount.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BillingAccount.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *BillingAccountsSubAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAccount, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3144,39 +2465,7 @@ func (c *BillingAccountsSubAccountsCreateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "This method creates [billing subaccounts](https://cloud.google.com/billing/docs/concepts#subaccounts). Google Cloud resellers should use the Channel Services APIs, [accounts.customers.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create) and [accounts.customers.entitlements.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create). When creating a subaccount, the current authenticated user must have the `billing.accounts.update` IAM permission on the parent account, which is typically given to billing account [administrators](https://cloud.google.com/billing/docs/how-to/billing-access). This method will return an error if the parent account has not been provisioned for subaccounts.",
-	//   "flatPath": "v1/billingAccounts/{billingAccountsId}/subAccounts",
-	//   "httpMethod": "POST",
-	//   "id": "cloudbilling.billingAccounts.subAccounts.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Optional. The parent to create a billing account from. Format: - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/subAccounts",
-	//   "request": {
-	//     "$ref": "BillingAccount"
-	//   },
-	//   "response": {
-	//     "$ref": "BillingAccount"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.billingAccounts.subAccounts.list":
 
 type BillingAccountsSubAccountsListCall struct {
 	s            *APIService
@@ -3187,76 +2476,71 @@ type BillingAccountsSubAccountsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the billing accounts that the current authenticated user
-// has permission to view
+// List: Lists the billing accounts that the current authenticated user has
+// permission to view
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
 //
-//   - parent: Optional. The parent resource to list billing accounts
-//     from. Format: - `organizations/{organization_id}`, for example,
-//     `organizations/12345678` - `billingAccounts/{billing_account_id}`,
-//     for example, `billingAccounts/012345-567890-ABCDEF`.
+//   - parent: Optional. The parent resource to list billing accounts from.
+//     Format: - `organizations/{organization_id}`, for example,
+//     `organizations/12345678` - `billingAccounts/{billing_account_id}`, for
+//     example, `billingAccounts/012345-567890-ABCDEF`.
 func (r *BillingAccountsSubAccountsService) List(parent string) *BillingAccountsSubAccountsListCall {
 	c := &BillingAccountsSubAccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Options for how to
-// filter the returned billing accounts. This only supports filtering
-// for subaccounts (https://cloud.google.com/billing/docs/concepts)
-// under a single provided parent billing account. (for example,
-// `master_billing_account=billingAccounts/012345-678901-ABCDEF`).
-// Boolean algebra and other fields are not currently supported.
+// Filter sets the optional parameter "filter": Options for how to filter the
+// returned billing accounts. This only supports filtering for subaccounts
+// (https://cloud.google.com/billing/docs/concepts) under a single provided
+// parent billing account. (for example,
+// `master_billing_account=billingAccounts/012345-678901-ABCDEF`). Boolean
+// algebra and other fields are not currently supported.
 func (c *BillingAccountsSubAccountsListCall) Filter(filter string) *BillingAccountsSubAccountsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The maximum page size is 100; this is also the default.
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// maximum page size is 100; this is also the default.
 func (c *BillingAccountsSubAccountsListCall) PageSize(pageSize int64) *BillingAccountsSubAccountsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to return. This should be a
-// `next_page_token` value returned from a previous
-// `ListBillingAccounts` call. If unspecified, the first page of results
-// is returned.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results to return. This should be a `next_page_token` value returned
+// from a previous `ListBillingAccounts` call. If unspecified, the first page
+// of results is returned.
 func (c *BillingAccountsSubAccountsListCall) PageToken(pageToken string) *BillingAccountsSubAccountsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *BillingAccountsSubAccountsListCall) Fields(s ...googleapi.Field) *BillingAccountsSubAccountsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *BillingAccountsSubAccountsListCall) IfNoneMatch(entityTag string) *BillingAccountsSubAccountsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *BillingAccountsSubAccountsListCall) Context(ctx context.Context) *BillingAccountsSubAccountsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *BillingAccountsSubAccountsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3265,12 +2549,7 @@ func (c *BillingAccountsSubAccountsListCall) Header() http.Header {
 }
 
 func (c *BillingAccountsSubAccountsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3291,12 +2570,11 @@ func (c *BillingAccountsSubAccountsListCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "cloudbilling.billingAccounts.subAccounts.list" call.
-// Exactly one of *ListBillingAccountsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListBillingAccountsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListBillingAccountsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *BillingAccountsSubAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBillingAccountsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3327,50 +2605,6 @@ func (c *BillingAccountsSubAccountsListCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the billing accounts that the current authenticated user has permission to [view](https://cloud.google.com/billing/docs/how-to/billing-access).",
-	//   "flatPath": "v1/billingAccounts/{billingAccountsId}/subAccounts",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.billingAccounts.subAccounts.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Options for how to filter the returned billing accounts. This only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided parent billing account. (for example, `master_billing_account=billingAccounts/012345-678901-ABCDEF`). Boolean algebra and other fields are not currently supported.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Requested page size. The maximum page size is 100; this is also the default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results to return. This should be a `next_page_token` value returned from a previous `ListBillingAccounts` call. If unspecified, the first page of results is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Optional. The parent resource to list billing accounts from. Format: - `organizations/{organization_id}`, for example, `organizations/12345678` - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/subAccounts",
-	//   "response": {
-	//     "$ref": "ListBillingAccountsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3378,7 +2612,7 @@ func (c *BillingAccountsSubAccountsListCall) Do(opts ...googleapi.CallOption) (*
 // The provided context supersedes any context provided to the Context method.
 func (c *BillingAccountsSubAccountsListCall) Pages(ctx context.Context, f func(*ListBillingAccountsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3394,8 +2628,6 @@ func (c *BillingAccountsSubAccountsListCall) Pages(ctx context.Context, f func(*
 	}
 }
 
-// method id "cloudbilling.organizations.billingAccounts.create":
-
 type OrganizationsBillingAccountsCreateCall struct {
 	s              *APIService
 	parent         string
@@ -3406,21 +2638,20 @@ type OrganizationsBillingAccountsCreateCall struct {
 }
 
 // Create: This method creates billing subaccounts
-// (https://cloud.google.com/billing/docs/concepts#subaccounts). Google
-// Cloud resellers should use the Channel Services APIs,
-// accounts.customers.create
+// (https://cloud.google.com/billing/docs/concepts#subaccounts). Google Cloud
+// resellers should use the Channel Services APIs, accounts.customers.create
 // (https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create)
 // and accounts.customers.entitlements.create
 // (https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create).
-// When creating a subaccount, the current authenticated user must have
-// the `billing.accounts.update` IAM permission on the parent account,
-// which is typically given to billing account administrators
-// (https://cloud.google.com/billing/docs/how-to/billing-access). This
-// method will return an error if the parent account has not been
-// provisioned for subaccounts.
+// When creating a subaccount, the current authenticated user must have the
+// `billing.accounts.update` IAM permission on the parent account, which is
+// typically given to billing account administrators
+// (https://cloud.google.com/billing/docs/how-to/billing-access). This method
+// will return an error if the parent account has not been provisioned for
+// subaccounts.
 //
-//   - parent: Optional. The parent to create a billing account from.
-//     Format: - `billingAccounts/{billing_account_id}`, for example,
+//   - parent: Optional. The parent to create a billing account from. Format: -
+//     `billingAccounts/{billing_account_id}`, for example,
 //     `billingAccounts/012345-567890-ABCDEF`.
 func (r *OrganizationsBillingAccountsService) Create(parent string, billingaccount *BillingAccount) *OrganizationsBillingAccountsCreateCall {
 	c := &OrganizationsBillingAccountsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3430,23 +2661,21 @@ func (r *OrganizationsBillingAccountsService) Create(parent string, billingaccou
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsBillingAccountsCreateCall) Fields(s ...googleapi.Field) *OrganizationsBillingAccountsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsBillingAccountsCreateCall) Context(ctx context.Context) *OrganizationsBillingAccountsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsBillingAccountsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3455,18 +2684,12 @@ func (c *OrganizationsBillingAccountsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsBillingAccountsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.billingaccount)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+parent}/billingAccounts")
@@ -3483,12 +2706,10 @@ func (c *OrganizationsBillingAccountsCreateCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "cloudbilling.organizations.billingAccounts.create" call.
-// Exactly one of *BillingAccount or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *BillingAccount.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BillingAccount.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *OrganizationsBillingAccountsCreateCall) Do(opts ...googleapi.CallOption) (*BillingAccount, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3519,39 +2740,7 @@ func (c *OrganizationsBillingAccountsCreateCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "This method creates [billing subaccounts](https://cloud.google.com/billing/docs/concepts#subaccounts). Google Cloud resellers should use the Channel Services APIs, [accounts.customers.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers/create) and [accounts.customers.entitlements.create](https://cloud.google.com/channel/docs/reference/rest/v1/accounts.customers.entitlements/create). When creating a subaccount, the current authenticated user must have the `billing.accounts.update` IAM permission on the parent account, which is typically given to billing account [administrators](https://cloud.google.com/billing/docs/how-to/billing-access). This method will return an error if the parent account has not been provisioned for subaccounts.",
-	//   "flatPath": "v1/organizations/{organizationsId}/billingAccounts",
-	//   "httpMethod": "POST",
-	//   "id": "cloudbilling.organizations.billingAccounts.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Optional. The parent to create a billing account from. Format: - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/billingAccounts",
-	//   "request": {
-	//     "$ref": "BillingAccount"
-	//   },
-	//   "response": {
-	//     "$ref": "BillingAccount"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.organizations.billingAccounts.list":
 
 type OrganizationsBillingAccountsListCall struct {
 	s            *APIService
@@ -3562,76 +2751,71 @@ type OrganizationsBillingAccountsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the billing accounts that the current authenticated user
-// has permission to view
+// List: Lists the billing accounts that the current authenticated user has
+// permission to view
 // (https://cloud.google.com/billing/docs/how-to/billing-access).
 //
-//   - parent: Optional. The parent resource to list billing accounts
-//     from. Format: - `organizations/{organization_id}`, for example,
-//     `organizations/12345678` - `billingAccounts/{billing_account_id}`,
-//     for example, `billingAccounts/012345-567890-ABCDEF`.
+//   - parent: Optional. The parent resource to list billing accounts from.
+//     Format: - `organizations/{organization_id}`, for example,
+//     `organizations/12345678` - `billingAccounts/{billing_account_id}`, for
+//     example, `billingAccounts/012345-567890-ABCDEF`.
 func (r *OrganizationsBillingAccountsService) List(parent string) *OrganizationsBillingAccountsListCall {
 	c := &OrganizationsBillingAccountsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": Options for how to
-// filter the returned billing accounts. This only supports filtering
-// for subaccounts (https://cloud.google.com/billing/docs/concepts)
-// under a single provided parent billing account. (for example,
-// `master_billing_account=billingAccounts/012345-678901-ABCDEF`).
-// Boolean algebra and other fields are not currently supported.
+// Filter sets the optional parameter "filter": Options for how to filter the
+// returned billing accounts. This only supports filtering for subaccounts
+// (https://cloud.google.com/billing/docs/concepts) under a single provided
+// parent billing account. (for example,
+// `master_billing_account=billingAccounts/012345-678901-ABCDEF`). Boolean
+// algebra and other fields are not currently supported.
 func (c *OrganizationsBillingAccountsListCall) Filter(filter string) *OrganizationsBillingAccountsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// The maximum page size is 100; this is also the default.
+// PageSize sets the optional parameter "pageSize": Requested page size. The
+// maximum page size is 100; this is also the default.
 func (c *OrganizationsBillingAccountsListCall) PageSize(pageSize int64) *OrganizationsBillingAccountsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to return. This should be a
-// `next_page_token` value returned from a previous
-// `ListBillingAccounts` call. If unspecified, the first page of results
-// is returned.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results to return. This should be a `next_page_token` value returned
+// from a previous `ListBillingAccounts` call. If unspecified, the first page
+// of results is returned.
 func (c *OrganizationsBillingAccountsListCall) PageToken(pageToken string) *OrganizationsBillingAccountsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsBillingAccountsListCall) Fields(s ...googleapi.Field) *OrganizationsBillingAccountsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsBillingAccountsListCall) IfNoneMatch(entityTag string) *OrganizationsBillingAccountsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsBillingAccountsListCall) Context(ctx context.Context) *OrganizationsBillingAccountsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsBillingAccountsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3640,12 +2824,7 @@ func (c *OrganizationsBillingAccountsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsBillingAccountsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3666,12 +2845,11 @@ func (c *OrganizationsBillingAccountsListCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "cloudbilling.organizations.billingAccounts.list" call.
-// Exactly one of *ListBillingAccountsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListBillingAccountsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListBillingAccountsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsBillingAccountsListCall) Do(opts ...googleapi.CallOption) (*ListBillingAccountsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3702,50 +2880,6 @@ func (c *OrganizationsBillingAccountsListCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the billing accounts that the current authenticated user has permission to [view](https://cloud.google.com/billing/docs/how-to/billing-access).",
-	//   "flatPath": "v1/organizations/{organizationsId}/billingAccounts",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.organizations.billingAccounts.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Options for how to filter the returned billing accounts. This only supports filtering for [subaccounts](https://cloud.google.com/billing/docs/concepts) under a single provided parent billing account. (for example, `master_billing_account=billingAccounts/012345-678901-ABCDEF`). Boolean algebra and other fields are not currently supported.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Requested page size. The maximum page size is 100; this is also the default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results to return. This should be a `next_page_token` value returned from a previous `ListBillingAccounts` call. If unspecified, the first page of results is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Optional. The parent resource to list billing accounts from. Format: - `organizations/{organization_id}`, for example, `organizations/12345678` - `billingAccounts/{billing_account_id}`, for example, `billingAccounts/012345-567890-ABCDEF`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/billingAccounts",
-	//   "response": {
-	//     "$ref": "ListBillingAccountsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3753,7 +2887,7 @@ func (c *OrganizationsBillingAccountsListCall) Do(opts ...googleapi.CallOption) 
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsBillingAccountsListCall) Pages(ctx context.Context, f func(*ListBillingAccountsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3769,8 +2903,6 @@ func (c *OrganizationsBillingAccountsListCall) Pages(ctx context.Context, f func
 	}
 }
 
-// method id "cloudbilling.organizations.billingAccounts.move":
-
 type OrganizationsBillingAccountsMoveCall struct {
 	s                 *APIService
 	destinationParent string
@@ -3783,13 +2915,13 @@ type OrganizationsBillingAccountsMoveCall struct {
 
 // Move: Changes which parent organization a billing account belongs to.
 //
-//   - destinationParent: The resource name of the Organization to move
-//     the billing account under. Must be of the form
+//   - destinationParent: The resource name of the Organization to move the
+//     billing account under. Must be of the form
 //     `organizations/{organization_id}`.
-//   - name: The resource name of the billing account to move. Must be of
-//     the form `billingAccounts/{billing_account_id}`. The specified
-//     billing account cannot be a subaccount, since a subaccount always
-//     belongs to the same organization as its parent account.
+//   - name: The resource name of the billing account to move. Must be of the
+//     form `billingAccounts/{billing_account_id}`. The specified billing account
+//     cannot be a subaccount, since a subaccount always belongs to the same
+//     organization as its parent account.
 func (r *OrganizationsBillingAccountsService) Move(destinationParent string, name string) *OrganizationsBillingAccountsMoveCall {
 	c := &OrganizationsBillingAccountsMoveCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.destinationParent = destinationParent
@@ -3798,33 +2930,29 @@ func (r *OrganizationsBillingAccountsService) Move(destinationParent string, nam
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsBillingAccountsMoveCall) Fields(s ...googleapi.Field) *OrganizationsBillingAccountsMoveCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsBillingAccountsMoveCall) IfNoneMatch(entityTag string) *OrganizationsBillingAccountsMoveCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsBillingAccountsMoveCall) Context(ctx context.Context) *OrganizationsBillingAccountsMoveCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsBillingAccountsMoveCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3833,12 +2961,7 @@ func (c *OrganizationsBillingAccountsMoveCall) Header() http.Header {
 }
 
 func (c *OrganizationsBillingAccountsMoveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3860,12 +2983,10 @@ func (c *OrganizationsBillingAccountsMoveCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "cloudbilling.organizations.billingAccounts.move" call.
-// Exactly one of *BillingAccount or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *BillingAccount.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *BillingAccount.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *OrganizationsBillingAccountsMoveCall) Do(opts ...googleapi.CallOption) (*BillingAccount, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3896,44 +3017,7 @@ func (c *OrganizationsBillingAccountsMoveCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Changes which parent organization a billing account belongs to.",
-	//   "flatPath": "v1/organizations/{organizationsId}/billingAccounts/{billingAccountsId}:move",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.organizations.billingAccounts.move",
-	//   "parameterOrder": [
-	//     "destinationParent",
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "destinationParent": {
-	//       "description": "Required. The resource name of the Organization to move the billing account under. Must be of the form `organizations/{organization_id}`.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. The resource name of the billing account to move. Must be of the form `billingAccounts/{billing_account_id}`. The specified billing account cannot be a subaccount, since a subaccount always belongs to the same organization as its parent account.",
-	//       "location": "path",
-	//       "pattern": "^billingAccounts/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+destinationParent}/{+name}:move",
-	//   "response": {
-	//     "$ref": "BillingAccount"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.projects.getBillingInfo":
 
 type ProjectsGetBillingInfoCall struct {
 	s            *APIService
@@ -3944,15 +3028,14 @@ type ProjectsGetBillingInfoCall struct {
 	header_      http.Header
 }
 
-// GetBillingInfo: Gets the billing information for a project. The
-// current authenticated user must have the
-// `resourcemanager.projects.get` permission for the project, which can
-// be granted by assigning the Project Viewer
+// GetBillingInfo: Gets the billing information for a project. The current
+// authenticated user must have the `resourcemanager.projects.get` permission
+// for the project, which can be granted by assigning the Project Viewer
 // (https://cloud.google.com/iam/docs/understanding-roles#predefined_roles)
 // role.
 //
-//   - name: The resource name of the project for which billing
-//     information is retrieved. For example, `projects/tokyo-rain-123`.
+//   - name: The resource name of the project for which billing information is
+//     retrieved. For example, `projects/tokyo-rain-123`.
 func (r *ProjectsService) GetBillingInfo(name string) *ProjectsGetBillingInfoCall {
 	c := &ProjectsGetBillingInfoCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3960,33 +3043,29 @@ func (r *ProjectsService) GetBillingInfo(name string) *ProjectsGetBillingInfoCal
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsGetBillingInfoCall) Fields(s ...googleapi.Field) *ProjectsGetBillingInfoCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsGetBillingInfoCall) IfNoneMatch(entityTag string) *ProjectsGetBillingInfoCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsGetBillingInfoCall) Context(ctx context.Context) *ProjectsGetBillingInfoCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsGetBillingInfoCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3995,12 +3074,7 @@ func (c *ProjectsGetBillingInfoCall) Header() http.Header {
 }
 
 func (c *ProjectsGetBillingInfoCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4021,12 +3095,11 @@ func (c *ProjectsGetBillingInfoCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "cloudbilling.projects.getBillingInfo" call.
-// Exactly one of *ProjectBillingInfo or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ProjectBillingInfo.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ProjectBillingInfo.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsGetBillingInfoCall) Do(opts ...googleapi.CallOption) (*ProjectBillingInfo, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4057,37 +3130,7 @@ func (c *ProjectsGetBillingInfoCall) Do(opts ...googleapi.CallOption) (*ProjectB
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the billing information for a project. The current authenticated user must have the `resourcemanager.projects.get` permission for the project, which can be granted by assigning the [Project Viewer](https://cloud.google.com/iam/docs/understanding-roles#predefined_roles) role.",
-	//   "flatPath": "v1/projects/{projectsId}/billingInfo",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.projects.getBillingInfo",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the project for which billing information is retrieved. For example, `projects/tokyo-rain-123`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}/billingInfo",
-	//   "response": {
-	//     "$ref": "ProjectBillingInfo"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.projects.updateBillingInfo":
 
 type ProjectsUpdateBillingInfoCall struct {
 	s                  *APIService
@@ -4098,34 +3141,31 @@ type ProjectsUpdateBillingInfoCall struct {
 	header_            http.Header
 }
 
-// UpdateBillingInfo: Sets or updates the billing account associated
-// with a project. You specify the new billing account by setting the
-// `billing_account_name` in the `ProjectBillingInfo` resource to the
-// resource name of a billing account. Associating a project with an
-// open billing account enables billing on the project and allows
-// charges for resource usage. If the project already had a billing
-// account, this method changes the billing account used for resource
-// usage charges. *Note:* Incurred charges that have not yet been
-// reported in the transaction history of the Google Cloud Console might
-// be billed to the new billing account, even if the charge occurred
-// before the new billing account was assigned to the project. The
-// current authenticated user must have ownership privileges for both
-// the project
-// (https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo )
+// UpdateBillingInfo: Sets or updates the billing account associated with a
+// project. You specify the new billing account by setting the
+// `billing_account_name` in the `ProjectBillingInfo` resource to the resource
+// name of a billing account. Associating a project with an open billing
+// account enables billing on the project and allows charges for resource
+// usage. If the project already had a billing account, this method changes the
+// billing account used for resource usage charges. *Note:* Incurred charges
+// that have not yet been reported in the transaction history of the Google
+// Cloud Console might be billed to the new billing account, even if the charge
+// occurred before the new billing account was assigned to the project. The
+// current authenticated user must have ownership privileges for both the
+// project (https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo )
 // and the billing account
-// (https://cloud.google.com/billing/docs/how-to/billing-access). You
-// can disable billing on the project by setting the
-// `billing_account_name` field to empty. This action disassociates the
-// current billing account from the project. Any billable activity of
-// your in-use services will stop, and your application could stop
-// functioning as expected. Any unbilled charges to date will be billed
-// to the previously associated account. The current authenticated user
-// must be either an owner of the project or an owner of the billing
-// account for the project. Note that associating a project with a
-// *closed* billing account will have much the same effect as disabling
-// billing on the project: any paid resources used by the project will
-// be shut down. Thus, unless you wish to disable billing, you should
-// always call this method with the name of an *open* billing account.
+// (https://cloud.google.com/billing/docs/how-to/billing-access). You can
+// disable billing on the project by setting the `billing_account_name` field
+// to empty. This action disassociates the current billing account from the
+// project. Any billable activity of your in-use services will stop, and your
+// application could stop functioning as expected. Any unbilled charges to date
+// will be billed to the previously associated account. The current
+// authenticated user must be either an owner of the project or an owner of the
+// billing account for the project. Note that associating a project with a
+// *closed* billing account will have much the same effect as disabling billing
+// on the project: any paid resources used by the project will be shut down.
+// Thus, unless you wish to disable billing, you should always call this method
+// with the name of an *open* billing account.
 //
 //   - name: The resource name of the project associated with the billing
 //     information that you want to update. For example,
@@ -4138,23 +3178,21 @@ func (r *ProjectsService) UpdateBillingInfo(name string, projectbillinginfo *Pro
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsUpdateBillingInfoCall) Fields(s ...googleapi.Field) *ProjectsUpdateBillingInfoCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsUpdateBillingInfoCall) Context(ctx context.Context) *ProjectsUpdateBillingInfoCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsUpdateBillingInfoCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4163,18 +3201,12 @@ func (c *ProjectsUpdateBillingInfoCall) Header() http.Header {
 }
 
 func (c *ProjectsUpdateBillingInfoCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.projectbillinginfo)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1/{+name}/billingInfo")
@@ -4191,12 +3223,11 @@ func (c *ProjectsUpdateBillingInfoCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "cloudbilling.projects.updateBillingInfo" call.
-// Exactly one of *ProjectBillingInfo or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ProjectBillingInfo.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ProjectBillingInfo.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsUpdateBillingInfoCall) Do(opts ...googleapi.CallOption) (*ProjectBillingInfo, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4227,39 +3258,7 @@ func (c *ProjectsUpdateBillingInfoCall) Do(opts ...googleapi.CallOption) (*Proje
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Sets or updates the billing account associated with a project. You specify the new billing account by setting the `billing_account_name` in the `ProjectBillingInfo` resource to the resource name of a billing account. Associating a project with an open billing account enables billing on the project and allows charges for resource usage. If the project already had a billing account, this method changes the billing account used for resource usage charges. *Note:* Incurred charges that have not yet been reported in the transaction history of the Google Cloud Console might be billed to the new billing account, even if the charge occurred before the new billing account was assigned to the project. The current authenticated user must have ownership privileges for both the [project](https://cloud.google.com/docs/permissions-overview#h.bgs0oxofvnoo ) and the [billing account](https://cloud.google.com/billing/docs/how-to/billing-access). You can disable billing on the project by setting the `billing_account_name` field to empty. This action disassociates the current billing account from the project. Any billable activity of your in-use services will stop, and your application could stop functioning as expected. Any unbilled charges to date will be billed to the previously associated account. The current authenticated user must be either an owner of the project or an owner of the billing account for the project. Note that associating a project with a *closed* billing account will have much the same effect as disabling billing on the project: any paid resources used by the project will be shut down. Thus, unless you wish to disable billing, you should always call this method with the name of an *open* billing account.",
-	//   "flatPath": "v1/projects/{projectsId}/billingInfo",
-	//   "httpMethod": "PUT",
-	//   "id": "cloudbilling.projects.updateBillingInfo",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The resource name of the project associated with the billing information that you want to update. For example, `projects/tokyo-rain-123`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}/billingInfo",
-	//   "request": {
-	//     "$ref": "ProjectBillingInfo"
-	//   },
-	//   "response": {
-	//     "$ref": "ProjectBillingInfo"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "cloudbilling.services.list":
 
 type ServicesListCall struct {
 	s            *APIService
@@ -4282,43 +3281,39 @@ func (c *ServicesListCall) PageSize(pageSize int64) *ServicesListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to return. This should be a
-// `next_page_token` value returned from a previous `ListServices` call.
-// If unspecified, the first page of results is returned.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results to return. This should be a `next_page_token` value returned
+// from a previous `ListServices` call. If unspecified, the first page of
+// results is returned.
 func (c *ServicesListCall) PageToken(pageToken string) *ServicesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ServicesListCall) Fields(s ...googleapi.Field) *ServicesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ServicesListCall) IfNoneMatch(entityTag string) *ServicesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ServicesListCall) Context(ctx context.Context) *ServicesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ServicesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4327,12 +3322,7 @@ func (c *ServicesListCall) Header() http.Header {
 }
 
 func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4350,12 +3340,11 @@ func (c *ServicesListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudbilling.services.list" call.
-// Exactly one of *ListServicesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListServicesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListServicesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4386,36 +3375,6 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all public cloud services.",
-	//   "flatPath": "v1/services",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.services.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Requested page size. Defaults to 5000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results to return. This should be a `next_page_token` value returned from a previous `ListServices` call. If unspecified, the first page of results is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/services",
-	//   "response": {
-	//     "$ref": "ListServicesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4423,7 +3382,7 @@ func (c *ServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesRespon
 // The provided context supersedes any context provided to the Context method.
 func (c *ServicesListCall) Pages(ctx context.Context, f func(*ListServicesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4438,8 +3397,6 @@ func (c *ServicesListCall) Pages(ctx context.Context, f func(*ListServicesRespon
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "cloudbilling.services.skus.list":
 
 type ServicesSkusListCall struct {
 	s            *APIService
@@ -4460,20 +3417,19 @@ func (r *ServicesSkusService) List(parent string) *ServicesSkusListCall {
 }
 
 // CurrencyCode sets the optional parameter "currencyCode": The ISO 4217
-// currency code for the pricing info in the response proto. Will use
-// the conversion rate as of start_time.  If not specified USD will be
-// used.
+// currency code for the pricing info in the response proto. Will use the
+// conversion rate as of start_time.  If not specified USD will be used.
 func (c *ServicesSkusListCall) CurrencyCode(currencyCode string) *ServicesSkusListCall {
 	c.urlParams_.Set("currencyCode", currencyCode)
 	return c
 }
 
-// EndTime sets the optional parameter "endTime": Optional exclusive end
-// time of the time range for which the pricing versions will be
-// returned. Timestamps in the future are not allowed. The time range
-// has to be within a single calendar month in America/Los_Angeles
-// timezone. Time range as a whole is optional. If not specified, the
-// latest pricing will be returned (up to 12 hours old at most).
+// EndTime sets the optional parameter "endTime": Optional exclusive end time
+// of the time range for which the pricing versions will be returned.
+// Timestamps in the future are not allowed. The time range has to be within a
+// single calendar month in America/Los_Angeles timezone. Time range as a whole
+// is optional. If not specified, the latest pricing will be returned (up to 12
+// hours old at most).
 func (c *ServicesSkusListCall) EndTime(endTime string) *ServicesSkusListCall {
 	c.urlParams_.Set("endTime", endTime)
 	return c
@@ -4486,54 +3442,50 @@ func (c *ServicesSkusListCall) PageSize(pageSize int64) *ServicesSkusListCall {
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A token
-// identifying a page of results to return. This should be a
-// `next_page_token` value returned from a previous `ListSkus` call. If
-// unspecified, the first page of results is returned.
+// PageToken sets the optional parameter "pageToken": A token identifying a
+// page of results to return. This should be a `next_page_token` value returned
+// from a previous `ListSkus` call. If unspecified, the first page of results
+// is returned.
 func (c *ServicesSkusListCall) PageToken(pageToken string) *ServicesSkusListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// StartTime sets the optional parameter "startTime": Optional inclusive
-// start time of the time range for which the pricing versions will be
-// returned. Timestamps in the future are not allowed. The time range
-// has to be within a single calendar month in America/Los_Angeles
-// timezone. Time range as a whole is optional. If not specified, the
-// latest pricing will be returned (up to 12 hours old at most).
+// StartTime sets the optional parameter "startTime": Optional inclusive start
+// time of the time range for which the pricing versions will be returned.
+// Timestamps in the future are not allowed. The time range has to be within a
+// single calendar month in America/Los_Angeles timezone. Time range as a whole
+// is optional. If not specified, the latest pricing will be returned (up to 12
+// hours old at most).
 func (c *ServicesSkusListCall) StartTime(startTime string) *ServicesSkusListCall {
 	c.urlParams_.Set("startTime", startTime)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ServicesSkusListCall) Fields(s ...googleapi.Field) *ServicesSkusListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ServicesSkusListCall) IfNoneMatch(entityTag string) *ServicesSkusListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ServicesSkusListCall) Context(ctx context.Context) *ServicesSkusListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ServicesSkusListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4542,12 +3494,7 @@ func (c *ServicesSkusListCall) Header() http.Header {
 }
 
 func (c *ServicesSkusListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4568,12 +3515,11 @@ func (c *ServicesSkusListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "cloudbilling.services.skus.list" call.
-// Exactly one of *ListSkusResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListSkusResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListSkusResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ServicesSkusListCall) Do(opts ...googleapi.CallOption) (*ListSkusResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4604,62 +3550,6 @@ func (c *ServicesSkusListCall) Do(opts ...googleapi.CallOption) (*ListSkusRespon
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all publicly available SKUs for a given cloud service.",
-	//   "flatPath": "v1/services/{servicesId}/skus",
-	//   "httpMethod": "GET",
-	//   "id": "cloudbilling.services.skus.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "currencyCode": {
-	//       "description": "The ISO 4217 currency code for the pricing info in the response proto. Will use the conversion rate as of start_time. Optional. If not specified USD will be used.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "endTime": {
-	//       "description": "Optional exclusive end time of the time range for which the pricing versions will be returned. Timestamps in the future are not allowed. The time range has to be within a single calendar month in America/Los_Angeles timezone. Time range as a whole is optional. If not specified, the latest pricing will be returned (up to 12 hours old at most).",
-	//       "format": "google-datetime",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Requested page size. Defaults to 5000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A token identifying a page of results to return. This should be a `next_page_token` value returned from a previous `ListSkus` call. If unspecified, the first page of results is returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The name of the service. Example: \"services/DA34-426B-A397\"",
-	//       "location": "path",
-	//       "pattern": "^services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "startTime": {
-	//       "description": "Optional inclusive start time of the time range for which the pricing versions will be returned. Timestamps in the future are not allowed. The time range has to be within a single calendar month in America/Los_Angeles timezone. Time range as a whole is optional. If not specified, the latest pricing will be returned (up to 12 hours old at most).",
-	//       "format": "google-datetime",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/skus",
-	//   "response": {
-	//     "$ref": "ListSkusResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-billing",
-	//     "https://www.googleapis.com/auth/cloud-billing.readonly",
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4667,7 +3557,7 @@ func (c *ServicesSkusListCall) Do(opts ...googleapi.CallOption) (*ListSkusRespon
 // The provided context supersedes any context provided to the Context method.
 func (c *ServicesSkusListCall) Pages(ctx context.Context, f func(*ListSkusResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

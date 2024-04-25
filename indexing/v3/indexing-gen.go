@@ -165,47 +165,36 @@ type UrlNotificationsService struct {
 
 // PublishUrlNotificationResponse: Output for PublishUrlNotification
 type PublishUrlNotificationResponse struct {
-	// UrlNotificationMetadata: Description of the notification events
-	// received for this URL.
+	// UrlNotificationMetadata: Description of the notification events received for
+	// this URL.
 	UrlNotificationMetadata *UrlNotificationMetadata `json:"urlNotificationMetadata,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "UrlNotificationMetadata") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "UrlNotificationMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UrlNotificationMetadata")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "UrlNotificationMetadata") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PublishUrlNotificationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishUrlNotificationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// UrlNotification: `UrlNotification` is the resource used in all
-// Indexing API calls. It describes one event in the life cycle of a Web
-// Document.
+// UrlNotification: `UrlNotification` is the resource used in all Indexing API
+// calls. It describes one event in the life cycle of a Web Document.
 type UrlNotification struct {
-	// NotifyTime: Creation timestamp for this notification. Users should
-	// _not_ specify it, the field is ignored at the request time.
+	// NotifyTime: Creation timestamp for this notification. Users should _not_
+	// specify it, the field is ignored at the request time.
 	NotifyTime string `json:"notifyTime,omitempty"`
-
 	// Type: The URL life cycle event that Google is being notified about.
 	//
 	// Possible values:
@@ -213,33 +202,26 @@ type UrlNotification struct {
 	//   "URL_UPDATED" - The given URL (Web document) has been updated.
 	//   "URL_DELETED" - The given URL (Web document) has been deleted.
 	Type string `json:"type,omitempty"`
-
-	// Url: The object of this notification. The URL must be owned by the
-	// publisher of this notification and, in case of `URL_UPDATED`
-	// notifications, it _must_ be crawlable by Google.
+	// Url: The object of this notification. The URL must be owned by the publisher
+	// of this notification and, in case of `URL_UPDATED` notifications, it _must_
+	// be crawlable by Google.
 	Url string `json:"url,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "NotifyTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NotifyTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NotifyTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UrlNotification) MarshalJSON() ([]byte, error) {
 	type NoMethod UrlNotification
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // UrlNotificationMetadata: Summary of the most recent Indexing API
@@ -247,41 +229,30 @@ func (s *UrlNotification) MarshalJSON() ([]byte, error) {
 type UrlNotificationMetadata struct {
 	// LatestRemove: Latest notification received with type `URL_REMOVED`.
 	LatestRemove *UrlNotification `json:"latestRemove,omitempty"`
-
 	// LatestUpdate: Latest notification received with type `URL_UPDATED`.
 	LatestUpdate *UrlNotification `json:"latestUpdate,omitempty"`
-
 	// Url: URL to which this metadata refers.
 	Url string `json:"url,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "LatestRemove") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LatestRemove") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LatestRemove") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UrlNotificationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod UrlNotificationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "indexing.urlNotifications.getMetadata":
 
 type UrlNotificationsGetMetadataCall struct {
 	s            *Service
@@ -291,10 +262,9 @@ type UrlNotificationsGetMetadataCall struct {
 	header_      http.Header
 }
 
-// GetMetadata: Gets metadata about a Web Document. This method can
-// _only_ be used to query URLs that were previously seen in successful
-// Indexing API notifications. Includes the latest `UrlNotification`
-// received via this API.
+// GetMetadata: Gets metadata about a Web Document. This method can _only_ be
+// used to query URLs that were previously seen in successful Indexing API
+// notifications. Includes the latest `UrlNotification` received via this API.
 func (r *UrlNotificationsService) GetMetadata() *UrlNotificationsGetMetadataCall {
 	c := &UrlNotificationsGetMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
@@ -307,33 +277,29 @@ func (c *UrlNotificationsGetMetadataCall) Url(url string) *UrlNotificationsGetMe
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *UrlNotificationsGetMetadataCall) Fields(s ...googleapi.Field) *UrlNotificationsGetMetadataCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *UrlNotificationsGetMetadataCall) IfNoneMatch(entityTag string) *UrlNotificationsGetMetadataCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *UrlNotificationsGetMetadataCall) Context(ctx context.Context) *UrlNotificationsGetMetadataCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *UrlNotificationsGetMetadataCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -342,12 +308,7 @@ func (c *UrlNotificationsGetMetadataCall) Header() http.Header {
 }
 
 func (c *UrlNotificationsGetMetadataCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -365,12 +326,11 @@ func (c *UrlNotificationsGetMetadataCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "indexing.urlNotifications.getMetadata" call.
-// Exactly one of *UrlNotificationMetadata or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *UrlNotificationMetadata.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *UrlNotificationsGetMetadataCall) Do(opts ...googleapi.CallOption) (*UrlNotificationMetadata, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -401,31 +361,7 @@ func (c *UrlNotificationsGetMetadataCall) Do(opts ...googleapi.CallOption) (*Url
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets metadata about a Web Document. This method can _only_ be used to query URLs that were previously seen in successful Indexing API notifications. Includes the latest `UrlNotification` received via this API.",
-	//   "flatPath": "v3/urlNotifications/metadata",
-	//   "httpMethod": "GET",
-	//   "id": "indexing.urlNotifications.getMetadata",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "url": {
-	//       "description": "URL that is being queried.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v3/urlNotifications/metadata",
-	//   "response": {
-	//     "$ref": "UrlNotificationMetadata"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/indexing"
-	//   ]
-	// }
-
 }
-
-// method id "indexing.urlNotifications.publish":
 
 type UrlNotificationsPublishCall struct {
 	s               *Service
@@ -443,23 +379,21 @@ func (r *UrlNotificationsService) Publish(urlnotification *UrlNotification) *Url
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *UrlNotificationsPublishCall) Fields(s ...googleapi.Field) *UrlNotificationsPublishCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *UrlNotificationsPublishCall) Context(ctx context.Context) *UrlNotificationsPublishCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *UrlNotificationsPublishCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -468,18 +402,12 @@ func (c *UrlNotificationsPublishCall) Header() http.Header {
 }
 
 func (c *UrlNotificationsPublishCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.urlnotification)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v3/urlNotifications:publish")
@@ -493,12 +421,11 @@ func (c *UrlNotificationsPublishCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "indexing.urlNotifications.publish" call.
-// Exactly one of *PublishUrlNotificationResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *PublishUrlNotificationResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *PublishUrlNotificationResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *UrlNotificationsPublishCall) Do(opts ...googleapi.CallOption) (*PublishUrlNotificationResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -529,23 +456,4 @@ func (c *UrlNotificationsPublishCall) Do(opts ...googleapi.CallOption) (*Publish
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Notifies that a URL has been updated or deleted.",
-	//   "flatPath": "v3/urlNotifications:publish",
-	//   "httpMethod": "POST",
-	//   "id": "indexing.urlNotifications.publish",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v3/urlNotifications:publish",
-	//   "request": {
-	//     "$ref": "UrlNotification"
-	//   },
-	//   "response": {
-	//     "$ref": "PublishUrlNotificationResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/indexing"
-	//   ]
-	// }
-
 }

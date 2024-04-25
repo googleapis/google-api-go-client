@@ -96,8 +96,8 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -272,136 +272,105 @@ type ProjectsPoliciesService struct {
 	s *Service
 }
 
-// GoogleCloudOrgpolicyV2AlternatePolicySpec: Similar to PolicySpec but
-// with an extra 'launch' field for launch reference. The PolicySpec
-// here is specific for dry-run/darklaunch.
+// GoogleCloudOrgpolicyV2AlternatePolicySpec: Similar to PolicySpec but with an
+// extra 'launch' field for launch reference. The PolicySpec here is specific
+// for dry-run/darklaunch.
 type GoogleCloudOrgpolicyV2AlternatePolicySpec struct {
-	// Launch: Reference to the launch that will be used while audit logging
-	// and to control the launch. Should be set only in the alternate
-	// policy.
+	// Launch: Reference to the launch that will be used while audit logging and to
+	// control the launch. Should be set only in the alternate policy.
 	Launch string `json:"launch,omitempty"`
-
-	// Spec: Specify constraint for configurations of Google Cloud
-	// resources.
+	// Spec: Specify constraint for configurations of Google Cloud resources.
 	Spec *GoogleCloudOrgpolicyV2PolicySpec `json:"spec,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Launch") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Launch") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Launch") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudOrgpolicyV2AlternatePolicySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2AlternatePolicySpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOrgpolicyV2Constraint: A constraint describes a way to
-// restrict resource's configuration. For example, you could enforce a
-// constraint that controls which Google Cloud services can be activated
-// across an organization, or whether a Compute Engine instance can have
-// serial port connections established. Constraints can be configured by
-// the organization policy administrator to fit the needs of the
-// organization by setting a policy that includes constraints at
-// different locations in the organization's resource hierarchy.
-// Policies are inherited down the resource hierarchy from higher
-// levels, but can also be overridden. For details about the inheritance
-// rules please read about `policies`. Constraints have a default
-// behavior determined by the `constraint_default` field, which is the
-// enforcement behavior that is used in the absence of a policy being
-// defined or inherited for the resource in question.
+// GoogleCloudOrgpolicyV2Constraint: A constraint describes a way to restrict
+// resource's configuration. For example, you could enforce a constraint that
+// controls which Google Cloud services can be activated across an
+// organization, or whether a Compute Engine instance can have serial port
+// connections established. Constraints can be configured by the organization
+// policy administrator to fit the needs of the organization by setting a
+// policy that includes constraints at different locations in the
+// organization's resource hierarchy. Policies are inherited down the resource
+// hierarchy from higher levels, but can also be overridden. For details about
+// the inheritance rules please read about `policies`. Constraints have a
+// default behavior determined by the `constraint_default` field, which is the
+// enforcement behavior that is used in the absence of a policy being defined
+// or inherited for the resource in question.
 type GoogleCloudOrgpolicyV2Constraint struct {
-	// BooleanConstraint: Defines this constraint as being a
-	// BooleanConstraint.
+	// BooleanConstraint: Defines this constraint as being a BooleanConstraint.
 	BooleanConstraint *GoogleCloudOrgpolicyV2ConstraintBooleanConstraint `json:"booleanConstraint,omitempty"`
-
-	// ConstraintDefault: The evaluation behavior of this constraint in the
-	// absence of a policy.
+	// ConstraintDefault: The evaluation behavior of this constraint in the absence
+	// of a policy.
 	//
 	// Possible values:
-	//   "CONSTRAINT_DEFAULT_UNSPECIFIED" - This is only used for
-	// distinguishing unset values and should never be used.
-	//   "ALLOW" - Indicate that all values are allowed for list
-	// constraints. Indicate that enforcement is off for boolean
-	// constraints.
+	//   "CONSTRAINT_DEFAULT_UNSPECIFIED" - This is only used for distinguishing
+	// unset values and should never be used.
+	//   "ALLOW" - Indicate that all values are allowed for list constraints.
+	// Indicate that enforcement is off for boolean constraints.
 	//   "DENY" - Indicate that all values are denied for list constraints.
 	// Indicate that enforcement is on for boolean constraints.
 	ConstraintDefault string `json:"constraintDefault,omitempty"`
-
-	// CustomConstraint: Defines this constraint as being a
-	// CustomConstraint.
+	// CustomConstraint: Defines this constraint as being a CustomConstraint.
 	CustomConstraint *GoogleCloudOrgpolicyV2ConstraintGoogleDefinedCustomConstraint `json:"customConstraint,omitempty"`
-
-	// Description: Detailed description of what this constraint controls as
-	// well as how and where it is enforced. Mutable.
+	// Description: Detailed description of what this constraint controls as well
+	// as how and where it is enforced. Mutable.
 	Description string `json:"description,omitempty"`
-
 	// DisplayName: The human readable name. Mutable.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// ListConstraint: Defines this constraint as being a ListConstraint.
 	ListConstraint *GoogleCloudOrgpolicyV2ConstraintListConstraint `json:"listConstraint,omitempty"`
-
-	// Name: Immutable. The resource name of the constraint. Must be in one
-	// of the following forms: *
-	// `projects/{project_number}/constraints/{constraint_name}` *
-	// `folders/{folder_id}/constraints/{constraint_name}` *
-	// `organizations/{organization_id}/constraints/{constraint_name}` For
-	// example, "/projects/123/constraints/compute.disableSerialPortAccess".
+	// Name: Immutable. The resource name of the constraint. Must be in one of the
+	// following forms: * `projects/{project_number}/constraints/{constraint_name}`
+	// * `folders/{folder_id}/constraints/{constraint_name}` *
+	// `organizations/{organization_id}/constraints/{constraint_name}` For example,
+	// "/projects/123/constraints/compute.disableSerialPortAccess".
 	Name string `json:"name,omitempty"`
-
-	// SupportsDryRun: Shows if dry run is supported for this constraint or
-	// not.
+	// SupportsDryRun: Shows if dry run is supported for this constraint or not.
 	SupportsDryRun bool `json:"supportsDryRun,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "BooleanConstraint")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BooleanConstraint") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BooleanConstraint") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BooleanConstraint") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudOrgpolicyV2Constraint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2Constraint
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOrgpolicyV2ConstraintBooleanConstraint: A constraint that
-// is either enforced or not. For example, a constraint
-// `constraints/compute.disableSerialPortAccess`. If it is enforced on a
-// VM instance, serial port connections will not be opened to that
-// instance.
+// GoogleCloudOrgpolicyV2ConstraintBooleanConstraint: A constraint that is
+// either enforced or not. For example, a constraint
+// `constraints/compute.disableSerialPortAccess`. If it is enforced on a VM
+// instance, serial port connections will not be opened to that instance.
 type GoogleCloudOrgpolicyV2ConstraintBooleanConstraint struct {
 }
 
-// GoogleCloudOrgpolicyV2ConstraintGoogleDefinedCustomConstraint: A
-// Google defined custom constraint. This represents a subset of fields
-// missing from Constraint proto that are required to describe
-// CustomConstraint
+// GoogleCloudOrgpolicyV2ConstraintGoogleDefinedCustomConstraint: A Google
+// defined custom constraint. This represents a subset of fields missing from
+// Constraint proto that are required to describe CustomConstraint
 type GoogleCloudOrgpolicyV2ConstraintGoogleDefinedCustomConstraint struct {
 	// ActionType: Allow or deny type.
 	//
@@ -410,94 +379,78 @@ type GoogleCloudOrgpolicyV2ConstraintGoogleDefinedCustomConstraint struct {
 	//   "ALLOW" - Allowed action type.
 	//   "DENY" - Deny action type.
 	ActionType string `json:"actionType,omitempty"`
-
 	// Condition: Org policy condition/expression. For example:
 	// `resource.instanceName.matches("[production|test]_.*_(\d)+")` or,
-	// `resource.management.auto_upgrade == true` The max length of the
-	// condition is 1000 characters.
+	// `resource.management.auto_upgrade == true` The max length of the condition
+	// is 1000 characters.
 	Condition string `json:"condition,omitempty"`
-
 	// MethodTypes: All the operations being applied for this constraint.
 	//
 	// Possible values:
 	//   "METHOD_TYPE_UNSPECIFIED" - Unspecified. Results in an error.
 	//   "CREATE" - Constraint applied when creating the resource.
 	//   "UPDATE" - Constraint applied when updating the resource.
-	//   "DELETE" - Constraint applied when deleting the resource. Not
-	// supported yet.
+	//   "DELETE" - Constraint applied when deleting the resource. Not supported
+	// yet.
 	MethodTypes []string `json:"methodTypes,omitempty"`
-
-	// ResourceTypes: The resource instance type on which this policy
-	// applies. Format will be of the form : `/` Example: *
+	// ResourceTypes: The resource instance type on which this policy applies.
+	// Format will be of the form : `/` Example: *
 	// `compute.googleapis.com/Instance`.
 	ResourceTypes []string `json:"resourceTypes,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ActionType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActionType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ActionType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudOrgpolicyV2ConstraintGoogleDefinedCustomConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2ConstraintGoogleDefinedCustomConstraint
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOrgpolicyV2ConstraintListConstraint: A constraint that
-// allows or disallows a list of string values, which are configured by
-// an Organization Policy administrator with a policy.
+// GoogleCloudOrgpolicyV2ConstraintListConstraint: A constraint that allows or
+// disallows a list of string values, which are configured by an Organization
+// Policy administrator with a policy.
 type GoogleCloudOrgpolicyV2ConstraintListConstraint struct {
-	// SupportsIn: Indicates whether values grouped into categories can be
-	// used in `Policy.allowed_values` and `Policy.denied_values`. For
-	// example, "in:Python" would match any value in the 'Python' group.
+	// SupportsIn: Indicates whether values grouped into categories can be used in
+	// `Policy.allowed_values` and `Policy.denied_values`. For example,
+	// "in:Python" would match any value in the 'Python' group.
 	SupportsIn bool `json:"supportsIn,omitempty"`
-
-	// SupportsUnder: Indicates whether subtrees of the Resource Manager
-	// resource hierarchy can be used in `Policy.allowed_values` and
-	// `Policy.denied_values`. For example, "under:folders/123" would
-	// match any resource under the 'folders/123' folder.
+	// SupportsUnder: Indicates whether subtrees of the Resource Manager resource
+	// hierarchy can be used in `Policy.allowed_values` and `Policy.denied_values`.
+	// For example, "under:folders/123" would match any resource under the
+	// 'folders/123' folder.
 	SupportsUnder bool `json:"supportsUnder,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "SupportsIn") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "SupportsIn") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "SupportsIn") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudOrgpolicyV2ConstraintListConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2ConstraintListConstraint
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOrgpolicyV2CustomConstraint: A custom constraint defined
-// by customers which can *only* be applied to the given resource types
-// and organization. By creating a custom constraint, customers can
-// apply policies of this custom constraint. *Creating a custom
-// constraint itself does NOT apply any policy enforcement*.
+// GoogleCloudOrgpolicyV2CustomConstraint: A custom constraint defined by
+// customers which can *only* be applied to the given resource types and
+// organization. By creating a custom constraint, customers can apply policies
+// of this custom constraint. *Creating a custom constraint itself does NOT
+// apply any policy enforcement*.
 type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	// ActionType: Allow or deny type.
 	//
@@ -506,494 +459,393 @@ type GoogleCloudOrgpolicyV2CustomConstraint struct {
 	//   "ALLOW" - Allowed action type.
 	//   "DENY" - Deny action type.
 	ActionType string `json:"actionType,omitempty"`
-
 	// Condition: Org policy condition/expression. For example:
 	// `resource.instanceName.matches("[production|test]_.*_(\d)+")` or,
-	// `resource.management.auto_upgrade == true` The max length of the
-	// condition is 1000 characters.
+	// `resource.management.auto_upgrade == true` The max length of the condition
+	// is 1000 characters.
 	Condition string `json:"condition,omitempty"`
-
-	// Description: Detailed information about this custom policy
-	// constraint. The max length of the description is 2000 characters.
+	// Description: Detailed information about this custom policy constraint. The
+	// max length of the description is 2000 characters.
 	Description string `json:"description,omitempty"`
-
 	// DisplayName: One line display name for the UI. The max length of the
 	// display_name is 200 characters.
 	DisplayName string `json:"displayName,omitempty"`
-
 	// MethodTypes: All the operations being applied for this constraint.
 	//
 	// Possible values:
 	//   "METHOD_TYPE_UNSPECIFIED" - Unspecified. Results in an error.
 	//   "CREATE" - Constraint applied when creating the resource.
 	//   "UPDATE" - Constraint applied when updating the resource.
-	//   "DELETE" - Constraint applied when deleting the resource. Not
-	// supported yet.
+	//   "DELETE" - Constraint applied when deleting the resource. Not supported
+	// yet.
 	MethodTypes []string `json:"methodTypes,omitempty"`
-
 	// Name: Immutable. Name of the constraint. This is unique within the
 	// organization. Format of the name should be *
-	// `organizations/{organization_id}/customConstraints/{custom_constraint_
-	// id}` Example:
-	// `organizations/123/customConstraints/custom.createOnlyE2TypeVms` The
-	// max length is 70 characters and the minimum length is 1. Note that
-	// the prefix `organizations/{organization_id}/customConstraints/` is
-	// not counted.
+	// `organizations/{organization_id}/customConstraints/{custom_constraint_id}`
+	// Example: `organizations/123/customConstraints/custom.createOnlyE2TypeVms`
+	// The max length is 70 characters and the minimum length is 1. Note that the
+	// prefix `organizations/{organization_id}/customConstraints/` is not counted.
 	Name string `json:"name,omitempty"`
-
-	// ResourceTypes: Immutable. The resource instance type on which this
-	// policy applies. Format will be of the form : `/` Example: *
+	// ResourceTypes: Immutable. The resource instance type on which this policy
+	// applies. Format will be of the form : `/` Example: *
 	// `compute.googleapis.com/Instance`.
 	ResourceTypes []string `json:"resourceTypes,omitempty"`
-
-	// UpdateTime: Output only. The last time this custom constraint was
-	// updated. This represents the last time that the
-	// `CreateCustomConstraint` or `UpdateCustomConstraint` RPC was called
+	// UpdateTime: Output only. The last time this custom constraint was updated.
+	// This represents the last time that the `CreateCustomConstraint` or
+	// `UpdateCustomConstraint` RPC was called
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ActionType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ActionType") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ActionType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudOrgpolicyV2CustomConstraint) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2CustomConstraint
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOrgpolicyV2ListConstraintsResponse: The response returned
-// from the ListConstraints method.
+// GoogleCloudOrgpolicyV2ListConstraintsResponse: The response returned from
+// the ListConstraints method.
 type GoogleCloudOrgpolicyV2ListConstraintsResponse struct {
 	// Constraints: The collection of constraints that are available on the
 	// targeted resource.
 	Constraints []*GoogleCloudOrgpolicyV2Constraint `json:"constraints,omitempty"`
-
-	// NextPageToken: Page token used to retrieve the next page. This is
-	// currently not used.
+	// NextPageToken: Page token used to retrieve the next page. This is currently
+	// not used.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Constraints") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Constraints") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Constraints") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudOrgpolicyV2ListConstraintsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2ListConstraintsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOrgpolicyV2ListCustomConstraintsResponse: The response
-// returned from the ListCustomConstraints method. It will be empty if
-// no custom constraints are set on the organization resource.
+// GoogleCloudOrgpolicyV2ListCustomConstraintsResponse: The response returned
+// from the ListCustomConstraints method. It will be empty if no custom
+// constraints are set on the organization resource.
 type GoogleCloudOrgpolicyV2ListCustomConstraintsResponse struct {
-	// CustomConstraints: All custom constraints that exist on the
-	// organization resource. It will be empty if no custom constraints are
-	// set.
+	// CustomConstraints: All custom constraints that exist on the organization
+	// resource. It will be empty if no custom constraints are set.
 	CustomConstraints []*GoogleCloudOrgpolicyV2CustomConstraint `json:"customConstraints,omitempty"`
-
-	// NextPageToken: Page token used to retrieve the next page. This is
-	// currently not used, but the server may at any point start supplying a
-	// valid token.
+	// NextPageToken: Page token used to retrieve the next page. This is currently
+	// not used, but the server may at any point start supplying a valid token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "CustomConstraints")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CustomConstraints") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CustomConstraints") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CustomConstraints") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudOrgpolicyV2ListCustomConstraintsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2ListCustomConstraintsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOrgpolicyV2ListPoliciesResponse: The response returned
-// from the ListPolicies method. It will be empty if no policies are set
-// on the resource.
+// GoogleCloudOrgpolicyV2ListPoliciesResponse: The response returned from the
+// ListPolicies method. It will be empty if no policies are set on the
+// resource.
 type GoogleCloudOrgpolicyV2ListPoliciesResponse struct {
-	// NextPageToken: Page token used to retrieve the next page. This is
-	// currently not used, but the server may at any point start supplying a
-	// valid token.
+	// NextPageToken: Page token used to retrieve the next page. This is currently
+	// not used, but the server may at any point start supplying a valid token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Policies: All policies that exist on the resource. It will be empty
-	// if no policies are set.
+	// Policies: All policies that exist on the resource. It will be empty if no
+	// policies are set.
 	Policies []*GoogleCloudOrgpolicyV2Policy `json:"policies,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudOrgpolicyV2ListPoliciesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2ListPoliciesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOrgpolicyV2Policy: Defines an organization policy which is
-// used to specify constraints for configurations of Google Cloud
-// resources.
+// GoogleCloudOrgpolicyV2Policy: Defines an organization policy which is used
+// to specify constraints for configurations of Google Cloud resources.
 type GoogleCloudOrgpolicyV2Policy struct {
 	// Alternate: Deprecated.
 	Alternate *GoogleCloudOrgpolicyV2AlternatePolicySpec `json:"alternate,omitempty"`
-
-	// DryRunSpec: Dry-run policy. Audit-only policy, can be used to monitor
-	// how the policy would have impacted the existing and future resources
-	// if it's enforced.
+	// DryRunSpec: Dry-run policy. Audit-only policy, can be used to monitor how
+	// the policy would have impacted the existing and future resources if it's
+	// enforced.
 	DryRunSpec *GoogleCloudOrgpolicyV2PolicySpec `json:"dryRunSpec,omitempty"`
-
-	// Etag: Optional. An opaque tag indicating the current state of the
-	// policy, used for concurrency control. This 'etag' is computed by the
-	// server based on the value of other fields, and may be sent on update
-	// and delete requests to ensure the client has an up-to-date value
-	// before proceeding.
+	// Etag: Optional. An opaque tag indicating the current state of the policy,
+	// used for concurrency control. This 'etag' is computed by the server based on
+	// the value of other fields, and may be sent on update and delete requests to
+	// ensure the client has an up-to-date value before proceeding.
 	Etag string `json:"etag,omitempty"`
-
 	// Name: Immutable. The resource name of the policy. Must be one of the
-	// following forms, where `constraint_name` is the name of the
-	// constraint which this policy configures: *
+	// following forms, where `constraint_name` is the name of the constraint which
+	// this policy configures: *
 	// `projects/{project_number}/policies/{constraint_name}` *
 	// `folders/{folder_id}/policies/{constraint_name}` *
-	// `organizations/{organization_id}/policies/{constraint_name}` For
-	// example, `projects/123/policies/compute.disableSerialPortAccess`.
-	// Note: `projects/{project_id}/policies/{constraint_name}` is also an
-	// acceptable name for API requests, but responses will return the name
-	// using the equivalent project number.
+	// `organizations/{organization_id}/policies/{constraint_name}` For example,
+	// `projects/123/policies/compute.disableSerialPortAccess`. Note:
+	// `projects/{project_id}/policies/{constraint_name}` is also an acceptable
+	// name for API requests, but responses will return the name using the
+	// equivalent project number.
 	Name string `json:"name,omitempty"`
-
 	// Spec: Basic information about the Organization Policy.
 	Spec *GoogleCloudOrgpolicyV2PolicySpec `json:"spec,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Alternate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Alternate") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Alternate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudOrgpolicyV2Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2Policy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // GoogleCloudOrgpolicyV2PolicySpec: Defines a Google Cloud policy
-// specification which is used to specify constraints for configurations
-// of Google Cloud resources.
+// specification which is used to specify constraints for configurations of
+// Google Cloud resources.
 type GoogleCloudOrgpolicyV2PolicySpec struct {
-	// Etag: An opaque tag indicating the current version of the policySpec,
-	// used for concurrency control. This field is ignored if used in a
-	// `CreatePolicy` request. When the policy is returned from either a
-	// `GetPolicy` or a `ListPolicies` request, this `etag` indicates the
-	// version of the current policySpec to use when executing a
-	// read-modify-write loop. When the policy is returned from a
-	// `GetEffectivePolicy` request, the `etag` will be unset.
+	// Etag: An opaque tag indicating the current version of the policySpec, used
+	// for concurrency control. This field is ignored if used in a `CreatePolicy`
+	// request. When the policy is returned from either a `GetPolicy` or a
+	// `ListPolicies` request, this `etag` indicates the version of the current
+	// policySpec to use when executing a read-modify-write loop. When the policy
+	// is returned from a `GetEffectivePolicy` request, the `etag` will be unset.
 	Etag string `json:"etag,omitempty"`
-
-	// InheritFromParent: Determines the inheritance behavior for this
-	// policy. If `inherit_from_parent` is true, policy rules set higher up
-	// in the hierarchy (up to the closest root) are inherited and present
-	// in the effective policy. If it is false, then no rules are inherited,
-	// and this policy becomes the new root for evaluation. This field can
-	// be set only for policies which configure list constraints.
+	// InheritFromParent: Determines the inheritance behavior for this policy. If
+	// `inherit_from_parent` is true, policy rules set higher up in the hierarchy
+	// (up to the closest root) are inherited and present in the effective policy.
+	// If it is false, then no rules are inherited, and this policy becomes the new
+	// root for evaluation. This field can be set only for policies which configure
+	// list constraints.
 	InheritFromParent bool `json:"inheritFromParent,omitempty"`
-
 	// Reset: Ignores policies set above this resource and restores the
-	// `constraint_default` enforcement behavior of the specific constraint
-	// at this resource. This field can be set in policies for either list
-	// or boolean constraints. If set, `rules` must be empty and
-	// `inherit_from_parent` must be set to false.
+	// `constraint_default` enforcement behavior of the specific constraint at this
+	// resource. This field can be set in policies for either list or boolean
+	// constraints. If set, `rules` must be empty and `inherit_from_parent` must be
+	// set to false.
 	Reset bool `json:"reset,omitempty"`
-
-	// Rules: In policies for boolean constraints, the following
-	// requirements apply: - There must be one and only one policy rule
-	// where condition is unset. - Boolean policy rules with conditions must
-	// set `enforced` to the opposite of the policy rule without a
-	// condition. - During policy evaluation, policy rules with conditions
-	// that are true for a target resource take precedence.
+	// Rules: In policies for boolean constraints, the following requirements
+	// apply: - There must be one and only one policy rule where condition is
+	// unset. - Boolean policy rules with conditions must set `enforced` to the
+	// opposite of the policy rule without a condition. - During policy evaluation,
+	// policy rules with conditions that are true for a target resource take
+	// precedence.
 	Rules []*GoogleCloudOrgpolicyV2PolicySpecPolicyRule `json:"rules,omitempty"`
-
-	// UpdateTime: Output only. The time stamp this was previously updated.
-	// This represents the last time a call to `CreatePolicy` or
-	// `UpdatePolicy` was made for that policy.
+	// UpdateTime: Output only. The time stamp this was previously updated. This
+	// represents the last time a call to `CreatePolicy` or `UpdatePolicy` was made
+	// for that policy.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudOrgpolicyV2PolicySpec) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2PolicySpec
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOrgpolicyV2PolicySpecPolicyRule: A rule used to express
-// this policy.
+// GoogleCloudOrgpolicyV2PolicySpecPolicyRule: A rule used to express this
+// policy.
 type GoogleCloudOrgpolicyV2PolicySpecPolicyRule struct {
-	// AllowAll: Setting this to true means that all values are allowed.
-	// This field can be set only in policies for list constraints.
+	// AllowAll: Setting this to true means that all values are allowed. This field
+	// can be set only in policies for list constraints.
 	AllowAll bool `json:"allowAll,omitempty"`
-
-	// Condition: A condition which determines whether this rule is used in
-	// the evaluation of the policy. When set, the `expression` field in the
-	// `Expr' must include from 1 to 10 subexpressions, joined by the "||"
-	// or "&&" operators. Each subexpression must be of the form
+	// Condition: A condition which determines whether this rule is used in the
+	// evaluation of the policy. When set, the `expression` field in the `Expr'
+	// must include from 1 to 10 subexpressions, joined by the "||" or "&&"
+	// operators. Each subexpression must be of the form
 	// "resource.matchTag('/tag_key_short_name, 'tag_value_short_name')". or
 	// "resource.matchTagId('tagKeys/key_id', 'tagValues/value_id')". where
-	// key_name and value_name are the resource names for Label Keys and
-	// Values. These names are available from the Tag Manager Service. An
-	// example expression is: "resource.matchTag('123456789/environment,
-	// 'prod')". or "resource.matchTagId('tagKeys/123', 'tagValues/456')".
+	// key_name and value_name are the resource names for Label Keys and Values.
+	// These names are available from the Tag Manager Service. An example
+	// expression is: "resource.matchTag('123456789/environment, 'prod')". or
+	// "resource.matchTagId('tagKeys/123', 'tagValues/456')".
 	Condition *GoogleTypeExpr `json:"condition,omitempty"`
-
-	// DenyAll: Setting this to true means that all values are denied. This
-	// field can be set only in policies for list constraints.
-	DenyAll bool `json:"denyAll,omitempty"`
-
-	// Enforce: If `true`, then the policy is enforced. If `false`, then any
-	// configuration is acceptable. This field can be set only in policies
-	// for boolean constraints.
-	Enforce bool `json:"enforce,omitempty"`
-
-	// Values: List of values to be used for this policy rule. This field
+	// DenyAll: Setting this to true means that all values are denied. This field
 	// can be set only in policies for list constraints.
+	DenyAll bool `json:"denyAll,omitempty"`
+	// Enforce: If `true`, then the policy is enforced. If `false`, then any
+	// configuration is acceptable. This field can be set only in policies for
+	// boolean constraints.
+	Enforce bool `json:"enforce,omitempty"`
+	// Values: List of values to be used for this policy rule. This field can be
+	// set only in policies for list constraints.
 	Values *GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues `json:"values,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AllowAll") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowAll") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AllowAll") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudOrgpolicyV2PolicySpecPolicyRule) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2PolicySpecPolicyRule
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues: A message
-// that holds specific allowed and denied values. This message can
-// define specific values and subtrees of the Resource Manager resource
-// hierarchy (`Organizations`, `Folders`, `Projects`) that are allowed
-// or denied. This is achieved by using the `under:` and optional `is:`
-// prefixes. The `under:` prefix is used to denote resource subtree
-// values. The `is:` prefix is used to denote specific values, and is
-// required only if the value contains a ":". Values prefixed with "is:"
-// are treated the same as values with no prefix. Ancestry subtrees must
-// be in one of the following formats: - `projects/` (for example,
-// `projects/tokyo-rain-123`) - `folders/` (for example, `folders/1234`)
-// - `organizations/` (for example, `organizations/1234`) The
-// `supports_under` field of the associated `Constraint` defines whether
-// ancestry prefixes can be used.
+// GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues: A message that holds
+// specific allowed and denied values. This message can define specific values
+// and subtrees of the Resource Manager resource hierarchy (`Organizations`,
+// `Folders`, `Projects`) that are allowed or denied. This is achieved by using
+// the `under:` and optional `is:` prefixes. The `under:` prefix is used to
+// denote resource subtree values. The `is:` prefix is used to denote specific
+// values, and is required only if the value contains a ":". Values prefixed
+// with "is:" are treated the same as values with no prefix. Ancestry subtrees
+// must be in one of the following formats: - `projects/` (for example,
+// `projects/tokyo-rain-123`) - `folders/` (for example, `folders/1234`) -
+// `organizations/` (for example, `organizations/1234`) The `supports_under`
+// field of the associated `Constraint` defines whether ancestry prefixes can
+// be used.
 type GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues struct {
 	// AllowedValues: List of values allowed at this resource.
 	AllowedValues []string `json:"allowedValues,omitempty"`
-
 	// DeniedValues: List of values denied at this resource.
 	DeniedValues []string `json:"deniedValues,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AllowedValues") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AllowedValues") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AllowedValues") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleCloudOrgpolicyV2PolicySpecPolicyRuleStringValues
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleProtobufEmpty: A generic empty message that you can re-use to
-// avoid defining duplicated empty messages in your APIs. A typical
-// example is to use it as the request or the response type of an API
-// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); }
+// GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
+// defining duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For instance:
+// service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
-// GoogleTypeExpr: Represents a textual expression in the Common
-// Expression Language (CEL) syntax. CEL is a C-like expression
-// language. The syntax and semantics of CEL are documented at
-// https://github.com/google/cel-spec. Example (Comparison): title:
-// "Summary size limit" description: "Determines if a summary is less
-// than 100 chars" expression: "document.summary.size() < 100" Example
-// (Equality): title: "Requestor is owner" description: "Determines if
-// requestor is the document owner" expression: "document.owner ==
-// request.auth.claims.email" Example (Logic): title: "Public documents"
-// description: "Determine whether the document should be publicly
-// visible" expression: "document.type != 'private' && document.type !=
-// 'internal'" Example (Data Manipulation): title: "Notification string"
-// description: "Create a notification string with a timestamp."
-// expression: "'New message received at ' +
-// string(document.create_time)" The exact variables and functions that
-// may be referenced within an expression are determined by the service
-// that evaluates it. See the service documentation for additional
+// GoogleTypeExpr: Represents a textual expression in the Common Expression
+// Language (CEL) syntax. CEL is a C-like expression language. The syntax and
+// semantics of CEL are documented at https://github.com/google/cel-spec.
+// Example (Comparison): title: "Summary size limit" description: "Determines
+// if a summary is less than 100 chars" expression: "document.summary.size() <
+// 100" Example (Equality): title: "Requestor is owner" description:
+// "Determines if requestor is the document owner" expression: "document.owner
+// == request.auth.claims.email" Example (Logic): title: "Public documents"
+// description: "Determine whether the document should be publicly visible"
+// expression: "document.type != 'private' && document.type != 'internal'"
+// Example (Data Manipulation): title: "Notification string" description:
+// "Create a notification string with a timestamp." expression: "'New message
+// received at ' + string(document.create_time)" The exact variables and
+// functions that may be referenced within an expression are determined by the
+// service that evaluates it. See the service documentation for additional
 // information.
 type GoogleTypeExpr struct {
-	// Description: Optional. Description of the expression. This is a
-	// longer text which describes the expression, e.g. when hovered over it
-	// in a UI.
+	// Description: Optional. Description of the expression. This is a longer text
+	// which describes the expression, e.g. when hovered over it in a UI.
 	Description string `json:"description,omitempty"`
-
-	// Expression: Textual representation of an expression in Common
-	// Expression Language syntax.
+	// Expression: Textual representation of an expression in Common Expression
+	// Language syntax.
 	Expression string `json:"expression,omitempty"`
-
-	// Location: Optional. String indicating the location of the expression
-	// for error reporting, e.g. a file name and a position in the file.
+	// Location: Optional. String indicating the location of the expression for
+	// error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
-
-	// Title: Optional. Title for the expression, i.e. a short string
-	// describing its purpose. This can be used e.g. in UIs which allow to
-	// enter the expression.
+	// Title: Optional. Title for the expression, i.e. a short string describing
+	// its purpose. This can be used e.g. in UIs which allow to enter the
+	// expression.
 	Title string `json:"title,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleTypeExpr) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleTypeExpr
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "orgpolicy.folders.constraints.list":
 
 type FoldersConstraintsListCall struct {
 	s            *Service
@@ -1004,11 +856,10 @@ type FoldersConstraintsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists constraints that could be applied on the specified
-// resource.
+// List: Lists constraints that could be applied on the specified resource.
 //
-//   - parent: The Google Cloud resource that parents the constraint. Must
-//     be in one of the following forms: * `projects/{project_number}` *
+//   - parent: The Google Cloud resource that parents the constraint. Must be in
+//     one of the following forms: * `projects/{project_number}` *
 //     `projects/{project_id}` * `folders/{folder_id}` *
 //     `organizations/{organization_id}`.
 func (r *FoldersConstraintsService) List(parent string) *FoldersConstraintsListCall {
@@ -1017,50 +868,46 @@ func (r *FoldersConstraintsService) List(parent string) *FoldersConstraintsListC
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the pages to
-// be returned. This is currently unsupported and will be ignored. The
-// server may at any point start using this field to limit page size.
+// PageSize sets the optional parameter "pageSize": Size of the pages to be
+// returned. This is currently unsupported and will be ignored. The server may
+// at any point start using this field to limit page size.
 func (c *FoldersConstraintsListCall) PageSize(pageSize int64) *FoldersConstraintsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token used to
-// retrieve the next page. This is currently unsupported and will be
-// ignored. The server may at any point start using this field.
+// retrieve the next page. This is currently unsupported and will be ignored.
+// The server may at any point start using this field.
 func (c *FoldersConstraintsListCall) PageToken(pageToken string) *FoldersConstraintsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *FoldersConstraintsListCall) Fields(s ...googleapi.Field) *FoldersConstraintsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *FoldersConstraintsListCall) IfNoneMatch(entityTag string) *FoldersConstraintsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *FoldersConstraintsListCall) Context(ctx context.Context) *FoldersConstraintsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *FoldersConstraintsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1069,12 +916,7 @@ func (c *FoldersConstraintsListCall) Header() http.Header {
 }
 
 func (c *FoldersConstraintsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1095,14 +937,11 @@ func (c *FoldersConstraintsListCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "orgpolicy.folders.constraints.list" call.
-// Exactly one of *GoogleCloudOrgpolicyV2ListConstraintsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudOrgpolicyV2ListConstraintsResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2ListConstraintsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *FoldersConstraintsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2ListConstraintsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1133,43 +972,6 @@ func (c *FoldersConstraintsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists constraints that could be applied on the specified resource.",
-	//   "flatPath": "v2/folders/{foldersId}/constraints",
-	//   "httpMethod": "GET",
-	//   "id": "orgpolicy.folders.constraints.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Size of the pages to be returned. This is currently unsupported and will be ignored. The server may at any point start using this field to limit page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token used to retrieve the next page. This is currently unsupported and will be ignored. The server may at any point start using this field.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The Google Cloud resource that parents the constraint. Must be in one of the following forms: * `projects/{project_number}` * `projects/{project_id}` * `folders/{folder_id}` * `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^folders/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/constraints",
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2ListConstraintsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1177,7 +979,7 @@ func (c *FoldersConstraintsListCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 // The provided context supersedes any context provided to the Context method.
 func (c *FoldersConstraintsListCall) Pages(ctx context.Context, f func(*GoogleCloudOrgpolicyV2ListConstraintsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1193,8 +995,6 @@ func (c *FoldersConstraintsListCall) Pages(ctx context.Context, f func(*GoogleCl
 	}
 }
 
-// method id "orgpolicy.folders.policies.create":
-
 type FoldersPoliciesCreateCall struct {
 	s                            *Service
 	parent                       string
@@ -1205,14 +1005,14 @@ type FoldersPoliciesCreateCall struct {
 }
 
 // Create: Creates a policy. Returns a `google.rpc.Status` with
-// `google.rpc.Code.NOT_FOUND` if the constraint does not exist. Returns
-// a `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the
-// policy already exists on the given Google Cloud resource.
+// `google.rpc.Code.NOT_FOUND` if the constraint does not exist. Returns a
+// `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the policy
+// already exists on the given Google Cloud resource.
 //
-//   - parent: The Google Cloud resource that will parent the new policy.
-//     Must be in one of the following forms: *
-//     `projects/{project_number}` * `projects/{project_id}` *
-//     `folders/{folder_id}` * `organizations/{organization_id}`.
+//   - parent: The Google Cloud resource that will parent the new policy. Must be
+//     in one of the following forms: * `projects/{project_number}` *
+//     `projects/{project_id}` * `folders/{folder_id}` *
+//     `organizations/{organization_id}`.
 func (r *FoldersPoliciesService) Create(parent string, googlecloudorgpolicyv2policy *GoogleCloudOrgpolicyV2Policy) *FoldersPoliciesCreateCall {
 	c := &FoldersPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -1221,23 +1021,21 @@ func (r *FoldersPoliciesService) Create(parent string, googlecloudorgpolicyv2pol
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *FoldersPoliciesCreateCall) Fields(s ...googleapi.Field) *FoldersPoliciesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *FoldersPoliciesCreateCall) Context(ctx context.Context) *FoldersPoliciesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *FoldersPoliciesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1246,18 +1044,12 @@ func (c *FoldersPoliciesCreateCall) Header() http.Header {
 }
 
 func (c *FoldersPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudorgpolicyv2policy)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/policies")
@@ -1274,12 +1066,11 @@ func (c *FoldersPoliciesCreateCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "orgpolicy.folders.policies.create" call.
-// Exactly one of *GoogleCloudOrgpolicyV2Policy or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *FoldersPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1310,38 +1101,7 @@ func (c *FoldersPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint does not exist. Returns a `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the policy already exists on the given Google Cloud resource.",
-	//   "flatPath": "v2/folders/{foldersId}/policies",
-	//   "httpMethod": "POST",
-	//   "id": "orgpolicy.folders.policies.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The Google Cloud resource that will parent the new policy. Must be in one of the following forms: * `projects/{project_number}` * `projects/{project_id}` * `folders/{folder_id}` * `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^folders/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/policies",
-	//   "request": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.folders.policies.delete":
 
 type FoldersPoliciesDeleteCall struct {
 	s          *Service
@@ -1352,44 +1112,40 @@ type FoldersPoliciesDeleteCall struct {
 }
 
 // Delete: Deletes a policy. Returns a `google.rpc.Status` with
-// `google.rpc.Code.NOT_FOUND` if the constraint or organization policy
-// does not exist.
+// `google.rpc.Code.NOT_FOUND` if the constraint or organization policy does
+// not exist.
 //
-//   - name: Name of the policy to delete. See the policy entry for naming
-//     rules.
+// - name: Name of the policy to delete. See the policy entry for naming rules.
 func (r *FoldersPoliciesService) Delete(name string) *FoldersPoliciesDeleteCall {
 	c := &FoldersPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Etag sets the optional parameter "etag": The current etag of policy.
-// If an etag is provided and does not match the current etag of the
-// policy, deletion will be blocked and an ABORTED error will be
-// returned.
+// Etag sets the optional parameter "etag": The current etag of policy. If an
+// etag is provided and does not match the current etag of the policy, deletion
+// will be blocked and an ABORTED error will be returned.
 func (c *FoldersPoliciesDeleteCall) Etag(etag string) *FoldersPoliciesDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *FoldersPoliciesDeleteCall) Fields(s ...googleapi.Field) *FoldersPoliciesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *FoldersPoliciesDeleteCall) Context(ctx context.Context) *FoldersPoliciesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *FoldersPoliciesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1398,12 +1154,7 @@ func (c *FoldersPoliciesDeleteCall) Header() http.Header {
 }
 
 func (c *FoldersPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1421,12 +1172,11 @@ func (c *FoldersPoliciesDeleteCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "orgpolicy.folders.policies.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *FoldersPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1457,40 +1207,7 @@ func (c *FoldersPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*GooglePro
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or organization policy does not exist.",
-	//   "flatPath": "v2/folders/{foldersId}/policies/{policiesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "orgpolicy.folders.policies.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "etag": {
-	//       "description": "Optional. The current etag of policy. If an etag is provided and does not match the current etag of the policy, deletion will be blocked and an ABORTED error will be returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. Name of the policy to delete. See the policy entry for naming rules.",
-	//       "location": "path",
-	//       "pattern": "^folders/[^/]+/policies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.folders.policies.get":
 
 type FoldersPoliciesGetCall struct {
 	s            *Service
@@ -1501,12 +1218,11 @@ type FoldersPoliciesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a policy on a resource. If no policy is set on the
-// resource, `NOT_FOUND` is returned. The `etag` value can be used with
-// `UpdatePolicy()` to update a policy during read-modify-write.
+// Get: Gets a policy on a resource. If no policy is set on the resource,
+// `NOT_FOUND` is returned. The `etag` value can be used with `UpdatePolicy()`
+// to update a policy during read-modify-write.
 //
-//   - name: Resource name of the policy. See Policy for naming
-//     requirements.
+// - name: Resource name of the policy. See Policy for naming requirements.
 func (r *FoldersPoliciesService) Get(name string) *FoldersPoliciesGetCall {
 	c := &FoldersPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1514,33 +1230,29 @@ func (r *FoldersPoliciesService) Get(name string) *FoldersPoliciesGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *FoldersPoliciesGetCall) Fields(s ...googleapi.Field) *FoldersPoliciesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *FoldersPoliciesGetCall) IfNoneMatch(entityTag string) *FoldersPoliciesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *FoldersPoliciesGetCall) Context(ctx context.Context) *FoldersPoliciesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *FoldersPoliciesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1549,12 +1261,7 @@ func (c *FoldersPoliciesGetCall) Header() http.Header {
 }
 
 func (c *FoldersPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1575,12 +1282,11 @@ func (c *FoldersPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "orgpolicy.folders.policies.get" call.
-// Exactly one of *GoogleCloudOrgpolicyV2Policy or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *FoldersPoliciesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1611,35 +1317,7 @@ func (c *FoldersPoliciesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a policy on a resource. If no policy is set on the resource, `NOT_FOUND` is returned. The `etag` value can be used with `UpdatePolicy()` to update a policy during read-modify-write.",
-	//   "flatPath": "v2/folders/{foldersId}/policies/{policiesId}",
-	//   "httpMethod": "GET",
-	//   "id": "orgpolicy.folders.policies.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the policy. See Policy for naming requirements.",
-	//       "location": "path",
-	//       "pattern": "^folders/[^/]+/policies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.folders.policies.getEffectivePolicy":
 
 type FoldersPoliciesGetEffectivePolicyCall struct {
 	s            *Service
@@ -1650,15 +1328,14 @@ type FoldersPoliciesGetEffectivePolicyCall struct {
 	header_      http.Header
 }
 
-// GetEffectivePolicy: Gets the effective policy on a resource. This is
-// the result of merging policies in the resource hierarchy and
-// evaluating conditions. The returned policy will not have an `etag` or
-// `condition` set because it is an evaluated policy across multiple
-// resources. Subtrees of Resource Manager resource hierarchy with
-// 'under:' prefix will not be expanded.
+// GetEffectivePolicy: Gets the effective policy on a resource. This is the
+// result of merging policies in the resource hierarchy and evaluating
+// conditions. The returned policy will not have an `etag` or `condition` set
+// because it is an evaluated policy across multiple resources. Subtrees of
+// Resource Manager resource hierarchy with 'under:' prefix will not be
+// expanded.
 //
-//   - name: The effective policy to compute. See Policy for naming
-//     requirements.
+// - name: The effective policy to compute. See Policy for naming requirements.
 func (r *FoldersPoliciesService) GetEffectivePolicy(name string) *FoldersPoliciesGetEffectivePolicyCall {
 	c := &FoldersPoliciesGetEffectivePolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1666,33 +1343,29 @@ func (r *FoldersPoliciesService) GetEffectivePolicy(name string) *FoldersPolicie
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *FoldersPoliciesGetEffectivePolicyCall) Fields(s ...googleapi.Field) *FoldersPoliciesGetEffectivePolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *FoldersPoliciesGetEffectivePolicyCall) IfNoneMatch(entityTag string) *FoldersPoliciesGetEffectivePolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *FoldersPoliciesGetEffectivePolicyCall) Context(ctx context.Context) *FoldersPoliciesGetEffectivePolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *FoldersPoliciesGetEffectivePolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1701,12 +1374,7 @@ func (c *FoldersPoliciesGetEffectivePolicyCall) Header() http.Header {
 }
 
 func (c *FoldersPoliciesGetEffectivePolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1727,12 +1395,11 @@ func (c *FoldersPoliciesGetEffectivePolicyCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "orgpolicy.folders.policies.getEffectivePolicy" call.
-// Exactly one of *GoogleCloudOrgpolicyV2Policy or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *FoldersPoliciesGetEffectivePolicyCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1763,35 +1430,7 @@ func (c *FoldersPoliciesGetEffectivePolicyCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the effective policy on a resource. This is the result of merging policies in the resource hierarchy and evaluating conditions. The returned policy will not have an `etag` or `condition` set because it is an evaluated policy across multiple resources. Subtrees of Resource Manager resource hierarchy with 'under:' prefix will not be expanded.",
-	//   "flatPath": "v2/folders/{foldersId}/policies/{policiesId}:getEffectivePolicy",
-	//   "httpMethod": "GET",
-	//   "id": "orgpolicy.folders.policies.getEffectivePolicy",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The effective policy to compute. See Policy for naming requirements.",
-	//       "location": "path",
-	//       "pattern": "^folders/[^/]+/policies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}:getEffectivePolicy",
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.folders.policies.list":
 
 type FoldersPoliciesListCall struct {
 	s            *Service
@@ -1802,12 +1441,11 @@ type FoldersPoliciesListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieves all of the policies that exist on a particular
-// resource.
+// List: Retrieves all of the policies that exist on a particular resource.
 //
 //   - parent: The target Google Cloud resource that parents the set of
-//     constraints and policies that will be returned from this call. Must
-//     be in one of the following forms: * `projects/{project_number}` *
+//     constraints and policies that will be returned from this call. Must be in
+//     one of the following forms: * `projects/{project_number}` *
 //     `projects/{project_id}` * `folders/{folder_id}` *
 //     `organizations/{organization_id}`.
 func (r *FoldersPoliciesService) List(parent string) *FoldersPoliciesListCall {
@@ -1816,50 +1454,46 @@ func (r *FoldersPoliciesService) List(parent string) *FoldersPoliciesListCall {
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the pages to
-// be returned. This is currently unsupported and will be ignored. The
-// server may at any point start using this field to limit page size.
+// PageSize sets the optional parameter "pageSize": Size of the pages to be
+// returned. This is currently unsupported and will be ignored. The server may
+// at any point start using this field to limit page size.
 func (c *FoldersPoliciesListCall) PageSize(pageSize int64) *FoldersPoliciesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token used to
-// retrieve the next page. This is currently unsupported and will be
-// ignored. The server may at any point start using this field.
+// retrieve the next page. This is currently unsupported and will be ignored.
+// The server may at any point start using this field.
 func (c *FoldersPoliciesListCall) PageToken(pageToken string) *FoldersPoliciesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *FoldersPoliciesListCall) Fields(s ...googleapi.Field) *FoldersPoliciesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *FoldersPoliciesListCall) IfNoneMatch(entityTag string) *FoldersPoliciesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *FoldersPoliciesListCall) Context(ctx context.Context) *FoldersPoliciesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *FoldersPoliciesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1868,12 +1502,7 @@ func (c *FoldersPoliciesListCall) Header() http.Header {
 }
 
 func (c *FoldersPoliciesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1894,14 +1523,11 @@ func (c *FoldersPoliciesListCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "orgpolicy.folders.policies.list" call.
-// Exactly one of *GoogleCloudOrgpolicyV2ListPoliciesResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudOrgpolicyV2ListPoliciesResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2ListPoliciesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *FoldersPoliciesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2ListPoliciesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1932,43 +1558,6 @@ func (c *FoldersPoliciesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves all of the policies that exist on a particular resource.",
-	//   "flatPath": "v2/folders/{foldersId}/policies",
-	//   "httpMethod": "GET",
-	//   "id": "orgpolicy.folders.policies.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Size of the pages to be returned. This is currently unsupported and will be ignored. The server may at any point start using this field to limit page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token used to retrieve the next page. This is currently unsupported and will be ignored. The server may at any point start using this field.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The target Google Cloud resource that parents the set of constraints and policies that will be returned from this call. Must be in one of the following forms: * `projects/{project_number}` * `projects/{project_id}` * `folders/{folder_id}` * `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^folders/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/policies",
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2ListPoliciesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1976,7 +1565,7 @@ func (c *FoldersPoliciesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 // The provided context supersedes any context provided to the Context method.
 func (c *FoldersPoliciesListCall) Pages(ctx context.Context, f func(*GoogleCloudOrgpolicyV2ListPoliciesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1992,8 +1581,6 @@ func (c *FoldersPoliciesListCall) Pages(ctx context.Context, f func(*GoogleCloud
 	}
 }
 
-// method id "orgpolicy.folders.policies.patch":
-
 type FoldersPoliciesPatchCall struct {
 	s                            *Service
 	name                         string
@@ -2004,22 +1591,21 @@ type FoldersPoliciesPatchCall struct {
 }
 
 // Patch: Updates a policy. Returns a `google.rpc.Status` with
-// `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not
-// exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED`
-// if the etag supplied in the request does not match the persisted etag
-// of the policy Note: the supplied policy will perform a full overwrite
-// of all fields.
+// `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not exist.
+// Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag
+// supplied in the request does not match the persisted etag of the policy
+// Note: the supplied policy will perform a full overwrite of all fields.
 //
-//   - name: Immutable. The resource name of the policy. Must be one of
-//     the following forms, where `constraint_name` is the name of the
-//     constraint which this policy configures: *
+//   - name: Immutable. The resource name of the policy. Must be one of the
+//     following forms, where `constraint_name` is the name of the constraint
+//     which this policy configures: *
 //     `projects/{project_number}/policies/{constraint_name}` *
 //     `folders/{folder_id}/policies/{constraint_name}` *
-//     `organizations/{organization_id}/policies/{constraint_name}` For
-//     example, `projects/123/policies/compute.disableSerialPortAccess`.
-//     Note: `projects/{project_id}/policies/{constraint_name}` is also an
-//     acceptable name for API requests, but responses will return the
-//     name using the equivalent project number.
+//     `organizations/{organization_id}/policies/{constraint_name}` For example,
+//     `projects/123/policies/compute.disableSerialPortAccess`. Note:
+//     `projects/{project_id}/policies/{constraint_name}` is also an acceptable
+//     name for API requests, but responses will return the name using the
+//     equivalent project number.
 func (r *FoldersPoliciesService) Patch(name string, googlecloudorgpolicyv2policy *GoogleCloudOrgpolicyV2Policy) *FoldersPoliciesPatchCall {
 	c := &FoldersPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2027,33 +1613,31 @@ func (r *FoldersPoliciesService) Patch(name string, googlecloudorgpolicyv2policy
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Field mask used
-// to specify the fields to be overwritten in the policy by the set. The
-// fields specified in the update_mask are relative to the policy, not
-// the full request.
+// UpdateMask sets the optional parameter "updateMask": Field mask used to
+// specify the fields to be overwritten in the policy by the set. The fields
+// specified in the update_mask are relative to the policy, not the full
+// request.
 func (c *FoldersPoliciesPatchCall) UpdateMask(updateMask string) *FoldersPoliciesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *FoldersPoliciesPatchCall) Fields(s ...googleapi.Field) *FoldersPoliciesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *FoldersPoliciesPatchCall) Context(ctx context.Context) *FoldersPoliciesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *FoldersPoliciesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2062,18 +1646,12 @@ func (c *FoldersPoliciesPatchCall) Header() http.Header {
 }
 
 func (c *FoldersPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudorgpolicyv2policy)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
@@ -2090,12 +1668,11 @@ func (c *FoldersPoliciesPatchCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "orgpolicy.folders.policies.patch" call.
-// Exactly one of *GoogleCloudOrgpolicyV2Policy or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *FoldersPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2126,44 +1703,7 @@ func (c *FoldersPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag supplied in the request does not match the persisted etag of the policy Note: the supplied policy will perform a full overwrite of all fields.",
-	//   "flatPath": "v2/folders/{foldersId}/policies/{policiesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "orgpolicy.folders.policies.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint which this policy configures: * `projects/{project_number}/policies/{constraint_name}` * `folders/{folder_id}/policies/{constraint_name}` * `organizations/{organization_id}/policies/{constraint_name}` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/{project_id}/policies/{constraint_name}` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.",
-	//       "location": "path",
-	//       "pattern": "^folders/[^/]+/policies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Field mask used to specify the fields to be overwritten in the policy by the set. The fields specified in the update_mask are relative to the policy, not the full request.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.organizations.constraints.list":
 
 type OrganizationsConstraintsListCall struct {
 	s            *Service
@@ -2174,11 +1714,10 @@ type OrganizationsConstraintsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists constraints that could be applied on the specified
-// resource.
+// List: Lists constraints that could be applied on the specified resource.
 //
-//   - parent: The Google Cloud resource that parents the constraint. Must
-//     be in one of the following forms: * `projects/{project_number}` *
+//   - parent: The Google Cloud resource that parents the constraint. Must be in
+//     one of the following forms: * `projects/{project_number}` *
 //     `projects/{project_id}` * `folders/{folder_id}` *
 //     `organizations/{organization_id}`.
 func (r *OrganizationsConstraintsService) List(parent string) *OrganizationsConstraintsListCall {
@@ -2187,50 +1726,46 @@ func (r *OrganizationsConstraintsService) List(parent string) *OrganizationsCons
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the pages to
-// be returned. This is currently unsupported and will be ignored. The
-// server may at any point start using this field to limit page size.
+// PageSize sets the optional parameter "pageSize": Size of the pages to be
+// returned. This is currently unsupported and will be ignored. The server may
+// at any point start using this field to limit page size.
 func (c *OrganizationsConstraintsListCall) PageSize(pageSize int64) *OrganizationsConstraintsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token used to
-// retrieve the next page. This is currently unsupported and will be
-// ignored. The server may at any point start using this field.
+// retrieve the next page. This is currently unsupported and will be ignored.
+// The server may at any point start using this field.
 func (c *OrganizationsConstraintsListCall) PageToken(pageToken string) *OrganizationsConstraintsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsConstraintsListCall) Fields(s ...googleapi.Field) *OrganizationsConstraintsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsConstraintsListCall) IfNoneMatch(entityTag string) *OrganizationsConstraintsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsConstraintsListCall) Context(ctx context.Context) *OrganizationsConstraintsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsConstraintsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2239,12 +1774,7 @@ func (c *OrganizationsConstraintsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsConstraintsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2265,14 +1795,11 @@ func (c *OrganizationsConstraintsListCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "orgpolicy.organizations.constraints.list" call.
-// Exactly one of *GoogleCloudOrgpolicyV2ListConstraintsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudOrgpolicyV2ListConstraintsResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2ListConstraintsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsConstraintsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2ListConstraintsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2303,43 +1830,6 @@ func (c *OrganizationsConstraintsListCall) Do(opts ...googleapi.CallOption) (*Go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists constraints that could be applied on the specified resource.",
-	//   "flatPath": "v2/organizations/{organizationsId}/constraints",
-	//   "httpMethod": "GET",
-	//   "id": "orgpolicy.organizations.constraints.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Size of the pages to be returned. This is currently unsupported and will be ignored. The server may at any point start using this field to limit page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token used to retrieve the next page. This is currently unsupported and will be ignored. The server may at any point start using this field.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The Google Cloud resource that parents the constraint. Must be in one of the following forms: * `projects/{project_number}` * `projects/{project_id}` * `folders/{folder_id}` * `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/constraints",
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2ListConstraintsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2347,7 +1837,7 @@ func (c *OrganizationsConstraintsListCall) Do(opts ...googleapi.CallOption) (*Go
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsConstraintsListCall) Pages(ctx context.Context, f func(*GoogleCloudOrgpolicyV2ListConstraintsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2363,8 +1853,6 @@ func (c *OrganizationsConstraintsListCall) Pages(ctx context.Context, f func(*Go
 	}
 }
 
-// method id "orgpolicy.organizations.customConstraints.create":
-
 type OrganizationsCustomConstraintsCreateCall struct {
 	s                                      *Service
 	parent                                 string
@@ -2374,13 +1862,12 @@ type OrganizationsCustomConstraintsCreateCall struct {
 	header_                                http.Header
 }
 
-// Create: Creates a custom constraint. Returns a `google.rpc.Status`
-// with `google.rpc.Code.NOT_FOUND` if the organization does not exist.
-// Returns a `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS`
-// if the constraint already exists on the given organization.
+// Create: Creates a custom constraint. Returns a `google.rpc.Status` with
+// `google.rpc.Code.NOT_FOUND` if the organization does not exist. Returns a
+// `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the constraint
+// already exists on the given organization.
 //
-//   - parent: Must be in the following form: *
-//     `organizations/{organization_id}`.
+// - parent: Must be in the following form: * `organizations/{organization_id}`.
 func (r *OrganizationsCustomConstraintsService) Create(parent string, googlecloudorgpolicyv2customconstraint *GoogleCloudOrgpolicyV2CustomConstraint) *OrganizationsCustomConstraintsCreateCall {
 	c := &OrganizationsCustomConstraintsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -2389,23 +1876,21 @@ func (r *OrganizationsCustomConstraintsService) Create(parent string, googleclou
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsCustomConstraintsCreateCall) Fields(s ...googleapi.Field) *OrganizationsCustomConstraintsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsCustomConstraintsCreateCall) Context(ctx context.Context) *OrganizationsCustomConstraintsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsCustomConstraintsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2414,18 +1899,12 @@ func (c *OrganizationsCustomConstraintsCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsCustomConstraintsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudorgpolicyv2customconstraint)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/customConstraints")
@@ -2442,13 +1921,11 @@ func (c *OrganizationsCustomConstraintsCreateCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "orgpolicy.organizations.customConstraints.create" call.
-// Exactly one of *GoogleCloudOrgpolicyV2CustomConstraint or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudOrgpolicyV2CustomConstraint.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2CustomConstraint.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsCustomConstraintsCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2CustomConstraint, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2479,38 +1956,7 @@ func (c *OrganizationsCustomConstraintsCreateCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a custom constraint. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the organization does not exist. Returns a `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the constraint already exists on the given organization.",
-	//   "flatPath": "v2/organizations/{organizationsId}/customConstraints",
-	//   "httpMethod": "POST",
-	//   "id": "orgpolicy.organizations.customConstraints.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. Must be in the following form: * `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/customConstraints",
-	//   "request": {
-	//     "$ref": "GoogleCloudOrgpolicyV2CustomConstraint"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2CustomConstraint"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.organizations.customConstraints.delete":
 
 type OrganizationsCustomConstraintsDeleteCall struct {
 	s          *Service
@@ -2520,11 +1966,11 @@ type OrganizationsCustomConstraintsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a custom constraint. Returns a `google.rpc.Status`
-// with `google.rpc.Code.NOT_FOUND` if the constraint does not exist.
+// Delete: Deletes a custom constraint. Returns a `google.rpc.Status` with
+// `google.rpc.Code.NOT_FOUND` if the constraint does not exist.
 //
-//   - name: Name of the custom constraint to delete. See the custom
-//     constraint entry for naming rules.
+//   - name: Name of the custom constraint to delete. See the custom constraint
+//     entry for naming rules.
 func (r *OrganizationsCustomConstraintsService) Delete(name string) *OrganizationsCustomConstraintsDeleteCall {
 	c := &OrganizationsCustomConstraintsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2532,23 +1978,21 @@ func (r *OrganizationsCustomConstraintsService) Delete(name string) *Organizatio
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsCustomConstraintsDeleteCall) Fields(s ...googleapi.Field) *OrganizationsCustomConstraintsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsCustomConstraintsDeleteCall) Context(ctx context.Context) *OrganizationsCustomConstraintsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsCustomConstraintsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2557,12 +2001,7 @@ func (c *OrganizationsCustomConstraintsDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsCustomConstraintsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2580,12 +2019,11 @@ func (c *OrganizationsCustomConstraintsDeleteCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "orgpolicy.organizations.customConstraints.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *OrganizationsCustomConstraintsDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2616,35 +2054,7 @@ func (c *OrganizationsCustomConstraintsDeleteCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a custom constraint. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint does not exist.",
-	//   "flatPath": "v2/organizations/{organizationsId}/customConstraints/{customConstraintsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "orgpolicy.organizations.customConstraints.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Name of the custom constraint to delete. See the custom constraint entry for naming rules.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/customConstraints/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.organizations.customConstraints.get":
 
 type OrganizationsCustomConstraintsGetCall struct {
 	s            *Service
@@ -2658,8 +2068,8 @@ type OrganizationsCustomConstraintsGetCall struct {
 // Get: Gets a custom constraint. Returns a `google.rpc.Status` with
 // `google.rpc.Code.NOT_FOUND` if the custom constraint does not exist.
 //
-//   - name: Resource name of the custom constraint. See the custom
-//     constraint entry for naming requirements.
+//   - name: Resource name of the custom constraint. See the custom constraint
+//     entry for naming requirements.
 func (r *OrganizationsCustomConstraintsService) Get(name string) *OrganizationsCustomConstraintsGetCall {
 	c := &OrganizationsCustomConstraintsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -2667,33 +2077,29 @@ func (r *OrganizationsCustomConstraintsService) Get(name string) *OrganizationsC
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsCustomConstraintsGetCall) Fields(s ...googleapi.Field) *OrganizationsCustomConstraintsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsCustomConstraintsGetCall) IfNoneMatch(entityTag string) *OrganizationsCustomConstraintsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsCustomConstraintsGetCall) Context(ctx context.Context) *OrganizationsCustomConstraintsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsCustomConstraintsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2702,12 +2108,7 @@ func (c *OrganizationsCustomConstraintsGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsCustomConstraintsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2728,13 +2129,11 @@ func (c *OrganizationsCustomConstraintsGetCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "orgpolicy.organizations.customConstraints.get" call.
-// Exactly one of *GoogleCloudOrgpolicyV2CustomConstraint or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudOrgpolicyV2CustomConstraint.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2CustomConstraint.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsCustomConstraintsGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2CustomConstraint, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2765,35 +2164,7 @@ func (c *OrganizationsCustomConstraintsGetCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a custom constraint. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the custom constraint does not exist.",
-	//   "flatPath": "v2/organizations/{organizationsId}/customConstraints/{customConstraintsId}",
-	//   "httpMethod": "GET",
-	//   "id": "orgpolicy.organizations.customConstraints.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the custom constraint. See the custom constraint entry for naming requirements.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/customConstraints/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2CustomConstraint"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.organizations.customConstraints.list":
 
 type OrganizationsCustomConstraintsListCall struct {
 	s            *Service
@@ -2804,62 +2175,58 @@ type OrganizationsCustomConstraintsListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieves all of the custom constraints that exist on a
-// particular organization resource.
+// List: Retrieves all of the custom constraints that exist on a particular
+// organization resource.
 //
-//   - parent: The target Google Cloud resource that parents the set of
-//     custom constraints that will be returned from this call. Must be in
-//     one of the following forms: * `organizations/{organization_id}`.
+//   - parent: The target Google Cloud resource that parents the set of custom
+//     constraints that will be returned from this call. Must be in one of the
+//     following forms: * `organizations/{organization_id}`.
 func (r *OrganizationsCustomConstraintsService) List(parent string) *OrganizationsCustomConstraintsListCall {
 	c := &OrganizationsCustomConstraintsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the pages to
-// be returned. This is currently unsupported and will be ignored. The
-// server may at any point start using this field to limit page size.
+// PageSize sets the optional parameter "pageSize": Size of the pages to be
+// returned. This is currently unsupported and will be ignored. The server may
+// at any point start using this field to limit page size.
 func (c *OrganizationsCustomConstraintsListCall) PageSize(pageSize int64) *OrganizationsCustomConstraintsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token used to
-// retrieve the next page. This is currently unsupported and will be
-// ignored. The server may at any point start using this field.
+// retrieve the next page. This is currently unsupported and will be ignored.
+// The server may at any point start using this field.
 func (c *OrganizationsCustomConstraintsListCall) PageToken(pageToken string) *OrganizationsCustomConstraintsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsCustomConstraintsListCall) Fields(s ...googleapi.Field) *OrganizationsCustomConstraintsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsCustomConstraintsListCall) IfNoneMatch(entityTag string) *OrganizationsCustomConstraintsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsCustomConstraintsListCall) Context(ctx context.Context) *OrganizationsCustomConstraintsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsCustomConstraintsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2868,12 +2235,7 @@ func (c *OrganizationsCustomConstraintsListCall) Header() http.Header {
 }
 
 func (c *OrganizationsCustomConstraintsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2894,14 +2256,11 @@ func (c *OrganizationsCustomConstraintsListCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "orgpolicy.organizations.customConstraints.list" call.
-// Exactly one of *GoogleCloudOrgpolicyV2ListCustomConstraintsResponse
-// or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleCloudOrgpolicyV2ListCustomConstraintsResponse.ServerResponse.He
-// ader or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2ListCustomConstraintsResponse.ServerResponse.Header
+// or (if a response was returned at all) in error.(*googleapi.Error).Header.
+// Use googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsCustomConstraintsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2ListCustomConstraintsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2932,43 +2291,6 @@ func (c *OrganizationsCustomConstraintsListCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves all of the custom constraints that exist on a particular organization resource.",
-	//   "flatPath": "v2/organizations/{organizationsId}/customConstraints",
-	//   "httpMethod": "GET",
-	//   "id": "orgpolicy.organizations.customConstraints.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Size of the pages to be returned. This is currently unsupported and will be ignored. The server may at any point start using this field to limit page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token used to retrieve the next page. This is currently unsupported and will be ignored. The server may at any point start using this field.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The target Google Cloud resource that parents the set of custom constraints that will be returned from this call. Must be in one of the following forms: * `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/customConstraints",
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2ListCustomConstraintsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2976,7 +2298,7 @@ func (c *OrganizationsCustomConstraintsListCall) Do(opts ...googleapi.CallOption
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsCustomConstraintsListCall) Pages(ctx context.Context, f func(*GoogleCloudOrgpolicyV2ListCustomConstraintsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2992,8 +2314,6 @@ func (c *OrganizationsCustomConstraintsListCall) Pages(ctx context.Context, f fu
 	}
 }
 
-// method id "orgpolicy.organizations.customConstraints.patch":
-
 type OrganizationsCustomConstraintsPatchCall struct {
 	s                                      *Service
 	name                                   string
@@ -3003,19 +2323,16 @@ type OrganizationsCustomConstraintsPatchCall struct {
 	header_                                http.Header
 }
 
-// Patch: Updates a custom constraint. Returns a `google.rpc.Status`
-// with `google.rpc.Code.NOT_FOUND` if the constraint does not exist.
-// Note: the supplied policy will perform a full overwrite of all
-// fields.
+// Patch: Updates a custom constraint. Returns a `google.rpc.Status` with
+// `google.rpc.Code.NOT_FOUND` if the constraint does not exist. Note: the
+// supplied policy will perform a full overwrite of all fields.
 //
 //   - name: Immutable. Name of the constraint. This is unique within the
 //     organization. Format of the name should be *
-//     `organizations/{organization_id}/customConstraints/{custom_constrain
-//     t_id}` Example:
-//     `organizations/123/customConstraints/custom.createOnlyE2TypeVms`
-//     The max length is 70 characters and the minimum length is 1. Note
-//     that the prefix
-//     `organizations/{organization_id}/customConstraints/` is not
+//     `organizations/{organization_id}/customConstraints/{custom_constraint_id}`
+//     Example: `organizations/123/customConstraints/custom.createOnlyE2TypeVms`
+//     The max length is 70 characters and the minimum length is 1. Note that the
+//     prefix `organizations/{organization_id}/customConstraints/` is not
 //     counted.
 func (r *OrganizationsCustomConstraintsService) Patch(name string, googlecloudorgpolicyv2customconstraint *GoogleCloudOrgpolicyV2CustomConstraint) *OrganizationsCustomConstraintsPatchCall {
 	c := &OrganizationsCustomConstraintsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3025,23 +2342,21 @@ func (r *OrganizationsCustomConstraintsService) Patch(name string, googlecloudor
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsCustomConstraintsPatchCall) Fields(s ...googleapi.Field) *OrganizationsCustomConstraintsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsCustomConstraintsPatchCall) Context(ctx context.Context) *OrganizationsCustomConstraintsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsCustomConstraintsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3050,18 +2365,12 @@ func (c *OrganizationsCustomConstraintsPatchCall) Header() http.Header {
 }
 
 func (c *OrganizationsCustomConstraintsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudorgpolicyv2customconstraint)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
@@ -3078,13 +2387,11 @@ func (c *OrganizationsCustomConstraintsPatchCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "orgpolicy.organizations.customConstraints.patch" call.
-// Exactly one of *GoogleCloudOrgpolicyV2CustomConstraint or error will
-// be non-nil. Any non-2xx status code is an error. Response headers are
-// in either
-// *GoogleCloudOrgpolicyV2CustomConstraint.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2CustomConstraint.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsCustomConstraintsPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2CustomConstraint, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3115,38 +2422,7 @@ func (c *OrganizationsCustomConstraintsPatchCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a custom constraint. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint does not exist. Note: the supplied policy will perform a full overwrite of all fields.",
-	//   "flatPath": "v2/organizations/{organizationsId}/customConstraints/{customConstraintsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "orgpolicy.organizations.customConstraints.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Immutable. Name of the constraint. This is unique within the organization. Format of the name should be * `organizations/{organization_id}/customConstraints/{custom_constraint_id}` Example: `organizations/123/customConstraints/custom.createOnlyE2TypeVms` The max length is 70 characters and the minimum length is 1. Note that the prefix `organizations/{organization_id}/customConstraints/` is not counted.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/customConstraints/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudOrgpolicyV2CustomConstraint"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2CustomConstraint"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.organizations.policies.create":
 
 type OrganizationsPoliciesCreateCall struct {
 	s                            *Service
@@ -3158,14 +2434,14 @@ type OrganizationsPoliciesCreateCall struct {
 }
 
 // Create: Creates a policy. Returns a `google.rpc.Status` with
-// `google.rpc.Code.NOT_FOUND` if the constraint does not exist. Returns
-// a `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the
-// policy already exists on the given Google Cloud resource.
+// `google.rpc.Code.NOT_FOUND` if the constraint does not exist. Returns a
+// `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the policy
+// already exists on the given Google Cloud resource.
 //
-//   - parent: The Google Cloud resource that will parent the new policy.
-//     Must be in one of the following forms: *
-//     `projects/{project_number}` * `projects/{project_id}` *
-//     `folders/{folder_id}` * `organizations/{organization_id}`.
+//   - parent: The Google Cloud resource that will parent the new policy. Must be
+//     in one of the following forms: * `projects/{project_number}` *
+//     `projects/{project_id}` * `folders/{folder_id}` *
+//     `organizations/{organization_id}`.
 func (r *OrganizationsPoliciesService) Create(parent string, googlecloudorgpolicyv2policy *GoogleCloudOrgpolicyV2Policy) *OrganizationsPoliciesCreateCall {
 	c := &OrganizationsPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -3174,23 +2450,21 @@ func (r *OrganizationsPoliciesService) Create(parent string, googlecloudorgpolic
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsPoliciesCreateCall) Fields(s ...googleapi.Field) *OrganizationsPoliciesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsPoliciesCreateCall) Context(ctx context.Context) *OrganizationsPoliciesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsPoliciesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3199,18 +2473,12 @@ func (c *OrganizationsPoliciesCreateCall) Header() http.Header {
 }
 
 func (c *OrganizationsPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudorgpolicyv2policy)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/policies")
@@ -3227,12 +2495,11 @@ func (c *OrganizationsPoliciesCreateCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "orgpolicy.organizations.policies.create" call.
-// Exactly one of *GoogleCloudOrgpolicyV2Policy or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3263,38 +2530,7 @@ func (c *OrganizationsPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint does not exist. Returns a `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the policy already exists on the given Google Cloud resource.",
-	//   "flatPath": "v2/organizations/{organizationsId}/policies",
-	//   "httpMethod": "POST",
-	//   "id": "orgpolicy.organizations.policies.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The Google Cloud resource that will parent the new policy. Must be in one of the following forms: * `projects/{project_number}` * `projects/{project_id}` * `folders/{folder_id}` * `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/policies",
-	//   "request": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.organizations.policies.delete":
 
 type OrganizationsPoliciesDeleteCall struct {
 	s          *Service
@@ -3305,44 +2541,40 @@ type OrganizationsPoliciesDeleteCall struct {
 }
 
 // Delete: Deletes a policy. Returns a `google.rpc.Status` with
-// `google.rpc.Code.NOT_FOUND` if the constraint or organization policy
-// does not exist.
+// `google.rpc.Code.NOT_FOUND` if the constraint or organization policy does
+// not exist.
 //
-//   - name: Name of the policy to delete. See the policy entry for naming
-//     rules.
+// - name: Name of the policy to delete. See the policy entry for naming rules.
 func (r *OrganizationsPoliciesService) Delete(name string) *OrganizationsPoliciesDeleteCall {
 	c := &OrganizationsPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Etag sets the optional parameter "etag": The current etag of policy.
-// If an etag is provided and does not match the current etag of the
-// policy, deletion will be blocked and an ABORTED error will be
-// returned.
+// Etag sets the optional parameter "etag": The current etag of policy. If an
+// etag is provided and does not match the current etag of the policy, deletion
+// will be blocked and an ABORTED error will be returned.
 func (c *OrganizationsPoliciesDeleteCall) Etag(etag string) *OrganizationsPoliciesDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsPoliciesDeleteCall) Fields(s ...googleapi.Field) *OrganizationsPoliciesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsPoliciesDeleteCall) Context(ctx context.Context) *OrganizationsPoliciesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsPoliciesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3351,12 +2583,7 @@ func (c *OrganizationsPoliciesDeleteCall) Header() http.Header {
 }
 
 func (c *OrganizationsPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3374,12 +2601,11 @@ func (c *OrganizationsPoliciesDeleteCall) doRequest(alt string) (*http.Response,
 }
 
 // Do executes the "orgpolicy.organizations.policies.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *OrganizationsPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3410,40 +2636,7 @@ func (c *OrganizationsPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*Goo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or organization policy does not exist.",
-	//   "flatPath": "v2/organizations/{organizationsId}/policies/{policiesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "orgpolicy.organizations.policies.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "etag": {
-	//       "description": "Optional. The current etag of policy. If an etag is provided and does not match the current etag of the policy, deletion will be blocked and an ABORTED error will be returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. Name of the policy to delete. See the policy entry for naming rules.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/policies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.organizations.policies.get":
 
 type OrganizationsPoliciesGetCall struct {
 	s            *Service
@@ -3454,12 +2647,11 @@ type OrganizationsPoliciesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a policy on a resource. If no policy is set on the
-// resource, `NOT_FOUND` is returned. The `etag` value can be used with
-// `UpdatePolicy()` to update a policy during read-modify-write.
+// Get: Gets a policy on a resource. If no policy is set on the resource,
+// `NOT_FOUND` is returned. The `etag` value can be used with `UpdatePolicy()`
+// to update a policy during read-modify-write.
 //
-//   - name: Resource name of the policy. See Policy for naming
-//     requirements.
+// - name: Resource name of the policy. See Policy for naming requirements.
 func (r *OrganizationsPoliciesService) Get(name string) *OrganizationsPoliciesGetCall {
 	c := &OrganizationsPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3467,33 +2659,29 @@ func (r *OrganizationsPoliciesService) Get(name string) *OrganizationsPoliciesGe
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsPoliciesGetCall) Fields(s ...googleapi.Field) *OrganizationsPoliciesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsPoliciesGetCall) IfNoneMatch(entityTag string) *OrganizationsPoliciesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsPoliciesGetCall) Context(ctx context.Context) *OrganizationsPoliciesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsPoliciesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3502,12 +2690,7 @@ func (c *OrganizationsPoliciesGetCall) Header() http.Header {
 }
 
 func (c *OrganizationsPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3528,12 +2711,11 @@ func (c *OrganizationsPoliciesGetCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "orgpolicy.organizations.policies.get" call.
-// Exactly one of *GoogleCloudOrgpolicyV2Policy or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsPoliciesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3564,35 +2746,7 @@ func (c *OrganizationsPoliciesGetCall) Do(opts ...googleapi.CallOption) (*Google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a policy on a resource. If no policy is set on the resource, `NOT_FOUND` is returned. The `etag` value can be used with `UpdatePolicy()` to update a policy during read-modify-write.",
-	//   "flatPath": "v2/organizations/{organizationsId}/policies/{policiesId}",
-	//   "httpMethod": "GET",
-	//   "id": "orgpolicy.organizations.policies.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the policy. See Policy for naming requirements.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/policies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.organizations.policies.getEffectivePolicy":
 
 type OrganizationsPoliciesGetEffectivePolicyCall struct {
 	s            *Service
@@ -3603,15 +2757,14 @@ type OrganizationsPoliciesGetEffectivePolicyCall struct {
 	header_      http.Header
 }
 
-// GetEffectivePolicy: Gets the effective policy on a resource. This is
-// the result of merging policies in the resource hierarchy and
-// evaluating conditions. The returned policy will not have an `etag` or
-// `condition` set because it is an evaluated policy across multiple
-// resources. Subtrees of Resource Manager resource hierarchy with
-// 'under:' prefix will not be expanded.
+// GetEffectivePolicy: Gets the effective policy on a resource. This is the
+// result of merging policies in the resource hierarchy and evaluating
+// conditions. The returned policy will not have an `etag` or `condition` set
+// because it is an evaluated policy across multiple resources. Subtrees of
+// Resource Manager resource hierarchy with 'under:' prefix will not be
+// expanded.
 //
-//   - name: The effective policy to compute. See Policy for naming
-//     requirements.
+// - name: The effective policy to compute. See Policy for naming requirements.
 func (r *OrganizationsPoliciesService) GetEffectivePolicy(name string) *OrganizationsPoliciesGetEffectivePolicyCall {
 	c := &OrganizationsPoliciesGetEffectivePolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3619,33 +2772,29 @@ func (r *OrganizationsPoliciesService) GetEffectivePolicy(name string) *Organiza
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsPoliciesGetEffectivePolicyCall) Fields(s ...googleapi.Field) *OrganizationsPoliciesGetEffectivePolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsPoliciesGetEffectivePolicyCall) IfNoneMatch(entityTag string) *OrganizationsPoliciesGetEffectivePolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsPoliciesGetEffectivePolicyCall) Context(ctx context.Context) *OrganizationsPoliciesGetEffectivePolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsPoliciesGetEffectivePolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3654,12 +2803,7 @@ func (c *OrganizationsPoliciesGetEffectivePolicyCall) Header() http.Header {
 }
 
 func (c *OrganizationsPoliciesGetEffectivePolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3680,12 +2824,11 @@ func (c *OrganizationsPoliciesGetEffectivePolicyCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "orgpolicy.organizations.policies.getEffectivePolicy" call.
-// Exactly one of *GoogleCloudOrgpolicyV2Policy or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsPoliciesGetEffectivePolicyCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3716,35 +2859,7 @@ func (c *OrganizationsPoliciesGetEffectivePolicyCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the effective policy on a resource. This is the result of merging policies in the resource hierarchy and evaluating conditions. The returned policy will not have an `etag` or `condition` set because it is an evaluated policy across multiple resources. Subtrees of Resource Manager resource hierarchy with 'under:' prefix will not be expanded.",
-	//   "flatPath": "v2/organizations/{organizationsId}/policies/{policiesId}:getEffectivePolicy",
-	//   "httpMethod": "GET",
-	//   "id": "orgpolicy.organizations.policies.getEffectivePolicy",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The effective policy to compute. See Policy for naming requirements.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/policies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}:getEffectivePolicy",
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.organizations.policies.list":
 
 type OrganizationsPoliciesListCall struct {
 	s            *Service
@@ -3755,12 +2870,11 @@ type OrganizationsPoliciesListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieves all of the policies that exist on a particular
-// resource.
+// List: Retrieves all of the policies that exist on a particular resource.
 //
 //   - parent: The target Google Cloud resource that parents the set of
-//     constraints and policies that will be returned from this call. Must
-//     be in one of the following forms: * `projects/{project_number}` *
+//     constraints and policies that will be returned from this call. Must be in
+//     one of the following forms: * `projects/{project_number}` *
 //     `projects/{project_id}` * `folders/{folder_id}` *
 //     `organizations/{organization_id}`.
 func (r *OrganizationsPoliciesService) List(parent string) *OrganizationsPoliciesListCall {
@@ -3769,50 +2883,46 @@ func (r *OrganizationsPoliciesService) List(parent string) *OrganizationsPolicie
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the pages to
-// be returned. This is currently unsupported and will be ignored. The
-// server may at any point start using this field to limit page size.
+// PageSize sets the optional parameter "pageSize": Size of the pages to be
+// returned. This is currently unsupported and will be ignored. The server may
+// at any point start using this field to limit page size.
 func (c *OrganizationsPoliciesListCall) PageSize(pageSize int64) *OrganizationsPoliciesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token used to
-// retrieve the next page. This is currently unsupported and will be
-// ignored. The server may at any point start using this field.
+// retrieve the next page. This is currently unsupported and will be ignored.
+// The server may at any point start using this field.
 func (c *OrganizationsPoliciesListCall) PageToken(pageToken string) *OrganizationsPoliciesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsPoliciesListCall) Fields(s ...googleapi.Field) *OrganizationsPoliciesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *OrganizationsPoliciesListCall) IfNoneMatch(entityTag string) *OrganizationsPoliciesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsPoliciesListCall) Context(ctx context.Context) *OrganizationsPoliciesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsPoliciesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3821,12 +2931,7 @@ func (c *OrganizationsPoliciesListCall) Header() http.Header {
 }
 
 func (c *OrganizationsPoliciesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3847,14 +2952,11 @@ func (c *OrganizationsPoliciesListCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "orgpolicy.organizations.policies.list" call.
-// Exactly one of *GoogleCloudOrgpolicyV2ListPoliciesResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudOrgpolicyV2ListPoliciesResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2ListPoliciesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsPoliciesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2ListPoliciesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3885,43 +2987,6 @@ func (c *OrganizationsPoliciesListCall) Do(opts ...googleapi.CallOption) (*Googl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves all of the policies that exist on a particular resource.",
-	//   "flatPath": "v2/organizations/{organizationsId}/policies",
-	//   "httpMethod": "GET",
-	//   "id": "orgpolicy.organizations.policies.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Size of the pages to be returned. This is currently unsupported and will be ignored. The server may at any point start using this field to limit page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token used to retrieve the next page. This is currently unsupported and will be ignored. The server may at any point start using this field.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The target Google Cloud resource that parents the set of constraints and policies that will be returned from this call. Must be in one of the following forms: * `projects/{project_number}` * `projects/{project_id}` * `folders/{folder_id}` * `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/policies",
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2ListPoliciesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3929,7 +2994,7 @@ func (c *OrganizationsPoliciesListCall) Do(opts ...googleapi.CallOption) (*Googl
 // The provided context supersedes any context provided to the Context method.
 func (c *OrganizationsPoliciesListCall) Pages(ctx context.Context, f func(*GoogleCloudOrgpolicyV2ListPoliciesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3945,8 +3010,6 @@ func (c *OrganizationsPoliciesListCall) Pages(ctx context.Context, f func(*Googl
 	}
 }
 
-// method id "orgpolicy.organizations.policies.patch":
-
 type OrganizationsPoliciesPatchCall struct {
 	s                            *Service
 	name                         string
@@ -3957,22 +3020,21 @@ type OrganizationsPoliciesPatchCall struct {
 }
 
 // Patch: Updates a policy. Returns a `google.rpc.Status` with
-// `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not
-// exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED`
-// if the etag supplied in the request does not match the persisted etag
-// of the policy Note: the supplied policy will perform a full overwrite
-// of all fields.
+// `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not exist.
+// Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag
+// supplied in the request does not match the persisted etag of the policy
+// Note: the supplied policy will perform a full overwrite of all fields.
 //
-//   - name: Immutable. The resource name of the policy. Must be one of
-//     the following forms, where `constraint_name` is the name of the
-//     constraint which this policy configures: *
+//   - name: Immutable. The resource name of the policy. Must be one of the
+//     following forms, where `constraint_name` is the name of the constraint
+//     which this policy configures: *
 //     `projects/{project_number}/policies/{constraint_name}` *
 //     `folders/{folder_id}/policies/{constraint_name}` *
-//     `organizations/{organization_id}/policies/{constraint_name}` For
-//     example, `projects/123/policies/compute.disableSerialPortAccess`.
-//     Note: `projects/{project_id}/policies/{constraint_name}` is also an
-//     acceptable name for API requests, but responses will return the
-//     name using the equivalent project number.
+//     `organizations/{organization_id}/policies/{constraint_name}` For example,
+//     `projects/123/policies/compute.disableSerialPortAccess`. Note:
+//     `projects/{project_id}/policies/{constraint_name}` is also an acceptable
+//     name for API requests, but responses will return the name using the
+//     equivalent project number.
 func (r *OrganizationsPoliciesService) Patch(name string, googlecloudorgpolicyv2policy *GoogleCloudOrgpolicyV2Policy) *OrganizationsPoliciesPatchCall {
 	c := &OrganizationsPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -3980,33 +3042,31 @@ func (r *OrganizationsPoliciesService) Patch(name string, googlecloudorgpolicyv2
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Field mask used
-// to specify the fields to be overwritten in the policy by the set. The
-// fields specified in the update_mask are relative to the policy, not
-// the full request.
+// UpdateMask sets the optional parameter "updateMask": Field mask used to
+// specify the fields to be overwritten in the policy by the set. The fields
+// specified in the update_mask are relative to the policy, not the full
+// request.
 func (c *OrganizationsPoliciesPatchCall) UpdateMask(updateMask string) *OrganizationsPoliciesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *OrganizationsPoliciesPatchCall) Fields(s ...googleapi.Field) *OrganizationsPoliciesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *OrganizationsPoliciesPatchCall) Context(ctx context.Context) *OrganizationsPoliciesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *OrganizationsPoliciesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4015,18 +3075,12 @@ func (c *OrganizationsPoliciesPatchCall) Header() http.Header {
 }
 
 func (c *OrganizationsPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudorgpolicyv2policy)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
@@ -4043,12 +3097,11 @@ func (c *OrganizationsPoliciesPatchCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "orgpolicy.organizations.policies.patch" call.
-// Exactly one of *GoogleCloudOrgpolicyV2Policy or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *OrganizationsPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4079,44 +3132,7 @@ func (c *OrganizationsPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*Goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag supplied in the request does not match the persisted etag of the policy Note: the supplied policy will perform a full overwrite of all fields.",
-	//   "flatPath": "v2/organizations/{organizationsId}/policies/{policiesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "orgpolicy.organizations.policies.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint which this policy configures: * `projects/{project_number}/policies/{constraint_name}` * `folders/{folder_id}/policies/{constraint_name}` * `organizations/{organization_id}/policies/{constraint_name}` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/{project_id}/policies/{constraint_name}` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.",
-	//       "location": "path",
-	//       "pattern": "^organizations/[^/]+/policies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Field mask used to specify the fields to be overwritten in the policy by the set. The fields specified in the update_mask are relative to the policy, not the full request.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.projects.constraints.list":
 
 type ProjectsConstraintsListCall struct {
 	s            *Service
@@ -4127,11 +3143,10 @@ type ProjectsConstraintsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists constraints that could be applied on the specified
-// resource.
+// List: Lists constraints that could be applied on the specified resource.
 //
-//   - parent: The Google Cloud resource that parents the constraint. Must
-//     be in one of the following forms: * `projects/{project_number}` *
+//   - parent: The Google Cloud resource that parents the constraint. Must be in
+//     one of the following forms: * `projects/{project_number}` *
 //     `projects/{project_id}` * `folders/{folder_id}` *
 //     `organizations/{organization_id}`.
 func (r *ProjectsConstraintsService) List(parent string) *ProjectsConstraintsListCall {
@@ -4140,50 +3155,46 @@ func (r *ProjectsConstraintsService) List(parent string) *ProjectsConstraintsLis
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the pages to
-// be returned. This is currently unsupported and will be ignored. The
-// server may at any point start using this field to limit page size.
+// PageSize sets the optional parameter "pageSize": Size of the pages to be
+// returned. This is currently unsupported and will be ignored. The server may
+// at any point start using this field to limit page size.
 func (c *ProjectsConstraintsListCall) PageSize(pageSize int64) *ProjectsConstraintsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token used to
-// retrieve the next page. This is currently unsupported and will be
-// ignored. The server may at any point start using this field.
+// retrieve the next page. This is currently unsupported and will be ignored.
+// The server may at any point start using this field.
 func (c *ProjectsConstraintsListCall) PageToken(pageToken string) *ProjectsConstraintsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsConstraintsListCall) Fields(s ...googleapi.Field) *ProjectsConstraintsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsConstraintsListCall) IfNoneMatch(entityTag string) *ProjectsConstraintsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsConstraintsListCall) Context(ctx context.Context) *ProjectsConstraintsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsConstraintsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4192,12 +3203,7 @@ func (c *ProjectsConstraintsListCall) Header() http.Header {
 }
 
 func (c *ProjectsConstraintsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4218,14 +3224,11 @@ func (c *ProjectsConstraintsListCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "orgpolicy.projects.constraints.list" call.
-// Exactly one of *GoogleCloudOrgpolicyV2ListConstraintsResponse or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudOrgpolicyV2ListConstraintsResponse.ServerResponse.Header
-// or (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2ListConstraintsResponse.ServerResponse.Header or (if
+// a response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsConstraintsListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2ListConstraintsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4256,43 +3259,6 @@ func (c *ProjectsConstraintsListCall) Do(opts ...googleapi.CallOption) (*GoogleC
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists constraints that could be applied on the specified resource.",
-	//   "flatPath": "v2/projects/{projectsId}/constraints",
-	//   "httpMethod": "GET",
-	//   "id": "orgpolicy.projects.constraints.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Size of the pages to be returned. This is currently unsupported and will be ignored. The server may at any point start using this field to limit page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token used to retrieve the next page. This is currently unsupported and will be ignored. The server may at any point start using this field.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The Google Cloud resource that parents the constraint. Must be in one of the following forms: * `projects/{project_number}` * `projects/{project_id}` * `folders/{folder_id}` * `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/constraints",
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2ListConstraintsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4300,7 +3266,7 @@ func (c *ProjectsConstraintsListCall) Do(opts ...googleapi.CallOption) (*GoogleC
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsConstraintsListCall) Pages(ctx context.Context, f func(*GoogleCloudOrgpolicyV2ListConstraintsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4316,8 +3282,6 @@ func (c *ProjectsConstraintsListCall) Pages(ctx context.Context, f func(*GoogleC
 	}
 }
 
-// method id "orgpolicy.projects.policies.create":
-
 type ProjectsPoliciesCreateCall struct {
 	s                            *Service
 	parent                       string
@@ -4328,14 +3292,14 @@ type ProjectsPoliciesCreateCall struct {
 }
 
 // Create: Creates a policy. Returns a `google.rpc.Status` with
-// `google.rpc.Code.NOT_FOUND` if the constraint does not exist. Returns
-// a `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the
-// policy already exists on the given Google Cloud resource.
+// `google.rpc.Code.NOT_FOUND` if the constraint does not exist. Returns a
+// `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the policy
+// already exists on the given Google Cloud resource.
 //
-//   - parent: The Google Cloud resource that will parent the new policy.
-//     Must be in one of the following forms: *
-//     `projects/{project_number}` * `projects/{project_id}` *
-//     `folders/{folder_id}` * `organizations/{organization_id}`.
+//   - parent: The Google Cloud resource that will parent the new policy. Must be
+//     in one of the following forms: * `projects/{project_number}` *
+//     `projects/{project_id}` * `folders/{folder_id}` *
+//     `organizations/{organization_id}`.
 func (r *ProjectsPoliciesService) Create(parent string, googlecloudorgpolicyv2policy *GoogleCloudOrgpolicyV2Policy) *ProjectsPoliciesCreateCall {
 	c := &ProjectsPoliciesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -4344,23 +3308,21 @@ func (r *ProjectsPoliciesService) Create(parent string, googlecloudorgpolicyv2po
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsPoliciesCreateCall) Fields(s ...googleapi.Field) *ProjectsPoliciesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsPoliciesCreateCall) Context(ctx context.Context) *ProjectsPoliciesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsPoliciesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4369,18 +3331,12 @@ func (c *ProjectsPoliciesCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsPoliciesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudorgpolicyv2policy)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+parent}/policies")
@@ -4397,12 +3353,11 @@ func (c *ProjectsPoliciesCreateCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "orgpolicy.projects.policies.create" call.
-// Exactly one of *GoogleCloudOrgpolicyV2Policy or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4433,38 +3388,7 @@ func (c *ProjectsPoliciesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleCl
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint does not exist. Returns a `google.rpc.Status` with `google.rpc.Code.ALREADY_EXISTS` if the policy already exists on the given Google Cloud resource.",
-	//   "flatPath": "v2/projects/{projectsId}/policies",
-	//   "httpMethod": "POST",
-	//   "id": "orgpolicy.projects.policies.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The Google Cloud resource that will parent the new policy. Must be in one of the following forms: * `projects/{project_number}` * `projects/{project_id}` * `folders/{folder_id}` * `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/policies",
-	//   "request": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.projects.policies.delete":
 
 type ProjectsPoliciesDeleteCall struct {
 	s          *Service
@@ -4475,44 +3399,40 @@ type ProjectsPoliciesDeleteCall struct {
 }
 
 // Delete: Deletes a policy. Returns a `google.rpc.Status` with
-// `google.rpc.Code.NOT_FOUND` if the constraint or organization policy
-// does not exist.
+// `google.rpc.Code.NOT_FOUND` if the constraint or organization policy does
+// not exist.
 //
-//   - name: Name of the policy to delete. See the policy entry for naming
-//     rules.
+// - name: Name of the policy to delete. See the policy entry for naming rules.
 func (r *ProjectsPoliciesService) Delete(name string) *ProjectsPoliciesDeleteCall {
 	c := &ProjectsPoliciesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Etag sets the optional parameter "etag": The current etag of policy.
-// If an etag is provided and does not match the current etag of the
-// policy, deletion will be blocked and an ABORTED error will be
-// returned.
+// Etag sets the optional parameter "etag": The current etag of policy. If an
+// etag is provided and does not match the current etag of the policy, deletion
+// will be blocked and an ABORTED error will be returned.
 func (c *ProjectsPoliciesDeleteCall) Etag(etag string) *ProjectsPoliciesDeleteCall {
 	c.urlParams_.Set("etag", etag)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsPoliciesDeleteCall) Fields(s ...googleapi.Field) *ProjectsPoliciesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsPoliciesDeleteCall) Context(ctx context.Context) *ProjectsPoliciesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsPoliciesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4521,12 +3441,7 @@ func (c *ProjectsPoliciesDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsPoliciesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -4544,12 +3459,11 @@ func (c *ProjectsPoliciesDeleteCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "orgpolicy.projects.policies.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4580,40 +3494,7 @@ func (c *ProjectsPoliciesDeleteCall) Do(opts ...googleapi.CallOption) (*GooglePr
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or organization policy does not exist.",
-	//   "flatPath": "v2/projects/{projectsId}/policies/{policiesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "orgpolicy.projects.policies.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "etag": {
-	//       "description": "Optional. The current etag of policy. If an etag is provided and does not match the current etag of the policy, deletion will be blocked and an ABORTED error will be returned.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "Required. Name of the policy to delete. See the policy entry for naming rules.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/policies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.projects.policies.get":
 
 type ProjectsPoliciesGetCall struct {
 	s            *Service
@@ -4624,12 +3505,11 @@ type ProjectsPoliciesGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a policy on a resource. If no policy is set on the
-// resource, `NOT_FOUND` is returned. The `etag` value can be used with
-// `UpdatePolicy()` to update a policy during read-modify-write.
+// Get: Gets a policy on a resource. If no policy is set on the resource,
+// `NOT_FOUND` is returned. The `etag` value can be used with `UpdatePolicy()`
+// to update a policy during read-modify-write.
 //
-//   - name: Resource name of the policy. See Policy for naming
-//     requirements.
+// - name: Resource name of the policy. See Policy for naming requirements.
 func (r *ProjectsPoliciesService) Get(name string) *ProjectsPoliciesGetCall {
 	c := &ProjectsPoliciesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4637,33 +3517,29 @@ func (r *ProjectsPoliciesService) Get(name string) *ProjectsPoliciesGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsPoliciesGetCall) Fields(s ...googleapi.Field) *ProjectsPoliciesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsPoliciesGetCall) IfNoneMatch(entityTag string) *ProjectsPoliciesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsPoliciesGetCall) Context(ctx context.Context) *ProjectsPoliciesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsPoliciesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4672,12 +3548,7 @@ func (c *ProjectsPoliciesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsPoliciesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4698,12 +3569,11 @@ func (c *ProjectsPoliciesGetCall) doRequest(alt string) (*http.Response, error) 
 }
 
 // Do executes the "orgpolicy.projects.policies.get" call.
-// Exactly one of *GoogleCloudOrgpolicyV2Policy or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsPoliciesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4734,35 +3604,7 @@ func (c *ProjectsPoliciesGetCall) Do(opts ...googleapi.CallOption) (*GoogleCloud
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a policy on a resource. If no policy is set on the resource, `NOT_FOUND` is returned. The `etag` value can be used with `UpdatePolicy()` to update a policy during read-modify-write.",
-	//   "flatPath": "v2/projects/{projectsId}/policies/{policiesId}",
-	//   "httpMethod": "GET",
-	//   "id": "orgpolicy.projects.policies.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. Resource name of the policy. See Policy for naming requirements.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/policies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.projects.policies.getEffectivePolicy":
 
 type ProjectsPoliciesGetEffectivePolicyCall struct {
 	s            *Service
@@ -4773,15 +3615,14 @@ type ProjectsPoliciesGetEffectivePolicyCall struct {
 	header_      http.Header
 }
 
-// GetEffectivePolicy: Gets the effective policy on a resource. This is
-// the result of merging policies in the resource hierarchy and
-// evaluating conditions. The returned policy will not have an `etag` or
-// `condition` set because it is an evaluated policy across multiple
-// resources. Subtrees of Resource Manager resource hierarchy with
-// 'under:' prefix will not be expanded.
+// GetEffectivePolicy: Gets the effective policy on a resource. This is the
+// result of merging policies in the resource hierarchy and evaluating
+// conditions. The returned policy will not have an `etag` or `condition` set
+// because it is an evaluated policy across multiple resources. Subtrees of
+// Resource Manager resource hierarchy with 'under:' prefix will not be
+// expanded.
 //
-//   - name: The effective policy to compute. See Policy for naming
-//     requirements.
+// - name: The effective policy to compute. See Policy for naming requirements.
 func (r *ProjectsPoliciesService) GetEffectivePolicy(name string) *ProjectsPoliciesGetEffectivePolicyCall {
 	c := &ProjectsPoliciesGetEffectivePolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4789,33 +3630,29 @@ func (r *ProjectsPoliciesService) GetEffectivePolicy(name string) *ProjectsPolic
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsPoliciesGetEffectivePolicyCall) Fields(s ...googleapi.Field) *ProjectsPoliciesGetEffectivePolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsPoliciesGetEffectivePolicyCall) IfNoneMatch(entityTag string) *ProjectsPoliciesGetEffectivePolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsPoliciesGetEffectivePolicyCall) Context(ctx context.Context) *ProjectsPoliciesGetEffectivePolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsPoliciesGetEffectivePolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4824,12 +3661,7 @@ func (c *ProjectsPoliciesGetEffectivePolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsPoliciesGetEffectivePolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4850,12 +3682,11 @@ func (c *ProjectsPoliciesGetEffectivePolicyCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "orgpolicy.projects.policies.getEffectivePolicy" call.
-// Exactly one of *GoogleCloudOrgpolicyV2Policy or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsPoliciesGetEffectivePolicyCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4886,35 +3717,7 @@ func (c *ProjectsPoliciesGetEffectivePolicyCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the effective policy on a resource. This is the result of merging policies in the resource hierarchy and evaluating conditions. The returned policy will not have an `etag` or `condition` set because it is an evaluated policy across multiple resources. Subtrees of Resource Manager resource hierarchy with 'under:' prefix will not be expanded.",
-	//   "flatPath": "v2/projects/{projectsId}/policies/{policiesId}:getEffectivePolicy",
-	//   "httpMethod": "GET",
-	//   "id": "orgpolicy.projects.policies.getEffectivePolicy",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The effective policy to compute. See Policy for naming requirements.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/policies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}:getEffectivePolicy",
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "orgpolicy.projects.policies.list":
 
 type ProjectsPoliciesListCall struct {
 	s            *Service
@@ -4925,12 +3728,11 @@ type ProjectsPoliciesListCall struct {
 	header_      http.Header
 }
 
-// List: Retrieves all of the policies that exist on a particular
-// resource.
+// List: Retrieves all of the policies that exist on a particular resource.
 //
 //   - parent: The target Google Cloud resource that parents the set of
-//     constraints and policies that will be returned from this call. Must
-//     be in one of the following forms: * `projects/{project_number}` *
+//     constraints and policies that will be returned from this call. Must be in
+//     one of the following forms: * `projects/{project_number}` *
 //     `projects/{project_id}` * `folders/{folder_id}` *
 //     `organizations/{organization_id}`.
 func (r *ProjectsPoliciesService) List(parent string) *ProjectsPoliciesListCall {
@@ -4939,50 +3741,46 @@ func (r *ProjectsPoliciesService) List(parent string) *ProjectsPoliciesListCall 
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Size of the pages to
-// be returned. This is currently unsupported and will be ignored. The
-// server may at any point start using this field to limit page size.
+// PageSize sets the optional parameter "pageSize": Size of the pages to be
+// returned. This is currently unsupported and will be ignored. The server may
+// at any point start using this field to limit page size.
 func (c *ProjectsPoliciesListCall) PageSize(pageSize int64) *ProjectsPoliciesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
 // PageToken sets the optional parameter "pageToken": Page token used to
-// retrieve the next page. This is currently unsupported and will be
-// ignored. The server may at any point start using this field.
+// retrieve the next page. This is currently unsupported and will be ignored.
+// The server may at any point start using this field.
 func (c *ProjectsPoliciesListCall) PageToken(pageToken string) *ProjectsPoliciesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsPoliciesListCall) Fields(s ...googleapi.Field) *ProjectsPoliciesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsPoliciesListCall) IfNoneMatch(entityTag string) *ProjectsPoliciesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsPoliciesListCall) Context(ctx context.Context) *ProjectsPoliciesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsPoliciesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4991,12 +3789,7 @@ func (c *ProjectsPoliciesListCall) Header() http.Header {
 }
 
 func (c *ProjectsPoliciesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5017,14 +3810,11 @@ func (c *ProjectsPoliciesListCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "orgpolicy.projects.policies.list" call.
-// Exactly one of *GoogleCloudOrgpolicyV2ListPoliciesResponse or error
-// will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleCloudOrgpolicyV2ListPoliciesResponse.ServerResponse.Header or
-// (if a response was returned at all) in
-// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2ListPoliciesResponse.ServerResponse.Header or (if a
+// response was returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsPoliciesListCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2ListPoliciesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5055,43 +3845,6 @@ func (c *ProjectsPoliciesListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Retrieves all of the policies that exist on a particular resource.",
-	//   "flatPath": "v2/projects/{projectsId}/policies",
-	//   "httpMethod": "GET",
-	//   "id": "orgpolicy.projects.policies.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Size of the pages to be returned. This is currently unsupported and will be ignored. The server may at any point start using this field to limit page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Page token used to retrieve the next page. This is currently unsupported and will be ignored. The server may at any point start using this field.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The target Google Cloud resource that parents the set of constraints and policies that will be returned from this call. Must be in one of the following forms: * `projects/{project_number}` * `projects/{project_id}` * `folders/{folder_id}` * `organizations/{organization_id}`",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+parent}/policies",
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2ListPoliciesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5099,7 +3852,7 @@ func (c *ProjectsPoliciesListCall) Do(opts ...googleapi.CallOption) (*GoogleClou
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsPoliciesListCall) Pages(ctx context.Context, f func(*GoogleCloudOrgpolicyV2ListPoliciesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5115,8 +3868,6 @@ func (c *ProjectsPoliciesListCall) Pages(ctx context.Context, f func(*GoogleClou
 	}
 }
 
-// method id "orgpolicy.projects.policies.patch":
-
 type ProjectsPoliciesPatchCall struct {
 	s                            *Service
 	name                         string
@@ -5127,22 +3878,21 @@ type ProjectsPoliciesPatchCall struct {
 }
 
 // Patch: Updates a policy. Returns a `google.rpc.Status` with
-// `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not
-// exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED`
-// if the etag supplied in the request does not match the persisted etag
-// of the policy Note: the supplied policy will perform a full overwrite
-// of all fields.
+// `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not exist.
+// Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag
+// supplied in the request does not match the persisted etag of the policy
+// Note: the supplied policy will perform a full overwrite of all fields.
 //
-//   - name: Immutable. The resource name of the policy. Must be one of
-//     the following forms, where `constraint_name` is the name of the
-//     constraint which this policy configures: *
+//   - name: Immutable. The resource name of the policy. Must be one of the
+//     following forms, where `constraint_name` is the name of the constraint
+//     which this policy configures: *
 //     `projects/{project_number}/policies/{constraint_name}` *
 //     `folders/{folder_id}/policies/{constraint_name}` *
-//     `organizations/{organization_id}/policies/{constraint_name}` For
-//     example, `projects/123/policies/compute.disableSerialPortAccess`.
-//     Note: `projects/{project_id}/policies/{constraint_name}` is also an
-//     acceptable name for API requests, but responses will return the
-//     name using the equivalent project number.
+//     `organizations/{organization_id}/policies/{constraint_name}` For example,
+//     `projects/123/policies/compute.disableSerialPortAccess`. Note:
+//     `projects/{project_id}/policies/{constraint_name}` is also an acceptable
+//     name for API requests, but responses will return the name using the
+//     equivalent project number.
 func (r *ProjectsPoliciesService) Patch(name string, googlecloudorgpolicyv2policy *GoogleCloudOrgpolicyV2Policy) *ProjectsPoliciesPatchCall {
 	c := &ProjectsPoliciesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -5150,33 +3900,31 @@ func (r *ProjectsPoliciesService) Patch(name string, googlecloudorgpolicyv2polic
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Field mask used
-// to specify the fields to be overwritten in the policy by the set. The
-// fields specified in the update_mask are relative to the policy, not
-// the full request.
+// UpdateMask sets the optional parameter "updateMask": Field mask used to
+// specify the fields to be overwritten in the policy by the set. The fields
+// specified in the update_mask are relative to the policy, not the full
+// request.
 func (c *ProjectsPoliciesPatchCall) UpdateMask(updateMask string) *ProjectsPoliciesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsPoliciesPatchCall) Fields(s ...googleapi.Field) *ProjectsPoliciesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsPoliciesPatchCall) Context(ctx context.Context) *ProjectsPoliciesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsPoliciesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5185,18 +3933,12 @@ func (c *ProjectsPoliciesPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsPoliciesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlecloudorgpolicyv2policy)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v2/{+name}")
@@ -5213,12 +3955,11 @@ func (c *ProjectsPoliciesPatchCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "orgpolicy.projects.policies.patch" call.
-// Exactly one of *GoogleCloudOrgpolicyV2Policy or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleCloudOrgpolicyV2Policy.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleCloudOrgpolicyV2Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5249,39 +3990,4 @@ func (c *ProjectsPoliciesPatchCall) Do(opts ...googleapi.CallOption) (*GoogleClo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a policy. Returns a `google.rpc.Status` with `google.rpc.Code.NOT_FOUND` if the constraint or the policy do not exist. Returns a `google.rpc.Status` with `google.rpc.Code.ABORTED` if the etag supplied in the request does not match the persisted etag of the policy Note: the supplied policy will perform a full overwrite of all fields.",
-	//   "flatPath": "v2/projects/{projectsId}/policies/{policiesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "orgpolicy.projects.policies.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Immutable. The resource name of the policy. Must be one of the following forms, where `constraint_name` is the name of the constraint which this policy configures: * `projects/{project_number}/policies/{constraint_name}` * `folders/{folder_id}/policies/{constraint_name}` * `organizations/{organization_id}/policies/{constraint_name}` For example, `projects/123/policies/compute.disableSerialPortAccess`. Note: `projects/{project_id}/policies/{constraint_name}` is also an acceptable name for API requests, but responses will return the name using the equivalent project number.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/policies/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Field mask used to specify the fields to be overwritten in the policy by the set. The fields specified in the update_mask are relative to the policy, not the full request.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v2/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleCloudOrgpolicyV2Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

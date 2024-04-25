@@ -211,14 +211,13 @@ type ProjectsLocationsDatasetsFhirStoresFhirService struct {
 	s *Service
 }
 
-// HttpBody: Message that represents an arbitrary HTTP body. It should
-// only be used for
-// payload formats that can't be represented as JSON, such as raw binary
-// or
+// HttpBody: Message that represents an arbitrary HTTP body. It should only be
+// used for
+// payload formats that can't be represented as JSON, such as raw binary or
 // an HTML page.
 //
-// This message can be used both in streaming and non-streaming API
-// methods in
+// This message can be used both in streaming and non-streaming API methods
+// in
 // the request as well as the response.
 //
 // It can be used as a top-level request field, which is convenient if
@@ -238,11 +237,8 @@ type ProjectsLocationsDatasetsFhirStoresFhirService struct {
 //	}
 //
 //	service ResourceService {
-//	  rpc GetResource(GetResourceRequest) returns
-//
-// (google.api.HttpBody);
-//
-//	rpc UpdateResource(google.api.HttpBody) returns
+//	  rpc GetResource(GetResourceRequest) returns (google.api.HttpBody);
+//	  rpc UpdateResource(google.api.HttpBody) returns
 //
 // (google.protobuf.Empty);
 //
@@ -261,46 +257,35 @@ type ProjectsLocationsDatasetsFhirStoresFhirService struct {
 // are
 // handled, all other features will continue to work unchanged.
 type HttpBody struct {
-	// ContentType: The HTTP Content-Type header value specifying the
-	// content type of the body.
+	// ContentType: The HTTP Content-Type header value specifying the content type
+	// of the body.
 	ContentType string `json:"contentType,omitempty"`
-
 	// Data: The HTTP request/response body as raw binary.
 	Data string `json:"data,omitempty"`
-
-	// Extensions: Application specific response metadata. Must be set in
-	// the first response
+	// Extensions: Application specific response metadata. Must be set in the first
+	// response
 	// for streaming APIs.
 	Extensions []googleapi.RawMessage `json:"extensions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ContentType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContentType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContentType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *HttpBody) MarshalJSON() ([]byte, error) {
 	type NoMethod HttpBody
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "healthcare.projects.locations.datasets.fhirStores.fhir.createResource":
 
 type ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall struct {
 	s          *Service
@@ -325,23 +310,21 @@ func (r *ProjectsLocationsDatasetsFhirStoresFhirService) CreateResource(parent s
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -350,12 +333,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall) Header() htt
 }
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	body = c.body_
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1beta1/{+parent}/fhir/{+type}")
@@ -376,46 +354,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall) doRequest(al
 func (c *ProjectsLocationsDatasetsFhirStoresFhirCreateResourceCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
-	// {
-	//   "description": "Creates a FHIR resource.\n",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}",
-	//   "httpMethod": "POST",
-	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.createResource",
-	//   "parameterOrder": [
-	//     "parent",
-	//     "type"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "The name of the FHIR store this resource belongs to.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "type": {
-	//       "description": "The type of the resource to create.",
-	//       "location": "path",
-	//       "pattern": "^[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+parent}/fhir/{+type}",
-	//   "request": {
-	//     "$ref": "HttpBody"
-	//   },
-	//   "response": {
-	//     "$ref": "HttpBody"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "healthcare.projects.locations.datasets.fhirStores.fhir.read":
 
 type ProjectsLocationsDatasetsFhirStoresFhirReadCall struct {
 	s            *Service
@@ -439,8 +378,7 @@ type ProjectsLocationsDatasetsFhirStoresFhirReadCall struct {
 // value
 // or an `If-None-Match` header with an ETag value.
 //
-// On success, the response body will contain a JSON-encoded
-// representation
+// On success, the response body will contain a JSON-encoded representation
 // of the resource.
 // Errors generated by the FHIR store will contain a
 // JSON-encoded
@@ -458,33 +396,29 @@ func (r *ProjectsLocationsDatasetsFhirStoresFhirService) Read(name string) *Proj
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Fields(s ...googleapi.Field) *ProjectsLocationsDatasetsFhirStoresFhirReadCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) IfNoneMatch(entityTag string) *ProjectsLocationsDatasetsFhirStoresFhirReadCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Context(ctx context.Context) *ProjectsLocationsDatasetsFhirStoresFhirReadCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -493,12 +427,7 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -522,30 +451,4 @@ func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) doRequest(alt string) 
 func (c *ProjectsLocationsDatasetsFhirStoresFhirReadCall) Do(opts ...googleapi.CallOption) (*http.Response, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	return c.doRequest("")
-	// {
-	//   "description": "Gets the contents of a FHIR resource.\n\nImplements the FHIR standard [read\ninteraction](http://hl7.org/implement/standards/fhir/STU3/http.html#read).\n\nAlso supports the FHIR standard [conditional read\ninteraction](http://hl7.org/implement/standards/fhir/STU3/http.html#cread)\nspecified by supplying an `If-Modified-Since` header with a date/time value\nor an `If-None-Match` header with an ETag value.\n\nOn success, the response body will contain a JSON-encoded representation\nof the resource.\nErrors generated by the FHIR store will contain a JSON-encoded\n`OperationOutcome` resource describing the reason for the error. If the\nrequest cannot be mapped to a valid API method on a FHIR store, a generic\nGCP error might be returned instead.",
-	//   "flatPath": "v1beta1/projects/{projectsId}/locations/{locationsId}/datasets/{datasetsId}/fhirStores/{fhirStoresId}/fhir/{fhirId}/{fhirId1}",
-	//   "httpMethod": "GET",
-	//   "id": "healthcare.projects.locations.datasets.fhirStores.fhir.read",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the resource to retrieve.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/datasets/[^/]+/fhirStores/[^/]+/fhir/[^/]+/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1beta1/{+name}",
-	//   "response": {
-	//     "$ref": "HttpBody"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }

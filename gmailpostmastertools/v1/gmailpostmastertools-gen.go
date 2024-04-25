@@ -96,8 +96,8 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// See email traffic metrics for the domains you have registered in
-	// Gmail Postmaster Tools
+	// See email traffic metrics for the domains you have registered in Gmail
+	// Postmaster Tools
 	PostmasterReadonlyScope = "https://www.googleapis.com/auth/postmaster.readonly"
 )
 
@@ -181,69 +181,59 @@ type DeliveryError struct {
 	// ErrorClass: The class of delivery error.
 	//
 	// Possible values:
-	//   "DELIVERY_ERROR_CLASS_UNSPECIFIED" - The default value which should
-	// never be used explicitly.
+	//   "DELIVERY_ERROR_CLASS_UNSPECIFIED" - The default value which should never
+	// be used explicitly.
 	//   "PERMANENT_ERROR" - Delivery of message has been rejected.
 	//   "TEMPORARY_ERROR" - Temporary failure of message delivery to the
 	// recipient.
 	ErrorClass string `json:"errorClass,omitempty"`
-
 	// ErrorRatio: The ratio of messages where the error occurred vs all
 	// authenticated traffic.
 	ErrorRatio float64 `json:"errorRatio,omitempty"`
-
 	// ErrorType: The type of delivery error.
 	//
 	// Possible values:
-	//   "DELIVERY_ERROR_TYPE_UNSPECIFIED" - The default value which should
-	// never be used explicitly.
+	//   "DELIVERY_ERROR_TYPE_UNSPECIFIED" - The default value which should never
+	// be used explicitly.
 	//   "RATE_LIMIT_EXCEEDED" - The Domain or IP is sending traffic at a
 	// suspiciously high rate, due to which temporary rate limits have been
-	// imposed. The limit will be lifted when Gmail is confident enough of
-	// the nature of the traffic.
-	//   "SUSPECTED_SPAM" - The traffic is suspected to be spam, by Gmail,
-	// for various reasons.
-	//   "CONTENT_SPAMMY" - The traffic is suspected to be spammy, specific
-	// to the content.
-	//   "BAD_ATTACHMENT" - Traffic contains attachments not supported by
-	// Gmail.
+	// imposed. The limit will be lifted when Gmail is confident enough of the
+	// nature of the traffic.
+	//   "SUSPECTED_SPAM" - The traffic is suspected to be spam, by Gmail, for
+	// various reasons.
+	//   "CONTENT_SPAMMY" - The traffic is suspected to be spammy, specific to the
+	// content.
+	//   "BAD_ATTACHMENT" - Traffic contains attachments not supported by Gmail.
 	//   "BAD_DMARC_POLICY" - The sender domain has set up a DMARC rejection
 	// policy.
-	//   "LOW_IP_REPUTATION" - The IP reputation of the sending IP is very
-	// low.
-	//   "LOW_DOMAIN_REPUTATION" - The Domain reputation of the sending
-	// domain is very low.
-	//   "IP_IN_RBL" - The IP is listed in one or more public [Real-time
-	// Blackhole Lists](http://en.wikipedia.org/wiki/DNSBL). Work with the
-	// RBL to get your IP delisted.
-	//   "DOMAIN_IN_RBL" - The Domain is listed in one or more public
-	// [Real-time Blackhole Lists](http://en.wikipedia.org/wiki/DNSBL). Work
-	// with the RBL to get your domain delisted.
+	//   "LOW_IP_REPUTATION" - The IP reputation of the sending IP is very low.
+	//   "LOW_DOMAIN_REPUTATION" - The Domain reputation of the sending domain is
+	// very low.
+	//   "IP_IN_RBL" - The IP is listed in one or more public [Real-time Blackhole
+	// Lists](http://en.wikipedia.org/wiki/DNSBL). Work with the RBL to get your IP
+	// delisted.
+	//   "DOMAIN_IN_RBL" - The Domain is listed in one or more public [Real-time
+	// Blackhole Lists](http://en.wikipedia.org/wiki/DNSBL). Work with the RBL to
+	// get your domain delisted.
 	//   "BAD_PTR_RECORD" - The sending IP is missing a [PTR
 	// record](https://support.google.com/domains/answer/3251147#ptr).
 	ErrorType string `json:"errorType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ErrorClass") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ErrorClass") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ErrorClass") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DeliveryError) MarshalJSON() ([]byte, error) {
 	type NoMethod DeliveryError
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *DeliveryError) UnmarshalJSON(data []byte) error {
@@ -262,89 +252,70 @@ func (s *DeliveryError) UnmarshalJSON(data []byte) error {
 
 // Domain: A registered domain resource in the Postmaster API.
 type Domain struct {
-	// CreateTime: Timestamp when the user registered this domain. Assigned
-	// by the server.
-	CreateTime string `json:"createTime,omitempty"`
-
-	// Name: The resource name of the Domain. Domain names have the form
-	// `domains/{domain_name}`, where domain_name is the fully qualified
-	// domain name (i.e., mymail.mydomain.com).
-	Name string `json:"name,omitempty"`
-
-	// Permission: User’s permission for this domain. Assigned by the
+	// CreateTime: Timestamp when the user registered this domain. Assigned by the
 	// server.
+	CreateTime string `json:"createTime,omitempty"`
+	// Name: The resource name of the Domain. Domain names have the form
+	// `domains/{domain_name}`, where domain_name is the fully qualified domain
+	// name (i.e., mymail.mydomain.com).
+	Name string `json:"name,omitempty"`
+	// Permission: User’s permission for this domain. Assigned by the server.
 	//
 	// Possible values:
-	//   "PERMISSION_UNSPECIFIED" - The default value and should never be
-	// used explicitly.
-	//   "OWNER" - User has read access to the domain and can share access
-	// with others.
+	//   "PERMISSION_UNSPECIFIED" - The default value and should never be used
+	// explicitly.
+	//   "OWNER" - User has read access to the domain and can share access with
+	// others.
 	//   "READER" - User has read access to the domain.
-	//   "NONE" - User doesn't have permission to access information about
-	// the domain. User did not verify ownership of domain nor was access
-	// granted by other domain owners.
+	//   "NONE" - User doesn't have permission to access information about the
+	// domain. User did not verify ownership of domain nor was access granted by
+	// other domain owners.
 	Permission string `json:"permission,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Domain) MarshalJSON() ([]byte, error) {
 	type NoMethod Domain
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// FeedbackLoop: Feedback loop
-// (https://support.google.com/mail/answer/6254652) identifier
-// information.
+// FeedbackLoop: Feedback loop (https://support.google.com/mail/answer/6254652)
+// identifier information.
 type FeedbackLoop struct {
-	// Id: Feedback loop identifier that uniquely identifies individual
-	// campaigns.
+	// Id: Feedback loop identifier that uniquely identifies individual campaigns.
 	Id string `json:"id,omitempty"`
-
-	// SpamRatio: The ratio of user marked spam messages with the identifier
-	// vs the total number of inboxed messages with that identifier.
+	// SpamRatio: The ratio of user marked spam messages with the identifier vs the
+	// total number of inboxed messages with that identifier.
 	SpamRatio float64 `json:"spamRatio,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Id") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Id") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Id") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Id") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *FeedbackLoop) MarshalJSON() ([]byte, error) {
 	type NoMethod FeedbackLoop
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *FeedbackLoop) UnmarshalJSON(data []byte) error {
@@ -361,257 +332,207 @@ func (s *FeedbackLoop) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// IpReputation: IP Reputation information for a set of IPs in a
-// specific reputation category.
+// IpReputation: IP Reputation information for a set of IPs in a specific
+// reputation category.
 type IpReputation struct {
-	// IpCount: Total number of unique IPs in this reputation category. This
-	// metric only pertains to traffic that passed SPF
-	// (http://www.openspf.org/) or DKIM (http://www.dkim.org/).
+	// IpCount: Total number of unique IPs in this reputation category. This metric
+	// only pertains to traffic that passed SPF (http://www.openspf.org/) or DKIM
+	// (http://www.dkim.org/).
 	IpCount int64 `json:"ipCount,omitempty,string"`
-
 	// Reputation: The reputation category this IP reputation represents.
 	//
 	// Possible values:
-	//   "REPUTATION_CATEGORY_UNSPECIFIED" - The default value which should
-	// never be used explicitly. This represents the state where no
-	// reputation information is available.
-	//   "HIGH" - Has a good track record of a very low spam rate, and
-	// complies with Gmail's sender guidelines. Mail will rarely be marked
-	// by the spam filter.
-	//   "MEDIUM" - Known to send good mail, but is prone to sending a low
-	// volume of spam intermittently. Most of the email from this entity
-	// will have a fair deliverability rate, except when there is a notable
-	// increase in spam levels.
-	//   "LOW" - Known to send a considerable volume of spam regularly, and
-	// mail from this sender will likely be marked as spam.
-	//   "BAD" - History of sending an enormously high volume of spam. Mail
-	// coming from this entity will almost always be rejected at SMTP level
-	// or marked as spam.
+	//   "REPUTATION_CATEGORY_UNSPECIFIED" - The default value which should never
+	// be used explicitly. This represents the state where no reputation
+	// information is available.
+	//   "HIGH" - Has a good track record of a very low spam rate, and complies
+	// with Gmail's sender guidelines. Mail will rarely be marked by the spam
+	// filter.
+	//   "MEDIUM" - Known to send good mail, but is prone to sending a low volume
+	// of spam intermittently. Most of the email from this entity will have a fair
+	// deliverability rate, except when there is a notable increase in spam levels.
+	//   "LOW" - Known to send a considerable volume of spam regularly, and mail
+	// from this sender will likely be marked as spam.
+	//   "BAD" - History of sending an enormously high volume of spam. Mail coming
+	// from this entity will almost always be rejected at SMTP level or marked as
+	// spam.
 	Reputation string `json:"reputation,omitempty"`
-
 	// SampleIps: A sample of IPs in this reputation category.
 	SampleIps []string `json:"sampleIps,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "IpCount") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "IpCount") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IpCount") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IpCount") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *IpReputation) MarshalJSON() ([]byte, error) {
 	type NoMethod IpReputation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListDomainsResponse: Response message for ListDomains.
 type ListDomainsResponse struct {
 	// Domains: The list of domains.
 	Domains []*Domain `json:"domains,omitempty"`
-
-	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Domains") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Domains") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Domains") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Domains") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListDomainsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListDomainsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTrafficStatsResponse: Response message for ListTrafficStats.
 type ListTrafficStatsResponse struct {
-	// NextPageToken: Token to retrieve the next page of results, or empty
-	// if there are no more results in the list.
+	// NextPageToken: Token to retrieve the next page of results, or empty if there
+	// are no more results in the list.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// TrafficStats: The list of TrafficStats.
 	TrafficStats []*TrafficStats `json:"trafficStats,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListTrafficStatsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTrafficStatsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // TrafficStats: Email traffic statistics pertaining to a specific date.
 type TrafficStats struct {
-	// DeliveryErrors: Delivery errors for the domain. This metric only
-	// pertains to traffic that passed SPF (http://www.openspf.org/) or DKIM
+	// DeliveryErrors: Delivery errors for the domain. This metric only pertains to
+	// traffic that passed SPF (http://www.openspf.org/) or DKIM
 	// (http://www.dkim.org/).
 	DeliveryErrors []*DeliveryError `json:"deliveryErrors,omitempty"`
-
-	// DkimSuccessRatio: The ratio of mail that successfully authenticated
-	// with DKIM vs. all mail that attempted to authenticate with DKIM
+	// DkimSuccessRatio: The ratio of mail that successfully authenticated with
+	// DKIM vs. all mail that attempted to authenticate with DKIM
 	// (http://www.dkim.org/). Spoofed mail is excluded.
 	DkimSuccessRatio float64 `json:"dkimSuccessRatio,omitempty"`
-
-	// DmarcSuccessRatio: The ratio of mail that passed DMARC
-	// (https://dmarc.org/) alignment checks vs all mail received from the
-	// domain that successfully authenticated with either of SPF
-	// (http://www.openspf.org/) or DKIM (http://www.dkim.org/).
+	// DmarcSuccessRatio: The ratio of mail that passed DMARC (https://dmarc.org/)
+	// alignment checks vs all mail received from the domain that successfully
+	// authenticated with either of SPF (http://www.openspf.org/) or DKIM
+	// (http://www.dkim.org/).
 	DmarcSuccessRatio float64 `json:"dmarcSuccessRatio,omitempty"`
-
 	// DomainReputation: Reputation of the domain.
 	//
 	// Possible values:
-	//   "REPUTATION_CATEGORY_UNSPECIFIED" - The default value which should
-	// never be used explicitly. This represents the state where no
-	// reputation information is available.
-	//   "HIGH" - Has a good track record of a very low spam rate, and
-	// complies with Gmail's sender guidelines. Mail will rarely be marked
-	// by the spam filter.
-	//   "MEDIUM" - Known to send good mail, but is prone to sending a low
-	// volume of spam intermittently. Most of the email from this entity
-	// will have a fair deliverability rate, except when there is a notable
-	// increase in spam levels.
-	//   "LOW" - Known to send a considerable volume of spam regularly, and
-	// mail from this sender will likely be marked as spam.
-	//   "BAD" - History of sending an enormously high volume of spam. Mail
-	// coming from this entity will almost always be rejected at SMTP level
-	// or marked as spam.
+	//   "REPUTATION_CATEGORY_UNSPECIFIED" - The default value which should never
+	// be used explicitly. This represents the state where no reputation
+	// information is available.
+	//   "HIGH" - Has a good track record of a very low spam rate, and complies
+	// with Gmail's sender guidelines. Mail will rarely be marked by the spam
+	// filter.
+	//   "MEDIUM" - Known to send good mail, but is prone to sending a low volume
+	// of spam intermittently. Most of the email from this entity will have a fair
+	// deliverability rate, except when there is a notable increase in spam levels.
+	//   "LOW" - Known to send a considerable volume of spam regularly, and mail
+	// from this sender will likely be marked as spam.
+	//   "BAD" - History of sending an enormously high volume of spam. Mail coming
+	// from this entity will almost always be rejected at SMTP level or marked as
+	// spam.
 	DomainReputation string `json:"domainReputation,omitempty"`
-
-	// InboundEncryptionRatio: The ratio of incoming mail (to Gmail), that
-	// passed secure transport (TLS) vs all mail received from that domain.
-	// This metric only pertains to traffic that passed SPF
-	// (http://www.openspf.org/) or DKIM (http://www.dkim.org/).
+	// InboundEncryptionRatio: The ratio of incoming mail (to Gmail), that passed
+	// secure transport (TLS) vs all mail received from that domain. This metric
+	// only pertains to traffic that passed SPF (http://www.openspf.org/) or DKIM
+	// (http://www.dkim.org/).
 	InboundEncryptionRatio float64 `json:"inboundEncryptionRatio,omitempty"`
-
-	// IpReputations: Reputation information pertaining to the IP addresses
-	// of the email servers for the domain. There is exactly one entry for
-	// each reputation category except REPUTATION_CATEGORY_UNSPECIFIED.
+	// IpReputations: Reputation information pertaining to the IP addresses of the
+	// email servers for the domain. There is exactly one entry for each reputation
+	// category except REPUTATION_CATEGORY_UNSPECIFIED.
 	IpReputations []*IpReputation `json:"ipReputations,omitempty"`
-
-	// Name: The resource name of the traffic statistics. Traffic statistic
-	// names have the form `domains/{domain}/trafficStats/{date}`, where
-	// domain_name is the fully qualified domain name (i.e.,
-	// mymail.mydomain.com) of the domain this traffic statistics pertains
-	// to and date is the date in yyyymmdd format that these statistics
-	// corresponds to. For example:
+	// Name: The resource name of the traffic statistics. Traffic statistic names
+	// have the form `domains/{domain}/trafficStats/{date}`, where domain_name is
+	// the fully qualified domain name (i.e., mymail.mydomain.com) of the domain
+	// this traffic statistics pertains to and date is the date in yyyymmdd format
+	// that these statistics corresponds to. For example:
 	// domains/mymail.mydomain.com/trafficStats/20160807
 	Name string `json:"name,omitempty"`
-
-	// OutboundEncryptionRatio: The ratio of outgoing mail (from Gmail) that
-	// was accepted over secure transport (TLS).
+	// OutboundEncryptionRatio: The ratio of outgoing mail (from Gmail) that was
+	// accepted over secure transport (TLS).
 	OutboundEncryptionRatio float64 `json:"outboundEncryptionRatio,omitempty"`
-
 	// SpammyFeedbackLoops: Spammy [Feedback loop identifiers]
-	// (https://support.google.com/mail/answer/6254652) with their
-	// individual spam rates. This metric only pertains to traffic that is
-	// authenticated by DKIM (http://www.dkim.org/).
+	// (https://support.google.com/mail/answer/6254652) with their individual spam
+	// rates. This metric only pertains to traffic that is authenticated by DKIM
+	// (http://www.dkim.org/).
 	SpammyFeedbackLoops []*FeedbackLoop `json:"spammyFeedbackLoops,omitempty"`
-
-	// SpfSuccessRatio: The ratio of mail that successfully authenticated
-	// with SPF vs. all mail that attempted to authenticate with SPF
+	// SpfSuccessRatio: The ratio of mail that successfully authenticated with SPF
+	// vs. all mail that attempted to authenticate with SPF
 	// (http://www.openspf.org/). Spoofed mail is excluded.
 	SpfSuccessRatio float64 `json:"spfSuccessRatio,omitempty"`
-
-	// UserReportedSpamRatio: The ratio of user-report spam vs. email that
-	// was sent to the inbox. This is potentially inexact -- users may want
-	// to refer to the description of the interval fields
-	// userReportedSpamRatioLowerBound and userReportedSpamRatioUpperBound
-	// for more explicit accuracy guarantees. This metric only pertains to
-	// emails authenticated by DKIM (http://www.dkim.org/).
+	// UserReportedSpamRatio: The ratio of user-report spam vs. email that was sent
+	// to the inbox. This is potentially inexact -- users may want to refer to the
+	// description of the interval fields userReportedSpamRatioLowerBound and
+	// userReportedSpamRatioUpperBound for more explicit accuracy guarantees. This
+	// metric only pertains to emails authenticated by DKIM (http://www.dkim.org/).
 	UserReportedSpamRatio float64 `json:"userReportedSpamRatio,omitempty"`
-
-	// UserReportedSpamRatioLowerBound: The lower bound of the confidence
-	// interval for the user reported spam ratio. If this field is set, then
-	// the value of userReportedSpamRatio is set to the midpoint of this
-	// interval and is thus inexact. However, the true ratio is guaranteed
-	// to be in between this lower bound and the corresponding upper bound
-	// 95% of the time. This metric only pertains to emails authenticated by
-	// DKIM (http://www.dkim.org/).
+	// UserReportedSpamRatioLowerBound: The lower bound of the confidence interval
+	// for the user reported spam ratio. If this field is set, then the value of
+	// userReportedSpamRatio is set to the midpoint of this interval and is thus
+	// inexact. However, the true ratio is guaranteed to be in between this lower
+	// bound and the corresponding upper bound 95% of the time. This metric only
+	// pertains to emails authenticated by DKIM (http://www.dkim.org/).
 	UserReportedSpamRatioLowerBound float64 `json:"userReportedSpamRatioLowerBound,omitempty"`
-
-	// UserReportedSpamRatioUpperBound: The upper bound of the confidence
-	// interval for the user reported spam ratio. If this field is set, then
-	// the value of userReportedSpamRatio is set to the midpoint of this
-	// interval and is thus inexact. However, the true ratio is guaranteed
-	// to be in between this upper bound and the corresponding lower bound
-	// 95% of the time. This metric only pertains to emails authenticated by
-	// DKIM (http://www.dkim.org/).
+	// UserReportedSpamRatioUpperBound: The upper bound of the confidence interval
+	// for the user reported spam ratio. If this field is set, then the value of
+	// userReportedSpamRatio is set to the midpoint of this interval and is thus
+	// inexact. However, the true ratio is guaranteed to be in between this upper
+	// bound and the corresponding lower bound 95% of the time. This metric only
+	// pertains to emails authenticated by DKIM (http://www.dkim.org/).
 	UserReportedSpamRatioUpperBound float64 `json:"userReportedSpamRatioUpperBound,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DeliveryErrors") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DeliveryErrors") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DeliveryErrors") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TrafficStats) MarshalJSON() ([]byte, error) {
 	type NoMethod TrafficStats
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *TrafficStats) UnmarshalJSON(data []byte) error {
@@ -642,8 +563,6 @@ func (s *TrafficStats) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// method id "gmailpostmastertools.domains.get":
-
 type DomainsGetCall struct {
 	s            *Service
 	name         string
@@ -653,12 +572,12 @@ type DomainsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets a specific domain registered by the client. Returns
-// NOT_FOUND if the domain does not exist.
+// Get: Gets a specific domain registered by the client. Returns NOT_FOUND if
+// the domain does not exist.
 //
 //   - name: The resource name of the domain. It should have the form
-//     `domains/{domain_name}`, where domain_name is the fully qualified
-//     domain name.
+//     `domains/{domain_name}`, where domain_name is the fully qualified domain
+//     name.
 func (r *DomainsService) Get(name string) *DomainsGetCall {
 	c := &DomainsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -666,33 +585,29 @@ func (r *DomainsService) Get(name string) *DomainsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *DomainsGetCall) Fields(s ...googleapi.Field) *DomainsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *DomainsGetCall) IfNoneMatch(entityTag string) *DomainsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *DomainsGetCall) Context(ctx context.Context) *DomainsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *DomainsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -701,12 +616,7 @@ func (c *DomainsGetCall) Header() http.Header {
 }
 
 func (c *DomainsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -727,12 +637,10 @@ func (c *DomainsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "gmailpostmastertools.domains.get" call.
-// Exactly one of *Domain or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Domain.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Domain.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *DomainsGetCall) Do(opts ...googleapi.CallOption) (*Domain, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -763,35 +671,7 @@ func (c *DomainsGetCall) Do(opts ...googleapi.CallOption) (*Domain, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a specific domain registered by the client. Returns NOT_FOUND if the domain does not exist.",
-	//   "flatPath": "v1/domains/{domainsId}",
-	//   "httpMethod": "GET",
-	//   "id": "gmailpostmastertools.domains.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the domain. It should have the form `domains/{domain_name}`, where domain_name is the fully qualified domain name.",
-	//       "location": "path",
-	//       "pattern": "^domains/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "Domain"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/postmaster.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "gmailpostmastertools.domains.list":
 
 type DomainsListCall struct {
 	s            *Service
@@ -801,60 +681,55 @@ type DomainsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists the domains that have been registered by the client. The
-// order of domains in the response is unspecified and
-// non-deterministic. Newly created domains will not necessarily be
-// added to the end of this list.
+// List: Lists the domains that have been registered by the client. The order
+// of domains in the response is unspecified and non-deterministic. Newly
+// created domains will not necessarily be added to the end of this list.
 func (r *DomainsService) List() *DomainsListCall {
 	c := &DomainsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer domains than requested. If unspecified,
-// server will pick an appropriate default.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer domains than requested. If unspecified, server will pick an
+// appropriate default.
 func (c *DomainsListCall) PageSize(pageSize int64) *DomainsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if any.
-// This is the value of ListDomainsResponse.next_page_token returned
-// from the previous call to `ListDomains` method.
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous List request, if any. This is the value of
+// ListDomainsResponse.next_page_token returned from the previous call to
+// `ListDomains` method.
 func (c *DomainsListCall) PageToken(pageToken string) *DomainsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *DomainsListCall) Fields(s ...googleapi.Field) *DomainsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *DomainsListCall) IfNoneMatch(entityTag string) *DomainsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *DomainsListCall) Context(ctx context.Context) *DomainsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *DomainsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -863,12 +738,7 @@ func (c *DomainsListCall) Header() http.Header {
 }
 
 func (c *DomainsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -886,12 +756,11 @@ func (c *DomainsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "gmailpostmastertools.domains.list" call.
-// Exactly one of *ListDomainsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListDomainsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListDomainsResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *DomainsListCall) Do(opts ...googleapi.CallOption) (*ListDomainsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -922,34 +791,6 @@ func (c *DomainsListCall) Do(opts ...googleapi.CallOption) (*ListDomainsResponse
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists the domains that have been registered by the client. The order of domains in the response is unspecified and non-deterministic. Newly created domains will not necessarily be added to the end of this list.",
-	//   "flatPath": "v1/domains",
-	//   "httpMethod": "GET",
-	//   "id": "gmailpostmastertools.domains.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer domains than requested. If unspecified, server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous List request, if any. This is the value of ListDomainsResponse.next_page_token returned from the previous call to `ListDomains` method.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/domains",
-	//   "response": {
-	//     "$ref": "ListDomainsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/postmaster.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -957,7 +798,7 @@ func (c *DomainsListCall) Do(opts ...googleapi.CallOption) (*ListDomainsResponse
 // The provided context supersedes any context provided to the Context method.
 func (c *DomainsListCall) Pages(ctx context.Context, f func(*ListDomainsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -973,8 +814,6 @@ func (c *DomainsListCall) Pages(ctx context.Context, f func(*ListDomainsResponse
 	}
 }
 
-// method id "gmailpostmastertools.domains.trafficStats.get":
-
 type DomainsTrafficStatsGetCall struct {
 	s            *Service
 	name         string
@@ -985,8 +824,8 @@ type DomainsTrafficStatsGetCall struct {
 }
 
 // Get: Get traffic statistics for a domain on a specific date. Returns
-// PERMISSION_DENIED if user does not have permission to access
-// TrafficStats for the domain.
+// PERMISSION_DENIED if user does not have permission to access TrafficStats
+// for the domain.
 //
 //   - name: The resource name of the traffic statistics to get. E.g.,
 //     domains/mymail.mydomain.com/trafficStats/20160807.
@@ -997,33 +836,29 @@ func (r *DomainsTrafficStatsService) Get(name string) *DomainsTrafficStatsGetCal
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *DomainsTrafficStatsGetCall) Fields(s ...googleapi.Field) *DomainsTrafficStatsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *DomainsTrafficStatsGetCall) IfNoneMatch(entityTag string) *DomainsTrafficStatsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *DomainsTrafficStatsGetCall) Context(ctx context.Context) *DomainsTrafficStatsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *DomainsTrafficStatsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1032,12 +867,7 @@ func (c *DomainsTrafficStatsGetCall) Header() http.Header {
 }
 
 func (c *DomainsTrafficStatsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1058,12 +888,10 @@ func (c *DomainsTrafficStatsGetCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "gmailpostmastertools.domains.trafficStats.get" call.
-// Exactly one of *TrafficStats or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TrafficStats.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TrafficStats.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *DomainsTrafficStatsGetCall) Do(opts ...googleapi.CallOption) (*TrafficStats, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1094,35 +922,7 @@ func (c *DomainsTrafficStatsGetCall) Do(opts ...googleapi.CallOption) (*TrafficS
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get traffic statistics for a domain on a specific date. Returns PERMISSION_DENIED if user does not have permission to access TrafficStats for the domain.",
-	//   "flatPath": "v1/domains/{domainsId}/trafficStats/{trafficStatsId}",
-	//   "httpMethod": "GET",
-	//   "id": "gmailpostmastertools.domains.trafficStats.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The resource name of the traffic statistics to get. E.g., domains/mymail.mydomain.com/trafficStats/20160807.",
-	//       "location": "path",
-	//       "pattern": "^domains/[^/]+/trafficStats/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1/{+name}",
-	//   "response": {
-	//     "$ref": "TrafficStats"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/postmaster.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "gmailpostmastertools.domains.trafficStats.list":
 
 type DomainsTrafficStatsListCall struct {
 	s            *Service
@@ -1134,112 +934,103 @@ type DomainsTrafficStatsListCall struct {
 }
 
 // List: List traffic statistics for all available days. Returns
-// PERMISSION_DENIED if user does not have permission to access
-// TrafficStats for the domain.
+// PERMISSION_DENIED if user does not have permission to access TrafficStats
+// for the domain.
 //
-//   - parent: The resource name of the domain whose traffic statistics
-//     we'd like to list. It should have the form `domains/{domain_name}`,
-//     where domain_name is the fully qualified domain name.
+//   - parent: The resource name of the domain whose traffic statistics we'd like
+//     to list. It should have the form `domains/{domain_name}`, where
+//     domain_name is the fully qualified domain name.
 func (r *DomainsTrafficStatsService) List(parent string) *DomainsTrafficStatsListCall {
 	c := &DomainsTrafficStatsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// EndDateDay sets the optional parameter "endDate.day": Day of a month.
-// Must be from 1 to 31 and valid for the year and month, or 0 to
-// specify a year by itself or a year and month where the day isn't
-// significant.
+// EndDateDay sets the optional parameter "endDate.day": Day of a month. Must
+// be from 1 to 31 and valid for the year and month, or 0 to specify a year by
+// itself or a year and month where the day isn't significant.
 func (c *DomainsTrafficStatsListCall) EndDateDay(endDateDay int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("endDate.day", fmt.Sprint(endDateDay))
 	return c
 }
 
-// EndDateMonth sets the optional parameter "endDate.month": Month of a
-// year. Must be from 1 to 12, or 0 to specify a year without a month
-// and day.
+// EndDateMonth sets the optional parameter "endDate.month": Month of a year.
+// Must be from 1 to 12, or 0 to specify a year without a month and day.
 func (c *DomainsTrafficStatsListCall) EndDateMonth(endDateMonth int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("endDate.month", fmt.Sprint(endDateMonth))
 	return c
 }
 
-// EndDateYear sets the optional parameter "endDate.year": Year of the
-// date. Must be from 1 to 9999, or 0 to specify a date without a year.
+// EndDateYear sets the optional parameter "endDate.year": Year of the date.
+// Must be from 1 to 9999, or 0 to specify a date without a year.
 func (c *DomainsTrafficStatsListCall) EndDateYear(endDateYear int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("endDate.year", fmt.Sprint(endDateYear))
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": Requested page size.
-// Server may return fewer TrafficStats than requested. If unspecified,
-// server will pick an appropriate default.
+// PageSize sets the optional parameter "pageSize": Requested page size. Server
+// may return fewer TrafficStats than requested. If unspecified, server will
+// pick an appropriate default.
 func (c *DomainsTrafficStatsListCall) PageSize(pageSize int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The
-// next_page_token value returned from a previous List request, if any.
-// This is the value of ListTrafficStatsResponse.next_page_token
-// returned from the previous call to `ListTrafficStats` method.
+// PageToken sets the optional parameter "pageToken": The next_page_token value
+// returned from a previous List request, if any. This is the value of
+// ListTrafficStatsResponse.next_page_token returned from the previous call to
+// `ListTrafficStats` method.
 func (c *DomainsTrafficStatsListCall) PageToken(pageToken string) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// StartDateDay sets the optional parameter "startDate.day": Day of a
-// month. Must be from 1 to 31 and valid for the year and month, or 0 to
-// specify a year by itself or a year and month where the day isn't
-// significant.
+// StartDateDay sets the optional parameter "startDate.day": Day of a month.
+// Must be from 1 to 31 and valid for the year and month, or 0 to specify a
+// year by itself or a year and month where the day isn't significant.
 func (c *DomainsTrafficStatsListCall) StartDateDay(startDateDay int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("startDate.day", fmt.Sprint(startDateDay))
 	return c
 }
 
-// StartDateMonth sets the optional parameter "startDate.month": Month
-// of a year. Must be from 1 to 12, or 0 to specify a year without a
-// month and day.
+// StartDateMonth sets the optional parameter "startDate.month": Month of a
+// year. Must be from 1 to 12, or 0 to specify a year without a month and day.
 func (c *DomainsTrafficStatsListCall) StartDateMonth(startDateMonth int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("startDate.month", fmt.Sprint(startDateMonth))
 	return c
 }
 
-// StartDateYear sets the optional parameter "startDate.year": Year of
-// the date. Must be from 1 to 9999, or 0 to specify a date without a
-// year.
+// StartDateYear sets the optional parameter "startDate.year": Year of the
+// date. Must be from 1 to 9999, or 0 to specify a date without a year.
 func (c *DomainsTrafficStatsListCall) StartDateYear(startDateYear int64) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("startDate.year", fmt.Sprint(startDateYear))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *DomainsTrafficStatsListCall) Fields(s ...googleapi.Field) *DomainsTrafficStatsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *DomainsTrafficStatsListCall) IfNoneMatch(entityTag string) *DomainsTrafficStatsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *DomainsTrafficStatsListCall) Context(ctx context.Context) *DomainsTrafficStatsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *DomainsTrafficStatsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1248,12 +1039,7 @@ func (c *DomainsTrafficStatsListCall) Header() http.Header {
 }
 
 func (c *DomainsTrafficStatsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1274,12 +1060,11 @@ func (c *DomainsTrafficStatsListCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "gmailpostmastertools.domains.trafficStats.list" call.
-// Exactly one of *ListTrafficStatsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *ListTrafficStatsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *DomainsTrafficStatsListCall) Do(opts ...googleapi.CallOption) (*ListTrafficStatsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1310,79 +1095,6 @@ func (c *DomainsTrafficStatsListCall) Do(opts ...googleapi.CallOption) (*ListTra
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List traffic statistics for all available days. Returns PERMISSION_DENIED if user does not have permission to access TrafficStats for the domain.",
-	//   "flatPath": "v1/domains/{domainsId}/trafficStats",
-	//   "httpMethod": "GET",
-	//   "id": "gmailpostmastertools.domains.trafficStats.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "endDate.day": {
-	//       "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year by itself or a year and month where the day isn't significant.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "endDate.month": {
-	//       "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "endDate.year": {
-	//       "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageSize": {
-	//       "description": "Requested page size. Server may return fewer TrafficStats than requested. If unspecified, server will pick an appropriate default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The next_page_token value returned from a previous List request, if any. This is the value of ListTrafficStatsResponse.next_page_token returned from the previous call to `ListTrafficStats` method.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "The resource name of the domain whose traffic statistics we'd like to list. It should have the form `domains/{domain_name}`, where domain_name is the fully qualified domain name.",
-	//       "location": "path",
-	//       "pattern": "^domains/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "startDate.day": {
-	//       "description": "Day of a month. Must be from 1 to 31 and valid for the year and month, or 0 to specify a year by itself or a year and month where the day isn't significant.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "startDate.month": {
-	//       "description": "Month of a year. Must be from 1 to 12, or 0 to specify a year without a month and day.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "startDate.year": {
-	//       "description": "Year of the date. Must be from 1 to 9999, or 0 to specify a date without a year.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     }
-	//   },
-	//   "path": "v1/{+parent}/trafficStats",
-	//   "response": {
-	//     "$ref": "ListTrafficStatsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/postmaster.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1390,7 +1102,7 @@ func (c *DomainsTrafficStatsListCall) Do(opts ...googleapi.CallOption) (*ListTra
 // The provided context supersedes any context provided to the Context method.
 func (c *DomainsTrafficStatsListCall) Pages(ctx context.Context, f func(*ListTrafficStatsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

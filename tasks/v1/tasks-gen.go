@@ -185,266 +185,197 @@ type TasksService struct {
 }
 
 type Task struct {
-	// Completed: Completion date of the task (as a RFC 3339 timestamp).
-	// This field is omitted if the task has not been completed.
+	// Completed: Completion date of the task (as a RFC 3339 timestamp). This field
+	// is omitted if the task has not been completed.
 	Completed *string `json:"completed,omitempty"`
-
-	// Deleted: Flag indicating whether the task has been deleted. The
-	// default is False.
+	// Deleted: Flag indicating whether the task has been deleted. The default is
+	// False.
 	Deleted bool `json:"deleted,omitempty"`
-
-	// Due: Due date of the task (as a RFC 3339 timestamp). Optional. The
-	// due date only records date information; the time portion of the
-	// timestamp is discarded when setting the due date. It isn't possible
-	// to read or write the time that a task is due via the API.
+	// Due: Due date of the task (as a RFC 3339 timestamp). Optional. The due date
+	// only records date information; the time portion of the timestamp is
+	// discarded when setting the due date. It isn't possible to read or write the
+	// time that a task is due via the API.
 	Due string `json:"due,omitempty"`
-
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
-
-	// Hidden: Flag indicating whether the task is hidden. This is the case
-	// if the task had been marked completed when the task list was last
-	// cleared. The default is False. This field is read-only.
+	// Hidden: Flag indicating whether the task is hidden. This is the case if the
+	// task had been marked completed when the task list was last cleared. The
+	// default is False. This field is read-only.
 	Hidden bool `json:"hidden,omitempty"`
-
 	// Id: Task identifier.
 	Id string `json:"id,omitempty"`
-
 	// Kind: Type of the resource. This is always "tasks#task".
 	Kind string `json:"kind,omitempty"`
-
 	// Links: Collection of links. This collection is read-only.
 	Links []*TaskLinks `json:"links,omitempty"`
-
-	// Notes: Notes describing the task. Optional. Maximum length allowed:
-	// 8192 characters.
+	// Notes: Notes describing the task. Optional. Maximum length allowed: 8192
+	// characters.
 	Notes string `json:"notes,omitempty"`
-
-	// Parent: Parent task identifier. This field is omitted if it is a
-	// top-level task. This field is read-only. Use the "move" method to
-	// move the task under a different parent or to the top level.
+	// Parent: Parent task identifier. This field is omitted if it is a top-level
+	// task. This field is read-only. Use the "move" method to move the task under
+	// a different parent or to the top level.
 	Parent string `json:"parent,omitempty"`
-
-	// Position: String indicating the position of the task among its
-	// sibling tasks under the same parent task or at the top level. If this
-	// string is greater than another task's corresponding position string
-	// according to lexicographical ordering, the task is positioned after
-	// the other task under the same parent task (or at the top level). This
-	// field is read-only. Use the "move" method to move the task to another
-	// position.
+	// Position: String indicating the position of the task among its sibling tasks
+	// under the same parent task or at the top level. If this string is greater
+	// than another task's corresponding position string according to
+	// lexicographical ordering, the task is positioned after the other task under
+	// the same parent task (or at the top level). This field is read-only. Use the
+	// "move" method to move the task to another position.
 	Position string `json:"position,omitempty"`
-
-	// SelfLink: URL pointing to this task. Used to retrieve, update, or
-	// delete this task.
+	// SelfLink: URL pointing to this task. Used to retrieve, update, or delete
+	// this task.
 	SelfLink string `json:"selfLink,omitempty"`
-
-	// Status: Status of the task. This is either "needsAction" or
-	// "completed".
+	// Status: Status of the task. This is either "needsAction" or "completed".
 	Status string `json:"status,omitempty"`
-
 	// Title: Title of the task. Maximum length allowed: 1024 characters.
 	Title string `json:"title,omitempty"`
-
-	// Updated: Last modification time of the task (as a RFC 3339
-	// timestamp).
+	// Updated: Last modification time of the task (as a RFC 3339 timestamp).
 	Updated string `json:"updated,omitempty"`
-
-	// WebViewLink: An absolute link to the task in the Google Tasks Web UI.
-	// This field is read-only.
+	// WebViewLink: An absolute link to the task in the Google Tasks Web UI. This
+	// field is read-only.
 	WebViewLink string `json:"webViewLink,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Completed") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Completed") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Completed") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Task) MarshalJSON() ([]byte, error) {
 	type NoMethod Task
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type TaskLinks struct {
-	// Description: The description. In HTML speak: Everything between <a>
-	// and </a>.
+	// Description: The description. In HTML speak: Everything between <a> and
+	// </a>.
 	Description string `json:"description,omitempty"`
-
 	// Link: The URL.
 	Link string `json:"link,omitempty"`
-
 	// Type: Type of the link, e.g. "email".
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TaskLinks) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskLinks
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type TaskList struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
-
 	// Id: Task list identifier.
 	Id string `json:"id,omitempty"`
-
 	// Kind: Type of the resource. This is always "tasks#taskList".
 	Kind string `json:"kind,omitempty"`
-
-	// SelfLink: URL pointing to this task list. Used to retrieve, update,
-	// or delete this task list.
+	// SelfLink: URL pointing to this task list. Used to retrieve, update, or
+	// delete this task list.
 	SelfLink string `json:"selfLink,omitempty"`
-
-	// Title: Title of the task list. Maximum length allowed: 1024
-	// characters.
+	// Title: Title of the task list. Maximum length allowed: 1024 characters.
 	Title string `json:"title,omitempty"`
-
-	// Updated: Last modification time of the task list (as a RFC 3339
-	// timestamp).
+	// Updated: Last modification time of the task list (as a RFC 3339 timestamp).
 	Updated string `json:"updated,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TaskList) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskList
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type TaskLists struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
-
 	// Items: Collection of task lists.
 	Items []*TaskList `json:"items,omitempty"`
-
 	// Kind: Type of the resource. This is always "tasks#taskLists".
 	Kind string `json:"kind,omitempty"`
-
-	// NextPageToken: Token that can be used to request the next page of
-	// this result.
+	// NextPageToken: Token that can be used to request the next page of this
+	// result.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TaskLists) MarshalJSON() ([]byte, error) {
 	type NoMethod TaskLists
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type Tasks struct {
 	// Etag: ETag of the resource.
 	Etag string `json:"etag,omitempty"`
-
 	// Items: Collection of tasks.
 	Items []*Task `json:"items,omitempty"`
-
 	// Kind: Type of the resource. This is always "tasks#tasks".
 	Kind string `json:"kind,omitempty"`
-
 	// NextPageToken: Token used to access the next page of this result.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Etag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Etag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Etag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Etag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Tasks) MarshalJSON() ([]byte, error) {
 	type NoMethod Tasks
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "tasks.tasklists.delete":
 
 type TasklistsDeleteCall struct {
 	s          *Service
@@ -464,23 +395,21 @@ func (r *TasklistsService) Delete(tasklistid string) *TasklistsDeleteCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TasklistsDeleteCall) Fields(s ...googleapi.Field) *TasklistsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TasklistsDeleteCall) Context(ctx context.Context) *TasklistsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TasklistsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -489,12 +418,7 @@ func (c *TasklistsDeleteCall) Header() http.Header {
 }
 
 func (c *TasklistsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -523,31 +447,7 @@ func (c *TasklistsDeleteCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes the authenticated user's specified task list.",
-	//   "flatPath": "tasks/v1/users/@me/lists/{tasklist}",
-	//   "httpMethod": "DELETE",
-	//   "id": "tasks.tasklists.delete",
-	//   "parameterOrder": [
-	//     "tasklist"
-	//   ],
-	//   "parameters": {
-	//     "tasklist": {
-	//       "description": "Task list identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tasks/v1/users/@me/lists/{tasklist}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks"
-	//   ]
-	// }
-
 }
-
-// method id "tasks.tasklists.get":
 
 type TasklistsGetCall struct {
 	s            *Service
@@ -568,33 +468,29 @@ func (r *TasklistsService) Get(tasklistid string) *TasklistsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TasklistsGetCall) Fields(s ...googleapi.Field) *TasklistsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *TasklistsGetCall) IfNoneMatch(entityTag string) *TasklistsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TasklistsGetCall) Context(ctx context.Context) *TasklistsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TasklistsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -603,12 +499,7 @@ func (c *TasklistsGetCall) Header() http.Header {
 }
 
 func (c *TasklistsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -629,12 +520,10 @@ func (c *TasklistsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "tasks.tasklists.get" call.
-// Exactly one of *TaskList or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *TaskList.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TaskList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TasklistsGetCall) Do(opts ...googleapi.CallOption) (*TaskList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -665,35 +554,7 @@ func (c *TasklistsGetCall) Do(opts ...googleapi.CallOption) (*TaskList, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the authenticated user's specified task list.",
-	//   "flatPath": "tasks/v1/users/@me/lists/{tasklist}",
-	//   "httpMethod": "GET",
-	//   "id": "tasks.tasklists.get",
-	//   "parameterOrder": [
-	//     "tasklist"
-	//   ],
-	//   "parameters": {
-	//     "tasklist": {
-	//       "description": "Task list identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tasks/v1/users/@me/lists/{tasklist}",
-	//   "response": {
-	//     "$ref": "TaskList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks",
-	//     "https://www.googleapis.com/auth/tasks.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tasks.tasklists.insert":
 
 type TasklistsInsertCall struct {
 	s          *Service
@@ -703,8 +564,8 @@ type TasklistsInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Creates a new task list and adds it to the authenticated
-// user's task lists. A user can have up to 2000 lists at a time.
+// Insert: Creates a new task list and adds it to the authenticated user's task
+// lists. A user can have up to 2000 lists at a time.
 func (r *TasklistsService) Insert(tasklist *TaskList) *TasklistsInsertCall {
 	c := &TasklistsInsertCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.tasklist = tasklist
@@ -712,23 +573,21 @@ func (r *TasklistsService) Insert(tasklist *TaskList) *TasklistsInsertCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TasklistsInsertCall) Fields(s ...googleapi.Field) *TasklistsInsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TasklistsInsertCall) Context(ctx context.Context) *TasklistsInsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TasklistsInsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -737,18 +596,12 @@ func (c *TasklistsInsertCall) Header() http.Header {
 }
 
 func (c *TasklistsInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tasklist)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/users/@me/lists")
@@ -762,12 +615,10 @@ func (c *TasklistsInsertCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "tasks.tasklists.insert" call.
-// Exactly one of *TaskList or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *TaskList.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TaskList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TasklistsInsertCall) Do(opts ...googleapi.CallOption) (*TaskList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -798,28 +649,7 @@ func (c *TasklistsInsertCall) Do(opts ...googleapi.CallOption) (*TaskList, error
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new task list and adds it to the authenticated user's task lists. A user can have up to 2000 lists at a time.",
-	//   "flatPath": "tasks/v1/users/@me/lists",
-	//   "httpMethod": "POST",
-	//   "id": "tasks.tasklists.insert",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "tasks/v1/users/@me/lists",
-	//   "request": {
-	//     "$ref": "TaskList"
-	//   },
-	//   "response": {
-	//     "$ref": "TaskList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks"
-	//   ]
-	// }
-
 }
-
-// method id "tasks.tasklists.list":
 
 type TasklistsListCall struct {
 	s            *Service
@@ -829,56 +659,51 @@ type TasklistsListCall struct {
 	header_      http.Header
 }
 
-// List: Returns all the authenticated user's task lists. A user can
-// have up to 2000 lists at a time.
+// List: Returns all the authenticated user's task lists. A user can have up to
+// 2000 lists at a time.
 func (r *TasklistsService) List() *TasklistsListCall {
 	c := &TasklistsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of task lists returned on one page.  The default is 20 (max allowed:
-// 100).
+// MaxResults sets the optional parameter "maxResults": Maximum number of task
+// lists returned on one page.  The default is 20 (max allowed: 100).
 func (c *TasklistsListCall) MaxResults(maxResults int64) *TasklistsListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token specifying
-// the result page to return.
+// PageToken sets the optional parameter "pageToken": Token specifying the
+// result page to return.
 func (c *TasklistsListCall) PageToken(pageToken string) *TasklistsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TasklistsListCall) Fields(s ...googleapi.Field) *TasklistsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *TasklistsListCall) IfNoneMatch(entityTag string) *TasklistsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TasklistsListCall) Context(ctx context.Context) *TasklistsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TasklistsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -887,12 +712,7 @@ func (c *TasklistsListCall) Header() http.Header {
 }
 
 func (c *TasklistsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -910,12 +730,10 @@ func (c *TasklistsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "tasks.tasklists.list" call.
-// Exactly one of *TaskLists or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *TaskLists.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TaskLists.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TasklistsListCall) Do(opts ...googleapi.CallOption) (*TaskLists, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -946,35 +764,6 @@ func (c *TasklistsListCall) Do(opts ...googleapi.CallOption) (*TaskLists, error)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns all the authenticated user's task lists. A user can have up to 2000 lists at a time.",
-	//   "flatPath": "tasks/v1/users/@me/lists",
-	//   "httpMethod": "GET",
-	//   "id": "tasks.tasklists.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "maxResults": {
-	//       "description": "Maximum number of task lists returned on one page. Optional. The default is 20 (max allowed: 100).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Token specifying the result page to return. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tasks/v1/users/@me/lists",
-	//   "response": {
-	//     "$ref": "TaskLists"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks",
-	//     "https://www.googleapis.com/auth/tasks.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -982,7 +771,7 @@ func (c *TasklistsListCall) Do(opts ...googleapi.CallOption) (*TaskLists, error)
 // The provided context supersedes any context provided to the Context method.
 func (c *TasklistsListCall) Pages(ctx context.Context, f func(*TaskLists) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -998,8 +787,6 @@ func (c *TasklistsListCall) Pages(ctx context.Context, f func(*TaskLists) error)
 	}
 }
 
-// method id "tasks.tasklists.patch":
-
 type TasklistsPatchCall struct {
 	s          *Service
 	tasklistid string
@@ -1009,8 +796,8 @@ type TasklistsPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates the authenticated user's specified task list. This
-// method supports patch semantics.
+// Patch: Updates the authenticated user's specified task list. This method
+// supports patch semantics.
 //
 // - tasklist: Task list identifier.
 func (r *TasklistsService) Patch(tasklistid string, tasklist *TaskList) *TasklistsPatchCall {
@@ -1021,23 +808,21 @@ func (r *TasklistsService) Patch(tasklistid string, tasklist *TaskList) *Tasklis
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TasklistsPatchCall) Fields(s ...googleapi.Field) *TasklistsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TasklistsPatchCall) Context(ctx context.Context) *TasklistsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TasklistsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1046,18 +831,12 @@ func (c *TasklistsPatchCall) Header() http.Header {
 }
 
 func (c *TasklistsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tasklist)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/users/@me/lists/{tasklist}")
@@ -1074,12 +853,10 @@ func (c *TasklistsPatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "tasks.tasklists.patch" call.
-// Exactly one of *TaskList or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *TaskList.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TaskList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TasklistsPatchCall) Do(opts ...googleapi.CallOption) (*TaskList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1110,37 +887,7 @@ func (c *TasklistsPatchCall) Do(opts ...googleapi.CallOption) (*TaskList, error)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the authenticated user's specified task list. This method supports patch semantics.",
-	//   "flatPath": "tasks/v1/users/@me/lists/{tasklist}",
-	//   "httpMethod": "PATCH",
-	//   "id": "tasks.tasklists.patch",
-	//   "parameterOrder": [
-	//     "tasklist"
-	//   ],
-	//   "parameters": {
-	//     "tasklist": {
-	//       "description": "Task list identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tasks/v1/users/@me/lists/{tasklist}",
-	//   "request": {
-	//     "$ref": "TaskList"
-	//   },
-	//   "response": {
-	//     "$ref": "TaskList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks"
-	//   ]
-	// }
-
 }
-
-// method id "tasks.tasklists.update":
 
 type TasklistsUpdateCall struct {
 	s          *Service
@@ -1162,23 +909,21 @@ func (r *TasklistsService) Update(tasklistid string, tasklist *TaskList) *Taskli
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TasklistsUpdateCall) Fields(s ...googleapi.Field) *TasklistsUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TasklistsUpdateCall) Context(ctx context.Context) *TasklistsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TasklistsUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1187,18 +932,12 @@ func (c *TasklistsUpdateCall) Header() http.Header {
 }
 
 func (c *TasklistsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tasklist)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/users/@me/lists/{tasklist}")
@@ -1215,12 +954,10 @@ func (c *TasklistsUpdateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "tasks.tasklists.update" call.
-// Exactly one of *TaskList or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *TaskList.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *TaskList.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TasklistsUpdateCall) Do(opts ...googleapi.CallOption) (*TaskList, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1251,37 +988,7 @@ func (c *TasklistsUpdateCall) Do(opts ...googleapi.CallOption) (*TaskList, error
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the authenticated user's specified task list.",
-	//   "flatPath": "tasks/v1/users/@me/lists/{tasklist}",
-	//   "httpMethod": "PUT",
-	//   "id": "tasks.tasklists.update",
-	//   "parameterOrder": [
-	//     "tasklist"
-	//   ],
-	//   "parameters": {
-	//     "tasklist": {
-	//       "description": "Task list identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tasks/v1/users/@me/lists/{tasklist}",
-	//   "request": {
-	//     "$ref": "TaskList"
-	//   },
-	//   "response": {
-	//     "$ref": "TaskList"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks"
-	//   ]
-	// }
-
 }
-
-// method id "tasks.tasks.clear":
 
 type TasksClearCall struct {
 	s          *Service
@@ -1291,9 +998,9 @@ type TasksClearCall struct {
 	header_    http.Header
 }
 
-// Clear: Clears all completed tasks from the specified task list. The
-// affected tasks will be marked as 'hidden' and no longer be returned
-// by default when retrieving all tasks for a task list.
+// Clear: Clears all completed tasks from the specified task list. The affected
+// tasks will be marked as 'hidden' and no longer be returned by default when
+// retrieving all tasks for a task list.
 //
 // - tasklist: Task list identifier.
 func (r *TasksService) Clear(tasklistid string) *TasksClearCall {
@@ -1303,23 +1010,21 @@ func (r *TasksService) Clear(tasklistid string) *TasksClearCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TasksClearCall) Fields(s ...googleapi.Field) *TasksClearCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TasksClearCall) Context(ctx context.Context) *TasksClearCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TasksClearCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1328,12 +1033,7 @@ func (c *TasksClearCall) Header() http.Header {
 }
 
 func (c *TasksClearCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1362,31 +1062,7 @@ func (c *TasksClearCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Clears all completed tasks from the specified task list. The affected tasks will be marked as 'hidden' and no longer be returned by default when retrieving all tasks for a task list.",
-	//   "flatPath": "tasks/v1/lists/{tasklist}/clear",
-	//   "httpMethod": "POST",
-	//   "id": "tasks.tasks.clear",
-	//   "parameterOrder": [
-	//     "tasklist"
-	//   ],
-	//   "parameters": {
-	//     "tasklist": {
-	//       "description": "Task list identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tasks/v1/lists/{tasklist}/clear",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks"
-	//   ]
-	// }
-
 }
-
-// method id "tasks.tasks.delete":
 
 type TasksDeleteCall struct {
 	s          *Service
@@ -1409,23 +1085,21 @@ func (r *TasksService) Delete(tasklistid string, taskid string) *TasksDeleteCall
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TasksDeleteCall) Fields(s ...googleapi.Field) *TasksDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TasksDeleteCall) Context(ctx context.Context) *TasksDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TasksDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1434,12 +1108,7 @@ func (c *TasksDeleteCall) Header() http.Header {
 }
 
 func (c *TasksDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1469,38 +1138,7 @@ func (c *TasksDeleteCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes the specified task from the task list.",
-	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks/{task}",
-	//   "httpMethod": "DELETE",
-	//   "id": "tasks.tasks.delete",
-	//   "parameterOrder": [
-	//     "tasklist",
-	//     "task"
-	//   ],
-	//   "parameters": {
-	//     "task": {
-	//       "description": "Task identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "tasklist": {
-	//       "description": "Task list identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tasks/v1/lists/{tasklist}/tasks/{task}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks"
-	//   ]
-	// }
-
 }
-
-// method id "tasks.tasks.get":
 
 type TasksGetCall struct {
 	s            *Service
@@ -1524,33 +1162,29 @@ func (r *TasksService) Get(tasklistid string, taskid string) *TasksGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TasksGetCall) Fields(s ...googleapi.Field) *TasksGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *TasksGetCall) IfNoneMatch(entityTag string) *TasksGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TasksGetCall) Context(ctx context.Context) *TasksGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TasksGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1559,12 +1193,7 @@ func (c *TasksGetCall) Header() http.Header {
 }
 
 func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1586,12 +1215,10 @@ func (c *TasksGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "tasks.tasks.get" call.
-// Exactly one of *Task or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Task.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TasksGetCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1622,42 +1249,7 @@ func (c *TasksGetCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns the specified task.",
-	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks/{task}",
-	//   "httpMethod": "GET",
-	//   "id": "tasks.tasks.get",
-	//   "parameterOrder": [
-	//     "tasklist",
-	//     "task"
-	//   ],
-	//   "parameters": {
-	//     "task": {
-	//       "description": "Task identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "tasklist": {
-	//       "description": "Task list identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tasks/v1/lists/{tasklist}/tasks/{task}",
-	//   "response": {
-	//     "$ref": "Task"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks",
-	//     "https://www.googleapis.com/auth/tasks.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tasks.tasks.insert":
 
 type TasksInsertCall struct {
 	s          *Service
@@ -1668,9 +1260,8 @@ type TasksInsertCall struct {
 	header_    http.Header
 }
 
-// Insert: Creates a new task on the specified task list. A user can
-// have up to 20,000 uncompleted tasks per list and up to 100,000 tasks
-// in total at a time.
+// Insert: Creates a new task on the specified task list. A user can have up to
+// 20,000 non-hidden tasks per list and up to 100,000 tasks in total at a time.
 //
 // - tasklist: Task list identifier.
 func (r *TasksService) Insert(tasklistid string, task *Task) *TasksInsertCall {
@@ -1680,39 +1271,37 @@ func (r *TasksService) Insert(tasklistid string, task *Task) *TasksInsertCall {
 	return c
 }
 
-// Parent sets the optional parameter "parent": Parent task identifier.
-// If the task is created at the top level, this parameter is omitted.
+// Parent sets the optional parameter "parent": Parent task identifier. If the
+// task is created at the top level, this parameter is omitted.
 func (c *TasksInsertCall) Parent(parent string) *TasksInsertCall {
 	c.urlParams_.Set("parent", parent)
 	return c
 }
 
-// Previous sets the optional parameter "previous": Previous sibling
-// task identifier. If the task is created at the first position among
-// its siblings, this parameter is omitted.
+// Previous sets the optional parameter "previous": Previous sibling task
+// identifier. If the task is created at the first position among its siblings,
+// this parameter is omitted.
 func (c *TasksInsertCall) Previous(previous string) *TasksInsertCall {
 	c.urlParams_.Set("previous", previous)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TasksInsertCall) Fields(s ...googleapi.Field) *TasksInsertCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TasksInsertCall) Context(ctx context.Context) *TasksInsertCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TasksInsertCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1721,18 +1310,12 @@ func (c *TasksInsertCall) Header() http.Header {
 }
 
 func (c *TasksInsertCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.task)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/lists/{tasklist}/tasks")
@@ -1749,12 +1332,10 @@ func (c *TasksInsertCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "tasks.tasks.insert" call.
-// Exactly one of *Task or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Task.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TasksInsertCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1785,47 +1366,7 @@ func (c *TasksInsertCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new task on the specified task list. A user can have up to 20,000 uncompleted tasks per list and up to 100,000 tasks in total at a time.",
-	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks",
-	//   "httpMethod": "POST",
-	//   "id": "tasks.tasks.insert",
-	//   "parameterOrder": [
-	//     "tasklist"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Parent task identifier. If the task is created at the top level, this parameter is omitted. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "previous": {
-	//       "description": "Previous sibling task identifier. If the task is created at the first position among its siblings, this parameter is omitted. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "tasklist": {
-	//       "description": "Task list identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tasks/v1/lists/{tasklist}/tasks",
-	//   "request": {
-	//     "$ref": "Task"
-	//   },
-	//   "response": {
-	//     "$ref": "Task"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks"
-	//   ]
-	// }
-
 }
-
-// method id "tasks.tasks.list":
 
 type TasksListCall struct {
 	s            *Service
@@ -1836,9 +1377,8 @@ type TasksListCall struct {
 	header_      http.Header
 }
 
-// List: Returns all tasks in the specified task list. A user can have
-// up to 20,000 uncompleted tasks per list and up to 100,000 tasks in
-// total at a time.
+// List: Returns all tasks in the specified task list. A user can have up to
+// 20,000 non-hidden tasks per list and up to 100,000 tasks in total at a time.
 //
 // - tasklist: Task list identifier.
 func (r *TasksService) List(tasklistid string) *TasksListCall {
@@ -1847,114 +1387,107 @@ func (r *TasksService) List(tasklistid string) *TasksListCall {
 	return c
 }
 
-// CompletedMax sets the optional parameter "completedMax": Upper bound
-// for a task's completion date (as a RFC 3339 timestamp) to filter by.
-// The default is not to filter by completion date.
+// CompletedMax sets the optional parameter "completedMax": Upper bound for a
+// task's completion date (as a RFC 3339 timestamp) to filter by.  The default
+// is not to filter by completion date.
 func (c *TasksListCall) CompletedMax(completedMax string) *TasksListCall {
 	c.urlParams_.Set("completedMax", completedMax)
 	return c
 }
 
-// CompletedMin sets the optional parameter "completedMin": Lower bound
-// for a task's completion date (as a RFC 3339 timestamp) to filter by.
-// The default is not to filter by completion date.
+// CompletedMin sets the optional parameter "completedMin": Lower bound for a
+// task's completion date (as a RFC 3339 timestamp) to filter by.  The default
+// is not to filter by completion date.
 func (c *TasksListCall) CompletedMin(completedMin string) *TasksListCall {
 	c.urlParams_.Set("completedMin", completedMin)
 	return c
 }
 
-// DueMax sets the optional parameter "dueMax": Upper bound for a task's
-// due date (as a RFC 3339 timestamp) to filter by.  The default is not
-// to filter by due date.
+// DueMax sets the optional parameter "dueMax": Upper bound for a task's due
+// date (as a RFC 3339 timestamp) to filter by.  The default is not to filter
+// by due date.
 func (c *TasksListCall) DueMax(dueMax string) *TasksListCall {
 	c.urlParams_.Set("dueMax", dueMax)
 	return c
 }
 
-// DueMin sets the optional parameter "dueMin": Lower bound for a task's
-// due date (as a RFC 3339 timestamp) to filter by.  The default is not
-// to filter by due date.
+// DueMin sets the optional parameter "dueMin": Lower bound for a task's due
+// date (as a RFC 3339 timestamp) to filter by.  The default is not to filter
+// by due date.
 func (c *TasksListCall) DueMin(dueMin string) *TasksListCall {
 	c.urlParams_.Set("dueMin", dueMin)
 	return c
 }
 
-// MaxResults sets the optional parameter "maxResults": Maximum number
-// of tasks returned on one page.  The default is 20 (max allowed: 100).
+// MaxResults sets the optional parameter "maxResults": Maximum number of tasks
+// returned on one page.  The default is 20 (max allowed: 100).
 func (c *TasksListCall) MaxResults(maxResults int64) *TasksListCall {
 	c.urlParams_.Set("maxResults", fmt.Sprint(maxResults))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": Token specifying
-// the result page to return.
+// PageToken sets the optional parameter "pageToken": Token specifying the
+// result page to return.
 func (c *TasksListCall) PageToken(pageToken string) *TasksListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// ShowCompleted sets the optional parameter "showCompleted": Flag
-// indicating whether completed tasks are returned in the result.  The
-// default is True. Note that showHidden must also be True to show tasks
-// completed in first party clients, such as the web UI and Google's
-// mobile apps.
+// ShowCompleted sets the optional parameter "showCompleted": Flag indicating
+// whether completed tasks are returned in the result.  The default is True.
+// Note that showHidden must also be True to show tasks completed in first
+// party clients, such as the web UI and Google's mobile apps.
 func (c *TasksListCall) ShowCompleted(showCompleted bool) *TasksListCall {
 	c.urlParams_.Set("showCompleted", fmt.Sprint(showCompleted))
 	return c
 }
 
-// ShowDeleted sets the optional parameter "showDeleted": Flag
-// indicating whether deleted tasks are returned in the result.  The
-// default is False.
+// ShowDeleted sets the optional parameter "showDeleted": Flag indicating
+// whether deleted tasks are returned in the result.  The default is False.
 func (c *TasksListCall) ShowDeleted(showDeleted bool) *TasksListCall {
 	c.urlParams_.Set("showDeleted", fmt.Sprint(showDeleted))
 	return c
 }
 
-// ShowHidden sets the optional parameter "showHidden": Flag indicating
-// whether hidden tasks are returned in the result.  The default is
-// False.
+// ShowHidden sets the optional parameter "showHidden": Flag indicating whether
+// hidden tasks are returned in the result.  The default is False.
 func (c *TasksListCall) ShowHidden(showHidden bool) *TasksListCall {
 	c.urlParams_.Set("showHidden", fmt.Sprint(showHidden))
 	return c
 }
 
-// UpdatedMin sets the optional parameter "updatedMin": Lower bound for
-// a task's last modification time (as a RFC 3339 timestamp) to filter
-// by.  The default is not to filter by last modification time.
+// UpdatedMin sets the optional parameter "updatedMin": Lower bound for a
+// task's last modification time (as a RFC 3339 timestamp) to filter by.  The
+// default is not to filter by last modification time.
 func (c *TasksListCall) UpdatedMin(updatedMin string) *TasksListCall {
 	c.urlParams_.Set("updatedMin", updatedMin)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TasksListCall) Fields(s ...googleapi.Field) *TasksListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *TasksListCall) IfNoneMatch(entityTag string) *TasksListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TasksListCall) Context(ctx context.Context) *TasksListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TasksListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1963,12 +1496,7 @@ func (c *TasksListCall) Header() http.Header {
 }
 
 func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1989,12 +1517,10 @@ func (c *TasksListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "tasks.tasks.list" call.
-// Exactly one of *Tasks or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Tasks.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Tasks.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TasksListCall) Do(opts ...googleapi.CallOption) (*Tasks, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2025,83 +1551,6 @@ func (c *TasksListCall) Do(opts ...googleapi.CallOption) (*Tasks, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns all tasks in the specified task list. A user can have up to 20,000 uncompleted tasks per list and up to 100,000 tasks in total at a time.",
-	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks",
-	//   "httpMethod": "GET",
-	//   "id": "tasks.tasks.list",
-	//   "parameterOrder": [
-	//     "tasklist"
-	//   ],
-	//   "parameters": {
-	//     "completedMax": {
-	//       "description": "Upper bound for a task's completion date (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by completion date.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "completedMin": {
-	//       "description": "Lower bound for a task's completion date (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by completion date.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "dueMax": {
-	//       "description": "Upper bound for a task's due date (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by due date.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "dueMin": {
-	//       "description": "Lower bound for a task's due date (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by due date.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "maxResults": {
-	//       "description": "Maximum number of tasks returned on one page. Optional. The default is 20 (max allowed: 100).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Token specifying the result page to return. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "showCompleted": {
-	//       "description": "Flag indicating whether completed tasks are returned in the result. Optional. The default is True. Note that showHidden must also be True to show tasks completed in first party clients, such as the web UI and Google's mobile apps.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "showDeleted": {
-	//       "description": "Flag indicating whether deleted tasks are returned in the result. Optional. The default is False.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "showHidden": {
-	//       "description": "Flag indicating whether hidden tasks are returned in the result. Optional. The default is False.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "tasklist": {
-	//       "description": "Task list identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "updatedMin": {
-	//       "description": "Lower bound for a task's last modification time (as a RFC 3339 timestamp) to filter by. Optional. The default is not to filter by last modification time.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tasks/v1/lists/{tasklist}/tasks",
-	//   "response": {
-	//     "$ref": "Tasks"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks",
-	//     "https://www.googleapis.com/auth/tasks.readonly"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -2109,7 +1558,7 @@ func (c *TasksListCall) Do(opts ...googleapi.CallOption) (*Tasks, error) {
 // The provided context supersedes any context provided to the Context method.
 func (c *TasksListCall) Pages(ctx context.Context, f func(*Tasks) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -2125,8 +1574,6 @@ func (c *TasksListCall) Pages(ctx context.Context, f func(*Tasks) error) error {
 	}
 }
 
-// method id "tasks.tasks.move":
-
 type TasksMoveCall struct {
 	s          *Service
 	tasklistid string
@@ -2136,10 +1583,10 @@ type TasksMoveCall struct {
 	header_    http.Header
 }
 
-// Move: Moves the specified task to another position in the task list.
-// This can include putting it as a child task under a new parent and/or
-// move it to a different position among its sibling tasks. A user can
-// have up to 2,000 subtasks per task.
+// Move: Moves the specified task to another position in the task list. This
+// can include putting it as a child task under a new parent and/or move it to
+// a different position among its sibling tasks. A user can have up to 2,000
+// subtasks per task.
 //
 // - task: Task identifier.
 // - tasklist: Task list identifier.
@@ -2150,40 +1597,37 @@ func (r *TasksService) Move(tasklistid string, taskid string) *TasksMoveCall {
 	return c
 }
 
-// Parent sets the optional parameter "parent": New parent task
-// identifier. If the task is moved to the top level, this parameter is
-// omitted.
+// Parent sets the optional parameter "parent": New parent task identifier. If
+// the task is moved to the top level, this parameter is omitted.
 func (c *TasksMoveCall) Parent(parent string) *TasksMoveCall {
 	c.urlParams_.Set("parent", parent)
 	return c
 }
 
-// Previous sets the optional parameter "previous": New previous sibling
-// task identifier. If the task is moved to the first position among its
-// siblings, this parameter is omitted.
+// Previous sets the optional parameter "previous": New previous sibling task
+// identifier. If the task is moved to the first position among its siblings,
+// this parameter is omitted.
 func (c *TasksMoveCall) Previous(previous string) *TasksMoveCall {
 	c.urlParams_.Set("previous", previous)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TasksMoveCall) Fields(s ...googleapi.Field) *TasksMoveCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TasksMoveCall) Context(ctx context.Context) *TasksMoveCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TasksMoveCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2192,12 +1636,7 @@ func (c *TasksMoveCall) Header() http.Header {
 }
 
 func (c *TasksMoveCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2216,12 +1655,10 @@ func (c *TasksMoveCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "tasks.tasks.move" call.
-// Exactly one of *Task or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Task.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TasksMoveCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2252,51 +1689,7 @@ func (c *TasksMoveCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Moves the specified task to another position in the task list. This can include putting it as a child task under a new parent and/or move it to a different position among its sibling tasks. A user can have up to 2,000 subtasks per task.",
-	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks/{task}/move",
-	//   "httpMethod": "POST",
-	//   "id": "tasks.tasks.move",
-	//   "parameterOrder": [
-	//     "tasklist",
-	//     "task"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "New parent task identifier. If the task is moved to the top level, this parameter is omitted. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "previous": {
-	//       "description": "New previous sibling task identifier. If the task is moved to the first position among its siblings, this parameter is omitted. Optional.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "task": {
-	//       "description": "Task identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "tasklist": {
-	//       "description": "Task list identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tasks/v1/lists/{tasklist}/tasks/{task}/move",
-	//   "response": {
-	//     "$ref": "Task"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks"
-	//   ]
-	// }
-
 }
-
-// method id "tasks.tasks.patch":
 
 type TasksPatchCall struct {
 	s          *Service
@@ -2308,8 +1701,7 @@ type TasksPatchCall struct {
 	header_    http.Header
 }
 
-// Patch: Updates the specified task. This method supports patch
-// semantics.
+// Patch: Updates the specified task. This method supports patch semantics.
 //
 // - task: Task identifier.
 // - tasklist: Task list identifier.
@@ -2322,23 +1714,21 @@ func (r *TasksService) Patch(tasklistid string, taskid string, task *Task) *Task
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TasksPatchCall) Fields(s ...googleapi.Field) *TasksPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TasksPatchCall) Context(ctx context.Context) *TasksPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TasksPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2347,18 +1737,12 @@ func (c *TasksPatchCall) Header() http.Header {
 }
 
 func (c *TasksPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.task)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/lists/{tasklist}/tasks/{task}")
@@ -2376,12 +1760,10 @@ func (c *TasksPatchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "tasks.tasks.patch" call.
-// Exactly one of *Task or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Task.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TasksPatchCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2412,44 +1794,7 @@ func (c *TasksPatchCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the specified task. This method supports patch semantics.",
-	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks/{task}",
-	//   "httpMethod": "PATCH",
-	//   "id": "tasks.tasks.patch",
-	//   "parameterOrder": [
-	//     "tasklist",
-	//     "task"
-	//   ],
-	//   "parameters": {
-	//     "task": {
-	//       "description": "Task identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "tasklist": {
-	//       "description": "Task list identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tasks/v1/lists/{tasklist}/tasks/{task}",
-	//   "request": {
-	//     "$ref": "Task"
-	//   },
-	//   "response": {
-	//     "$ref": "Task"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks"
-	//   ]
-	// }
-
 }
-
-// method id "tasks.tasks.update":
 
 type TasksUpdateCall struct {
 	s          *Service
@@ -2474,23 +1819,21 @@ func (r *TasksService) Update(tasklistid string, taskid string, task *Task) *Tas
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *TasksUpdateCall) Fields(s ...googleapi.Field) *TasksUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *TasksUpdateCall) Context(ctx context.Context) *TasksUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *TasksUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2499,18 +1842,12 @@ func (c *TasksUpdateCall) Header() http.Header {
 }
 
 func (c *TasksUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.task)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tasks/v1/lists/{tasklist}/tasks/{task}")
@@ -2528,12 +1865,10 @@ func (c *TasksUpdateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "tasks.tasks.update" call.
-// Exactly one of *Task or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Task.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *TasksUpdateCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2564,39 +1899,4 @@ func (c *TasksUpdateCall) Do(opts ...googleapi.CallOption) (*Task, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the specified task.",
-	//   "flatPath": "tasks/v1/lists/{tasklist}/tasks/{task}",
-	//   "httpMethod": "PUT",
-	//   "id": "tasks.tasks.update",
-	//   "parameterOrder": [
-	//     "tasklist",
-	//     "task"
-	//   ],
-	//   "parameters": {
-	//     "task": {
-	//       "description": "Task identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "tasklist": {
-	//       "description": "Task list identifier.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tasks/v1/lists/{tasklist}/tasks/{task}",
-	//   "request": {
-	//     "$ref": "Task"
-	//   },
-	//   "response": {
-	//     "$ref": "Task"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tasks"
-	//   ]
-	// }
-
 }

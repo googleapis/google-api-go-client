@@ -96,8 +96,8 @@ const defaultUniverseDomain = "googleapis.com"
 
 // OAuth2 scopes used by this API.
 const (
-	// See, edit, configure, and delete your Google Cloud data and see the
-	// email address for your Google Account.
+	// See, edit, configure, and delete your Google Cloud data and see the email
+	// address for your Google Account.
 	CloudPlatformScope = "https://www.googleapis.com/auth/cloud-platform"
 )
 
@@ -275,37 +275,28 @@ type ProjectsLocationsServicesMigrationExecutionsService struct {
 // AlterMetadataResourceLocationRequest: Request message for
 // DataprocMetastore.AlterMetadataResourceLocation.
 type AlterMetadataResourceLocationRequest struct {
-	// LocationUri: Required. The new location URI for the metadata
-	// resource.
+	// LocationUri: Required. The new location URI for the metadata resource.
 	LocationUri string `json:"locationUri,omitempty"`
-
-	// ResourceName: Required. The relative metadata resource name in the
-	// following format.databases/{database_id} or
-	// databases/{database_id}/tables/{table_id} or
-	// databases/{database_id}/tables/{table_id}/partitions/{partition_id}
+	// ResourceName: Required. The relative metadata resource name in the following
+	// format.databases/{database_id} or databases/{database_id}/tables/{table_id}
+	// or databases/{database_id}/tables/{table_id}/partitions/{partition_id}
 	ResourceName string `json:"resourceName,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LocationUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LocationUri") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LocationUri") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AlterMetadataResourceLocationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AlterMetadataResourceLocationRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AlterMetadataResourceLocationResponse: Response message for
@@ -318,112 +309,88 @@ type AlterMetadataResourceLocationResponse struct {
 type AlterTablePropertiesRequest struct {
 	// Properties: A map that describes the desired values to mutate. If
 	// update_mask is empty, the properties will not update. Otherwise, the
-	// properties only alters the value whose associated paths exist in the
-	// update mask
+	// properties only alters the value whose associated paths exist in the update
+	// mask
 	Properties map[string]string `json:"properties,omitempty"`
-
-	// TableName: Required. The name of the table containing the properties
-	// you're altering in the following
-	// format.databases/{database_id}/tables/{table_id}
+	// TableName: Required. The name of the table containing the properties you're
+	// altering in the following format.databases/{database_id}/tables/{table_id}
 	TableName string `json:"tableName,omitempty"`
-
-	// UpdateMask: A field mask that specifies the metadata table properties
-	// that are overwritten by the update. Fields specified in the
-	// update_mask are relative to the resource (not to the full request). A
-	// field is overwritten if it is in the mask.For example, given the
-	// target properties: properties { a: 1 b: 2 } And an update properties:
-	// properties { a: 2 b: 3 c: 4 } then if the field mask is:paths:
-	// "properties.b", "properties.c"then the result will be: properties {
-	// a: 1 b: 3 c: 4 }
+	// UpdateMask: A field mask that specifies the metadata table properties that
+	// are overwritten by the update. Fields specified in the update_mask are
+	// relative to the resource (not to the full request). A field is overwritten
+	// if it is in the mask.For example, given the target properties: properties {
+	// a: 1 b: 2 } And an update properties: properties { a: 2 b: 3 c: 4 } then if
+	// the field mask is:paths: "properties.b", "properties.c"then the result will
+	// be: properties { a: 1 b: 3 c: 4 }
 	UpdateMask string `json:"updateMask,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Properties") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Properties") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Properties") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AlterTablePropertiesRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod AlterTablePropertiesRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditConfig: Specifies the audit configuration for a service. The
 // configuration determines which permission types are logged, and what
-// identities, if any, are exempted from logging. An AuditConfig must
-// have one or more AuditLogConfigs.If there are AuditConfigs for both
-// allServices and a specific service, the union of the two AuditConfigs
-// is used for that service: the log_types specified in each AuditConfig
-// are enabled, and the exempted_members in each AuditLogConfig are
-// exempted.Example Policy with multiple AuditConfigs: {
-// "audit_configs": [ { "service": "allServices", "audit_log_configs": [
-// { "log_type": "DATA_READ", "exempted_members": [
-// "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, {
-// "log_type": "ADMIN_READ" } ] }, { "service":
-// "sampleservice.googleapis.com", "audit_log_configs": [ { "log_type":
-// "DATA_READ" }, { "log_type": "DATA_WRITE", "exempted_members": [
-// "user:aliya@example.com" ] } ] } ] } For sampleservice, this policy
-// enables DATA_READ, DATA_WRITE and ADMIN_READ logging. It also exempts
-// jose@example.com from DATA_READ logging, and aliya@example.com from
-// DATA_WRITE logging.
+// identities, if any, are exempted from logging. An AuditConfig must have one
+// or more AuditLogConfigs.If there are AuditConfigs for both allServices and a
+// specific service, the union of the two AuditConfigs is used for that
+// service: the log_types specified in each AuditConfig are enabled, and the
+// exempted_members in each AuditLogConfig are exempted.Example Policy with
+// multiple AuditConfigs: { "audit_configs": [ { "service": "allServices",
+// "audit_log_configs": [ { "log_type": "DATA_READ", "exempted_members": [
+// "user:jose@example.com" ] }, { "log_type": "DATA_WRITE" }, { "log_type":
+// "ADMIN_READ" } ] }, { "service": "sampleservice.googleapis.com",
+// "audit_log_configs": [ { "log_type": "DATA_READ" }, { "log_type":
+// "DATA_WRITE", "exempted_members": [ "user:aliya@example.com" ] } ] } ] } For
+// sampleservice, this policy enables DATA_READ, DATA_WRITE and ADMIN_READ
+// logging. It also exempts jose@example.com from DATA_READ logging, and
+// aliya@example.com from DATA_WRITE logging.
 type AuditConfig struct {
-	// AuditLogConfigs: The configuration for logging of each type of
-	// permission.
+	// AuditLogConfigs: The configuration for logging of each type of permission.
 	AuditLogConfigs []*AuditLogConfig `json:"auditLogConfigs,omitempty"`
-
-	// Service: Specifies a service that will be enabled for audit logging.
-	// For example, storage.googleapis.com, cloudsql.googleapis.com.
-	// allServices is a special value that covers all services.
+	// Service: Specifies a service that will be enabled for audit logging. For
+	// example, storage.googleapis.com, cloudsql.googleapis.com. allServices is a
+	// special value that covers all services.
 	Service string `json:"service,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AuditLogConfigs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AuditLogConfigs") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AuditLogConfigs") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AuditConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // AuditLogConfig: Provides the configuration for logging a type of
-// permissions. Example: { "audit_log_configs": [ { "log_type":
-// "DATA_READ", "exempted_members": [ "user:jose@example.com" ] }, {
-// "log_type": "DATA_WRITE" } ] } This enables 'DATA_READ' and
-// 'DATA_WRITE' logging, while exempting jose@example.com from DATA_READ
-// logging.
+// permissions. Example: { "audit_log_configs": [ { "log_type": "DATA_READ",
+// "exempted_members": [ "user:jose@example.com" ] }, { "log_type":
+// "DATA_WRITE" } ] } This enables 'DATA_READ' and 'DATA_WRITE' logging, while
+// exempting jose@example.com from DATA_READ logging.
 type AuditLogConfig struct {
-	// ExemptedMembers: Specifies the identities that do not cause logging
-	// for this type of permission. Follows the same format of
-	// Binding.members.
+	// ExemptedMembers: Specifies the identities that do not cause logging for this
+	// type of permission. Follows the same format of Binding.members.
 	ExemptedMembers []string `json:"exemptedMembers,omitempty"`
-
 	// LogType: The log type that this config enables.
 	//
 	// Possible values:
@@ -432,67 +399,51 @@ type AuditLogConfig struct {
 	//   "DATA_WRITE" - Data writes. Example: CloudSQL Users create
 	//   "DATA_READ" - Data reads. Example: CloudSQL Users list
 	LogType string `json:"logType,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ExemptedMembers") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ExemptedMembers") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ExemptedMembers") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AuditLogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuditLogConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// AutoscalingConfig: Represents the autoscaling configuration of a
-// metastore service.
+// AutoscalingConfig: Represents the autoscaling configuration of a metastore
+// service.
 type AutoscalingConfig struct {
-	// AutoscalingEnabled: Optional. Whether or not autoscaling is enabled
-	// for this service.
+	// AutoscalingEnabled: Optional. Whether or not autoscaling is enabled for this
+	// service.
 	AutoscalingEnabled bool `json:"autoscalingEnabled,omitempty"`
-
 	// AutoscalingFactor: Output only. The scaling factor of a service with
 	// autoscaling enabled.
 	AutoscalingFactor float64 `json:"autoscalingFactor,omitempty"`
-
 	// LimitConfig: Optional. The LimitConfig of the service.
 	LimitConfig *LimitConfig `json:"limitConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AutoscalingEnabled")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AutoscalingEnabled") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AutoscalingEnabled") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AutoscalingEnabled") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AutoscalingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AutoscalingConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *AutoscalingConfig) UnmarshalJSON(data []byte) error {
@@ -509,47 +460,37 @@ func (s *AutoscalingConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// AuxiliaryVersionConfig: Configuration information for the auxiliary
-// service versions.
+// AuxiliaryVersionConfig: Configuration information for the auxiliary service
+// versions.
 type AuxiliaryVersionConfig struct {
-	// ConfigOverrides: A mapping of Hive metastore configuration key-value
-	// pairs to apply to the auxiliary Hive metastore (configured in
-	// hive-site.xml) in addition to the primary version's overrides. If
-	// keys are present in both the auxiliary version's overrides and the
-	// primary version's overrides, the value from the auxiliary version's
-	// overrides takes precedence.
+	// ConfigOverrides: A mapping of Hive metastore configuration key-value pairs
+	// to apply to the auxiliary Hive metastore (configured in hive-site.xml) in
+	// addition to the primary version's overrides. If keys are present in both the
+	// auxiliary version's overrides and the primary version's overrides, the value
+	// from the auxiliary version's overrides takes precedence.
 	ConfigOverrides map[string]string `json:"configOverrides,omitempty"`
-
-	// NetworkConfig: Output only. The network configuration contains the
-	// endpoint URI(s) of the auxiliary Hive metastore service.
+	// NetworkConfig: Output only. The network configuration contains the endpoint
+	// URI(s) of the auxiliary Hive metastore service.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
-
-	// Version: The Hive metastore version of the auxiliary service. It must
-	// be less than the primary Hive metastore service's version.
+	// Version: The Hive metastore version of the auxiliary service. It must be
+	// less than the primary Hive metastore service's version.
 	Version string `json:"version,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ConfigOverrides") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConfigOverrides") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ConfigOverrides") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AuxiliaryVersionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod AuxiliaryVersionConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // BackendMetastore: Represents a backend metastore for the federation.
@@ -562,62 +503,46 @@ type BackendMetastore struct {
 	//   "BIGQUERY" - The backend metastore is BigQuery.
 	//   "DATAPROC_METASTORE" - The backend metastore is Dataproc Metastore.
 	MetastoreType string `json:"metastoreType,omitempty"`
-
-	// Name: The relative resource name of the metastore that is being
-	// federated. The formats of the relative resource names for the
-	// currently supported metastores are listed below: BigQuery
-	// projects/{project_id} Dataproc Metastore
-	// projects/{project_id}/locations/{location}/services/{service_id}
+	// Name: The relative resource name of the metastore that is being federated.
+	// The formats of the relative resource names for the currently supported
+	// metastores are listed below: BigQuery projects/{project_id} Dataproc
+	// Metastore projects/{project_id}/locations/{location}/services/{service_id}
 	Name string `json:"name,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MetastoreType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MetastoreType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "MetastoreType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *BackendMetastore) MarshalJSON() ([]byte, error) {
 	type NoMethod BackendMetastore
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Backup: The details of a backup resource.
 type Backup struct {
 	// CreateTime: Output only. The time when the backup was started.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// Description: The description of the backup.
 	Description string `json:"description,omitempty"`
-
 	// EndTime: Output only. The time when the backup finished creating.
 	EndTime string `json:"endTime,omitempty"`
-
-	// Name: Immutable. The relative resource name of the backup, in the
-	// following
-	// form:projects/{project_number}/locations/{location_id}/services/{servi
-	// ce_id}/backups/{backup_id}
+	// Name: Immutable. The relative resource name of the backup, in the following
+	// form:projects/{project_number}/locations/{location_id}/services/{service_id}/
+	// backups/{backup_id}
 	Name string `json:"name,omitempty"`
-
-	// RestoringServices: Output only. Services that are restoring from the
-	// backup.
+	// RestoringServices: Output only. Services that are restoring from the backup.
 	RestoringServices []string `json:"restoringServices,omitempty"`
-
-	// ServiceRevision: Output only. The revision of the service at the time
-	// of backup.
+	// ServiceRevision: Output only. The revision of the service at the time of
+	// backup.
 	ServiceRevision *Service `json:"serviceRevision,omitempty"`
-
 	// State: Output only. The current state of the backup.
 	//
 	// Possible values:
@@ -629,140 +554,120 @@ type Backup struct {
 	//   "RESTORING" - The backup is being restored.
 	State string `json:"state,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Backup) MarshalJSON() ([]byte, error) {
 	type NoMethod Backup
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Binding: Associates members, or principals, with a role.
 type Binding struct {
 	// Condition: The condition that is associated with this binding.If the
 	// condition evaluates to true, then this binding applies to the current
-	// request.If the condition evaluates to false, then this binding does
-	// not apply to the current request. However, a different role binding
-	// might grant the same role to one or more of the principals in this
-	// binding.To learn which resources support conditions in their IAM
-	// policies, see the IAM documentation
+	// request.If the condition evaluates to false, then this binding does not
+	// apply to the current request. However, a different role binding might grant
+	// the same role to one or more of the principals in this binding.To learn
+	// which resources support conditions in their IAM policies, see the IAM
+	// documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Condition *Expr `json:"condition,omitempty"`
-
-	// Members: Specifies the principals requesting access for a Google
-	// Cloud resource. members can have the following values: allUsers: A
-	// special identifier that represents anyone who is on the internet;
-	// with or without a Google account. allAuthenticatedUsers: A special
-	// identifier that represents anyone who is authenticated with a Google
-	// account or a service account. Does not include identities that come
-	// from external identity providers (IdPs) through identity federation.
-	// user:{emailid}: An email address that represents a specific Google
-	// account. For example, alice@example.com . serviceAccount:{emailid}:
-	// An email address that represents a Google service account. For
-	// example, my-other-app@appspot.gserviceaccount.com.
-	// serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]:
-	// An identifier for a Kubernetes service account
+	// Members: Specifies the principals requesting access for a Google Cloud
+	// resource. members can have the following values: allUsers: A special
+	// identifier that represents anyone who is on the internet; with or without a
+	// Google account. allAuthenticatedUsers: A special identifier that represents
+	// anyone who is authenticated with a Google account or a service account. Does
+	// not include identities that come from external identity providers (IdPs)
+	// through identity federation. user:{emailid}: An email address that
+	// represents a specific Google account. For example, alice@example.com .
+	// serviceAccount:{emailid}: An email address that represents a Google service
+	// account. For example, my-other-app@appspot.gserviceaccount.com.
+	// serviceAccount:{projectid}.svc.id.goog[{namespace}/{kubernetes-sa}]: An
+	// identifier for a Kubernetes service account
 	// (https://cloud.google.com/kubernetes-engine/docs/how-to/kubernetes-service-accounts).
 	// For example, my-project.svc.id.goog[my-namespace/my-kubernetes-sa].
 	// group:{emailid}: An email address that represents a Google group. For
-	// example, admins@example.com. domain:{domain}: The G Suite domain
-	// (primary) that represents all the users of that domain. For example,
-	// google.com or example.com.
-	// principal://iam.googleapis.com/locations/global/workforcePools/{pool_i
-	// d}/subject/{subject_attribute_value}: A single identity in a
-	// workforce identity pool.
-	// principalSet://iam.googleapis.com/locations/global/workforcePools/{poo
-	// l_id}/group/{group_id}: All workforce identities in a group.
-	// principalSet://iam.googleapis.com/locations/global/workforcePools/{poo
-	// l_id}/attribute.{attribute_name}/{attribute_value}: All workforce
-	// identities with a specific attribute value.
-	// principalSet://iam.googleapis.com/locations/global/workforcePools/{poo
-	// l_id}/*: All identities in a workforce identity pool.
-	// principal://iam.googleapis.com/projects/{project_number}/locations/glo
-	// bal/workloadIdentityPools/{pool_id}/subject/{subject_attribute_value}:
-	//  A single identity in a workload identity pool.
-	// principalSet://iam.googleapis.com/projects/{project_number}/locations/
-	// global/workloadIdentityPools/{pool_id}/group/{group_id}: A workload
-	// identity pool group.
-	// principalSet://iam.googleapis.com/projects/{project_number}/locations/
-	// global/workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{att
-	// ribute_value}: All identities in a workload identity pool with a
-	// certain attribute.
-	// principalSet://iam.googleapis.com/projects/{project_number}/locations/
-	// global/workloadIdentityPools/{pool_id}/*: All identities in a
-	// workload identity pool. deleted:user:{emailid}?uid={uniqueid}: An
-	// email address (plus unique identifier) representing a user that has
+	// example, admins@example.com. domain:{domain}: The G Suite domain (primary)
+	// that represents all the users of that domain. For example, google.com or
+	// example.com.
+	// principal://iam.googleapis.com/locations/global/workforcePools/{pool_id}/subj
+	// ect/{subject_attribute_value}: A single identity in a workforce identity
+	// pool.
+	// principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/g
+	// roup/{group_id}: All workforce identities in a group.
+	// principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/a
+	// ttribute.{attribute_name}/{attribute_value}: All workforce identities with a
+	// specific attribute value.
+	// principalSet://iam.googleapis.com/locations/global/workforcePools/{pool_id}/*
+	// : All identities in a workforce identity pool.
+	// principal://iam.googleapis.com/projects/{project_number}/locations/global/wor
+	// kloadIdentityPools/{pool_id}/subject/{subject_attribute_value}: A single
+	// identity in a workload identity pool.
+	// principalSet://iam.googleapis.com/projects/{project_number}/locations/global/
+	// workloadIdentityPools/{pool_id}/group/{group_id}: A workload identity pool
+	// group.
+	// principalSet://iam.googleapis.com/projects/{project_number}/locations/global/
+	// workloadIdentityPools/{pool_id}/attribute.{attribute_name}/{attribute_value}:
+	//  All identities in a workload identity pool with a certain attribute.
+	// principalSet://iam.googleapis.com/projects/{project_number}/locations/global/
+	// workloadIdentityPools/{pool_id}/*: All identities in a workload identity
+	// pool. deleted:user:{emailid}?uid={uniqueid}: An email address (plus unique
+	// identifier) representing a user that has been recently deleted. For example,
+	// alice@example.com?uid=123456789012345678901. If the user is recovered, this
+	// value reverts to user:{emailid} and the recovered user retains the role in
+	// the binding. deleted:serviceAccount:{emailid}?uid={uniqueid}: An email
+	// address (plus unique identifier) representing a service account that has
 	// been recently deleted. For example,
-	// alice@example.com?uid=123456789012345678901. If the user is
-	// recovered, this value reverts to user:{emailid} and the recovered
-	// user retains the role in the binding.
-	// deleted:serviceAccount:{emailid}?uid={uniqueid}: An email address
-	// (plus unique identifier) representing a service account that has been
-	// recently deleted. For example,
-	// my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901.
-	// If the service account is undeleted, this value reverts to
-	// serviceAccount:{emailid} and the undeleted service account retains
-	// the role in the binding. deleted:group:{emailid}?uid={uniqueid}: An
-	// email address (plus unique identifier) representing a Google group
-	// that has been recently deleted. For example,
-	// admins@example.com?uid=123456789012345678901. If the group is
-	// recovered, this value reverts to group:{emailid} and the recovered
-	// group retains the role in the binding.
-	// deleted:principal://iam.googleapis.com/locations/global/workforcePools
-	// /{pool_id}/subject/{subject_attribute_value}: Deleted single identity
-	// in a workforce identity pool. For example,
-	// deleted:principal://iam.googleapis.com/locations/global/workforcePools
-	// /my-pool-id/subject/my-subject-attribute-value.
+	// my-other-app@appspot.gserviceaccount.com?uid=123456789012345678901. If the
+	// service account is undeleted, this value reverts to serviceAccount:{emailid}
+	// and the undeleted service account retains the role in the binding.
+	// deleted:group:{emailid}?uid={uniqueid}: An email address (plus unique
+	// identifier) representing a Google group that has been recently deleted. For
+	// example, admins@example.com?uid=123456789012345678901. If the group is
+	// recovered, this value reverts to group:{emailid} and the recovered group
+	// retains the role in the binding.
+	// deleted:principal://iam.googleapis.com/locations/global/workforcePools/{pool_
+	// id}/subject/{subject_attribute_value}: Deleted single identity in a
+	// workforce identity pool. For example,
+	// deleted:principal://iam.googleapis.com/locations/global/workforcePools/my-poo
+	// l-id/subject/my-subject-attribute-value.
 	Members []string `json:"members,omitempty"`
-
-	// Role: Role that is assigned to the list of members, or principals.
-	// For example, roles/viewer, roles/editor, or roles/owner.For an
-	// overview of the IAM roles and permissions, see the IAM documentation
+	// Role: Role that is assigned to the list of members, or principals. For
+	// example, roles/viewer, roles/editor, or roles/owner.For an overview of the
+	// IAM roles and permissions, see the IAM documentation
 	// (https://cloud.google.com/iam/docs/roles-overview). For a list of the
 	// available pre-defined roles, see here
 	// (https://cloud.google.com/iam/docs/understanding-roles).
 	Role string `json:"role,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Condition") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Condition") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Condition") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Binding) MarshalJSON() ([]byte, error) {
 	type NoMethod Binding
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CancelMigrationRequest: Request message for
@@ -773,215 +678,168 @@ type CancelMigrationRequest struct {
 // CancelMigrationResponse: Response message for
 // DataprocMetastore.CancelMigration.
 type CancelMigrationResponse struct {
-	// MigrationExecution: The relative resource name of the migration
-	// execution, in the following
-	// form:projects/{project_number}/locations/{location_id}/services/{servi
-	// ce_id}/migrationExecutions/{migration_execution_id}.
+	// MigrationExecution: The relative resource name of the migration execution,
+	// in the following
+	// form:projects/{project_number}/locations/{location_id}/services/{service_id}/
+	// migrationExecutions/{migration_execution_id}.
 	MigrationExecution string `json:"migrationExecution,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MigrationExecution")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "MigrationExecution") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MigrationExecution") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MigrationExecution") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CancelMigrationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CancelMigrationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CancelOperationRequest: The request message for
-// Operations.CancelOperation.
+// CancelOperationRequest: The request message for Operations.CancelOperation.
 type CancelOperationRequest struct {
 }
 
-// CdcConfig: Configuration information to start the Change Data Capture
-// (CDC) streams from customer database to backend database of Dataproc
-// Metastore.
+// CdcConfig: Configuration information to start the Change Data Capture (CDC)
+// streams from customer database to backend database of Dataproc Metastore.
 type CdcConfig struct {
-	// Bucket: Optional. The bucket to write the intermediate stream event
-	// data in. The bucket name must be without any prefix like "gs://". See
-	// the bucket naming requirements
-	// (https://cloud.google.com/storage/docs/buckets#naming). This field is
-	// optional. If not set, the Artifacts Cloud Storage bucket will be
-	// used.
+	// Bucket: Optional. The bucket to write the intermediate stream event data in.
+	// The bucket name must be without any prefix like "gs://". See the bucket
+	// naming requirements (https://cloud.google.com/storage/docs/buckets#naming).
+	// This field is optional. If not set, the Artifacts Cloud Storage bucket will
+	// be used.
 	Bucket string `json:"bucket,omitempty"`
-
-	// Password: Required. Input only. The password for the user that
-	// Datastream service should use for the MySQL connection. This field is
-	// not returned on request.
+	// Password: Required. Input only. The password for the user that Datastream
+	// service should use for the MySQL connection. This field is not returned on
+	// request.
 	Password string `json:"password,omitempty"`
-
-	// ReverseProxySubnet: Required. The URL of the subnetwork resource to
-	// create the VM instance hosting the reverse proxy in. More context in
+	// ReverseProxySubnet: Required. The URL of the subnetwork resource to create
+	// the VM instance hosting the reverse proxy in. More context in
 	// https://cloud.google.com/datastream/docs/private-connectivity#reverse-csql-proxy
-	// The subnetwork should reside in the network provided in the request
-	// that Datastream will peer to and should be in the same region as
-	// Datastream, in the following format.
+	// The subnetwork should reside in the network provided in the request that
+	// Datastream will peer to and should be in the same region as Datastream, in
+	// the following format.
 	// projects/{project_id}/regions/{region_id}/subnetworks/{subnetwork_id}
 	ReverseProxySubnet string `json:"reverseProxySubnet,omitempty"`
-
-	// RootPath: Optional. The root path inside the Cloud Storage bucket.
-	// The stream event data will be written to this path. The default value
-	// is /migration.
+	// RootPath: Optional. The root path inside the Cloud Storage bucket. The
+	// stream event data will be written to this path. The default value is
+	// /migration.
 	RootPath string `json:"rootPath,omitempty"`
-
-	// SubnetIpRange: Required. A /29 CIDR IP range for peering with
-	// datastream.
+	// SubnetIpRange: Required. A /29 CIDR IP range for peering with datastream.
 	SubnetIpRange string `json:"subnetIpRange,omitempty"`
-
-	// Username: Required. The username that the Datastream service should
-	// use for the MySQL connection.
+	// Username: Required. The username that the Datastream service should use for
+	// the MySQL connection.
 	Username string `json:"username,omitempty"`
-
-	// VpcNetwork: Required. Fully qualified name of the Cloud SQL
-	// instance's VPC network or the shared VPC network that Datastream will
-	// peer to, in the following format:
-	// projects/{project_id}/locations/global/networks/{network_id}. More
-	// context in
+	// VpcNetwork: Required. Fully qualified name of the Cloud SQL instance's VPC
+	// network or the shared VPC network that Datastream will peer to, in the
+	// following format:
+	// projects/{project_id}/locations/global/networks/{network_id}. More context
+	// in
 	// https://cloud.google.com/datastream/docs/network-connectivity-options#privateconnectivity
 	VpcNetwork string `json:"vpcNetwork,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Bucket") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Bucket") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Bucket") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CdcConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CdcConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CloudSQLConnectionConfig: Configuration information to establish
-// customer database connection before the cutover phase of migration
+// CloudSQLConnectionConfig: Configuration information to establish customer
+// database connection before the cutover phase of migration
 type CloudSQLConnectionConfig struct {
 	// HiveDatabaseName: Required. The hive database name.
 	HiveDatabaseName string `json:"hiveDatabaseName,omitempty"`
-
 	// InstanceConnectionName: Required. Cloud SQL database connection name
 	// (project_id:region:instance_name)
 	InstanceConnectionName string `json:"instanceConnectionName,omitempty"`
-
-	// IpAddress: Required. The private IP address of the Cloud SQL
-	// instance.
+	// IpAddress: Required. The private IP address of the Cloud SQL instance.
 	IpAddress string `json:"ipAddress,omitempty"`
-
-	// NatSubnet: Required. The relative resource name of the subnetwork to
-	// be used for Private Service Connect. Note that this cannot be a
-	// regular subnet and is used only for NAT.
+	// NatSubnet: Required. The relative resource name of the subnetwork to be used
+	// for Private Service Connect. Note that this cannot be a regular subnet and
+	// is used only for NAT.
 	// (https://cloud.google.com/vpc/docs/about-vpc-hosted-services#psc-subnets)
-	// This subnet is used to publish the SOCKS5 proxy service. The subnet
-	// size must be at least /29 and it should reside in a network through
-	// which the Cloud SQL instance is accessible. The resource name should
-	// be in the format,
+	// This subnet is used to publish the SOCKS5 proxy service. The subnet size
+	// must be at least /29 and it should reside in a network through which the
+	// Cloud SQL instance is accessible. The resource name should be in the format,
 	// projects/{project_id}/regions/{region_id}/subnetworks/{subnetwork_id}
 	NatSubnet string `json:"natSubnet,omitempty"`
-
-	// Password: Required. Input only. The password for the user that
-	// Dataproc Metastore service will be using to connect to the database.
-	// This field is not returned on request.
+	// Password: Required. Input only. The password for the user that Dataproc
+	// Metastore service will be using to connect to the database. This field is
+	// not returned on request.
 	Password string `json:"password,omitempty"`
-
 	// Port: Required. The network port of the database.
 	Port int64 `json:"port,omitempty"`
-
-	// ProxySubnet: Required. The relative resource name of the subnetwork
-	// to deploy the SOCKS5 proxy service in. The subnetwork should reside
-	// in a network through which the Cloud SQL instance is accessible. The
-	// resource name should be in the format,
+	// ProxySubnet: Required. The relative resource name of the subnetwork to
+	// deploy the SOCKS5 proxy service in. The subnetwork should reside in a
+	// network through which the Cloud SQL instance is accessible. The resource
+	// name should be in the format,
 	// projects/{project_id}/regions/{region_id}/subnetworks/{subnetwork_id}
 	ProxySubnet string `json:"proxySubnet,omitempty"`
-
-	// Username: Required. The username that Dataproc Metastore service will
-	// use to connect to the database.
+	// Username: Required. The username that Dataproc Metastore service will use to
+	// connect to the database.
 	Username string `json:"username,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "HiveDatabaseName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "HiveDatabaseName") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "HiveDatabaseName") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CloudSQLConnectionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudSQLConnectionConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CloudSQLMigrationConfig: Configuration information for migrating from
-// self-managed hive metastore on Google Cloud using Cloud SQL as the
-// backend database to Dataproc Metastore.
+// self-managed hive metastore on Google Cloud using Cloud SQL as the backend
+// database to Dataproc Metastore.
 type CloudSQLMigrationConfig struct {
-	// CdcConfig: Required. Configuration information to start the Change
-	// Data Capture (CDC) streams from customer database to backend database
-	// of Dataproc Metastore. Dataproc Metastore switches to using its
-	// backend database after the cutover phase of migration.
+	// CdcConfig: Required. Configuration information to start the Change Data
+	// Capture (CDC) streams from customer database to backend database of Dataproc
+	// Metastore. Dataproc Metastore switches to using its backend database after
+	// the cutover phase of migration.
 	CdcConfig *CdcConfig `json:"cdcConfig,omitempty"`
-
-	// CloudSqlConnectionConfig: Required. Configuration information to
-	// establish customer database connection before the cutover phase of
-	// migration
+	// CloudSqlConnectionConfig: Required. Configuration information to establish
+	// customer database connection before the cutover phase of migration
 	CloudSqlConnectionConfig *CloudSQLConnectionConfig `json:"cloudSqlConnectionConfig,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CdcConfig") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CdcConfig") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CdcConfig") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CloudSQLMigrationConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod CloudSQLMigrationConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CompleteMigrationRequest: Request message for
@@ -992,110 +850,87 @@ type CompleteMigrationRequest struct {
 // CompleteMigrationResponse: Response message for
 // DataprocMetastore.CompleteMigration.
 type CompleteMigrationResponse struct {
-	// MigrationExecution: The relative resource name of the migration
-	// execution, in the following
-	// form:projects/{project_number}/locations/{location_id}/services/{servi
-	// ce_id}/migrationExecutions/{migration_execution_id}.
+	// MigrationExecution: The relative resource name of the migration execution,
+	// in the following
+	// form:projects/{project_number}/locations/{location_id}/services/{service_id}/
+	// migrationExecutions/{migration_execution_id}.
 	MigrationExecution string `json:"migrationExecution,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MigrationExecution")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "MigrationExecution") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MigrationExecution") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MigrationExecution") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CompleteMigrationResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CompleteMigrationResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Consumer: Contains information of the customer's network
-// configurations.
+// Consumer: Contains information of the customer's network configurations.
 type Consumer struct {
-	// EndpointLocation: Output only. The location of the endpoint URI.
-	// Format: projects/{project}/locations/{location}.
+	// EndpointLocation: Output only. The location of the endpoint URI. Format:
+	// projects/{project}/locations/{location}.
 	EndpointLocation string `json:"endpointLocation,omitempty"`
-
 	// EndpointUri: Output only. The URI of the endpoint used to access the
 	// metastore service.
 	EndpointUri string `json:"endpointUri,omitempty"`
-
-	// Subnetwork: Immutable. The subnetwork of the customer project from
-	// which an IP address is reserved and used as the Dataproc Metastore
-	// service's endpoint. It is accessible to hosts in the subnet and to
-	// all hosts in a subnet in the same region and same network. There must
-	// be at least one IP address available in the subnet's primary range.
-	// The subnet is specified in the following
-	// form:projects/{project_number}/regions/{region_id}/subnetworks/{subnet
-	// work_id}
+	// Subnetwork: Immutable. The subnetwork of the customer project from which an
+	// IP address is reserved and used as the Dataproc Metastore service's
+	// endpoint. It is accessible to hosts in the subnet and to all hosts in a
+	// subnet in the same region and same network. There must be at least one IP
+	// address available in the subnet's primary range. The subnet is specified in
+	// the following
+	// form:projects/{project_number}/regions/{region_id}/subnetworks/{subnetwork_id
+	// }
 	Subnetwork string `json:"subnetwork,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "EndpointLocation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "EndpointLocation") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "EndpointLocation") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Consumer) MarshalJSON() ([]byte, error) {
 	type NoMethod Consumer
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DataCatalogConfig: Specifies how metastore metadata should be
-// integrated with the Data Catalog service.
+// DataCatalogConfig: Specifies how metastore metadata should be integrated
+// with the Data Catalog service.
 type DataCatalogConfig struct {
-	// Enabled: Optional. Defines whether the metastore metadata should be
-	// synced to Data Catalog. The default value is to disable syncing
-	// metastore metadata to Data Catalog.
+	// Enabled: Optional. Defines whether the metastore metadata should be synced
+	// to Data Catalog. The default value is to disable syncing metastore metadata
+	// to Data Catalog.
 	Enabled bool `json:"enabled,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Enabled") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Enabled") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Enabled") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Enabled") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DataCatalogConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DataCatalogConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // DatabaseDump: A specification of the location of and metadata about a
@@ -1104,496 +939,386 @@ type DatabaseDump struct {
 	// DatabaseType: The type of the database.
 	//
 	// Possible values:
-	//   "DATABASE_TYPE_UNSPECIFIED" - The type of the source database is
-	// unknown.
+	//   "DATABASE_TYPE_UNSPECIFIED" - The type of the source database is unknown.
 	//   "MYSQL" - The type of the source database is MySQL.
 	DatabaseType string `json:"databaseType,omitempty"`
-
-	// GcsUri: A Cloud Storage object or folder URI that specifies the
-	// source from which to import metadata. It must begin with gs://.
+	// GcsUri: A Cloud Storage object or folder URI that specifies the source from
+	// which to import metadata. It must begin with gs://.
 	GcsUri string `json:"gcsUri,omitempty"`
-
 	// SourceDatabase: The name of the source database.
 	SourceDatabase string `json:"sourceDatabase,omitempty"`
-
-	// Type: Optional. The type of the database dump. If unspecified,
-	// defaults to MYSQL.
+	// Type: Optional. The type of the database dump. If unspecified, defaults to
+	// MYSQL.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - The type of the database dump is unknown.
 	//   "MYSQL" - Database dump is a MySQL dump file.
 	//   "AVRO" - Database dump contains Avro files.
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DatabaseType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DatabaseType") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DatabaseType") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DatabaseDump) MarshalJSON() ([]byte, error) {
 	type NoMethod DatabaseDump
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// DataplexConfig: Specifies how metastore metadata should be integrated
-// with the Dataplex service.
+// DataplexConfig: Specifies how metastore metadata should be integrated with
+// the Dataplex service.
 type DataplexConfig struct {
-	// LakeResources: A reference to the Lake resources that this metastore
-	// service is attached to. The key is the lake resource name. Example:
+	// LakeResources: A reference to the Lake resources that this metastore service
+	// is attached to. The key is the lake resource name. Example:
 	// projects/{project_number}/locations/{location_id}/lakes/{lake_id}.
 	LakeResources map[string]Lake `json:"lakeResources,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LakeResources") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LakeResources") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LakeResources") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *DataplexConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod DataplexConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Empty: A generic empty message that you can re-use to avoid defining
-// duplicated empty messages in your APIs. A typical example is to use
-// it as the request or the response type of an API method. For
-// instance: service Foo { rpc Bar(google.protobuf.Empty) returns
-// (google.protobuf.Empty); }
+// duplicated empty messages in your APIs. A typical example is to use it as
+// the request or the response type of an API method. For instance: service Foo
+// { rpc Bar(google.protobuf.Empty) returns (google.protobuf.Empty); }
 type Empty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
 
 // EncryptionConfig: Encryption settings for the service.
 type EncryptionConfig struct {
-	// KmsKey: The fully qualified customer provided Cloud KMS key name to
-	// use for customer data encryption, in the following
-	// format:projects/{project_number}/locations/{location_id}/keyRings/{key
-	// _ring_id}/cryptoKeys/{crypto_key_id}.
+	// KmsKey: The fully qualified customer provided Cloud KMS key name to use for
+	// customer data encryption, in the following
+	// format:projects/{project_number}/locations/{location_id}/keyRings/{key_ring_i
+	// d}/cryptoKeys/{crypto_key_id}.
 	KmsKey string `json:"kmsKey,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "KmsKey") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "KmsKey") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "KmsKey") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *EncryptionConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod EncryptionConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ErrorDetails: Error details in public error message for
 // DataprocMetastore.QueryMetadata.
 type ErrorDetails struct {
-	// Details: Additional structured details about this error.Keys define
-	// the failure items. Value describes the exception or details of the
-	// item.
+	// Details: Additional structured details about this error.Keys define the
+	// failure items. Value describes the exception or details of the item.
 	Details map[string]string `json:"details,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Details") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Details") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Details") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Details") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ErrorDetails) MarshalJSON() ([]byte, error) {
 	type NoMethod ErrorDetails
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ExportMetadataRequest: Request message for
-// DataprocMetastore.ExportMetadata.
+// ExportMetadataRequest: Request message for DataprocMetastore.ExportMetadata.
 type ExportMetadataRequest struct {
-	// DatabaseDumpType: Optional. The type of the database dump. If
-	// unspecified, defaults to MYSQL.
+	// DatabaseDumpType: Optional. The type of the database dump. If unspecified,
+	// defaults to MYSQL.
 	//
 	// Possible values:
 	//   "TYPE_UNSPECIFIED" - The type of the database dump is unknown.
 	//   "MYSQL" - Database dump is a MySQL dump file.
 	//   "AVRO" - Database dump contains Avro files.
 	DatabaseDumpType string `json:"databaseDumpType,omitempty"`
-
-	// DestinationGcsFolder: A Cloud Storage URI of a folder, in the format
-	// gs:///. A sub-folder containing exported files will be created below
-	// it.
+	// DestinationGcsFolder: A Cloud Storage URI of a folder, in the format gs:///.
+	// A sub-folder containing exported files will be created below it.
 	DestinationGcsFolder string `json:"destinationGcsFolder,omitempty"`
-
-	// RequestId: Optional. A request ID. Specify a unique request ID to
-	// allow the server to ignore the request if it has completed. The
-	// server will ignore subsequent requests that provide a duplicate
-	// request ID for at least 60 minutes after the first request.For
-	// example, if an initial request times out, followed by another request
-	// with the same request ID, the server ignores the second request to
-	// prevent the creation of duplicate commitments.The request ID must be
-	// a valid UUID
-	// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format).
-	// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+	// RequestId: Optional. A request ID. Specify a unique request ID to allow the
+	// server to ignore the request if it has completed. The server will ignore
+	// subsequent requests that provide a duplicate request ID for at least 60
+	// minutes after the first request.For example, if an initial request times
+	// out, followed by another request with the same request ID, the server
+	// ignores the second request to prevent the creation of duplicate
+	// commitments.The request ID must be a valid UUID
+	// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format). A zero
+	// UUID (00000000-0000-0000-0000-000000000000) is not supported.
 	RequestId string `json:"requestId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DatabaseDumpType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DatabaseDumpType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DatabaseDumpType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ExportMetadataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod ExportMetadataRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Expr: Represents a textual expression in the Common Expression
-// Language (CEL) syntax. CEL is a C-like expression language. The
-// syntax and semantics of CEL are documented at
-// https://github.com/google/cel-spec.Example (Comparison): title:
-// "Summary size limit" description: "Determines if a summary is less
-// than 100 chars" expression: "document.summary.size() < 100" Example
-// (Equality): title: "Requestor is owner" description: "Determines if
+// Expr: Represents a textual expression in the Common Expression Language
+// (CEL) syntax. CEL is a C-like expression language. The syntax and semantics
+// of CEL are documented at https://github.com/google/cel-spec.Example
+// (Comparison): title: "Summary size limit" description: "Determines if a
+// summary is less than 100 chars" expression: "document.summary.size() < 100"
+// Example (Equality): title: "Requestor is owner" description: "Determines if
 // requestor is the document owner" expression: "document.owner ==
 // request.auth.claims.email" Example (Logic): title: "Public documents"
-// description: "Determine whether the document should be publicly
-// visible" expression: "document.type != 'private' && document.type !=
-// 'internal'" Example (Data Manipulation): title: "Notification string"
-// description: "Create a notification string with a timestamp."
-// expression: "'New message received at ' +
-// string(document.create_time)" The exact variables and functions that
-// may be referenced within an expression are determined by the service
-// that evaluates it. See the service documentation for additional
+// description: "Determine whether the document should be publicly visible"
+// expression: "document.type != 'private' && document.type != 'internal'"
+// Example (Data Manipulation): title: "Notification string" description:
+// "Create a notification string with a timestamp." expression: "'New message
+// received at ' + string(document.create_time)" The exact variables and
+// functions that may be referenced within an expression are determined by the
+// service that evaluates it. See the service documentation for additional
 // information.
 type Expr struct {
-	// Description: Optional. Description of the expression. This is a
-	// longer text which describes the expression, e.g. when hovered over it
-	// in a UI.
+	// Description: Optional. Description of the expression. This is a longer text
+	// which describes the expression, e.g. when hovered over it in a UI.
 	Description string `json:"description,omitempty"`
-
-	// Expression: Textual representation of an expression in Common
-	// Expression Language syntax.
+	// Expression: Textual representation of an expression in Common Expression
+	// Language syntax.
 	Expression string `json:"expression,omitempty"`
-
-	// Location: Optional. String indicating the location of the expression
-	// for error reporting, e.g. a file name and a position in the file.
+	// Location: Optional. String indicating the location of the expression for
+	// error reporting, e.g. a file name and a position in the file.
 	Location string `json:"location,omitempty"`
-
-	// Title: Optional. Title for the expression, i.e. a short string
-	// describing its purpose. This can be used e.g. in UIs which allow to
-	// enter the expression.
+	// Title: Optional. Title for the expression, i.e. a short string describing
+	// its purpose. This can be used e.g. in UIs which allow to enter the
+	// expression.
 	Title string `json:"title,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Description") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Description") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Description") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Expr) MarshalJSON() ([]byte, error) {
 	type NoMethod Expr
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Federation: Represents a federation of multiple backend metastores.
 type Federation struct {
-	// BackendMetastores: A map from BackendMetastore rank to
-	// BackendMetastores from which the federation service serves metadata
-	// at query time. The map key represents the order in which
-	// BackendMetastores should be evaluated to resolve database names at
-	// query time and should be greater than or equal to zero. A
-	// BackendMetastore with a lower number will be evaluated before a
+	// BackendMetastores: A map from BackendMetastore rank to BackendMetastores
+	// from which the federation service serves metadata at query time. The map key
+	// represents the order in which BackendMetastores should be evaluated to
+	// resolve database names at query time and should be greater than or equal to
+	// zero. A BackendMetastore with a lower number will be evaluated before a
 	// BackendMetastore with a higher number.
 	BackendMetastores map[string]BackendMetastore `json:"backendMetastores,omitempty"`
-
-	// CreateTime: Output only. The time when the metastore federation was
-	// created.
+	// CreateTime: Output only. The time when the metastore federation was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// EndpointUri: Output only. The federation endpoint.
 	EndpointUri string `json:"endpointUri,omitempty"`
-
 	// Labels: User-defined labels for the metastore federation.
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// Name: Immutable. The relative resource name of the federation, of the
-	// form:
-	// projects/{project_number}/locations/{location_id}/federations/{federat
-	// ion_id}`.
+	// Name: Immutable. The relative resource name of the federation, of the form:
+	// projects/{project_number}/locations/{location_id}/federations/{federation_id}
+	// `.
 	Name string `json:"name,omitempty"`
-
 	// State: Output only. The current state of the federation.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - The state of the metastore federation is
-	// unknown.
-	//   "CREATING" - The metastore federation is in the process of being
-	// created.
-	//   "ACTIVE" - The metastore federation is running and ready to serve
-	// queries.
-	//   "UPDATING" - The metastore federation is being updated. It remains
-	// usable but cannot accept additional update requests or be deleted at
-	// this time.
-	//   "DELETING" - The metastore federation is undergoing deletion. It
-	// cannot be used.
-	//   "ERROR" - The metastore federation has encountered an error and
-	// cannot be used. The metastore federation should be deleted.
+	//   "STATE_UNSPECIFIED" - The state of the metastore federation is unknown.
+	//   "CREATING" - The metastore federation is in the process of being created.
+	//   "ACTIVE" - The metastore federation is running and ready to serve queries.
+	//   "UPDATING" - The metastore federation is being updated. It remains usable
+	// but cannot accept additional update requests or be deleted at this time.
+	//   "DELETING" - The metastore federation is undergoing deletion. It cannot be
+	// used.
+	//   "ERROR" - The metastore federation has encountered an error and cannot be
+	// used. The metastore federation should be deleted.
 	State string `json:"state,omitempty"`
-
-	// StateMessage: Output only. Additional information about the current
-	// state of the metastore federation, if available.
+	// StateMessage: Output only. Additional information about the current state of
+	// the metastore federation, if available.
 	StateMessage string `json:"stateMessage,omitempty"`
-
-	// Uid: Output only. The globally unique resource identifier of the
-	// metastore federation.
+	// Uid: Output only. The globally unique resource identifier of the metastore
+	// federation.
 	Uid string `json:"uid,omitempty"`
-
-	// UpdateTime: Output only. The time when the metastore federation was
-	// last updated.
+	// UpdateTime: Output only. The time when the metastore federation was last
+	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
-
-	// Version: Immutable. The Apache Hive metastore version of the
-	// federation. All backend metastore versions must be compatible with
-	// the federation version.
+	// Version: Immutable. The Apache Hive metastore version of the federation. All
+	// backend metastore versions must be compatible with the federation version.
 	Version string `json:"version,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "BackendMetastores")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "BackendMetastores") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BackendMetastores") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BackendMetastores") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Federation) MarshalJSON() ([]byte, error) {
 	type NoMethod Federation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// HiveMetastoreConfig: Specifies configuration information specific to
-// running Hive metastore software as the metastore service.
+// HiveMetastoreConfig: Specifies configuration information specific to running
+// Hive metastore software as the metastore service.
 type HiveMetastoreConfig struct {
-	// AuxiliaryVersions: A mapping of Hive metastore version to the
-	// auxiliary version configuration. When specified, a secondary Hive
-	// metastore service is created along with the primary service. All
-	// auxiliary versions must be less than the service's primary version.
-	// The key is the auxiliary service name and it must match the regular
-	// expression a-z?. This means that the first character must be a
-	// lowercase letter, and all the following characters must be hyphens,
-	// lowercase letters, or digits, except the last character, which cannot
-	// be a hyphen.
+	// AuxiliaryVersions: A mapping of Hive metastore version to the auxiliary
+	// version configuration. When specified, a secondary Hive metastore service is
+	// created along with the primary service. All auxiliary versions must be less
+	// than the service's primary version. The key is the auxiliary service name
+	// and it must match the regular expression a-z?. This means that the first
+	// character must be a lowercase letter, and all the following characters must
+	// be hyphens, lowercase letters, or digits, except the last character, which
+	// cannot be a hyphen.
 	AuxiliaryVersions map[string]AuxiliaryVersionConfig `json:"auxiliaryVersions,omitempty"`
-
-	// ConfigOverrides: A mapping of Hive metastore configuration key-value
-	// pairs to apply to the Hive metastore (configured in hive-site.xml).
-	// The mappings override system defaults (some keys cannot be
-	// overridden). These overrides are also applied to auxiliary versions
-	// and can be further customized in the auxiliary version's
-	// AuxiliaryVersionConfig.
+	// ConfigOverrides: A mapping of Hive metastore configuration key-value pairs
+	// to apply to the Hive metastore (configured in hive-site.xml). The mappings
+	// override system defaults (some keys cannot be overridden). These overrides
+	// are also applied to auxiliary versions and can be further customized in the
+	// auxiliary version's AuxiliaryVersionConfig.
 	ConfigOverrides map[string]string `json:"configOverrides,omitempty"`
-
-	// EndpointProtocol: The protocol to use for the metastore service
-	// endpoint. If unspecified, defaults to THRIFT.
+	// EndpointProtocol: The protocol to use for the metastore service endpoint. If
+	// unspecified, defaults to THRIFT.
 	//
 	// Possible values:
 	//   "ENDPOINT_PROTOCOL_UNSPECIFIED" - The protocol is not set.
-	//   "THRIFT" - Use the legacy Apache Thrift protocol for the metastore
-	// service endpoint.
+	//   "THRIFT" - Use the legacy Apache Thrift protocol for the metastore service
+	// endpoint.
 	//   "GRPC" - Use the modernized gRPC protocol for the metastore service
 	// endpoint.
 	EndpointProtocol string `json:"endpointProtocol,omitempty"`
-
-	// KerberosConfig: Information used to configure the Hive metastore
-	// service as a service principal in a Kerberos realm. To disable
-	// Kerberos, use the UpdateService method and specify this field's path
-	// (hive_metastore_config.kerberos_config) in the request's update_mask
-	// while omitting this field from the request's service.
+	// KerberosConfig: Information used to configure the Hive metastore service as
+	// a service principal in a Kerberos realm. To disable Kerberos, use the
+	// UpdateService method and specify this field's path
+	// (hive_metastore_config.kerberos_config) in the request's update_mask while
+	// omitting this field from the request's service.
 	KerberosConfig *KerberosConfig `json:"kerberosConfig,omitempty"`
-
 	// Version: Immutable. The Hive metastore schema version.
 	Version string `json:"version,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AuxiliaryVersions")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AuxiliaryVersions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AuxiliaryVersions") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AuxiliaryVersions") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *HiveMetastoreConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod HiveMetastoreConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// HiveMetastoreVersion: A specification of a supported version of the
-// Hive Metastore software.
+// HiveMetastoreVersion: A specification of a supported version of the Hive
+// Metastore software.
 type HiveMetastoreVersion struct {
-	// IsDefault: Whether version will be chosen by the server if a
-	// metastore service is created with a HiveMetastoreConfig that omits
-	// the version.
+	// IsDefault: Whether version will be chosen by the server if a metastore
+	// service is created with a HiveMetastoreConfig that omits the version.
 	IsDefault bool `json:"isDefault,omitempty"`
-
 	// Version: The semantic version of the Hive Metastore software.
 	Version string `json:"version,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "IsDefault") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "IsDefault") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "IsDefault") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *HiveMetastoreVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod HiveMetastoreVersion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // KerberosConfig: Configuration information for a Kerberos principal.
 type KerberosConfig struct {
-	// Keytab: A Kerberos keytab file that can be used to authenticate a
-	// service principal with a Kerberos Key Distribution Center (KDC).
+	// Keytab: A Kerberos keytab file that can be used to authenticate a service
+	// principal with a Kerberos Key Distribution Center (KDC).
 	Keytab *Secret `json:"keytab,omitempty"`
-
-	// Krb5ConfigGcsUri: A Cloud Storage URI that specifies the path to a
-	// krb5.conf file. It is of the form
-	// gs://{bucket_name}/path/to/krb5.conf, although the file does not need
-	// to be named krb5.conf explicitly.
+	// Krb5ConfigGcsUri: A Cloud Storage URI that specifies the path to a krb5.conf
+	// file. It is of the form gs://{bucket_name}/path/to/krb5.conf, although the
+	// file does not need to be named krb5.conf explicitly.
 	Krb5ConfigGcsUri string `json:"krb5ConfigGcsUri,omitempty"`
-
-	// Principal: A Kerberos principal that exists in the both the keytab
-	// the KDC to authenticate as. A typical principal is of the form
+	// Principal: A Kerberos principal that exists in the both the keytab the KDC
+	// to authenticate as. A typical principal is of the form
 	// primary/instance@REALM, but there is no exact format.
 	Principal string `json:"principal,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Keytab") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Keytab") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Keytab") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *KerberosConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod KerberosConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Lake: Represents a Lake resource
@@ -1601,42 +1326,33 @@ type Lake struct {
 	// Name: The Lake resource name. Example:
 	// projects/{project_number}/locations/{location_id}/lakes/{lake_id}
 	Name string `json:"name,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Lake) MarshalJSON() ([]byte, error) {
 	type NoMethod Lake
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // LatestBackup: The details of the latest scheduled backup.
 type LatestBackup struct {
-	// BackupId: Output only. The ID of an in-progress scheduled backup.
-	// Empty if no backup is in progress.
+	// BackupId: Output only. The ID of an in-progress scheduled backup. Empty if
+	// no backup is in progress.
 	BackupId string `json:"backupId,omitempty"`
-
 	// Duration: Output only. The duration of the backup completion.
 	Duration string `json:"duration,omitempty"`
-
 	// StartTime: Output only. The time when the backup was started.
 	StartTime string `json:"startTime,omitempty"`
-
 	// State: Output only. The current state of the backup.
 	//
 	// Possible values:
@@ -1645,63 +1361,49 @@ type LatestBackup struct {
 	//   "SUCCEEDED" - The backup completed.
 	//   "FAILED" - The backup failed.
 	State string `json:"state,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BackupId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BackupId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BackupId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *LatestBackup) MarshalJSON() ([]byte, error) {
 	type NoMethod LatestBackup
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// LimitConfig: Represents the autoscaling limit configuration of a
-// metastore service.
+// LimitConfig: Represents the autoscaling limit configuration of a metastore
+// service.
 type LimitConfig struct {
-	// MaxScalingFactor: Optional. The highest scaling factor that the
-	// service should be autoscaled to.
+	// MaxScalingFactor: Optional. The highest scaling factor that the service
+	// should be autoscaled to.
 	MaxScalingFactor float64 `json:"maxScalingFactor,omitempty"`
-
-	// MinScalingFactor: Optional. The lowest scaling factor that the
-	// service should be autoscaled to.
+	// MinScalingFactor: Optional. The lowest scaling factor that the service
+	// should be autoscaled to.
 	MinScalingFactor float64 `json:"minScalingFactor,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MaxScalingFactor") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MaxScalingFactor") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MaxScalingFactor") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *LimitConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod LimitConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *LimitConfig) UnmarshalJSON(data []byte) error {
@@ -1720,120 +1422,92 @@ func (s *LimitConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ListBackupsResponse: Response message for
-// DataprocMetastore.ListBackups.
+// ListBackupsResponse: Response message for DataprocMetastore.ListBackups.
 type ListBackupsResponse struct {
 	// Backups: The backups of the specified service.
 	Backups []*Backup `json:"backups,omitempty"`
-
-	// NextPageToken: A token that can be sent as page_token to retrieve the
-	// next page. If this field is omitted, there are no subsequent pages.
+	// NextPageToken: A token that can be sent as page_token to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Backups") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Backups") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Backups") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Backups") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListBackupsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListBackupsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListFederationsResponse: Response message for ListFederations
 type ListFederationsResponse struct {
 	// Federations: The services in the specified location.
 	Federations []*Federation `json:"federations,omitempty"`
-
-	// NextPageToken: A token that can be sent as page_token to retrieve the
-	// next page. If this field is omitted, there are no subsequent pages.
+	// NextPageToken: A token that can be sent as page_token to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Federations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Federations") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Federations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListFederationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFederationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListLocationsResponse: The response message for
-// Locations.ListLocations.
+// ListLocationsResponse: The response message for Locations.ListLocations.
 type ListLocationsResponse struct {
-	// Locations: A list of locations that matches the specified filter in
-	// the request.
+	// Locations: A list of locations that matches the specified filter in the
+	// request.
 	Locations []*Location `json:"locations,omitempty"`
-
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Locations") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Locations") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Locations") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListLocationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMetadataImportsResponse: Response message for
@@ -1841,245 +1515,184 @@ func (s *ListLocationsResponse) MarshalJSON() ([]byte, error) {
 type ListMetadataImportsResponse struct {
 	// MetadataImports: The imports in the specified service.
 	MetadataImports []*MetadataImport `json:"metadataImports,omitempty"`
-
-	// NextPageToken: A token that can be sent as page_token to retrieve the
-	// next page. If this field is omitted, there are no subsequent pages.
+	// NextPageToken: A token that can be sent as page_token to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "MetadataImports") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MetadataImports") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MetadataImports") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListMetadataImportsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMetadataImportsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListMigrationExecutionsResponse: Response message for
 // DataprocMetastore.ListMigrationExecutions.
 type ListMigrationExecutionsResponse struct {
-	// MigrationExecutions: The migration executions on the specified
-	// service.
+	// MigrationExecutions: The migration executions on the specified service.
 	MigrationExecutions []*MigrationExecution `json:"migrationExecutions,omitempty"`
-
-	// NextPageToken: A token that can be sent as page_token to retrieve the
-	// next page. If this field is omitted, there are no subsequent pages.
+	// NextPageToken: A token that can be sent as page_token to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "MigrationExecutions")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "MigrationExecutions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MigrationExecutions") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MigrationExecutions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListMigrationExecutionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListMigrationExecutionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListOperationsResponse: The response message for
-// Operations.ListOperations.
+// ListOperationsResponse: The response message for Operations.ListOperations.
 type ListOperationsResponse struct {
 	// NextPageToken: The standard List next-page token.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
-	// Operations: A list of operations that matches the specified filter in
-	// the request.
+	// Operations: A list of operations that matches the specified filter in the
+	// request.
 	Operations []*Operation `json:"operations,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListOperationsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListOperationsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ListServicesResponse: Response message for
-// DataprocMetastore.ListServices.
+// ListServicesResponse: Response message for DataprocMetastore.ListServices.
 type ListServicesResponse struct {
-	// NextPageToken: A token that can be sent as page_token to retrieve the
-	// next page. If this field is omitted, there are no subsequent pages.
+	// NextPageToken: A token that can be sent as page_token to retrieve the next
+	// page. If this field is omitted, there are no subsequent pages.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Services: The services in the specified location.
 	Services []*Service `json:"services,omitempty"`
-
 	// Unreachable: Locations that could not be reached.
 	Unreachable []string `json:"unreachable,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListServicesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListServicesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Location: A resource that represents a Google Cloud location.
 type Location struct {
-	// DisplayName: The friendly name for this location, typically a nearby
-	// city name. For example, "Tokyo".
+	// DisplayName: The friendly name for this location, typically a nearby city
+	// name. For example, "Tokyo".
 	DisplayName string `json:"displayName,omitempty"`
-
 	// Labels: Cross-service attributes for the location. For example
 	// {"cloud.googleapis.com/region": "us-east1"}
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// LocationId: The canonical id for this location. For example:
-	// "us-east1".
+	// LocationId: The canonical id for this location. For example: "us-east1".
 	LocationId string `json:"locationId,omitempty"`
-
-	// Metadata: Service-specific metadata. For example the available
-	// capacity at the given location.
+	// Metadata: Service-specific metadata. For example the available capacity at
+	// the given location.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
 	// Name: Resource name for the location, which may vary between
-	// implementations. For example:
-	// "projects/example-project/locations/us-east1"
+	// implementations. For example: "projects/example-project/locations/us-east1"
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "DisplayName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DisplayName") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DisplayName") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Location) MarshalJSON() ([]byte, error) {
 	type NoMethod Location
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // LocationMetadata: Metadata about the service in a location.
 type LocationMetadata struct {
-	// MultiRegionMetadata: The multi-region metadata if the current region
-	// is a multi-region.
+	// MultiRegionMetadata: The multi-region metadata if the current region is a
+	// multi-region.
 	MultiRegionMetadata *MultiRegionMetadata `json:"multiRegionMetadata,omitempty"`
-
-	// SupportedHiveMetastoreVersions: The versions of Hive Metastore that
-	// can be used when creating a new metastore service in this location.
-	// The server guarantees that exactly one HiveMetastoreVersion in the
-	// list will set is_default.
+	// SupportedHiveMetastoreVersions: The versions of Hive Metastore that can be
+	// used when creating a new metastore service in this location. The server
+	// guarantees that exactly one HiveMetastoreVersion in the list will set
+	// is_default.
 	SupportedHiveMetastoreVersions []*HiveMetastoreVersion `json:"supportedHiveMetastoreVersions,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MultiRegionMetadata")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "MultiRegionMetadata") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MultiRegionMetadata") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MultiRegionMetadata") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *LocationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod LocationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MaintenanceWindow: Maintenance window. This specifies when Dataproc
@@ -2097,31 +1710,24 @@ type MaintenanceWindow struct {
 	//   "SATURDAY" - Saturday
 	//   "SUNDAY" - Sunday
 	DayOfWeek string `json:"dayOfWeek,omitempty"`
-
 	// HourOfDay: The hour of day (0-23) when the window starts.
 	HourOfDay int64 `json:"hourOfDay,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DayOfWeek") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DayOfWeek") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "DayOfWeek") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MaintenanceWindow) MarshalJSON() ([]byte, error) {
 	type NoMethod MaintenanceWindow
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MetadataExport: The details of a metadata export operation.
@@ -2133,18 +1739,14 @@ type MetadataExport struct {
 	//   "MYSQL" - Database dump is a MySQL dump file.
 	//   "AVRO" - Database dump contains Avro files.
 	DatabaseDumpType string `json:"databaseDumpType,omitempty"`
-
 	// DestinationGcsUri: Output only. A Cloud Storage URI of a folder that
-	// metadata are exported to, in the form of gs:////, where is
-	// automatically generated.
+	// metadata are exported to, in the form of gs:////, where is automatically
+	// generated.
 	DestinationGcsUri string `json:"destinationGcsUri,omitempty"`
-
 	// EndTime: Output only. The time when the export ended.
 	EndTime string `json:"endTime,omitempty"`
-
 	// StartTime: Output only. The time when the export started.
 	StartTime string `json:"startTime,omitempty"`
-
 	// State: Output only. The current state of the export.
 	//
 	// Possible values:
@@ -2154,53 +1756,39 @@ type MetadataExport struct {
 	//   "FAILED" - The metadata export failed.
 	//   "CANCELLED" - The metadata export is cancelled.
 	State string `json:"state,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "DatabaseDumpType") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DatabaseDumpType") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DatabaseDumpType") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MetadataExport) MarshalJSON() ([]byte, error) {
 	type NoMethod MetadataExport
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MetadataImport: A metastore resource that imports metadata.
 type MetadataImport struct {
-	// CreateTime: Output only. The time when the metadata import was
-	// started.
+	// CreateTime: Output only. The time when the metadata import was started.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// DatabaseDump: Immutable. A database dump from a pre-existing
-	// metastore's database.
+	// DatabaseDump: Immutable. A database dump from a pre-existing metastore's
+	// database.
 	DatabaseDump *DatabaseDump `json:"databaseDump,omitempty"`
-
 	// Description: The description of the metadata import.
 	Description string `json:"description,omitempty"`
-
 	// EndTime: Output only. The time when the metadata import finished.
 	EndTime string `json:"endTime,omitempty"`
-
-	// Name: Immutable. The relative resource name of the metadata import,
-	// of the
-	// form:projects/{project_number}/locations/{location_id}/services/{servi
-	// ce_id}/metadataImports/{metadata_import_id}.
+	// Name: Immutable. The relative resource name of the metadata import, of the
+	// form:projects/{project_number}/locations/{location_id}/services/{service_id}/
+	// metadataImports/{metadata_import_id}.
 	Name string `json:"name,omitempty"`
-
 	// State: Output only. The current state of the metadata import.
 	//
 	// Possible values:
@@ -2208,194 +1796,148 @@ type MetadataImport struct {
 	//   "RUNNING" - The metadata import is running.
 	//   "SUCCEEDED" - The metadata import completed successfully.
 	//   "UPDATING" - The metadata import is being updated.
-	//   "FAILED" - The metadata import failed, and attempted metadata
-	// changes were rolled back.
+	//   "FAILED" - The metadata import failed, and attempted metadata changes were
+	// rolled back.
 	State string `json:"state,omitempty"`
-
-	// UpdateTime: Output only. The time when the metadata import was last
-	// updated.
+	// UpdateTime: Output only. The time when the metadata import was last updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CreateTime") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CreateTime") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CreateTime") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MetadataImport) MarshalJSON() ([]byte, error) {
 	type NoMethod MetadataImport
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// MetadataIntegration: Specifies how metastore metadata should be
-// integrated with external services.
+// MetadataIntegration: Specifies how metastore metadata should be integrated
+// with external services.
 type MetadataIntegration struct {
-	// DataCatalogConfig: Optional. The integration config for the Data
-	// Catalog service.
+	// DataCatalogConfig: Optional. The integration config for the Data Catalog
+	// service.
 	DataCatalogConfig *DataCatalogConfig `json:"dataCatalogConfig,omitempty"`
-
 	// DataplexConfig: The integration config for the Dataplex service.
 	DataplexConfig *DataplexConfig `json:"dataplexConfig,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DataCatalogConfig")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DataCatalogConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "DataCatalogConfig") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "DataCatalogConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MetadataIntegration) MarshalJSON() ([]byte, error) {
 	type NoMethod MetadataIntegration
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MetadataManagementActivity: The metadata management activities of the
 // metastore service.
 type MetadataManagementActivity struct {
-	// MetadataExports: Output only. The latest metadata exports of the
-	// metastore service.
+	// MetadataExports: Output only. The latest metadata exports of the metastore
+	// service.
 	MetadataExports []*MetadataExport `json:"metadataExports,omitempty"`
-
 	// Restores: Output only. The latest restores of the metastore service.
 	Restores []*Restore `json:"restores,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "MetadataExports") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MetadataExports") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MetadataExports") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MetadataManagementActivity) MarshalJSON() ([]byte, error) {
 	type NoMethod MetadataManagementActivity
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MigrationExecution: The details of a migration execution resource.
 type MigrationExecution struct {
-	// CloudSqlMigrationConfig: Configuration information specific to
-	// migrating from self-managed hive metastore on Google Cloud using
-	// Cloud SQL as the backend database to Dataproc Metastore.
+	// CloudSqlMigrationConfig: Configuration information specific to migrating
+	// from self-managed hive metastore on Google Cloud using Cloud SQL as the
+	// backend database to Dataproc Metastore.
 	CloudSqlMigrationConfig *CloudSQLMigrationConfig `json:"cloudSqlMigrationConfig,omitempty"`
-
-	// CreateTime: Output only. The time when the migration execution was
-	// started.
+	// CreateTime: Output only. The time when the migration execution was started.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// EndTime: Output only. The time when the migration execution finished.
 	EndTime string `json:"endTime,omitempty"`
-
-	// Name: Output only. The relative resource name of the migration
-	// execution, in the following form:
-	// projects/{project_number}/locations/{location_id}/services/{service_id
-	// }/migrationExecutions/{migration_execution_id}
+	// Name: Output only. The relative resource name of the migration execution, in
+	// the following form:
+	// projects/{project_number}/locations/{location_id}/services/{service_id}/migra
+	// tionExecutions/{migration_execution_id}
 	Name string `json:"name,omitempty"`
-
 	// Phase: Output only. The current phase of the migration execution.
 	//
 	// Possible values:
-	//   "PHASE_UNSPECIFIED" - The phase of the migration execution is
-	// unknown.
-	//   "REPLICATION" - Replication phase refers to the migration phase
-	// when Dataproc Metastore is running a pipeline to replicate changes in
-	// the customer database to its backend database. During this phase,
-	// Dataproc Metastore uses the customer database as the hive metastore
-	// backend database.
-	//   "CUTOVER" - Cutover phase refers to the migration phase when
-	// Dataproc Metastore switches to using its own backend database.
-	// Migration enters this phase when customer is done migrating all their
-	// clusters/workloads to Dataproc Metastore and triggers
-	// CompleteMigration.
+	//   "PHASE_UNSPECIFIED" - The phase of the migration execution is unknown.
+	//   "REPLICATION" - Replication phase refers to the migration phase when
+	// Dataproc Metastore is running a pipeline to replicate changes in the
+	// customer database to its backend database. During this phase, Dataproc
+	// Metastore uses the customer database as the hive metastore backend database.
+	//   "CUTOVER" - Cutover phase refers to the migration phase when Dataproc
+	// Metastore switches to using its own backend database. Migration enters this
+	// phase when customer is done migrating all their clusters/workloads to
+	// Dataproc Metastore and triggers CompleteMigration.
 	Phase string `json:"phase,omitempty"`
-
 	// State: Output only. The current state of the migration execution.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - The state of the migration execution is
-	// unknown.
+	//   "STATE_UNSPECIFIED" - The state of the migration execution is unknown.
 	//   "STARTING" - The migration execution is starting.
 	//   "RUNNING" - The migration execution is running.
 	//   "CANCELLING" - The migration execution is in the process of being
 	// cancelled.
-	//   "AWAITING_USER_ACTION" - The migration execution is awaiting user
-	// action.
+	//   "AWAITING_USER_ACTION" - The migration execution is awaiting user action.
 	//   "SUCCEEDED" - The migration execution has completed successfully.
 	//   "FAILED" - The migration execution has failed.
 	//   "CANCELLED" - The migration execution is cancelled.
 	//   "DELETING" - The migration execution is being deleted.
 	State string `json:"state,omitempty"`
-
-	// StateMessage: Output only. Additional information about the current
-	// state of the migration execution.
+	// StateMessage: Output only. Additional information about the current state of
+	// the migration execution.
 	StateMessage string `json:"stateMessage,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "CloudSqlMigrationConfig") to unconditionally include in API
-	// requests. By default, fields with empty or default values are omitted
-	// from API requests. However, any non-pointer, non-interface field
-	// appearing in ForceSendFields will be sent to the server regardless of
-	// whether the field is empty or not. This may be used to include empty
-	// fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "CloudSqlMigrationConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CloudSqlMigrationConfig")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "CloudSqlMigrationConfig") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MigrationExecution) MarshalJSON() ([]byte, error) {
 	type NoMethod MigrationExecution
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MoveTableToDatabaseRequest: Request message for
@@ -2403,35 +1945,27 @@ func (s *MigrationExecution) MarshalJSON() ([]byte, error) {
 type MoveTableToDatabaseRequest struct {
 	// DbName: Required. The name of the database where the table resides.
 	DbName string `json:"dbName,omitempty"`
-
-	// DestinationDbName: Required. The name of the database where the table
-	// should be moved.
+	// DestinationDbName: Required. The name of the database where the table should
+	// be moved.
 	DestinationDbName string `json:"destinationDbName,omitempty"`
-
 	// TableName: Required. The name of the table to be moved.
 	TableName string `json:"tableName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "DbName") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "DbName") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "DbName") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MoveTableToDatabaseRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod MoveTableToDatabaseRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // MoveTableToDatabaseResponse: Response message for
@@ -2439,384 +1973,300 @@ func (s *MoveTableToDatabaseRequest) MarshalJSON() ([]byte, error) {
 type MoveTableToDatabaseResponse struct {
 }
 
-// MultiRegionMetadata: The metadata for the multi-region that includes
-// the constituent regions. The metadata is only populated if the region
-// is multi-region. For single region, it will be empty.
+// MultiRegionMetadata: The metadata for the multi-region that includes the
+// constituent regions. The metadata is only populated if the region is
+// multi-region. For single region, it will be empty.
 type MultiRegionMetadata struct {
 	// ConstituentRegions: The regions constituting the multi-region.
 	ConstituentRegions []string `json:"constituentRegions,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ConstituentRegions")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ConstituentRegions") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ConstituentRegions") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ConstituentRegions") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *MultiRegionMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod MultiRegionMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// NetworkConfig: Network configuration for the Dataproc Metastore
-// service.
+// NetworkConfig: Network configuration for the Dataproc Metastore service.
 type NetworkConfig struct {
 	// Consumers: Immutable. The consumer-side network configuration for the
 	// Dataproc Metastore instance.
 	Consumers []*Consumer `json:"consumers,omitempty"`
-
-	// CustomRoutesEnabled: Enables custom routes to be imported and
-	// exported for the Dataproc Metastore service's peered VPC network.
+	// CustomRoutesEnabled: Enables custom routes to be imported and exported for
+	// the Dataproc Metastore service's peered VPC network.
 	CustomRoutesEnabled bool `json:"customRoutesEnabled,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Consumers") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Consumers") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Consumers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *NetworkConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod NetworkConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Operation: This resource represents a long-running operation that is
-// the result of a network API call.
+// Operation: This resource represents a long-running operation that is the
+// result of a network API call.
 type Operation struct {
-	// Done: If the value is false, it means the operation is still in
-	// progress. If true, the operation is completed, and either error or
-	// response is available.
+	// Done: If the value is false, it means the operation is still in progress. If
+	// true, the operation is completed, and either error or response is available.
 	Done bool `json:"done,omitempty"`
-
-	// Error: The error result of the operation in case of failure or
-	// cancellation.
+	// Error: The error result of the operation in case of failure or cancellation.
 	Error *Status `json:"error,omitempty"`
-
 	// Metadata: Service-specific metadata associated with the operation. It
-	// typically contains progress information and common metadata such as
-	// create time. Some services might not provide such metadata. Any
-	// method that returns a long-running operation should document the
-	// metadata type, if any.
+	// typically contains progress information and common metadata such as create
+	// time. Some services might not provide such metadata. Any method that returns
+	// a long-running operation should document the metadata type, if any.
 	Metadata googleapi.RawMessage `json:"metadata,omitempty"`
-
-	// Name: The server-assigned name, which is only unique within the same
-	// service that originally returns it. If you use the default HTTP
-	// mapping, the name should be a resource name ending with
-	// operations/{unique_id}.
+	// Name: The server-assigned name, which is only unique within the same service
+	// that originally returns it. If you use the default HTTP mapping, the name
+	// should be a resource name ending with operations/{unique_id}.
 	Name string `json:"name,omitempty"`
-
-	// Response: The normal, successful response of the operation. If the
-	// original method returns no data on success, such as Delete, the
-	// response is google.protobuf.Empty. If the original method is standard
-	// Get/Create/Update, the response should be the resource. For other
-	// methods, the response should have the type XxxResponse, where Xxx is
-	// the original method name. For example, if the original method name is
-	// TakeSnapshot(), the inferred response type is TakeSnapshotResponse.
+	// Response: The normal, successful response of the operation. If the original
+	// method returns no data on success, such as Delete, the response is
+	// google.protobuf.Empty. If the original method is standard Get/Create/Update,
+	// the response should be the resource. For other methods, the response should
+	// have the type XxxResponse, where Xxx is the original method name. For
+	// example, if the original method name is TakeSnapshot(), the inferred
+	// response type is TakeSnapshotResponse.
 	Response googleapi.RawMessage `json:"response,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Done") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Done") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Done") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Done") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Operation) MarshalJSON() ([]byte, error) {
 	type NoMethod Operation
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// OperationMetadata: Represents the metadata of a long-running
-// operation.
+// OperationMetadata: Represents the metadata of a long-running operation.
 type OperationMetadata struct {
 	// ApiVersion: Output only. API version used to start the operation.
 	ApiVersion string `json:"apiVersion,omitempty"`
-
 	// CreateTime: Output only. The time the operation was created.
 	CreateTime string `json:"createTime,omitempty"`
-
 	// EndTime: Output only. The time the operation finished running.
 	EndTime string `json:"endTime,omitempty"`
-
 	// RequestedCancellation: Output only. Identifies whether the caller has
-	// requested cancellation of the operation. Operations that have
-	// successfully been cancelled have Operation.error value with a
-	// google.rpc.Status.code of 1, corresponding to Code.CANCELLED.
+	// requested cancellation of the operation. Operations that have successfully
+	// been cancelled have Operation.error value with a google.rpc.Status.code of
+	// 1, corresponding to Code.CANCELLED.
 	RequestedCancellation bool `json:"requestedCancellation,omitempty"`
-
-	// StatusMessage: Output only. Human-readable status of the operation,
-	// if any.
+	// StatusMessage: Output only. Human-readable status of the operation, if any.
 	StatusMessage string `json:"statusMessage,omitempty"`
-
-	// Target: Output only. Server-defined resource path for the target of
-	// the operation.
+	// Target: Output only. Server-defined resource path for the target of the
+	// operation.
 	Target string `json:"target,omitempty"`
-
 	// Verb: Output only. Name of the verb executed by the operation.
 	Verb string `json:"verb,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ApiVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ApiVersion") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ApiVersion") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *OperationMetadata) MarshalJSON() ([]byte, error) {
 	type NoMethod OperationMetadata
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Policy: An Identity and Access Management (IAM) policy, which
-// specifies access controls for Google Cloud resources.A Policy is a
-// collection of bindings. A binding binds one or more members, or
-// principals, to a single role. Principals can be user accounts,
-// service accounts, Google groups, and domains (such as G Suite). A
-// role is a named list of permissions; each role can be an IAM
-// predefined role or a user-created custom role.For some types of
-// Google Cloud resources, a binding can also specify a condition, which
-// is a logical expression that allows access to a resource only if the
-// expression evaluates to true. A condition can add constraints based
-// on attributes of the request, the resource, or both. To learn which
-// resources support conditions in their IAM policies, see the IAM
-// documentation
+// Policy: An Identity and Access Management (IAM) policy, which specifies
+// access controls for Google Cloud resources.A Policy is a collection of
+// bindings. A binding binds one or more members, or principals, to a single
+// role. Principals can be user accounts, service accounts, Google groups, and
+// domains (such as G Suite). A role is a named list of permissions; each role
+// can be an IAM predefined role or a user-created custom role.For some types
+// of Google Cloud resources, a binding can also specify a condition, which is
+// a logical expression that allows access to a resource only if the expression
+// evaluates to true. A condition can add constraints based on attributes of
+// the request, the resource, or both. To learn which resources support
+// conditions in their IAM policies, see the IAM documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).JSON
 // example: { "bindings": [ { "role":
 // "roles/resourcemanager.organizationAdmin", "members": [
-// "user:mike@example.com", "group:admins@example.com",
-// "domain:google.com",
-// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, {
-// "role": "roles/resourcemanager.organizationViewer", "members": [
+// "user:mike@example.com", "group:admins@example.com", "domain:google.com",
+// "serviceAccount:my-project-id@appspot.gserviceaccount.com" ] }, { "role":
+// "roles/resourcemanager.organizationViewer", "members": [
 // "user:eve@example.com" ], "condition": { "title": "expirable access",
 // "description": "Does not grant access after Sep 2020", "expression":
-// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ],
-// "etag": "BwWWja0YfJA=", "version": 3 } YAML example: bindings: -
-// members: - user:mike@example.com - group:admins@example.com -
-// domain:google.com -
+// "request.time < timestamp('2020-10-01T00:00:00.000Z')", } } ], "etag":
+// "BwWWja0YfJA=", "version": 3 } YAML example: bindings: - members: -
+// user:mike@example.com - group:admins@example.com - domain:google.com -
 // serviceAccount:my-project-id@appspot.gserviceaccount.com role:
-// roles/resourcemanager.organizationAdmin - members: -
-// user:eve@example.com role: roles/resourcemanager.organizationViewer
-// condition: title: expirable access description: Does not grant access
-// after Sep 2020 expression: request.time <
-// timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA= version: 3
-// For a description of IAM and its features, see the IAM documentation
-// (https://cloud.google.com/iam/docs/).
+// roles/resourcemanager.organizationAdmin - members: - user:eve@example.com
+// role: roles/resourcemanager.organizationViewer condition: title: expirable
+// access description: Does not grant access after Sep 2020 expression:
+// request.time < timestamp('2020-10-01T00:00:00.000Z') etag: BwWWja0YfJA=
+// version: 3 For a description of IAM and its features, see the IAM
+// documentation (https://cloud.google.com/iam/docs/).
 type Policy struct {
-	// AuditConfigs: Specifies cloud audit logging configuration for this
-	// policy.
+	// AuditConfigs: Specifies cloud audit logging configuration for this policy.
 	AuditConfigs []*AuditConfig `json:"auditConfigs,omitempty"`
-
 	// Bindings: Associates a list of members, or principals, with a role.
 	// Optionally, may specify a condition that determines how and when the
 	// bindings are applied. Each of the bindings must contain at least one
-	// principal.The bindings in a Policy can refer to up to 1,500
-	// principals; up to 250 of these principals can be Google groups. Each
-	// occurrence of a principal counts towards these limits. For example,
-	// if the bindings grant 50 different roles to user:alice@example.com,
-	// and not to any other principal, then you can add another 1,450
-	// principals to the bindings in the Policy.
+	// principal.The bindings in a Policy can refer to up to 1,500 principals; up
+	// to 250 of these principals can be Google groups. Each occurrence of a
+	// principal counts towards these limits. For example, if the bindings grant 50
+	// different roles to user:alice@example.com, and not to any other principal,
+	// then you can add another 1,450 principals to the bindings in the Policy.
 	Bindings []*Binding `json:"bindings,omitempty"`
-
-	// Etag: etag is used for optimistic concurrency control as a way to
-	// help prevent simultaneous updates of a policy from overwriting each
-	// other. It is strongly suggested that systems make use of the etag in
-	// the read-modify-write cycle to perform policy updates in order to
-	// avoid race conditions: An etag is returned in the response to
-	// getIamPolicy, and systems are expected to put that etag in the
-	// request to setIamPolicy to ensure that their change will be applied
-	// to the same version of the policy.Important: If you use IAM
-	// Conditions, you must include the etag field whenever you call
-	// setIamPolicy. If you omit this field, then IAM allows you to
-	// overwrite a version 3 policy with a version 1 policy, and all of the
-	// conditions in the version 3 policy are lost.
+	// Etag: etag is used for optimistic concurrency control as a way to help
+	// prevent simultaneous updates of a policy from overwriting each other. It is
+	// strongly suggested that systems make use of the etag in the
+	// read-modify-write cycle to perform policy updates in order to avoid race
+	// conditions: An etag is returned in the response to getIamPolicy, and systems
+	// are expected to put that etag in the request to setIamPolicy to ensure that
+	// their change will be applied to the same version of the policy.Important: If
+	// you use IAM Conditions, you must include the etag field whenever you call
+	// setIamPolicy. If you omit this field, then IAM allows you to overwrite a
+	// version 3 policy with a version 1 policy, and all of the conditions in the
+	// version 3 policy are lost.
 	Etag string `json:"etag,omitempty"`
-
-	// Version: Specifies the format of the policy.Valid values are 0, 1,
-	// and 3. Requests that specify an invalid value are rejected.Any
-	// operation that affects conditional role bindings must specify version
-	// 3. This requirement applies to the following operations: Getting a
-	// policy that includes a conditional role binding Adding a conditional
-	// role binding to a policy Changing a conditional role binding in a
-	// policy Removing any role binding, with or without a condition, from a
-	// policy that includes conditionsImportant: If you use IAM Conditions,
-	// you must include the etag field whenever you call setIamPolicy. If
-	// you omit this field, then IAM allows you to overwrite a version 3
-	// policy with a version 1 policy, and all of the conditions in the
-	// version 3 policy are lost.If a policy does not include any
-	// conditions, operations on that policy may specify any valid version
-	// or leave the field unset.To learn which resources support conditions
+	// Version: Specifies the format of the policy.Valid values are 0, 1, and 3.
+	// Requests that specify an invalid value are rejected.Any operation that
+	// affects conditional role bindings must specify version 3. This requirement
+	// applies to the following operations: Getting a policy that includes a
+	// conditional role binding Adding a conditional role binding to a policy
+	// Changing a conditional role binding in a policy Removing any role binding,
+	// with or without a condition, from a policy that includes
+	// conditionsImportant: If you use IAM Conditions, you must include the etag
+	// field whenever you call setIamPolicy. If you omit this field, then IAM
+	// allows you to overwrite a version 3 policy with a version 1 policy, and all
+	// of the conditions in the version 3 policy are lost.If a policy does not
+	// include any conditions, operations on that policy may specify any valid
+	// version or leave the field unset.To learn which resources support conditions
 	// in their IAM policies, see the IAM documentation
 	// (https://cloud.google.com/iam/help/conditions/resource-policies).
 	Version int64 `json:"version,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AuditConfigs") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AuditConfigs") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AuditConfigs") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Policy) MarshalJSON() ([]byte, error) {
 	type NoMethod Policy
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// QueryMetadataRequest: Request message for
-// DataprocMetastore.QueryMetadata.
+// QueryMetadataRequest: Request message for DataprocMetastore.QueryMetadata.
 type QueryMetadataRequest struct {
-	// Query: Required. A read-only SQL query to execute against the
-	// metadata database. The query cannot change or mutate the data.
+	// Query: Required. A read-only SQL query to execute against the metadata
+	// database. The query cannot change or mutate the data.
 	Query string `json:"query,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Query") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Query") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Query") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *QueryMetadataRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryMetadataRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// QueryMetadataResponse: Response message for
-// DataprocMetastore.QueryMetadata.
+// QueryMetadataResponse: Response message for DataprocMetastore.QueryMetadata.
 type QueryMetadataResponse struct {
-	// ResultManifestUri: The manifest URI is link to a JSON instance in
-	// Cloud Storage. This instance manifests immediately along with
-	// QueryMetadataResponse. The content of the URI is not retriable until
-	// the long-running operation query against the metadata finishes.
+	// ResultManifestUri: The manifest URI is link to a JSON instance in Cloud
+	// Storage. This instance manifests immediately along with
+	// QueryMetadataResponse. The content of the URI is not retriable until the
+	// long-running operation query against the metadata finishes.
 	ResultManifestUri string `json:"resultManifestUri,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "ResultManifestUri")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ResultManifestUri") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ResultManifestUri") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ResultManifestUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *QueryMetadataResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod QueryMetadataResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // RemoveIamPolicyRequest: Request message for
 // DataprocMetastore.RemoveIamPolicy.
 type RemoveIamPolicyRequest struct {
-	// Asynchronous: Optional. Removes IAM policy attached to database or
-	// table asynchronously when it is set. The default is false.
+	// Asynchronous: Optional. Removes IAM policy attached to database or table
+	// asynchronously when it is set. The default is false.
 	Asynchronous bool `json:"asynchronous,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Asynchronous") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Asynchronous") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Asynchronous") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RemoveIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveIamPolicyRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // RemoveIamPolicyResponse: Response message for
@@ -2825,55 +2275,43 @@ type RemoveIamPolicyResponse struct {
 	// Success: True if the policy is successfully removed.
 	Success bool `json:"success,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Success") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Success") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Success") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Success") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RemoveIamPolicyResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod RemoveIamPolicyResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Restore: The details of a metadata restore operation.
 type Restore struct {
-	// Backup: Output only. The relative resource name of the metastore
-	// service backup to restore from, in the following
-	// form:projects/{project_id}/locations/{location_id}/services/{service_i
-	// d}/backups/{backup_id}.
+	// Backup: Output only. The relative resource name of the metastore service
+	// backup to restore from, in the following
+	// form:projects/{project_id}/locations/{location_id}/services/{service_id}/back
+	// ups/{backup_id}.
 	Backup string `json:"backup,omitempty"`
-
-	// BackupLocation: Optional. A Cloud Storage URI specifying where the
-	// backup artifacts are stored, in the format gs:///.
+	// BackupLocation: Optional. A Cloud Storage URI specifying where the backup
+	// artifacts are stored, in the format gs:///.
 	BackupLocation string `json:"backupLocation,omitempty"`
-
-	// Details: Output only. The restore details containing the revision of
-	// the service to be restored to, in format of JSON.
+	// Details: Output only. The restore details containing the revision of the
+	// service to be restored to, in format of JSON.
 	Details string `json:"details,omitempty"`
-
 	// EndTime: Output only. The time when the restore ended.
 	EndTime string `json:"endTime,omitempty"`
-
 	// StartTime: Output only. The time when the restore started.
 	StartTime string `json:"startTime,omitempty"`
-
 	// State: Output only. The current state of the restore.
 	//
 	// Possible values:
@@ -2883,7 +2321,6 @@ type Restore struct {
 	//   "FAILED" - The metadata restore failed.
 	//   "CANCELLED" - The metadata restore is cancelled.
 	State string `json:"state,omitempty"`
-
 	// Type: Output only. The type of restore.
 	//
 	// Possible values:
@@ -2891,137 +2328,110 @@ type Restore struct {
 	//   "FULL" - The service's metadata and configuration are restored.
 	//   "METADATA_ONLY" - Only the service's metadata is restored.
 	Type string `json:"type,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Backup") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Backup") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Restore) MarshalJSON() ([]byte, error) {
 	type NoMethod Restore
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // RestoreServiceRequest: Request message for DataprocMetastore.Restore.
 type RestoreServiceRequest struct {
-	// Backup: Optional. The relative resource name of the metastore service
-	// backup to restore from, in the following
-	// form:projects/{project_id}/locations/{location_id}/services/{service_i
-	// d}/backups/{backup_id}. Mutually exclusive with backup_location, and
-	// exactly one of the two must be set.
+	// Backup: Optional. The relative resource name of the metastore service backup
+	// to restore from, in the following
+	// form:projects/{project_id}/locations/{location_id}/services/{service_id}/back
+	// ups/{backup_id}. Mutually exclusive with backup_location, and exactly one of
+	// the two must be set.
 	Backup string `json:"backup,omitempty"`
-
-	// BackupLocation: Optional. A Cloud Storage URI specifying the location
-	// of the backup artifacts, namely - backup avro files under "avro/",
+	// BackupLocation: Optional. A Cloud Storage URI specifying the location of the
+	// backup artifacts, namely - backup avro files under "avro/",
 	// backup_metastore.json and service.json, in the following form:gs://.
-	// Mutually exclusive with backup, and exactly one of the two must be
-	// set.
+	// Mutually exclusive with backup, and exactly one of the two must be set.
 	BackupLocation string `json:"backupLocation,omitempty"`
-
-	// RequestId: Optional. A request ID. Specify a unique request ID to
-	// allow the server to ignore the request if it has completed. The
-	// server will ignore subsequent requests that provide a duplicate
-	// request ID for at least 60 minutes after the first request.For
-	// example, if an initial request times out, followed by another request
-	// with the same request ID, the server ignores the second request to
-	// prevent the creation of duplicate commitments.The request ID must be
-	// a valid UUID
-	// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format).
-	// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+	// RequestId: Optional. A request ID. Specify a unique request ID to allow the
+	// server to ignore the request if it has completed. The server will ignore
+	// subsequent requests that provide a duplicate request ID for at least 60
+	// minutes after the first request.For example, if an initial request times
+	// out, followed by another request with the same request ID, the server
+	// ignores the second request to prevent the creation of duplicate
+	// commitments.The request ID must be a valid UUID
+	// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format). A zero
+	// UUID (00000000-0000-0000-0000-000000000000) is not supported.
 	RequestId string `json:"requestId,omitempty"`
-
-	// RestoreType: Optional. The type of restore. If unspecified, defaults
-	// to METADATA_ONLY.
+	// RestoreType: Optional. The type of restore. If unspecified, defaults to
+	// METADATA_ONLY.
 	//
 	// Possible values:
 	//   "RESTORE_TYPE_UNSPECIFIED" - The restore type is unknown.
 	//   "FULL" - The service's metadata and configuration are restored.
 	//   "METADATA_ONLY" - Only the service's metadata is restored.
 	RestoreType string `json:"restoreType,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Backup") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Backup") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Backup") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *RestoreServiceRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod RestoreServiceRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ScalingConfig: Represents the scaling configuration of a metastore
-// service.
+// ScalingConfig: Represents the scaling configuration of a metastore service.
 type ScalingConfig struct {
 	// AutoscalingConfig: Optional. The autoscaling configuration.
 	AutoscalingConfig *AutoscalingConfig `json:"autoscalingConfig,omitempty"`
-
-	// InstanceSize: An enum of readable instance sizes, with each instance
-	// size mapping to a float value (e.g. InstanceSize.EXTRA_SMALL =
+	// InstanceSize: An enum of readable instance sizes, with each instance size
+	// mapping to a float value (e.g. InstanceSize.EXTRA_SMALL =
 	// scaling_factor(0.1))
 	//
 	// Possible values:
 	//   "INSTANCE_SIZE_UNSPECIFIED" - Unspecified instance size
-	//   "EXTRA_SMALL" - Extra small instance size, maps to a scaling factor
-	// of 0.1.
+	//   "EXTRA_SMALL" - Extra small instance size, maps to a scaling factor of
+	// 0.1.
 	//   "SMALL" - Small instance size, maps to a scaling factor of 0.5.
 	//   "MEDIUM" - Medium instance size, maps to a scaling factor of 1.0.
 	//   "LARGE" - Large instance size, maps to a scaling factor of 3.0.
-	//   "EXTRA_LARGE" - Extra large instance size, maps to a scaling factor
-	// of 6.0.
+	//   "EXTRA_LARGE" - Extra large instance size, maps to a scaling factor of
+	// 6.0.
 	InstanceSize string `json:"instanceSize,omitempty"`
-
-	// ScalingFactor: Scaling factor, increments of 0.1 for values less than
-	// 1.0, and increments of 1.0 for values greater than 1.0.
+	// ScalingFactor: Scaling factor, increments of 0.1 for values less than 1.0,
+	// and increments of 1.0 for values greater than 1.0.
 	ScalingFactor float64 `json:"scalingFactor,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "AutoscalingConfig")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "AutoscalingConfig") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AutoscalingConfig") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "AutoscalingConfig") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ScalingConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod ScalingConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 func (s *ScalingConfig) UnmarshalJSON(data []byte) error {
@@ -3038,488 +2448,371 @@ func (s *ScalingConfig) UnmarshalJSON(data []byte) error {
 	return nil
 }
 
-// ScheduledBackup: This specifies the configuration of scheduled
-// backup.
+// ScheduledBackup: This specifies the configuration of scheduled backup.
 type ScheduledBackup struct {
-	// BackupLocation: Optional. A Cloud Storage URI of a folder, in the
-	// format gs:///. A sub-folder containing backup files will be stored
-	// below it.
+	// BackupLocation: Optional. A Cloud Storage URI of a folder, in the format
+	// gs:///. A sub-folder containing backup files will be stored below it.
 	BackupLocation string `json:"backupLocation,omitempty"`
-
 	// CronSchedule: Optional. The scheduled interval in Cron format, see
-	// https://en.wikipedia.org/wiki/Cron The default is empty: scheduled
-	// backup is not enabled. Must be specified to enable scheduled backups.
+	// https://en.wikipedia.org/wiki/Cron The default is empty: scheduled backup is
+	// not enabled. Must be specified to enable scheduled backups.
 	CronSchedule string `json:"cronSchedule,omitempty"`
-
-	// Enabled: Optional. Defines whether the scheduled backup is enabled.
-	// The default value is false.
+	// Enabled: Optional. Defines whether the scheduled backup is enabled. The
+	// default value is false.
 	Enabled bool `json:"enabled,omitempty"`
-
-	// LatestBackup: Output only. The details of the latest scheduled
-	// backup.
+	// LatestBackup: Output only. The details of the latest scheduled backup.
 	LatestBackup *LatestBackup `json:"latestBackup,omitempty"`
-
-	// NextScheduledTime: Output only. The time when the next backups
-	// execution is scheduled to start.
+	// NextScheduledTime: Output only. The time when the next backups execution is
+	// scheduled to start.
 	NextScheduledTime string `json:"nextScheduledTime,omitempty"`
-
-	// TimeZone: Optional. Specifies the time zone to be used when
-	// interpreting cron_schedule. Must be a time zone name from the time
-	// zone database
+	// TimeZone: Optional. Specifies the time zone to be used when interpreting
+	// cron_schedule. Must be a time zone name from the time zone database
 	// (https://en.wikipedia.org/wiki/List_of_tz_database_time_zones), e.g.
-	// America/Los_Angeles or Africa/Abidjan. If left unspecified, the
-	// default is UTC.
+	// America/Los_Angeles or Africa/Abidjan. If left unspecified, the default is
+	// UTC.
 	TimeZone string `json:"timeZone,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BackupLocation") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BackupLocation") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "BackupLocation") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ScheduledBackup) MarshalJSON() ([]byte, error) {
 	type NoMethod ScheduledBackup
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Secret: A securely stored value.
 type Secret struct {
-	// CloudSecret: The relative resource name of a Secret Manager secret
-	// version, in the following
-	// form:projects/{project_number}/secrets/{secret_id}/versions/{version_i
-	// d}.
+	// CloudSecret: The relative resource name of a Secret Manager secret version,
+	// in the following
+	// form:projects/{project_number}/secrets/{secret_id}/versions/{version_id}.
 	CloudSecret string `json:"cloudSecret,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "CloudSecret") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CloudSecret") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CloudSecret") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Secret) MarshalJSON() ([]byte, error) {
 	type NoMethod Secret
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Service: A managed metastore service that serves metadata queries.
 type Service struct {
-	// ArtifactGcsUri: Output only. A Cloud Storage URI (starting with
-	// gs://) that specifies where artifacts related to the metastore
-	// service are stored.
+	// ArtifactGcsUri: Output only. A Cloud Storage URI (starting with gs://) that
+	// specifies where artifacts related to the metastore service are stored.
 	ArtifactGcsUri string `json:"artifactGcsUri,omitempty"`
-
-	// CreateTime: Output only. The time when the metastore service was
-	// created.
+	// CreateTime: Output only. The time when the metastore service was created.
 	CreateTime string `json:"createTime,omitempty"`
-
-	// DatabaseType: Immutable. The database type that the Metastore service
-	// stores its data.
+	// DatabaseType: Immutable. The database type that the Metastore service stores
+	// its data.
 	//
 	// Possible values:
 	//   "DATABASE_TYPE_UNSPECIFIED" - The DATABASE_TYPE is not set.
 	//   "MYSQL" - MySQL is used to persist the metastore data.
 	//   "SPANNER" - Spanner is used to persist the metastore data.
 	DatabaseType string `json:"databaseType,omitempty"`
-
-	// EncryptionConfig: Immutable. Information used to configure the
-	// Dataproc Metastore service to encrypt customer data at rest. Cannot
-	// be updated.
+	// EncryptionConfig: Immutable. Information used to configure the Dataproc
+	// Metastore service to encrypt customer data at rest. Cannot be updated.
 	EncryptionConfig *EncryptionConfig `json:"encryptionConfig,omitempty"`
-
 	// EndpointUri: Output only. The URI of the endpoint used to access the
 	// metastore service.
 	EndpointUri string `json:"endpointUri,omitempty"`
-
-	// HiveMetastoreConfig: Configuration information specific to running
-	// Hive metastore software as the metastore service.
+	// HiveMetastoreConfig: Configuration information specific to running Hive
+	// metastore software as the metastore service.
 	HiveMetastoreConfig *HiveMetastoreConfig `json:"hiveMetastoreConfig,omitempty"`
-
 	// Labels: User-defined labels for the metastore service.
 	Labels map[string]string `json:"labels,omitempty"`
-
-	// MaintenanceWindow: The one hour maintenance window of the metastore
-	// service. This specifies when the service can be restarted for
-	// maintenance purposes in UTC time. Maintenance window is not needed
-	// for services with the SPANNER database type.
+	// MaintenanceWindow: The one hour maintenance window of the metastore service.
+	// This specifies when the service can be restarted for maintenance purposes in
+	// UTC time. Maintenance window is not needed for services with the SPANNER
+	// database type.
 	MaintenanceWindow *MaintenanceWindow `json:"maintenanceWindow,omitempty"`
-
 	// MetadataIntegration: Optional. The setting that defines how metastore
 	// metadata should be integrated with external services and systems.
 	MetadataIntegration *MetadataIntegration `json:"metadataIntegration,omitempty"`
-
-	// MetadataManagementActivity: Output only. The metadata management
-	// activities of the metastore service.
+	// MetadataManagementActivity: Output only. The metadata management activities
+	// of the metastore service.
 	MetadataManagementActivity *MetadataManagementActivity `json:"metadataManagementActivity,omitempty"`
-
-	// Name: Immutable. The relative resource name of the metastore service,
-	// in the following
-	// format:projects/{project_number}/locations/{location_id}/services/{ser
-	// vice_id}.
+	// Name: Immutable. The relative resource name of the metastore service, in the
+	// following
+	// format:projects/{project_number}/locations/{location_id}/services/{service_id
+	// }.
 	Name string `json:"name,omitempty"`
-
-	// Network: Immutable. The relative resource name of the VPC network on
-	// which the instance can be accessed. It is specified in the following
+	// Network: Immutable. The relative resource name of the VPC network on which
+	// the instance can be accessed. It is specified in the following
 	// form:projects/{project_number}/global/networks/{network_id}.
 	Network string `json:"network,omitempty"`
-
-	// NetworkConfig: The configuration specifying the network settings for
-	// the Dataproc Metastore service.
+	// NetworkConfig: The configuration specifying the network settings for the
+	// Dataproc Metastore service.
 	NetworkConfig *NetworkConfig `json:"networkConfig,omitempty"`
-
-	// Port: The TCP port at which the metastore service is reached.
-	// Default: 9083.
+	// Port: The TCP port at which the metastore service is reached. Default: 9083.
 	Port int64 `json:"port,omitempty"`
-
 	// ReleaseChannel: Immutable. The release channel of the service. If
 	// unspecified, defaults to STABLE.
 	//
 	// Possible values:
 	//   "RELEASE_CHANNEL_UNSPECIFIED" - Release channel is not specified.
-	//   "CANARY" - The CANARY release channel contains the newest features,
-	// which may be unstable and subject to unresolved issues with no known
-	// workarounds. Services using the CANARY release channel are not
-	// subject to any SLAs.
+	//   "CANARY" - The CANARY release channel contains the newest features, which
+	// may be unstable and subject to unresolved issues with no known workarounds.
+	// Services using the CANARY release channel are not subject to any SLAs.
 	//   "STABLE" - The STABLE release channel contains features that are
 	// considered stable and have been validated for production use.
 	ReleaseChannel string `json:"releaseChannel,omitempty"`
-
 	// ScalingConfig: Scaling configuration of the metastore service.
 	ScalingConfig *ScalingConfig `json:"scalingConfig,omitempty"`
-
-	// ScheduledBackup: Optional. The configuration of scheduled backup for
-	// the metastore service.
+	// ScheduledBackup: Optional. The configuration of scheduled backup for the
+	// metastore service.
 	ScheduledBackup *ScheduledBackup `json:"scheduledBackup,omitempty"`
-
 	// State: Output only. The current state of the metastore service.
 	//
 	// Possible values:
-	//   "STATE_UNSPECIFIED" - The state of the metastore service is
-	// unknown.
-	//   "CREATING" - The metastore service is in the process of being
-	// created.
-	//   "ACTIVE" - The metastore service is running and ready to serve
-	// queries.
+	//   "STATE_UNSPECIFIED" - The state of the metastore service is unknown.
+	//   "CREATING" - The metastore service is in the process of being created.
+	//   "ACTIVE" - The metastore service is running and ready to serve queries.
 	//   "SUSPENDING" - The metastore service is entering suspension. Its
 	// query-serving availability may cease unexpectedly.
-	//   "SUSPENDED" - The metastore service is suspended and unable to
-	// serve queries.
-	//   "UPDATING" - The metastore service is being updated. It remains
-	// usable but cannot accept additional update requests or be deleted at
-	// this time.
-	//   "DELETING" - The metastore service is undergoing deletion. It
-	// cannot be used.
-	//   "ERROR" - The metastore service has encountered an error and cannot
-	// be used. The metastore service should be deleted.
-	//   "MIGRATING" - The metastore service is processing a managed
-	// migration.
+	//   "SUSPENDED" - The metastore service is suspended and unable to serve
+	// queries.
+	//   "UPDATING" - The metastore service is being updated. It remains usable but
+	// cannot accept additional update requests or be deleted at this time.
+	//   "DELETING" - The metastore service is undergoing deletion. It cannot be
+	// used.
+	//   "ERROR" - The metastore service has encountered an error and cannot be
+	// used. The metastore service should be deleted.
+	//   "MIGRATING" - The metastore service is processing a managed migration.
 	State string `json:"state,omitempty"`
-
-	// StateMessage: Output only. Additional information about the current
-	// state of the metastore service, if available.
+	// StateMessage: Output only. Additional information about the current state of
+	// the metastore service, if available.
 	StateMessage string `json:"stateMessage,omitempty"`
-
-	// TelemetryConfig: The configuration specifying telemetry settings for
-	// the Dataproc Metastore service. If unspecified defaults to JSON.
+	// TelemetryConfig: The configuration specifying telemetry settings for the
+	// Dataproc Metastore service. If unspecified defaults to JSON.
 	TelemetryConfig *TelemetryConfig `json:"telemetryConfig,omitempty"`
-
 	// Tier: The tier of the service.
 	//
 	// Possible values:
 	//   "TIER_UNSPECIFIED" - The tier is not set.
-	//   "DEVELOPER" - The developer tier provides limited scalability and
-	// no fault tolerance. Good for low-cost proof-of-concept.
-	//   "ENTERPRISE" - The enterprise tier provides multi-zone high
-	// availability, and sufficient scalability for enterprise-level
-	// Dataproc Metastore workloads.
+	//   "DEVELOPER" - The developer tier provides limited scalability and no fault
+	// tolerance. Good for low-cost proof-of-concept.
+	//   "ENTERPRISE" - The enterprise tier provides multi-zone high availability,
+	// and sufficient scalability for enterprise-level Dataproc Metastore
+	// workloads.
 	Tier string `json:"tier,omitempty"`
-
-	// Uid: Output only. The globally unique resource identifier of the
-	// metastore service.
+	// Uid: Output only. The globally unique resource identifier of the metastore
+	// service.
 	Uid string `json:"uid,omitempty"`
-
 	// UpdateTime: Output only. The time when the metastore service was last
 	// updated.
 	UpdateTime string `json:"updateTime,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ArtifactGcsUri") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ArtifactGcsUri") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ArtifactGcsUri") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Service) MarshalJSON() ([]byte, error) {
 	type NoMethod Service
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // SetIamPolicyRequest: Request message for SetIamPolicy method.
 type SetIamPolicyRequest struct {
-	// Policy: REQUIRED: The complete policy to be applied to the resource.
-	// The size of the policy is limited to a few 10s of KB. An empty policy
-	// is a valid policy but certain Google Cloud services (such as
-	// Projects) might reject them.
+	// Policy: REQUIRED: The complete policy to be applied to the resource. The
+	// size of the policy is limited to a few 10s of KB. An empty policy is a valid
+	// policy but certain Google Cloud services (such as Projects) might reject
+	// them.
 	Policy *Policy `json:"policy,omitempty"`
-
-	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the
-	// policy to modify. Only the fields in the mask will be modified. If no
-	// mask is provided, the following default mask is used:paths:
-	// "bindings, etag"
+	// UpdateMask: OPTIONAL: A FieldMask specifying which fields of the policy to
+	// modify. Only the fields in the mask will be modified. If no mask is
+	// provided, the following default mask is used:paths: "bindings, etag"
 	UpdateMask string `json:"updateMask,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Policy") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Policy") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Policy") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SetIamPolicyRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod SetIamPolicyRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// StartMigrationRequest: Request message for
-// DataprocMetastore.StartMigration.
+// StartMigrationRequest: Request message for DataprocMetastore.StartMigration.
 type StartMigrationRequest struct {
-	// MigrationExecution: Required. The configuration details for the
-	// migration.
+	// MigrationExecution: Required. The configuration details for the migration.
 	MigrationExecution *MigrationExecution `json:"migrationExecution,omitempty"`
-
-	// RequestId: Optional. A request ID. Specify a unique request ID to
-	// allow the server to ignore the request if it has completed. The
-	// server will ignore subsequent requests that provide a duplicate
-	// request ID for at least 60 minutes after the first request.For
-	// example, if an initial request times out, followed by another request
-	// with the same request ID, the server ignores the second request to
-	// prevent the creation of duplicate commitments.The request ID must be
-	// a valid UUID
-	// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format)
-	// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+	// RequestId: Optional. A request ID. Specify a unique request ID to allow the
+	// server to ignore the request if it has completed. The server will ignore
+	// subsequent requests that provide a duplicate request ID for at least 60
+	// minutes after the first request.For example, if an initial request times
+	// out, followed by another request with the same request ID, the server
+	// ignores the second request to prevent the creation of duplicate
+	// commitments.The request ID must be a valid UUID
+	// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero
+	// UUID (00000000-0000-0000-0000-000000000000) is not supported.
 	RequestId string `json:"requestId,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "MigrationExecution")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "MigrationExecution") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "MigrationExecution") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "MigrationExecution") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *StartMigrationRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod StartMigrationRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Status: The Status type defines a logical error model that is
-// suitable for different programming environments, including REST APIs
-// and RPC APIs. It is used by gRPC (https://github.com/grpc). Each
-// Status message contains three pieces of data: error code, error
-// message, and error details.You can find out more about this error
-// model and how to work with it in the API Design Guide
-// (https://cloud.google.com/apis/design/errors).
+// Status: The Status type defines a logical error model that is suitable for
+// different programming environments, including REST APIs and RPC APIs. It is
+// used by gRPC (https://github.com/grpc). Each Status message contains three
+// pieces of data: error code, error message, and error details.You can find
+// out more about this error model and how to work with it in the API Design
+// Guide (https://cloud.google.com/apis/design/errors).
 type Status struct {
-	// Code: The status code, which should be an enum value of
-	// google.rpc.Code.
+	// Code: The status code, which should be an enum value of google.rpc.Code.
 	Code int64 `json:"code,omitempty"`
-
-	// Details: A list of messages that carry the error details. There is a
-	// common set of message types for APIs to use.
+	// Details: A list of messages that carry the error details. There is a common
+	// set of message types for APIs to use.
 	Details []googleapi.RawMessage `json:"details,omitempty"`
-
-	// Message: A developer-facing error message, which should be in
-	// English. Any user-facing error message should be localized and sent
-	// in the google.rpc.Status.details field, or localized by the client.
+	// Message: A developer-facing error message, which should be in English. Any
+	// user-facing error message should be localized and sent in the
+	// google.rpc.Status.details field, or localized by the client.
 	Message string `json:"message,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Code") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Code") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Code") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Code") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Status) MarshalJSON() ([]byte, error) {
 	type NoMethod Status
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TelemetryConfig: Telemetry Configuration for the Dataproc Metastore
-// service.
+// TelemetryConfig: Telemetry Configuration for the Dataproc Metastore service.
 type TelemetryConfig struct {
-	// LogFormat: The output format of the Dataproc Metastore service's
-	// logs.
+	// LogFormat: The output format of the Dataproc Metastore service's logs.
 	//
 	// Possible values:
 	//   "LOG_FORMAT_UNSPECIFIED" - The LOG_FORMAT is not set.
 	//   "LEGACY" - Logging output uses the legacy textPayload format.
 	//   "JSON" - Logging output uses the jsonPayload format.
 	LogFormat string `json:"logFormat,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LogFormat") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LogFormat") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LogFormat") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TelemetryConfig) MarshalJSON() ([]byte, error) {
 	type NoMethod TelemetryConfig
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TestIamPermissionsRequest: Request message for TestIamPermissions
-// method.
+// TestIamPermissionsRequest: Request message for TestIamPermissions method.
 type TestIamPermissionsRequest struct {
-	// Permissions: The set of permissions to check for the resource.
-	// Permissions with wildcards (such as * or storage.*) are not allowed.
-	// For more information see IAM Overview
+	// Permissions: The set of permissions to check for the resource. Permissions
+	// with wildcards (such as * or storage.*) are not allowed. For more
+	// information see IAM Overview
 	// (https://cloud.google.com/iam/docs/overview#permissions).
 	Permissions []string `json:"permissions,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permissions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permissions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TestIamPermissionsRequest) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsRequest
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// TestIamPermissionsResponse: Response message for TestIamPermissions
-// method.
+// TestIamPermissionsResponse: Response message for TestIamPermissions method.
 type TestIamPermissionsResponse struct {
-	// Permissions: A subset of TestPermissionsRequest.permissions that the
-	// caller is allowed.
+	// Permissions: A subset of TestPermissionsRequest.permissions that the caller
+	// is allowed.
 	Permissions []string `json:"permissions,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Permissions") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permissions") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permissions") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TestIamPermissionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod TestIamPermissionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "metastore.projects.locations.get":
 
 type ProjectsLocationsGetCall struct {
 	s            *APIService
@@ -3540,33 +2833,29 @@ func (r *ProjectsLocationsService) Get(name string) *ProjectsLocationsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsGetCall) Context(ctx context.Context) *ProjectsLocationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3575,12 +2864,7 @@ func (c *ProjectsLocationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3601,12 +2885,10 @@ func (c *ProjectsLocationsGetCall) doRequest(alt string) (*http.Response, error)
 }
 
 // Do executes the "metastore.projects.locations.get" call.
-// Exactly one of *Location or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Location.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Location.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3637,35 +2919,7 @@ func (c *ProjectsLocationsGetCall) Do(opts ...googleapi.CallOption) (*Location, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets information about a location.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Resource name for the location.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "Location"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.list":
 
 type ProjectsLocationsListCall struct {
 	s            *APIService
@@ -3676,69 +2930,63 @@ type ProjectsLocationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists information about the supported locations for this
-// service.
+// List: Lists information about the supported locations for this service.
 //
-//   - name: The resource that owns the locations collection, if
-//     applicable.
+// - name: The resource that owns the locations collection, if applicable.
 func (r *ProjectsLocationsService) List(name string) *ProjectsLocationsListCall {
 	c := &ProjectsLocationsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// Filter sets the optional parameter "filter": A filter to narrow down
-// results to a preferred subset. The filtering language accepts strings
-// like "displayName=tokyo", and is documented in more detail in AIP-160
+// Filter sets the optional parameter "filter": A filter to narrow down results
+// to a preferred subset. The filtering language accepts strings like
+// "displayName=tokyo", and is documented in more detail in AIP-160
 // (https://google.aip.dev/160).
 func (c *ProjectsLocationsListCall) Filter(filter string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of results to return. If not set, the service selects a default.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// results to return. If not set, the service selects a default.
 func (c *ProjectsLocationsListCall) PageSize(pageSize int64) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token
-// received from the next_page_token field in the response. Send that
-// page token to receive the subsequent page.
+// PageToken sets the optional parameter "pageToken": A page token received
+// from the next_page_token field in the response. Send that page token to
+// receive the subsequent page.
 func (c *ProjectsLocationsListCall) PageToken(pageToken string) *ProjectsLocationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsListCall) Context(ctx context.Context) *ProjectsLocationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3747,12 +2995,7 @@ func (c *ProjectsLocationsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3773,12 +3016,11 @@ func (c *ProjectsLocationsListCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "metastore.projects.locations.list" call.
-// Exactly one of *ListLocationsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListLocationsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListLocationsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3809,48 +3051,6 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists information about the supported locations for this service.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "A filter to narrow down results to a preferred subset. The filtering language accepts strings like \"displayName=tokyo\", and is documented in more detail in AIP-160 (https://google.aip.dev/160).",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The resource that owns the locations collection, if applicable.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The maximum number of results to return. If not set, the service selects a default.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "A page token received from the next_page_token field in the response. Send that page token to receive the subsequent page.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}/locations",
-	//   "response": {
-	//     "$ref": "ListLocationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -3858,7 +3058,7 @@ func (c *ProjectsLocationsListCall) Do(opts ...googleapi.CallOption) (*ListLocat
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -3874,8 +3074,6 @@ func (c *ProjectsLocationsListCall) Pages(ctx context.Context, f func(*ListLocat
 	}
 }
 
-// method id "metastore.projects.locations.federations.create":
-
 type ProjectsLocationsFederationsCreateCall struct {
 	s          *APIService
 	parent     string
@@ -3887,8 +3085,8 @@ type ProjectsLocationsFederationsCreateCall struct {
 
 // Create: Creates a metastore federation in a project and location.
 //
-//   - parent: The relative resource name of the location in which to
-//     create a federation service, in the following
+//   - parent: The relative resource name of the location in which to create a
+//     federation service, in the following
 //     form:projects/{project_number}/locations/{location_id}.
 func (r *ProjectsLocationsFederationsService) Create(parent string, federation *Federation) *ProjectsLocationsFederationsCreateCall {
 	c := &ProjectsLocationsFederationsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -3897,50 +3095,46 @@ func (r *ProjectsLocationsFederationsService) Create(parent string, federation *
 	return c
 }
 
-// FederationId sets the optional parameter "federationId": Required.
-// The ID of the metastore federation, which is used as the final
-// component of the metastore federation's name.This value must be
-// between 2 and 63 characters long inclusive, begin with a letter, end
-// with a letter or number, and consist of alpha-numeric ASCII
-// characters or hyphens.
+// FederationId sets the optional parameter "federationId": Required. The ID of
+// the metastore federation, which is used as the final component of the
+// metastore federation's name.This value must be between 2 and 63 characters
+// long inclusive, begin with a letter, end with a letter or number, and
+// consist of alpha-numeric ASCII characters or hyphens.
 func (c *ProjectsLocationsFederationsCreateCall) FederationId(federationId string) *ProjectsLocationsFederationsCreateCall {
 	c.urlParams_.Set("federationId", federationId)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A request ID.
-// Specify a unique request ID to allow the server to ignore the request
-// if it has completed. The server will ignore subsequent requests that
-// provide a duplicate request ID for at least 60 minutes after the
-// first request.For example, if an initial request times out, followed
-// by another request with the same request ID, the server ignores the
-// second request to prevent the creation of duplicate commitments.The
-// request ID must be a valid UUID
-// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format)
-// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+// RequestId sets the optional parameter "requestId": A request ID. Specify a
+// unique request ID to allow the server to ignore the request if it has
+// completed. The server will ignore subsequent requests that provide a
+// duplicate request ID for at least 60 minutes after the first request.For
+// example, if an initial request times out, followed by another request with
+// the same request ID, the server ignores the second request to prevent the
+// creation of duplicate commitments.The request ID must be a valid UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero
+// UUID (00000000-0000-0000-0000-000000000000) is not supported.
 func (c *ProjectsLocationsFederationsCreateCall) RequestId(requestId string) *ProjectsLocationsFederationsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsFederationsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsFederationsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsFederationsCreateCall) Context(ctx context.Context) *ProjectsLocationsFederationsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsFederationsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3949,18 +3143,12 @@ func (c *ProjectsLocationsFederationsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsFederationsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.federation)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/federations")
@@ -3977,12 +3165,10 @@ func (c *ProjectsLocationsFederationsCreateCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "metastore.projects.locations.federations.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsFederationsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4013,48 +3199,7 @@ func (c *ProjectsLocationsFederationsCreateCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a metastore federation in a project and location.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/federations",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.federations.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "federationId": {
-	//       "description": "Required. The ID of the metastore federation, which is used as the final component of the metastore federation's name.This value must be between 2 and 63 characters long inclusive, begin with a letter, end with a letter or number, and consist of alpha-numeric ASCII characters or hyphens.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The relative resource name of the location in which to create a federation service, in the following form:projects/{project_number}/locations/{location_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "Optional. A request ID. Specify a unique request ID to allow the server to ignore the request if it has completed. The server will ignore subsequent requests that provide a duplicate request ID for at least 60 minutes after the first request.For example, if an initial request times out, followed by another request with the same request ID, the server ignores the second request to prevent the creation of duplicate commitments.The request ID must be a valid UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/federations",
-	//   "request": {
-	//     "$ref": "Federation"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.federations.delete":
 
 type ProjectsLocationsFederationsDeleteCall struct {
 	s          *APIService
@@ -4066,49 +3211,46 @@ type ProjectsLocationsFederationsDeleteCall struct {
 
 // Delete: Deletes a single federation.
 //
-//   - name: The relative resource name of the metastore federation to
-//     delete, in the following
-//     form:projects/{project_number}/locations/{location_id}/federations/{
-//     federation_id}.
+//   - name: The relative resource name of the metastore federation to delete, in
+//     the following
+//     form:projects/{project_number}/locations/{location_id}/federations/{federat
+//     ion_id}.
 func (r *ProjectsLocationsFederationsService) Delete(name string) *ProjectsLocationsFederationsDeleteCall {
 	c := &ProjectsLocationsFederationsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A request ID.
-// Specify a unique request ID to allow the server to ignore the request
-// if it has completed. The server will ignore subsequent requests that
-// provide a duplicate request ID for at least 60 minutes after the
-// first request.For example, if an initial request times out, followed
-// by another request with the same request ID, the server ignores the
-// second request to prevent the creation of duplicate commitments.The
-// request ID must be a valid UUID
-// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format)
-// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+// RequestId sets the optional parameter "requestId": A request ID. Specify a
+// unique request ID to allow the server to ignore the request if it has
+// completed. The server will ignore subsequent requests that provide a
+// duplicate request ID for at least 60 minutes after the first request.For
+// example, if an initial request times out, followed by another request with
+// the same request ID, the server ignores the second request to prevent the
+// creation of duplicate commitments.The request ID must be a valid UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero
+// UUID (00000000-0000-0000-0000-000000000000) is not supported.
 func (c *ProjectsLocationsFederationsDeleteCall) RequestId(requestId string) *ProjectsLocationsFederationsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsFederationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsFederationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsFederationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsFederationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsFederationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4117,12 +3259,7 @@ func (c *ProjectsLocationsFederationsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsFederationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -4140,12 +3277,10 @@ func (c *ProjectsLocationsFederationsDeleteCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "metastore.projects.locations.federations.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsFederationsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4176,40 +3311,7 @@ func (c *ProjectsLocationsFederationsDeleteCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a single federation.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/federations/{federationsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "metastore.projects.locations.federations.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the metastore federation to delete, in the following form:projects/{project_number}/locations/{location_id}/federations/{federation_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/federations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "Optional. A request ID. Specify a unique request ID to allow the server to ignore the request if it has completed. The server will ignore subsequent requests that provide a duplicate request ID for at least 60 minutes after the first request.For example, if an initial request times out, followed by another request with the same request ID, the server ignores the second request to prevent the creation of duplicate commitments.The request ID must be a valid UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.federations.get":
 
 type ProjectsLocationsFederationsGetCall struct {
 	s            *APIService
@@ -4222,10 +3324,10 @@ type ProjectsLocationsFederationsGetCall struct {
 
 // Get: Gets the details of a single federation.
 //
-//   - name: The relative resource name of the metastore federation to
-//     retrieve, in the following
-//     form:projects/{project_number}/locations/{location_id}/federations/{
-//     federation_id}.
+//   - name: The relative resource name of the metastore federation to retrieve,
+//     in the following
+//     form:projects/{project_number}/locations/{location_id}/federations/{federat
+//     ion_id}.
 func (r *ProjectsLocationsFederationsService) Get(name string) *ProjectsLocationsFederationsGetCall {
 	c := &ProjectsLocationsFederationsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4233,33 +3335,29 @@ func (r *ProjectsLocationsFederationsService) Get(name string) *ProjectsLocation
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsFederationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsFederationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsFederationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsFederationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsFederationsGetCall) Context(ctx context.Context) *ProjectsLocationsFederationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsFederationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4268,12 +3366,7 @@ func (c *ProjectsLocationsFederationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsFederationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4294,12 +3387,10 @@ func (c *ProjectsLocationsFederationsGetCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "metastore.projects.locations.federations.get" call.
-// Exactly one of *Federation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Federation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Federation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsFederationsGetCall) Do(opts ...googleapi.CallOption) (*Federation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4330,35 +3421,7 @@ func (c *ProjectsLocationsFederationsGetCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the details of a single federation.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/federations/{federationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.federations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the metastore federation to retrieve, in the following form:projects/{project_number}/locations/{location_id}/federations/{federation_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/federations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "Federation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.federations.getIamPolicy":
 
 type ProjectsLocationsFederationsGetIamPolicyCall struct {
 	s            *APIService
@@ -4369,14 +3432,12 @@ type ProjectsLocationsFederationsGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource. Returns
-// an empty policy if the resource exists and does not have a policy
-// set.
+// GetIamPolicy: Gets the access control policy for a resource. Returns an
+// empty policy if the resource exists and does not have a policy set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsLocationsFederationsService) GetIamPolicy(resource string) *ProjectsLocationsFederationsGetIamPolicyCall {
 	c := &ProjectsLocationsFederationsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4384,16 +3445,15 @@ func (r *ProjectsLocationsFederationsService) GetIamPolicy(resource string) *Pro
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The maximum policy version that
-// will be used to format the policy.Valid values are 0, 1, and 3.
-// Requests specifying an invalid value will be rejected.Requests for
-// policies with any conditional role bindings must specify version 3.
-// Policies with no conditional role bindings may specify any valid
-// value or leave the field unset.The policy in the response might use
-// the policy version that you specified, or it might use a lower policy
-// version. For example, if you specify version 3, but the policy has no
-// conditional role bindings, the response uses version 1.To learn which
-// resources support conditions in their IAM policies, see the IAM
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy.Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected.Requests for policies with any conditional
+// role bindings must specify version 3. Policies with no conditional role
+// bindings may specify any valid value or leave the field unset.The policy in
+// the response might use the policy version that you specified, or it might
+// use a lower policy version. For example, if you specify version 3, but the
+// policy has no conditional role bindings, the response uses version 1.To
+// learn which resources support conditions in their IAM policies, see the IAM
 // documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsFederationsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsFederationsGetIamPolicyCall {
@@ -4402,33 +3462,29 @@ func (c *ProjectsLocationsFederationsGetIamPolicyCall) OptionsRequestedPolicyVer
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsFederationsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsFederationsGetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsFederationsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsFederationsGetIamPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsFederationsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsFederationsGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsFederationsGetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4437,12 +3493,7 @@ func (c *ProjectsLocationsFederationsGetIamPolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsFederationsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4463,12 +3514,10 @@ func (c *ProjectsLocationsFederationsGetIamPolicyCall) doRequest(alt string) (*h
 }
 
 // Do executes the "metastore.projects.locations.federations.getIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsFederationsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4499,41 +3548,7 @@ func (c *ProjectsLocationsFederationsGetIamPolicyCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/federations/{federationsId}:getIamPolicy",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.federations.getIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The maximum policy version that will be used to format the policy.Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected.Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset.The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1.To learn which resources support conditions in their IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/conditions/resource-policies).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/federations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:getIamPolicy",
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.federations.list":
 
 type ProjectsLocationsFederationsListCall struct {
 	s            *APIService
@@ -4555,71 +3570,65 @@ func (r *ProjectsLocationsFederationsService) List(parent string) *ProjectsLocat
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filter to apply to
-// list results.
+// Filter sets the optional parameter "filter": The filter to apply to list
+// results.
 func (c *ProjectsLocationsFederationsListCall) Filter(filter string) *ProjectsLocationsFederationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Specify the ordering
-// of results as described in Sorting Order
-// (https://cloud.google.com/apis/design/design_patterns#sorting_order).
-// If not specified, the results will be sorted in the default order.
+// OrderBy sets the optional parameter "orderBy": Specify the ordering of
+// results as described in Sorting Order
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order). If not
+// specified, the results will be sorted in the default order.
 func (c *ProjectsLocationsFederationsListCall) OrderBy(orderBy string) *ProjectsLocationsFederationsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of federations to return. The response may contain less than the
-// maximum number. If unspecified, no more than 500 services are
-// returned. The maximum value is 1000; values above 1000 are changed to
-// 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// federations to return. The response may contain less than the maximum
+// number. If unspecified, no more than 500 services are returned. The maximum
+// value is 1000; values above 1000 are changed to 1000.
 func (c *ProjectsLocationsFederationsListCall) PageSize(pageSize int64) *ProjectsLocationsFederationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous ListFederationServices call. Provide this
-// token to retrieve the subsequent page.To retrieve the first page,
-// supply an empty page token.When paginating, other parameters provided
-// to ListFederationServices must match the call that provided the page
-// token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous ListFederationServices call. Provide this token to retrieve
+// the subsequent page.To retrieve the first page, supply an empty page
+// token.When paginating, other parameters provided to ListFederationServices
+// must match the call that provided the page token.
 func (c *ProjectsLocationsFederationsListCall) PageToken(pageToken string) *ProjectsLocationsFederationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsFederationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsFederationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsFederationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsFederationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsFederationsListCall) Context(ctx context.Context) *ProjectsLocationsFederationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsFederationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4628,12 +3637,7 @@ func (c *ProjectsLocationsFederationsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsFederationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4654,12 +3658,11 @@ func (c *ProjectsLocationsFederationsListCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "metastore.projects.locations.federations.list" call.
-// Exactly one of *ListFederationsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *ListFederationsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsFederationsListCall) Do(opts ...googleapi.CallOption) (*ListFederationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4690,53 +3693,6 @@ func (c *ProjectsLocationsFederationsListCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists federations in a project and location.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/federations",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.federations.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. The filter to apply to list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Optional. Specify the ordering of results as described in Sorting Order (https://cloud.google.com/apis/design/design_patterns#sorting_order). If not specified, the results will be sorted in the default order.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of federations to return. The response may contain less than the maximum number. If unspecified, no more than 500 services are returned. The maximum value is 1000; values above 1000 are changed to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous ListFederationServices call. Provide this token to retrieve the subsequent page.To retrieve the first page, supply an empty page token.When paginating, other parameters provided to ListFederationServices must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The relative resource name of the location of metastore federations to list, in the following form: projects/{project_number}/locations/{location_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/federations",
-	//   "response": {
-	//     "$ref": "ListFederationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -4744,7 +3700,7 @@ func (c *ProjectsLocationsFederationsListCall) Do(opts ...googleapi.CallOption) 
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsFederationsListCall) Pages(ctx context.Context, f func(*ListFederationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -4760,8 +3716,6 @@ func (c *ProjectsLocationsFederationsListCall) Pages(ctx context.Context, f func
 	}
 }
 
-// method id "metastore.projects.locations.federations.patch":
-
 type ProjectsLocationsFederationsPatchCall struct {
 	s          *APIService
 	name       string
@@ -4773,10 +3727,10 @@ type ProjectsLocationsFederationsPatchCall struct {
 
 // Patch: Updates the fields of a federation.
 //
-//   - name: Immutable. The relative resource name of the federation, of
-//     the form:
-//     projects/{project_number}/locations/{location_id}/federations/{feder
-//     ation_id}`.
+//   - name: Immutable. The relative resource name of the federation, of the
+//     form:
+//     projects/{project_number}/locations/{location_id}/federations/{federation_i
+//     d}`.
 func (r *ProjectsLocationsFederationsService) Patch(name string, federation *Federation) *ProjectsLocationsFederationsPatchCall {
 	c := &ProjectsLocationsFederationsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -4784,49 +3738,46 @@ func (r *ProjectsLocationsFederationsService) Patch(name string, federation *Fed
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A request ID.
-// Specify a unique request ID to allow the server to ignore the request
-// if it has completed. The server will ignore subsequent requests that
-// provide a duplicate request ID for at least 60 minutes after the
-// first request.For example, if an initial request times out, followed
-// by another request with the same request ID, the server ignores the
-// second request to prevent the creation of duplicate commitments.The
-// request ID must be a valid UUID
-// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format)
-// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+// RequestId sets the optional parameter "requestId": A request ID. Specify a
+// unique request ID to allow the server to ignore the request if it has
+// completed. The server will ignore subsequent requests that provide a
+// duplicate request ID for at least 60 minutes after the first request.For
+// example, if an initial request times out, followed by another request with
+// the same request ID, the server ignores the second request to prevent the
+// creation of duplicate commitments.The request ID must be a valid UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero
+// UUID (00000000-0000-0000-0000-000000000000) is not supported.
 func (c *ProjectsLocationsFederationsPatchCall) RequestId(requestId string) *ProjectsLocationsFederationsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. A
-// field mask used to specify the fields to be overwritten in the
-// metastore federation resource by the update. Fields specified in the
-// update_mask are relative to the resource (not to the full request). A
-// field is overwritten if it is in the mask.
+// UpdateMask sets the optional parameter "updateMask": Required. A field mask
+// used to specify the fields to be overwritten in the metastore federation
+// resource by the update. Fields specified in the update_mask are relative to
+// the resource (not to the full request). A field is overwritten if it is in
+// the mask.
 func (c *ProjectsLocationsFederationsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsFederationsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsFederationsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsFederationsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsFederationsPatchCall) Context(ctx context.Context) *ProjectsLocationsFederationsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsFederationsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4835,18 +3786,12 @@ func (c *ProjectsLocationsFederationsPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsFederationsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.federation)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
@@ -4863,12 +3808,10 @@ func (c *ProjectsLocationsFederationsPatchCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "metastore.projects.locations.federations.patch" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsFederationsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4899,49 +3842,7 @@ func (c *ProjectsLocationsFederationsPatchCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the fields of a federation.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/federations/{federationsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "metastore.projects.locations.federations.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Immutable. The relative resource name of the federation, of the form: projects/{project_number}/locations/{location_id}/federations/{federation_id}`.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/federations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "Optional. A request ID. Specify a unique request ID to allow the server to ignore the request if it has completed. The server will ignore subsequent requests that provide a duplicate request ID for at least 60 minutes after the first request.For example, if an initial request times out, followed by another request with the same request ID, the server ignores the second request to prevent the creation of duplicate commitments.The request ID must be a valid UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. A field mask used to specify the fields to be overwritten in the metastore federation resource by the update. Fields specified in the update_mask are relative to the resource (not to the full request). A field is overwritten if it is in the mask.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "request": {
-	//     "$ref": "Federation"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.federations.setIamPolicy":
 
 type ProjectsLocationsFederationsSetIamPolicyCall struct {
 	s                   *APIService
@@ -4952,14 +3853,13 @@ type ProjectsLocationsFederationsSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any existing policy.Can return NOT_FOUND,
-// INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+// SetIamPolicy: Sets the access control policy on the specified resource.
+// Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and
+// PERMISSION_DENIED errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsLocationsFederationsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsFederationsSetIamPolicyCall {
 	c := &ProjectsLocationsFederationsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -4968,23 +3868,21 @@ func (r *ProjectsLocationsFederationsService) SetIamPolicy(resource string, seti
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsFederationsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsFederationsSetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsFederationsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsFederationsSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsFederationsSetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4993,18 +3891,12 @@ func (c *ProjectsLocationsFederationsSetIamPolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsFederationsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:setIamPolicy")
@@ -5021,12 +3913,10 @@ func (c *ProjectsLocationsFederationsSetIamPolicyCall) doRequest(alt string) (*h
 }
 
 // Do executes the "metastore.projects.locations.federations.setIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsFederationsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5057,38 +3947,7 @@ func (c *ProjectsLocationsFederationsSetIamPolicyCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and PERMISSION_DENIED errors.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/federations/{federationsId}:setIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.federations.setIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/federations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:setIamPolicy",
-	//   "request": {
-	//     "$ref": "SetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.federations.testIamPermissions":
 
 type ProjectsLocationsFederationsTestIamPermissionsCall struct {
 	s                         *APIService
@@ -5099,17 +3958,16 @@ type ProjectsLocationsFederationsTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Returns permissions that a caller has on the
-// specified resource. If the resource does not exist, this will return
-// an empty set of permissions, not a NOT_FOUND error.Note: This
-// operation is designed to be used for building permission-aware UIs
-// and command-line tools, not for authorization checking. This
-// operation may "fail open" without warning.
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource. If the resource does not exist, this will return an empty set of
+// permissions, not a NOT_FOUND error.Note: This operation is designed to be
+// used for building permission-aware UIs and command-line tools, not for
+// authorization checking. This operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
 func (r *ProjectsLocationsFederationsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsFederationsTestIamPermissionsCall {
 	c := &ProjectsLocationsFederationsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -5118,23 +3976,21 @@ func (r *ProjectsLocationsFederationsService) TestIamPermissions(resource string
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsFederationsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsFederationsTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsFederationsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsFederationsTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsFederationsTestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5143,18 +3999,12 @@ func (c *ProjectsLocationsFederationsTestIamPermissionsCall) Header() http.Heade
 }
 
 func (c *ProjectsLocationsFederationsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:testIamPermissions")
@@ -5171,12 +4021,11 @@ func (c *ProjectsLocationsFederationsTestIamPermissionsCall) doRequest(alt strin
 }
 
 // Do executes the "metastore.projects.locations.federations.testIamPermissions" call.
-// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsFederationsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5207,38 +4056,7 @@ func (c *ProjectsLocationsFederationsTestIamPermissionsCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/federations/{federationsId}:testIamPermissions",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.federations.testIamPermissions",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/federations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:testIamPermissions",
-	//   "request": {
-	//     "$ref": "TestIamPermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TestIamPermissionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.operations.cancel":
 
 type ProjectsLocationsOperationsCancelCall struct {
 	s                      *APIService
@@ -5249,15 +4067,14 @@ type ProjectsLocationsOperationsCancelCall struct {
 	header_                http.Header
 }
 
-// Cancel: Starts asynchronous cancellation on a long-running operation.
-// The server makes a best effort to cancel the operation, but success
-// is not guaranteed. If the server doesn't support this method, it
-// returns google.rpc.Code.UNIMPLEMENTED. Clients can use
-// Operations.GetOperation or other methods to check whether the
-// cancellation succeeded or whether the operation completed despite
-// cancellation. On successful cancellation, the operation is not
-// deleted; instead, it becomes an operation with an Operation.error
-// value with a google.rpc.Status.code of 1, corresponding to
+// Cancel: Starts asynchronous cancellation on a long-running operation. The
+// server makes a best effort to cancel the operation, but success is not
+// guaranteed. If the server doesn't support this method, it returns
+// google.rpc.Code.UNIMPLEMENTED. Clients can use Operations.GetOperation or
+// other methods to check whether the cancellation succeeded or whether the
+// operation completed despite cancellation. On successful cancellation, the
+// operation is not deleted; instead, it becomes an operation with an
+// Operation.error value with a google.rpc.Status.code of 1, corresponding to
 // Code.CANCELLED.
 //
 // - name: The name of the operation resource to be cancelled.
@@ -5269,23 +4086,21 @@ func (r *ProjectsLocationsOperationsService) Cancel(name string, canceloperation
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsCancelCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsCancelCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsCancelCall) Context(ctx context.Context) *ProjectsLocationsOperationsCancelCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5294,18 +4109,12 @@ func (c *ProjectsLocationsOperationsCancelCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.canceloperationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}:cancel")
@@ -5322,12 +4131,10 @@ func (c *ProjectsLocationsOperationsCancelCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "metastore.projects.locations.operations.cancel" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5358,38 +4165,7 @@ func (c *ProjectsLocationsOperationsCancelCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Starts asynchronous cancellation on a long-running operation. The server makes a best effort to cancel the operation, but success is not guaranteed. If the server doesn't support this method, it returns google.rpc.Code.UNIMPLEMENTED. Clients can use Operations.GetOperation or other methods to check whether the cancellation succeeded or whether the operation completed despite cancellation. On successful cancellation, the operation is not deleted; instead, it becomes an operation with an Operation.error value with a google.rpc.Status.code of 1, corresponding to Code.CANCELLED.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}:cancel",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.operations.cancel",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be cancelled.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}:cancel",
-	//   "request": {
-	//     "$ref": "CancelOperationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.operations.delete":
 
 type ProjectsLocationsOperationsDeleteCall struct {
 	s          *APIService
@@ -5399,10 +4175,10 @@ type ProjectsLocationsOperationsDeleteCall struct {
 	header_    http.Header
 }
 
-// Delete: Deletes a long-running operation. This method indicates that
-// the client is no longer interested in the operation result. It does
-// not cancel the operation. If the server doesn't support this method,
-// it returns google.rpc.Code.UNIMPLEMENTED.
+// Delete: Deletes a long-running operation. This method indicates that the
+// client is no longer interested in the operation result. It does not cancel
+// the operation. If the server doesn't support this method, it returns
+// google.rpc.Code.UNIMPLEMENTED.
 //
 // - name: The name of the operation resource to be deleted.
 func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocationsOperationsDeleteCall {
@@ -5412,23 +4188,21 @@ func (r *ProjectsLocationsOperationsService) Delete(name string) *ProjectsLocati
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsDeleteCall) Context(ctx context.Context) *ProjectsLocationsOperationsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5437,12 +4211,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -5460,12 +4229,10 @@ func (c *ProjectsLocationsOperationsDeleteCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "metastore.projects.locations.operations.delete" call.
-// Exactly one of *Empty or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Empty.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Empty.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption) (*Empty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5496,35 +4263,7 @@ func (c *ProjectsLocationsOperationsDeleteCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a long-running operation. This method indicates that the client is no longer interested in the operation result. It does not cancel the operation. If the server doesn't support this method, it returns google.rpc.Code.UNIMPLEMENTED.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "metastore.projects.locations.operations.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource to be deleted.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "Empty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.operations.get":
 
 type ProjectsLocationsOperationsGetCall struct {
 	s            *APIService
@@ -5535,9 +4274,9 @@ type ProjectsLocationsOperationsGetCall struct {
 	header_      http.Header
 }
 
-// Get: Gets the latest state of a long-running operation. Clients can
-// use this method to poll the operation result at intervals as
-// recommended by the API service.
+// Get: Gets the latest state of a long-running operation. Clients can use this
+// method to poll the operation result at intervals as recommended by the API
+// service.
 //
 // - name: The name of the operation resource.
 func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocationsOperationsGetCall {
@@ -5547,33 +4286,29 @@ func (r *ProjectsLocationsOperationsService) Get(name string) *ProjectsLocations
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsOperationsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsGetCall) Context(ctx context.Context) *ProjectsLocationsOperationsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5582,12 +4317,7 @@ func (c *ProjectsLocationsOperationsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5608,12 +4338,10 @@ func (c *ProjectsLocationsOperationsGetCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "metastore.projects.locations.operations.get" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5644,35 +4372,7 @@ func (c *ProjectsLocationsOperationsGetCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the latest state of a long-running operation. Clients can use this method to poll the operation result at intervals as recommended by the API service.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/operations/{operationsId}",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.operations.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the operation resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/operations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.operations.list":
 
 type ProjectsLocationsOperationsListCall struct {
 	s            *APIService
@@ -5683,9 +4383,8 @@ type ProjectsLocationsOperationsListCall struct {
 	header_      http.Header
 }
 
-// List: Lists operations that match the specified filter in the
-// request. If the server doesn't support this method, it returns
-// UNIMPLEMENTED.
+// List: Lists operations that match the specified filter in the request. If
+// the server doesn't support this method, it returns UNIMPLEMENTED.
 //
 // - name: The name of the operation's parent resource.
 func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocationsOperationsListCall {
@@ -5694,55 +4393,50 @@ func (r *ProjectsLocationsOperationsService) List(name string) *ProjectsLocation
 	return c
 }
 
-// Filter sets the optional parameter "filter": The standard list
-// filter.
+// Filter sets the optional parameter "filter": The standard list filter.
 func (c *ProjectsLocationsOperationsListCall) Filter(filter string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The standard list
-// page size.
+// PageSize sets the optional parameter "pageSize": The standard list page
+// size.
 func (c *ProjectsLocationsOperationsListCall) PageSize(pageSize int64) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The standard list
-// page token.
+// PageToken sets the optional parameter "pageToken": The standard list page
+// token.
 func (c *ProjectsLocationsOperationsListCall) PageToken(pageToken string) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsOperationsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsOperationsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsOperationsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsOperationsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsOperationsListCall) Context(ctx context.Context) *ProjectsLocationsOperationsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5751,12 +4445,7 @@ func (c *ProjectsLocationsOperationsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5777,12 +4466,11 @@ func (c *ProjectsLocationsOperationsListCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "metastore.projects.locations.operations.list" call.
-// Exactly one of *ListOperationsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListOperationsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListOperationsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (*ListOperationsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5813,48 +4501,6 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists operations that match the specified filter in the request. If the server doesn't support this method, it returns UNIMPLEMENTED.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/operations",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.operations.list",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "The standard list filter.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "name": {
-	//       "description": "The name of the operation's parent resource.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The standard list page size.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The standard list page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}/operations",
-	//   "response": {
-	//     "$ref": "ListOperationsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -5862,7 +4508,7 @@ func (c *ProjectsLocationsOperationsListCall) Do(opts ...googleapi.CallOption) (
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(*ListOperationsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -5878,8 +4524,6 @@ func (c *ProjectsLocationsOperationsListCall) Pages(ctx context.Context, f func(
 	}
 }
 
-// method id "metastore.projects.locations.services.alterLocation":
-
 type ProjectsLocationsServicesAlterLocationCall struct {
 	s                                    *APIService
 	service                              string
@@ -5889,15 +4533,14 @@ type ProjectsLocationsServicesAlterLocationCall struct {
 	header_                              http.Header
 }
 
-// AlterLocation: Alter metadata resource location. The metadata
-// resource can be a database, table, or partition. This functionality
-// only updates the parent directory for the respective metadata
-// resource and does not transfer any existing data to the new location.
+// AlterLocation: Alter metadata resource location. The metadata resource can
+// be a database, table, or partition. This functionality only updates the
+// parent directory for the respective metadata resource and does not transfer
+// any existing data to the new location.
 //
-//   - service: The relative resource name of the metastore service to
-//     mutate metadata, in the following
-//     format:projects/{project_id}/locations/{location_id}/services/{servi
-//     ce_id}.
+//   - service: The relative resource name of the metastore service to mutate
+//     metadata, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{service_id}.
 func (r *ProjectsLocationsServicesService) AlterLocation(service string, altermetadataresourcelocationrequest *AlterMetadataResourceLocationRequest) *ProjectsLocationsServicesAlterLocationCall {
 	c := &ProjectsLocationsServicesAlterLocationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.service = service
@@ -5906,23 +4549,21 @@ func (r *ProjectsLocationsServicesService) AlterLocation(service string, alterme
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesAlterLocationCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesAlterLocationCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesAlterLocationCall) Context(ctx context.Context) *ProjectsLocationsServicesAlterLocationCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesAlterLocationCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5931,18 +4572,12 @@ func (c *ProjectsLocationsServicesAlterLocationCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesAlterLocationCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.altermetadataresourcelocationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+service}:alterLocation")
@@ -5959,12 +4594,10 @@ func (c *ProjectsLocationsServicesAlterLocationCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "metastore.projects.locations.services.alterLocation" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesAlterLocationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5995,38 +4628,7 @@ func (c *ProjectsLocationsServicesAlterLocationCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Alter metadata resource location. The metadata resource can be a database, table, or partition. This functionality only updates the parent directory for the respective metadata resource and does not transfer any existing data to the new location.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:alterLocation",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.alterLocation",
-	//   "parameterOrder": [
-	//     "service"
-	//   ],
-	//   "parameters": {
-	//     "service": {
-	//       "description": "Required. The relative resource name of the metastore service to mutate metadata, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+service}:alterLocation",
-	//   "request": {
-	//     "$ref": "AlterMetadataResourceLocationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.alterTableProperties":
 
 type ProjectsLocationsServicesAlterTablePropertiesCall struct {
 	s                           *APIService
@@ -6039,11 +4641,9 @@ type ProjectsLocationsServicesAlterTablePropertiesCall struct {
 
 // AlterTableProperties: Alter metadata table properties.
 //
-//   - service: The relative resource name of the Dataproc Metastore
-//     service that's being used to mutate metadata table properties, in
-//     the following
-//     format:projects/{project_id}/locations/{location_id}/services/{servi
-//     ce_id}.
+//   - service: The relative resource name of the Dataproc Metastore service
+//     that's being used to mutate metadata table properties, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{service_id}.
 func (r *ProjectsLocationsServicesService) AlterTableProperties(service string, altertablepropertiesrequest *AlterTablePropertiesRequest) *ProjectsLocationsServicesAlterTablePropertiesCall {
 	c := &ProjectsLocationsServicesAlterTablePropertiesCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.service = service
@@ -6052,23 +4652,21 @@ func (r *ProjectsLocationsServicesService) AlterTableProperties(service string, 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesAlterTablePropertiesCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Context(ctx context.Context) *ProjectsLocationsServicesAlterTablePropertiesCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6077,18 +4675,12 @@ func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Header() http.Header
 }
 
 func (c *ProjectsLocationsServicesAlterTablePropertiesCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.altertablepropertiesrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+service}:alterTableProperties")
@@ -6105,12 +4697,10 @@ func (c *ProjectsLocationsServicesAlterTablePropertiesCall) doRequest(alt string
 }
 
 // Do executes the "metastore.projects.locations.services.alterTableProperties" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6141,38 +4731,7 @@ func (c *ProjectsLocationsServicesAlterTablePropertiesCall) Do(opts ...googleapi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Alter metadata table properties.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:alterTableProperties",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.alterTableProperties",
-	//   "parameterOrder": [
-	//     "service"
-	//   ],
-	//   "parameters": {
-	//     "service": {
-	//       "description": "Required. The relative resource name of the Dataproc Metastore service that's being used to mutate metadata table properties, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+service}:alterTableProperties",
-	//   "request": {
-	//     "$ref": "AlterTablePropertiesRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.cancelMigration":
 
 type ProjectsLocationsServicesCancelMigrationCall struct {
 	s                      *APIService
@@ -6185,10 +4744,9 @@ type ProjectsLocationsServicesCancelMigrationCall struct {
 
 // CancelMigration: Cancels the ongoing Managed Migration process.
 //
-//   - service: The relative resource name of the metastore service to
-//     cancel the ongoing migration to, in the following
-//     format:projects/{project_id}/locations/{location_id}/services/{servi
-//     ce_id}.
+//   - service: The relative resource name of the metastore service to cancel the
+//     ongoing migration to, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{service_id}.
 func (r *ProjectsLocationsServicesService) CancelMigration(service string, cancelmigrationrequest *CancelMigrationRequest) *ProjectsLocationsServicesCancelMigrationCall {
 	c := &ProjectsLocationsServicesCancelMigrationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.service = service
@@ -6197,23 +4755,21 @@ func (r *ProjectsLocationsServicesService) CancelMigration(service string, cance
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesCancelMigrationCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesCancelMigrationCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesCancelMigrationCall) Context(ctx context.Context) *ProjectsLocationsServicesCancelMigrationCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesCancelMigrationCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6222,18 +4778,12 @@ func (c *ProjectsLocationsServicesCancelMigrationCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesCancelMigrationCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.cancelmigrationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+service}:cancelMigration")
@@ -6250,12 +4800,10 @@ func (c *ProjectsLocationsServicesCancelMigrationCall) doRequest(alt string) (*h
 }
 
 // Do executes the "metastore.projects.locations.services.cancelMigration" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesCancelMigrationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6286,38 +4834,7 @@ func (c *ProjectsLocationsServicesCancelMigrationCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Cancels the ongoing Managed Migration process.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:cancelMigration",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.cancelMigration",
-	//   "parameterOrder": [
-	//     "service"
-	//   ],
-	//   "parameters": {
-	//     "service": {
-	//       "description": "Required. The relative resource name of the metastore service to cancel the ongoing migration to, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+service}:cancelMigration",
-	//   "request": {
-	//     "$ref": "CancelMigrationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.completeMigration":
 
 type ProjectsLocationsServicesCompleteMigrationCall struct {
 	s                        *APIService
@@ -6328,14 +4845,13 @@ type ProjectsLocationsServicesCompleteMigrationCall struct {
 	header_                  http.Header
 }
 
-// CompleteMigration: Completes the managed migration process. The
-// Dataproc Metastore service will switch to using its own backend
-// database after successful migration.
+// CompleteMigration: Completes the managed migration process. The Dataproc
+// Metastore service will switch to using its own backend database after
+// successful migration.
 //
-//   - service: The relative resource name of the metastore service to
-//     complete the migration to, in the following
-//     format:projects/{project_id}/locations/{location_id}/services/{servi
-//     ce_id}.
+//   - service: The relative resource name of the metastore service to complete
+//     the migration to, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{service_id}.
 func (r *ProjectsLocationsServicesService) CompleteMigration(service string, completemigrationrequest *CompleteMigrationRequest) *ProjectsLocationsServicesCompleteMigrationCall {
 	c := &ProjectsLocationsServicesCompleteMigrationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.service = service
@@ -6344,23 +4860,21 @@ func (r *ProjectsLocationsServicesService) CompleteMigration(service string, com
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesCompleteMigrationCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesCompleteMigrationCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesCompleteMigrationCall) Context(ctx context.Context) *ProjectsLocationsServicesCompleteMigrationCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesCompleteMigrationCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6369,18 +4883,12 @@ func (c *ProjectsLocationsServicesCompleteMigrationCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesCompleteMigrationCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.completemigrationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+service}:completeMigration")
@@ -6397,12 +4905,10 @@ func (c *ProjectsLocationsServicesCompleteMigrationCall) doRequest(alt string) (
 }
 
 // Do executes the "metastore.projects.locations.services.completeMigration" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesCompleteMigrationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6433,38 +4939,7 @@ func (c *ProjectsLocationsServicesCompleteMigrationCall) Do(opts ...googleapi.Ca
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Completes the managed migration process. The Dataproc Metastore service will switch to using its own backend database after successful migration.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:completeMigration",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.completeMigration",
-	//   "parameterOrder": [
-	//     "service"
-	//   ],
-	//   "parameters": {
-	//     "service": {
-	//       "description": "Required. The relative resource name of the metastore service to complete the migration to, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+service}:completeMigration",
-	//   "request": {
-	//     "$ref": "CompleteMigrationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.create":
 
 type ProjectsLocationsServicesCreateCall struct {
 	s          *APIService
@@ -6477,8 +4952,8 @@ type ProjectsLocationsServicesCreateCall struct {
 
 // Create: Creates a metastore service in a project and location.
 //
-//   - parent: The relative resource name of the location in which to
-//     create a metastore service, in the following
+//   - parent: The relative resource name of the location in which to create a
+//     metastore service, in the following
 //     form:projects/{project_number}/locations/{location_id}.
 func (r *ProjectsLocationsServicesService) Create(parent string, service *Service) *ProjectsLocationsServicesCreateCall {
 	c := &ProjectsLocationsServicesCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -6487,49 +4962,46 @@ func (r *ProjectsLocationsServicesService) Create(parent string, service *Servic
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A request ID.
-// Specify a unique request ID to allow the server to ignore the request
-// if it has completed. The server will ignore subsequent requests that
-// provide a duplicate request ID for at least 60 minutes after the
-// first request.For example, if an initial request times out, followed
-// by another request with the same request ID, the server ignores the
-// second request to prevent the creation of duplicate commitments.The
-// request ID must be a valid UUID
-// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format)
-// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+// RequestId sets the optional parameter "requestId": A request ID. Specify a
+// unique request ID to allow the server to ignore the request if it has
+// completed. The server will ignore subsequent requests that provide a
+// duplicate request ID for at least 60 minutes after the first request.For
+// example, if an initial request times out, followed by another request with
+// the same request ID, the server ignores the second request to prevent the
+// creation of duplicate commitments.The request ID must be a valid UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero
+// UUID (00000000-0000-0000-0000-000000000000) is not supported.
 func (c *ProjectsLocationsServicesCreateCall) RequestId(requestId string) *ProjectsLocationsServicesCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// ServiceId sets the optional parameter "serviceId": Required. The ID
-// of the metastore service, which is used as the final component of the
-// metastore service's name.This value must be between 2 and 63
-// characters long inclusive, begin with a letter, end with a letter or
-// number, and consist of alpha-numeric ASCII characters or hyphens.
+// ServiceId sets the optional parameter "serviceId": Required. The ID of the
+// metastore service, which is used as the final component of the metastore
+// service's name.This value must be between 2 and 63 characters long
+// inclusive, begin with a letter, end with a letter or number, and consist of
+// alpha-numeric ASCII characters or hyphens.
 func (c *ProjectsLocationsServicesCreateCall) ServiceId(serviceId string) *ProjectsLocationsServicesCreateCall {
 	c.urlParams_.Set("serviceId", serviceId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesCreateCall) Context(ctx context.Context) *ProjectsLocationsServicesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6538,18 +5010,12 @@ func (c *ProjectsLocationsServicesCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.service)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/services")
@@ -6566,12 +5032,10 @@ func (c *ProjectsLocationsServicesCreateCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "metastore.projects.locations.services.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6602,48 +5066,7 @@ func (c *ProjectsLocationsServicesCreateCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a metastore service in a project and location.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "parent": {
-	//       "description": "Required. The relative resource name of the location in which to create a metastore service, in the following form:projects/{project_number}/locations/{location_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "Optional. A request ID. Specify a unique request ID to allow the server to ignore the request if it has completed. The server will ignore subsequent requests that provide a duplicate request ID for at least 60 minutes after the first request.For example, if an initial request times out, followed by another request with the same request ID, the server ignores the second request to prevent the creation of duplicate commitments.The request ID must be a valid UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "serviceId": {
-	//       "description": "Required. The ID of the metastore service, which is used as the final component of the metastore service's name.This value must be between 2 and 63 characters long inclusive, begin with a letter, end with a letter or number, and consist of alpha-numeric ASCII characters or hyphens.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/services",
-	//   "request": {
-	//     "$ref": "Service"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.delete":
 
 type ProjectsLocationsServicesDeleteCall struct {
 	s          *APIService
@@ -6655,49 +5078,46 @@ type ProjectsLocationsServicesDeleteCall struct {
 
 // Delete: Deletes a single service.
 //
-//   - name: The relative resource name of the metastore service to
-//     delete, in the following
-//     form:projects/{project_number}/locations/{location_id}/services/{ser
-//     vice_id}.
+//   - name: The relative resource name of the metastore service to delete, in
+//     the following
+//     form:projects/{project_number}/locations/{location_id}/services/{service_id
+//     }.
 func (r *ProjectsLocationsServicesService) Delete(name string) *ProjectsLocationsServicesDeleteCall {
 	c := &ProjectsLocationsServicesDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A request ID.
-// Specify a unique request ID to allow the server to ignore the request
-// if it has completed. The server will ignore subsequent requests that
-// provide a duplicate request ID for at least 60 minutes after the
-// first request.For example, if an initial request times out, followed
-// by another request with the same request ID, the server ignores the
-// second request to prevent the creation of duplicate commitments.The
-// request ID must be a valid UUID
-// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format)
-// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+// RequestId sets the optional parameter "requestId": A request ID. Specify a
+// unique request ID to allow the server to ignore the request if it has
+// completed. The server will ignore subsequent requests that provide a
+// duplicate request ID for at least 60 minutes after the first request.For
+// example, if an initial request times out, followed by another request with
+// the same request ID, the server ignores the second request to prevent the
+// creation of duplicate commitments.The request ID must be a valid UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero
+// UUID (00000000-0000-0000-0000-000000000000) is not supported.
 func (c *ProjectsLocationsServicesDeleteCall) RequestId(requestId string) *ProjectsLocationsServicesDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesDeleteCall) Context(ctx context.Context) *ProjectsLocationsServicesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6706,12 +5126,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -6729,12 +5144,10 @@ func (c *ProjectsLocationsServicesDeleteCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "metastore.projects.locations.services.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6765,40 +5178,7 @@ func (c *ProjectsLocationsServicesDeleteCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a single service.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "metastore.projects.locations.services.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the metastore service to delete, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "Optional. A request ID. Specify a unique request ID to allow the server to ignore the request if it has completed. The server will ignore subsequent requests that provide a duplicate request ID for at least 60 minutes after the first request.For example, if an initial request times out, followed by another request with the same request ID, the server ignores the second request to prevent the creation of duplicate commitments.The request ID must be a valid UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.exportMetadata":
 
 type ProjectsLocationsServicesExportMetadataCall struct {
 	s                     *APIService
@@ -6813,8 +5193,7 @@ type ProjectsLocationsServicesExportMetadataCall struct {
 //
 //   - service: The relative resource name of the metastore service to run
 //     export, in the following
-//     form:projects/{project_id}/locations/{location_id}/services/{service
-//     _id}.
+//     form:projects/{project_id}/locations/{location_id}/services/{service_id}.
 func (r *ProjectsLocationsServicesService) ExportMetadata(service string, exportmetadatarequest *ExportMetadataRequest) *ProjectsLocationsServicesExportMetadataCall {
 	c := &ProjectsLocationsServicesExportMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.service = service
@@ -6823,23 +5202,21 @@ func (r *ProjectsLocationsServicesService) ExportMetadata(service string, export
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesExportMetadataCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesExportMetadataCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesExportMetadataCall) Context(ctx context.Context) *ProjectsLocationsServicesExportMetadataCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesExportMetadataCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6848,18 +5225,12 @@ func (c *ProjectsLocationsServicesExportMetadataCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesExportMetadataCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.exportmetadatarequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+service}:exportMetadata")
@@ -6876,12 +5247,10 @@ func (c *ProjectsLocationsServicesExportMetadataCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "metastore.projects.locations.services.exportMetadata" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesExportMetadataCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6912,38 +5281,7 @@ func (c *ProjectsLocationsServicesExportMetadataCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Exports metadata from a service.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:exportMetadata",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.exportMetadata",
-	//   "parameterOrder": [
-	//     "service"
-	//   ],
-	//   "parameters": {
-	//     "service": {
-	//       "description": "Required. The relative resource name of the metastore service to run export, in the following form:projects/{project_id}/locations/{location_id}/services/{service_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+service}:exportMetadata",
-	//   "request": {
-	//     "$ref": "ExportMetadataRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.get":
 
 type ProjectsLocationsServicesGetCall struct {
 	s            *APIService
@@ -6956,10 +5294,10 @@ type ProjectsLocationsServicesGetCall struct {
 
 // Get: Gets the details of a single service.
 //
-//   - name: The relative resource name of the metastore service to
-//     retrieve, in the following
-//     form:projects/{project_number}/locations/{location_id}/services/{ser
-//     vice_id}.
+//   - name: The relative resource name of the metastore service to retrieve, in
+//     the following
+//     form:projects/{project_number}/locations/{location_id}/services/{service_id
+//     }.
 func (r *ProjectsLocationsServicesService) Get(name string) *ProjectsLocationsServicesGetCall {
 	c := &ProjectsLocationsServicesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -6967,33 +5305,29 @@ func (r *ProjectsLocationsServicesService) Get(name string) *ProjectsLocationsSe
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsServicesGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesGetCall) Context(ctx context.Context) *ProjectsLocationsServicesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7002,12 +5336,7 @@ func (c *ProjectsLocationsServicesGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7028,12 +5357,10 @@ func (c *ProjectsLocationsServicesGetCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "metastore.projects.locations.services.get" call.
-// Exactly one of *Service or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Service.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Service.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Service, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7064,35 +5391,7 @@ func (c *ProjectsLocationsServicesGetCall) Do(opts ...googleapi.CallOption) (*Se
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the details of a single service.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.services.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the metastore service to retrieve, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "Service"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.getIamPolicy":
 
 type ProjectsLocationsServicesGetIamPolicyCall struct {
 	s            *APIService
@@ -7103,14 +5402,12 @@ type ProjectsLocationsServicesGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource. Returns
-// an empty policy if the resource exists and does not have a policy
-// set.
+// GetIamPolicy: Gets the access control policy for a resource. Returns an
+// empty policy if the resource exists and does not have a policy set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsLocationsServicesService) GetIamPolicy(resource string) *ProjectsLocationsServicesGetIamPolicyCall {
 	c := &ProjectsLocationsServicesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7118,16 +5415,15 @@ func (r *ProjectsLocationsServicesService) GetIamPolicy(resource string) *Projec
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The maximum policy version that
-// will be used to format the policy.Valid values are 0, 1, and 3.
-// Requests specifying an invalid value will be rejected.Requests for
-// policies with any conditional role bindings must specify version 3.
-// Policies with no conditional role bindings may specify any valid
-// value or leave the field unset.The policy in the response might use
-// the policy version that you specified, or it might use a lower policy
-// version. For example, if you specify version 3, but the policy has no
-// conditional role bindings, the response uses version 1.To learn which
-// resources support conditions in their IAM policies, see the IAM
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy.Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected.Requests for policies with any conditional
+// role bindings must specify version 3. Policies with no conditional role
+// bindings may specify any valid value or leave the field unset.The policy in
+// the response might use the policy version that you specified, or it might
+// use a lower policy version. For example, if you specify version 3, but the
+// policy has no conditional role bindings, the response uses version 1.To
+// learn which resources support conditions in their IAM policies, see the IAM
 // documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsServicesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsServicesGetIamPolicyCall {
@@ -7136,33 +5432,29 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) OptionsRequestedPolicyVersio
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesGetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsServicesGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesGetIamPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServicesGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesGetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7171,12 +5463,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7197,12 +5484,10 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) doRequest(alt string) (*http
 }
 
 // Do executes the "metastore.projects.locations.services.getIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7233,41 +5518,7 @@ func (c *ProjectsLocationsServicesGetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:getIamPolicy",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.services.getIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The maximum policy version that will be used to format the policy.Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected.Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset.The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1.To learn which resources support conditions in their IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/conditions/resource-policies).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:getIamPolicy",
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.list":
 
 type ProjectsLocationsServicesListCall struct {
 	s            *APIService
@@ -7280,8 +5531,8 @@ type ProjectsLocationsServicesListCall struct {
 
 // List: Lists services in a project and location.
 //
-//   - parent: The relative resource name of the location of metastore
-//     services to list, in the following
+//   - parent: The relative resource name of the location of metastore services
+//     to list, in the following
 //     form:projects/{project_number}/locations/{location_id}.
 func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocationsServicesListCall {
 	c := &ProjectsLocationsServicesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
@@ -7289,70 +5540,66 @@ func (r *ProjectsLocationsServicesService) List(parent string) *ProjectsLocation
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filter to apply to
-// list results.
+// Filter sets the optional parameter "filter": The filter to apply to list
+// results.
 func (c *ProjectsLocationsServicesListCall) Filter(filter string) *ProjectsLocationsServicesListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Specify the ordering
-// of results as described in Sorting Order
-// (https://cloud.google.com/apis/design/design_patterns#sorting_order).
-// If not specified, the results will be sorted in the default order.
+// OrderBy sets the optional parameter "orderBy": Specify the ordering of
+// results as described in Sorting Order
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order). If not
+// specified, the results will be sorted in the default order.
 func (c *ProjectsLocationsServicesListCall) OrderBy(orderBy string) *ProjectsLocationsServicesListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of services to return. The response may contain less than the maximum
-// number. If unspecified, no more than 500 services are returned. The
-// maximum value is 1000; values above 1000 are changed to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// services to return. The response may contain less than the maximum number.
+// If unspecified, no more than 500 services are returned. The maximum value is
+// 1000; values above 1000 are changed to 1000.
 func (c *ProjectsLocationsServicesListCall) PageSize(pageSize int64) *ProjectsLocationsServicesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous DataprocMetastore.ListServices call. Provide
-// this token to retrieve the subsequent page.To retrieve the first
-// page, supply an empty page token.When paginating, other parameters
-// provided to DataprocMetastore.ListServices must match the call that
-// provided the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous DataprocMetastore.ListServices call. Provide this token to
+// retrieve the subsequent page.To retrieve the first page, supply an empty
+// page token.When paginating, other parameters provided to
+// DataprocMetastore.ListServices must match the call that provided the page
+// token.
 func (c *ProjectsLocationsServicesListCall) PageToken(pageToken string) *ProjectsLocationsServicesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesListCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsServicesListCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesListCall) Context(ctx context.Context) *ProjectsLocationsServicesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7361,12 +5608,7 @@ func (c *ProjectsLocationsServicesListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7387,12 +5629,11 @@ func (c *ProjectsLocationsServicesListCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "metastore.projects.locations.services.list" call.
-// Exactly one of *ListServicesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListServicesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListServicesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*ListServicesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7423,53 +5664,6 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*L
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists services in a project and location.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.services.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. The filter to apply to list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Optional. Specify the ordering of results as described in Sorting Order (https://cloud.google.com/apis/design/design_patterns#sorting_order). If not specified, the results will be sorted in the default order.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of services to return. The response may contain less than the maximum number. If unspecified, no more than 500 services are returned. The maximum value is 1000; values above 1000 are changed to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous DataprocMetastore.ListServices call. Provide this token to retrieve the subsequent page.To retrieve the first page, supply an empty page token.When paginating, other parameters provided to DataprocMetastore.ListServices must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The relative resource name of the location of metastore services to list, in the following form:projects/{project_number}/locations/{location_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/services",
-	//   "response": {
-	//     "$ref": "ListServicesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -7477,7 +5671,7 @@ func (c *ProjectsLocationsServicesListCall) Do(opts ...googleapi.CallOption) (*L
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsServicesListCall) Pages(ctx context.Context, f func(*ListServicesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -7493,8 +5687,6 @@ func (c *ProjectsLocationsServicesListCall) Pages(ctx context.Context, f func(*L
 	}
 }
 
-// method id "metastore.projects.locations.services.moveTableToDatabase":
-
 type ProjectsLocationsServicesMoveTableToDatabaseCall struct {
 	s                          *APIService
 	service                    string
@@ -7506,10 +5698,9 @@ type ProjectsLocationsServicesMoveTableToDatabaseCall struct {
 
 // MoveTableToDatabase: Move a table to another database.
 //
-//   - service: The relative resource name of the metastore service to
-//     mutate metadata, in the following
-//     format:projects/{project_id}/locations/{location_id}/services/{servi
-//     ce_id}.
+//   - service: The relative resource name of the metastore service to mutate
+//     metadata, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{service_id}.
 func (r *ProjectsLocationsServicesService) MoveTableToDatabase(service string, movetabletodatabaserequest *MoveTableToDatabaseRequest) *ProjectsLocationsServicesMoveTableToDatabaseCall {
 	c := &ProjectsLocationsServicesMoveTableToDatabaseCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.service = service
@@ -7518,23 +5709,21 @@ func (r *ProjectsLocationsServicesService) MoveTableToDatabase(service string, m
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesMoveTableToDatabaseCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) Context(ctx context.Context) *ProjectsLocationsServicesMoveTableToDatabaseCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7543,18 +5732,12 @@ func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) Header() http.Header 
 }
 
 func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.movetabletodatabaserequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+service}:moveTableToDatabase")
@@ -7571,12 +5754,10 @@ func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) doRequest(alt string)
 }
 
 // Do executes the "metastore.projects.locations.services.moveTableToDatabase" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7607,38 +5788,7 @@ func (c *ProjectsLocationsServicesMoveTableToDatabaseCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Move a table to another database.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:moveTableToDatabase",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.moveTableToDatabase",
-	//   "parameterOrder": [
-	//     "service"
-	//   ],
-	//   "parameters": {
-	//     "service": {
-	//       "description": "Required. The relative resource name of the metastore service to mutate metadata, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+service}:moveTableToDatabase",
-	//   "request": {
-	//     "$ref": "MoveTableToDatabaseRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.patch":
 
 type ProjectsLocationsServicesPatchCall struct {
 	s          *APIService
@@ -7651,10 +5801,10 @@ type ProjectsLocationsServicesPatchCall struct {
 
 // Patch: Updates the parameters of a single service.
 //
-//   - name: Immutable. The relative resource name of the metastore
-//     service, in the following
-//     format:projects/{project_number}/locations/{location_id}/services/{s
-//     ervice_id}.
+//   - name: Immutable. The relative resource name of the metastore service, in
+//     the following
+//     format:projects/{project_number}/locations/{location_id}/services/{service_
+//     id}.
 func (r *ProjectsLocationsServicesService) Patch(name string, service *Service) *ProjectsLocationsServicesPatchCall {
 	c := &ProjectsLocationsServicesPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -7662,49 +5812,46 @@ func (r *ProjectsLocationsServicesService) Patch(name string, service *Service) 
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A request ID.
-// Specify a unique request ID to allow the server to ignore the request
-// if it has completed. The server will ignore subsequent requests that
-// provide a duplicate request ID for at least 60 minutes after the
-// first request.For example, if an initial request times out, followed
-// by another request with the same request ID, the server ignores the
-// second request to prevent the creation of duplicate commitments.The
-// request ID must be a valid UUID
-// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format)
-// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+// RequestId sets the optional parameter "requestId": A request ID. Specify a
+// unique request ID to allow the server to ignore the request if it has
+// completed. The server will ignore subsequent requests that provide a
+// duplicate request ID for at least 60 minutes after the first request.For
+// example, if an initial request times out, followed by another request with
+// the same request ID, the server ignores the second request to prevent the
+// creation of duplicate commitments.The request ID must be a valid UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero
+// UUID (00000000-0000-0000-0000-000000000000) is not supported.
 func (c *ProjectsLocationsServicesPatchCall) RequestId(requestId string) *ProjectsLocationsServicesPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. A
-// field mask used to specify the fields to be overwritten in the
-// metastore service resource by the update. Fields specified in the
-// update_mask are relative to the resource (not to the full request). A
-// field is overwritten if it is in the mask.
+// UpdateMask sets the optional parameter "updateMask": Required. A field mask
+// used to specify the fields to be overwritten in the metastore service
+// resource by the update. Fields specified in the update_mask are relative to
+// the resource (not to the full request). A field is overwritten if it is in
+// the mask.
 func (c *ProjectsLocationsServicesPatchCall) UpdateMask(updateMask string) *ProjectsLocationsServicesPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesPatchCall) Context(ctx context.Context) *ProjectsLocationsServicesPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7713,18 +5860,12 @@ func (c *ProjectsLocationsServicesPatchCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.service)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
@@ -7741,12 +5882,10 @@ func (c *ProjectsLocationsServicesPatchCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "metastore.projects.locations.services.patch" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7777,49 +5916,7 @@ func (c *ProjectsLocationsServicesPatchCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates the parameters of a single service.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "metastore.projects.locations.services.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Immutable. The relative resource name of the metastore service, in the following format:projects/{project_number}/locations/{location_id}/services/{service_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "Optional. A request ID. Specify a unique request ID to allow the server to ignore the request if it has completed. The server will ignore subsequent requests that provide a duplicate request ID for at least 60 minutes after the first request.For example, if an initial request times out, followed by another request with the same request ID, the server ignores the second request to prevent the creation of duplicate commitments.The request ID must be a valid UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. A field mask used to specify the fields to be overwritten in the metastore service resource by the update. Fields specified in the update_mask are relative to the resource (not to the full request). A field is overwritten if it is in the mask.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "request": {
-	//     "$ref": "Service"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.queryMetadata":
 
 type ProjectsLocationsServicesQueryMetadataCall struct {
 	s                    *APIService
@@ -7832,10 +5929,9 @@ type ProjectsLocationsServicesQueryMetadataCall struct {
 
 // QueryMetadata: Query Dataproc Metastore metadata.
 //
-//   - service: The relative resource name of the metastore service to
-//     query metadata, in the following
-//     format:projects/{project_id}/locations/{location_id}/services/{servi
-//     ce_id}.
+//   - service: The relative resource name of the metastore service to query
+//     metadata, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{service_id}.
 func (r *ProjectsLocationsServicesService) QueryMetadata(service string, querymetadatarequest *QueryMetadataRequest) *ProjectsLocationsServicesQueryMetadataCall {
 	c := &ProjectsLocationsServicesQueryMetadataCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.service = service
@@ -7844,23 +5940,21 @@ func (r *ProjectsLocationsServicesService) QueryMetadata(service string, queryme
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesQueryMetadataCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesQueryMetadataCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesQueryMetadataCall) Context(ctx context.Context) *ProjectsLocationsServicesQueryMetadataCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesQueryMetadataCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7869,18 +5963,12 @@ func (c *ProjectsLocationsServicesQueryMetadataCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesQueryMetadataCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.querymetadatarequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+service}:queryMetadata")
@@ -7897,12 +5985,10 @@ func (c *ProjectsLocationsServicesQueryMetadataCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "metastore.projects.locations.services.queryMetadata" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesQueryMetadataCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7933,38 +6019,7 @@ func (c *ProjectsLocationsServicesQueryMetadataCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Query Dataproc Metastore metadata.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:queryMetadata",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.queryMetadata",
-	//   "parameterOrder": [
-	//     "service"
-	//   ],
-	//   "parameters": {
-	//     "service": {
-	//       "description": "Required. The relative resource name of the metastore service to query metadata, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+service}:queryMetadata",
-	//   "request": {
-	//     "$ref": "QueryMetadataRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.removeIamPolicy":
 
 type ProjectsLocationsServicesRemoveIamPolicyCall struct {
 	s                      *APIService
@@ -7977,12 +6032,12 @@ type ProjectsLocationsServicesRemoveIamPolicyCall struct {
 
 // RemoveIamPolicy: Removes the attached IAM policies for a resource
 //
-//   - resource: The relative resource name of the dataplane resource to
-//     remove IAM policy, in the following
-//     form:projects/{project_id}/locations/{location_id}/services/{service
-//     _id}/databases/{database_id} or
-//     projects/{project_id}/locations/{location_id}/services/{service_id}/
-//     databases/{database_id}/tables/{table_id}.
+//   - resource: The relative resource name of the dataplane resource to remove
+//     IAM policy, in the following
+//     form:projects/{project_id}/locations/{location_id}/services/{service_id}/da
+//     tabases/{database_id} or
+//     projects/{project_id}/locations/{location_id}/services/{service_id}/databas
+//     es/{database_id}/tables/{table_id}.
 func (r *ProjectsLocationsServicesService) RemoveIamPolicy(resource string, removeiampolicyrequest *RemoveIamPolicyRequest) *ProjectsLocationsServicesRemoveIamPolicyCall {
 	c := &ProjectsLocationsServicesRemoveIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -7991,23 +6046,21 @@ func (r *ProjectsLocationsServicesService) RemoveIamPolicy(resource string, remo
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesRemoveIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesRemoveIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesRemoveIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServicesRemoveIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesRemoveIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8016,18 +6069,12 @@ func (c *ProjectsLocationsServicesRemoveIamPolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesRemoveIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.removeiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:removeIamPolicy")
@@ -8044,12 +6091,11 @@ func (c *ProjectsLocationsServicesRemoveIamPolicyCall) doRequest(alt string) (*h
 }
 
 // Do executes the "metastore.projects.locations.services.removeIamPolicy" call.
-// Exactly one of *RemoveIamPolicyResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *RemoveIamPolicyResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesRemoveIamPolicyCall) Do(opts ...googleapi.CallOption) (*RemoveIamPolicyResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8080,38 +6126,7 @@ func (c *ProjectsLocationsServicesRemoveIamPolicyCall) Do(opts ...googleapi.Call
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Removes the attached IAM policies for a resource",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/{servicesId1}:removeIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.removeIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "Required. The relative resource name of the dataplane resource to remove IAM policy, in the following form:projects/{project_id}/locations/{location_id}/services/{service_id}/databases/{database_id} or projects/{project_id}/locations/{location_id}/services/{service_id}/databases/{database_id}/tables/{table_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/.*$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:removeIamPolicy",
-	//   "request": {
-	//     "$ref": "RemoveIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "RemoveIamPolicyResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.restore":
 
 type ProjectsLocationsServicesRestoreCall struct {
 	s                     *APIService
@@ -8126,8 +6141,7 @@ type ProjectsLocationsServicesRestoreCall struct {
 //
 //   - service: The relative resource name of the metastore service to run
 //     restore, in the following
-//     form:projects/{project_id}/locations/{location_id}/services/{service
-//     _id}.
+//     form:projects/{project_id}/locations/{location_id}/services/{service_id}.
 func (r *ProjectsLocationsServicesService) Restore(service string, restoreservicerequest *RestoreServiceRequest) *ProjectsLocationsServicesRestoreCall {
 	c := &ProjectsLocationsServicesRestoreCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.service = service
@@ -8136,23 +6150,21 @@ func (r *ProjectsLocationsServicesService) Restore(service string, restoreservic
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesRestoreCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesRestoreCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesRestoreCall) Context(ctx context.Context) *ProjectsLocationsServicesRestoreCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesRestoreCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8161,18 +6173,12 @@ func (c *ProjectsLocationsServicesRestoreCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesRestoreCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.restoreservicerequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+service}:restore")
@@ -8189,12 +6195,10 @@ func (c *ProjectsLocationsServicesRestoreCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "metastore.projects.locations.services.restore" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesRestoreCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8225,38 +6229,7 @@ func (c *ProjectsLocationsServicesRestoreCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Restores a service from a backup.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:restore",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.restore",
-	//   "parameterOrder": [
-	//     "service"
-	//   ],
-	//   "parameters": {
-	//     "service": {
-	//       "description": "Required. The relative resource name of the metastore service to run restore, in the following form:projects/{project_id}/locations/{location_id}/services/{service_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+service}:restore",
-	//   "request": {
-	//     "$ref": "RestoreServiceRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.setIamPolicy":
 
 type ProjectsLocationsServicesSetIamPolicyCall struct {
 	s                   *APIService
@@ -8267,14 +6240,13 @@ type ProjectsLocationsServicesSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any existing policy.Can return NOT_FOUND,
-// INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+// SetIamPolicy: Sets the access control policy on the specified resource.
+// Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and
+// PERMISSION_DENIED errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsLocationsServicesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServicesSetIamPolicyCall {
 	c := &ProjectsLocationsServicesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8283,23 +6255,21 @@ func (r *ProjectsLocationsServicesService) SetIamPolicy(resource string, setiamp
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesSetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServicesSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesSetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8308,18 +6278,12 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:setIamPolicy")
@@ -8336,12 +6300,10 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) doRequest(alt string) (*http
 }
 
 // Do executes the "metastore.projects.locations.services.setIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8372,38 +6334,7 @@ func (c *ProjectsLocationsServicesSetIamPolicyCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and PERMISSION_DENIED errors.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:setIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.setIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:setIamPolicy",
-	//   "request": {
-	//     "$ref": "SetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.startMigration":
 
 type ProjectsLocationsServicesStartMigrationCall struct {
 	s                     *APIService
@@ -8416,10 +6347,9 @@ type ProjectsLocationsServicesStartMigrationCall struct {
 
 // StartMigration: Starts the Managed Migration process.
 //
-//   - service: The relative resource name of the metastore service to
-//     start migrating to, in the following
-//     format:projects/{project_id}/locations/{location_id}/services/{servi
-//     ce_id}.
+//   - service: The relative resource name of the metastore service to start
+//     migrating to, in the following
+//     format:projects/{project_id}/locations/{location_id}/services/{service_id}.
 func (r *ProjectsLocationsServicesService) StartMigration(service string, startmigrationrequest *StartMigrationRequest) *ProjectsLocationsServicesStartMigrationCall {
 	c := &ProjectsLocationsServicesStartMigrationCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.service = service
@@ -8428,23 +6358,21 @@ func (r *ProjectsLocationsServicesService) StartMigration(service string, startm
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesStartMigrationCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesStartMigrationCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesStartMigrationCall) Context(ctx context.Context) *ProjectsLocationsServicesStartMigrationCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesStartMigrationCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8453,18 +6381,12 @@ func (c *ProjectsLocationsServicesStartMigrationCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesStartMigrationCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.startmigrationrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+service}:startMigration")
@@ -8481,12 +6403,10 @@ func (c *ProjectsLocationsServicesStartMigrationCall) doRequest(alt string) (*ht
 }
 
 // Do executes the "metastore.projects.locations.services.startMigration" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesStartMigrationCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8517,38 +6437,7 @@ func (c *ProjectsLocationsServicesStartMigrationCall) Do(opts ...googleapi.CallO
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Starts the Managed Migration process.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:startMigration",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.startMigration",
-	//   "parameterOrder": [
-	//     "service"
-	//   ],
-	//   "parameters": {
-	//     "service": {
-	//       "description": "Required. The relative resource name of the metastore service to start migrating to, in the following format:projects/{project_id}/locations/{location_id}/services/{service_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+service}:startMigration",
-	//   "request": {
-	//     "$ref": "StartMigrationRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.testIamPermissions":
 
 type ProjectsLocationsServicesTestIamPermissionsCall struct {
 	s                         *APIService
@@ -8559,17 +6448,16 @@ type ProjectsLocationsServicesTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Returns permissions that a caller has on the
-// specified resource. If the resource does not exist, this will return
-// an empty set of permissions, not a NOT_FOUND error.Note: This
-// operation is designed to be used for building permission-aware UIs
-// and command-line tools, not for authorization checking. This
-// operation may "fail open" without warning.
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource. If the resource does not exist, this will return an empty set of
+// permissions, not a NOT_FOUND error.Note: This operation is designed to be
+// used for building permission-aware UIs and command-line tools, not for
+// authorization checking. This operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
 func (r *ProjectsLocationsServicesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServicesTestIamPermissionsCall {
 	c := &ProjectsLocationsServicesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -8578,23 +6466,21 @@ func (r *ProjectsLocationsServicesService) TestIamPermissions(resource string, t
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsServicesTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesTestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8603,18 +6489,12 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:testIamPermissions")
@@ -8631,12 +6511,11 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) doRequest(alt string) 
 }
 
 // Do executes the "metastore.projects.locations.services.testIamPermissions" call.
-// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8667,38 +6546,7 @@ func (c *ProjectsLocationsServicesTestIamPermissionsCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}:testIamPermissions",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.testIamPermissions",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:testIamPermissions",
-	//   "request": {
-	//     "$ref": "TestIamPermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TestIamPermissionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.backups.create":
 
 type ProjectsLocationsServicesBackupsCreateCall struct {
 	s          *APIService
@@ -8711,10 +6559,10 @@ type ProjectsLocationsServicesBackupsCreateCall struct {
 
 // Create: Creates a new backup in a given project and location.
 //
-//   - parent: The relative resource name of the service in which to
-//     create a backup of the following
-//     form:projects/{project_number}/locations/{location_id}/services/{ser
-//     vice_id}.
+//   - parent: The relative resource name of the service in which to create a
+//     backup of the following
+//     form:projects/{project_number}/locations/{location_id}/services/{service_id
+//     }.
 func (r *ProjectsLocationsServicesBackupsService) Create(parent string, backup *Backup) *ProjectsLocationsServicesBackupsCreateCall {
 	c := &ProjectsLocationsServicesBackupsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -8722,49 +6570,45 @@ func (r *ProjectsLocationsServicesBackupsService) Create(parent string, backup *
 	return c
 }
 
-// BackupId sets the optional parameter "backupId": Required. The ID of
-// the backup, which is used as the final component of the backup's
-// name.This value must be between 1 and 64 characters long, begin with
-// a letter, end with a letter or number, and consist of alpha-numeric
-// ASCII characters or hyphens.
+// BackupId sets the optional parameter "backupId": Required. The ID of the
+// backup, which is used as the final component of the backup's name.This value
+// must be between 1 and 64 characters long, begin with a letter, end with a
+// letter or number, and consist of alpha-numeric ASCII characters or hyphens.
 func (c *ProjectsLocationsServicesBackupsCreateCall) BackupId(backupId string) *ProjectsLocationsServicesBackupsCreateCall {
 	c.urlParams_.Set("backupId", backupId)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A request ID.
-// Specify a unique request ID to allow the server to ignore the request
-// if it has completed. The server will ignore subsequent requests that
-// provide a duplicate request ID for at least 60 minutes after the
-// first request.For example, if an initial request times out, followed
-// by another request with the same request ID, the server ignores the
-// second request to prevent the creation of duplicate commitments.The
-// request ID must be a valid UUID
-// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format)
-// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+// RequestId sets the optional parameter "requestId": A request ID. Specify a
+// unique request ID to allow the server to ignore the request if it has
+// completed. The server will ignore subsequent requests that provide a
+// duplicate request ID for at least 60 minutes after the first request.For
+// example, if an initial request times out, followed by another request with
+// the same request ID, the server ignores the second request to prevent the
+// creation of duplicate commitments.The request ID must be a valid UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero
+// UUID (00000000-0000-0000-0000-000000000000) is not supported.
 func (c *ProjectsLocationsServicesBackupsCreateCall) RequestId(requestId string) *ProjectsLocationsServicesBackupsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesBackupsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesBackupsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesBackupsCreateCall) Context(ctx context.Context) *ProjectsLocationsServicesBackupsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesBackupsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8773,18 +6617,12 @@ func (c *ProjectsLocationsServicesBackupsCreateCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesBackupsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.backup)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/backups")
@@ -8801,12 +6639,10 @@ func (c *ProjectsLocationsServicesBackupsCreateCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "metastore.projects.locations.services.backups.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesBackupsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8837,48 +6673,7 @@ func (c *ProjectsLocationsServicesBackupsCreateCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new backup in a given project and location.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/backups",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.backups.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "backupId": {
-	//       "description": "Required. The ID of the backup, which is used as the final component of the backup's name.This value must be between 1 and 64 characters long, begin with a letter, end with a letter or number, and consist of alpha-numeric ASCII characters or hyphens.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The relative resource name of the service in which to create a backup of the following form:projects/{project_number}/locations/{location_id}/services/{service_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "Optional. A request ID. Specify a unique request ID to allow the server to ignore the request if it has completed. The server will ignore subsequent requests that provide a duplicate request ID for at least 60 minutes after the first request.For example, if an initial request times out, followed by another request with the same request ID, the server ignores the second request to prevent the creation of duplicate commitments.The request ID must be a valid UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/backups",
-	//   "request": {
-	//     "$ref": "Backup"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.backups.delete":
 
 type ProjectsLocationsServicesBackupsDeleteCall struct {
 	s          *APIService
@@ -8890,49 +6685,45 @@ type ProjectsLocationsServicesBackupsDeleteCall struct {
 
 // Delete: Deletes a single backup.
 //
-//   - name: The relative resource name of the backup to delete, in the
-//     following
-//     form:projects/{project_number}/locations/{location_id}/services/{ser
-//     vice_id}/backups/{backup_id}.
+//   - name: The relative resource name of the backup to delete, in the following
+//     form:projects/{project_number}/locations/{location_id}/services/{service_id
+//     }/backups/{backup_id}.
 func (r *ProjectsLocationsServicesBackupsService) Delete(name string) *ProjectsLocationsServicesBackupsDeleteCall {
 	c := &ProjectsLocationsServicesBackupsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A request ID.
-// Specify a unique request ID to allow the server to ignore the request
-// if it has completed. The server will ignore subsequent requests that
-// provide a duplicate request ID for at least 60 minutes after the
-// first request.For example, if an initial request times out, followed
-// by another request with the same request ID, the server ignores the
-// second request to prevent the creation of duplicate commitments.The
-// request ID must be a valid UUID
-// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format)
-// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+// RequestId sets the optional parameter "requestId": A request ID. Specify a
+// unique request ID to allow the server to ignore the request if it has
+// completed. The server will ignore subsequent requests that provide a
+// duplicate request ID for at least 60 minutes after the first request.For
+// example, if an initial request times out, followed by another request with
+// the same request ID, the server ignores the second request to prevent the
+// creation of duplicate commitments.The request ID must be a valid UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero
+// UUID (00000000-0000-0000-0000-000000000000) is not supported.
 func (c *ProjectsLocationsServicesBackupsDeleteCall) RequestId(requestId string) *ProjectsLocationsServicesBackupsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesBackupsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesBackupsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesBackupsDeleteCall) Context(ctx context.Context) *ProjectsLocationsServicesBackupsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesBackupsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8941,12 +6732,7 @@ func (c *ProjectsLocationsServicesBackupsDeleteCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesBackupsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -8964,12 +6750,10 @@ func (c *ProjectsLocationsServicesBackupsDeleteCall) doRequest(alt string) (*htt
 }
 
 // Do executes the "metastore.projects.locations.services.backups.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesBackupsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9000,40 +6784,7 @@ func (c *ProjectsLocationsServicesBackupsDeleteCall) Do(opts ...googleapi.CallOp
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a single backup.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/backups/{backupsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "metastore.projects.locations.services.backups.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the backup to delete, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/backups/{backup_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/backups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "Optional. A request ID. Specify a unique request ID to allow the server to ignore the request if it has completed. The server will ignore subsequent requests that provide a duplicate request ID for at least 60 minutes after the first request.For example, if an initial request times out, followed by another request with the same request ID, the server ignores the second request to prevent the creation of duplicate commitments.The request ID must be a valid UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.backups.get":
 
 type ProjectsLocationsServicesBackupsGetCall struct {
 	s            *APIService
@@ -9048,8 +6799,8 @@ type ProjectsLocationsServicesBackupsGetCall struct {
 //
 //   - name: The relative resource name of the backup to retrieve, in the
 //     following
-//     form:projects/{project_number}/locations/{location_id}/services/{ser
-//     vice_id}/backups/{backup_id}.
+//     form:projects/{project_number}/locations/{location_id}/services/{service_id
+//     }/backups/{backup_id}.
 func (r *ProjectsLocationsServicesBackupsService) Get(name string) *ProjectsLocationsServicesBackupsGetCall {
 	c := &ProjectsLocationsServicesBackupsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -9057,33 +6808,29 @@ func (r *ProjectsLocationsServicesBackupsService) Get(name string) *ProjectsLoca
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesBackupsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesBackupsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsServicesBackupsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesBackupsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesBackupsGetCall) Context(ctx context.Context) *ProjectsLocationsServicesBackupsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesBackupsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9092,12 +6839,7 @@ func (c *ProjectsLocationsServicesBackupsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesBackupsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9118,12 +6860,10 @@ func (c *ProjectsLocationsServicesBackupsGetCall) doRequest(alt string) (*http.R
 }
 
 // Do executes the "metastore.projects.locations.services.backups.get" call.
-// Exactly one of *Backup or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Backup.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Backup.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesBackupsGetCall) Do(opts ...googleapi.CallOption) (*Backup, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9154,35 +6894,7 @@ func (c *ProjectsLocationsServicesBackupsGetCall) Do(opts ...googleapi.CallOptio
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets details of a single backup.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/backups/{backupsId}",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.services.backups.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the backup to retrieve, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/backups/{backup_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/backups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "Backup"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.backups.getIamPolicy":
 
 type ProjectsLocationsServicesBackupsGetIamPolicyCall struct {
 	s            *APIService
@@ -9193,14 +6905,12 @@ type ProjectsLocationsServicesBackupsGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource. Returns
-// an empty policy if the resource exists and does not have a policy
-// set.
+// GetIamPolicy: Gets the access control policy for a resource. Returns an
+// empty policy if the resource exists and does not have a policy set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsLocationsServicesBackupsService) GetIamPolicy(resource string) *ProjectsLocationsServicesBackupsGetIamPolicyCall {
 	c := &ProjectsLocationsServicesBackupsGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9208,16 +6918,15 @@ func (r *ProjectsLocationsServicesBackupsService) GetIamPolicy(resource string) 
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The maximum policy version that
-// will be used to format the policy.Valid values are 0, 1, and 3.
-// Requests specifying an invalid value will be rejected.Requests for
-// policies with any conditional role bindings must specify version 3.
-// Policies with no conditional role bindings may specify any valid
-// value or leave the field unset.The policy in the response might use
-// the policy version that you specified, or it might use a lower policy
-// version. For example, if you specify version 3, but the policy has no
-// conditional role bindings, the response uses version 1.To learn which
-// resources support conditions in their IAM policies, see the IAM
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy.Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected.Requests for policies with any conditional
+// role bindings must specify version 3. Policies with no conditional role
+// bindings may specify any valid value or leave the field unset.The policy in
+// the response might use the policy version that you specified, or it might
+// use a lower policy version. For example, if you specify version 3, but the
+// policy has no conditional role bindings, the response uses version 1.To
+// learn which resources support conditions in their IAM policies, see the IAM
 // documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsServicesBackupsGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsServicesBackupsGetIamPolicyCall {
@@ -9226,33 +6935,29 @@ func (c *ProjectsLocationsServicesBackupsGetIamPolicyCall) OptionsRequestedPolic
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesBackupsGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesBackupsGetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsServicesBackupsGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesBackupsGetIamPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesBackupsGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServicesBackupsGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesBackupsGetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9261,12 +6966,7 @@ func (c *ProjectsLocationsServicesBackupsGetIamPolicyCall) Header() http.Header 
 }
 
 func (c *ProjectsLocationsServicesBackupsGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9287,12 +6987,10 @@ func (c *ProjectsLocationsServicesBackupsGetIamPolicyCall) doRequest(alt string)
 }
 
 // Do executes the "metastore.projects.locations.services.backups.getIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesBackupsGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9323,41 +7021,7 @@ func (c *ProjectsLocationsServicesBackupsGetIamPolicyCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/backups/{backupsId}:getIamPolicy",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.services.backups.getIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The maximum policy version that will be used to format the policy.Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected.Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset.The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1.To learn which resources support conditions in their IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/conditions/resource-policies).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/backups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:getIamPolicy",
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.backups.list":
 
 type ProjectsLocationsServicesBackupsListCall struct {
 	s            *APIService
@@ -9370,80 +7034,76 @@ type ProjectsLocationsServicesBackupsListCall struct {
 
 // List: Lists backups in a service.
 //
-//   - parent: The relative resource name of the service whose backups to
-//     list, in the following
-//     form:projects/{project_number}/locations/{location_id}/services/{ser
-//     vice_id}/backups.
+//   - parent: The relative resource name of the service whose backups to list,
+//     in the following
+//     form:projects/{project_number}/locations/{location_id}/services/{service_id
+//     }/backups.
 func (r *ProjectsLocationsServicesBackupsService) List(parent string) *ProjectsLocationsServicesBackupsListCall {
 	c := &ProjectsLocationsServicesBackupsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filter to apply to
-// list results.
+// Filter sets the optional parameter "filter": The filter to apply to list
+// results.
 func (c *ProjectsLocationsServicesBackupsListCall) Filter(filter string) *ProjectsLocationsServicesBackupsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Specify the ordering
-// of results as described in Sorting Order
-// (https://cloud.google.com/apis/design/design_patterns#sorting_order).
-// If not specified, the results will be sorted in the default order.
+// OrderBy sets the optional parameter "orderBy": Specify the ordering of
+// results as described in Sorting Order
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order). If not
+// specified, the results will be sorted in the default order.
 func (c *ProjectsLocationsServicesBackupsListCall) OrderBy(orderBy string) *ProjectsLocationsServicesBackupsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of backups to return. The response may contain less than the maximum
-// number. If unspecified, no more than 500 backups are returned. The
-// maximum value is 1000; values above 1000 are changed to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// backups to return. The response may contain less than the maximum number. If
+// unspecified, no more than 500 backups are returned. The maximum value is
+// 1000; values above 1000 are changed to 1000.
 func (c *ProjectsLocationsServicesBackupsListCall) PageSize(pageSize int64) *ProjectsLocationsServicesBackupsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous DataprocMetastore.ListBackups call. Provide
-// this token to retrieve the subsequent page.To retrieve the first
-// page, supply an empty page token.When paginating, other parameters
-// provided to DataprocMetastore.ListBackups must match the call that
-// provided the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous DataprocMetastore.ListBackups call. Provide this token to
+// retrieve the subsequent page.To retrieve the first page, supply an empty
+// page token.When paginating, other parameters provided to
+// DataprocMetastore.ListBackups must match the call that provided the page
+// token.
 func (c *ProjectsLocationsServicesBackupsListCall) PageToken(pageToken string) *ProjectsLocationsServicesBackupsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesBackupsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesBackupsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsServicesBackupsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesBackupsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesBackupsListCall) Context(ctx context.Context) *ProjectsLocationsServicesBackupsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesBackupsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9452,12 +7112,7 @@ func (c *ProjectsLocationsServicesBackupsListCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesBackupsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9478,12 +7133,11 @@ func (c *ProjectsLocationsServicesBackupsListCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "metastore.projects.locations.services.backups.list" call.
-// Exactly one of *ListBackupsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListBackupsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListBackupsResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsServicesBackupsListCall) Do(opts ...googleapi.CallOption) (*ListBackupsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9514,53 +7168,6 @@ func (c *ProjectsLocationsServicesBackupsListCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists backups in a service.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/backups",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.services.backups.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. The filter to apply to list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Optional. Specify the ordering of results as described in Sorting Order (https://cloud.google.com/apis/design/design_patterns#sorting_order). If not specified, the results will be sorted in the default order.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of backups to return. The response may contain less than the maximum number. If unspecified, no more than 500 backups are returned. The maximum value is 1000; values above 1000 are changed to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous DataprocMetastore.ListBackups call. Provide this token to retrieve the subsequent page.To retrieve the first page, supply an empty page token.When paginating, other parameters provided to DataprocMetastore.ListBackups must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The relative resource name of the service whose backups to list, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/backups.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/backups",
-	//   "response": {
-	//     "$ref": "ListBackupsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -9568,7 +7175,7 @@ func (c *ProjectsLocationsServicesBackupsListCall) Do(opts ...googleapi.CallOpti
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsServicesBackupsListCall) Pages(ctx context.Context, f func(*ListBackupsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -9584,8 +7191,6 @@ func (c *ProjectsLocationsServicesBackupsListCall) Pages(ctx context.Context, f 
 	}
 }
 
-// method id "metastore.projects.locations.services.backups.setIamPolicy":
-
 type ProjectsLocationsServicesBackupsSetIamPolicyCall struct {
 	s                   *APIService
 	resource            string
@@ -9595,14 +7200,13 @@ type ProjectsLocationsServicesBackupsSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any existing policy.Can return NOT_FOUND,
-// INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+// SetIamPolicy: Sets the access control policy on the specified resource.
+// Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and
+// PERMISSION_DENIED errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsLocationsServicesBackupsService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServicesBackupsSetIamPolicyCall {
 	c := &ProjectsLocationsServicesBackupsSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9611,23 +7215,21 @@ func (r *ProjectsLocationsServicesBackupsService) SetIamPolicy(resource string, 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesBackupsSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesBackupsSetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesBackupsSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServicesBackupsSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesBackupsSetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9636,18 +7238,12 @@ func (c *ProjectsLocationsServicesBackupsSetIamPolicyCall) Header() http.Header 
 }
 
 func (c *ProjectsLocationsServicesBackupsSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:setIamPolicy")
@@ -9664,12 +7260,10 @@ func (c *ProjectsLocationsServicesBackupsSetIamPolicyCall) doRequest(alt string)
 }
 
 // Do executes the "metastore.projects.locations.services.backups.setIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesBackupsSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9700,38 +7294,7 @@ func (c *ProjectsLocationsServicesBackupsSetIamPolicyCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and PERMISSION_DENIED errors.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/backups/{backupsId}:setIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.backups.setIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/backups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:setIamPolicy",
-	//   "request": {
-	//     "$ref": "SetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.backups.testIamPermissions":
 
 type ProjectsLocationsServicesBackupsTestIamPermissionsCall struct {
 	s                         *APIService
@@ -9742,17 +7305,16 @@ type ProjectsLocationsServicesBackupsTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Returns permissions that a caller has on the
-// specified resource. If the resource does not exist, this will return
-// an empty set of permissions, not a NOT_FOUND error.Note: This
-// operation is designed to be used for building permission-aware UIs
-// and command-line tools, not for authorization checking. This
-// operation may "fail open" without warning.
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource. If the resource does not exist, this will return an empty set of
+// permissions, not a NOT_FOUND error.Note: This operation is designed to be
+// used for building permission-aware UIs and command-line tools, not for
+// authorization checking. This operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
 func (r *ProjectsLocationsServicesBackupsService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServicesBackupsTestIamPermissionsCall {
 	c := &ProjectsLocationsServicesBackupsTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9761,23 +7323,21 @@ func (r *ProjectsLocationsServicesBackupsService) TestIamPermissions(resource st
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesBackupsTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesBackupsTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesBackupsTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsServicesBackupsTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesBackupsTestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9786,18 +7346,12 @@ func (c *ProjectsLocationsServicesBackupsTestIamPermissionsCall) Header() http.H
 }
 
 func (c *ProjectsLocationsServicesBackupsTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:testIamPermissions")
@@ -9814,12 +7368,11 @@ func (c *ProjectsLocationsServicesBackupsTestIamPermissionsCall) doRequest(alt s
 }
 
 // Do executes the "metastore.projects.locations.services.backups.testIamPermissions" call.
-// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesBackupsTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9850,38 +7403,7 @@ func (c *ProjectsLocationsServicesBackupsTestIamPermissionsCall) Do(opts ...goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/backups/{backupsId}:testIamPermissions",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.backups.testIamPermissions",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/backups/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:testIamPermissions",
-	//   "request": {
-	//     "$ref": "TestIamPermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TestIamPermissionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.databases.getIamPolicy":
 
 type ProjectsLocationsServicesDatabasesGetIamPolicyCall struct {
 	s            *APIService
@@ -9892,14 +7414,12 @@ type ProjectsLocationsServicesDatabasesGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource. Returns
-// an empty policy if the resource exists and does not have a policy
-// set.
+// GetIamPolicy: Gets the access control policy for a resource. Returns an
+// empty policy if the resource exists and does not have a policy set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsLocationsServicesDatabasesService) GetIamPolicy(resource string) *ProjectsLocationsServicesDatabasesGetIamPolicyCall {
 	c := &ProjectsLocationsServicesDatabasesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -9907,16 +7427,15 @@ func (r *ProjectsLocationsServicesDatabasesService) GetIamPolicy(resource string
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The maximum policy version that
-// will be used to format the policy.Valid values are 0, 1, and 3.
-// Requests specifying an invalid value will be rejected.Requests for
-// policies with any conditional role bindings must specify version 3.
-// Policies with no conditional role bindings may specify any valid
-// value or leave the field unset.The policy in the response might use
-// the policy version that you specified, or it might use a lower policy
-// version. For example, if you specify version 3, but the policy has no
-// conditional role bindings, the response uses version 1.To learn which
-// resources support conditions in their IAM policies, see the IAM
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy.Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected.Requests for policies with any conditional
+// role bindings must specify version 3. Policies with no conditional role
+// bindings may specify any valid value or leave the field unset.The policy in
+// the response might use the policy version that you specified, or it might
+// use a lower policy version. For example, if you specify version 3, but the
+// policy has no conditional role bindings, the response uses version 1.To
+// learn which resources support conditions in their IAM policies, see the IAM
 // documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsServicesDatabasesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsServicesDatabasesGetIamPolicyCall {
@@ -9925,33 +7444,29 @@ func (c *ProjectsLocationsServicesDatabasesGetIamPolicyCall) OptionsRequestedPol
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesDatabasesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesDatabasesGetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsServicesDatabasesGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesDatabasesGetIamPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesDatabasesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServicesDatabasesGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesDatabasesGetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9960,12 +7475,7 @@ func (c *ProjectsLocationsServicesDatabasesGetIamPolicyCall) Header() http.Heade
 }
 
 func (c *ProjectsLocationsServicesDatabasesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9986,12 +7496,10 @@ func (c *ProjectsLocationsServicesDatabasesGetIamPolicyCall) doRequest(alt strin
 }
 
 // Do executes the "metastore.projects.locations.services.databases.getIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesDatabasesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10022,41 +7530,7 @@ func (c *ProjectsLocationsServicesDatabasesGetIamPolicyCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/databases/{databasesId}:getIamPolicy",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.services.databases.getIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The maximum policy version that will be used to format the policy.Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected.Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset.The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1.To learn which resources support conditions in their IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/conditions/resource-policies).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/databases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:getIamPolicy",
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.databases.setIamPolicy":
 
 type ProjectsLocationsServicesDatabasesSetIamPolicyCall struct {
 	s                   *APIService
@@ -10067,14 +7541,13 @@ type ProjectsLocationsServicesDatabasesSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any existing policy.Can return NOT_FOUND,
-// INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+// SetIamPolicy: Sets the access control policy on the specified resource.
+// Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and
+// PERMISSION_DENIED errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsLocationsServicesDatabasesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServicesDatabasesSetIamPolicyCall {
 	c := &ProjectsLocationsServicesDatabasesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10083,23 +7556,21 @@ func (r *ProjectsLocationsServicesDatabasesService) SetIamPolicy(resource string
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesDatabasesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesDatabasesSetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesDatabasesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServicesDatabasesSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesDatabasesSetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10108,18 +7579,12 @@ func (c *ProjectsLocationsServicesDatabasesSetIamPolicyCall) Header() http.Heade
 }
 
 func (c *ProjectsLocationsServicesDatabasesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:setIamPolicy")
@@ -10136,12 +7601,10 @@ func (c *ProjectsLocationsServicesDatabasesSetIamPolicyCall) doRequest(alt strin
 }
 
 // Do executes the "metastore.projects.locations.services.databases.setIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesDatabasesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10172,38 +7635,7 @@ func (c *ProjectsLocationsServicesDatabasesSetIamPolicyCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and PERMISSION_DENIED errors.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/databases/{databasesId}:setIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.databases.setIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/databases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:setIamPolicy",
-	//   "request": {
-	//     "$ref": "SetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.databases.testIamPermissions":
 
 type ProjectsLocationsServicesDatabasesTestIamPermissionsCall struct {
 	s                         *APIService
@@ -10214,17 +7646,16 @@ type ProjectsLocationsServicesDatabasesTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Returns permissions that a caller has on the
-// specified resource. If the resource does not exist, this will return
-// an empty set of permissions, not a NOT_FOUND error.Note: This
-// operation is designed to be used for building permission-aware UIs
-// and command-line tools, not for authorization checking. This
-// operation may "fail open" without warning.
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource. If the resource does not exist, this will return an empty set of
+// permissions, not a NOT_FOUND error.Note: This operation is designed to be
+// used for building permission-aware UIs and command-line tools, not for
+// authorization checking. This operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
 func (r *ProjectsLocationsServicesDatabasesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServicesDatabasesTestIamPermissionsCall {
 	c := &ProjectsLocationsServicesDatabasesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10233,23 +7664,21 @@ func (r *ProjectsLocationsServicesDatabasesService) TestIamPermissions(resource 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesDatabasesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesDatabasesTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesDatabasesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsServicesDatabasesTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesDatabasesTestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10258,18 +7687,12 @@ func (c *ProjectsLocationsServicesDatabasesTestIamPermissionsCall) Header() http
 }
 
 func (c *ProjectsLocationsServicesDatabasesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:testIamPermissions")
@@ -10286,12 +7709,11 @@ func (c *ProjectsLocationsServicesDatabasesTestIamPermissionsCall) doRequest(alt
 }
 
 // Do executes the "metastore.projects.locations.services.databases.testIamPermissions" call.
-// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesDatabasesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10322,38 +7744,7 @@ func (c *ProjectsLocationsServicesDatabasesTestIamPermissionsCall) Do(opts ...go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/databases/{databasesId}:testIamPermissions",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.databases.testIamPermissions",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/databases/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:testIamPermissions",
-	//   "request": {
-	//     "$ref": "TestIamPermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TestIamPermissionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.databases.tables.getIamPolicy":
 
 type ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall struct {
 	s            *APIService
@@ -10364,14 +7755,12 @@ type ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall struct {
 	header_      http.Header
 }
 
-// GetIamPolicy: Gets the access control policy for a resource. Returns
-// an empty policy if the resource exists and does not have a policy
-// set.
+// GetIamPolicy: Gets the access control policy for a resource. Returns an
+// empty policy if the resource exists and does not have a policy set.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being requested.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsLocationsServicesDatabasesTablesService) GetIamPolicy(resource string) *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall {
 	c := &ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10379,16 +7768,15 @@ func (r *ProjectsLocationsServicesDatabasesTablesService) GetIamPolicy(resource 
 }
 
 // OptionsRequestedPolicyVersion sets the optional parameter
-// "options.requestedPolicyVersion": The maximum policy version that
-// will be used to format the policy.Valid values are 0, 1, and 3.
-// Requests specifying an invalid value will be rejected.Requests for
-// policies with any conditional role bindings must specify version 3.
-// Policies with no conditional role bindings may specify any valid
-// value or leave the field unset.The policy in the response might use
-// the policy version that you specified, or it might use a lower policy
-// version. For example, if you specify version 3, but the policy has no
-// conditional role bindings, the response uses version 1.To learn which
-// resources support conditions in their IAM policies, see the IAM
+// "options.requestedPolicyVersion": The maximum policy version that will be
+// used to format the policy.Valid values are 0, 1, and 3. Requests specifying
+// an invalid value will be rejected.Requests for policies with any conditional
+// role bindings must specify version 3. Policies with no conditional role
+// bindings may specify any valid value or leave the field unset.The policy in
+// the response might use the policy version that you specified, or it might
+// use a lower policy version. For example, if you specify version 3, but the
+// policy has no conditional role bindings, the response uses version 1.To
+// learn which resources support conditions in their IAM policies, see the IAM
 // documentation
 // (https://cloud.google.com/iam/help/conditions/resource-policies).
 func (c *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall) OptionsRequestedPolicyVersion(optionsRequestedPolicyVersion int64) *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall {
@@ -10397,33 +7785,29 @@ func (c *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall) OptionsReques
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10432,12 +7816,7 @@ func (c *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall) Header() http
 }
 
 func (c *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -10458,12 +7837,10 @@ func (c *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall) doRequest(alt
 }
 
 // Do executes the "metastore.projects.locations.services.databases.tables.getIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10494,41 +7871,7 @@ func (c *ProjectsLocationsServicesDatabasesTablesGetIamPolicyCall) Do(opts ...go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets the access control policy for a resource. Returns an empty policy if the resource exists and does not have a policy set.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/databases/{databasesId}/tables/{tablesId}:getIamPolicy",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.services.databases.tables.getIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "options.requestedPolicyVersion": {
-	//       "description": "Optional. The maximum policy version that will be used to format the policy.Valid values are 0, 1, and 3. Requests specifying an invalid value will be rejected.Requests for policies with any conditional role bindings must specify version 3. Policies with no conditional role bindings may specify any valid value or leave the field unset.The policy in the response might use the policy version that you specified, or it might use a lower policy version. For example, if you specify version 3, but the policy has no conditional role bindings, the response uses version 1.To learn which resources support conditions in their IAM policies, see the IAM documentation (https://cloud.google.com/iam/help/conditions/resource-policies).",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/databases/[^/]+/tables/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:getIamPolicy",
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.databases.tables.setIamPolicy":
 
 type ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall struct {
 	s                   *APIService
@@ -10539,14 +7882,13 @@ type ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall struct {
 	header_             http.Header
 }
 
-// SetIamPolicy: Sets the access control policy on the specified
-// resource. Replaces any existing policy.Can return NOT_FOUND,
-// INVALID_ARGUMENT, and PERMISSION_DENIED errors.
+// SetIamPolicy: Sets the access control policy on the specified resource.
+// Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and
+// PERMISSION_DENIED errors.
 //
-//   - resource: REQUIRED: The resource for which the policy is being
-//     specified. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy is being specified.
+//     See Resource names (https://cloud.google.com/apis/design/resource_names)
+//     for the appropriate value for this field.
 func (r *ProjectsLocationsServicesDatabasesTablesService) SetIamPolicy(resource string, setiampolicyrequest *SetIamPolicyRequest) *ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall {
 	c := &ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10555,23 +7897,21 @@ func (r *ProjectsLocationsServicesDatabasesTablesService) SetIamPolicy(resource 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall) Context(ctx context.Context) *ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10580,18 +7920,12 @@ func (c *ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall) Header() http
 }
 
 func (c *ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.setiampolicyrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:setIamPolicy")
@@ -10608,12 +7942,10 @@ func (c *ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall) doRequest(alt
 }
 
 // Do executes the "metastore.projects.locations.services.databases.tables.setIamPolicy" call.
-// Exactly one of *Policy or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Policy.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Policy.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall) Do(opts ...googleapi.CallOption) (*Policy, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10644,38 +7976,7 @@ func (c *ProjectsLocationsServicesDatabasesTablesSetIamPolicyCall) Do(opts ...go
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Sets the access control policy on the specified resource. Replaces any existing policy.Can return NOT_FOUND, INVALID_ARGUMENT, and PERMISSION_DENIED errors.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/databases/{databasesId}/tables/{tablesId}:setIamPolicy",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.databases.tables.setIamPolicy",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy is being specified. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/databases/[^/]+/tables/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:setIamPolicy",
-	//   "request": {
-	//     "$ref": "SetIamPolicyRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "Policy"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.databases.tables.testIamPermissions":
 
 type ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall struct {
 	s                         *APIService
@@ -10686,17 +7987,16 @@ type ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall struct {
 	header_                   http.Header
 }
 
-// TestIamPermissions: Returns permissions that a caller has on the
-// specified resource. If the resource does not exist, this will return
-// an empty set of permissions, not a NOT_FOUND error.Note: This
-// operation is designed to be used for building permission-aware UIs
-// and command-line tools, not for authorization checking. This
-// operation may "fail open" without warning.
+// TestIamPermissions: Returns permissions that a caller has on the specified
+// resource. If the resource does not exist, this will return an empty set of
+// permissions, not a NOT_FOUND error.Note: This operation is designed to be
+// used for building permission-aware UIs and command-line tools, not for
+// authorization checking. This operation may "fail open" without warning.
 //
-//   - resource: REQUIRED: The resource for which the policy detail is
-//     being requested. See Resource names
-//     (https://cloud.google.com/apis/design/resource_names) for the
-//     appropriate value for this field.
+//   - resource: REQUIRED: The resource for which the policy detail is being
+//     requested. See Resource names
+//     (https://cloud.google.com/apis/design/resource_names) for the appropriate
+//     value for this field.
 func (r *ProjectsLocationsServicesDatabasesTablesService) TestIamPermissions(resource string, testiampermissionsrequest *TestIamPermissionsRequest) *ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall {
 	c := &ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.resource = resource
@@ -10705,23 +8005,21 @@ func (r *ProjectsLocationsServicesDatabasesTablesService) TestIamPermissions(res
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall) Context(ctx context.Context) *ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10730,18 +8028,12 @@ func (c *ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall) Header(
 }
 
 func (c *ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.testiampermissionsrequest)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+resource}:testIamPermissions")
@@ -10758,12 +8050,11 @@ func (c *ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall) doReque
 }
 
 // Do executes the "metastore.projects.locations.services.databases.tables.testIamPermissions" call.
-// Exactly one of *TestIamPermissionsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *TestIamPermissionsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *TestIamPermissionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall) Do(opts ...googleapi.CallOption) (*TestIamPermissionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10794,38 +8085,7 @@ func (c *ProjectsLocationsServicesDatabasesTablesTestIamPermissionsCall) Do(opts
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Returns permissions that a caller has on the specified resource. If the resource does not exist, this will return an empty set of permissions, not a NOT_FOUND error.Note: This operation is designed to be used for building permission-aware UIs and command-line tools, not for authorization checking. This operation may \"fail open\" without warning.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/databases/{databasesId}/tables/{tablesId}:testIamPermissions",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.databases.tables.testIamPermissions",
-	//   "parameterOrder": [
-	//     "resource"
-	//   ],
-	//   "parameters": {
-	//     "resource": {
-	//       "description": "REQUIRED: The resource for which the policy detail is being requested. See Resource names (https://cloud.google.com/apis/design/resource_names) for the appropriate value for this field.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/databases/[^/]+/tables/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+resource}:testIamPermissions",
-	//   "request": {
-	//     "$ref": "TestIamPermissionsRequest"
-	//   },
-	//   "response": {
-	//     "$ref": "TestIamPermissionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.metadataImports.create":
 
 type ProjectsLocationsServicesMetadataImportsCreateCall struct {
 	s              *APIService
@@ -10838,10 +8098,10 @@ type ProjectsLocationsServicesMetadataImportsCreateCall struct {
 
 // Create: Creates a new MetadataImport in a given project and location.
 //
-//   - parent: The relative resource name of the service in which to
-//     create a metastore import, in the following
-//     form:projects/{project_number}/locations/{location_id}/services/{ser
-//     vice_id}.
+//   - parent: The relative resource name of the service in which to create a
+//     metastore import, in the following
+//     form:projects/{project_number}/locations/{location_id}/services/{service_id
+//     }.
 func (r *ProjectsLocationsServicesMetadataImportsService) Create(parent string, metadataimport *MetadataImport) *ProjectsLocationsServicesMetadataImportsCreateCall {
 	c := &ProjectsLocationsServicesMetadataImportsCreateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
@@ -10849,49 +8109,46 @@ func (r *ProjectsLocationsServicesMetadataImportsService) Create(parent string, 
 	return c
 }
 
-// MetadataImportId sets the optional parameter "metadataImportId":
-// Required. The ID of the metadata import, which is used as the final
-// component of the metadata import's name.This value must be between 1
-// and 64 characters long, begin with a letter, end with a letter or
-// number, and consist of alpha-numeric ASCII characters or hyphens.
+// MetadataImportId sets the optional parameter "metadataImportId": Required.
+// The ID of the metadata import, which is used as the final component of the
+// metadata import's name.This value must be between 1 and 64 characters long,
+// begin with a letter, end with a letter or number, and consist of
+// alpha-numeric ASCII characters or hyphens.
 func (c *ProjectsLocationsServicesMetadataImportsCreateCall) MetadataImportId(metadataImportId string) *ProjectsLocationsServicesMetadataImportsCreateCall {
 	c.urlParams_.Set("metadataImportId", metadataImportId)
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A request ID.
-// Specify a unique request ID to allow the server to ignore the request
-// if it has completed. The server will ignore subsequent requests that
-// provide a duplicate request ID for at least 60 minutes after the
-// first request.For example, if an initial request times out, followed
-// by another request with the same request ID, the server ignores the
-// second request to prevent the creation of duplicate commitments.The
-// request ID must be a valid UUID
-// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format)
-// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+// RequestId sets the optional parameter "requestId": A request ID. Specify a
+// unique request ID to allow the server to ignore the request if it has
+// completed. The server will ignore subsequent requests that provide a
+// duplicate request ID for at least 60 minutes after the first request.For
+// example, if an initial request times out, followed by another request with
+// the same request ID, the server ignores the second request to prevent the
+// creation of duplicate commitments.The request ID must be a valid UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero
+// UUID (00000000-0000-0000-0000-000000000000) is not supported.
 func (c *ProjectsLocationsServicesMetadataImportsCreateCall) RequestId(requestId string) *ProjectsLocationsServicesMetadataImportsCreateCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesMetadataImportsCreateCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesMetadataImportsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesMetadataImportsCreateCall) Context(ctx context.Context) *ProjectsLocationsServicesMetadataImportsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesMetadataImportsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -10900,18 +8157,12 @@ func (c *ProjectsLocationsServicesMetadataImportsCreateCall) Header() http.Heade
 }
 
 func (c *ProjectsLocationsServicesMetadataImportsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.metadataimport)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+parent}/metadataImports")
@@ -10928,12 +8179,10 @@ func (c *ProjectsLocationsServicesMetadataImportsCreateCall) doRequest(alt strin
 }
 
 // Do executes the "metastore.projects.locations.services.metadataImports.create" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesMetadataImportsCreateCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -10964,48 +8213,7 @@ func (c *ProjectsLocationsServicesMetadataImportsCreateCall) Do(opts ...googleap
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a new MetadataImport in a given project and location.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/metadataImports",
-	//   "httpMethod": "POST",
-	//   "id": "metastore.projects.locations.services.metadataImports.create",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "metadataImportId": {
-	//       "description": "Required. The ID of the metadata import, which is used as the final component of the metadata import's name.This value must be between 1 and 64 characters long, begin with a letter, end with a letter or number, and consist of alpha-numeric ASCII characters or hyphens.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The relative resource name of the service in which to create a metastore import, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "Optional. A request ID. Specify a unique request ID to allow the server to ignore the request if it has completed. The server will ignore subsequent requests that provide a duplicate request ID for at least 60 minutes after the first request.For example, if an initial request times out, followed by another request with the same request ID, the server ignores the second request to prevent the creation of duplicate commitments.The request ID must be a valid UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/metadataImports",
-	//   "request": {
-	//     "$ref": "MetadataImport"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.metadataImports.get":
 
 type ProjectsLocationsServicesMetadataImportsGetCall struct {
 	s            *APIService
@@ -11018,10 +8226,10 @@ type ProjectsLocationsServicesMetadataImportsGetCall struct {
 
 // Get: Gets details of a single import.
 //
-//   - name: The relative resource name of the metadata import to
-//     retrieve, in the following
-//     form:projects/{project_number}/locations/{location_id}/services/{ser
-//     vice_id}/metadataImports/{import_id}.
+//   - name: The relative resource name of the metadata import to retrieve, in
+//     the following
+//     form:projects/{project_number}/locations/{location_id}/services/{service_id
+//     }/metadataImports/{import_id}.
 func (r *ProjectsLocationsServicesMetadataImportsService) Get(name string) *ProjectsLocationsServicesMetadataImportsGetCall {
 	c := &ProjectsLocationsServicesMetadataImportsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11029,33 +8237,29 @@ func (r *ProjectsLocationsServicesMetadataImportsService) Get(name string) *Proj
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesMetadataImportsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesMetadataImportsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsServicesMetadataImportsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesMetadataImportsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesMetadataImportsGetCall) Context(ctx context.Context) *ProjectsLocationsServicesMetadataImportsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesMetadataImportsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11064,12 +8268,7 @@ func (c *ProjectsLocationsServicesMetadataImportsGetCall) Header() http.Header {
 }
 
 func (c *ProjectsLocationsServicesMetadataImportsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11090,12 +8289,10 @@ func (c *ProjectsLocationsServicesMetadataImportsGetCall) doRequest(alt string) 
 }
 
 // Do executes the "metastore.projects.locations.services.metadataImports.get" call.
-// Exactly one of *MetadataImport or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *MetadataImport.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *MetadataImport.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesMetadataImportsGetCall) Do(opts ...googleapi.CallOption) (*MetadataImport, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11126,35 +8323,7 @@ func (c *ProjectsLocationsServicesMetadataImportsGetCall) Do(opts ...googleapi.C
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets details of a single import.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/metadataImports/{metadataImportsId}",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.services.metadataImports.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the metadata import to retrieve, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/metadataImports/{import_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/metadataImports/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "MetadataImport"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.metadataImports.list":
 
 type ProjectsLocationsServicesMetadataImportsListCall struct {
 	s            *APIService
@@ -11167,80 +8336,76 @@ type ProjectsLocationsServicesMetadataImportsListCall struct {
 
 // List: Lists imports in a service.
 //
-//   - parent: The relative resource name of the service whose metadata
-//     imports to list, in the following
-//     form:projects/{project_number}/locations/{location_id}/services/{ser
-//     vice_id}/metadataImports.
+//   - parent: The relative resource name of the service whose metadata imports
+//     to list, in the following
+//     form:projects/{project_number}/locations/{location_id}/services/{service_id
+//     }/metadataImports.
 func (r *ProjectsLocationsServicesMetadataImportsService) List(parent string) *ProjectsLocationsServicesMetadataImportsListCall {
 	c := &ProjectsLocationsServicesMetadataImportsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filter to apply to
-// list results.
+// Filter sets the optional parameter "filter": The filter to apply to list
+// results.
 func (c *ProjectsLocationsServicesMetadataImportsListCall) Filter(filter string) *ProjectsLocationsServicesMetadataImportsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Specify the ordering
-// of results as described in Sorting Order
-// (https://cloud.google.com/apis/design/design_patterns#sorting_order).
-// If not specified, the results will be sorted in the default order.
+// OrderBy sets the optional parameter "orderBy": Specify the ordering of
+// results as described in Sorting Order
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order). If not
+// specified, the results will be sorted in the default order.
 func (c *ProjectsLocationsServicesMetadataImportsListCall) OrderBy(orderBy string) *ProjectsLocationsServicesMetadataImportsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of imports to return. The response may contain less than the maximum
-// number. If unspecified, no more than 500 imports are returned. The
-// maximum value is 1000; values above 1000 are changed to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// imports to return. The response may contain less than the maximum number. If
+// unspecified, no more than 500 imports are returned. The maximum value is
+// 1000; values above 1000 are changed to 1000.
 func (c *ProjectsLocationsServicesMetadataImportsListCall) PageSize(pageSize int64) *ProjectsLocationsServicesMetadataImportsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous DataprocMetastore.ListServices call. Provide
-// this token to retrieve the subsequent page.To retrieve the first
-// page, supply an empty page token.When paginating, other parameters
-// provided to DataprocMetastore.ListServices must match the call that
-// provided the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous DataprocMetastore.ListServices call. Provide this token to
+// retrieve the subsequent page.To retrieve the first page, supply an empty
+// page token.When paginating, other parameters provided to
+// DataprocMetastore.ListServices must match the call that provided the page
+// token.
 func (c *ProjectsLocationsServicesMetadataImportsListCall) PageToken(pageToken string) *ProjectsLocationsServicesMetadataImportsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesMetadataImportsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesMetadataImportsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsServicesMetadataImportsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesMetadataImportsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesMetadataImportsListCall) Context(ctx context.Context) *ProjectsLocationsServicesMetadataImportsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesMetadataImportsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11249,12 +8414,7 @@ func (c *ProjectsLocationsServicesMetadataImportsListCall) Header() http.Header 
 }
 
 func (c *ProjectsLocationsServicesMetadataImportsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11275,12 +8435,11 @@ func (c *ProjectsLocationsServicesMetadataImportsListCall) doRequest(alt string)
 }
 
 // Do executes the "metastore.projects.locations.services.metadataImports.list" call.
-// Exactly one of *ListMetadataImportsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
-// *ListMetadataImportsResponse.ServerResponse.Header or (if a response
-// was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// *ListMetadataImportsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesMetadataImportsListCall) Do(opts ...googleapi.CallOption) (*ListMetadataImportsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11311,53 +8470,6 @@ func (c *ProjectsLocationsServicesMetadataImportsListCall) Do(opts ...googleapi.
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists imports in a service.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/metadataImports",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.services.metadataImports.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. The filter to apply to list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Optional. Specify the ordering of results as described in Sorting Order (https://cloud.google.com/apis/design/design_patterns#sorting_order). If not specified, the results will be sorted in the default order.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of imports to return. The response may contain less than the maximum number. If unspecified, no more than 500 imports are returned. The maximum value is 1000; values above 1000 are changed to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous DataprocMetastore.ListServices call. Provide this token to retrieve the subsequent page.To retrieve the first page, supply an empty page token.When paginating, other parameters provided to DataprocMetastore.ListServices must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The relative resource name of the service whose metadata imports to list, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/metadataImports.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/metadataImports",
-	//   "response": {
-	//     "$ref": "ListMetadataImportsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -11365,7 +8477,7 @@ func (c *ProjectsLocationsServicesMetadataImportsListCall) Do(opts ...googleapi.
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsServicesMetadataImportsListCall) Pages(ctx context.Context, f func(*ListMetadataImportsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -11381,8 +8493,6 @@ func (c *ProjectsLocationsServicesMetadataImportsListCall) Pages(ctx context.Con
 	}
 }
 
-// method id "metastore.projects.locations.services.metadataImports.patch":
-
 type ProjectsLocationsServicesMetadataImportsPatchCall struct {
 	s              *APIService
 	name           string
@@ -11392,13 +8502,12 @@ type ProjectsLocationsServicesMetadataImportsPatchCall struct {
 	header_        http.Header
 }
 
-// Patch: Updates a single import. Only the description field of
-// MetadataImport is supported to be updated.
+// Patch: Updates a single import. Only the description field of MetadataImport
+// is supported to be updated.
 //
-//   - name: Immutable. The relative resource name of the metadata import,
-//     of the
-//     form:projects/{project_number}/locations/{location_id}/services/{ser
-//     vice_id}/metadataImports/{metadata_import_id}.
+//   - name: Immutable. The relative resource name of the metadata import, of the
+//     form:projects/{project_number}/locations/{location_id}/services/{service_id
+//     }/metadataImports/{metadata_import_id}.
 func (r *ProjectsLocationsServicesMetadataImportsService) Patch(name string, metadataimport *MetadataImport) *ProjectsLocationsServicesMetadataImportsPatchCall {
 	c := &ProjectsLocationsServicesMetadataImportsPatchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11406,49 +8515,46 @@ func (r *ProjectsLocationsServicesMetadataImportsService) Patch(name string, met
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A request ID.
-// Specify a unique request ID to allow the server to ignore the request
-// if it has completed. The server will ignore subsequent requests that
-// provide a duplicate request ID for at least 60 minutes after the
-// first request.For example, if an initial request times out, followed
-// by another request with the same request ID, the server ignores the
-// second request to prevent the creation of duplicate commitments.The
-// request ID must be a valid UUID
-// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format)
-// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+// RequestId sets the optional parameter "requestId": A request ID. Specify a
+// unique request ID to allow the server to ignore the request if it has
+// completed. The server will ignore subsequent requests that provide a
+// duplicate request ID for at least 60 minutes after the first request.For
+// example, if an initial request times out, followed by another request with
+// the same request ID, the server ignores the second request to prevent the
+// creation of duplicate commitments.The request ID must be a valid UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero
+// UUID (00000000-0000-0000-0000-000000000000) is not supported.
 func (c *ProjectsLocationsServicesMetadataImportsPatchCall) RequestId(requestId string) *ProjectsLocationsServicesMetadataImportsPatchCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
-// UpdateMask sets the optional parameter "updateMask": Required. A
-// field mask used to specify the fields to be overwritten in the
-// metadata import resource by the update. Fields specified in the
-// update_mask are relative to the resource (not to the full request). A
-// field is overwritten if it is in the mask.
+// UpdateMask sets the optional parameter "updateMask": Required. A field mask
+// used to specify the fields to be overwritten in the metadata import resource
+// by the update. Fields specified in the update_mask are relative to the
+// resource (not to the full request). A field is overwritten if it is in the
+// mask.
 func (c *ProjectsLocationsServicesMetadataImportsPatchCall) UpdateMask(updateMask string) *ProjectsLocationsServicesMetadataImportsPatchCall {
 	c.urlParams_.Set("updateMask", updateMask)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesMetadataImportsPatchCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesMetadataImportsPatchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesMetadataImportsPatchCall) Context(ctx context.Context) *ProjectsLocationsServicesMetadataImportsPatchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesMetadataImportsPatchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11457,18 +8563,12 @@ func (c *ProjectsLocationsServicesMetadataImportsPatchCall) Header() http.Header
 }
 
 func (c *ProjectsLocationsServicesMetadataImportsPatchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.metadataimport)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha/{+name}")
@@ -11485,12 +8585,10 @@ func (c *ProjectsLocationsServicesMetadataImportsPatchCall) doRequest(alt string
 }
 
 // Do executes the "metastore.projects.locations.services.metadataImports.patch" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesMetadataImportsPatchCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11521,49 +8619,7 @@ func (c *ProjectsLocationsServicesMetadataImportsPatchCall) Do(opts ...googleapi
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a single import. Only the description field of MetadataImport is supported to be updated.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/metadataImports/{metadataImportsId}",
-	//   "httpMethod": "PATCH",
-	//   "id": "metastore.projects.locations.services.metadataImports.patch",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Immutable. The relative resource name of the metadata import, of the form:projects/{project_number}/locations/{location_id}/services/{service_id}/metadataImports/{metadata_import_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/metadataImports/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "Optional. A request ID. Specify a unique request ID to allow the server to ignore the request if it has completed. The server will ignore subsequent requests that provide a duplicate request ID for at least 60 minutes after the first request.For example, if an initial request times out, followed by another request with the same request ID, the server ignores the second request to prevent the creation of duplicate commitments.The request ID must be a valid UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "updateMask": {
-	//       "description": "Required. A field mask used to specify the fields to be overwritten in the metadata import resource by the update. Fields specified in the update_mask are relative to the resource (not to the full request). A field is overwritten if it is in the mask.",
-	//       "format": "google-fieldmask",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "request": {
-	//     "$ref": "MetadataImport"
-	//   },
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.migrationExecutions.delete":
 
 type ProjectsLocationsServicesMigrationExecutionsDeleteCall struct {
 	s          *APIService
@@ -11575,49 +8631,46 @@ type ProjectsLocationsServicesMigrationExecutionsDeleteCall struct {
 
 // Delete: Deletes a single migration execution.
 //
-//   - name: The relative resource name of the migrationExecution to
-//     delete, in the following
-//     form:projects/{project_number}/locations/{location_id}/services/{ser
-//     vice_id}/migrationExecutions/{migration_execution_id}.
+//   - name: The relative resource name of the migrationExecution to delete, in
+//     the following
+//     form:projects/{project_number}/locations/{location_id}/services/{service_id
+//     }/migrationExecutions/{migration_execution_id}.
 func (r *ProjectsLocationsServicesMigrationExecutionsService) Delete(name string) *ProjectsLocationsServicesMigrationExecutionsDeleteCall {
 	c := &ProjectsLocationsServicesMigrationExecutionsDeleteCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
 	return c
 }
 
-// RequestId sets the optional parameter "requestId": A request ID.
-// Specify a unique request ID to allow the server to ignore the request
-// if it has completed. The server will ignore subsequent requests that
-// provide a duplicate request ID for at least 60 minutes after the
-// first request.For example, if an initial request times out, followed
-// by another request with the same request ID, the server ignores the
-// second request to prevent the creation of duplicate commitments.The
-// request ID must be a valid UUID
-// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format)
-// A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.
+// RequestId sets the optional parameter "requestId": A request ID. Specify a
+// unique request ID to allow the server to ignore the request if it has
+// completed. The server will ignore subsequent requests that provide a
+// duplicate request ID for at least 60 minutes after the first request.For
+// example, if an initial request times out, followed by another request with
+// the same request ID, the server ignores the second request to prevent the
+// creation of duplicate commitments.The request ID must be a valid UUID
+// (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero
+// UUID (00000000-0000-0000-0000-000000000000) is not supported.
 func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) RequestId(requestId string) *ProjectsLocationsServicesMigrationExecutionsDeleteCall {
 	c.urlParams_.Set("requestId", requestId)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesMigrationExecutionsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) Context(ctx context.Context) *ProjectsLocationsServicesMigrationExecutionsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11626,12 +8679,7 @@ func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) Header() http.H
 }
 
 func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -11649,12 +8697,10 @@ func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) doRequest(alt s
 }
 
 // Do executes the "metastore.projects.locations.services.migrationExecutions.delete" call.
-// Exactly one of *Operation or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Operation.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Operation.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) Do(opts ...googleapi.CallOption) (*Operation, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11685,40 +8731,7 @@ func (c *ProjectsLocationsServicesMigrationExecutionsDeleteCall) Do(opts ...goog
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Deletes a single migration execution.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/migrationExecutions/{migrationExecutionsId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "metastore.projects.locations.services.migrationExecutions.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the migrationExecution to delete, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/migrationExecutions/{migration_execution_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/migrationExecutions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "requestId": {
-	//       "description": "Optional. A request ID. Specify a unique request ID to allow the server to ignore the request if it has completed. The server will ignore subsequent requests that provide a duplicate request ID for at least 60 minutes after the first request.For example, if an initial request times out, followed by another request with the same request ID, the server ignores the second request to prevent the creation of duplicate commitments.The request ID must be a valid UUID (https://en.wikipedia.org/wiki/Universally_unique_identifier#Format) A zero UUID (00000000-0000-0000-0000-000000000000) is not supported.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "Operation"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.migrationExecutions.get":
 
 type ProjectsLocationsServicesMigrationExecutionsGetCall struct {
 	s            *APIService
@@ -11731,10 +8744,10 @@ type ProjectsLocationsServicesMigrationExecutionsGetCall struct {
 
 // Get: Gets details of a single migration execution.
 //
-//   - name: The relative resource name of the migration execution to
-//     retrieve, in the following
-//     form:projects/{project_number}/locations/{location_id}/services/{ser
-//     vice_id}/migrationExecutions/{migration_execution_id}.
+//   - name: The relative resource name of the migration execution to retrieve,
+//     in the following
+//     form:projects/{project_number}/locations/{location_id}/services/{service_id
+//     }/migrationExecutions/{migration_execution_id}.
 func (r *ProjectsLocationsServicesMigrationExecutionsService) Get(name string) *ProjectsLocationsServicesMigrationExecutionsGetCall {
 	c := &ProjectsLocationsServicesMigrationExecutionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -11742,33 +8755,29 @@ func (r *ProjectsLocationsServicesMigrationExecutionsService) Get(name string) *
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesMigrationExecutionsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesMigrationExecutionsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) Context(ctx context.Context) *ProjectsLocationsServicesMigrationExecutionsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11777,12 +8786,7 @@ func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) Header() http.Head
 }
 
 func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11803,12 +8807,11 @@ func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) doRequest(alt stri
 }
 
 // Do executes the "metastore.projects.locations.services.migrationExecutions.get" call.
-// Exactly one of *MigrationExecution or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *MigrationExecution.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *MigrationExecution.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) Do(opts ...googleapi.CallOption) (*MigrationExecution, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -11839,35 +8842,7 @@ func (c *ProjectsLocationsServicesMigrationExecutionsGetCall) Do(opts ...googlea
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets details of a single migration execution.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/migrationExecutions/{migrationExecutionsId}",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.services.migrationExecutions.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "Required. The relative resource name of the migration execution to retrieve, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/migrationExecutions/{migration_execution_id}.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+/migrationExecutions/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+name}",
-	//   "response": {
-	//     "$ref": "MigrationExecution"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
-
-// method id "metastore.projects.locations.services.migrationExecutions.list":
 
 type ProjectsLocationsServicesMigrationExecutionsListCall struct {
 	s            *APIService
@@ -11882,79 +8857,74 @@ type ProjectsLocationsServicesMigrationExecutionsListCall struct {
 //
 //   - parent: The relative resource name of the service whose migration
 //     executions to list, in the following
-//     form:projects/{project_number}/locations/{location_id}/services/{ser
-//     vice_id}/migrationExecutions.
+//     form:projects/{project_number}/locations/{location_id}/services/{service_id
+//     }/migrationExecutions.
 func (r *ProjectsLocationsServicesMigrationExecutionsService) List(parent string) *ProjectsLocationsServicesMigrationExecutionsListCall {
 	c := &ProjectsLocationsServicesMigrationExecutionsListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.parent = parent
 	return c
 }
 
-// Filter sets the optional parameter "filter": The filter to apply to
-// list results.
+// Filter sets the optional parameter "filter": The filter to apply to list
+// results.
 func (c *ProjectsLocationsServicesMigrationExecutionsListCall) Filter(filter string) *ProjectsLocationsServicesMigrationExecutionsListCall {
 	c.urlParams_.Set("filter", filter)
 	return c
 }
 
-// OrderBy sets the optional parameter "orderBy": Specify the ordering
-// of results as described in Sorting Order
-// (https://cloud.google.com/apis/design/design_patterns#sorting_order).
-// If not specified, the results will be sorted in the default order.
+// OrderBy sets the optional parameter "orderBy": Specify the ordering of
+// results as described in Sorting Order
+// (https://cloud.google.com/apis/design/design_patterns#sorting_order). If not
+// specified, the results will be sorted in the default order.
 func (c *ProjectsLocationsServicesMigrationExecutionsListCall) OrderBy(orderBy string) *ProjectsLocationsServicesMigrationExecutionsListCall {
 	c.urlParams_.Set("orderBy", orderBy)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The maximum number
-// of migration executions to return. The response may contain less than
-// the maximum number. If unspecified, no more than 500 migration
-// executions are returned. The maximum value is 1000; values above 1000
-// are changed to 1000.
+// PageSize sets the optional parameter "pageSize": The maximum number of
+// migration executions to return. The response may contain less than the
+// maximum number. If unspecified, no more than 500 migration executions are
+// returned. The maximum value is 1000; values above 1000 are changed to 1000.
 func (c *ProjectsLocationsServicesMigrationExecutionsListCall) PageSize(pageSize int64) *ProjectsLocationsServicesMigrationExecutionsListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": A page token,
-// received from a previous DataprocMetastore.ListMigrationExecutions
-// call. Provide this token to retrieve the subsequent page.To retrieve
-// the first page, supply an empty page token.When paginating, other
-// parameters provided to DataprocMetastore.ListMigrationExecutions must
-// match the call that provided the page token.
+// PageToken sets the optional parameter "pageToken": A page token, received
+// from a previous DataprocMetastore.ListMigrationExecutions call. Provide this
+// token to retrieve the subsequent page.To retrieve the first page, supply an
+// empty page token.When paginating, other parameters provided to
+// DataprocMetastore.ListMigrationExecutions must match the call that provided
+// the page token.
 func (c *ProjectsLocationsServicesMigrationExecutionsListCall) PageToken(pageToken string) *ProjectsLocationsServicesMigrationExecutionsListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ProjectsLocationsServicesMigrationExecutionsListCall) Fields(s ...googleapi.Field) *ProjectsLocationsServicesMigrationExecutionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ProjectsLocationsServicesMigrationExecutionsListCall) IfNoneMatch(entityTag string) *ProjectsLocationsServicesMigrationExecutionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ProjectsLocationsServicesMigrationExecutionsListCall) Context(ctx context.Context) *ProjectsLocationsServicesMigrationExecutionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ProjectsLocationsServicesMigrationExecutionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -11963,12 +8933,7 @@ func (c *ProjectsLocationsServicesMigrationExecutionsListCall) Header() http.Hea
 }
 
 func (c *ProjectsLocationsServicesMigrationExecutionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -11989,12 +8954,11 @@ func (c *ProjectsLocationsServicesMigrationExecutionsListCall) doRequest(alt str
 }
 
 // Do executes the "metastore.projects.locations.services.migrationExecutions.list" call.
-// Exactly one of *ListMigrationExecutionsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListMigrationExecutionsResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListMigrationExecutionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *ProjectsLocationsServicesMigrationExecutionsListCall) Do(opts ...googleapi.CallOption) (*ListMigrationExecutionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -12025,53 +8989,6 @@ func (c *ProjectsLocationsServicesMigrationExecutionsListCall) Do(opts ...google
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists migration executions on a service.",
-	//   "flatPath": "v1alpha/projects/{projectsId}/locations/{locationsId}/services/{servicesId}/migrationExecutions",
-	//   "httpMethod": "GET",
-	//   "id": "metastore.projects.locations.services.migrationExecutions.list",
-	//   "parameterOrder": [
-	//     "parent"
-	//   ],
-	//   "parameters": {
-	//     "filter": {
-	//       "description": "Optional. The filter to apply to list results.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "orderBy": {
-	//       "description": "Optional. Specify the ordering of results as described in Sorting Order (https://cloud.google.com/apis/design/design_patterns#sorting_order). If not specified, the results will be sorted in the default order.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The maximum number of migration executions to return. The response may contain less than the maximum number. If unspecified, no more than 500 migration executions are returned. The maximum value is 1000; values above 1000 are changed to 1000.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. A page token, received from a previous DataprocMetastore.ListMigrationExecutions call. Provide this token to retrieve the subsequent page.To retrieve the first page, supply an empty page token.When paginating, other parameters provided to DataprocMetastore.ListMigrationExecutions must match the call that provided the page token.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "parent": {
-	//       "description": "Required. The relative resource name of the service whose migration executions to list, in the following form:projects/{project_number}/locations/{location_id}/services/{service_id}/migrationExecutions.",
-	//       "location": "path",
-	//       "pattern": "^projects/[^/]+/locations/[^/]+/services/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha/{+parent}/migrationExecutions",
-	//   "response": {
-	//     "$ref": "ListMigrationExecutionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/cloud-platform"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -12079,7 +8996,7 @@ func (c *ProjectsLocationsServicesMigrationExecutionsListCall) Do(opts ...google
 // The provided context supersedes any context provided to the Context method.
 func (c *ProjectsLocationsServicesMigrationExecutionsListCall) Pages(ctx context.Context, f func(*ListMigrationExecutionsResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {

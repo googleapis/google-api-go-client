@@ -104,8 +104,8 @@ const (
 	// Delete your Google Tag Manager containers
 	TagmanagerDeleteContainersScope = "https://www.googleapis.com/auth/tagmanager.delete.containers"
 
-	// Manage your Google Tag Manager container and its subcomponents,
-	// excluding versioning and publishing
+	// Manage your Google Tag Manager container and its subcomponents, excluding
+	// versioning and publishing
 	TagmanagerEditContainersScope = "https://www.googleapis.com/auth/tagmanager.edit.containers"
 
 	// Manage your Google Tag Manager container versions
@@ -114,8 +114,7 @@ const (
 	// View and manage your Google Tag Manager accounts
 	TagmanagerManageAccountsScope = "https://www.googleapis.com/auth/tagmanager.manage.accounts"
 
-	// Manage user permissions of your Google Tag Manager account and
-	// container
+	// Manage user permissions of your Google Tag Manager account and container
 	TagmanagerManageUsersScope = "https://www.googleapis.com/auth/tagmanager.manage.users"
 
 	// Publish your Google Tag Manager container versions
@@ -330,54 +329,42 @@ type AccountsPermissionsService struct {
 type Account struct {
 	// AccountId: The Account ID uniquely identifies the GTM Account.
 	AccountId string `json:"accountId,omitempty"`
-
-	// Fingerprint: The fingerprint of the GTM Account as computed at
-	// storage time. This value is recomputed whenever the account is
-	// modified.
+	// Fingerprint: The fingerprint of the GTM Account as computed at storage time.
+	// This value is recomputed whenever the account is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-
-	// Name: Account display name. @mutable tagmanager.accounts.create
-	// @mutable tagmanager.accounts.update
+	// Name: Account display name. @mutable tagmanager.accounts.create @mutable
+	// tagmanager.accounts.update
 	Name string `json:"name,omitempty"`
-
-	// ShareData: Whether the account shares data anonymously with Google
-	// and others. @mutable tagmanager.accounts.create @mutable
+	// ShareData: Whether the account shares data anonymously with Google and
+	// others. @mutable tagmanager.accounts.create @mutable
 	// tagmanager.accounts.update
 	ShareData bool `json:"shareData,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Account) MarshalJSON() ([]byte, error) {
 	type NoMethod Account
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// AccountAccess: Defines the Google Tag Manager Account access
-// permissions.
+// AccountAccess: Defines the Google Tag Manager Account access permissions.
 type AccountAccess struct {
-	// Permission: List of Account permissions. Valid account permissions
-	// are read and manage. @mutable tagmanager.accounts.permissions.create
-	// @mutable tagmanager.accounts.permissions.update
+	// Permission: List of Account permissions. Valid account permissions are read
+	// and manage. @mutable tagmanager.accounts.permissions.create @mutable
+	// tagmanager.accounts.permissions.update
 	//
 	// Possible values:
 	//   "read"
@@ -387,45 +374,37 @@ type AccountAccess struct {
 	//   "manage"
 	//   "editWorkspace"
 	Permission []string `json:"permission,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Permission") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Permission") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Permission") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *AccountAccess) MarshalJSON() ([]byte, error) {
 	type NoMethod AccountAccess
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Condition: Represents a predicate.
 type Condition struct {
 	// Parameter: A list of named parameters (key/value), depending on the
-	// condition's type. Notes: - For binary operators, include parameters
-	// named arg0 and arg1 for specifying the left and right operands,
-	// respectively. - At this time, the left operand (arg0) must be a
-	// reference to a variable. - For case-insensitive Regex matching,
-	// include a boolean parameter named ignore_case that is set to true. If
-	// not specified or set to any other value, the matching will be case
-	// sensitive. - To negate an operator, include a boolean parameter named
-	// negate boolean parameter that is set to true. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
+	// condition's type. Notes: - For binary operators, include parameters named
+	// arg0 and arg1 for specifying the left and right operands, respectively. - At
+	// this time, the left operand (arg0) must be a reference to a variable. - For
+	// case-insensitive Regex matching, include a boolean parameter named
+	// ignore_case that is set to true. If not specified or set to any other value,
+	// the matching will be case sensitive. - To negate an operator, include a
+	// boolean parameter named negate boolean parameter that is set to true.
+	// @mutable tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
-
 	// Type: The type of operator for this condition. @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
@@ -443,51 +422,41 @@ type Condition struct {
 	//   "cssSelector"
 	//   "urlMatches"
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "Parameter") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Parameter") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Parameter") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Condition) MarshalJSON() ([]byte, error) {
 	type NoMethod Condition
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Container: Represents a Google Tag Manager Container.
 type Container struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-
 	// ContainerId: The Container ID uniquely identifies the GTM Container.
 	ContainerId string `json:"containerId,omitempty"`
-
-	// DomainName: Optional list of domain names associated with the
-	// Container. @mutable tagmanager.accounts.containers.create @mutable
+	// DomainName: Optional list of domain names associated with the Container.
+	// @mutable tagmanager.accounts.containers.create @mutable
 	// tagmanager.accounts.containers.update
 	DomainName []string `json:"domainName,omitempty"`
-
-	// EnabledBuiltInVariable: List of enabled built-in variables. Valid
-	// values include: pageUrl, pageHostname, pagePath, referrer, event,
-	// clickElement, clickClasses, clickId, clickTarget, clickUrl,
-	// clickText, formElement, formClasses, formId, formTarget, formUrl,
-	// formText, errorMessage, errorUrl, errorLine, newHistoryFragment,
-	// oldHistoryFragment, newHistoryState, oldHistoryState, historySource,
-	// containerVersion, debugMode, randomNumber, containerId. @mutable
-	// tagmanager.accounts.containers.create @mutable
+	// EnabledBuiltInVariable: List of enabled built-in variables. Valid values
+	// include: pageUrl, pageHostname, pagePath, referrer, event, clickElement,
+	// clickClasses, clickId, clickTarget, clickUrl, clickText, formElement,
+	// formClasses, formId, formTarget, formUrl, formText, errorMessage, errorUrl,
+	// errorLine, newHistoryFragment, oldHistoryFragment, newHistoryState,
+	// oldHistoryState, historySource, containerVersion, debugMode, randomNumber,
+	// containerId. @mutable tagmanager.accounts.containers.create @mutable
 	// tagmanager.accounts.containers.update
 	//
 	// Possible values:
@@ -597,39 +566,28 @@ type Container struct {
 	//   "elementVisibilityFirstTime"
 	//   "elementVisibilityRecentTime"
 	EnabledBuiltInVariable []string `json:"enabledBuiltInVariable,omitempty"`
-
-	// Fingerprint: The fingerprint of the GTM Container as computed at
-	// storage time. This value is recomputed whenever the account is
-	// modified.
+	// Fingerprint: The fingerprint of the GTM Container as computed at storage
+	// time. This value is recomputed whenever the account is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-
-	// Name: Container display name. @mutable
-	// tagmanager.accounts.containers.create @mutable
-	// tagmanager.accounts.containers.update
+	// Name: Container display name. @mutable tagmanager.accounts.containers.create
+	// @mutable tagmanager.accounts.containers.update
 	Name string `json:"name,omitempty"`
-
-	// Notes: Container Notes. @mutable
-	// tagmanager.accounts.containers.create @mutable
-	// tagmanager.accounts.containers.update
+	// Notes: Container Notes. @mutable tagmanager.accounts.containers.create
+	// @mutable tagmanager.accounts.containers.update
 	Notes string `json:"notes,omitempty"`
-
 	// PublicId: Container Public ID.
 	PublicId string `json:"publicId,omitempty"`
-
 	// TimeZoneCountryId: Container Country ID. @mutable
 	// tagmanager.accounts.containers.create @mutable
 	// tagmanager.accounts.containers.update
 	TimeZoneCountryId string `json:"timeZoneCountryId,omitempty"`
-
 	// TimeZoneId: Container Time Zone ID. @mutable
 	// tagmanager.accounts.containers.create @mutable
 	// tagmanager.accounts.containers.update
 	TimeZoneId string `json:"timeZoneId,omitempty"`
-
 	// UsageContext: List of Usage Contexts for the Container. Valid values
-	// include: web, android, ios. @mutable
-	// tagmanager.accounts.containers.create @mutable
-	// tagmanager.accounts.containers.update
+	// include: web, android, ios. @mutable tagmanager.accounts.containers.create
+	// @mutable tagmanager.accounts.containers.update
 	//
 	// Possible values:
 	//   "web"
@@ -640,31 +598,24 @@ type Container struct {
 	//   "amp"
 	UsageContext []string `json:"usageContext,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Container) MarshalJSON() ([]byte, error) {
 	type NoMethod Container
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ContainerAccess: Defines the Google Tag Manager Container access
@@ -674,11 +625,9 @@ type ContainerAccess struct {
 	// tagmanager.accounts.permissions.create @mutable
 	// tagmanager.accounts.permissions.update
 	ContainerId string `json:"containerId,omitempty"`
-
-	// Permission: List of Container permissions. Valid container
-	// permissions are: read, edit, delete, publish. @mutable
-	// tagmanager.accounts.permissions.create @mutable
-	// tagmanager.accounts.permissions.update
+	// Permission: List of Container permissions. Valid container permissions are:
+	// read, edit, delete, publish. @mutable tagmanager.accounts.permissions.create
+	// @mutable tagmanager.accounts.permissions.update
 	//
 	// Possible values:
 	//   "read"
@@ -688,413 +637,308 @@ type ContainerAccess struct {
 	//   "manage"
 	//   "editWorkspace"
 	Permission []string `json:"permission,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ContainerId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContainerId") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ContainerId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ContainerAccess) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerAccess
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ContainerVersion: Represents a Google Tag Manager Container Version.
 type ContainerVersion struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-
 	// Container: The container that this version was taken from.
 	Container *Container `json:"container,omitempty"`
-
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
-
-	// ContainerVersionId: The Container Version ID uniquely identifies the
-	// GTM Container Version.
+	// ContainerVersionId: The Container Version ID uniquely identifies the GTM
+	// Container Version.
 	ContainerVersionId string `json:"containerVersionId,omitempty"`
-
-	// Deleted: A value of true indicates this container version has been
-	// deleted.
+	// Deleted: A value of true indicates this container version has been deleted.
 	Deleted bool `json:"deleted,omitempty"`
-
-	// Fingerprint: The fingerprint of the GTM Container Version as computed
-	// at storage time. This value is recomputed whenever the container
-	// version is modified.
+	// Fingerprint: The fingerprint of the GTM Container Version as computed at
+	// storage time. This value is recomputed whenever the container version is
+	// modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-
-	// Folder: The folders in the container that this version was taken
-	// from.
+	// Folder: The folders in the container that this version was taken from.
 	Folder []*Folder `json:"folder,omitempty"`
-
 	// Macro: The macros in the container that this version was taken from.
 	Macro []*Macro `json:"macro,omitempty"`
-
 	// Name: Container version display name. @mutable
 	// tagmanager.accounts.containers.versions.update
 	Name string `json:"name,omitempty"`
-
-	// Notes: User notes on how to apply this container version in the
-	// container. @mutable tagmanager.accounts.containers.versions.update
+	// Notes: User notes on how to apply this container version in the container.
+	// @mutable tagmanager.accounts.containers.versions.update
 	Notes string `json:"notes,omitempty"`
-
 	// Rule: The rules in the container that this version was taken from.
 	Rule []*Rule `json:"rule,omitempty"`
-
 	// Tag: The tags in the container that this version was taken from.
 	Tag []*Tag `json:"tag,omitempty"`
-
-	// Trigger: The triggers in the container that this version was taken
-	// from.
+	// Trigger: The triggers in the container that this version was taken from.
 	Trigger []*Trigger `json:"trigger,omitempty"`
-
-	// Variable: The variables in the container that this version was taken
-	// from.
+	// Variable: The variables in the container that this version was taken from.
 	Variable []*Variable `json:"variable,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ContainerVersion) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerVersion
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// ContainerVersionHeader: Represents a Google Tag Manager Container
-// Version Header.
+// ContainerVersionHeader: Represents a Google Tag Manager Container Version
+// Header.
 type ContainerVersionHeader struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
-
-	// ContainerVersionId: The Container Version ID uniquely identifies the
-	// GTM Container Version.
+	// ContainerVersionId: The Container Version ID uniquely identifies the GTM
+	// Container Version.
 	ContainerVersionId string `json:"containerVersionId,omitempty"`
-
-	// Deleted: A value of true indicates this container version has been
-	// deleted.
+	// Deleted: A value of true indicates this container version has been deleted.
 	Deleted bool `json:"deleted,omitempty"`
-
 	// Name: Container version display name.
 	Name string `json:"name,omitempty"`
-
 	// NumMacros: Number of macros in the container version.
 	NumMacros string `json:"numMacros,omitempty"`
-
 	// NumRules: Number of rules in the container version.
 	NumRules string `json:"numRules,omitempty"`
-
 	// NumTags: Number of tags in the container version.
 	NumTags string `json:"numTags,omitempty"`
-
 	// NumTriggers: Number of triggers in the container version.
 	NumTriggers string `json:"numTriggers,omitempty"`
-
 	// NumVariables: Number of variables in the container version.
 	NumVariables string `json:"numVariables,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ContainerVersionHeader) MarshalJSON() ([]byte, error) {
 	type NoMethod ContainerVersionHeader
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// CreateContainerVersionRequestVersionOptions: Options for new
-// container versions.
+// CreateContainerVersionRequestVersionOptions: Options for new container
+// versions.
 type CreateContainerVersionRequestVersionOptions struct {
 	// Name: The name of the container version to be created.
 	Name string `json:"name,omitempty"`
-
 	// Notes: The notes of the container version to be created.
 	Notes string `json:"notes,omitempty"`
-
-	// QuickPreview: The creation of this version may be for quick preview
-	// and shouldn't be saved.
+	// QuickPreview: The creation of this version may be for quick preview and
+	// shouldn't be saved.
 	QuickPreview bool `json:"quickPreview,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CreateContainerVersionRequestVersionOptions) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateContainerVersionRequestVersionOptions
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // CreateContainerVersionResponse: Create container versions response.
 type CreateContainerVersionResponse struct {
 	// CompilerError: Compiler errors or not.
 	CompilerError bool `json:"compilerError,omitempty"`
-
 	// ContainerVersion: The container version created.
 	ContainerVersion *ContainerVersion `json:"containerVersion,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CompilerError") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompilerError") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CompilerError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *CreateContainerVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod CreateContainerVersionResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// Environment: Represents a Google Tag Manager Environment. Note that a
-// user can create, delete and update environments of type USER, but can
-// only update the enable_debug and url fields of environments of other
-// types.
+// Environment: Represents a Google Tag Manager Environment. Note that a user
+// can create, delete and update environments of type USER, but can only update
+// the enable_debug and url fields of environments of other types.
 type Environment struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-
 	// AuthorizationCode: The environment authorization code.
 	AuthorizationCode string `json:"authorizationCode,omitempty"`
-
-	// AuthorizationTimestampMs: The last update time-stamp for the
-	// authorization code.
+	// AuthorizationTimestampMs: The last update time-stamp for the authorization
+	// code.
 	AuthorizationTimestampMs int64 `json:"authorizationTimestampMs,omitempty,string"`
-
 	// ContainerId: GTM Container ID.
-	ContainerId string `json:"containerId,omitempty"`
-
+	ContainerId        string `json:"containerId,omitempty"`
 	ContainerVersionId string `json:"containerVersionId,omitempty"`
-
-	// Description: The environment description. Can be set or changed only
-	// on USER type environments. @mutable
+	// Description: The environment description. Can be set or changed only on USER
+	// type environments. @mutable
 	// tagmanager.accounts.containers.environments.create @mutable
 	// tagmanager.accounts.containers.environments.update
 	Description string `json:"description,omitempty"`
-
 	// EnableDebug: Whether or not to enable debug by default on for the
-	// environment. @mutable
-	// tagmanager.accounts.containers.environments.create @mutable
-	// tagmanager.accounts.containers.environments.update
+	// environment. @mutable tagmanager.accounts.containers.environments.create
+	// @mutable tagmanager.accounts.containers.environments.update
 	EnableDebug bool `json:"enableDebug,omitempty"`
-
-	// EnvironmentId: GTM Environment ID uniquely identifies the GTM
-	// Environment.
+	// EnvironmentId: GTM Environment ID uniquely identifies the GTM Environment.
 	EnvironmentId string `json:"environmentId,omitempty"`
-
-	// Fingerprint: The fingerprint of the GTM environment as computed at
-	// storage time. This value is recomputed whenever the environment is
-	// modified.
+	// Fingerprint: The fingerprint of the GTM environment as computed at storage
+	// time. This value is recomputed whenever the environment is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-
-	// Name: The environment display name. Can be set or changed only on
-	// USER type environments. @mutable
-	// tagmanager.accounts.containers.environments.create @mutable
-	// tagmanager.accounts.containers.environments.update
+	// Name: The environment display name. Can be set or changed only on USER type
+	// environments. @mutable tagmanager.accounts.containers.environments.create
+	// @mutable tagmanager.accounts.containers.environments.update
 	Name string `json:"name,omitempty"`
-
 	// Type: The type of this environment.
 	//
 	// Possible values:
 	//   "user" - Used for user defined environments.
-	//   "live" - Used for Live environment, which points to the live
-	// published container version.
-	//   "latest" - Used for Latest environment, which points to the latest
-	// created container version.
-	//   "draft" - Used for Draft environment, which points to the single
-	// draft in the container.
+	//   "live" - Used for Live environment, which points to the live published
+	// container version.
+	//   "latest" - Used for Latest environment, which points to the latest created
+	// container version.
+	//   "draft" - Used for Draft environment, which points to the single draft in
+	// the container.
 	Type string `json:"type,omitempty"`
-
 	// Url: Default preview page url for the environment. @mutable
 	// tagmanager.accounts.containers.environments.create @mutable
 	// tagmanager.accounts.containers.environments.update
 	Url string `json:"url,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Environment) MarshalJSON() ([]byte, error) {
 	type NoMethod Environment
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Folder: Represents a Google Tag Manager Folder.
 type Folder struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
-
-	// Fingerprint: The fingerprint of the GTM Folder as computed at storage
-	// time. This value is recomputed whenever the folder is modified.
+	// Fingerprint: The fingerprint of the GTM Folder as computed at storage time.
+	// This value is recomputed whenever the folder is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-
 	// FolderId: The Folder ID uniquely identifies the GTM Folder.
 	FolderId string `json:"folderId,omitempty"`
-
 	// Name: Folder display name. @mutable
 	// tagmanager.accounts.containers.folders.create @mutable
 	// tagmanager.accounts.containers.folders.update
 	Name string `json:"name,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Folder) MarshalJSON() ([]byte, error) {
 	type NoMethod Folder
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // FolderEntities: Represents a Google Tag Manager Folder's contents.
 type FolderEntities struct {
 	// Tag: The list of tags inside the folder.
 	Tag []*Tag `json:"tag,omitempty"`
-
 	// Trigger: The list of triggers inside the folder.
 	Trigger []*Trigger `json:"trigger,omitempty"`
-
 	// Variable: The list of variables inside the folder.
 	Variable []*Variable `json:"variable,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Tag") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Tag") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Tag") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Tag") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *FolderEntities) MarshalJSON() ([]byte, error) {
 	type NoMethod FolderEntities
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccountUsersResponse: List AccountUsers Response.
@@ -1102,31 +946,24 @@ type ListAccountUsersResponse struct {
 	// UserAccess: All GTM AccountUsers of a GTM Account.
 	UserAccess []*UserAccess `json:"userAccess,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "UserAccess") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "UserAccess") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "UserAccess") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAccountUsersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccountUsersResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListAccountsResponse: List Accounts Response.
@@ -1134,68 +971,51 @@ type ListAccountsResponse struct {
 	// Accounts: List of GTM Accounts that a user has access to.
 	Accounts []*Account `json:"accounts,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Accounts") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Accounts") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Accounts") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListAccountsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListAccountsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListContainerVersionsResponse: List container versions response.
 type ListContainerVersionsResponse struct {
 	// ContainerVersion: All versions of a GTM Container.
 	ContainerVersion []*ContainerVersion `json:"containerVersion,omitempty"`
-
-	// ContainerVersionHeader: All container version headers of a GTM
-	// Container.
+	// ContainerVersionHeader: All container version headers of a GTM Container.
 	ContainerVersionHeader []*ContainerVersionHeader `json:"containerVersionHeader,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "ContainerVersion") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ContainerVersion") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ContainerVersion") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListContainerVersionsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListContainerVersionsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListContainersResponse: List Containers Response.
@@ -1203,31 +1023,24 @@ type ListContainersResponse struct {
 	// Containers: All Containers of a GTM Account.
 	Containers []*Container `json:"containers,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Containers") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Containers") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Containers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListContainersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListContainersResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListEnvironmentsResponse: List Environments Response.
@@ -1235,31 +1048,24 @@ type ListEnvironmentsResponse struct {
 	// Environments: All Environments of a GTM Container.
 	Environments []*Environment `json:"environments,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Environments") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Environments") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Environments") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListEnvironmentsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListEnvironmentsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListFoldersResponse: List Folders Response.
@@ -1267,31 +1073,24 @@ type ListFoldersResponse struct {
 	// Folders: All GTM Folders of a GTM Container.
 	Folders []*Folder `json:"folders,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Folders") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Folders") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Folders") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Folders") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListFoldersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListFoldersResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTagsResponse: List Tags Response.
@@ -1299,31 +1098,24 @@ type ListTagsResponse struct {
 	// Tags: All GTM Tags of a GTM Container.
 	Tags []*Tag `json:"tags,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Tags") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Tags") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Tags") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Tags") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListTagsResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTagsResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListTriggersResponse: List triggers response.
@@ -1331,31 +1123,24 @@ type ListTriggersResponse struct {
 	// Triggers: All GTM Triggers of a GTM Container.
 	Triggers []*Trigger `json:"triggers,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Triggers") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Triggers") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Triggers") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListTriggersResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListTriggersResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // ListVariablesResponse: List Variables Response.
@@ -1363,118 +1148,90 @@ type ListVariablesResponse struct {
 	// Variables: All GTM Variables of a GTM Container.
 	Variables []*Variable `json:"variables,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "Variables") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Variables") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Variables") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *ListVariablesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod ListVariablesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Macro: Represents a Google Tag Manager Macro.
 type Macro struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
-
 	// DisablingRuleId: For mobile containers only: A list of rule IDs for
-	// disabling conditional macros; the macro is enabled if one of the
-	// enabling rules is true while all the disabling rules are false.
-	// Treated as an unordered set. @mutable
-	// tagmanager.accounts.containers.macros.create @mutable
-	// tagmanager.accounts.containers.macros.update
+	// disabling conditional macros; the macro is enabled if one of the enabling
+	// rules is true while all the disabling rules are false. Treated as an
+	// unordered set. @mutable tagmanager.accounts.containers.macros.create
+	// @mutable tagmanager.accounts.containers.macros.update
 	DisablingRuleId []string `json:"disablingRuleId,omitempty"`
-
-	// EnablingRuleId: For mobile containers only: A list of rule IDs for
-	// enabling conditional macros; the macro is enabled if one of the
-	// enabling rules is true while all the disabling rules are false.
-	// Treated as an unordered set. @mutable
-	// tagmanager.accounts.containers.macros.create @mutable
+	// EnablingRuleId: For mobile containers only: A list of rule IDs for enabling
+	// conditional macros; the macro is enabled if one of the enabling rules is
+	// true while all the disabling rules are false. Treated as an unordered set.
+	// @mutable tagmanager.accounts.containers.macros.create @mutable
 	// tagmanager.accounts.containers.macros.update
 	EnablingRuleId []string `json:"enablingRuleId,omitempty"`
-
-	// Fingerprint: The fingerprint of the GTM Macro as computed at storage
-	// time. This value is recomputed whenever the macro is modified.
+	// Fingerprint: The fingerprint of the GTM Macro as computed at storage time.
+	// This value is recomputed whenever the macro is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-
 	// MacroId: The Macro ID uniquely identifies the GTM Macro.
 	MacroId string `json:"macroId,omitempty"`
-
 	// Name: Macro display name. @mutable
 	// tagmanager.accounts.containers.macros.create @mutable
 	// tagmanager.accounts.containers.macros.update
 	Name string `json:"name,omitempty"`
-
-	// Notes: User notes on how to apply this macro in the container.
-	// @mutable tagmanager.accounts.containers.macros.create @mutable
+	// Notes: User notes on how to apply this macro in the container. @mutable
+	// tagmanager.accounts.containers.macros.create @mutable
 	// tagmanager.accounts.containers.macros.update
 	Notes string `json:"notes,omitempty"`
-
 	// Parameter: The macro's parameters. @mutable
 	// tagmanager.accounts.containers.macros.create @mutable
 	// tagmanager.accounts.containers.macros.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
-
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
-
 	// ScheduleEndMs: The end timestamp in milliseconds to schedule a macro.
 	// @mutable tagmanager.accounts.containers.macros.create @mutable
 	// tagmanager.accounts.containers.macros.update
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
-
-	// ScheduleStartMs: The start timestamp in milliseconds to schedule a
-	// macro. @mutable tagmanager.accounts.containers.macros.create @mutable
+	// ScheduleStartMs: The start timestamp in milliseconds to schedule a macro.
+	// @mutable tagmanager.accounts.containers.macros.create @mutable
 	// tagmanager.accounts.containers.macros.update
 	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
-
-	// Type: GTM Macro Type. @mutable
-	// tagmanager.accounts.containers.macros.create @mutable
-	// tagmanager.accounts.containers.macros.update
+	// Type: GTM Macro Type. @mutable tagmanager.accounts.containers.macros.create
+	// @mutable tagmanager.accounts.containers.macros.update
 	Type string `json:"type,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Macro) MarshalJSON() ([]byte, error) {
 	type NoMethod Macro
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Parameter: Represents a Google Tag Manager Parameter.
@@ -1488,35 +1245,31 @@ type Parameter struct {
 	// tagmanager.accounts.containers.tags.create @mutable
 	// tagmanager.accounts.containers.tags.update
 	Key string `json:"key,omitempty"`
-
-	// List: This list parameter's parameters (keys will be ignored).
-	// @mutable tagmanager.accounts.containers.variables.create @mutable
+	// List: This list parameter's parameters (keys will be ignored). @mutable
+	// tagmanager.accounts.containers.variables.create @mutable
 	// tagmanager.accounts.containers.variables.update @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update @mutable
 	// tagmanager.accounts.containers.tags.create @mutable
 	// tagmanager.accounts.containers.tags.update
 	List []*Parameter `json:"list,omitempty"`
-
-	// Map: This map parameter's parameters (must have keys; keys must be
-	// unique). @mutable tagmanager.accounts.containers.variables.create
-	// @mutable tagmanager.accounts.containers.variables.update @mutable
+	// Map: This map parameter's parameters (must have keys; keys must be unique).
+	// @mutable tagmanager.accounts.containers.variables.create @mutable
+	// tagmanager.accounts.containers.variables.update @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update @mutable
 	// tagmanager.accounts.containers.tags.create @mutable
 	// tagmanager.accounts.containers.tags.update
 	Map []*Parameter `json:"map,omitempty"`
-
-	// Type: The parameter type. Valid values are: - boolean: The value
-	// represents a boolean, represented as 'true' or 'false' - integer: The
-	// value represents a 64-bit signed integer value, in base 10 - list: A
-	// list of parameters should be specified - map: A map of parameters
-	// should be specified - template: The value represents any text; this
-	// can include variable references (even variable references that might
-	// return non-string types) - trigger_reference: The value represents a
-	// trigger, represented as the trigger id - tag_reference: The value
-	// represents a tag, represented as the tag name @mutable
-	// tagmanager.accounts.containers.variables.create @mutable
+	// Type: The parameter type. Valid values are: - boolean: The value represents
+	// a boolean, represented as 'true' or 'false' - integer: The value represents
+	// a 64-bit signed integer value, in base 10 - list: A list of parameters
+	// should be specified - map: A map of parameters should be specified -
+	// template: The value represents any text; this can include variable
+	// references (even variable references that might return non-string types) -
+	// trigger_reference: The value represents a trigger, represented as the
+	// trigger id - tag_reference: The value represents a tag, represented as the
+	// tag name @mutable tagmanager.accounts.containers.variables.create @mutable
 	// tagmanager.accounts.containers.variables.update @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update @mutable
@@ -1524,8 +1277,7 @@ type Parameter struct {
 	// tagmanager.accounts.containers.tags.update
 	//
 	// Possible values:
-	//   "template" - May include variable references (such as
-	// "{{myVariable}}").
+	//   "template" - May include variable references (such as "{{myVariable}}").
 	//   "integer"
 	//   "boolean"
 	//   "list"
@@ -1533,7 +1285,6 @@ type Parameter struct {
 	//   "triggerReference"
 	//   "tagReference"
 	Type string `json:"type,omitempty"`
-
 	// Value: A parameter's value (may contain variable references such as
 	// "{{myVariable}}") as appropriate to the specified type. @mutable
 	// tagmanager.accounts.containers.variables.create @mutable
@@ -1543,431 +1294,331 @@ type Parameter struct {
 	// tagmanager.accounts.containers.tags.create @mutable
 	// tagmanager.accounts.containers.tags.update
 	Value string `json:"value,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Key") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Key") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Key") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Key") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Parameter) MarshalJSON() ([]byte, error) {
 	type NoMethod Parameter
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // PublishContainerVersionResponse: Publish container version response.
 type PublishContainerVersionResponse struct {
 	// CompilerError: Compiler errors or not.
 	CompilerError bool `json:"compilerError,omitempty"`
-
 	// ContainerVersion: The container version created.
 	ContainerVersion *ContainerVersion `json:"containerVersion,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "CompilerError") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "CompilerError") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "CompilerError") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *PublishContainerVersionResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod PublishContainerVersionResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Rule: Represents a Google Tag Manager Rule.
 type Rule struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-
-	// Condition: The list of conditions that make up this rule (implicit
-	// AND between them). @mutable
-	// tagmanager.accounts.containers.rules.create @mutable
+	// Condition: The list of conditions that make up this rule (implicit AND
+	// between them). @mutable tagmanager.accounts.containers.rules.create @mutable
 	// tagmanager.accounts.containers.rules.update
 	Condition []*Condition `json:"condition,omitempty"`
-
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
-
-	// Fingerprint: The fingerprint of the GTM Rule as computed at storage
-	// time. This value is recomputed whenever the rule is modified.
+	// Fingerprint: The fingerprint of the GTM Rule as computed at storage time.
+	// This value is recomputed whenever the rule is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-
 	// Name: Rule display name. @mutable
 	// tagmanager.accounts.containers.rules.create @mutable
 	// tagmanager.accounts.containers.rules.update
 	Name string `json:"name,omitempty"`
-
-	// Notes: User notes on how to apply this rule in the container.
-	// @mutable tagmanager.accounts.containers.rules.create @mutable
+	// Notes: User notes on how to apply this rule in the container. @mutable
+	// tagmanager.accounts.containers.rules.create @mutable
 	// tagmanager.accounts.containers.rules.update
 	Notes string `json:"notes,omitempty"`
-
 	// RuleId: The Rule ID uniquely identifies the GTM Rule.
 	RuleId string `json:"ruleId,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Rule) MarshalJSON() ([]byte, error) {
 	type NoMethod Rule
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type SetupTag struct {
-	// StopOnSetupFailure: If true, fire the main tag if and only if the
-	// setup tag fires successfully. If false, fire the main tag regardless
-	// of setup tag firing status.
+	// StopOnSetupFailure: If true, fire the main tag if and only if the setup tag
+	// fires successfully. If false, fire the main tag regardless of setup tag
+	// firing status.
 	StopOnSetupFailure bool `json:"stopOnSetupFailure,omitempty"`
-
 	// TagName: The name of the setup tag.
 	TagName string `json:"tagName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "StopOnSetupFailure")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "StopOnSetupFailure") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "StopOnSetupFailure") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "StopOnSetupFailure") to include
+	// in API requests with the JSON null value. By default, fields with empty
+	// values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *SetupTag) MarshalJSON() ([]byte, error) {
 	type NoMethod SetupTag
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Tag: Represents a Google Tag Manager Tag.
 type Tag struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-
-	// BlockingRuleId: Blocking rule IDs. If any of the listed rules
-	// evaluate to true, the tag will not fire. @mutable
+	// BlockingRuleId: Blocking rule IDs. If any of the listed rules evaluate to
+	// true, the tag will not fire. @mutable
 	// tagmanager.accounts.containers.tags.create @mutable
 	// tagmanager.accounts.containers.tags.update
 	BlockingRuleId []string `json:"blockingRuleId,omitempty"`
-
-	// BlockingTriggerId: Blocking trigger IDs. If any of the listed
-	// triggers evaluate to true, the tag will not fire. @mutable
+	// BlockingTriggerId: Blocking trigger IDs. If any of the listed triggers
+	// evaluate to true, the tag will not fire. @mutable
 	// tagmanager.accounts.containers.tags.create @mutable
 	// tagmanager.accounts.containers.tags.update
 	BlockingTriggerId []string `json:"blockingTriggerId,omitempty"`
-
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
-
-	// Fingerprint: The fingerprint of the GTM Tag as computed at storage
-	// time. This value is recomputed whenever the tag is modified.
+	// Fingerprint: The fingerprint of the GTM Tag as computed at storage time.
+	// This value is recomputed whenever the tag is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-
-	// FiringRuleId: Firing rule IDs. A tag will fire when any of the listed
-	// rules are true and all of its blockingRuleIds (if any specified) are
-	// false. @mutable tagmanager.accounts.containers.tags.create @mutable
+	// FiringRuleId: Firing rule IDs. A tag will fire when any of the listed rules
+	// are true and all of its blockingRuleIds (if any specified) are false.
+	// @mutable tagmanager.accounts.containers.tags.create @mutable
 	// tagmanager.accounts.containers.tags.update
 	FiringRuleId []string `json:"firingRuleId,omitempty"`
-
-	// FiringTriggerId: Firing trigger IDs. A tag will fire when any of the
-	// listed triggers are true and all of its blockingTriggerIds (if any
-	// specified) are false. @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
+	// FiringTriggerId: Firing trigger IDs. A tag will fire when any of the listed
+	// triggers are true and all of its blockingTriggerIds (if any specified) are
+	// false. @mutable tagmanager.accounts.containers.tags.create @mutable
 	// tagmanager.accounts.containers.tags.update
 	FiringTriggerId []string `json:"firingTriggerId,omitempty"`
-
-	// LiveOnly: If set to true, this tag will only fire in the live
-	// environment (e.g. not in preview or debug mode). @mutable
+	// LiveOnly: If set to true, this tag will only fire in the live environment
+	// (e.g. not in preview or debug mode). @mutable
 	// tagmanager.accounts.containers.tags.create @mutable
 	// tagmanager.accounts.containers.tags.update
 	LiveOnly bool `json:"liveOnly,omitempty"`
-
-	// Name: Tag display name. @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
+	// Name: Tag display name. @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	Name string `json:"name,omitempty"`
-
 	// Notes: User notes on how to apply this tag in the container. @mutable
 	// tagmanager.accounts.containers.tags.create @mutable
 	// tagmanager.accounts.containers.tags.update
 	Notes string `json:"notes,omitempty"`
-
 	// Parameter: The tag's parameters. @mutable
 	// tagmanager.accounts.containers.tags.create @mutable
 	// tagmanager.accounts.containers.tags.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
-
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
-
 	// Paused: True if the tag is paused. @mutable
 	// tagmanager.accounts.containers.tags.create @mutable
 	// tagmanager.accounts.containers.tags.update
 	Paused bool `json:"paused,omitempty"`
-
 	// Priority: User defined numeric priority of the tag. Tags are fired
-	// asynchronously in order of priority. Tags with higher numeric value
-	// fire first. A tag's priority can be a positive or negative value. The
-	// default value is 0. @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
+	// asynchronously in order of priority. Tags with higher numeric value fire
+	// first. A tag's priority can be a positive or negative value. The default
+	// value is 0. @mutable tagmanager.accounts.containers.tags.create @mutable
 	// tagmanager.accounts.containers.tags.update
 	Priority *Parameter `json:"priority,omitempty"`
-
-	// ScheduleEndMs: The end timestamp in milliseconds to schedule a tag.
-	// @mutable tagmanager.accounts.containers.tags.create @mutable
+	// ScheduleEndMs: The end timestamp in milliseconds to schedule a tag. @mutable
+	// tagmanager.accounts.containers.tags.create @mutable
 	// tagmanager.accounts.containers.tags.update
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
-
-	// ScheduleStartMs: The start timestamp in milliseconds to schedule a
-	// tag. @mutable tagmanager.accounts.containers.tags.create @mutable
+	// ScheduleStartMs: The start timestamp in milliseconds to schedule a tag.
+	// @mutable tagmanager.accounts.containers.tags.create @mutable
 	// tagmanager.accounts.containers.tags.update
 	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
-
 	// SetupTag: The list of setup tags. Currently we only allow one.
 	SetupTag []*SetupTag `json:"setupTag,omitempty"`
-
 	// TagFiringOption: Option to fire this tag.
 	//
 	// Possible values:
 	//   "unlimited" - Tag can be fired multiple times per event.
-	//   "oncePerEvent" - Tag can only be fired per event but can be fired
-	// multiple times per load (e.g., app load or page load).
-	//   "oncePerLoad" - Tag can only be fired per load (e.g., app load or
-	// page load).
+	//   "oncePerEvent" - Tag can only be fired per event but can be fired multiple
+	// times per load (e.g., app load or page load).
+	//   "oncePerLoad" - Tag can only be fired per load (e.g., app load or page
+	// load).
 	TagFiringOption string `json:"tagFiringOption,omitempty"`
-
 	// TagId: The Tag ID uniquely identifies the GTM Tag.
 	TagId string `json:"tagId,omitempty"`
-
 	// TeardownTag: The list of teardown tags. Currently we only allow one.
 	TeardownTag []*TeardownTag `json:"teardownTag,omitempty"`
-
-	// Type: GTM Tag Type. @mutable
-	// tagmanager.accounts.containers.tags.create @mutable
-	// tagmanager.accounts.containers.tags.update
+	// Type: GTM Tag Type. @mutable tagmanager.accounts.containers.tags.create
+	// @mutable tagmanager.accounts.containers.tags.update
 	Type string `json:"type,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Tag) MarshalJSON() ([]byte, error) {
 	type NoMethod Tag
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 type TeardownTag struct {
-	// StopTeardownOnFailure: If true, fire the teardown tag if and only if
-	// the main tag fires successfully. If false, fire the teardown tag
-	// regardless of main tag firing status.
+	// StopTeardownOnFailure: If true, fire the teardown tag if and only if the
+	// main tag fires successfully. If false, fire the teardown tag regardless of
+	// main tag firing status.
 	StopTeardownOnFailure bool `json:"stopTeardownOnFailure,omitempty"`
-
 	// TagName: The name of the teardown tag.
 	TagName string `json:"tagName,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "StopTeardownOnFailure") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "StopTeardownOnFailure") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "StopTeardownOnFailure") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *TeardownTag) MarshalJSON() ([]byte, error) {
 	type NoMethod TeardownTag
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Trigger: Represents a Google Tag Manager Trigger
 type Trigger struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-
 	// AutoEventFilter: Used in the case of auto event tracking. @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	AutoEventFilter []*Condition `json:"autoEventFilter,omitempty"`
-
-	// CheckValidation: Whether or not we should only fire tags if the form
-	// submit or link click event is not cancelled by some other event
-	// handler (e.g. because of validation). Only valid for Form Submission
-	// and Link Click triggers. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
+	// CheckValidation: Whether or not we should only fire tags if the form submit
+	// or link click event is not cancelled by some other event handler (e.g.
+	// because of validation). Only valid for Form Submission and Link Click
+	// triggers. @mutable tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	CheckValidation *Parameter `json:"checkValidation,omitempty"`
-
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
-
-	// ContinuousTimeMinMilliseconds: A visibility trigger minimum
-	// continuous visible time (in milliseconds). Only valid for AMP
-	// Visibility trigger. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
-	ContinuousTimeMinMilliseconds *Parameter `json:"continuousTimeMinMilliseconds,omitempty"`
-
-	// CustomEventFilter: Used in the case of custom event, which is fired
-	// iff all Conditions are true. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
-	CustomEventFilter []*Condition `json:"customEventFilter,omitempty"`
-
-	// EventName: Name of the GTM event that is fired. Only valid for Timer
-	// triggers. @mutable tagmanager.accounts.containers.triggers.create
-	// @mutable tagmanager.accounts.containers.triggers.update
-	EventName *Parameter `json:"eventName,omitempty"`
-
-	// Filter: The trigger will only fire iff all Conditions are true.
+	// ContinuousTimeMinMilliseconds: A visibility trigger minimum continuous
+	// visible time (in milliseconds). Only valid for AMP Visibility trigger.
 	// @mutable tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
+	ContinuousTimeMinMilliseconds *Parameter `json:"continuousTimeMinMilliseconds,omitempty"`
+	// CustomEventFilter: Used in the case of custom event, which is fired iff all
+	// Conditions are true. @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
+	CustomEventFilter []*Condition `json:"customEventFilter,omitempty"`
+	// EventName: Name of the GTM event that is fired. Only valid for Timer
+	// triggers. @mutable tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
+	EventName *Parameter `json:"eventName,omitempty"`
+	// Filter: The trigger will only fire iff all Conditions are true. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
+	// tagmanager.accounts.containers.triggers.update
 	Filter []*Condition `json:"filter,omitempty"`
-
-	// Fingerprint: The fingerprint of the GTM Trigger as computed at
-	// storage time. This value is recomputed whenever the trigger is
-	// modified.
+	// Fingerprint: The fingerprint of the GTM Trigger as computed at storage time.
+	// This value is recomputed whenever the trigger is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-
-	// HorizontalScrollPercentageList: List of integer percentage values for
-	// scroll triggers. The trigger will fire when each percentage is
-	// reached when the view is scrolled horizontally. Only valid for AMP
-	// scroll triggers. @mutable
+	// HorizontalScrollPercentageList: List of integer percentage values for scroll
+	// triggers. The trigger will fire when each percentage is reached when the
+	// view is scrolled horizontally. Only valid for AMP scroll triggers. @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	HorizontalScrollPercentageList *Parameter `json:"horizontalScrollPercentageList,omitempty"`
-
-	// Interval: Time between triggering recurring Timer Events (in
-	// milliseconds). Only valid for Timer triggers. @mutable
+	// Interval: Time between triggering recurring Timer Events (in milliseconds).
+	// Only valid for Timer triggers. @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	Interval *Parameter `json:"interval,omitempty"`
-
-	// IntervalSeconds: Time between Timer Events to fire (in seconds). Only
-	// valid for AMP Timer trigger. @mutable
+	// IntervalSeconds: Time between Timer Events to fire (in seconds). Only valid
+	// for AMP Timer trigger. @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	IntervalSeconds *Parameter `json:"intervalSeconds,omitempty"`
-
-	// Limit: Limit of the number of GTM events this Timer Trigger will
-	// fire. If no limit is set, we will continue to fire GTM events until
-	// the user leaves the page. Only valid for Timer triggers. @mutable
+	// Limit: Limit of the number of GTM events this Timer Trigger will fire. If no
+	// limit is set, we will continue to fire GTM events until the user leaves the
+	// page. Only valid for Timer triggers. @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	Limit *Parameter `json:"limit,omitempty"`
-
-	// MaxTimerLengthSeconds: Max time to fire Timer Events (in seconds).
-	// Only valid for AMP Timer trigger. @mutable
+	// MaxTimerLengthSeconds: Max time to fire Timer Events (in seconds). Only
+	// valid for AMP Timer trigger. @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	MaxTimerLengthSeconds *Parameter `json:"maxTimerLengthSeconds,omitempty"`
-
 	// Name: Trigger display name. @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	Name string `json:"name,omitempty"`
-
 	// Parameter: Additional parameters. @mutable
 	// tagmanager.accounts.containers.workspaces.triggers.create @mutable
 	// tagmanager.accounts.containers.workspaces.triggers.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
-
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
-
-	// Selector: A click trigger CSS selector (i.e. "a", "button" etc.).
-	// Only valid for AMP Click trigger. @mutable
+	// Selector: A click trigger CSS selector (i.e. "a", "button" etc.). Only valid
+	// for AMP Click trigger. @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	Selector *Parameter `json:"selector,omitempty"`
-
-	// TotalTimeMinMilliseconds: A visibility trigger minimum total visible
-	// time (in milliseconds). Only valid for AMP Visibility trigger.
-	// @mutable tagmanager.accounts.containers.triggers.create @mutable
+	// TotalTimeMinMilliseconds: A visibility trigger minimum total visible time
+	// (in milliseconds). Only valid for AMP Visibility trigger. @mutable
+	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	TotalTimeMinMilliseconds *Parameter `json:"totalTimeMinMilliseconds,omitempty"`
-
 	// TriggerId: The Trigger ID uniquely identifies the GTM Trigger.
 	TriggerId string `json:"triggerId,omitempty"`
-
 	// Type: Defines the data layer event that causes this trigger. @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
@@ -1993,228 +1644,177 @@ type Trigger struct {
 	//   "scrollDepth"
 	//   "elementVisibility"
 	Type string `json:"type,omitempty"`
-
-	// UniqueTriggerId: Globally unique id of the trigger that
-	// auto-generates this (a Form Submit, Link Click or Timer listener) if
-	// any. Used to make incompatible auto-events work together with trigger
-	// filtering based on trigger ids. This value is populated during output
-	// generation since the tags implied by triggers don't exist until then.
-	// Only valid for Form Submit, Link Click and Timer triggers. @mutable
+	// UniqueTriggerId: Globally unique id of the trigger that auto-generates this
+	// (a Form Submit, Link Click or Timer listener) if any. Used to make
+	// incompatible auto-events work together with trigger filtering based on
+	// trigger ids. This value is populated during output generation since the tags
+	// implied by triggers don't exist until then. Only valid for Form Submit, Link
+	// Click and Timer triggers. @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	UniqueTriggerId *Parameter `json:"uniqueTriggerId,omitempty"`
-
-	// VerticalScrollPercentageList: List of integer percentage values for
-	// scroll triggers. The trigger will fire when each percentage is
-	// reached when the view is scrolled vertically. Only valid for AMP
-	// scroll triggers. @mutable
+	// VerticalScrollPercentageList: List of integer percentage values for scroll
+	// triggers. The trigger will fire when each percentage is reached when the
+	// view is scrolled vertically. Only valid for AMP scroll triggers. @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	VerticalScrollPercentageList *Parameter `json:"verticalScrollPercentageList,omitempty"`
-
-	// VisibilitySelector: A visibility trigger CSS selector (i.e. "#id").
-	// Only valid for AMP Visibility trigger. @mutable
+	// VisibilitySelector: A visibility trigger CSS selector (i.e. "#id"). Only
+	// valid for AMP Visibility trigger. @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	VisibilitySelector *Parameter `json:"visibilitySelector,omitempty"`
-
-	// VisiblePercentageMax: A visibility trigger maximum percent
-	// visibility. Only valid for AMP Visibility trigger. @mutable
+	// VisiblePercentageMax: A visibility trigger maximum percent visibility. Only
+	// valid for AMP Visibility trigger. @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	VisiblePercentageMax *Parameter `json:"visiblePercentageMax,omitempty"`
-
-	// VisiblePercentageMin: A visibility trigger minimum percent
-	// visibility. Only valid for AMP Visibility trigger. @mutable
+	// VisiblePercentageMin: A visibility trigger minimum percent visibility. Only
+	// valid for AMP Visibility trigger. @mutable
 	// tagmanager.accounts.containers.triggers.create @mutable
 	// tagmanager.accounts.containers.triggers.update
 	VisiblePercentageMin *Parameter `json:"visiblePercentageMin,omitempty"`
-
-	// WaitForTags: Whether or not we should delay the form submissions or
-	// link opening until all of the tags have fired (by preventing the
-	// default action and later simulating the default action). Only valid
-	// for Form Submission and Link Click triggers. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// WaitForTags: Whether or not we should delay the form submissions or link
+	// opening until all of the tags have fired (by preventing the default action
+	// and later simulating the default action). Only valid for Form Submission and
+	// Link Click triggers. @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	WaitForTags *Parameter `json:"waitForTags,omitempty"`
-
-	// WaitForTagsTimeout: How long to wait (in milliseconds) for tags to
-	// fire when 'waits_for_tags' above evaluates to true. Only valid for
-	// Form Submission and Link Click triggers. @mutable
-	// tagmanager.accounts.containers.triggers.create @mutable
-	// tagmanager.accounts.containers.triggers.update
+	// WaitForTagsTimeout: How long to wait (in milliseconds) for tags to fire when
+	// 'waits_for_tags' above evaluates to true. Only valid for Form Submission and
+	// Link Click triggers. @mutable tagmanager.accounts.containers.triggers.create
+	// @mutable tagmanager.accounts.containers.triggers.update
 	WaitForTagsTimeout *Parameter `json:"waitForTagsTimeout,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Trigger) MarshalJSON() ([]byte, error) {
 	type NoMethod Trigger
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// UserAccess: Represents a user's permissions to an account and its
-// container.
+// UserAccess: Represents a user's permissions to an account and its container.
 type UserAccess struct {
 	// AccountAccess: GTM Account access permissions. @mutable
 	// tagmanager.accounts.permissions.create @mutable
 	// tagmanager.accounts.permissions.update
 	AccountAccess *AccountAccess `json:"accountAccess,omitempty"`
-
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-
 	// ContainerAccess: GTM Container access permissions. @mutable
 	// tagmanager.accounts.permissions.create @mutable
 	// tagmanager.accounts.permissions.update
 	ContainerAccess []*ContainerAccess `json:"containerAccess,omitempty"`
-
 	// EmailAddress: User's email address. @mutable
 	// tagmanager.accounts.permissions.create
 	EmailAddress string `json:"emailAddress,omitempty"`
-
 	// PermissionId: Account Permission ID.
 	PermissionId string `json:"permissionId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountAccess") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountAccess") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccountAccess") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *UserAccess) MarshalJSON() ([]byte, error) {
 	type NoMethod UserAccess
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
 // Variable: Represents a Google Tag Manager Variable.
 type Variable struct {
 	// AccountId: GTM Account ID.
 	AccountId string `json:"accountId,omitempty"`
-
 	// ContainerId: GTM Container ID.
 	ContainerId string `json:"containerId,omitempty"`
-
-	// DisablingTriggerId: For mobile containers only: A list of trigger IDs
-	// for disabling conditional variables; the variable is enabled if one
-	// of the enabling trigger is true while all the disabling trigger are
-	// false. Treated as an unordered set. @mutable
+	// DisablingTriggerId: For mobile containers only: A list of trigger IDs for
+	// disabling conditional variables; the variable is enabled if one of the
+	// enabling trigger is true while all the disabling trigger are false. Treated
+	// as an unordered set. @mutable
 	// tagmanager.accounts.containers.variables.create @mutable
 	// tagmanager.accounts.containers.variables.update
 	DisablingTriggerId []string `json:"disablingTriggerId,omitempty"`
-
-	// EnablingTriggerId: For mobile containers only: A list of trigger IDs
-	// for enabling conditional variables; the variable is enabled if one of
-	// the enabling triggers is true while all the disabling triggers are
-	// false. Treated as an unordered set. @mutable
+	// EnablingTriggerId: For mobile containers only: A list of trigger IDs for
+	// enabling conditional variables; the variable is enabled if one of the
+	// enabling triggers is true while all the disabling triggers are false.
+	// Treated as an unordered set. @mutable
 	// tagmanager.accounts.containers.variables.create @mutable
 	// tagmanager.accounts.containers.variables.update
 	EnablingTriggerId []string `json:"enablingTriggerId,omitempty"`
-
-	// Fingerprint: The fingerprint of the GTM Variable as computed at
-	// storage time. This value is recomputed whenever the variable is
-	// modified.
+	// Fingerprint: The fingerprint of the GTM Variable as computed at storage
+	// time. This value is recomputed whenever the variable is modified.
 	Fingerprint string `json:"fingerprint,omitempty"`
-
 	// Name: Variable display name. @mutable
 	// tagmanager.accounts.containers.variables.create @mutable
 	// tagmanager.accounts.containers.variables.update
 	Name string `json:"name,omitempty"`
-
-	// Notes: User notes on how to apply this variable in the container.
-	// @mutable tagmanager.accounts.containers.variables.create @mutable
+	// Notes: User notes on how to apply this variable in the container. @mutable
+	// tagmanager.accounts.containers.variables.create @mutable
 	// tagmanager.accounts.containers.variables.update
 	Notes string `json:"notes,omitempty"`
-
 	// Parameter: The variable's parameters. @mutable
 	// tagmanager.accounts.containers.variables.create @mutable
 	// tagmanager.accounts.containers.variables.update
 	Parameter []*Parameter `json:"parameter,omitempty"`
-
 	// ParentFolderId: Parent folder id.
 	ParentFolderId string `json:"parentFolderId,omitempty"`
-
-	// ScheduleEndMs: The end timestamp in milliseconds to schedule a
-	// variable. @mutable tagmanager.accounts.containers.variables.create
-	// @mutable tagmanager.accounts.containers.variables.update
+	// ScheduleEndMs: The end timestamp in milliseconds to schedule a variable.
+	// @mutable tagmanager.accounts.containers.variables.create @mutable
+	// tagmanager.accounts.containers.variables.update
 	ScheduleEndMs int64 `json:"scheduleEndMs,omitempty,string"`
-
-	// ScheduleStartMs: The start timestamp in milliseconds to schedule a
-	// variable. @mutable tagmanager.accounts.containers.variables.create
-	// @mutable tagmanager.accounts.containers.variables.update
+	// ScheduleStartMs: The start timestamp in milliseconds to schedule a variable.
+	// @mutable tagmanager.accounts.containers.variables.create @mutable
+	// tagmanager.accounts.containers.variables.update
 	ScheduleStartMs int64 `json:"scheduleStartMs,omitempty,string"`
-
 	// Type: GTM Variable Type. @mutable
 	// tagmanager.accounts.containers.variables.create @mutable
 	// tagmanager.accounts.containers.variables.update
 	Type string `json:"type,omitempty"`
-
 	// VariableId: The Variable ID uniquely identifies the GTM Variable.
 	VariableId string `json:"variableId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "AccountId") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "AccountId") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "AccountId") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *Variable) MarshalJSON() ([]byte, error) {
 	type NoMethod Variable
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
-
-// method id "tagmanager.accounts.get":
 
 type AccountsGetCall struct {
 	s            *Service
@@ -2235,33 +1835,29 @@ func (r *AccountsService) Get(accountId string) *AccountsGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsGetCall) Fields(s ...googleapi.Field) *AccountsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsGetCall) IfNoneMatch(entityTag string) *AccountsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsGetCall) Context(ctx context.Context) *AccountsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2270,12 +1866,7 @@ func (c *AccountsGetCall) Header() http.Header {
 }
 
 func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2296,12 +1887,10 @@ func (c *AccountsGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "tagmanager.accounts.get" call.
-// Exactly one of *Account or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Account.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Account.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2332,36 +1921,7 @@ func (c *AccountsGetCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a GTM Account.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.get",
-	//   "parameterOrder": [
-	//     "accountId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}",
-	//   "response": {
-	//     "$ref": "Account"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.manage.accounts",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.list":
 
 type AccountsListCall struct {
 	s            *Service
@@ -2378,33 +1938,29 @@ func (r *AccountsService) List() *AccountsListCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsListCall) Fields(s ...googleapi.Field) *AccountsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsListCall) IfNoneMatch(entityTag string) *AccountsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsListCall) Context(ctx context.Context) *AccountsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2413,12 +1969,7 @@ func (c *AccountsListCall) Header() http.Header {
 }
 
 func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2436,12 +1987,11 @@ func (c *AccountsListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "tagmanager.accounts.list" call.
-// Exactly one of *ListAccountsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListAccountsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListAccountsResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccountsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2472,27 +2022,7 @@ func (c *AccountsListCall) Do(opts ...googleapi.CallOption) (*ListAccountsRespon
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all GTM Accounts that a user has access to.",
-	//   "flatPath": "tagmanager/v1/accounts",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.list",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "tagmanager/v1/accounts",
-	//   "response": {
-	//     "$ref": "ListAccountsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.manage.accounts",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.update":
 
 type AccountsUpdateCall struct {
 	s          *Service
@@ -2513,32 +2043,29 @@ func (r *AccountsService) Update(accountId string, account *Account) *AccountsUp
 	return c
 }
 
-// Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the account in
-// storage.
+// Fingerprint sets the optional parameter "fingerprint": When provided, this
+// fingerprint must match the fingerprint of the account in storage.
 func (c *AccountsUpdateCall) Fingerprint(fingerprint string) *AccountsUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsUpdateCall) Fields(s ...googleapi.Field) *AccountsUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsUpdateCall) Context(ctx context.Context) *AccountsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2547,18 +2074,12 @@ func (c *AccountsUpdateCall) Header() http.Header {
 }
 
 func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.account)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}")
@@ -2575,12 +2096,10 @@ func (c *AccountsUpdateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "tagmanager.accounts.update" call.
-// Exactly one of *Account or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Account.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Account.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Account, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2611,42 +2130,7 @@ func (c *AccountsUpdateCall) Do(opts ...googleapi.CallOption) (*Account, error) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a GTM Account.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}",
-	//   "httpMethod": "PUT",
-	//   "id": "tagmanager.accounts.update",
-	//   "parameterOrder": [
-	//     "accountId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the account in storage.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}",
-	//   "request": {
-	//     "$ref": "Account"
-	//   },
-	//   "response": {
-	//     "$ref": "Account"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.manage.accounts"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.create":
 
 type AccountsContainersCreateCall struct {
 	s          *Service
@@ -2668,23 +2152,21 @@ func (r *AccountsContainersService) Create(accountId string, container *Containe
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersCreateCall) Fields(s ...googleapi.Field) *AccountsContainersCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersCreateCall) Context(ctx context.Context) *AccountsContainersCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2693,18 +2175,12 @@ func (c *AccountsContainersCreateCall) Header() http.Header {
 }
 
 func (c *AccountsContainersCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.container)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers")
@@ -2721,12 +2197,10 @@ func (c *AccountsContainersCreateCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "tagmanager.accounts.containers.create" call.
-// Exactly one of *Container or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Container.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Container.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersCreateCall) Do(opts ...googleapi.CallOption) (*Container, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -2757,37 +2231,7 @@ func (c *AccountsContainersCreateCall) Do(opts ...googleapi.CallOption) (*Contai
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a Container.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers",
-	//   "httpMethod": "POST",
-	//   "id": "tagmanager.accounts.containers.create",
-	//   "parameterOrder": [
-	//     "accountId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers",
-	//   "request": {
-	//     "$ref": "Container"
-	//   },
-	//   "response": {
-	//     "$ref": "Container"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.delete":
 
 type AccountsContainersDeleteCall struct {
 	s           *Service
@@ -2810,23 +2254,21 @@ func (r *AccountsContainersService) Delete(accountId string, containerId string)
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersDeleteCall) Fields(s ...googleapi.Field) *AccountsContainersDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersDeleteCall) Context(ctx context.Context) *AccountsContainersDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2835,12 +2277,7 @@ func (c *AccountsContainersDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsContainersDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -2870,38 +2307,7 @@ func (c *AccountsContainersDeleteCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a Container.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "tagmanager.accounts.containers.delete",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.delete.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.get":
 
 type AccountsContainersGetCall struct {
 	s            *Service
@@ -2925,33 +2331,29 @@ func (r *AccountsContainersService) Get(accountId string, containerId string) *A
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersGetCall) Fields(s ...googleapi.Field) *AccountsContainersGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsContainersGetCall) IfNoneMatch(entityTag string) *AccountsContainersGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersGetCall) Context(ctx context.Context) *AccountsContainersGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -2960,12 +2362,7 @@ func (c *AccountsContainersGetCall) Header() http.Header {
 }
 
 func (c *AccountsContainersGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -2987,12 +2384,10 @@ func (c *AccountsContainersGetCall) doRequest(alt string) (*http.Response, error
 }
 
 // Do executes the "tagmanager.accounts.containers.get" call.
-// Exactly one of *Container or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Container.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Container.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersGetCall) Do(opts ...googleapi.CallOption) (*Container, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3023,42 +2418,7 @@ func (c *AccountsContainersGetCall) Do(opts ...googleapi.CallOption) (*Container
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a Container.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.get",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}",
-	//   "response": {
-	//     "$ref": "Container"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.list":
 
 type AccountsContainersListCall struct {
 	s            *Service
@@ -3079,33 +2439,29 @@ func (r *AccountsContainersService) List(accountId string) *AccountsContainersLi
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersListCall) Fields(s ...googleapi.Field) *AccountsContainersListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsContainersListCall) IfNoneMatch(entityTag string) *AccountsContainersListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersListCall) Context(ctx context.Context) *AccountsContainersListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3114,12 +2470,7 @@ func (c *AccountsContainersListCall) Header() http.Header {
 }
 
 func (c *AccountsContainersListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3140,12 +2491,11 @@ func (c *AccountsContainersListCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "tagmanager.accounts.containers.list" call.
-// Exactly one of *ListContainersResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListContainersResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListContainersResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsContainersListCall) Do(opts ...googleapi.CallOption) (*ListContainersResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3176,35 +2526,7 @@ func (c *AccountsContainersListCall) Do(opts ...googleapi.CallOption) (*ListCont
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all Containers that belongs to a GTM Account.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.list",
-	//   "parameterOrder": [
-	//     "accountId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers",
-	//   "response": {
-	//     "$ref": "ListContainersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.update":
 
 type AccountsContainersUpdateCall struct {
 	s           *Service
@@ -3228,32 +2550,29 @@ func (r *AccountsContainersService) Update(accountId string, containerId string,
 	return c
 }
 
-// Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the container in
-// storage.
+// Fingerprint sets the optional parameter "fingerprint": When provided, this
+// fingerprint must match the fingerprint of the container in storage.
 func (c *AccountsContainersUpdateCall) Fingerprint(fingerprint string) *AccountsContainersUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersUpdateCall) Context(ctx context.Context) *AccountsContainersUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3262,18 +2581,12 @@ func (c *AccountsContainersUpdateCall) Header() http.Header {
 }
 
 func (c *AccountsContainersUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.container)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}")
@@ -3291,12 +2604,10 @@ func (c *AccountsContainersUpdateCall) doRequest(alt string) (*http.Response, er
 }
 
 // Do executes the "tagmanager.accounts.containers.update" call.
-// Exactly one of *Container or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Container.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Container.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersUpdateCall) Do(opts ...googleapi.CallOption) (*Container, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3327,49 +2638,7 @@ func (c *AccountsContainersUpdateCall) Do(opts ...googleapi.CallOption) (*Contai
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a Container.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}",
-	//   "httpMethod": "PUT",
-	//   "id": "tagmanager.accounts.containers.update",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the container in storage.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}",
-	//   "request": {
-	//     "$ref": "Container"
-	//   },
-	//   "response": {
-	//     "$ref": "Container"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.environments.create":
 
 type AccountsContainersEnvironmentsCreateCall struct {
 	s           *Service
@@ -3394,23 +2663,21 @@ func (r *AccountsContainersEnvironmentsService) Create(accountId string, contain
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersEnvironmentsCreateCall) Fields(s ...googleapi.Field) *AccountsContainersEnvironmentsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersEnvironmentsCreateCall) Context(ctx context.Context) *AccountsContainersEnvironmentsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersEnvironmentsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3419,18 +2686,12 @@ func (c *AccountsContainersEnvironmentsCreateCall) Header() http.Header {
 }
 
 func (c *AccountsContainersEnvironmentsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.environment)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments")
@@ -3448,12 +2709,10 @@ func (c *AccountsContainersEnvironmentsCreateCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "tagmanager.accounts.containers.environments.create" call.
-// Exactly one of *Environment or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Environment.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Environment.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersEnvironmentsCreateCall) Do(opts ...googleapi.CallOption) (*Environment, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3484,44 +2743,7 @@ func (c *AccountsContainersEnvironmentsCreateCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a GTM Environment.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments",
-	//   "httpMethod": "POST",
-	//   "id": "tagmanager.accounts.containers.environments.create",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments",
-	//   "request": {
-	//     "$ref": "Environment"
-	//   },
-	//   "response": {
-	//     "$ref": "Environment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.environments.delete":
 
 type AccountsContainersEnvironmentsDeleteCall struct {
 	s             *Service
@@ -3547,23 +2769,21 @@ func (r *AccountsContainersEnvironmentsService) Delete(accountId string, contain
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersEnvironmentsDeleteCall) Fields(s ...googleapi.Field) *AccountsContainersEnvironmentsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersEnvironmentsDeleteCall) Context(ctx context.Context) *AccountsContainersEnvironmentsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersEnvironmentsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3572,12 +2792,7 @@ func (c *AccountsContainersEnvironmentsDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsContainersEnvironmentsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -3608,45 +2823,7 @@ func (c *AccountsContainersEnvironmentsDeleteCall) Do(opts ...googleapi.CallOpti
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a GTM Environment.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "tagmanager.accounts.containers.environments.delete",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "environmentId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "environmentId": {
-	//       "description": "The GTM Environment ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.environments.get":
 
 type AccountsContainersEnvironmentsGetCall struct {
 	s             *Service
@@ -3673,33 +2850,29 @@ func (r *AccountsContainersEnvironmentsService) Get(accountId string, containerI
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersEnvironmentsGetCall) Fields(s ...googleapi.Field) *AccountsContainersEnvironmentsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsContainersEnvironmentsGetCall) IfNoneMatch(entityTag string) *AccountsContainersEnvironmentsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersEnvironmentsGetCall) Context(ctx context.Context) *AccountsContainersEnvironmentsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersEnvironmentsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3708,12 +2881,7 @@ func (c *AccountsContainersEnvironmentsGetCall) Header() http.Header {
 }
 
 func (c *AccountsContainersEnvironmentsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3736,12 +2904,10 @@ func (c *AccountsContainersEnvironmentsGetCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "tagmanager.accounts.containers.environments.get" call.
-// Exactly one of *Environment or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Environment.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Environment.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersEnvironmentsGetCall) Do(opts ...googleapi.CallOption) (*Environment, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3772,49 +2938,7 @@ func (c *AccountsContainersEnvironmentsGetCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a GTM Environment.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.environments.get",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "environmentId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "environmentId": {
-	//       "description": "The GTM Environment ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
-	//   "response": {
-	//     "$ref": "Environment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.environments.list":
 
 type AccountsContainersEnvironmentsListCall struct {
 	s            *Service
@@ -3838,33 +2962,29 @@ func (r *AccountsContainersEnvironmentsService) List(accountId string, container
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersEnvironmentsListCall) Fields(s ...googleapi.Field) *AccountsContainersEnvironmentsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsContainersEnvironmentsListCall) IfNoneMatch(entityTag string) *AccountsContainersEnvironmentsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersEnvironmentsListCall) Context(ctx context.Context) *AccountsContainersEnvironmentsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersEnvironmentsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -3873,12 +2993,7 @@ func (c *AccountsContainersEnvironmentsListCall) Header() http.Header {
 }
 
 func (c *AccountsContainersEnvironmentsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -3900,12 +3015,11 @@ func (c *AccountsContainersEnvironmentsListCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "tagmanager.accounts.containers.environments.list" call.
-// Exactly one of *ListEnvironmentsResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *ListEnvironmentsResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsContainersEnvironmentsListCall) Do(opts ...googleapi.CallOption) (*ListEnvironmentsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -3936,42 +3050,7 @@ func (c *AccountsContainersEnvironmentsListCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all GTM Environments of a GTM Container.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.environments.list",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments",
-	//   "response": {
-	//     "$ref": "ListEnvironmentsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.environments.update":
 
 type AccountsContainersEnvironmentsUpdateCall struct {
 	s             *Service
@@ -3998,32 +3077,29 @@ func (r *AccountsContainersEnvironmentsService) Update(accountId string, contain
 	return c
 }
 
-// Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the environment in
-// storage.
+// Fingerprint sets the optional parameter "fingerprint": When provided, this
+// fingerprint must match the fingerprint of the environment in storage.
 func (c *AccountsContainersEnvironmentsUpdateCall) Fingerprint(fingerprint string) *AccountsContainersEnvironmentsUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersEnvironmentsUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersEnvironmentsUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersEnvironmentsUpdateCall) Context(ctx context.Context) *AccountsContainersEnvironmentsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersEnvironmentsUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4032,18 +3108,12 @@ func (c *AccountsContainersEnvironmentsUpdateCall) Header() http.Header {
 }
 
 func (c *AccountsContainersEnvironmentsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.environment)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}")
@@ -4062,12 +3132,10 @@ func (c *AccountsContainersEnvironmentsUpdateCall) doRequest(alt string) (*http.
 }
 
 // Do executes the "tagmanager.accounts.containers.environments.update" call.
-// Exactly one of *Environment or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Environment.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Environment.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersEnvironmentsUpdateCall) Do(opts ...googleapi.CallOption) (*Environment, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4098,56 +3166,7 @@ func (c *AccountsContainersEnvironmentsUpdateCall) Do(opts ...googleapi.CallOpti
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a GTM Environment.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
-	//   "httpMethod": "PUT",
-	//   "id": "tagmanager.accounts.containers.environments.update",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "environmentId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "environmentId": {
-	//       "description": "The GTM Environment ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the environment in storage.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/environments/{environmentId}",
-	//   "request": {
-	//     "$ref": "Environment"
-	//   },
-	//   "response": {
-	//     "$ref": "Environment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.folders.create":
 
 type AccountsContainersFoldersCreateCall struct {
 	s           *Service
@@ -4172,23 +3191,21 @@ func (r *AccountsContainersFoldersService) Create(accountId string, containerId 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersFoldersCreateCall) Fields(s ...googleapi.Field) *AccountsContainersFoldersCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersFoldersCreateCall) Context(ctx context.Context) *AccountsContainersFoldersCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersFoldersCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4197,18 +3214,12 @@ func (c *AccountsContainersFoldersCreateCall) Header() http.Header {
 }
 
 func (c *AccountsContainersFoldersCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.folder)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders")
@@ -4226,12 +3237,10 @@ func (c *AccountsContainersFoldersCreateCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "tagmanager.accounts.containers.folders.create" call.
-// Exactly one of *Folder or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Folder.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Folder.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersFoldersCreateCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4262,44 +3271,7 @@ func (c *AccountsContainersFoldersCreateCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a GTM Folder.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders",
-	//   "httpMethod": "POST",
-	//   "id": "tagmanager.accounts.containers.folders.create",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders",
-	//   "request": {
-	//     "$ref": "Folder"
-	//   },
-	//   "response": {
-	//     "$ref": "Folder"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.folders.delete":
 
 type AccountsContainersFoldersDeleteCall struct {
 	s           *Service
@@ -4325,23 +3297,21 @@ func (r *AccountsContainersFoldersService) Delete(accountId string, containerId 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersFoldersDeleteCall) Fields(s ...googleapi.Field) *AccountsContainersFoldersDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersFoldersDeleteCall) Context(ctx context.Context) *AccountsContainersFoldersDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersFoldersDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4350,12 +3320,7 @@ func (c *AccountsContainersFoldersDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsContainersFoldersDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -4386,45 +3351,7 @@ func (c *AccountsContainersFoldersDeleteCall) Do(opts ...googleapi.CallOption) e
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a GTM Folder.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "tagmanager.accounts.containers.folders.delete",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "folderId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "folderId": {
-	//       "description": "The GTM Folder ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.folders.get":
 
 type AccountsContainersFoldersGetCall struct {
 	s            *Service
@@ -4451,33 +3378,29 @@ func (r *AccountsContainersFoldersService) Get(accountId string, containerId str
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersFoldersGetCall) Fields(s ...googleapi.Field) *AccountsContainersFoldersGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsContainersFoldersGetCall) IfNoneMatch(entityTag string) *AccountsContainersFoldersGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersFoldersGetCall) Context(ctx context.Context) *AccountsContainersFoldersGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersFoldersGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4486,12 +3409,7 @@ func (c *AccountsContainersFoldersGetCall) Header() http.Header {
 }
 
 func (c *AccountsContainersFoldersGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4514,12 +3432,10 @@ func (c *AccountsContainersFoldersGetCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "tagmanager.accounts.containers.folders.get" call.
-// Exactly one of *Folder or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Folder.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Folder.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersFoldersGetCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4550,49 +3466,7 @@ func (c *AccountsContainersFoldersGetCall) Do(opts ...googleapi.CallOption) (*Fo
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a GTM Folder.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.folders.get",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "folderId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "folderId": {
-	//       "description": "The GTM Folder ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}",
-	//   "response": {
-	//     "$ref": "Folder"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.folders.list":
 
 type AccountsContainersFoldersListCall struct {
 	s            *Service
@@ -4616,33 +3490,29 @@ func (r *AccountsContainersFoldersService) List(accountId string, containerId st
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersFoldersListCall) Fields(s ...googleapi.Field) *AccountsContainersFoldersListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsContainersFoldersListCall) IfNoneMatch(entityTag string) *AccountsContainersFoldersListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersFoldersListCall) Context(ctx context.Context) *AccountsContainersFoldersListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersFoldersListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4651,12 +3521,7 @@ func (c *AccountsContainersFoldersListCall) Header() http.Header {
 }
 
 func (c *AccountsContainersFoldersListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -4678,12 +3543,11 @@ func (c *AccountsContainersFoldersListCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "tagmanager.accounts.containers.folders.list" call.
-// Exactly one of *ListFoldersResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListFoldersResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListFoldersResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsContainersFoldersListCall) Do(opts ...googleapi.CallOption) (*ListFoldersResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4714,42 +3578,7 @@ func (c *AccountsContainersFoldersListCall) Do(opts ...googleapi.CallOption) (*L
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all GTM Folders of a Container.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.folders.list",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders",
-	//   "response": {
-	//     "$ref": "ListFoldersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.folders.update":
 
 type AccountsContainersFoldersUpdateCall struct {
 	s           *Service
@@ -4776,31 +3605,29 @@ func (r *AccountsContainersFoldersService) Update(accountId string, containerId 
 	return c
 }
 
-// Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the folder in storage.
+// Fingerprint sets the optional parameter "fingerprint": When provided, this
+// fingerprint must match the fingerprint of the folder in storage.
 func (c *AccountsContainersFoldersUpdateCall) Fingerprint(fingerprint string) *AccountsContainersFoldersUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersFoldersUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersFoldersUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersFoldersUpdateCall) Context(ctx context.Context) *AccountsContainersFoldersUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersFoldersUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4809,18 +3636,12 @@ func (c *AccountsContainersFoldersUpdateCall) Header() http.Header {
 }
 
 func (c *AccountsContainersFoldersUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.folder)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}")
@@ -4839,12 +3660,10 @@ func (c *AccountsContainersFoldersUpdateCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "tagmanager.accounts.containers.folders.update" call.
-// Exactly one of *Folder or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Folder.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Folder.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersFoldersUpdateCall) Do(opts ...googleapi.CallOption) (*Folder, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -4875,56 +3694,7 @@ func (c *AccountsContainersFoldersUpdateCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a GTM Folder.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}",
-	//   "httpMethod": "PUT",
-	//   "id": "tagmanager.accounts.containers.folders.update",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "folderId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the folder in storage.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "folderId": {
-	//       "description": "The GTM Folder ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}",
-	//   "request": {
-	//     "$ref": "Folder"
-	//   },
-	//   "response": {
-	//     "$ref": "Folder"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.folders.entities.list":
 
 type AccountsContainersFoldersEntitiesListCall struct {
 	s            *Service
@@ -4951,33 +3721,29 @@ func (r *AccountsContainersFoldersEntitiesService) List(accountId string, contai
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersFoldersEntitiesListCall) Fields(s ...googleapi.Field) *AccountsContainersFoldersEntitiesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsContainersFoldersEntitiesListCall) IfNoneMatch(entityTag string) *AccountsContainersFoldersEntitiesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersFoldersEntitiesListCall) Context(ctx context.Context) *AccountsContainersFoldersEntitiesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersFoldersEntitiesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -4986,12 +3752,7 @@ func (c *AccountsContainersFoldersEntitiesListCall) Header() http.Header {
 }
 
 func (c *AccountsContainersFoldersEntitiesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5014,12 +3775,10 @@ func (c *AccountsContainersFoldersEntitiesListCall) doRequest(alt string) (*http
 }
 
 // Do executes the "tagmanager.accounts.containers.folders.entities.list" call.
-// Exactly one of *FolderEntities or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *FolderEntities.ServerResponse.Header or (if a response was returned
-// at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *FolderEntities.ServerResponse.Header or (if a response was returned at all)
+// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersFoldersEntitiesListCall) Do(opts ...googleapi.CallOption) (*FolderEntities, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5050,49 +3809,7 @@ func (c *AccountsContainersFoldersEntitiesListCall) Do(opts ...googleapi.CallOpt
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all entities in a GTM Folder.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}/entities",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.folders.entities.list",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "folderId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "folderId": {
-	//       "description": "The GTM Folder ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/folders/{folderId}/entities",
-	//   "response": {
-	//     "$ref": "FolderEntities"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.move_folders.update":
 
 type AccountsContainersMoveFoldersUpdateCall struct {
 	s           *Service
@@ -5119,45 +3836,43 @@ func (r *AccountsContainersMoveFoldersService) Update(accountId string, containe
 	return c
 }
 
-// TagId sets the optional parameter "tagId": The tags to be moved to
-// the folder.
+// TagId sets the optional parameter "tagId": The tags to be moved to the
+// folder.
 func (c *AccountsContainersMoveFoldersUpdateCall) TagId(tagId ...string) *AccountsContainersMoveFoldersUpdateCall {
 	c.urlParams_.SetMulti("tagId", append([]string{}, tagId...))
 	return c
 }
 
-// TriggerId sets the optional parameter "triggerId": The triggers to be
-// moved to the folder.
+// TriggerId sets the optional parameter "triggerId": The triggers to be moved
+// to the folder.
 func (c *AccountsContainersMoveFoldersUpdateCall) TriggerId(triggerId ...string) *AccountsContainersMoveFoldersUpdateCall {
 	c.urlParams_.SetMulti("triggerId", append([]string{}, triggerId...))
 	return c
 }
 
-// VariableId sets the optional parameter "variableId": The variables to
-// be moved to the folder.
+// VariableId sets the optional parameter "variableId": The variables to be
+// moved to the folder.
 func (c *AccountsContainersMoveFoldersUpdateCall) VariableId(variableId ...string) *AccountsContainersMoveFoldersUpdateCall {
 	c.urlParams_.SetMulti("variableId", append([]string{}, variableId...))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersMoveFoldersUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersMoveFoldersUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersMoveFoldersUpdateCall) Context(ctx context.Context) *AccountsContainersMoveFoldersUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersMoveFoldersUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5166,18 +3881,12 @@ func (c *AccountsContainersMoveFoldersUpdateCall) Header() http.Header {
 }
 
 func (c *AccountsContainersMoveFoldersUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.folder)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/move_folders/{folderId}")
@@ -5207,66 +3916,7 @@ func (c *AccountsContainersMoveFoldersUpdateCall) Do(opts ...googleapi.CallOptio
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Moves entities to a GTM Folder.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/move_folders/{folderId}",
-	//   "httpMethod": "PUT",
-	//   "id": "tagmanager.accounts.containers.move_folders.update",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "folderId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "folderId": {
-	//       "description": "The GTM Folder ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "tagId": {
-	//       "description": "The tags to be moved to the folder.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "triggerId": {
-	//       "description": "The triggers to be moved to the folder.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     },
-	//     "variableId": {
-	//       "description": "The variables to be moved to the folder.",
-	//       "location": "query",
-	//       "repeated": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/move_folders/{folderId}",
-	//   "request": {
-	//     "$ref": "Folder"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.reauthorize_environments.update":
 
 type AccountsContainersReauthorizeEnvironmentsUpdateCall struct {
 	s             *Service
@@ -5294,23 +3944,21 @@ func (r *AccountsContainersReauthorizeEnvironmentsService) Update(accountId stri
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersReauthorizeEnvironmentsUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) Context(ctx context.Context) *AccountsContainersReauthorizeEnvironmentsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5319,18 +3967,12 @@ func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) Header() http.Head
 }
 
 func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.environment)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/reauthorize_environments/{environmentId}")
@@ -5349,12 +3991,10 @@ func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) doRequest(alt stri
 }
 
 // Do executes the "tagmanager.accounts.containers.reauthorize_environments.update" call.
-// Exactly one of *Environment or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *Environment.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Environment.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) Do(opts ...googleapi.CallOption) (*Environment, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5385,51 +4025,7 @@ func (c *AccountsContainersReauthorizeEnvironmentsUpdateCall) Do(opts ...googlea
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Re-generates the authorization code for a GTM Environment.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/reauthorize_environments/{environmentId}",
-	//   "httpMethod": "PUT",
-	//   "id": "tagmanager.accounts.containers.reauthorize_environments.update",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "environmentId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "environmentId": {
-	//       "description": "The GTM Environment ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/reauthorize_environments/{environmentId}",
-	//   "request": {
-	//     "$ref": "Environment"
-	//   },
-	//   "response": {
-	//     "$ref": "Environment"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.publish"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.tags.create":
 
 type AccountsContainersTagsCreateCall struct {
 	s           *Service
@@ -5454,23 +4050,21 @@ func (r *AccountsContainersTagsService) Create(accountId string, containerId str
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersTagsCreateCall) Fields(s ...googleapi.Field) *AccountsContainersTagsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersTagsCreateCall) Context(ctx context.Context) *AccountsContainersTagsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersTagsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5479,18 +4073,12 @@ func (c *AccountsContainersTagsCreateCall) Header() http.Header {
 }
 
 func (c *AccountsContainersTagsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tag)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags")
@@ -5508,12 +4096,10 @@ func (c *AccountsContainersTagsCreateCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "tagmanager.accounts.containers.tags.create" call.
-// Exactly one of *Tag or error will be non-nil. Any non-2xx status code
-// is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Tag.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersTagsCreateCall) Do(opts ...googleapi.CallOption) (*Tag, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5544,44 +4130,7 @@ func (c *AccountsContainersTagsCreateCall) Do(opts ...googleapi.CallOption) (*Ta
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a GTM Tag.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags",
-	//   "httpMethod": "POST",
-	//   "id": "tagmanager.accounts.containers.tags.create",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags",
-	//   "request": {
-	//     "$ref": "Tag"
-	//   },
-	//   "response": {
-	//     "$ref": "Tag"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.tags.delete":
 
 type AccountsContainersTagsDeleteCall struct {
 	s           *Service
@@ -5607,23 +4156,21 @@ func (r *AccountsContainersTagsService) Delete(accountId string, containerId str
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersTagsDeleteCall) Fields(s ...googleapi.Field) *AccountsContainersTagsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersTagsDeleteCall) Context(ctx context.Context) *AccountsContainersTagsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersTagsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5632,12 +4179,7 @@ func (c *AccountsContainersTagsDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsContainersTagsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -5668,45 +4210,7 @@ func (c *AccountsContainersTagsDeleteCall) Do(opts ...googleapi.CallOption) erro
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a GTM Tag.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "tagmanager.accounts.containers.tags.delete",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "tagId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "tagId": {
-	//       "description": "The GTM Tag ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.tags.get":
 
 type AccountsContainersTagsGetCall struct {
 	s            *Service
@@ -5733,33 +4237,29 @@ func (r *AccountsContainersTagsService) Get(accountId string, containerId string
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersTagsGetCall) Fields(s ...googleapi.Field) *AccountsContainersTagsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsContainersTagsGetCall) IfNoneMatch(entityTag string) *AccountsContainersTagsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersTagsGetCall) Context(ctx context.Context) *AccountsContainersTagsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersTagsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5768,12 +4268,7 @@ func (c *AccountsContainersTagsGetCall) Header() http.Header {
 }
 
 func (c *AccountsContainersTagsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5796,12 +4291,10 @@ func (c *AccountsContainersTagsGetCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "tagmanager.accounts.containers.tags.get" call.
-// Exactly one of *Tag or error will be non-nil. Any non-2xx status code
-// is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Tag.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersTagsGetCall) Do(opts ...googleapi.CallOption) (*Tag, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5832,49 +4325,7 @@ func (c *AccountsContainersTagsGetCall) Do(opts ...googleapi.CallOption) (*Tag, 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a GTM Tag.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.tags.get",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "tagId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "tagId": {
-	//       "description": "The GTM Tag ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}",
-	//   "response": {
-	//     "$ref": "Tag"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.tags.list":
 
 type AccountsContainersTagsListCall struct {
 	s            *Service
@@ -5898,33 +4349,29 @@ func (r *AccountsContainersTagsService) List(accountId string, containerId strin
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersTagsListCall) Fields(s ...googleapi.Field) *AccountsContainersTagsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsContainersTagsListCall) IfNoneMatch(entityTag string) *AccountsContainersTagsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersTagsListCall) Context(ctx context.Context) *AccountsContainersTagsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersTagsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -5933,12 +4380,7 @@ func (c *AccountsContainersTagsListCall) Header() http.Header {
 }
 
 func (c *AccountsContainersTagsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -5960,12 +4402,11 @@ func (c *AccountsContainersTagsListCall) doRequest(alt string) (*http.Response, 
 }
 
 // Do executes the "tagmanager.accounts.containers.tags.list" call.
-// Exactly one of *ListTagsResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListTagsResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListTagsResponse.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsContainersTagsListCall) Do(opts ...googleapi.CallOption) (*ListTagsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -5996,42 +4437,7 @@ func (c *AccountsContainersTagsListCall) Do(opts ...googleapi.CallOption) (*List
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all GTM Tags of a Container.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.tags.list",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags",
-	//   "response": {
-	//     "$ref": "ListTagsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.tags.update":
 
 type AccountsContainersTagsUpdateCall struct {
 	s           *Service
@@ -6058,31 +4464,29 @@ func (r *AccountsContainersTagsService) Update(accountId string, containerId str
 	return c
 }
 
-// Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the tag in storage.
+// Fingerprint sets the optional parameter "fingerprint": When provided, this
+// fingerprint must match the fingerprint of the tag in storage.
 func (c *AccountsContainersTagsUpdateCall) Fingerprint(fingerprint string) *AccountsContainersTagsUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersTagsUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersTagsUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersTagsUpdateCall) Context(ctx context.Context) *AccountsContainersTagsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersTagsUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6091,18 +4495,12 @@ func (c *AccountsContainersTagsUpdateCall) Header() http.Header {
 }
 
 func (c *AccountsContainersTagsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.tag)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}")
@@ -6121,12 +4519,10 @@ func (c *AccountsContainersTagsUpdateCall) doRequest(alt string) (*http.Response
 }
 
 // Do executes the "tagmanager.accounts.containers.tags.update" call.
-// Exactly one of *Tag or error will be non-nil. Any non-2xx status code
-// is an error. Response headers are in either
+// Any non-2xx status code is an error. Response headers are in either
 // *Tag.ServerResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersTagsUpdateCall) Do(opts ...googleapi.CallOption) (*Tag, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6157,56 +4553,7 @@ func (c *AccountsContainersTagsUpdateCall) Do(opts ...googleapi.CallOption) (*Ta
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a GTM Tag.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}",
-	//   "httpMethod": "PUT",
-	//   "id": "tagmanager.accounts.containers.tags.update",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "tagId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the tag in storage.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "tagId": {
-	//       "description": "The GTM Tag ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/tags/{tagId}",
-	//   "request": {
-	//     "$ref": "Tag"
-	//   },
-	//   "response": {
-	//     "$ref": "Tag"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.triggers.create":
 
 type AccountsContainersTriggersCreateCall struct {
 	s           *Service
@@ -6231,23 +4578,21 @@ func (r *AccountsContainersTriggersService) Create(accountId string, containerId
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersTriggersCreateCall) Fields(s ...googleapi.Field) *AccountsContainersTriggersCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersTriggersCreateCall) Context(ctx context.Context) *AccountsContainersTriggersCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersTriggersCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6256,18 +4601,12 @@ func (c *AccountsContainersTriggersCreateCall) Header() http.Header {
 }
 
 func (c *AccountsContainersTriggersCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.trigger)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers")
@@ -6285,12 +4624,10 @@ func (c *AccountsContainersTriggersCreateCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "tagmanager.accounts.containers.triggers.create" call.
-// Exactly one of *Trigger or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Trigger.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Trigger.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersTriggersCreateCall) Do(opts ...googleapi.CallOption) (*Trigger, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6321,44 +4658,7 @@ func (c *AccountsContainersTriggersCreateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a GTM Trigger.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers",
-	//   "httpMethod": "POST",
-	//   "id": "tagmanager.accounts.containers.triggers.create",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers",
-	//   "request": {
-	//     "$ref": "Trigger"
-	//   },
-	//   "response": {
-	//     "$ref": "Trigger"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.triggers.delete":
 
 type AccountsContainersTriggersDeleteCall struct {
 	s           *Service
@@ -6384,23 +4684,21 @@ func (r *AccountsContainersTriggersService) Delete(accountId string, containerId
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersTriggersDeleteCall) Fields(s ...googleapi.Field) *AccountsContainersTriggersDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersTriggersDeleteCall) Context(ctx context.Context) *AccountsContainersTriggersDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersTriggersDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6409,12 +4707,7 @@ func (c *AccountsContainersTriggersDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsContainersTriggersDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -6445,45 +4738,7 @@ func (c *AccountsContainersTriggersDeleteCall) Do(opts ...googleapi.CallOption) 
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a GTM Trigger.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "tagmanager.accounts.containers.triggers.delete",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "triggerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "triggerId": {
-	//       "description": "The GTM Trigger ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.triggers.get":
 
 type AccountsContainersTriggersGetCall struct {
 	s            *Service
@@ -6510,33 +4765,29 @@ func (r *AccountsContainersTriggersService) Get(accountId string, containerId st
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersTriggersGetCall) Fields(s ...googleapi.Field) *AccountsContainersTriggersGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsContainersTriggersGetCall) IfNoneMatch(entityTag string) *AccountsContainersTriggersGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersTriggersGetCall) Context(ctx context.Context) *AccountsContainersTriggersGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersTriggersGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6545,12 +4796,7 @@ func (c *AccountsContainersTriggersGetCall) Header() http.Header {
 }
 
 func (c *AccountsContainersTriggersGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6573,12 +4819,10 @@ func (c *AccountsContainersTriggersGetCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "tagmanager.accounts.containers.triggers.get" call.
-// Exactly one of *Trigger or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Trigger.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Trigger.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersTriggersGetCall) Do(opts ...googleapi.CallOption) (*Trigger, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6609,49 +4853,7 @@ func (c *AccountsContainersTriggersGetCall) Do(opts ...googleapi.CallOption) (*T
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a GTM Trigger.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.triggers.get",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "triggerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "triggerId": {
-	//       "description": "The GTM Trigger ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}",
-	//   "response": {
-	//     "$ref": "Trigger"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.triggers.list":
 
 type AccountsContainersTriggersListCall struct {
 	s            *Service
@@ -6675,33 +4877,29 @@ func (r *AccountsContainersTriggersService) List(accountId string, containerId s
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersTriggersListCall) Fields(s ...googleapi.Field) *AccountsContainersTriggersListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsContainersTriggersListCall) IfNoneMatch(entityTag string) *AccountsContainersTriggersListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersTriggersListCall) Context(ctx context.Context) *AccountsContainersTriggersListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersTriggersListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6710,12 +4908,7 @@ func (c *AccountsContainersTriggersListCall) Header() http.Header {
 }
 
 func (c *AccountsContainersTriggersListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -6737,12 +4930,11 @@ func (c *AccountsContainersTriggersListCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "tagmanager.accounts.containers.triggers.list" call.
-// Exactly one of *ListTriggersResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListTriggersResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListTriggersResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsContainersTriggersListCall) Do(opts ...googleapi.CallOption) (*ListTriggersResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6773,42 +4965,7 @@ func (c *AccountsContainersTriggersListCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all GTM Triggers of a Container.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.triggers.list",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers",
-	//   "response": {
-	//     "$ref": "ListTriggersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.triggers.update":
 
 type AccountsContainersTriggersUpdateCall struct {
 	s           *Service
@@ -6835,32 +4992,29 @@ func (r *AccountsContainersTriggersService) Update(accountId string, containerId
 	return c
 }
 
-// Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the trigger in
-// storage.
+// Fingerprint sets the optional parameter "fingerprint": When provided, this
+// fingerprint must match the fingerprint of the trigger in storage.
 func (c *AccountsContainersTriggersUpdateCall) Fingerprint(fingerprint string) *AccountsContainersTriggersUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersTriggersUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersTriggersUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersTriggersUpdateCall) Context(ctx context.Context) *AccountsContainersTriggersUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersTriggersUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -6869,18 +5023,12 @@ func (c *AccountsContainersTriggersUpdateCall) Header() http.Header {
 }
 
 func (c *AccountsContainersTriggersUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.trigger)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}")
@@ -6899,12 +5047,10 @@ func (c *AccountsContainersTriggersUpdateCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "tagmanager.accounts.containers.triggers.update" call.
-// Exactly one of *Trigger or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Trigger.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Trigger.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersTriggersUpdateCall) Do(opts ...googleapi.CallOption) (*Trigger, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -6935,56 +5081,7 @@ func (c *AccountsContainersTriggersUpdateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a GTM Trigger.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}",
-	//   "httpMethod": "PUT",
-	//   "id": "tagmanager.accounts.containers.triggers.update",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "triggerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the trigger in storage.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "triggerId": {
-	//       "description": "The GTM Trigger ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/triggers/{triggerId}",
-	//   "request": {
-	//     "$ref": "Trigger"
-	//   },
-	//   "response": {
-	//     "$ref": "Trigger"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.variables.create":
 
 type AccountsContainersVariablesCreateCall struct {
 	s           *Service
@@ -7009,23 +5106,21 @@ func (r *AccountsContainersVariablesService) Create(accountId string, containerI
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersVariablesCreateCall) Fields(s ...googleapi.Field) *AccountsContainersVariablesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersVariablesCreateCall) Context(ctx context.Context) *AccountsContainersVariablesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersVariablesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7034,18 +5129,12 @@ func (c *AccountsContainersVariablesCreateCall) Header() http.Header {
 }
 
 func (c *AccountsContainersVariablesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variable)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables")
@@ -7063,12 +5152,10 @@ func (c *AccountsContainersVariablesCreateCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "tagmanager.accounts.containers.variables.create" call.
-// Exactly one of *Variable or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Variable.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Variable.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersVariablesCreateCall) Do(opts ...googleapi.CallOption) (*Variable, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7099,44 +5186,7 @@ func (c *AccountsContainersVariablesCreateCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a GTM Variable.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables",
-	//   "httpMethod": "POST",
-	//   "id": "tagmanager.accounts.containers.variables.create",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables",
-	//   "request": {
-	//     "$ref": "Variable"
-	//   },
-	//   "response": {
-	//     "$ref": "Variable"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.variables.delete":
 
 type AccountsContainersVariablesDeleteCall struct {
 	s           *Service
@@ -7162,23 +5212,21 @@ func (r *AccountsContainersVariablesService) Delete(accountId string, containerI
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersVariablesDeleteCall) Fields(s ...googleapi.Field) *AccountsContainersVariablesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersVariablesDeleteCall) Context(ctx context.Context) *AccountsContainersVariablesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersVariablesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7187,12 +5235,7 @@ func (c *AccountsContainersVariablesDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsContainersVariablesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -7223,45 +5266,7 @@ func (c *AccountsContainersVariablesDeleteCall) Do(opts ...googleapi.CallOption)
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a GTM Variable.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "tagmanager.accounts.containers.variables.delete",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "variableId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "variableId": {
-	//       "description": "The GTM Variable ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.variables.get":
 
 type AccountsContainersVariablesGetCall struct {
 	s            *Service
@@ -7288,33 +5293,29 @@ func (r *AccountsContainersVariablesService) Get(accountId string, containerId s
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersVariablesGetCall) Fields(s ...googleapi.Field) *AccountsContainersVariablesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsContainersVariablesGetCall) IfNoneMatch(entityTag string) *AccountsContainersVariablesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersVariablesGetCall) Context(ctx context.Context) *AccountsContainersVariablesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersVariablesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7323,12 +5324,7 @@ func (c *AccountsContainersVariablesGetCall) Header() http.Header {
 }
 
 func (c *AccountsContainersVariablesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7351,12 +5347,10 @@ func (c *AccountsContainersVariablesGetCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "tagmanager.accounts.containers.variables.get" call.
-// Exactly one of *Variable or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Variable.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Variable.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersVariablesGetCall) Do(opts ...googleapi.CallOption) (*Variable, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7387,49 +5381,7 @@ func (c *AccountsContainersVariablesGetCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a GTM Variable.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.variables.get",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "variableId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "variableId": {
-	//       "description": "The GTM Variable ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}",
-	//   "response": {
-	//     "$ref": "Variable"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.variables.list":
 
 type AccountsContainersVariablesListCall struct {
 	s            *Service
@@ -7453,33 +5405,29 @@ func (r *AccountsContainersVariablesService) List(accountId string, containerId 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersVariablesListCall) Fields(s ...googleapi.Field) *AccountsContainersVariablesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsContainersVariablesListCall) IfNoneMatch(entityTag string) *AccountsContainersVariablesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersVariablesListCall) Context(ctx context.Context) *AccountsContainersVariablesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersVariablesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7488,12 +5436,7 @@ func (c *AccountsContainersVariablesListCall) Header() http.Header {
 }
 
 func (c *AccountsContainersVariablesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -7515,12 +5458,11 @@ func (c *AccountsContainersVariablesListCall) doRequest(alt string) (*http.Respo
 }
 
 // Do executes the "tagmanager.accounts.containers.variables.list" call.
-// Exactly one of *ListVariablesResponse or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ListVariablesResponse.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListVariablesResponse.ServerResponse.Header or (if a response was returned
+// at all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsContainersVariablesListCall) Do(opts ...googleapi.CallOption) (*ListVariablesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7551,42 +5493,7 @@ func (c *AccountsContainersVariablesListCall) Do(opts ...googleapi.CallOption) (
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all GTM Variables of a Container.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.variables.list",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables",
-	//   "response": {
-	//     "$ref": "ListVariablesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.variables.update":
 
 type AccountsContainersVariablesUpdateCall struct {
 	s           *Service
@@ -7613,32 +5520,29 @@ func (r *AccountsContainersVariablesService) Update(accountId string, containerI
 	return c
 }
 
-// Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the variable in
-// storage.
+// Fingerprint sets the optional parameter "fingerprint": When provided, this
+// fingerprint must match the fingerprint of the variable in storage.
 func (c *AccountsContainersVariablesUpdateCall) Fingerprint(fingerprint string) *AccountsContainersVariablesUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersVariablesUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersVariablesUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersVariablesUpdateCall) Context(ctx context.Context) *AccountsContainersVariablesUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersVariablesUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7647,18 +5551,12 @@ func (c *AccountsContainersVariablesUpdateCall) Header() http.Header {
 }
 
 func (c *AccountsContainersVariablesUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.variable)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}")
@@ -7677,12 +5575,10 @@ func (c *AccountsContainersVariablesUpdateCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "tagmanager.accounts.containers.variables.update" call.
-// Exactly one of *Variable or error will be non-nil. Any non-2xx status
-// code is an error. Response headers are in either
-// *Variable.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *Variable.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsContainersVariablesUpdateCall) Do(opts ...googleapi.CallOption) (*Variable, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7713,56 +5609,7 @@ func (c *AccountsContainersVariablesUpdateCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a GTM Variable.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}",
-	//   "httpMethod": "PUT",
-	//   "id": "tagmanager.accounts.containers.variables.update",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "variableId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the variable in storage.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "variableId": {
-	//       "description": "The GTM Variable ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/variables/{variableId}",
-	//   "request": {
-	//     "$ref": "Variable"
-	//   },
-	//   "response": {
-	//     "$ref": "Variable"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.versions.create":
 
 type AccountsContainersVersionsCreateCall struct {
 	s                                           *Service
@@ -7787,23 +5634,21 @@ func (r *AccountsContainersVersionsService) Create(accountId string, containerId
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersVersionsCreateCall) Fields(s ...googleapi.Field) *AccountsContainersVersionsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersVersionsCreateCall) Context(ctx context.Context) *AccountsContainersVersionsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersVersionsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7812,18 +5657,12 @@ func (c *AccountsContainersVersionsCreateCall) Header() http.Header {
 }
 
 func (c *AccountsContainersVersionsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.createcontainerversionrequestversionoptions)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions")
@@ -7841,12 +5680,11 @@ func (c *AccountsContainersVersionsCreateCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "tagmanager.accounts.containers.versions.create" call.
-// Exactly one of *CreateContainerVersionResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *CreateContainerVersionResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *CreateContainerVersionResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsContainersVersionsCreateCall) Do(opts ...googleapi.CallOption) (*CreateContainerVersionResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -7877,44 +5715,7 @@ func (c *AccountsContainersVersionsCreateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a Container Version.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions",
-	//   "httpMethod": "POST",
-	//   "id": "tagmanager.accounts.containers.versions.create",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions",
-	//   "request": {
-	//     "$ref": "CreateContainerVersionRequestVersionOptions"
-	//   },
-	//   "response": {
-	//     "$ref": "CreateContainerVersionResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containerversions"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.versions.delete":
 
 type AccountsContainersVersionsDeleteCall struct {
 	s                  *Service
@@ -7940,23 +5741,21 @@ func (r *AccountsContainersVersionsService) Delete(accountId string, containerId
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersVersionsDeleteCall) Fields(s ...googleapi.Field) *AccountsContainersVersionsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersVersionsDeleteCall) Context(ctx context.Context) *AccountsContainersVersionsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersVersionsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -7965,12 +5764,7 @@ func (c *AccountsContainersVersionsDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsContainersVersionsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -8001,45 +5795,7 @@ func (c *AccountsContainersVersionsDeleteCall) Do(opts ...googleapi.CallOption) 
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Deletes a Container Version.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "tagmanager.accounts.containers.versions.delete",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "containerVersionId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerVersionId": {
-	//       "description": "The GTM Container Version ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containerversions"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.versions.get":
 
 type AccountsContainersVersionsGetCall struct {
 	s                  *Service
@@ -8056,8 +5812,8 @@ type AccountsContainersVersionsGetCall struct {
 //
 //   - accountId: The GTM Account ID.
 //   - containerId: The GTM Container ID.
-//   - containerVersionId: The GTM Container Version ID. Specify published
-//     to retrieve the currently published version.
+//   - containerVersionId: The GTM Container Version ID. Specify published to
+//     retrieve the currently published version.
 func (r *AccountsContainersVersionsService) Get(accountId string, containerId string, containerVersionId string) *AccountsContainersVersionsGetCall {
 	c := &AccountsContainersVersionsGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.accountId = accountId
@@ -8067,33 +5823,29 @@ func (r *AccountsContainersVersionsService) Get(accountId string, containerId st
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersVersionsGetCall) Fields(s ...googleapi.Field) *AccountsContainersVersionsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsContainersVersionsGetCall) IfNoneMatch(entityTag string) *AccountsContainersVersionsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersVersionsGetCall) Context(ctx context.Context) *AccountsContainersVersionsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersVersionsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8102,12 +5854,7 @@ func (c *AccountsContainersVersionsGetCall) Header() http.Header {
 }
 
 func (c *AccountsContainersVersionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8130,12 +5877,11 @@ func (c *AccountsContainersVersionsGetCall) doRequest(alt string) (*http.Respons
 }
 
 // Do executes the "tagmanager.accounts.containers.versions.get" call.
-// Exactly one of *ContainerVersion or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ContainerVersion.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ContainerVersion.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsContainersVersionsGetCall) Do(opts ...googleapi.CallOption) (*ContainerVersion, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8166,50 +5912,7 @@ func (c *AccountsContainersVersionsGetCall) Do(opts ...googleapi.CallOption) (*C
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a Container Version.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.versions.get",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "containerVersionId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerVersionId": {
-	//       "description": "The GTM Container Version ID. Specify published to retrieve the currently published version.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}",
-	//   "response": {
-	//     "$ref": "ContainerVersion"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containerversions",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.versions.list":
 
 type AccountsContainersVersionsListCall struct {
 	s            *Service
@@ -8232,48 +5935,44 @@ func (r *AccountsContainersVersionsService) List(accountId string, containerId s
 	return c
 }
 
-// Headers sets the optional parameter "headers": Retrieve headers only
-// when true.
+// Headers sets the optional parameter "headers": Retrieve headers only when
+// true.
 func (c *AccountsContainersVersionsListCall) Headers(headers bool) *AccountsContainersVersionsListCall {
 	c.urlParams_.Set("headers", fmt.Sprint(headers))
 	return c
 }
 
-// IncludeDeleted sets the optional parameter "includeDeleted": Also
-// retrieve deleted (archived) versions when true.
+// IncludeDeleted sets the optional parameter "includeDeleted": Also retrieve
+// deleted (archived) versions when true.
 func (c *AccountsContainersVersionsListCall) IncludeDeleted(includeDeleted bool) *AccountsContainersVersionsListCall {
 	c.urlParams_.Set("includeDeleted", fmt.Sprint(includeDeleted))
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersVersionsListCall) Fields(s ...googleapi.Field) *AccountsContainersVersionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsContainersVersionsListCall) IfNoneMatch(entityTag string) *AccountsContainersVersionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersVersionsListCall) Context(ctx context.Context) *AccountsContainersVersionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersVersionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8282,12 +5981,7 @@ func (c *AccountsContainersVersionsListCall) Header() http.Header {
 }
 
 func (c *AccountsContainersVersionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -8309,12 +6003,11 @@ func (c *AccountsContainersVersionsListCall) doRequest(alt string) (*http.Respon
 }
 
 // Do executes the "tagmanager.accounts.containers.versions.list" call.
-// Exactly one of *ListContainerVersionsResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *ListContainerVersionsResponse.ServerResponse.Header or (if a
-// response was returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ListContainerVersionsResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsContainersVersionsListCall) Do(opts ...googleapi.CallOption) (*ListContainerVersionsResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8345,55 +6038,7 @@ func (c *AccountsContainersVersionsListCall) Do(opts ...googleapi.CallOption) (*
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Lists all Container Versions of a GTM Container.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.containers.versions.list",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "headers": {
-	//       "default": "false",
-	//       "description": "Retrieve headers only when true.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     },
-	//     "includeDeleted": {
-	//       "default": "false",
-	//       "description": "Also retrieve deleted (archived) versions when true.",
-	//       "location": "query",
-	//       "type": "boolean"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions",
-	//   "response": {
-	//     "$ref": "ListContainerVersionsResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers",
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containerversions",
-	//     "https://www.googleapis.com/auth/tagmanager.readonly"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.versions.publish":
 
 type AccountsContainersVersionsPublishCall struct {
 	s                  *Service
@@ -8418,32 +6063,29 @@ func (r *AccountsContainersVersionsService) Publish(accountId string, containerI
 	return c
 }
 
-// Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the container version
-// in storage.
+// Fingerprint sets the optional parameter "fingerprint": When provided, this
+// fingerprint must match the fingerprint of the container version in storage.
 func (c *AccountsContainersVersionsPublishCall) Fingerprint(fingerprint string) *AccountsContainersVersionsPublishCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersVersionsPublishCall) Fields(s ...googleapi.Field) *AccountsContainersVersionsPublishCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersVersionsPublishCall) Context(ctx context.Context) *AccountsContainersVersionsPublishCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersVersionsPublishCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8452,12 +6094,7 @@ func (c *AccountsContainersVersionsPublishCall) Header() http.Header {
 }
 
 func (c *AccountsContainersVersionsPublishCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -8477,12 +6114,11 @@ func (c *AccountsContainersVersionsPublishCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "tagmanager.accounts.containers.versions.publish" call.
-// Exactly one of *PublishContainerVersionResponse or error will be
-// non-nil. Any non-2xx status code is an error. Response headers are in
-// either *PublishContainerVersionResponse.ServerResponse.Header or (if
-// a response was returned at all) in error.(*googleapi.Error).Header.
-// Use googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *PublishContainerVersionResponse.ServerResponse.Header or (if a response was
+// returned at all) in error.(*googleapi.Error).Header. Use
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsContainersVersionsPublishCall) Do(opts ...googleapi.CallOption) (*PublishContainerVersionResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8513,53 +6149,7 @@ func (c *AccountsContainersVersionsPublishCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Publishes a Container Version.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/publish",
-	//   "httpMethod": "POST",
-	//   "id": "tagmanager.accounts.containers.versions.publish",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "containerVersionId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerVersionId": {
-	//       "description": "The GTM Container Version ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the container version in storage.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/publish",
-	//   "response": {
-	//     "$ref": "PublishContainerVersionResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.publish"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.versions.restore":
 
 type AccountsContainersVersionsRestoreCall struct {
 	s                  *Service
@@ -8571,10 +6161,10 @@ type AccountsContainersVersionsRestoreCall struct {
 	header_            http.Header
 }
 
-// Restore: Restores a Container Version. This will overwrite the
-// container's current configuration (including its variables, triggers
-// and tags). The operation will not have any effect on the version that
-// is being served (i.e. the published version).
+// Restore: Restores a Container Version. This will overwrite the container's
+// current configuration (including its variables, triggers and tags). The
+// operation will not have any effect on the version that is being served (i.e.
+// the published version).
 //
 // - accountId: The GTM Account ID.
 // - containerId: The GTM Container ID.
@@ -8588,23 +6178,21 @@ func (r *AccountsContainersVersionsService) Restore(accountId string, containerI
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersVersionsRestoreCall) Fields(s ...googleapi.Field) *AccountsContainersVersionsRestoreCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersVersionsRestoreCall) Context(ctx context.Context) *AccountsContainersVersionsRestoreCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersVersionsRestoreCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8613,12 +6201,7 @@ func (c *AccountsContainersVersionsRestoreCall) Header() http.Header {
 }
 
 func (c *AccountsContainersVersionsRestoreCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -8638,12 +6221,11 @@ func (c *AccountsContainersVersionsRestoreCall) doRequest(alt string) (*http.Res
 }
 
 // Do executes the "tagmanager.accounts.containers.versions.restore" call.
-// Exactly one of *ContainerVersion or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ContainerVersion.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ContainerVersion.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsContainersVersionsRestoreCall) Do(opts ...googleapi.CallOption) (*ContainerVersion, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8674,48 +6256,7 @@ func (c *AccountsContainersVersionsRestoreCall) Do(opts ...googleapi.CallOption)
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Restores a Container Version. This will overwrite the container's current configuration (including its variables, triggers and tags). The operation will not have any effect on the version that is being served (i.e. the published version).",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/restore",
-	//   "httpMethod": "POST",
-	//   "id": "tagmanager.accounts.containers.versions.restore",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "containerVersionId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerVersionId": {
-	//       "description": "The GTM Container Version ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/restore",
-	//   "response": {
-	//     "$ref": "ContainerVersion"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containers"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.versions.undelete":
 
 type AccountsContainersVersionsUndeleteCall struct {
 	s                  *Service
@@ -8741,23 +6282,21 @@ func (r *AccountsContainersVersionsService) Undelete(accountId string, container
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersVersionsUndeleteCall) Fields(s ...googleapi.Field) *AccountsContainersVersionsUndeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersVersionsUndeleteCall) Context(ctx context.Context) *AccountsContainersVersionsUndeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersVersionsUndeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8766,12 +6305,7 @@ func (c *AccountsContainersVersionsUndeleteCall) Header() http.Header {
 }
 
 func (c *AccountsContainersVersionsUndeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -8791,12 +6325,11 @@ func (c *AccountsContainersVersionsUndeleteCall) doRequest(alt string) (*http.Re
 }
 
 // Do executes the "tagmanager.accounts.containers.versions.undelete" call.
-// Exactly one of *ContainerVersion or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ContainerVersion.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ContainerVersion.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsContainersVersionsUndeleteCall) Do(opts ...googleapi.CallOption) (*ContainerVersion, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8827,48 +6360,7 @@ func (c *AccountsContainersVersionsUndeleteCall) Do(opts ...googleapi.CallOption
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Undeletes a Container Version.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/undelete",
-	//   "httpMethod": "POST",
-	//   "id": "tagmanager.accounts.containers.versions.undelete",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "containerVersionId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerVersionId": {
-	//       "description": "The GTM Container Version ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}/undelete",
-	//   "response": {
-	//     "$ref": "ContainerVersion"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containerversions"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.containers.versions.update":
 
 type AccountsContainersVersionsUpdateCall struct {
 	s                  *Service
@@ -8895,32 +6387,29 @@ func (r *AccountsContainersVersionsService) Update(accountId string, containerId
 	return c
 }
 
-// Fingerprint sets the optional parameter "fingerprint": When provided,
-// this fingerprint must match the fingerprint of the container version
-// in storage.
+// Fingerprint sets the optional parameter "fingerprint": When provided, this
+// fingerprint must match the fingerprint of the container version in storage.
 func (c *AccountsContainersVersionsUpdateCall) Fingerprint(fingerprint string) *AccountsContainersVersionsUpdateCall {
 	c.urlParams_.Set("fingerprint", fingerprint)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsContainersVersionsUpdateCall) Fields(s ...googleapi.Field) *AccountsContainersVersionsUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsContainersVersionsUpdateCall) Context(ctx context.Context) *AccountsContainersVersionsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsContainersVersionsUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -8929,18 +6418,12 @@ func (c *AccountsContainersVersionsUpdateCall) Header() http.Header {
 }
 
 func (c *AccountsContainersVersionsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.containerversion)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}")
@@ -8959,12 +6442,11 @@ func (c *AccountsContainersVersionsUpdateCall) doRequest(alt string) (*http.Resp
 }
 
 // Do executes the "tagmanager.accounts.containers.versions.update" call.
-// Exactly one of *ContainerVersion or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *ContainerVersion.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *ContainerVersion.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *AccountsContainersVersionsUpdateCall) Do(opts ...googleapi.CallOption) (*ContainerVersion, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -8995,56 +6477,7 @@ func (c *AccountsContainersVersionsUpdateCall) Do(opts ...googleapi.CallOption) 
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a Container Version.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}",
-	//   "httpMethod": "PUT",
-	//   "id": "tagmanager.accounts.containers.versions.update",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "containerId",
-	//     "containerVersionId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerId": {
-	//       "description": "The GTM Container ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "containerVersionId": {
-	//       "description": "The GTM Container Version ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "fingerprint": {
-	//       "description": "When provided, this fingerprint must match the fingerprint of the container version in storage.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/containers/{containerId}/versions/{containerVersionId}",
-	//   "request": {
-	//     "$ref": "ContainerVersion"
-	//   },
-	//   "response": {
-	//     "$ref": "ContainerVersion"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.edit.containerversions"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.permissions.create":
 
 type AccountsPermissionsCreateCall struct {
 	s          *Service
@@ -9066,23 +6499,21 @@ func (r *AccountsPermissionsService) Create(accountId string, useraccess *UserAc
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsPermissionsCreateCall) Fields(s ...googleapi.Field) *AccountsPermissionsCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsPermissionsCreateCall) Context(ctx context.Context) *AccountsPermissionsCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsPermissionsCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9091,18 +6522,12 @@ func (c *AccountsPermissionsCreateCall) Header() http.Header {
 }
 
 func (c *AccountsPermissionsCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.useraccess)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/permissions")
@@ -9119,12 +6544,10 @@ func (c *AccountsPermissionsCreateCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "tagmanager.accounts.permissions.create" call.
-// Exactly one of *UserAccess or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *UserAccess.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *UserAccess.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsPermissionsCreateCall) Do(opts ...googleapi.CallOption) (*UserAccess, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9155,37 +6578,7 @@ func (c *AccountsPermissionsCreateCall) Do(opts ...googleapi.CallOption) (*UserA
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Creates a user's Account \u0026 Container Permissions.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/permissions",
-	//   "httpMethod": "POST",
-	//   "id": "tagmanager.accounts.permissions.create",
-	//   "parameterOrder": [
-	//     "accountId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/permissions",
-	//   "request": {
-	//     "$ref": "UserAccess"
-	//   },
-	//   "response": {
-	//     "$ref": "UserAccess"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.manage.users"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.permissions.delete":
 
 type AccountsPermissionsDeleteCall struct {
 	s            *Service
@@ -9196,8 +6589,8 @@ type AccountsPermissionsDeleteCall struct {
 	header_      http.Header
 }
 
-// Delete: Removes a user from the account, revoking access to it and
-// all of its containers.
+// Delete: Removes a user from the account, revoking access to it and all of
+// its containers.
 //
 // - accountId: The GTM Account ID.
 // - permissionId: The GTM User ID.
@@ -9209,23 +6602,21 @@ func (r *AccountsPermissionsService) Delete(accountId string, permissionId strin
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsPermissionsDeleteCall) Fields(s ...googleapi.Field) *AccountsPermissionsDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsPermissionsDeleteCall) Context(ctx context.Context) *AccountsPermissionsDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsPermissionsDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9234,12 +6625,7 @@ func (c *AccountsPermissionsDeleteCall) Header() http.Header {
 }
 
 func (c *AccountsPermissionsDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -9269,38 +6655,7 @@ func (c *AccountsPermissionsDeleteCall) Do(opts ...googleapi.CallOption) error {
 		return gensupport.WrapError(err)
 	}
 	return nil
-	// {
-	//   "description": "Removes a user from the account, revoking access to it and all of its containers.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "tagmanager.accounts.permissions.delete",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "permissionId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "permissionId": {
-	//       "description": "The GTM User ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}",
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.manage.users"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.permissions.get":
 
 type AccountsPermissionsGetCall struct {
 	s            *Service
@@ -9324,33 +6679,29 @@ func (r *AccountsPermissionsService) Get(accountId string, permissionId string) 
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsPermissionsGetCall) Fields(s ...googleapi.Field) *AccountsPermissionsGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsPermissionsGetCall) IfNoneMatch(entityTag string) *AccountsPermissionsGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsPermissionsGetCall) Context(ctx context.Context) *AccountsPermissionsGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsPermissionsGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9359,12 +6710,7 @@ func (c *AccountsPermissionsGetCall) Header() http.Header {
 }
 
 func (c *AccountsPermissionsGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9386,12 +6732,10 @@ func (c *AccountsPermissionsGetCall) doRequest(alt string) (*http.Response, erro
 }
 
 // Do executes the "tagmanager.accounts.permissions.get" call.
-// Exactly one of *UserAccess or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *UserAccess.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *UserAccess.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsPermissionsGetCall) Do(opts ...googleapi.CallOption) (*UserAccess, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9422,41 +6766,7 @@ func (c *AccountsPermissionsGetCall) Do(opts ...googleapi.CallOption) (*UserAcce
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Gets a user's Account \u0026 Container Permissions.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.permissions.get",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "permissionId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "permissionId": {
-	//       "description": "The GTM User ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}",
-	//   "response": {
-	//     "$ref": "UserAccess"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.manage.users"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.permissions.list":
 
 type AccountsPermissionsListCall struct {
 	s            *Service
@@ -9467,8 +6777,8 @@ type AccountsPermissionsListCall struct {
 	header_      http.Header
 }
 
-// List: List all users that have access to the account along with
-// Account and Container Permissions granted to each of them.
+// List: List all users that have access to the account along with Account and
+// Container Permissions granted to each of them.
 //
 // - accountId: The GTM Account ID.
 func (r *AccountsPermissionsService) List(accountId string) *AccountsPermissionsListCall {
@@ -9478,33 +6788,29 @@ func (r *AccountsPermissionsService) List(accountId string) *AccountsPermissions
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsPermissionsListCall) Fields(s ...googleapi.Field) *AccountsPermissionsListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *AccountsPermissionsListCall) IfNoneMatch(entityTag string) *AccountsPermissionsListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsPermissionsListCall) Context(ctx context.Context) *AccountsPermissionsListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsPermissionsListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9513,12 +6819,7 @@ func (c *AccountsPermissionsListCall) Header() http.Header {
 }
 
 func (c *AccountsPermissionsListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -9539,12 +6840,11 @@ func (c *AccountsPermissionsListCall) doRequest(alt string) (*http.Response, err
 }
 
 // Do executes the "tagmanager.accounts.permissions.list" call.
-// Exactly one of *ListAccountUsersResponse or error will be non-nil.
 // Any non-2xx status code is an error. Response headers are in either
 // *ListAccountUsersResponse.ServerResponse.Header or (if a response was
 // returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// googleapi.IsNotModified to check whether the returned error was because
+// http.StatusNotModified was returned.
 func (c *AccountsPermissionsListCall) Do(opts ...googleapi.CallOption) (*ListAccountUsersResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9575,34 +6875,7 @@ func (c *AccountsPermissionsListCall) Do(opts ...googleapi.CallOption) (*ListAcc
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List all users that have access to the account along with Account and Container Permissions granted to each of them.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/permissions",
-	//   "httpMethod": "GET",
-	//   "id": "tagmanager.accounts.permissions.list",
-	//   "parameterOrder": [
-	//     "accountId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/permissions",
-	//   "response": {
-	//     "$ref": "ListAccountUsersResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.manage.users"
-	//   ]
-	// }
-
 }
-
-// method id "tagmanager.accounts.permissions.update":
 
 type AccountsPermissionsUpdateCall struct {
 	s            *Service
@@ -9627,23 +6900,21 @@ func (r *AccountsPermissionsService) Update(accountId string, permissionId strin
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *AccountsPermissionsUpdateCall) Fields(s ...googleapi.Field) *AccountsPermissionsUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *AccountsPermissionsUpdateCall) Context(ctx context.Context) *AccountsPermissionsUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *AccountsPermissionsUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -9652,18 +6923,12 @@ func (c *AccountsPermissionsUpdateCall) Header() http.Header {
 }
 
 func (c *AccountsPermissionsUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.useraccess)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}")
@@ -9681,12 +6946,10 @@ func (c *AccountsPermissionsUpdateCall) doRequest(alt string) (*http.Response, e
 }
 
 // Do executes the "tagmanager.accounts.permissions.update" call.
-// Exactly one of *UserAccess or error will be non-nil. Any non-2xx
-// status code is an error. Response headers are in either
-// *UserAccess.ServerResponse.Header or (if a response was returned at
-// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified
-// to check whether the returned error was because
-// http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *UserAccess.ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *AccountsPermissionsUpdateCall) Do(opts ...googleapi.CallOption) (*UserAccess, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -9717,39 +6980,4 @@ func (c *AccountsPermissionsUpdateCall) Do(opts ...googleapi.CallOption) (*UserA
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Updates a user's Account \u0026 Container Permissions.",
-	//   "flatPath": "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}",
-	//   "httpMethod": "PUT",
-	//   "id": "tagmanager.accounts.permissions.update",
-	//   "parameterOrder": [
-	//     "accountId",
-	//     "permissionId"
-	//   ],
-	//   "parameters": {
-	//     "accountId": {
-	//       "description": "The GTM Account ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     },
-	//     "permissionId": {
-	//       "description": "The GTM User ID.",
-	//       "location": "path",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "tagmanager/v1/accounts/{accountId}/permissions/{permissionId}",
-	//   "request": {
-	//     "$ref": "UserAccess"
-	//   },
-	//   "response": {
-	//     "$ref": "UserAccess"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/tagmanager.manage.users"
-	//   ]
-	// }
-
 }

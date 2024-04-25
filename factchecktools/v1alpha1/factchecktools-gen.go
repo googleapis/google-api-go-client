@@ -175,537 +175,408 @@ type PagesService struct {
 	s *Service
 }
 
-// GoogleFactcheckingFactchecktoolsV1alpha1Claim: Information about the
-// claim.
+// GoogleFactcheckingFactchecktoolsV1alpha1Claim: Information about the claim.
 type GoogleFactcheckingFactchecktoolsV1alpha1Claim struct {
 	// ClaimDate: The date that the claim was made.
 	ClaimDate string `json:"claimDate,omitempty"`
-
-	// ClaimReview: One or more reviews of this claim (namely, a
-	// fact-checking article).
+	// ClaimReview: One or more reviews of this claim (namely, a fact-checking
+	// article).
 	ClaimReview []*GoogleFactcheckingFactchecktoolsV1alpha1ClaimReview `json:"claimReview,omitempty"`
-
-	// Claimant: A person or organization stating the claim. For instance,
-	// "John Doe".
+	// Claimant: A person or organization stating the claim. For instance, "John
+	// Doe".
 	Claimant string `json:"claimant,omitempty"`
-
-	// Text: The claim text. For instance, "Crime has doubled in the last 2
-	// years."
+	// Text: The claim text. For instance, "Crime has doubled in the last 2 years."
 	Text string `json:"text,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClaimDate") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClaimDate") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ClaimDate") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFactcheckingFactchecktoolsV1alpha1Claim) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1Claim
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFactcheckingFactchecktoolsV1alpha1ClaimAuthor: Information
-// about the claim author.
+// GoogleFactcheckingFactchecktoolsV1alpha1ClaimAuthor: Information about the
+// claim author.
 type GoogleFactcheckingFactchecktoolsV1alpha1ClaimAuthor struct {
 	// ImageUrl: Corresponds to `ClaimReview.itemReviewed.author.image`.
 	ImageUrl string `json:"imageUrl,omitempty"`
-
 	// JobTitle: Corresponds to `ClaimReview.itemReviewed.author.jobTitle`.
 	JobTitle string `json:"jobTitle,omitempty"`
-
-	// Name: A person or organization stating the claim. For instance, "John
-	// Doe". Corresponds to `ClaimReview.itemReviewed.author.name`.
+	// Name: A person or organization stating the claim. For instance, "John Doe".
+	// Corresponds to `ClaimReview.itemReviewed.author.name`.
 	Name string `json:"name,omitempty"`
-
 	// SameAs: Corresponds to `ClaimReview.itemReviewed.author.sameAs`.
 	SameAs string `json:"sameAs,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ImageUrl") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImageUrl") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ImageUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFactcheckingFactchecktoolsV1alpha1ClaimAuthor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1ClaimAuthor
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFactcheckingFactchecktoolsV1alpha1ClaimRating: Information
-// about the claim rating.
+// GoogleFactcheckingFactchecktoolsV1alpha1ClaimRating: Information about the
+// claim rating.
 type GoogleFactcheckingFactchecktoolsV1alpha1ClaimRating struct {
-	// BestRating: For numeric ratings, the best value possible in the scale
-	// from worst to best. Corresponds to
-	// `ClaimReview.reviewRating.bestRating`.
+	// BestRating: For numeric ratings, the best value possible in the scale from
+	// worst to best. Corresponds to `ClaimReview.reviewRating.bestRating`.
 	BestRating int64 `json:"bestRating,omitempty"`
-
 	// ImageUrl: Corresponds to `ClaimReview.reviewRating.image`.
 	ImageUrl string `json:"imageUrl,omitempty"`
-
 	// RatingExplanation: Corresponds to
 	// `ClaimReview.reviewRating.ratingExplanation`.
 	RatingExplanation string `json:"ratingExplanation,omitempty"`
-
-	// RatingValue: A numeric rating of this claim, in the range worstRating
-	// — bestRating inclusive. Corresponds to
-	// `ClaimReview.reviewRating.ratingValue`.
+	// RatingValue: A numeric rating of this claim, in the range worstRating —
+	// bestRating inclusive. Corresponds to `ClaimReview.reviewRating.ratingValue`.
 	RatingValue int64 `json:"ratingValue,omitempty"`
-
-	// TextualRating: The truthfulness rating as a human-readible short word
-	// or phrase. Corresponds to `ClaimReview.reviewRating.alternateName`.
+	// TextualRating: The truthfulness rating as a human-readible short word or
+	// phrase. Corresponds to `ClaimReview.reviewRating.alternateName`.
 	TextualRating string `json:"textualRating,omitempty"`
-
-	// WorstRating: For numeric ratings, the worst value possible in the
-	// scale from worst to best. Corresponds to
-	// `ClaimReview.reviewRating.worstRating`.
+	// WorstRating: For numeric ratings, the worst value possible in the scale from
+	// worst to best. Corresponds to `ClaimReview.reviewRating.worstRating`.
 	WorstRating int64 `json:"worstRating,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "BestRating") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "BestRating") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "BestRating") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFactcheckingFactchecktoolsV1alpha1ClaimRating) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1ClaimRating
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFactcheckingFactchecktoolsV1alpha1ClaimReview: Information
-// about a claim review.
+// GoogleFactcheckingFactchecktoolsV1alpha1ClaimReview: Information about a
+// claim review.
 type GoogleFactcheckingFactchecktoolsV1alpha1ClaimReview struct {
-	// LanguageCode: The language this review was written in. For instance,
-	// "en" or "de".
+	// LanguageCode: The language this review was written in. For instance, "en" or
+	// "de".
 	LanguageCode string `json:"languageCode,omitempty"`
-
 	// Publisher: The publisher of this claim review.
 	Publisher *GoogleFactcheckingFactchecktoolsV1alpha1Publisher `json:"publisher,omitempty"`
-
 	// ReviewDate: The date the claim was reviewed.
 	ReviewDate string `json:"reviewDate,omitempty"`
-
 	// TextualRating: Textual rating. For instance, "Mostly false".
 	TextualRating string `json:"textualRating,omitempty"`
-
 	// Title: The title of this claim review, if it can be determined.
 	Title string `json:"title,omitempty"`
-
 	// Url: The URL of this claim review.
 	Url string `json:"url,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "LanguageCode") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "LanguageCode") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "LanguageCode") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReview) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1ClaimReview
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewAuthor:
-// Information about the claim review author.
+// GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewAuthor: Information about
+// the claim review author.
 type GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewAuthor struct {
 	// ImageUrl: Corresponds to `ClaimReview.author.image`.
 	ImageUrl string `json:"imageUrl,omitempty"`
-
 	// Name: Name of the organization that is publishing the fact check.
 	// Corresponds to `ClaimReview.author.name`.
 	Name string `json:"name,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ImageUrl") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ImageUrl") to include in
-	// API requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "ImageUrl") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewAuthor) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewAuthor
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkup: Fields for
-// an individual `ClaimReview` element. Except for sub-messages that
-// group fields together, each of these fields correspond those in
-// https://schema.org/ClaimReview. We list the precise mapping for each
-// field.
+// GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkup: Fields for an
+// individual `ClaimReview` element. Except for sub-messages that group fields
+// together, each of these fields correspond those in
+// https://schema.org/ClaimReview. We list the precise mapping for each field.
 type GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkup struct {
-	// ClaimAppearances: A list of links to works in which this claim
-	// appears, aside from the one specified in `claim_first_appearance`.
-	// Corresponds to
+	// ClaimAppearances: A list of links to works in which this claim appears,
+	// aside from the one specified in `claim_first_appearance`. Corresponds to
 	// `ClaimReview.itemReviewed[@type=Claim].appearance.url`.
 	ClaimAppearances []string `json:"claimAppearances,omitempty"`
-
 	// ClaimAuthor: Info about the author of this claim.
 	ClaimAuthor *GoogleFactcheckingFactchecktoolsV1alpha1ClaimAuthor `json:"claimAuthor,omitempty"`
-
-	// ClaimDate: The date when the claim was made or entered public
-	// discourse. Corresponds to `ClaimReview.itemReviewed.datePublished`.
+	// ClaimDate: The date when the claim was made or entered public discourse.
+	// Corresponds to `ClaimReview.itemReviewed.datePublished`.
 	ClaimDate string `json:"claimDate,omitempty"`
-
-	// ClaimFirstAppearance: A link to a work in which this claim first
-	// appears. Corresponds to
-	// `ClaimReview.itemReviewed[@type=Claim].firstAppearance.url`.
+	// ClaimFirstAppearance: A link to a work in which this claim first appears.
+	// Corresponds to `ClaimReview.itemReviewed[@type=Claim].firstAppearance.url`.
 	ClaimFirstAppearance string `json:"claimFirstAppearance,omitempty"`
-
 	// ClaimLocation: The location where this claim was made. Corresponds to
 	// `ClaimReview.itemReviewed.name`.
 	ClaimLocation string `json:"claimLocation,omitempty"`
-
-	// ClaimReviewed: A short summary of the claim being evaluated.
-	// Corresponds to `ClaimReview.claimReviewed`.
+	// ClaimReviewed: A short summary of the claim being evaluated. Corresponds to
+	// `ClaimReview.claimReviewed`.
 	ClaimReviewed string `json:"claimReviewed,omitempty"`
-
 	// Rating: Info about the rating of this claim review.
 	Rating *GoogleFactcheckingFactchecktoolsV1alpha1ClaimRating `json:"rating,omitempty"`
-
-	// Url: This field is optional, and will default to the page URL. We
-	// provide this field to allow you the override the default value, but
-	// the only permitted override is the page URL plus an optional anchor
-	// link ("page jump"). Corresponds to `ClaimReview.url`
+	// Url: This field is optional, and will default to the page URL. We provide
+	// this field to allow you the override the default value, but the only
+	// permitted override is the page URL plus an optional anchor link ("page
+	// jump"). Corresponds to `ClaimReview.url`
 	Url string `json:"url,omitempty"`
-
 	// ForceSendFields is a list of field names (e.g. "ClaimAppearances") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClaimAppearances") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ClaimAppearances") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkup) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkup
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage: Holds
-// one or more instances of `ClaimReview` markup for a webpage.
+// GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage: Holds one or
+// more instances of `ClaimReview` markup for a webpage.
 type GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage struct {
-	// ClaimReviewAuthor: Info about the author of this claim review.
-	// Similar to the above, semantically these are page-level fields, and
-	// each `ClaimReview` on this page will contain the same values.
+	// ClaimReviewAuthor: Info about the author of this claim review. Similar to
+	// the above, semantically these are page-level fields, and each `ClaimReview`
+	// on this page will contain the same values.
 	ClaimReviewAuthor *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewAuthor `json:"claimReviewAuthor,omitempty"`
-
-	// ClaimReviewMarkups: A list of individual claim reviews for this page.
-	// Each item in the list corresponds to one `ClaimReview` element.
+	// ClaimReviewMarkups: A list of individual claim reviews for this page. Each
+	// item in the list corresponds to one `ClaimReview` element.
 	ClaimReviewMarkups []*GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkup `json:"claimReviewMarkups,omitempty"`
-
-	// Name: The name of this `ClaimReview` markup page resource, in the
-	// form of `pages/{page_id}`. Except for update requests, this field is
-	// output-only and should not be set by the user.
+	// Name: The name of this `ClaimReview` markup page resource, in the form of
+	// `pages/{page_id}`. Except for update requests, this field is output-only and
+	// should not be set by the user.
 	Name string `json:"name,omitempty"`
-
-	// PageUrl: The URL of the page associated with this `ClaimReview`
-	// markup. While every individual `ClaimReview` has its own URL field,
-	// semantically this is a page-level field, and each `ClaimReview` on
-	// this page will use this value unless individually overridden.
-	// Corresponds to `ClaimReview.url`
+	// PageUrl: The URL of the page associated with this `ClaimReview` markup.
+	// While every individual `ClaimReview` has its own URL field, semantically
+	// this is a page-level field, and each `ClaimReview` on this page will use
+	// this value unless individually overridden. Corresponds to `ClaimReview.url`
 	PageUrl string `json:"pageUrl,omitempty"`
-
-	// PublishDate: The date when the fact check was published. Similar to
-	// the URL, semantically this is a page-level field, and each
-	// `ClaimReview` on this page will contain the same value. Corresponds
-	// to `ClaimReview.datePublished`
+	// PublishDate: The date when the fact check was published. Similar to the URL,
+	// semantically this is a page-level field, and each `ClaimReview` on this page
+	// will contain the same value. Corresponds to `ClaimReview.datePublished`
 	PublishDate string `json:"publishDate,omitempty"`
-
-	// VersionId: The version ID for this markup. Except for update
-	// requests, this field is output-only and should not be set by the
-	// user.
+	// VersionId: The version ID for this markup. Except for update requests, this
+	// field is output-only and should not be set by the user.
 	VersionId string `json:"versionId,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "ClaimReviewAuthor")
-	// to unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ClaimReviewAuthor") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClaimReviewAuthor") to
-	// include in API requests with the JSON null value. By default, fields
-	// with empty values are omitted from API requests. However, any field
-	// with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ClaimReviewAuthor") to include in
+	// API requests with the JSON null value. By default, fields with empty values
+	// are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchRes
-// ponse: Response from searching fact-checked claims by image.
+// GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse:
+// Response from searching fact-checked claims by image.
 type GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse struct {
-	// NextPageToken: The next pagination token in the Search response. It
-	// should be used as the `page_token` for the following request. An
-	// empty value means no more results.
+	// NextPageToken: The next pagination token in the Search response. It should
+	// be used as the `page_token` for the following request. An empty value means
+	// no more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
-
 	// Results: The list of claims and all of their associated information.
 	Results []*GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponseResult `json:"results,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
 	// ForceSendFields is a list of field names (e.g. "NextPageToken") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "NextPageToken") to include
-	// in API requests with the JSON null value. By default, fields with
-	// empty values are omitted from API requests. However, any field with
-	// an empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "NextPageToken") to include in API
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchRes
-// ponseResult: A claim and its associated information.
+// GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponseRe
+// sult: A claim and its associated information.
 type GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponseResult struct {
 	// Claim: A claim which matched the query.
 	Claim *GoogleFactcheckingFactchecktoolsV1alpha1Claim `json:"claim,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Claim") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Claim") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Claim") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponseResult) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponseResult
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse
-// : Response from searching fact-checked claims.
+// GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse:
+// Response from searching fact-checked claims.
 type GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse struct {
 	// Claims: The list of claims and all of their associated information.
 	Claims []*GoogleFactcheckingFactchecktoolsV1alpha1Claim `json:"claims,omitempty"`
-
-	// NextPageToken: The next pagination token in the Search response. It
-	// should be used as the `page_token` for the following request. An
-	// empty value means no more results.
+	// NextPageToken: The next pagination token in the Search response. It should
+	// be used as the `page_token` for the following request. An empty value means
+	// no more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g. "Claims") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Claims") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
 	// NullFields is a list of field names (e.g. "Claims") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// requests with the JSON null value. By default, fields with empty values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResp
-// onse: Response from listing `ClaimReview` markup.
+// GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse:
+// Response from listing `ClaimReview` markup.
 type GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse struct {
-	// ClaimReviewMarkupPages: The result list of pages of `ClaimReview`
-	// markup.
+	// ClaimReviewMarkupPages: The result list of pages of `ClaimReview` markup.
 	ClaimReviewMarkupPages []*GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage `json:"claimReviewMarkupPages,omitempty"`
-
-	// NextPageToken: The next pagination token in the Search response. It
-	// should be used as the `page_token` for the following request. An
-	// empty value means no more results.
+	// NextPageToken: The next pagination token in the Search response. It should
+	// be used as the `page_token` for the following request. An empty value means
+	// no more results.
 	NextPageToken string `json:"nextPageToken,omitempty"`
 
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
-
-	// ForceSendFields is a list of field names (e.g.
-	// "ClaimReviewMarkupPages") to unconditionally include in API requests.
-	// By default, fields with empty or default values are omitted from API
-	// requests. However, any non-pointer, non-interface field appearing in
-	// ForceSendFields will be sent to the server regardless of whether the
-	// field is empty or not. This may be used to include empty fields in
-	// Patch requests.
+	// ForceSendFields is a list of field names (e.g. "ClaimReviewMarkupPages") to
+	// unconditionally include in API requests. By default, fields with empty or
+	// default values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "ClaimReviewMarkupPages")
-	// to include in API requests with the JSON null value. By default,
-	// fields with empty values are omitted from API requests. However, any
-	// field with an empty value appearing in NullFields will be sent to the
-	// server as null. It is an error if a field in this list has a
-	// non-empty value. This may be used to include null fields in Patch
-	// requests.
+	// NullFields is a list of field names (e.g. "ClaimReviewMarkupPages") to
+	// include in API requests with the JSON null value. By default, fields with
+	// empty values are omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleFactcheckingFactchecktoolsV1alpha1Publisher: Information about
-// the publisher.
+// GoogleFactcheckingFactchecktoolsV1alpha1Publisher: Information about the
+// publisher.
 type GoogleFactcheckingFactchecktoolsV1alpha1Publisher struct {
-	// Name: The name of this publisher. For instance, "Awesome Fact
-	// Checks".
+	// Name: The name of this publisher. For instance, "Awesome Fact Checks".
 	Name string `json:"name,omitempty"`
-
 	// Site: Host-level site name, without the protocol or "www" prefix. For
-	// instance, "awesomefactchecks.com". This value of this field is based
-	// purely on the claim review URL.
+	// instance, "awesomefactchecks.com". This value of this field is based purely
+	// on the claim review URL.
 	Site string `json:"site,omitempty"`
-
-	// ForceSendFields is a list of field names (e.g. "Name") to
-	// unconditionally include in API requests. By default, fields with
-	// empty or default values are omitted from API requests. However, any
-	// non-pointer, non-interface field appearing in ForceSendFields will be
-	// sent to the server regardless of whether the field is empty or not.
-	// This may be used to include empty fields in Patch requests.
+	// ForceSendFields is a list of field names (e.g. "Name") to unconditionally
+	// include in API requests. By default, fields with empty or default values are
+	// omitted from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-ForceSendFields for more
+	// details.
 	ForceSendFields []string `json:"-"`
-
-	// NullFields is a list of field names (e.g. "Name") to include in API
-	// requests with the JSON null value. By default, fields with empty
-	// values are omitted from API requests. However, any field with an
-	// empty value appearing in NullFields will be sent to the server as
-	// null. It is an error if a field in this list has a non-empty value.
-	// This may be used to include null fields in Patch requests.
+	// NullFields is a list of field names (e.g. "Name") to include in API requests
+	// with the JSON null value. By default, fields with empty values are omitted
+	// from API requests. See
+	// https://pkg.go.dev/google.golang.org/api#hdr-NullFields for more details.
 	NullFields []string `json:"-"`
 }
 
 func (s *GoogleFactcheckingFactchecktoolsV1alpha1Publisher) MarshalJSON() ([]byte, error) {
 	type NoMethod GoogleFactcheckingFactchecktoolsV1alpha1Publisher
-	raw := NoMethod(*s)
-	return gensupport.MarshalJSON(raw, s.ForceSendFields, s.NullFields)
+	return gensupport.MarshalJSON(NoMethod(*s), s.ForceSendFields, s.NullFields)
 }
 
-// GoogleProtobufEmpty: A generic empty message that you can re-use to
-// avoid defining duplicated empty messages in your APIs. A typical
-// example is to use it as the request or the response type of an API
-// method. For instance: service Foo { rpc Bar(google.protobuf.Empty)
-// returns (google.protobuf.Empty); }
+// GoogleProtobufEmpty: A generic empty message that you can re-use to avoid
+// defining duplicated empty messages in your APIs. A typical example is to use
+// it as the request or the response type of an API method. For instance:
+// service Foo { rpc Bar(google.protobuf.Empty) returns
+// (google.protobuf.Empty); }
 type GoogleProtobufEmpty struct {
-	// ServerResponse contains the HTTP response code and headers from the
-	// server.
+	// ServerResponse contains the HTTP response code and headers from the server.
 	googleapi.ServerResponse `json:"-"`
 }
-
-// method id "factchecktools.claims.imageSearch":
 
 type ClaimsImageSearchCall struct {
 	s            *Service
@@ -715,88 +586,82 @@ type ClaimsImageSearchCall struct {
 	header_      http.Header
 }
 
-// ImageSearch: Search through fact-checked claims using an image as the
-// query.
+// ImageSearch: Search through fact-checked claims using an image as the query.
 func (r *ClaimsService) ImageSearch() *ClaimsImageSearchCall {
 	c := &ClaimsImageSearchCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// ImageUri sets the optional parameter "imageUri": Required. The URI of
-// the source image. This must be a publicly-accessible image HTTP/HTTPS
-// URL. When fetching images from HTTP/HTTPS URLs, Google cannot
-// guarantee that the request will be completed. Your request may fail
-// if the specified host denies the request (e.g. due to request
-// throttling or DOS prevention), or if Google throttles requests to the
-// site for abuse prevention. You should not depend on externally-hosted
-// images for production applications.
+// ImageUri sets the optional parameter "imageUri": Required. The URI of the
+// source image. This must be a publicly-accessible image HTTP/HTTPS URL. When
+// fetching images from HTTP/HTTPS URLs, Google cannot guarantee that the
+// request will be completed. Your request may fail if the specified host
+// denies the request (e.g. due to request throttling or DOS prevention), or if
+// Google throttles requests to the site for abuse prevention. You should not
+// depend on externally-hosted images for production applications.
 func (c *ClaimsImageSearchCall) ImageUri(imageUri string) *ClaimsImageSearchCall {
 	c.urlParams_.Set("imageUri", imageUri)
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode": The BCP-47
-// language code, such as "en-US" or "sr-Latn". Can be used to restrict
-// results by language, though we do not currently consider the region.
+// LanguageCode sets the optional parameter "languageCode": The BCP-47 language
+// code, such as "en-US" or "sr-Latn". Can be used to restrict results by
+// language, though we do not currently consider the region.
 func (c *ClaimsImageSearchCall) LanguageCode(languageCode string) *ClaimsImageSearchCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
-// Offset sets the optional parameter "offset": An integer that
-// specifies the current offset (that is, starting result location) in
-// search results. This field is only considered if `page_token` is
-// unset. For example, 0 means to return results starting from the first
-// matching result, and 10 means to return from the 11th result.
+// Offset sets the optional parameter "offset": An integer that specifies the
+// current offset (that is, starting result location) in search results. This
+// field is only considered if `page_token` is unset. For example, 0 means to
+// return results starting from the first matching result, and 10 means to
+// return from the 11th result.
 func (c *ClaimsImageSearchCall) Offset(offset int64) *ClaimsImageSearchCall {
 	c.urlParams_.Set("offset", fmt.Sprint(offset))
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The pagination size.
-// We will return up to that many results. Defaults to 10 if not set.
+// PageSize sets the optional parameter "pageSize": The pagination size. We
+// will return up to that many results. Defaults to 10 if not set.
 func (c *ClaimsImageSearchCall) PageSize(pageSize int64) *ClaimsImageSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The pagination
-// token. You may provide the `next_page_token` returned from a previous
-// List request, if any, in order to get the next page. All other fields
-// must have the same values as in the previous request.
+// PageToken sets the optional parameter "pageToken": The pagination token. You
+// may provide the `next_page_token` returned from a previous List request, if
+// any, in order to get the next page. All other fields must have the same
+// values as in the previous request.
 func (c *ClaimsImageSearchCall) PageToken(pageToken string) *ClaimsImageSearchCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ClaimsImageSearchCall) Fields(s ...googleapi.Field) *ClaimsImageSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ClaimsImageSearchCall) IfNoneMatch(entityTag string) *ClaimsImageSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ClaimsImageSearchCall) Context(ctx context.Context) *ClaimsImageSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ClaimsImageSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -805,12 +670,7 @@ func (c *ClaimsImageSearchCall) Header() http.Header {
 }
 
 func (c *ClaimsImageSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -828,15 +688,11 @@ func (c *ClaimsImageSearchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "factchecktools.claims.imageSearch" call.
-// Exactly one of
-// *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchRe
-// sponse or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchRe
-// sponse.ServerResponse.Header or (if a response was returned at all)
-// in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
-// check whether the returned error was because http.StatusNotModified
-// was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse.
+// ServerResponse.Header or (if a response was returned at all) in
+// error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ClaimsImageSearchCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -867,47 +723,6 @@ func (c *ClaimsImageSearchCall) Do(opts ...googleapi.CallOption) (*GoogleFactche
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Search through fact-checked claims using an image as the query.",
-	//   "flatPath": "v1alpha1/claims:imageSearch",
-	//   "httpMethod": "GET",
-	//   "id": "factchecktools.claims.imageSearch",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "imageUri": {
-	//       "description": "Required. The URI of the source image. This must be a publicly-accessible image HTTP/HTTPS URL. When fetching images from HTTP/HTTPS URLs, Google cannot guarantee that the request will be completed. Your request may fail if the specified host denies the request (e.g. due to request throttling or DOS prevention), or if Google throttles requests to the site for abuse prevention. You should not depend on externally-hosted images for production applications.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "languageCode": {
-	//       "description": "Optional. The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". Can be used to restrict results by language, though we do not currently consider the region.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "offset": {
-	//       "description": "Optional. An integer that specifies the current offset (that is, starting result location) in search results. This field is only considered if `page_token` is unset. For example, 0 means to return results starting from the first matching result, and 10 means to return from the 11th result.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageSize": {
-	//       "description": "Optional. The pagination size. We will return up to that many results. Defaults to 10 if not set.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "Optional. The pagination token. You may provide the `next_page_token` returned from a previous List request, if any, in order to get the next page. All other fields must have the same values as in the previous request.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/claims:imageSearch",
-	//   "response": {
-	//     "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -915,7 +730,7 @@ func (c *ClaimsImageSearchCall) Do(opts ...googleapi.CallOption) (*GoogleFactche
 // The provided context supersedes any context provided to the Context method.
 func (c *ClaimsImageSearchCall) Pages(ctx context.Context, f func(*GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimImageSearchResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -931,8 +746,6 @@ func (c *ClaimsImageSearchCall) Pages(ctx context.Context, f func(*GoogleFactche
 	}
 }
 
-// method id "factchecktools.claims.search":
-
 type ClaimsSearchCall struct {
 	s            *Service
 	urlParams_   gensupport.URLParams
@@ -947,91 +760,87 @@ func (r *ClaimsService) Search() *ClaimsSearchCall {
 	return c
 }
 
-// LanguageCode sets the optional parameter "languageCode": The BCP-47
-// language code, such as "en-US" or "sr-Latn". Can be used to restrict
-// results by language, though we do not currently consider the region.
+// LanguageCode sets the optional parameter "languageCode": The BCP-47 language
+// code, such as "en-US" or "sr-Latn". Can be used to restrict results by
+// language, though we do not currently consider the region.
 func (c *ClaimsSearchCall) LanguageCode(languageCode string) *ClaimsSearchCall {
 	c.urlParams_.Set("languageCode", languageCode)
 	return c
 }
 
-// MaxAgeDays sets the optional parameter "maxAgeDays": The maximum age
-// of the returned search results, in days. Age is determined by either
-// claim date or review date, whichever is newer.
+// MaxAgeDays sets the optional parameter "maxAgeDays": The maximum age of the
+// returned search results, in days. Age is determined by either claim date or
+// review date, whichever is newer.
 func (c *ClaimsSearchCall) MaxAgeDays(maxAgeDays int64) *ClaimsSearchCall {
 	c.urlParams_.Set("maxAgeDays", fmt.Sprint(maxAgeDays))
 	return c
 }
 
-// Offset sets the optional parameter "offset": An integer that
-// specifies the current offset (that is, starting result location) in
-// search results. This field is only considered if `page_token` is
-// unset. For example, 0 means to return results starting from the first
-// matching result, and 10 means to return from the 11th result.
+// Offset sets the optional parameter "offset": An integer that specifies the
+// current offset (that is, starting result location) in search results. This
+// field is only considered if `page_token` is unset. For example, 0 means to
+// return results starting from the first matching result, and 10 means to
+// return from the 11th result.
 func (c *ClaimsSearchCall) Offset(offset int64) *ClaimsSearchCall {
 	c.urlParams_.Set("offset", fmt.Sprint(offset))
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The pagination size.
-// We will return up to that many results. Defaults to 10 if not set.
+// PageSize sets the optional parameter "pageSize": The pagination size. We
+// will return up to that many results. Defaults to 10 if not set.
 func (c *ClaimsSearchCall) PageSize(pageSize int64) *ClaimsSearchCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The pagination
-// token. You may provide the `next_page_token` returned from a previous
-// List request, if any, in order to get the next page. All other fields
-// must have the same values as in the previous request.
+// PageToken sets the optional parameter "pageToken": The pagination token. You
+// may provide the `next_page_token` returned from a previous List request, if
+// any, in order to get the next page. All other fields must have the same
+// values as in the previous request.
 func (c *ClaimsSearchCall) PageToken(pageToken string) *ClaimsSearchCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
 }
 
-// Query sets the optional parameter "query": Textual query string.
-// Required unless `review_publisher_site_filter` is specified.
+// Query sets the optional parameter "query": Textual query string. Required
+// unless `review_publisher_site_filter` is specified.
 func (c *ClaimsSearchCall) Query(query string) *ClaimsSearchCall {
 	c.urlParams_.Set("query", query)
 	return c
 }
 
 // ReviewPublisherSiteFilter sets the optional parameter
-// "reviewPublisherSiteFilter": The review publisher site to filter
-// results by, e.g. nytimes.com.
+// "reviewPublisherSiteFilter": The review publisher site to filter results by,
+// e.g. nytimes.com.
 func (c *ClaimsSearchCall) ReviewPublisherSiteFilter(reviewPublisherSiteFilter string) *ClaimsSearchCall {
 	c.urlParams_.Set("reviewPublisherSiteFilter", reviewPublisherSiteFilter)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *ClaimsSearchCall) Fields(s ...googleapi.Field) *ClaimsSearchCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *ClaimsSearchCall) IfNoneMatch(entityTag string) *ClaimsSearchCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *ClaimsSearchCall) Context(ctx context.Context) *ClaimsSearchCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *ClaimsSearchCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1040,12 +849,7 @@ func (c *ClaimsSearchCall) Header() http.Header {
 }
 
 func (c *ClaimsSearchCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1063,15 +867,11 @@ func (c *ClaimsSearchCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "factchecktools.claims.search" call.
-// Exactly one of
-// *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchRespons
-// e or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchRespons
-// e.ServerResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse.Serve
+// rResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *ClaimsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1102,58 +902,6 @@ func (c *ClaimsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleFactchecking
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Search through fact-checked claims.",
-	//   "flatPath": "v1alpha1/claims:search",
-	//   "httpMethod": "GET",
-	//   "id": "factchecktools.claims.search",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "languageCode": {
-	//       "description": "The BCP-47 language code, such as \"en-US\" or \"sr-Latn\". Can be used to restrict results by language, though we do not currently consider the region.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "maxAgeDays": {
-	//       "description": "The maximum age of the returned search results, in days. Age is determined by either claim date or review date, whichever is newer.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "offset": {
-	//       "description": "An integer that specifies the current offset (that is, starting result location) in search results. This field is only considered if `page_token` is unset. For example, 0 means to return results starting from the first matching result, and 10 means to return from the 11th result.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageSize": {
-	//       "description": "The pagination size. We will return up to that many results. Defaults to 10 if not set.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The pagination token. You may provide the `next_page_token` returned from a previous List request, if any, in order to get the next page. All other fields must have the same values as in the previous request.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "query": {
-	//       "description": "Textual query string. Required unless `review_publisher_site_filter` is specified.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "reviewPublisherSiteFilter": {
-	//       "description": "The review publisher site to filter results by, e.g. nytimes.com.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/claims:search",
-	//   "response": {
-	//     "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse"
-	//   }
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1161,7 +909,7 @@ func (c *ClaimsSearchCall) Do(opts ...googleapi.CallOption) (*GoogleFactchecking
 // The provided context supersedes any context provided to the Context method.
 func (c *ClaimsSearchCall) Pages(ctx context.Context, f func(*GoogleFactcheckingFactchecktoolsV1alpha1FactCheckedClaimSearchResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1176,8 +924,6 @@ func (c *ClaimsSearchCall) Pages(ctx context.Context, f func(*GoogleFactchecking
 		c.PageToken(x.NextPageToken)
 	}
 }
-
-// method id "factchecktools.pages.create":
 
 type PagesCreateCall struct {
 	s                                                             *Service
@@ -1195,23 +941,21 @@ func (r *PagesService) Create(googlefactcheckingfactchecktoolsv1alpha1claimrevie
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PagesCreateCall) Fields(s ...googleapi.Field) *PagesCreateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PagesCreateCall) Context(ctx context.Context) *PagesCreateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PagesCreateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1220,18 +964,12 @@ func (c *PagesCreateCall) Header() http.Header {
 }
 
 func (c *PagesCreateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefactcheckingfactchecktoolsv1alpha1claimreviewmarkuppage)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/pages")
@@ -1245,15 +983,11 @@ func (c *PagesCreateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "factchecktools.pages.create" call.
-// Exactly one of
-// *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage.ServerR
-// esponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage.ServerResponse
+// .Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PagesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1284,28 +1018,7 @@ func (c *PagesCreateCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingF
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Create `ClaimReview` markup on a page.",
-	//   "flatPath": "v1alpha1/pages",
-	//   "httpMethod": "POST",
-	//   "id": "factchecktools.pages.create",
-	//   "parameterOrder": [],
-	//   "parameters": {},
-	//   "path": "v1alpha1/pages",
-	//   "request": {
-	//     "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/userinfo.email"
-	//   ]
-	// }
-
 }
-
-// method id "factchecktools.pages.delete":
 
 type PagesDeleteCall struct {
 	s          *Service
@@ -1326,23 +1039,21 @@ func (r *PagesService) Delete(name string) *PagesDeleteCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PagesDeleteCall) Fields(s ...googleapi.Field) *PagesDeleteCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PagesDeleteCall) Context(ctx context.Context) *PagesDeleteCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PagesDeleteCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1351,12 +1062,7 @@ func (c *PagesDeleteCall) Header() http.Header {
 }
 
 func (c *PagesDeleteCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	var body io.Reader = nil
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
@@ -1374,12 +1080,11 @@ func (c *PagesDeleteCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "factchecktools.pages.delete" call.
-// Exactly one of *GoogleProtobufEmpty or error will be non-nil. Any
-// non-2xx status code is an error. Response headers are in either
-// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was
-// returned at all) in error.(*googleapi.Error).Header. Use
-// googleapi.IsNotModified to check whether the returned error was
-// because http.StatusNotModified was returned.
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleProtobufEmpty.ServerResponse.Header or (if a response was returned at
+// all) in error.(*googleapi.Error).Header. Use googleapi.IsNotModified to
+// check whether the returned error was because http.StatusNotModified was
+// returned.
 func (c *PagesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1410,35 +1115,7 @@ func (c *PagesDeleteCall) Do(opts ...googleapi.CallOption) (*GoogleProtobufEmpty
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Delete all `ClaimReview` markup on a page.",
-	//   "flatPath": "v1alpha1/pages/{pagesId}",
-	//   "httpMethod": "DELETE",
-	//   "id": "factchecktools.pages.delete",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the resource to delete, in the form of `pages/{page_id}`.",
-	//       "location": "path",
-	//       "pattern": "^pages/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleProtobufEmpty"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/userinfo.email"
-	//   ]
-	// }
-
 }
-
-// method id "factchecktools.pages.get":
 
 type PagesGetCall struct {
 	s            *Service
@@ -1451,8 +1128,7 @@ type PagesGetCall struct {
 
 // Get: Get all `ClaimReview` markup on a page.
 //
-//   - name: The name of the resource to get, in the form of
-//     `pages/{page_id}`.
+// - name: The name of the resource to get, in the form of `pages/{page_id}`.
 func (r *PagesService) Get(name string) *PagesGetCall {
 	c := &PagesGetCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1460,33 +1136,29 @@ func (r *PagesService) Get(name string) *PagesGetCall {
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PagesGetCall) Fields(s ...googleapi.Field) *PagesGetCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PagesGetCall) IfNoneMatch(entityTag string) *PagesGetCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PagesGetCall) Context(ctx context.Context) *PagesGetCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PagesGetCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1495,12 +1167,7 @@ func (c *PagesGetCall) Header() http.Header {
 }
 
 func (c *PagesGetCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1521,15 +1188,11 @@ func (c *PagesGetCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "factchecktools.pages.get" call.
-// Exactly one of
-// *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage.ServerR
-// esponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage.ServerResponse
+// .Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PagesGetCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1560,35 +1223,7 @@ func (c *PagesGetCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingFact
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Get all `ClaimReview` markup on a page.",
-	//   "flatPath": "v1alpha1/pages/{pagesId}",
-	//   "httpMethod": "GET",
-	//   "id": "factchecktools.pages.get",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of the resource to get, in the form of `pages/{page_id}`.",
-	//       "location": "path",
-	//       "pattern": "^pages/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+name}",
-	//   "response": {
-	//     "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/userinfo.email"
-	//   ]
-	// }
-
 }
-
-// method id "factchecktools.pages.list":
 
 type PagesListCall struct {
 	s            *Service
@@ -1598,44 +1233,43 @@ type PagesListCall struct {
 	header_      http.Header
 }
 
-// List: List the `ClaimReview` markup pages for a specific URL or for
-// an organization.
+// List: List the `ClaimReview` markup pages for a specific URL or for an
+// organization.
 func (r *PagesService) List() *PagesListCall {
 	c := &PagesListCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	return c
 }
 
-// Offset sets the optional parameter "offset": An integer that
-// specifies the current offset (that is, starting result location) in
-// search results. This field is only considered if `page_token` is
-// unset, and if the request is not for a specific URL. For example, 0
-// means to return results starting from the first matching result, and
-// 10 means to return from the 11th result.
+// Offset sets the optional parameter "offset": An integer that specifies the
+// current offset (that is, starting result location) in search results. This
+// field is only considered if `page_token` is unset, and if the request is not
+// for a specific URL. For example, 0 means to return results starting from the
+// first matching result, and 10 means to return from the 11th result.
 func (c *PagesListCall) Offset(offset int64) *PagesListCall {
 	c.urlParams_.Set("offset", fmt.Sprint(offset))
 	return c
 }
 
-// Organization sets the optional parameter "organization": The
-// organization for which we want to fetch markups for. For instance,
-// "site.com". Cannot be specified along with an URL.
+// Organization sets the optional parameter "organization": The organization
+// for which we want to fetch markups for. For instance, "site.com". Cannot be
+// specified along with an URL.
 func (c *PagesListCall) Organization(organization string) *PagesListCall {
 	c.urlParams_.Set("organization", organization)
 	return c
 }
 
-// PageSize sets the optional parameter "pageSize": The pagination size.
-// We will return up to that many results. Defaults to 10 if not set.
-// Has no effect if a URL is requested.
+// PageSize sets the optional parameter "pageSize": The pagination size. We
+// will return up to that many results. Defaults to 10 if not set. Has no
+// effect if a URL is requested.
 func (c *PagesListCall) PageSize(pageSize int64) *PagesListCall {
 	c.urlParams_.Set("pageSize", fmt.Sprint(pageSize))
 	return c
 }
 
-// PageToken sets the optional parameter "pageToken": The pagination
-// token. You may provide the `next_page_token` returned from a previous
-// List request, if any, in order to get the next page. All other fields
-// must have the same values as in the previous request.
+// PageToken sets the optional parameter "pageToken": The pagination token. You
+// may provide the `next_page_token` returned from a previous List request, if
+// any, in order to get the next page. All other fields must have the same
+// values as in the previous request.
 func (c *PagesListCall) PageToken(pageToken string) *PagesListCall {
 	c.urlParams_.Set("pageToken", pageToken)
 	return c
@@ -1643,42 +1277,37 @@ func (c *PagesListCall) PageToken(pageToken string) *PagesListCall {
 
 // Url sets the optional parameter "url": The URL from which to get
 // `ClaimReview` markup. There will be at most one result. If markup is
-// associated with a more canonical version of the URL provided, we will
-// return that URL instead. Cannot be specified along with an
-// organization.
+// associated with a more canonical version of the URL provided, we will return
+// that URL instead. Cannot be specified along with an organization.
 func (c *PagesListCall) Url(url string) *PagesListCall {
 	c.urlParams_.Set("url", url)
 	return c
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PagesListCall) Fields(s ...googleapi.Field) *PagesListCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// IfNoneMatch sets the optional parameter which makes the operation
-// fail if the object's ETag matches the given value. This is useful for
-// getting updates only after the object has changed since the last
-// request. Use googleapi.IsNotModified to check whether the response
-// error from Do is the result of In-None-Match.
+// IfNoneMatch sets an optional parameter which makes the operation fail if the
+// object's ETag matches the given value. This is useful for getting updates
+// only after the object has changed since the last request.
 func (c *PagesListCall) IfNoneMatch(entityTag string) *PagesListCall {
 	c.ifNoneMatch_ = entityTag
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PagesListCall) Context(ctx context.Context) *PagesListCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PagesListCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1687,12 +1316,7 @@ func (c *PagesListCall) Header() http.Header {
 }
 
 func (c *PagesListCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "", c.header_)
 	if c.ifNoneMatch_ != "" {
 		reqHeaders.Set("If-None-Match", c.ifNoneMatch_)
 	}
@@ -1710,15 +1334,11 @@ func (c *PagesListCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "factchecktools.pages.list" call.
-// Exactly one of
-// *GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesRes
-// ponse or error will be non-nil. Any non-2xx status code is an error.
-// Response headers are in either
-// *GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesRes
-// ponse.ServerResponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse.S
+// erverResponse.Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PagesListCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1749,50 +1369,6 @@ func (c *PagesListCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingFac
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "List the `ClaimReview` markup pages for a specific URL or for an organization.",
-	//   "flatPath": "v1alpha1/pages",
-	//   "httpMethod": "GET",
-	//   "id": "factchecktools.pages.list",
-	//   "parameterOrder": [],
-	//   "parameters": {
-	//     "offset": {
-	//       "description": "An integer that specifies the current offset (that is, starting result location) in search results. This field is only considered if `page_token` is unset, and if the request is not for a specific URL. For example, 0 means to return results starting from the first matching result, and 10 means to return from the 11th result.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "organization": {
-	//       "description": "The organization for which we want to fetch markups for. For instance, \"site.com\". Cannot be specified along with an URL.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "pageSize": {
-	//       "description": "The pagination size. We will return up to that many results. Defaults to 10 if not set. Has no effect if a URL is requested.",
-	//       "format": "int32",
-	//       "location": "query",
-	//       "type": "integer"
-	//     },
-	//     "pageToken": {
-	//       "description": "The pagination token. You may provide the `next_page_token` returned from a previous List request, if any, in order to get the next page. All other fields must have the same values as in the previous request.",
-	//       "location": "query",
-	//       "type": "string"
-	//     },
-	//     "url": {
-	//       "description": "The URL from which to get `ClaimReview` markup. There will be at most one result. If markup is associated with a more canonical version of the URL provided, we will return that URL instead. Cannot be specified along with an organization.",
-	//       "location": "query",
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/pages",
-	//   "response": {
-	//     "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/userinfo.email"
-	//   ]
-	// }
-
 }
 
 // Pages invokes f for each page of results.
@@ -1800,7 +1376,7 @@ func (c *PagesListCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingFac
 // The provided context supersedes any context provided to the Context method.
 func (c *PagesListCall) Pages(ctx context.Context, f func(*GoogleFactcheckingFactchecktoolsV1alpha1ListClaimReviewMarkupPagesResponse) error) error {
 	c.ctx_ = ctx
-	defer c.PageToken(c.urlParams_.Get("pageToken")) // reset paging to original point
+	defer c.PageToken(c.urlParams_.Get("pageToken"))
 	for {
 		x, err := c.Do()
 		if err != nil {
@@ -1816,8 +1392,6 @@ func (c *PagesListCall) Pages(ctx context.Context, f func(*GoogleFactcheckingFac
 	}
 }
 
-// method id "factchecktools.pages.update":
-
 type PagesUpdateCall struct {
 	s                                                             *Service
 	name                                                          string
@@ -1827,15 +1401,14 @@ type PagesUpdateCall struct {
 	header_                                                       http.Header
 }
 
-// Update: Update for all `ClaimReview` markup on a page Note that this
-// is a full update. To retain the existing `ClaimReview` markup on a
-// page, first perform a Get operation, then modify the returned markup,
-// and finally call Update with the entire `ClaimReview` markup as the
-// body.
+// Update: Update for all `ClaimReview` markup on a page Note that this is a
+// full update. To retain the existing `ClaimReview` markup on a page, first
+// perform a Get operation, then modify the returned markup, and finally call
+// Update with the entire `ClaimReview` markup as the body.
 //
-//   - name: The name of this `ClaimReview` markup page resource, in the
-//     form of `pages/{page_id}`. Except for update requests, this field
-//     is output-only and should not be set by the user.
+//   - name: The name of this `ClaimReview` markup page resource, in the form of
+//     `pages/{page_id}`. Except for update requests, this field is output-only
+//     and should not be set by the user.
 func (r *PagesService) Update(name string, googlefactcheckingfactchecktoolsv1alpha1claimreviewmarkuppage *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage) *PagesUpdateCall {
 	c := &PagesUpdateCall{s: r.s, urlParams_: make(gensupport.URLParams)}
 	c.name = name
@@ -1844,23 +1417,21 @@ func (r *PagesService) Update(name string, googlefactcheckingfactchecktoolsv1alp
 }
 
 // Fields allows partial responses to be retrieved. See
-// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse
-// for more information.
+// https://developers.google.com/gdata/docs/2.0/basics#PartialResponse for more
+// details.
 func (c *PagesUpdateCall) Fields(s ...googleapi.Field) *PagesUpdateCall {
 	c.urlParams_.Set("fields", googleapi.CombineFields(s))
 	return c
 }
 
-// Context sets the context to be used in this call's Do method. Any
-// pending HTTP request will be aborted if the provided context is
-// canceled.
+// Context sets the context to be used in this call's Do method.
 func (c *PagesUpdateCall) Context(ctx context.Context) *PagesUpdateCall {
 	c.ctx_ = ctx
 	return c
 }
 
-// Header returns an http.Header that can be modified by the caller to
-// add HTTP headers to the request.
+// Header returns a http.Header that can be modified by the caller to add
+// headers to the request.
 func (c *PagesUpdateCall) Header() http.Header {
 	if c.header_ == nil {
 		c.header_ = make(http.Header)
@@ -1869,18 +1440,12 @@ func (c *PagesUpdateCall) Header() http.Header {
 }
 
 func (c *PagesUpdateCall) doRequest(alt string) (*http.Response, error) {
-	reqHeaders := make(http.Header)
-	reqHeaders.Set("x-goog-api-client", "gl-go/"+gensupport.GoVersion()+" gdcl/"+internal.Version)
-	for k, v := range c.header_ {
-		reqHeaders[k] = v
-	}
-	reqHeaders.Set("User-Agent", c.s.userAgent())
+	reqHeaders := gensupport.SetHeaders(c.s.userAgent(), "application/json", c.header_)
 	var body io.Reader = nil
 	body, err := googleapi.WithoutDataWrapper.JSONReader(c.googlefactcheckingfactchecktoolsv1alpha1claimreviewmarkuppage)
 	if err != nil {
 		return nil, err
 	}
-	reqHeaders.Set("Content-Type", "application/json")
 	c.urlParams_.Set("alt", alt)
 	c.urlParams_.Set("prettyPrint", "false")
 	urls := googleapi.ResolveRelative(c.s.BasePath, "v1alpha1/{+name}")
@@ -1897,15 +1462,11 @@ func (c *PagesUpdateCall) doRequest(alt string) (*http.Response, error) {
 }
 
 // Do executes the "factchecktools.pages.update" call.
-// Exactly one of
-// *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage or
-// error will be non-nil. Any non-2xx status code is an error. Response
-// headers are in either
-// *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage.ServerR
-// esponse.Header or (if a response was returned at all) in
+// Any non-2xx status code is an error. Response headers are in either
+// *GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage.ServerResponse
+// .Header or (if a response was returned at all) in
 // error.(*googleapi.Error).Header. Use googleapi.IsNotModified to check
-// whether the returned error was because http.StatusNotModified was
-// returned.
+// whether the returned error was because http.StatusNotModified was returned.
 func (c *PagesUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage, error) {
 	gensupport.SetOptions(c.urlParams_, opts...)
 	res, err := c.doRequest("json")
@@ -1936,33 +1497,4 @@ func (c *PagesUpdateCall) Do(opts ...googleapi.CallOption) (*GoogleFactcheckingF
 		return nil, err
 	}
 	return ret, nil
-	// {
-	//   "description": "Update for all `ClaimReview` markup on a page Note that this is a full update. To retain the existing `ClaimReview` markup on a page, first perform a Get operation, then modify the returned markup, and finally call Update with the entire `ClaimReview` markup as the body.",
-	//   "flatPath": "v1alpha1/pages/{pagesId}",
-	//   "httpMethod": "PUT",
-	//   "id": "factchecktools.pages.update",
-	//   "parameterOrder": [
-	//     "name"
-	//   ],
-	//   "parameters": {
-	//     "name": {
-	//       "description": "The name of this `ClaimReview` markup page resource, in the form of `pages/{page_id}`. Except for update requests, this field is output-only and should not be set by the user.",
-	//       "location": "path",
-	//       "pattern": "^pages/[^/]+$",
-	//       "required": true,
-	//       "type": "string"
-	//     }
-	//   },
-	//   "path": "v1alpha1/{+name}",
-	//   "request": {
-	//     "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage"
-	//   },
-	//   "response": {
-	//     "$ref": "GoogleFactcheckingFactchecktoolsV1alpha1ClaimReviewMarkupPage"
-	//   },
-	//   "scopes": [
-	//     "https://www.googleapis.com/auth/userinfo.email"
-	//   ]
-	// }
-
 }
